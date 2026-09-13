@@ -40,6 +40,10 @@ def main() -> None:
         fit_r = fit_r.filter(pl.col(TARGET).is_between(60, 3600))
     yf = np.clip(fit_r[TARGET].to_numpy(), *T.REG_CLIP)
     yv = val_r[TARGET].to_numpy()
+    base_f = base_v = np.zeros(len(yv))
+    if "resid" in args:  # learn the residual against a calibrated NM off-block proxy
+        base_f, base_v = T.proxy_base(fit_r, val_r)
+        yf = np.clip(yf - base_f, -7200, 7200)
     clean = yv <= T.REG_CLIP[1]
     t0 = time.time()
 
@@ -49,7 +53,7 @@ def main() -> None:
         Xf, cats = T.to_pandas(fit_r, cols, None)
         Xv, _ = T.to_pandas(val_r, cols, cats)
         dfit = xgb.DMatrix(Xf, label=yf, enable_categorical=True)
-        dval = xgb.DMatrix(Xv, label=np.clip(yv, *T.REG_CLIP), enable_categorical=True)
+        dval = xgb.DMatrix(Xv, label=np.clip(yv, *T.REG_CLIP) - base_v, enable_categorical=True)
         params = dict(
             objective="reg:squarederror", tree_method="hist", max_depth=10, eta=0.05, subsample=0.8,
             colsample_bytree=0.8, min_child_weight=50, reg_lambda=10.0, max_cat_to_onehot=8, max_bin=255,
@@ -71,7 +75,7 @@ def main() -> None:
             iterations=6000, learning_rate=0.08, depth=8, loss_function="RMSE", thread_count=12,
             od_type="Iter", od_wait=200, verbose=500,
         )
-        model.fit(pool(fit_r, yf), eval_set=pool(val_r, np.clip(yv, *T.REG_CLIP)), use_best_model=True)
+        model.fit(pool(fit_r, yf), eval_set=pool(val_r, np.clip(yv, *T.REG_CLIP) - base_v), use_best_model=True)
         pred = model.predict(pool(val_r))
         best = model.get_best_iteration()
     else:
@@ -88,7 +92,7 @@ def main() -> None:
             params,
             lgb.Dataset(Xf, yf, categorical_feature=[c for c in CATEGORICAL if c in cols]),
             num_boost_round=8000,
-            valid_sets=[lgb.Dataset(Xv, np.clip(yv, *T.REG_CLIP))],
+            valid_sets=[lgb.Dataset(Xv, np.clip(yv, *T.REG_CLIP) - base_v)],
             callbacks=[lgb.early_stopping(200, verbose=False), lgb.log_evaluation(1000)],
         )
         pred = model.predict(Xv, num_iteration=model.best_iteration)
@@ -96,6 +100,7 @@ def main() -> None:
         imp = sorted(zip(model.feature_importance("gain"), cols), reverse=True)[:15]
         print("top gain:", [c for _, c in imp])
 
+    pred = pred + base_v
     tag = "_".join(sorted(args)) or "base"
     np.save(f"data/exp_reg_{tag}.npy", pred)
     print(

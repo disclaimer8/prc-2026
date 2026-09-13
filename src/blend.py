@@ -31,7 +31,14 @@ clf = lgb.Booster(model_file=f"submissions/clf_v{base}.txt")
 reg = lgb.Booster(model_file=f"submissions/reg_v{base}.txt")
 assert clf.feature_name() == [c.replace(" ", "_") for c in cols], "feature list differs from the saved model"
 proba = clf.predict(Xr)
-r_lgb = reg.predict(Xr)
+_, base_p = T.proxy_base(train.filter(pl.Series(lab == 0)), rank)
+r_lgb = reg.predict(Xr) + base_p  # the regressor predicts the residual against the NM proxy
+if os.environ.get("LGB_SEEDS"):  # seed-averaged LightGBM regressor from src/seed_avg.py
+    seeds = np.load(os.environ["LGB_SEEDS"])
+    seed_map = dict(zip(seeds["mvt_id"], seeds["reg"]))
+    r_single = r_lgb
+    r_lgb = np.array([seed_map[m] for m in rank["MVT_ID_mvt"].to_numpy()])
+    print(f"LightGBM regressor: {seeds['per_seed'].shape[0]}-seed average, mean |single-avg| = {np.mean(np.abs(r_single - r_lgb)):.1f}s")
 
 if w_cat > 0:
     cat = np.load("submissions/cat_reg_rank.npz")
@@ -44,8 +51,9 @@ r = w_cat * r_cat + (1 - w_cat) * r_lgb
 values = [r] + [rank[c].to_numpy() for c in T.CANDIDATES.values()] + [r + T.DAY]
 values = np.column_stack(values)
 proba = np.where(np.isnan(values), 0.0, proba)
+proba = T.mask_infeasible(proba, values, rank)
 proba = proba / proba.sum(axis=1, keepdims=True)
-pred = np.clip(np.sum(proba * np.nan_to_num(values), axis=1), 0, None)
+pred = np.clip(T.lobt_clip(np.sum(proba * np.nan_to_num(values), axis=1), rank), 0, None)
 
 template = pl.read_parquet("data/prc-2026-datasets/submitting.parquet")
 preds = rank.select("MVT_ID_mvt").with_columns(pl.Series(TARGET, pred))

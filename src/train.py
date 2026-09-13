@@ -104,6 +104,48 @@ def regime_label(df: pl.DataFrame) -> np.ndarray:
     return df.select(expr.otherwise(0)).to_series().to_numpy()
 
 
+LOBT_WINDOW = 3606  # NM flight matching window: |BLOCK - LOBT| <= 3606 s on every 2025 row that has LOBT
+
+
+def lobt_clip(pred_values: np.ndarray, df: pl.DataFrame) -> np.ndarray:
+    """Clip taxi-out into [MVT-LOBT-window, MVT-LOBT+window] where LOBT is known."""
+    d = df["d_mvt_lobt"].to_numpy()
+    lo, hi = d - LOBT_WINDOW, d + LOBT_WINDOW
+    return np.where(np.isnan(d), pred_values, np.clip(pred_values, lo, hi))
+
+
+def proxy_base(fit_r: pl.DataFrame, pred: pl.DataFrame):
+    """Proxy chain MVT-AOBT_3 -> MVT-LOBT -> MVT-EOBT_1 (each only when in [0, 7200]), calibrated by a
+    per-airport, per-source median offset learned on the fit rows; airport median taxi when nothing is available."""
+    def chain(d):
+        ok = lambda c: pl.when(pl.col(c).is_between(0, 7200)).then(pl.col(c))
+        return d.select(
+            "ADEP_mvt",
+            raw=pl.coalesce(ok("d_mvt_aobt"), ok("d_mvt_lobt"), ok("d_mvt_eobt")),
+            src=pl.when(ok("d_mvt_aobt").is_not_null()).then(pl.lit("aobt"))
+            .when(ok("d_mvt_lobt").is_not_null()).then(pl.lit("lobt"))
+            .when(ok("d_mvt_eobt").is_not_null()).then(pl.lit("eobt"))
+            .otherwise(pl.lit("none")),
+        )
+    cf = chain(fit_r).with_columns(y=fit_r[TARGET].clip(0, 7200))
+    off = cf.filter(pl.col("raw").is_not_null()).group_by("ADEP_mvt", "src").agg(off=(pl.col("y") - pl.col("raw")).median())
+    med = cf.group_by("ADEP_mvt").agg(med=pl.col("y").median())
+    def apply(d):
+        c = chain(d).with_row_index("_i").join(off, on=["ADEP_mvt", "src"], how="left").join(med, on="ADEP_mvt", how="left").sort("_i")
+        return c.select(pl.coalesce(pl.col("raw") + pl.col("off").fill_null(0), pl.col("med"))).to_series().to_numpy()
+    return apply(fit_r), apply(pred)
+
+
+def mask_infeasible(proba: np.ndarray, values: np.ndarray, df: pl.DataFrame) -> np.ndarray:
+    """Zero the probability of non-regular regimes whose candidate lies outside the LOBT window."""
+    d = df["d_mvt_lobt"].to_numpy()[:, None]
+    bad = ~np.isnan(d) & (np.abs(np.nan_to_num(values) - np.nan_to_num(d)) > LOBT_WINDOW)
+    bad[:, 0] = False
+    out = np.where(bad, 0.0, proba)
+    s = out.sum(axis=1, keepdims=True)
+    return np.where(s > 0, out / np.where(s > 0, s, 1), proba)
+
+
 def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: dict | None, val_y=None):
     """Fit regime classifier + regressor on `fit`, return (prediction, parts, best rounds, models)."""
     lab = regime_label(fit)
@@ -114,6 +156,10 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
     Xp, _ = to_pandas(pred, cols, cats)
     y = fit[TARGET].to_numpy()
     reg_mask = lab == 0
+
+    # the regressor learns the residual against a calibrated NM off-block proxy
+    base_f, base_p = proxy_base(fit.filter(pl.Series(reg_mask)), pred)
+    resid_target = np.clip(np.clip(y[reg_mask], *REG_CLIP) - base_f, -7200, 7200)
 
     callbacks = [lgb.log_evaluation(500)]
     best = {}
@@ -128,9 +174,9 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
         )
         reg = lgb.train(
             REG_PARAMS,
-            lgb.Dataset(Xf[reg_mask], np.clip(y[reg_mask], *REG_CLIP), categorical_feature=cat_cols),
+            lgb.Dataset(Xf[reg_mask], resid_target, categorical_feature=cat_cols),
             num_boost_round=5000,
-            valid_sets=[lgb.Dataset(Xp[val_lab == 0], np.clip(val_y[val_lab == 0], *REG_CLIP))],
+            valid_sets=[lgb.Dataset(Xp[val_lab == 0], np.clip(val_y[val_lab == 0], *REG_CLIP) - base_p[val_lab == 0])],
             callbacks=callbacks + [lgb.early_stopping(200, verbose=False)],
         )
         best = {"clf": clf.best_iteration, "reg": reg.best_iteration}
@@ -138,12 +184,12 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
         clf = lgb.train(CLF_PARAMS, lgb.Dataset(Xf, lab, categorical_feature=cat_cols), rounds["clf"])
         reg = lgb.train(
             REG_PARAMS,
-            lgb.Dataset(Xf[reg_mask], np.clip(y[reg_mask], *REG_CLIP), categorical_feature=cat_cols),
+            lgb.Dataset(Xf[reg_mask], resid_target, categorical_feature=cat_cols),
             rounds["reg"],
         )
 
     proba = clf.predict(Xp)  # (n, n_classes)
-    r = reg.predict(Xp)
+    r = reg.predict(Xp) + base_p
     values = [r]
     for col in CANDIDATES.values():
         values.append(pred[col].to_numpy())
@@ -151,8 +197,9 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
     values = np.column_stack(values)
     missing = np.isnan(values)
     proba = np.where(missing, 0.0, proba)
+    proba = mask_infeasible(proba, values, pred)
     proba = proba / proba.sum(axis=1, keepdims=True)
-    out = np.sum(proba * np.nan_to_num(values), axis=1)
+    out = lobt_clip(np.sum(proba * np.nan_to_num(values), axis=1), pred)
     return np.clip(out, 0, None), {"p": 1 - proba[:, 0], "reg": r, "proba": proba, "values": values}, best, (clf, reg, cols)
 
 

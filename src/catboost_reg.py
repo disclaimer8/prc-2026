@@ -34,8 +34,9 @@ def pool(d, y=None):
 
 fit = train.filter(pl.Series(lab == 0))
 model = CatBoostRegressor(iterations=iterations, learning_rate=0.08, depth=8, loss_function="RMSE", thread_count=8, verbose=500)
-model.fit(pool(fit, np.clip(fit[TARGET].to_numpy(), *T.REG_CLIP)))
-reg = model.predict(pool(rank))
+base_f, base_p = T.proxy_base(fit, rank)
+model.fit(pool(fit, np.clip(np.clip(fit[TARGET].to_numpy(), *T.REG_CLIP) - base_f, -7200, 7200)))
+reg = model.predict(pool(rank)) + base_p
 np.savez("submissions/cat_reg_rank.npz", mvt_id=rank["MVT_ID_mvt"].to_numpy(), reg=reg)
 model.save_model("submissions/cat_reg_rank.cbm")
 print("done", len(reg), float(np.mean(reg)))

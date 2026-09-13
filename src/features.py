@@ -219,6 +219,85 @@ def add_runway_config(feat: pl.DataFrame, df: pl.DataFrame) -> pl.DataFrame:
     return feat.join(out, on="MVT_ID_mvt", how="left")
 
 
+def _window_stats(times: np.ndarray, vals: np.ndarray, q: np.ndarray, lo: float, hi: float, exclude_self: np.ndarray | None):
+    """Count, mean and std of vals with time in [q+lo, q+hi] (times sorted); optionally removes the row itself."""
+    cs = np.concatenate([[0.0], np.cumsum(vals)])
+    cs2 = np.concatenate([[0.0], np.cumsum(vals * vals)])
+    a = np.searchsorted(times, q + lo, side="left")
+    b = np.searchsorted(times, q + hi, side="right")
+    n = (b - a).astype(float)
+    s = cs[b] - cs[a]
+    s2 = cs2[b] - cs2[a]
+    if exclude_self is not None:
+        inside = ~np.isnan(exclude_self)
+        n = n - inside
+        s = s - np.nan_to_num(exclude_self)
+        s2 = s2 - np.nan_to_num(exclude_self) ** 2
+    mean = np.where(n > 0, s / np.maximum(n, 1), np.nan)
+    var = np.where(n > 1, (s2 - n * mean**2) / np.maximum(n - 1, 1), np.nan)
+    return n, mean, np.sqrt(np.clip(var, 0, None))
+
+
+def add_neighbor_features(feat: pl.DataFrame, df: pl.DataFrame) -> pl.DataFrame:
+    """Observed NM taxi proxies (take-off minus AOBT_3) of other departures, plus the previous arrival on the stand.
+
+    Other movements are fully observed in the ranking file, and features built from them are allowed.
+    """
+    dep = feat.select(
+        "MVT_ID_mvt", "ADEP_mvt", "RUNWAY_mvt", "STAND_mvt", "t_mvt",
+        prox=pl.when(pl.col("d_mvt_aobt").is_between(0, 7200)).then(pl.col("d_mvt_aobt")),
+        t_ob=pl.col("t_aobt").fill_null(pl.col("t_mvt") - 900),
+    )
+    out = [dep.select("MVT_ID_mvt")]
+    groups = {"ap": ["ADEP_mvt"], "rwy": ["ADEP_mvt", "RUNWAY_mvt"], "stand": ["ADEP_mvt", "STAND_mvt"]}
+    windows = {"ap": [(-1800, 0), (-1800, 1800)], "rwy": [(-3600, 0), (-1800, 1800)], "stand": [(-86400 * 3, 0)]}
+    for gname, keys in groups.items():
+        parts = []
+        for _, g in dep.drop_nulls(keys).group_by(keys):
+            obs = g.drop_nulls("prox").sort("t_mvt")
+            times, vals = obs["t_mvt"].to_numpy(), obs["prox"].to_numpy()
+            q = g["t_mvt"].to_numpy()
+            own = g["prox"].to_numpy().astype(float)
+            cols = {"MVT_ID_mvt": g["MVT_ID_mvt"].to_numpy()}
+            for lo, hi in windows[gname]:
+                self_in = np.where((lo <= 0) & (hi >= 0), own, np.nan)
+                n, mean, std = _window_stats(times, vals, q, lo, hi, self_in)
+                tag = f"nb_{gname}_{-lo // 60}_{hi // 60}"
+                cols[f"{tag}_n"], cols[f"{tag}_mean"], cols[f"{tag}_std"] = n, mean, std
+            # last observed neighbour strictly before take-off
+            idx = np.searchsorted(times, q, side="left") - 1
+            has = idx >= 0
+            cols[f"nb_{gname}_last"] = np.where(has, vals[np.clip(idx, 0, None)] if len(vals) else np.nan, np.nan)
+            cols[f"nb_{gname}_last_age"] = np.where(has, q - (times[np.clip(idx, 0, None)] if len(times) else 0), np.nan)
+            parts.append(pl.DataFrame(cols))
+        out.append(pl.concat(parts, how="diagonal_relaxed"))
+    nb = out[0]
+    for p_ in out[1:]:
+        nb = nb.join(p_, on="MVT_ID_mvt", how="left")
+
+    # previous and next arrival on the same stand around the off-block estimate
+    arr = (
+        df.filter((pl.col("PHASE_mvt") == "ARR") & pl.col("STAND_mvt").is_not_null() & pl.col("t_block").is_not_null())
+        .select(ADEP_mvt=pl.col("ADES_mvt"), STAND_mvt="STAND_mvt", inb="t_block", arr_taxi_in=pl.col(TARGET).cast(pl.Float64),
+                arr_type=pl.col("AIRCRAFT_TYPE_mvt"))
+        .sort("inb")
+    )
+    key = dep.select("MVT_ID_mvt", "ADEP_mvt", "STAND_mvt", "t_ob", "t_mvt").drop_nulls("STAND_mvt").sort("t_ob")
+    prev = key.join_asof(arr, left_on="t_ob", right_on="inb", by=["ADEP_mvt", "STAND_mvt"], strategy="backward").select(
+        "MVT_ID_mvt", stand_prev_arr_age=pl.col("t_ob") - pl.col("inb"), stand_prev_arr_taxi_in="arr_taxi_in",
+        stand_prev_arr_type="arr_type",
+    )
+    nxt = key.join_asof(arr, left_on="t_ob", right_on="inb", by=["ADEP_mvt", "STAND_mvt"], strategy="forward").select(
+        "MVT_ID_mvt", stand_next_arr_gap=pl.col("t_mvt") - pl.col("inb"),
+    )
+    feat = feat.join(nb, on="MVT_ID_mvt", how="left").join(prev, on="MVT_ID_mvt", how="left").join(nxt, on="MVT_ID_mvt", how="left")
+    return feat.with_columns(
+        stand_prev_arr_same_type=(pl.col("stand_prev_arr_type") == pl.col("AIRCRAFT_TYPE_mvt")).cast(pl.Int8),
+        nb_own_minus_ap=pl.col("d_mvt_aobt") - pl.col("nb_ap_30_30_mean"),
+        nb_own_minus_rwy=pl.col("d_mvt_aobt") - pl.col("nb_rwy_30_30_mean"),
+    ).drop("stand_prev_arr_type")
+
+
 def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
     """Return one row per departure (train + ranking) with features and target."""
     if df is None:
@@ -279,12 +358,13 @@ def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
     from geometry import add_geometry
 
     feat = add_runway_config(feat, df)
+    feat = add_neighbor_features(feat, df)
     feat = add_geometry(feat)
     return add_weather(feat)
 
 
 if __name__ == "__main__":
     f = build()
-    f.write_parquet(os.environ.get("FEATURES_OUT", "data/features_v4.parquet"))
+    f.write_parquet(os.environ.get("FEATURES_OUT", "data/features_v5.parquet"))
     print(f.shape)
     print(f.filter(pl.col("split") == "rank").null_count().transpose(include_header=True).filter(pl.col("column_0") > 0))
