@@ -337,6 +337,42 @@ def add_runway_arrivals(feat: pl.DataFrame, df: pl.DataFrame) -> pl.DataFrame:
     return feat.join(out, on="MVT_ID_mvt", how="left")
 
 
+def add_day_context(feat: pl.DataFrame, df: pl.DataFrame) -> pl.DataFrame:
+    """Airport-day context: share of movements without an NM record (a matching outage) and the day's NM taxi proxy level.
+
+    Both use only fields that the ranking file keeps for every movement.
+    """
+    parts = []
+    for ap, tz in AIRPORT_TZ.items():
+        parts.append(
+            df.filter(pl.col("airport") == ap).select(
+                "MVT_ID_mvt", "airport", "PHASE_mvt", "FLIGHT_ID_mvt",
+                local_day=pl.col("MVT_TIME_UTC_mvt").dt.convert_time_zone(tz).dt.date(),
+            )
+        )
+    mv = pl.concat(parts)
+    day = mv.group_by("airport", "local_day").agg(day_nonm_rate=pl.col("FLIGHT_ID_mvt").is_null().mean(), day_movements=pl.len())
+    day = day.with_columns(
+        day_nonm_ratio=pl.col("day_nonm_rate") / pl.col("day_nonm_rate").median().over("airport").clip(lower_bound=1e-4)
+    )
+    dep_day = feat.select("MVT_ID_mvt", "d_mvt_aobt", "aobt_infeasible").join(
+        mv.select("MVT_ID_mvt", "airport", "local_day"), on="MVT_ID_mvt", how="left"
+    )
+    level = (
+        dep_day.filter(pl.col("d_mvt_aobt").is_between(0, 7200) & (pl.col("aobt_infeasible") != 1))
+        .group_by("airport", "local_day")
+        .agg(day_da_med=pl.col("d_mvt_aobt").median())
+    )
+    level = level.with_columns(day_da_ratio=pl.col("day_da_med") / pl.col("day_da_med").median().over("airport"))
+    ctx = (
+        dep_day.select("MVT_ID_mvt", "airport", "local_day")
+        .join(day, on=["airport", "local_day"], how="left")
+        .join(level, on=["airport", "local_day"], how="left")
+        .select("MVT_ID_mvt", "day_nonm_rate", "day_nonm_ratio", "day_movements", "day_da_med", "day_da_ratio")
+    )
+    return feat.join(ctx, on="MVT_ID_mvt", how="left")
+
+
 def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
     """Return one row per departure (train + ranking) with features and target."""
     if df is None:
@@ -401,12 +437,13 @@ def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
     feat = add_runway_config(feat, df)
     feat = add_neighbor_features(feat, df)
     feat = add_runway_arrivals(feat, df)
+    feat = add_day_context(feat, df)
     feat = add_geometry(feat)
     return add_weather(feat)
 
 
 if __name__ == "__main__":
     f = build()
-    f.write_parquet(os.environ.get("FEATURES_OUT", "data/features_v7.parquet"))
+    f.write_parquet(os.environ.get("FEATURES_OUT", "data/features_v8.parquet"))
     print(f.shape)
     print(f.filter(pl.col("split") == "rank").null_count().transpose(include_header=True).filter(pl.col("column_0") > 0))
