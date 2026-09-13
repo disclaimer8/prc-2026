@@ -1,0 +1,10 @@
+N airport-days 1511
+R2 METAR only        0.377
+R2 METAR+ERA5 sd0    0.386
+R2 METAR+ERA5 all    0.392
+ADEP_mvt
+EDDF     4
+EDDM    20
+LSZH    20
+LTFM     5
+dtype: int64

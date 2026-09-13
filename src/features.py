@@ -44,6 +44,7 @@ CATEGORICAL = [
     "AIRCRAFT_OPERATOR_flt",
     "ades_region",
     "airline_prefix",
+    "rwy_config",
 ]
 
 
@@ -175,6 +176,49 @@ def add_weather(feat: pl.DataFrame) -> pl.DataFrame:
     ).drop("_ob_time", "metar_time")
 
 
+def add_runway_config(feat: pl.DataFrame, df: pl.DataFrame) -> pl.DataFrame:
+    """Runway configuration per airport-hour, inferred from the runway column of all movements.
+
+    RUNWAY_mvt is filled for every ranking row, so this is available for 2026 as well and captures
+    configuration changes (closures, new operating modes) that a stand x runway category cannot.
+    """
+    mv = df.with_columns(hour=pl.col("MVT_TIME_UTC_mvt").dt.truncate("1h")).drop_nulls("RUNWAY_mvt")
+    per = mv.group_by("airport", "hour", "PHASE_mvt", "RUNWAY_mvt").len().filter(pl.col("len") >= 2)
+    cfg = (
+        per.sort("RUNWAY_mvt")
+        .group_by("airport", "hour", "PHASE_mvt")
+        .agg(rwys=pl.col("RUNWAY_mvt").str.join(","), n_rwys=pl.len(), total=pl.col("len").sum())
+    )
+    dep_cfg = cfg.filter(pl.col("PHASE_mvt") == "DEP").select("airport", "hour", dep_rwys="rwys", n_dep_rwys="n_rwys")
+    arr_cfg = cfg.filter(pl.col("PHASE_mvt") == "ARR").select("airport", "hour", arr_rwys="rwys", n_arr_rwys="n_rwys")
+    own = (
+        mv.filter(pl.col("PHASE_mvt") == "DEP")
+        .group_by("airport", "hour", "RUNWAY_mvt")
+        .len()
+        .with_columns(own_rwy_share_hour=pl.col("len") / pl.col("len").sum().over("airport", "hour"))
+        .drop("len")
+    )
+    key = feat.select(
+        "MVT_ID_mvt",
+        "RUNWAY_mvt",
+        airport=pl.col("ADEP_mvt"),
+        hour=pl.col("MVT_TIME_UTC_mvt").dt.truncate("1h"),
+    )
+    out = (
+        key.join(dep_cfg, on=["airport", "hour"], how="left")
+        .join(arr_cfg, on=["airport", "hour"], how="left")
+        .join(own, on=["airport", "hour", "RUNWAY_mvt"], how="left")
+        .select(
+            "MVT_ID_mvt",
+            "n_dep_rwys",
+            "n_arr_rwys",
+            "own_rwy_share_hour",
+            rwy_config=pl.col("airport") + ":" + pl.col("dep_rwys").fill_null("") + "|" + pl.col("arr_rwys").fill_null(""),
+        )
+    )
+    return feat.join(out, on="MVT_ID_mvt", how="left")
+
+
 def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
     """Return one row per departure (train + ranking) with features and target."""
     if df is None:
@@ -232,11 +276,15 @@ def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
             aobt_minute_exact=(pl.col("AOBT_3_flt").dt.second() == 0).cast(pl.Int8),
         )
     )
+    from geometry import add_geometry
+
+    feat = add_runway_config(feat, df)
+    feat = add_geometry(feat)
     return add_weather(feat)
 
 
 if __name__ == "__main__":
     f = build()
-    f.write_parquet("data/features.parquet")
+    f.write_parquet(os.environ.get("FEATURES_OUT", "data/features_v4.parquet"))
     print(f.shape)
     print(f.filter(pl.col("split") == "rank").null_count().transpose(include_header=True).filter(pl.col("column_0") > 0))

@@ -6,3 +6,4 @@ __pycache__/
 *.parquet
 analysis/*/data_ext/
 analysis/*/ext/
+analysis/sources/samples/

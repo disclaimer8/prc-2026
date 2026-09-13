@@ -1,0 +1,15 @@
+westerly day deps 139265 agree with schedule 0.9824
+date
+1     0.957
+2     0.962
+3     0.981
+4     0.999
+5     0.992
+6     1.000
+7     0.999
+8     0.996
+9     0.958
+10    0.967
+11    0.981
+12    1.000
+share westerly deps 0.634

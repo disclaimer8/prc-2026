@@ -24,6 +24,7 @@ import numpy as np
 import polars as pl
 
 from features import CATEGORICAL, TARGET
+from target_encoding import add_encodings
 
 FEATURES_PATH = os.environ.get("FEATURES", "data/features.parquet")
 REG_CLIP = (0, 7200)
@@ -51,9 +52,9 @@ DROP = {
 
 REG_PARAMS = dict(
     objective="regression",
-    learning_rate=0.05,
-    num_leaves=255,
-    min_data_in_leaf=100,
+    learning_rate=0.03,
+    num_leaves=511,
+    min_data_in_leaf=50,
     feature_fraction=0.8,
     bagging_fraction=0.8,
     bagging_freq=1,
@@ -64,7 +65,7 @@ REG_PARAMS = dict(
     verbose=-1,
     num_threads=10,
 )
-CLF_PARAMS = {**REG_PARAMS, "objective": "multiclass", "num_class": len(CLASSES), "num_leaves": 127}
+CLF_PARAMS = {**REG_PARAMS, "objective": "multiclass", "num_class": len(CLASSES), "num_leaves": 127, "learning_rate": 0.05, "min_data_in_leaf": 100}
 
 
 def feature_columns(df: pl.DataFrame) -> list[str]:
@@ -105,10 +106,12 @@ def regime_label(df: pl.DataFrame) -> np.ndarray:
 
 def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: dict | None, val_y=None):
     """Fit regime classifier + regressor on `fit`, return (prediction, parts, best rounds, models)."""
+    lab = regime_label(fit)
+    fit, pred = add_encodings(fit, pred, lab == 0)
+    cols = feature_columns(fit)
     cat_cols = [c for c in CATEGORICAL if c in cols]
     Xf, cats = to_pandas(fit, cols, None)
     Xp, _ = to_pandas(pred, cols, cats)
-    lab = regime_label(fit)
     y = fit[TARGET].to_numpy()
     reg_mask = lab == 0
 
@@ -150,7 +153,7 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
     proba = np.where(missing, 0.0, proba)
     proba = proba / proba.sum(axis=1, keepdims=True)
     out = np.sum(proba * np.nan_to_num(values), axis=1)
-    return np.clip(out, 0, None), {"p": 1 - proba[:, 0], "reg": r}, best, (clf, reg)
+    return np.clip(out, 0, None), {"p": 1 - proba[:, 0], "reg": r, "proba": proba, "values": values}, best, (clf, reg, cols)
 
 
 def main() -> None:
@@ -164,7 +167,7 @@ def main() -> None:
         fit, val = train.filter(~is_val), train.filter(is_val)
         yv = val[TARGET].to_numpy()
         t0 = time.time()
-        pred, parts, best, (clf, reg) = fit_predict(fit, val, cols, None, val_y=yv)
+        pred, parts, best, (clf, reg, cols) = fit_predict(fit, val, cols, None, val_y=yv)
         clean = yv <= REG_CLIP[1]
         print(
             f"best={best} rmse={rmse(pred, yv):.1f} rmse_reg_only={rmse(parts['reg'], yv):.1f} "
@@ -190,7 +193,8 @@ def main() -> None:
         best = json.load(open("data/last_validation.json"))["best"]
         rounds = {k: int(v * 1.1) for k, v in best.items()}
         rank = df.filter(pl.col("split") == "rank")
-        pred, _, _, (clf, reg) = fit_predict(train, rank, cols, rounds)
+        pred, parts, _, (clf, reg, cols) = fit_predict(train, rank, cols, rounds)
+        np.savez(f"submissions/parts_v{version}.npz", mvt_id=rank["MVT_ID_mvt"].to_numpy(), proba=parts["proba"], values=parts["values"], reg=parts["reg"])
         template = pl.read_parquet("data/prc-2026-datasets/submitting.parquet")
         preds = rank.select("MVT_ID_mvt").with_columns(pl.Series(TARGET, pred))
         sub = template.select("MVT_ID_mvt").join(preds, on="MVT_ID_mvt", how="left")
