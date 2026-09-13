@@ -22,7 +22,7 @@ def h2(m):
 html = re.sub(r"<h2>(.*?)</h2>", h2, html)
 html = html.replace("</section>", "", 1) + "</section>"
 html = html.replace("<table>", '<div class="table-wrap"><table>').replace("</table>", "</table></div>")
-for word, cls in [("исправлено, v8", "ok"), ("обход в v8", "ok"), ("в работе", "warn"), ("запланировано", "info")]:
+for word, cls in [("исправлено, v8", "ok"), ("обход в v8", "ok"), ("исправлено (гигиена)", "ok"), ("в работе", "warn"), ("запланировано", "info")]:
     html = html.replace(f"<td>{word}</td>", f'<td><span class="chip {cls}">{word}</span></td>')
     html = html.replace(f"<td><strong>{word}</strong></td>", f'<td><span class="chip {cls}">{word}</span></td>')
 
@@ -31,7 +31,7 @@ head, rest = page.split("<ol>", 1)
 _, rest = rest.split("</ol>", 1)
 page = head + "<ol>\n" + toc_html + "\n    </ol>" + rest
 
-start = page.index('<section id="task">')
+start = page.index('<section id="')  # first content section, whatever its id
 end = page.index('<footer class="doc">')
 page = page[:start] + html + "\n\n    " + page[end:]
 (root / "review" / "brief.html").write_text(page)

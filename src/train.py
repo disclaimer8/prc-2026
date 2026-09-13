@@ -28,7 +28,10 @@ from target_encoding import add_encodings
 
 FEATURES_PATH = os.environ.get("FEATURES", "data/features.parquet")
 REG_CLIP = (0, 7200)
-TOL = 30  # seconds: |target - candidate| within this => that regime
+# A planned time substitutes the block time within +-6 s (a plateau in the histogram of BLOCK - SCHED seconds);
+# EDDF, EHAM and LSZH record block time to the second and show no plateau, so planned regimes are not labelled there.
+TOL = int(os.environ.get("REGIME_TOL", "6"))
+PLANNED_REGIME_EXCLUDED = set(os.environ.get("REGIME_EXCLUDE", "EDDF,EHAM,LSZH").split(",")) - {""}
 # regime name -> feature holding MVT minus the reported planning time
 CANDIDATES = {"sched": "d_mvt_sched", "iobt": "d_mvt_iobt", "lobt": "d_mvt_lobt", "eobt": "d_mvt_eobt"}
 DAY = 86400.0
@@ -99,8 +102,9 @@ def regime_label(df: pl.DataFrame) -> np.ndarray:
     """Class index per row; the first matching candidate wins, dayshift is y in [1 day, 1 day + 2 h]."""
     y = pl.col(TARGET)
     expr = pl.when((y >= DAY) & (y <= DAY + 7200)).then(len(CLASSES) - 1)
+    planned_ok = ~pl.col("ADEP_mvt").is_in(list(PLANNED_REGIME_EXCLUDED))
     for i, col in enumerate(CANDIDATES.values(), start=1):
-        expr = expr.when(((y - pl.col(col)).abs() <= TOL).fill_null(False)).then(i)
+        expr = expr.when((((y - pl.col(col)).abs() <= TOL) & planned_ok).fill_null(False)).then(i)
     return df.select(expr.otherwise(0)).to_series().to_numpy()
 
 
@@ -120,7 +124,7 @@ def proxy_base(fit_r: pl.DataFrame, pred: pl.DataFrame):
     def chain(d):
         def ok(c):
             cond = pl.col(c).is_between(0, 7200)
-            if c == "d_mvt_aobt":  # AOBT_3 outside the LOBT window cannot be the off-block time
+            if c == "d_mvt_aobt" and os.environ.get("AOBT_GATE", "1") == "1":  # AOBT_3 outside the LOBT window cannot be the off-block time
                 cond = cond & ((pl.col("d_mvt_aobt") - pl.col("d_mvt_lobt")).abs() <= LOBT_WINDOW).fill_null(True)
             return pl.when(cond).then(pl.col(c))
         return d.select(
