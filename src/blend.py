@@ -61,6 +61,7 @@ sub = template.select("MVT_ID_mvt").join(preds, on="MVT_ID_mvt", how="left")
 assert sub.height == template.height and sub[TARGET].null_count() == 0
 sub = sub.with_columns(pl.col(TARGET).round(0).cast(template.schema[TARGET]))
 sub.write_parquet(f"submissions/gentle-igloo_v{new}.parquet")
+np.savez(f"submissions/parts_v{new}.npz", mvt_id=rank["MVT_ID_mvt"].to_numpy(), reg=r, proba=proba, values=values, pred=pred)
 old = pl.read_parquet(f"submissions/gentle-igloo_v{base}.parquet")
 diff = old.join(sub, on="MVT_ID_mvt", suffix="_new").select((pl.col(TARGET) - pl.col(TARGET + "_new")).abs().mean()).item()
 print(f"wrote v{new}: mean={sub[TARGET].mean():.0f}, mean |v{base}-v{new}| = {diff:.1f}s, corr lgb/cat reg = {np.corrcoef(r_lgb, r_cat)[0,1]:.3f}")
