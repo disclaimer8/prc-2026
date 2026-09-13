@@ -294,6 +294,19 @@ def add_neighbor_features(feat: pl.DataFrame, df: pl.DataFrame) -> pl.DataFrame:
         "MVT_ID_mvt", stand_next_arr_gap=pl.col("t_mvt") - pl.col("inb"),
     )
     feat = feat.join(nb, on="MVT_ID_mvt", how="left").join(prev, on="MVT_ID_mvt", how="left").join(nxt, on="MVT_ID_mvt", how="left")
+    # the ranking frame holds January and July 2026 back to back: a "previous" event more than 3 days away
+    # (for early July that is late January) says nothing about the stand, so it is dropped
+    stale = 3 * 86400
+    feat = feat.with_columns(
+        pl.when(pl.col("nb_stand_last_age") > stale).then(None).otherwise(pl.col("nb_stand_last")).alias("nb_stand_last"),
+        pl.when(pl.col("nb_stand_last_age") > stale).then(None).otherwise(pl.col("nb_stand_last_age")).alias("nb_stand_last_age"),
+        pl.when(pl.col("stand_prev_arr_age") > stale).then(None).otherwise(pl.col("stand_prev_arr_taxi_in")).alias("stand_prev_arr_taxi_in"),
+        pl.when(pl.col("stand_prev_arr_age") > stale).then(None).otherwise(pl.col("stand_prev_arr_type")).alias("stand_prev_arr_type"),
+        pl.when(pl.col("stand_prev_arr_age") > stale).then(None).otherwise(pl.col("stand_prev_arr_age")).alias("stand_prev_arr_age"),
+        pl.when(pl.col("stand_next_arr_gap").abs() > stale).then(None).otherwise(pl.col("stand_next_arr_gap")).alias("stand_next_arr_gap"),
+        pl.when(pl.col("nb_ap_last_age") > stale).then(None).otherwise(pl.col("nb_ap_last")).alias("nb_ap_last"),
+        pl.when(pl.col("nb_rwy_last_age") > stale).then(None).otherwise(pl.col("nb_rwy_last")).alias("nb_rwy_last"),
+    )
     return feat.with_columns(
         stand_prev_arr_same_type=(pl.col("stand_prev_arr_type") == pl.col("AIRCRAFT_TYPE_mvt")).cast(pl.Int8),
         nb_own_minus_ap=pl.col("d_mvt_aobt") - pl.col("nb_ap_30_30_mean"),
