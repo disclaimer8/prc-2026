@@ -75,6 +75,9 @@ def _airport_congestion(g: pl.DataFrame) -> pl.DataFrame:
 
     dep_takeoff = np.sort(dep["t_mvt"].to_numpy())
     dep_aobt = np.sort(dep["t_aobt"].drop_nulls().to_numpy())
+    # take-offs of the same departures that have an AOBT: pushed-back-but-airborne must be counted on one set,
+    # otherwise the difference accumulates every departure without AOBT and drifts over the calendar
+    dep_takeoff_with_aobt = np.sort(dep.filter(pl.col("t_aobt").is_not_null())["t_mvt"].to_numpy())
     arr_land = np.sort(arr["t_mvt"].to_numpy())
 
     arr_sorted = arr.select("t_mvt", "t_block", TARGET).drop_nulls().sort("t_block")
@@ -94,7 +97,7 @@ def _airport_congestion(g: pl.DataFrame) -> pl.DataFrame:
         out[f"arr_around_ob_{m}"] = _window_count(arr_land, t_ob, -w / 2, w / 2)
         out[f"offblocks_around_ob_{m}"] = _window_count(dep_aobt, t_ob, -w / 2, w / 2)
     # departures that have pushed back but not yet taken off at our off-block estimate
-    out["taxiing_at_ob"] = np.searchsorted(dep_aobt, t_ob, side="right") - np.searchsorted(dep_takeoff, t_ob, side="left")
+    out["taxiing_at_ob"] = np.searchsorted(dep_aobt, t_ob, side="right") - np.searchsorted(dep_takeoff_with_aobt, t_ob, side="left")
     out["takeoffs_between_ob_mvt"] = np.searchsorted(dep_takeoff, t, side="left") - np.searchsorted(dep_takeoff, t_ob, side="left")
 
     for m in (30, 60, 180):
@@ -245,7 +248,7 @@ def add_neighbor_features(feat: pl.DataFrame, df: pl.DataFrame) -> pl.DataFrame:
     """
     dep = feat.select(
         "MVT_ID_mvt", "ADEP_mvt", "RUNWAY_mvt", "STAND_mvt", "t_mvt",
-        prox=pl.when(pl.col("d_mvt_aobt").is_between(0, 7200)).then(pl.col("d_mvt_aobt")),
+        prox=pl.when(pl.col("d_mvt_aobt").is_between(0, 7200) & (pl.col("aobt_infeasible") != 1)).then(pl.col("d_mvt_aobt")),
         t_ob=pl.col("t_aobt").fill_null(pl.col("t_mvt") - 900),
     )
     out = [dep.select("MVT_ID_mvt")]
@@ -389,6 +392,8 @@ def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
             ades_region=pl.col("ADES_mvt").str.slice(0, 2),
             airline_prefix=pl.col("CALLSIGN_flt").str.extract(r"^([A-Z]{3})", 1),
             aobt_minute_exact=(pl.col("AOBT_3_flt").dt.second() == 0).cast(pl.Int8),
+            # block time lies within 3606 s of LOBT on every 2025 row, so an AOBT_3 further than that from LOBT cannot be the off-block
+            aobt_infeasible=((pl.col("AOBT_3_flt") - pl.col("LOBT_flt")).dt.total_seconds().abs() > 3606).cast(pl.Int8),
         )
     )
     from geometry import add_geometry
@@ -402,6 +407,6 @@ def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
 
 if __name__ == "__main__":
     f = build()
-    f.write_parquet(os.environ.get("FEATURES_OUT", "data/features_v6.parquet"))
+    f.write_parquet(os.environ.get("FEATURES_OUT", "data/features_v7.parquet"))
     print(f.shape)
     print(f.filter(pl.col("split") == "rank").null_count().transpose(include_header=True).filter(pl.col("column_0") > 0))

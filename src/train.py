@@ -118,7 +118,11 @@ def proxy_base(fit_r: pl.DataFrame, pred: pl.DataFrame):
     """Proxy chain MVT-AOBT_3 -> MVT-LOBT -> MVT-EOBT_1 (each only when in [0, 7200]), calibrated by a
     per-airport, per-source median offset learned on the fit rows; airport median taxi when nothing is available."""
     def chain(d):
-        ok = lambda c: pl.when(pl.col(c).is_between(0, 7200)).then(pl.col(c))
+        def ok(c):
+            cond = pl.col(c).is_between(0, 7200)
+            if c == "d_mvt_aobt":  # AOBT_3 outside the LOBT window cannot be the off-block time
+                cond = cond & ((pl.col("d_mvt_aobt") - pl.col("d_mvt_lobt")).abs() <= LOBT_WINDOW).fill_null(True)
+            return pl.when(cond).then(pl.col(c))
         return d.select(
             "ADEP_mvt",
             raw=pl.coalesce(ok("d_mvt_aobt"), ok("d_mvt_lobt"), ok("d_mvt_eobt")),
