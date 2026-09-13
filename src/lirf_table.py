@@ -22,7 +22,10 @@ from features import TARGET
 
 BINS = [7200, 14400, 28800, 43200, 108000]
 LABELS = ["<2h", "2-4h", "4-8h", "8-12h", "12-30h", ">30h"]
-OVERRIDE = ["4-8h", "8-12h", "12-30h", ">30h"]
+# ">30h" is left to the model: one 2025 row, never validated (second review)
+OVERRIDE = ["4-8h", "8-12h", "12-30h"]
+# Dirichlet pseudo-counts (sched, day, other) = (1, 0.2, 1.8): day-shift is absent below 12 h
+# (1 of 1441 LIRF no-NM rows), so its prior mass is kept small where it was never observed.
 ALPHA, ALPHA_DAY = 1.0, 0.2
 
 
