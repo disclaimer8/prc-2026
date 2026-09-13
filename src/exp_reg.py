@@ -36,12 +36,29 @@ def main() -> None:
 
     cols = T.feature_columns(fit)
     fit_r, val_r = fit.filter(pl.Series(fit_lab == 0)), val.filter(pl.Series(val_lab == 0))
+    if "filt" in args:  # plausibility filter on the regressor's training rows only (validation untouched)
+        fit_r = fit_r.filter(pl.col(TARGET).is_between(60, 3600))
     yf = np.clip(fit_r[TARGET].to_numpy(), *T.REG_CLIP)
     yv = val_r[TARGET].to_numpy()
     clean = yv <= T.REG_CLIP[1]
     t0 = time.time()
 
-    if "cat" in args:
+    if "xgb" in args:
+        import xgboost as xgb
+
+        Xf, cats = T.to_pandas(fit_r, cols, None)
+        Xv, _ = T.to_pandas(val_r, cols, cats)
+        dfit = xgb.DMatrix(Xf, label=yf, enable_categorical=True)
+        dval = xgb.DMatrix(Xv, label=np.clip(yv, *T.REG_CLIP), enable_categorical=True)
+        params = dict(
+            objective="reg:squarederror", tree_method="hist", max_depth=10, eta=0.05, subsample=0.8,
+            colsample_bytree=0.8, min_child_weight=50, reg_lambda=10.0, max_cat_to_onehot=8, max_bin=255,
+            nthread=int(os.environ.get("XGB_THREADS", "5")),
+        )
+        model = xgb.train(params, dfit, num_boost_round=6000, evals=[(dval, "val")], early_stopping_rounds=200, verbose_eval=500)
+        pred = model.predict(dval, iteration_range=(0, model.best_iteration + 1))
+        best = model.best_iteration
+    elif "cat" in args:
         from catboost import CatBoostRegressor, Pool
 
         cat_cols = [c for c in CATEGORICAL if c in cols]
@@ -59,8 +76,12 @@ def main() -> None:
         best = model.get_best_iteration()
     else:
         params = dict(T.REG_PARAMS)
+        params["num_threads"] = int(os.environ.get("LGB_THREADS", params["num_threads"]))
         if "slow" in args:
             params.update(learning_rate=0.03, num_leaves=511, min_data_in_leaf=50)
+        if "regul" in args:  # small trees, strong regularisation (PRC 2024 winner style)
+            params.update(learning_rate=0.03, num_leaves=31, min_data_in_leaf=400, lambda_l1=50.0, lambda_l2=200.0,
+                          cat_l2=100.0, cat_smooth=100.0, max_bin=511, feature_fraction=0.75)
         Xf, cats = T.to_pandas(fit_r, cols, None)
         Xv, _ = T.to_pandas(val_r, cols, cats)
         model = lgb.train(
