@@ -298,6 +298,42 @@ def add_neighbor_features(feat: pl.DataFrame, df: pl.DataFrame) -> pl.DataFrame:
     ).drop("stand_prev_arr_type")
 
 
+def add_runway_arrivals(feat: pl.DataFrame, df: pl.DataFrame) -> pl.DataFrame:
+    """Landings on the departure runway around take-off (mixed-mode runways interleave departures and arrivals)."""
+    arr = df.filter((pl.col("PHASE_mvt") == "ARR") & pl.col("RUNWAY_mvt").is_not_null()).select(
+        ADEP_mvt=pl.col("ADES_mvt"), RUNWAY_mvt="RUNWAY_mvt", t_land="t_mvt"
+    )
+    groups = {k: np.sort(g["t_land"].to_numpy()) for k, g in arr.group_by(["ADEP_mvt", "RUNWAY_mvt"])}
+    parts = []
+    for key, g in feat.select("MVT_ID_mvt", "ADEP_mvt", "RUNWAY_mvt", "t_mvt").drop_nulls("RUNWAY_mvt").group_by(["ADEP_mvt", "RUNWAY_mvt"]):
+        t = g["t_mvt"].to_numpy()
+        land = groups.get(key)
+        if land is None or len(land) == 0:
+            land = np.array([np.inf])
+        before = np.searchsorted(land, t, side="right")
+        prev_t = np.where(before > 0, land[np.clip(before - 1, 0, None)], np.nan)
+        next_t = np.where(before < len(land), land[np.clip(before, 0, len(land) - 1)], np.nan)
+        parts.append(
+            pl.DataFrame(
+                {
+                    "MVT_ID_mvt": g["MVT_ID_mvt"].to_numpy(),
+                    "rwy_arr_before_5": _window_count(land, t, -300, 0),
+                    "rwy_arr_before_10": _window_count(land, t, -600, 0),
+                    "rwy_arr_around_10": _window_count(land, t, -600, 600),
+                    "rwy_arr_before_30": _window_count(land, t, -1800, 0),
+                    "rwy_since_last_arr": np.where(np.isfinite(prev_t), t - prev_t, np.nan),
+                    "rwy_to_next_arr": np.where(np.isfinite(next_t), next_t - t, np.nan),
+                }
+            )
+        )
+    out = pl.concat(parts).with_columns(
+        # the ranking frame holds January and July 2026 back to back: gaps across it are not meaningful
+        pl.when(pl.col("rwy_since_last_arr") > 86400).then(None).otherwise(pl.col("rwy_since_last_arr")).alias("rwy_since_last_arr"),
+        pl.when(pl.col("rwy_to_next_arr") > 86400).then(None).otherwise(pl.col("rwy_to_next_arr")).alias("rwy_to_next_arr"),
+    )
+    return feat.join(out, on="MVT_ID_mvt", how="left")
+
+
 def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
     """Return one row per departure (train + ranking) with features and target."""
     if df is None:
@@ -359,12 +395,13 @@ def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
 
     feat = add_runway_config(feat, df)
     feat = add_neighbor_features(feat, df)
+    feat = add_runway_arrivals(feat, df)
     feat = add_geometry(feat)
     return add_weather(feat)
 
 
 if __name__ == "__main__":
     f = build()
-    f.write_parquet(os.environ.get("FEATURES_OUT", "data/features_v5.parquet"))
+    f.write_parquet(os.environ.get("FEATURES_OUT", "data/features_v6.parquet"))
     print(f.shape)
     print(f.filter(pl.col("split") == "rank").null_count().transpose(include_header=True).filter(pl.col("column_0") > 0))

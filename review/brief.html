@@ -1,0 +1,519 @@
+<title>Бриф ревью gentle-igloo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+:root {
+  --ground: #f3f5f7;
+  --surface: #ffffff;
+  --ink: #15202a;
+  --ink-2: #4a5663;
+  --ink-3: #6f7b87;
+  --rule: #d9dfe5;
+  --rule-strong: #b9c2cb;
+  --sign: #f2c230;
+  --sign-ink: #16191c;
+  --crit: #b7322b;
+  --crit-bg: #fbe9e7;
+  --warn: #9a6512;
+  --warn-bg: #fbf1dd;
+  --ok: #2c7a4d;
+  --ok-bg: #e5f3ea;
+  --info: #2d5f93;
+  --info-bg: #e4edf7;
+  --code-bg: #eaeef2;
+  --display: "Barlow Condensed", "Roboto Condensed", "Arial Narrow", sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0f151b;
+    --surface: #161e26;
+    --ink: #e2e8ee;
+    --ink-2: #aeb9c4;
+    --ink-3: #8894a0;
+    --rule: #26313b;
+    --rule-strong: #3a4753;
+    --sign: #f2c230;
+    --sign-ink: #16191c;
+    --crit: #f07a70;
+    --crit-bg: #3a1f1d;
+    --warn: #e6b460;
+    --warn-bg: #3a2d17;
+    --ok: #6fcf98;
+    --ok-bg: #173226;
+    --info: #86b4e6;
+    --info-bg: #182a3d;
+    --code-bg: #1d2731;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #0f151b;
+  --surface: #161e26;
+  --ink: #e2e8ee;
+  --ink-2: #aeb9c4;
+  --ink-3: #8894a0;
+  --rule: #26313b;
+  --rule-strong: #3a4753;
+  --sign: #f2c230;
+  --sign-ink: #16191c;
+  --crit: #f07a70;
+  --crit-bg: #3a1f1d;
+  --warn: #e6b460;
+  --warn-bg: #3a2d17;
+  --ok: #6fcf98;
+  --ok-bg: #173226;
+  --info: #86b4e6;
+  --info-bg: #182a3d;
+  --code-bg: #1d2731;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font: 400 15.5px/1.62 var(--body);
+  padding-inline: 20px;
+}
+a { color: var(--info); text-underline-offset: 2px; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--sign); outline-offset: 2px; border-radius: 2px; }
+code, .mono { font-family: var(--mono); font-size: 0.88em; }
+code { background: var(--code-bg); padding: 0.08em 0.35em; border-radius: 3px; }
+.num { font-variant-numeric: tabular-nums; }
+
+.shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 48px;
+  padding-block: 28px 80px;
+}
+nav.toc {
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  font-size: 13.5px;
+}
+nav.toc .toc-label {
+  font: 600 12px/1 var(--display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 10px;
+}
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; counter-reset: s; }
+nav.toc li { counter-increment: s; }
+nav.toc a {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  color: var(--ink-2);
+  text-decoration: none;
+  padding: 4px 6px;
+  border-radius: 3px;
+}
+nav.toc a::before { content: counter(s); font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+nav.toc a:hover { background: var(--code-bg); color: var(--ink); }
+
+main { min-width: 0; }
+.confidential {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 13.5px;
+  color: var(--ink-2);
+  border-top: 3px solid var(--crit);
+  padding-top: 10px;
+  margin-bottom: 26px;
+}
+.confidential strong { color: var(--crit); font-weight: 600; letter-spacing: 0.02em; }
+
+header.doc h1 {
+  font: 700 clamp(34px, 5vw, 50px)/1 var(--display);
+  letter-spacing: 0.005em;
+  margin: 0 0 8px;
+  text-wrap: balance;
+}
+header.doc h1 .sign {
+  background: var(--sign);
+  color: var(--sign-ink);
+  padding: 0 0.22em;
+  border-radius: 2px;
+}
+header.doc .lede { color: var(--ink-2); max-width: 66ch; margin: 0 0 22px; }
+
+.strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border: 1px solid var(--rule-strong);
+  background: var(--surface);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 44px;
+}
+.strip > div { padding: 12px 14px; border-right: 1px solid var(--rule); }
+.strip > div:last-child { border-right: 0; }
+.strip .k {
+  font: 600 11.5px/1.2 var(--display);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.strip .v { font: 500 22px/1.25 var(--mono); font-variant-numeric: tabular-nums; margin-top: 4px; }
+.strip .s { font-size: 12.5px; color: var(--ink-2); margin-top: 2px; }
+.strip .hl .v { color: var(--ink); }
+.strip .hl { background: color-mix(in srgb, var(--sign) 16%, var(--surface)); }
+
+section { margin-bottom: 52px; scroll-margin-top: 20px; }
+h2 {
+  font: 600 30px/1.1 var(--display);
+  margin: 0 0 16px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  text-wrap: balance;
+}
+h2 .n { font: 500 14px/1 var(--mono); color: var(--ink-3); }
+h3 {
+  font: 600 20px/1.2 var(--display);
+  letter-spacing: 0.01em;
+  margin: 26px 0 10px;
+}
+p, li { max-width: 72ch; }
+p { margin: 0 0 12px; }
+ul.plain { margin: 0 0 12px; padding-left: 20px; }
+ul.plain li { margin-bottom: 6px; }
+.muted { color: var(--ink-2); }
+.note { font-size: 13.5px; color: var(--ink-3); }
+
+dl.facts { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 8px 20px; margin: 0; }
+dl.facts dt { font: 600 13px/1.5 var(--display); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); padding-top: 2px; }
+dl.facts dd { margin: 0; }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); margin: 8px 0 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--rule); }
+th {
+  font: 600 12px/1.3 var(--display);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  background: var(--ground);
+  white-space: nowrap;
+}
+tr:last-child td { border-bottom: 0; }
+td.r, th.r { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--mono); font-size: 13px; white-space: nowrap; }
+tr.pending td { color: var(--ink-2); }
+tr.best td { background: color-mix(in srgb, var(--sign) 12%, transparent); }
+
+.chip {
+  display: inline-block;
+  font: 600 11px/1 var(--display);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 7px 3px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.chip.crit { color: var(--crit); background: var(--crit-bg); }
+.chip.warn { color: var(--warn); background: var(--warn-bg); }
+.chip.ok { color: var(--ok); background: var(--ok-bg); }
+.chip.info { color: var(--info); background: var(--info-bg); }
+.chip.minor { color: var(--ink-2); background: var(--code-bg); }
+
+.obs { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; counter-reset: o; }
+.obs > li {
+  counter-increment: o;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 4px 10px;
+  max-width: none;
+}
+.obs > li::before { content: counter(o); font: 500 13px/1.7 var(--mono); color: var(--ink-3); }
+.obs .t { font-weight: 600; }
+.obs .fix { font-size: 13.5px; color: var(--ink-2); border-left: 2px solid var(--sign); padding-left: 10px; margin-top: 6px; }
+
+.findings { display: grid; gap: 10px; }
+.finding {
+  display: grid;
+  grid-template-columns: 92px 44px minmax(0, 1fr) 110px;
+  gap: 12px;
+  align-items: start;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 12px 14px;
+}
+.finding .id { font: 500 13px/1.6 var(--mono); color: var(--ink-3); }
+.finding .body p { margin: 0 0 6px; }
+.finding .body p:last-child { margin: 0; }
+.finding .body .t { font-weight: 600; }
+.finding .state { justify-self: end; }
+
+.plan { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--rule-strong); }
+.plan li { position: relative; padding: 0 0 18px 22px; max-width: none; }
+.plan li::before { content: ""; position: absolute; left: -6px; top: 7px; width: 10px; height: 10px; background: var(--ground); border: 2px solid var(--ink-3); border-radius: 50%; }
+.plan li.now::before { background: var(--sign); border-color: var(--sign-ink); }
+.plan .when { font: 500 13px/1.4 var(--mono); color: var(--ink-3); }
+.plan .what { font-weight: 600; margin: 2px 0 4px; }
+
+pre {
+  font: 400 13px/1.55 var(--mono);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  margin: 8px 0 14px;
+}
+details { border-top: 1px solid var(--rule); padding-block: 10px; }
+details:last-of-type { border-bottom: 1px solid var(--rule); }
+summary { cursor: pointer; font-weight: 600; }
+details p { margin-top: 8px; }
+
+footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13px; color: var(--ink-3); }
+
+@media (max-width: 1000px) {
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  nav.toc { display: none; }
+  .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .strip > div { border-bottom: 1px solid var(--rule); }
+}
+@media (max-width: 640px) {
+  body { font-size: 15px; }
+  dl.facts { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  dl.facts dd { margin-bottom: 10px; }
+  .finding { grid-template-columns: 1fr auto; }
+  .finding .id { grid-column: 1; }
+  .finding .sev { grid-column: 2; justify-self: end; }
+  .finding .body { grid-column: 1 / -1; }
+  .finding .state { grid-column: 1 / -1; justify-self: start; }
+  .strip .v { font-size: 19px; }
+}
+</style>
+
+<div class="shell">
+  <nav class="toc" aria-label="Содержание">
+    <div class="toc-label">Содержание</div>
+    <ol>
+      <li><a href="#task">Задача</a></li>
+      <li><a href="#status">Где мы сейчас</a></li>
+      <li><a href="#data">Что известно о данных</a></li>
+      <li><a href="#solution">Решение</a></li>
+      <li><a href="#log">Журнал экспериментов</a></li>
+      <li><a href="#issues">Реестр проблем</a></li>
+      <li><a href="#plan">План до дедлайна</a></li>
+      <li><a href="#risks">Риски</a></li>
+      <li><a href="#questions">Вопросы к ревьюверам</a></li>
+      <li><a href="#answers">Ответы на первое ревью</a></li>
+      <li><a href="#repo">Репозиторий</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="confidential"><strong>Конфиденциально.</strong><span>Описывает метод целиком. Не пересылать и не публиковать до конца соревнования, 11.10.2026, 23:59 CET.</span></div>
+
+    <header class="doc">
+      <h1>Taxi-out, команда <span class="sign">gentle-igloo</span></h1>
+      <p class="lede">Бриф для внешнего ревью решения EUROCONTROL PRC Data Challenge 2026. Состояние на 13.09.2026, 16:30 WEST; учтено первое ревью (Fable 5.1). Числа получены прогонами кода в репозитории, чужие утверждения помечены отдельно.</p>
+    </header>
+
+    <div class="strip" role="group" aria-label="Статус">
+      <div><div class="k">Лидерборд</div><div class="v">339,21</div><div class="s">v5, лучший сабмит</div></div>
+      <div><div class="k">Место</div><div class="v">75 / 130</div><div class="s">лидер 245,02</div></div>
+      <div class="hl"><div class="k">Валидация</div><div class="v">320,3</div><div class="s">v6 + таблица LIRF</div></div>
+      <div><div class="k">В очереди</div><div class="v">v7, v8</div><div class="s">отправка после 00:05 UTC 14.09</div></div>
+      <div><div class="k">Дедлайн</div><div class="v">11.10</div><div class="s">23:59 CET, 5 сабмитов в день</div></div>
+    </div>
+
+    <section id="task">
+      <h2><span class="n">1</span>Задача</h2>
+      <dl class="facts">
+        <dt>Цель</dt>
+        <dd>Предсказать taxi-out вылета: <code>MVT_TIME</code> (взлёт) минус <code>BLOCK_TIME</code> (off-block), в секундах.</dd>
+        <dt>Аэропорты</dt>
+        <dd class="mono">EDDF · EDDM · EGLL · EHAM · LEBL · LEMD · LFPG · LIRF · LSZH · LTFM</dd>
+        <dt>Обучение</dt>
+        <dd>Все движения 2025 года: 4,17 млн строк, из них 2,09 млн вылетов. Колонки аэропорта <code>_mvt</code> склеены с данными Network Manager <code>_flt</code>: IOBT, EOBT_1, LOBT, AOBT_3, сегмент рынка, тип, анонимный оператор.</dd>
+        <dt>Тест</dt>
+        <dd>Январь и июль 2026, 344 841 вылет. Скрыты только <code>BLOCK_TIME</code> и <code>TAXITIME</code> вылетов. Время взлёта, NM-времена и все прилёты, включая их block time и taxi-in, видны.</dd>
+        <dt>Метрика</dt>
+        <dd>RMSE по всем вылетам. Лимиты: 5 сабмитов в день, 1 ГБ на бакет.</dd>
+        <dt>Условия приза</dt>
+        <dd>Код открыт на GitHub под GPLv3, внешние данные открыты и документированы, решение оригинальное. В 2024 и 2025 команды без открытого кода к призу и финалу не допускали. Призовой фонд 5000 € на топ-3.</dd>
+      </dl>
+    </section>
+
+    <section id="status">
+      <h2><span class="n">2</span>Где мы сейчас</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Версия</th><th>Что изменилось</th><th class="r">Валидация</th><th class="r">Лидерборд</th><th class="r">Место</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">v1</td><td>LightGBM на прямом таргете, клип 7200 с</td><td class="r">531,8</td><td class="r">501,23</td><td class="r">101</td></tr>
+            <tr><td class="mono">v2</td><td>Смесь: классификатор режима «block = расписание» плюс регрессор</td><td class="r">404,7</td><td class="r">366,22</td><td class="r">82</td></tr>
+            <tr><td class="mono">v3</td><td>Шесть режимов, METAR, без абсолютных меток времени</td><td class="r">402,4</td><td class="r">354,20</td><td class="r">78</td></tr>
+            <tr><td class="mono">v4</td><td>Геометрия стоянка → ВПП из OSM, конфигурация ВПП по часу, target encoding</td><td class="r">406,3</td><td class="r">344,06</td><td class="r">76</td></tr>
+            <tr class="best"><td class="mono">v5</td><td>Регрессор: 0,65 CatBoost + 0,35 LightGBM</td><td class="r">—</td><td class="r">339,21</td><td class="r">75</td></tr>
+            <tr class="pending"><td class="mono">v6</td><td>Признаки соседей, остаток от NM-прокси, окно LOBT</td><td class="r">390,3</td><td class="r">не отправлен</td><td class="r"></td></tr>
+            <tr class="pending"><td class="mono">v7</td><td>v6 + CatBoost на тех же признаках + 5 сидов LightGBM</td><td class="r">—</td><td class="r">в очереди</td><td class="r"></td></tr>
+            <tr class="pending"><td class="mono">v8</td><td>v7 + таблица режимов LIRF без NM (находка ревью К1)</td><td class="r">320,3*</td><td class="r">в очереди</td><td class="r"></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Валидация: полный RMSE на январе и июле 2025, модель учится на остальных 10 месяцах. *Таблица применена к предсказаниям валидации v6. Медиана лидерборда 325,9. v4 ухудшил валидацию, но улучшил лидерборд: валидация на 2025 не видит сдвиг 2026, поэтому признаки, зависящие от 2026, проверяются на лидерборде.</p>
+    </section>
+
+    <section id="data">
+      <h2><span class="n">3</span>Что известно о данных</h2>
+      <ol class="obs">
+        <li><div><span class="t">Метрику определяют редкие длинные значения.</span> В январе и июле 2025 45 строк с таргетом больше 4 ч из 344 тыс. дают 52% суммы квадратов отклонений. У модели v6 строки без записи NM, это 1,6% вылетов, дают 67% SSE валидации: 44% приходится на LIRF, 20% на LFPG.</div></li>
+        <li><div><span class="t">Часть block time — плановое время, а не факт.</span> Среди 4126 вылетов 2025 года с таргетом больше 1 ч таргет совпадает в пределах ±120 с с <code>MVT − SCHED</code> в 45,5% случаев, с IOBT в 10,9%, с LOBT в 10,8%, с EOBT в 6,6%. В LIRF этим объясняется 87% длинных значений. Сдвиг ровно на сутки встречается 14 раз, все без записи NM.
+          <div class="fix">По гистограмме секунд подмена занимает окно ±6 с и есть только в 7 аэропортах. В EDDF, EHAM и LSZH у меток секундное разрешение, и такой полосы нет (ревью, К2).</div></div></li>
+        <li><div><span class="t">Режим не детерминирован и по-разному ведёт себя на хвосте.</span> LIRF без NM по задержке от расписания: при 2–4 ч «= SCHED» в 59% случаев, при 4–8 ч в 81%, при 8–12 ч в 100% (21 из 21), при 12–30 ч в 61%, а в остальных 39% сдвиг на сутки (17 и 11 строк). Классификатор на этих бинах выдавал вероятность сдвига на сутки около нуля.</div></li>
+        <li><div><span class="t">AOBT_3 — шумный прокси.</span> Медиана <code>AOBT_3 − BLOCK</code> −0,85 мин, 97,6% строк в пределах 15 мин, LTFM смещён на −4,93 мин. |AOBT_3 − BLOCK| ≤ 60 с у 9–26% строк в зависимости от аэропорта.</div></li>
+        <li><div><span class="t">Окно LOBT жёсткое.</span> |BLOCK − LOBT| ≤ 3606 с на всех 2 062 577 вылетах 2025 года с LOBT, в каждом месяце, 99,9-й перцентиль 3474. Похоже на окно сопоставления рейсов в NM.</div></li>
+        <li><div><span class="t">Конфигурация ВПП сильно меняется.</span> EGLL: доля вылетов с 09R по месяцам 2025 от 11% до 71%, в январе 2026 46%, в июле 38%, то есть внутри диапазона обучения, но вне валидационных месяцев. EHAM: 18C 0,4% → 6,2%, 09 1,3% → 5,4% (январь 2025 → 2026). LFPG: 09R/27L не использовались с августа по ноябрь 2025 и вернулись в декабре 2025; 27R — 16,1% в июле 2025 и 0,1% в июле 2026.</div></li>
+        <li><div><span class="t">Подмена времени частично кластеризуется по дням.</span> Корреляция доли подмены у прилётов и вылетов по дням внутри аэропорта: LIRF 0,45, EDDM 0,33, EGLL 0,22, у остальных не больше 0,19. По часам кластеризации нет.</div></li>
+        <li><div><span class="t">Потолок в Мадриде и Барселоне.</span> У LEMD и LEBL максимальный таргет 3598 и 3604 с. В EDDF таких строк 73, в EGLL 728.</div></li>
+        <li><div><span class="t">Правила со слов других участников</span> <span class="chip minor">не проверено</span> Строки с block = расписание остаются в скоринге. Признаки по другим движениям разрешены. Trino OpenSky запрещён. Одна команда отказалась от AOBT_3 и LOBT как от эксплуатации данных; явного запрета мы не нашли.</div></li>
+      </ol>
+    </section>
+
+    <section id="solution">
+      <h2><span class="n">4</span>Решение</h2>
+      <h3>Признаки</h3>
+      <p class="muted">Считаются одинаково для 2025 и ranking. Block time вылетов не используется.</p>
+      <ul class="plain">
+        <li>Разности взлёта с AOBT_3, EOBT_1, LOBT, IOBT, расписанием и между ними.</li>
+        <li>Загруженность: вылеты и прилёты в окнах вокруг взлёта и оценки off-block, вылеты, выруливающие в момент off-block, счётчики по ВПП, taxi-in недавних прилётов.</li>
+        <li>Соседи: «взлёт − AOBT_3» других вылетов по аэропорту, ВПП и стоянке (число, среднее, СКО, последнее значение, отклонение от среднего); предыдущий и следующий прилёт на ту же стоянку.</li>
+        <li>Прилёты на ВПП вылета: посадки за 5, 10, 30 мин до взлёта и ±10 мин, время с последней посадки и до следующей. <span class="chip warn">собирается, v9</span></li>
+        <li>Конфигурация ВПП по часу, выведенная из <code>RUNWAY_mvt</code> всех движений.</li>
+        <li>OpenStreetMap: координаты стоянок по нормализованному номеру (точное совпадение у 94% вылетов), расстояние и угол до начала ВПП.</li>
+        <li>METAR (Iowa Environmental Mesonet): температура, дефицит точки росы, ветер, видимость, флаги снега, переохлаждённых осадков и обледенения.</li>
+        <li>Out-of-fold target encoding по стоянке×ВПП, ВПП×часу, стоянке, оператору, типу, направлению и по остатку от AOBT_3.</li>
+      </ul>
+      <h3>Модель</h3>
+      <ol class="plain">
+        <li>Многоклассовая LightGBM оценивает вероятности режимов: обычный, SCHED, IOBT, LOBT, EOBT, +сутки.</li>
+        <li>Для LIRF без NM при задержке от расписания от 4 ч вероятности режимов берутся из сглаженной эмпирической таблицы по бинам задержки, а не из классификатора.</li>
+        <li>Регрессор на строках обычного режима учит остаток от калиброванной цепочки AOBT_3 → LOBT → EOBT_1. Регрессор — бленд 0,65 CatBoost и 0,35 LightGBM (усреднение 5 сидов).</li>
+        <li>Прогноз = Σ p<sub>k</sub> · кандидат<sub>k</sub>. Это оптимальная точечная оценка при квадратичной ошибке.</li>
+        <li>Режимам с кандидатом вне окна LOBT ±3606 с ставится вероятность 0, итоговый прогноз клипается в это окно.</li>
+      </ol>
+    </section>
+
+    <section id="log">
+      <h2><span class="n">5</span>Журнал экспериментов</h2>
+      <p class="note">RMSE регрессора на строках обычного режима валидации при y ≤ 7200 с, если не указано иное.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Эксперимент</th><th class="r">Результат</th><th>Решение</th></tr></thead>
+          <tbody>
+            <tr><td>Базовый LightGBM</td><td class="r">229,8</td><td>—</td></tr>
+            <tr><td>+ target encoding</td><td class="r">229,0</td><td><span class="chip ok">оставили</span></td></tr>
+            <tr><td>+ медленный LightGBM (511 листьев, lr 0,03)</td><td class="r">227,8</td><td><span class="chip ok">оставили</span></td></tr>
+            <tr><td>CatBoost</td><td class="r">224,3</td><td><span class="chip ok">оставили</span></td></tr>
+            <tr><td>Бленд LightGBM + CatBoost, веса NNLS 0,36 / 0,64</td><td class="r">223,2</td><td><span class="chip ok">v5</span></td></tr>
+            <tr><td>XGBoost; в NNLS-бленде вес 0 на обеих половинах выборки</td><td class="r">238,1</td><td><span class="chip minor">отказ</span></td></tr>
+            <tr><td>OSM и конфигурация ВПП (на лидерборде 354 → 344)</td><td class="r">227,6</td><td><span class="chip ok">v4</span></td></tr>
+            <tr><td>Фильтр таргета 60–3600 с в обучении регрессора</td><td class="r">233,2</td><td><span class="chip minor">отказ</span></td></tr>
+            <tr><td>Сильная регуляризация (31 лист, min_data 400)</td><td class="r">228,6</td><td><span class="chip warn">отложено</span></td></tr>
+            <tr><td>Остаток от NM-прокси вместо прямого таргета</td><td class="r">226,9</td><td><span class="chip ok">оставили</span></td></tr>
+            <tr><td>+ признаки соседей</td><td class="r">220,2</td><td><span class="chip ok">v6</span></td></tr>
+            <tr><td>5 сидов LightGBM</td><td class="r">227,65 → 226,76</td><td><span class="chip ok">v7</span></td></tr>
+            <tr><td>Таблица режимов LIRF без NM, полный RMSE валидации (45 строк заменено)</td><td class="r">390,3 → 320,3</td><td><span class="chip ok">v8</span></td></tr>
+            <tr><td>adsb.lol, наземные ADS-B-треки: точек на земле у EDDM 0%, LFPG 4%, EGLL 14%, у LTFM нет вообще</td><td class="r">—</td><td><span class="chip minor">отказ</span></td></tr>
+            <tr><td>Занятость стоянок как ограничение: предыдущий прилёт в медиане за 67–107 мин до block</td><td class="r">—</td><td><span class="chip minor">только признак</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="issues">
+      <h2><span class="n">6</span>Реестр проблем после первого ревью</h2>
+      <p class="muted">Каждую находку ревьювер подкрепил кодом или проверкой; К1 мы перепроверили независимо.</p>
+      <div class="findings">
+        <div class="finding"><span class="sev"><span class="chip crit">Критично</span></span><span class="id">К1</span><div class="body"><p class="t">Классификатор не может выучить режим «+сутки» и занижает «= SCHED» на больших задержках.</p><p class="muted">14 строк класса при <code>min_data_in_leaf=100</code>. Заменено эмпирической таблицей для LIRF без NM: валидация 390,3 → 320,3, в ranking меняются 43 строки.</p></div><span class="state"><span class="chip ok">исправлено, v8</span></span></div>
+        <div class="finding"><span class="sev"><span class="chip crit">Критично</span></span><span class="id">К2</span><div class="body"><p class="t">Допуск разметки режимов 30 с вместо реальных ±6 с.</p><p class="muted">Около 24,5 тыс. обычных рейсов размечены как «sched», из них 16,8 тыс. в EDDF, EHAM и LSZH, где подмены нет. Выпадают из обучения регрессора. План: окно ±6 с, плановые режимы только в 7 аэропортах.</p></div><span class="state"><span class="chip warn">в работе</span></span></div>
+        <div class="finding"><span class="sev"><span class="chip warn">Важно</span></span><span class="id">В1</span><div class="body"><p class="t"><code>taxiing_at_ob</code> дрейфует по календарю.</p><p class="muted">Разность кумулятивных счётчиков по разным множествам: медиана −63 в январе 2025, −1873 в декабре, −2231 в июле 2026. Скрытая абсолютная метка времени.</p></div><span class="state"><span class="chip warn">в работе</span></span></div>
+        <div class="finding"><span class="sev"><span class="chip warn">Важно</span></span><span class="id">В2</span><div class="body"><p class="t">Нет отдельной модели для строк без NM.</p><p class="muted">1,6% вылетов, 67% SSE валидации. Таблица К1 закрывает только хвост LIRF; LFPG без NM даёт 20% SSE.</p></div><span class="state"><span class="chip info">запланировано</span></span></div>
+        <div class="finding"><span class="sev"><span class="chip warn">Важно</span></span><span class="id">В3</span><div class="body"><p class="t">Прокси AOBT_3 используется вне окна LOBT.</p><p class="muted">При |AOBT_3 − LOBT| &gt; 3606 с block не может совпадать с AOBT_3. Таких строк 0,19% в 2025 и 0,28% в ranking, 2,3% SSE валидации.</p></div><span class="state"><span class="chip warn">в работе</span></span></div>
+        <div class="finding"><span class="sev"><span class="chip warn">Важно</span></span><span class="id">В4</span><div class="body"><p class="t">Стык января и июля в ranking ломает стояночные признаки.</p><p class="muted">«Последний прилёт на стоянку» для начала июля 2026 — январский. Обрезать возрасты и зазоры больше 3 суток.</p></div><span class="state"><span class="chip warn">в работе</span></span></div>
+        <div class="finding"><span class="sev"><span class="chip warn">Важно</span></span><span class="id">В5</span><div class="body"><p class="t">Вес CatBoost 0,65 и 5600 итераций взяты с признаков v3.</p><p class="muted">На v6 не перепроверялись. NNLS старого CatBoost с новым LightGBM даёт веса 0,38 / 0,61.</p></div><span class="state"><span class="chip info">запланировано</span></span></div>
+        <div class="finding"><span class="sev"><span class="chip warn">Важно</span></span><span class="id">В6</span><div class="body"><p class="t">Ранняя остановка на оценочном наборе, <code>month</code> среди признаков.</p><p class="muted">Отчётный RMSE смещён вниз; месяц переносит артефакты 2025 года, например закрытие ВПП в LFPG.</p></div><span class="state"><span class="chip info">запланировано</span></span></div>
+        <div class="finding"><span class="sev"><span class="chip minor">Мелко</span></span><span class="id">М1–М4</span><div class="body"><p class="t">Гигиена пайплайна.</p><p class="muted">В цепочке нет <code>pipefail</code>; <code>last_validation.json</code> не привязан к набору признаков; нет сидов и детерминизма LightGBM; 0,98% строк ranking с невиданной конфигурацией ВПП; потолок 3600 с в LEMD и LEBL.</p></div><span class="state"><span class="chip info">запланировано</span></span></div>
+      </div>
+      <p class="note">Утечек block time вылетов ревью не нашло: признаки соседей проверены перебором на 300 строках, расхождений 0.</p>
+    </section>
+
+    <section id="plan">
+      <h2><span class="n">7</span>План до дедлайна</h2>
+      <ol class="plan">
+        <li class="now"><div class="when">14.09</div><div class="what">v8 против v7 на лидерборде</div><div class="muted">Прямой замер эффекта таблицы LIRF. Уточнить в Discord легитимность AOBT_3/LOBT и срок публикации кода.</div></li>
+        <li><div class="when">14–16.09</div><div class="what">Гигиена и К2</div><div class="muted">Окно ±6 с для режимов, без плановых режимов в EDDF/EHAM/LSZH; исправить <code>taxiing_at_ob</code>, гейт AOBT по окну LOBT, обрезку стояночных возрастов; убрать <code>month</code>; <code>pipefail</code> и сиды. Добавить прилёты на ВПП вылета.</div></li>
+        <li><div class="when">16–19.09</div><div class="what">Честная валидация</div><div class="muted">6 фолдов по парам месяцев (k, k+6), ранняя остановка на внутреннем месяце. Метрики: полный RMSE, RMSE при y ≤ 7200, вклад строк без NM, худший фолд, бутстреп по дням, гейт «не больше половины выигрыша от одной строки». Стресс-фолды: EGLL на месяцах с высокой долей 09R, LFPG с исключением августа–ноября.</div></li>
+        <li><div class="when">19–25.09</div><div class="what">Специалист для строк без NM</div><div class="muted">Все аэропорты; для LIRF до 4 ч — разложение T = D − G, где G — задержка у гейта, обученная на всех вылетах LIRF.</div></li>
+        <li><div class="when">25–30.09</div><div class="what">Классификатор режимов на чистых метках</div><div class="muted">Частотные OOF-энкодеры режима, доля подмены у прилётов того же дня и стоянки, секунды меток времени, регуляризация категорий. CatBoost на актуальных признаках с перепроверкой весов.</div></li>
+        <li><div class="when">01–08.10</div><div class="what">Стабилизация</div><div class="muted">Воспроизводимость с нуля, сиды для всех моделей, выбор финала по валидации и лидерборду вместе; дельты меньше 2 с на лидерборде не считать сигналом.</div></li>
+        <li><div class="when">11.10</div><div class="what">Финальный сабмит, заморозка кода</div></li>
+        <li><div class="when">после 11.10</div><div class="what">Публикация</div><div class="muted">Репозиторий на GitHub под GPLv3, статья в JOAS, возможен открытый датасет стоянок и ВПП 10 хабов под ODbL.</div></li>
+      </ol>
+    </section>
+
+    <section id="risks">
+      <h2><span class="n">8</span>Риски</h2>
+      <ul class="plain">
+        <li><strong>Горстка строк двигает метрику.</strong> Одна пропущенная строка со сдвигом на сутки добавляет около 30 с к RMSE при базе 339. Таблица К1 работает с вероятностями по 28 строкам 2025 года.</li>
+        <li><strong>Переобучение на лидерборд.</strong> Отдельный приватный набор на странице ранжирования не упоминается. В PRC 2025 финал считался по другому файлу, и команда со 2-го места по публичному месяцу оказалась 11-й.</li>
+        <li><strong>Легитимность AOBT_3 и LOBT</strong> не подтверждена организаторами.</li>
+        <li><strong>Воспроизводимость.</strong> Многопоточный LightGBM не детерминирован бит в бит; CatBoost учится около часа.</li>
+      </ul>
+    </section>
+
+    <section id="questions">
+      <h2><span class="n">9</span>Вопросы к ревьюверам</h2>
+      <ol class="plain">
+        <li>Как надёжнее оценивать вероятности редких режимов (28 строк в хвосте LIRF): сглаженная таблица, иерархический байес, отдельный классификатор с весами классов? Какой априор разумен для P(+сутки) при 11 из 28?</li>
+        <li>Как построить валидацию, которая предсказывает эффект на 2026 при сдвиге конфигурации ВПП без меток 2026?</li>
+        <li>Нет ли утечки в признаках соседей и прилётов? Они используют взлёты и AOBT_3 других рейсов тестового набора, что по правилам разрешено.</li>
+        <li>Что ещё извлечь из цепочки IOBT → EOBT → LOBT → AOBT_3 для строк без записи NM, где этих времён нет?</li>
+        <li>Стоит ли моделировать строки без NM целиком отдельно, если их 1,6%, а доля в ошибке 67%?</li>
+      </ol>
+    </section>
+
+    <section id="answers">
+      <h2><span class="n">10</span>Ответы на вопросы первого ревью</h2>
+      <details><summary>«AOBT_3 в 60 с от BLOCK у 5–13%», откуда?</summary><p>Считали одностороннее окно: block позже AOBT_3 не более чем на 60 с. Двустороннее |AOBT_3 − BLOCK| ≤ 60 с даёт 9–26%, как у ревьювера. Исправлено в разделе 3.</p></details>
+      <details><summary>Проверялся ли CatBoost на признаках v5 и остатке?</summary><p>Нет. Вес 0,65 и 5600 итераций взяты с признаков v3. Перепроверка запланирована (В5).</p></details>
+      <details><summary>Осознанно ли P(+сутки) около нуля на всём ranking?</summary><p>Нет, это ограничение классификатора. Исправлено таблицей для LIRF без NM (К1).</p></details>
+      <details><summary>Почему допуск разметки 30 с, а не ±6 с?</summary><p>Допуск выбран до анализа гистограммы секунд. Меняем на ±6 с и убираем плановые режимы в EDDF, EHAM и LSZH (К2).</p></details>
+      <details><summary>Будет ли отдельная модель для всех строк без NM?</summary><p>Да, в плане на 19–25.09 (В2).</p></details>
+      <details><summary>Гарантирует ли что-то, что <code>last_validation.json</code> получен на тех же признаках?</summary><p>Нет. Добавим в файл путь к набору признаков и проверку при сабмите.</p></details>
+      <details><summary>Нужен ли <code>wx_gust</code> при 97% пропусков?</summary><p>Нет, уберём при следующей пересборке признаков.</p></details>
+    </section>
+
+    <section id="repo">
+      <h2><span class="n">11</span>Репозиторий</h2>
+      <pre>src/features.py          признаки → data/features_v6.parquet
+src/geometry.py          OSM-геометрия стоянок и ВПП
+src/target_encoding.py   out-of-fold target encoding
+src/train.py             validate | submit N: смесь режимов, окно LOBT, остаток
+src/lirf_table.py        таблица режимов LIRF без NM
+src/catboost_reg.py      CatBoost-регрессор на всём 2025
+src/seed_avg.py          усреднение сидов LightGBM
+src/blend.py             сборка сабмита из сохранённых моделей
+src/exp_reg.py           эксперименты с регрессором
+analysis/                аналитика данных, внешние источники, решения прошлых лет,
+                         публичные репозитории 2026, полный текст первого ревью</pre>
+      <p class="muted">Внешние данные: METAR, Iowa Environmental Mesonet (свободное использование, атрибуция приветствуется); OpenStreetMap через Overpass (ODbL 1.0). Данные челленджа и ключи в репозиторий не входят.</p>
+    </section>
+
+    <footer class="doc">Данные: EUROCONTROL Performance Review Commission Data Challenge 2026 при поддержке OpenSky Network. Карта стоянок © OpenStreetMap contributors.</footer>
+  </main>
+</div>
