@@ -4,3 +4,5 @@ submissions/
 .venv/
 __pycache__/
 *.parquet
+analysis/*/data_ext/
+analysis/*/ext/
