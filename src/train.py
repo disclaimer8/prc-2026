@@ -224,6 +224,8 @@ def main() -> None:
             pred=pl.Series(pred), p=pl.Series(parts["p"]), reg=pl.Series(parts["reg"])
         )
         res.write_parquet("data/last_validation_pred.parquet")
+        np.savez("data/last_validation_parts.npz", mvt_id=val["MVT_ID_mvt"].to_numpy(), proba=parts["proba"],
+                 values=parts["values"], reg=parts["reg"], pred=pred, y=yv, features=os.environ.get("FEATURES", FEATURES_PATH))
         print(
             res.group_by("ADEP_mvt")
             .agg(rmse=((pl.col("pred") - pl.col(TARGET)) ** 2).mean().sqrt().round(0), n=pl.len())
