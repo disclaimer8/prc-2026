@@ -1,0 +1,108 @@
+movements with NM match: 4811570  with ADES_flt != ADES_FILED_flt: 4913 (0.102%)
+
+(A) diverted INTO hub, ARR rows: 2433 | filed destination is another of the 10 hubs: 220
+(B) departed hub, diverted: 2480 | of which returned to the hub (ADES_flt == hub): 531
+
+=== 2025 per hub: diversions IN (per 10,000 arrivals) and OUT (per 10,000 departures) ===
+shape: (10, 9)
+┌──────┬────────┬────────┬────────┬─────────┬─────┬───────────┬────────────┬────────────┐
+│ hub  ┆ arr    ┆ dep    ┆ div_in ┆ div_out ┆ rto ┆ in_per10k ┆ out_per10k ┆ rto_per10k │
+│ ---  ┆ ---    ┆ ---    ┆ ---    ┆ ---     ┆ --- ┆ ---       ┆ ---        ┆ ---        │
+│ str  ┆ u32    ┆ u32    ┆ u32    ┆ u32     ┆ u32 ┆ f64       ┆ f64        ┆ f64        │
+╞══════╪════════╪════════╪════════╪═════════╪═════╪═══════════╪════════════╪════════════╡
+│ LEMD ┆ 210227 ┆ 211295 ┆ 328    ┆ 44      ┆ 13  ┆ 15.6      ┆ 2.1        ┆ 0.6        │
+│ LSZH ┆ 133255 ┆ 132616 ┆ 203    ┆ 135     ┆ 32  ┆ 15.2      ┆ 10.2       ┆ 2.4        │
+│ LIRF ┆ 159911 ┆ 159216 ┆ 243    ┆ 158     ┆ 18  ┆ 15.2      ┆ 9.9        ┆ 1.1        │
+│ EDDM ┆ 166934 ┆ 166324 ┆ 227    ┆ 244     ┆ 69  ┆ 13.6      ┆ 14.7       ┆ 4.1        │
+│ LEBL ┆ 178600 ┆ 177843 ┆ 204    ┆ 33      ┆ 9   ┆ 11.4      ┆ 1.9        ┆ 0.5        │
+│ LTFM ┆ 269658 ┆ 269320 ┆ 253    ┆ 534     ┆ 125 ┆ 9.4       ┆ 19.8       ┆ 4.6        │
+│ EDDF ┆ 229044 ┆ 228185 ┆ 202    ┆ 237     ┆ 34  ┆ 8.8       ┆ 10.4       ┆ 1.5        │
+│ EHAM ┆ 243790 ┆ 243867 ┆ 205    ┆ 300     ┆ 134 ┆ 8.4       ┆ 12.3       ┆ 5.5        │
+│ EGLL ┆ 238463 ┆ 238132 ┆ 107    ┆ 194     ┆ 0   ┆ 4.5       ┆ 8.1        ┆ 0.0        │
+│ LFPG ┆ 237419 ┆ 235779 ┆ 25     ┆ 191     ┆ 5   ┆ 1.1       ┆ 8.1        ┆ 0.2        │
+└──────┴────────┴────────┴────────┴─────────┴─────┴───────────┴────────────┴────────────┘
+
+=== (A) 2025: where were flights diverting INTO each hub originally going? top-3 filed destinations ===
+EDDF EDFE Egelsbach (DE) 17; EGLL London (GB) 16; EDDM Munich (DE) 10
+EDDM EDMO Weßling (DE) 32; LOWI Innsbruck (AT) 22; EDDF Frankfurt am Main (DE) 13
+EGLL KJFK New York (US) 8; KORD Chicago (US) 8; KEWR Newark (US) 5
+EHAM EHEH Eindhoven (NL) 20; EHRD Rotterdam (NL) 16; EGLL London (GB) 9
+LEBL LEBB Bilbao (ES) 33; LEAL Alicante (ES) 15; LEGE Girona (ES) 13
+LEMD LEBB Bilbao (ES) 31; LPPR Porto (PT) 20; LEXJ Santander (ES) 19
+LFPG LFPB Paris (FR) 5; EGLL London (GB) 3; EDDF Frankfurt am Main (DE) 2
+LIRF LIRN Napoli (IT) 55; LIBP Pescara (IT) 20; LIRA Rome (IT) 17
+LSZH LSZS Samedan (CH) 33; LSZC Buochs (CH) 24; LSZR St. Gallen (CH) 16
+LTFM LTFJ Pendik, Istanbul (TR) 34; UUWW Moscow (RU) 31; ULLI St. Petersburg (RU) 10
+
+=== (B) 2025: departures from hub that diverted (excl. return to hub): top-3 actual destinations with filed dest ===
+EDDF filed EPKK -> landed EPKT: 7; filed LIRQ -> landed LIRP: 4; filed GCLP -> landed GCFV: 3
+EDDM filed LHDC -> landed LHBP: 4; filed EDDL -> landed EDDK: 4; filed LEBB -> landed LEMD: 4
+EGLL filed LXGB -> landed LEMG: 25; filed EDDM -> landed EDDS: 5; filed LIRP -> landed LIRQ: 4
+EHAM filed LIRQ -> landed LIRP: 12; filed EPKK -> landed EPKT: 10; filed EGGD -> landed EGFF: 4
+LEBL filed LEVX -> landed LEST: 3; filed GCFV -> landed LEMG: 2; filed LECO -> landed LEST: 2
+LEMD filed LEVX -> landed LEST: 5; filed LECO -> landed LEST: 4; filed LESO -> landed LEBB: 3
+LFPG filed LIRQ -> landed LIPE: 7; filed LIRQ -> landed LIRP: 6; filed GMME -> landed GMMN: 4
+LIRF filed LPPT -> landed LPFR: 6; filed LICC -> landed LICJ: 5; filed LIMJ -> landed LIML: 5
+LSZH filed LWSK -> landed BKPR: 5; filed LSGK -> landed LSZB: 5; filed EHTW -> landed EDDG: 3
+LTFM filed LTAZ -> landed LTAU: 14; filed URSS -> landed URMM: 11; filed LTCB -> landed LTFH: 11
+
+=== Monthly diversion rows per 10,000 matched movements, all hubs ===
+shape: (14, 5)
+┌─────────┬────────┬─────┬────────┬────────┐
+│ month   ┆ len    ┆ div ┆ div_in ┆ per10k │
+│ ---     ┆ ---    ┆ --- ┆ ---    ┆ ---    │
+│ str     ┆ u32    ┆ u32 ┆ u32    ┆ f64    │
+╞═════════╪════════╪═════╪════════╪════════╡
+│ 2025-01 ┆ 304716 ┆ 425 ┆ 221    ┆ 13.95  │
+│ 2025-02 ┆ 285223 ┆ 250 ┆ 131    ┆ 8.77   │
+│ 2025-03 ┆ 326327 ┆ 268 ┆ 134    ┆ 8.21   │
+│ 2025-04 ┆ 347943 ┆ 297 ┆ 148    ┆ 8.54   │
+│ 2025-05 ┆ 367189 ┆ 335 ┆ 165    ┆ 9.12   │
+│ 2025-06 ┆ 362027 ┆ 338 ┆ 154    ┆ 9.34   │
+│ 2025-07 ┆ 375731 ┆ 343 ┆ 163    ┆ 9.13   │
+│ 2025-08 ┆ 378286 ┆ 279 ┆ 144    ┆ 7.38   │
+│ 2025-09 ┆ 363871 ┆ 286 ┆ 131    ┆ 7.86   │
+│ 2025-10 ┆ 367889 ┆ 379 ┆ 203    ┆ 10.30  │
+│ 2025-11 ┆ 321963 ┆ 327 ┆ 145    ┆ 10.16  │
+│ 2025-12 ┆ 328713 ┆ 540 ┆ 258    ┆ 16.43  │
+│ 2026-01 ┆ 301995 ┆ 573 ┆ 290    ┆ 18.97  │
+│ 2026-07 ┆ 379697 ┆ 273 ┆ 146    ┆ 7.19   │
+└─────────┴────────┴─────┴────────┴────────┘
+
+=== Top hub-days by diversions INTO hub ===
+shape: (12, 3)
+┌──────┬────────────┬─────┐
+│ hub  ┆ date_utc   ┆ len │
+│ ---  ┆ ---        ┆ --- │
+│ str  ┆ date       ┆ u32 │
+╞══════╪════════════╪═════╡
+│ LIRF ┆ 2026-07-05 ┆ 16  │
+│ LIRF ┆ 2025-12-18 ┆ 16  │
+│ LEMD ┆ 2025-01-26 ┆ 16  │
+│ LTFM ┆ 2025-07-20 ┆ 15  │
+│ LIRF ┆ 2025-12-19 ┆ 12  │
+│ …    ┆ …          ┆ …   │
+│ LTFM ┆ 2025-06-23 ┆ 10  │
+│ LTFM ┆ 2025-07-14 ┆ 9   │
+│ LIRF ┆ 2025-02-05 ┆ 9   │
+│ LEBL ┆ 2025-10-11 ┆ 9   │
+│ LTFM ┆ 2025-04-10 ┆ 8   │
+└──────┴────────────┴─────┘
+
+=== Top hub-days by diverted departures ===
+shape: (8, 3)
+┌──────┬────────────┬─────┐
+│ hub  ┆ date_utc   ┆ len │
+│ ---  ┆ ---        ┆ --- │
+│ str  ┆ date       ┆ u32 │
+╞══════╪════════════╪═════╡
+│ LTFM ┆ 2025-04-19 ┆ 10  │
+│ LTFM ┆ 2025-12-29 ┆ 9   │
+│ LTFM ┆ 2025-07-20 ┆ 9   │
+│ LTFM ┆ 2026-01-22 ┆ 8   │
+│ LTFM ┆ 2025-06-12 ┆ 7   │
+│ LTFM ┆ 2025-12-18 ┆ 7   │
+│ LIRF ┆ 2025-12-18 ┆ 7   │
+│ LTFM ┆ 2025-12-27 ┆ 7   │
+└──────┴────────────┴─────┘
+chart saved

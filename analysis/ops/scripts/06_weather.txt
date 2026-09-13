@@ -1,0 +1,183 @@
+/Users/denyskolomiiets/prc-2026/analysis/ops/scripts/06_weather.py:23: UserWarning: Sortedness of columns cannot be checked when 'by' groups provided
+  j = c.join_asof(met.sort("mt"), left_on="t", right_on="mt", by="APT", strategy="backward", tolerance="90m")
+METAR rows: 176560 shape: (10, 2)
+┌──────┬───────┐
+│ APT  ┆ len   │
+│ ---  ┆ ---   │
+│ str  ┆ u32   │
+╞══════╪═══════╡
+│ EDDF ┆ 17613 │
+│ EDDM ┆ 17614 │
+│ EGLL ┆ 17613 │
+│ EHAM ┆ 17567 │
+│ LEBL ┆ 17871 │
+│ LEMD ┆ 17863 │
+│ LFPG ┆ 17633 │
+│ LIRF ┆ 17561 │
+│ LSZH ┆ 17615 │
+│ LTFM ┆ 17610 │
+└──────┴───────┘
+rows without METAR within 90 min: 165 of 4165186
+=== taxi time by METAR class at off-block (DEP) / landing (ARR) hour ===
+shape: (104, 7)
+┌──────┬───────────┬────────────────────────────────┬────────┬───────┬────────┬───────┐
+│ APT  ┆ PHASE_mvt ┆ wx                             ┆ N      ┆ mean  ┆ median ┆ p90   │
+│ ---  ┆ ---       ┆ ---                            ┆ ---    ┆ ---   ┆ ---    ┆ ---   │
+│ str  ┆ str       ┆ str                            ┆ u32    ┆ f64   ┆ f64    ┆ f64   │
+╞══════╪═══════════╪════════════════════════════════╪════════╪═══════╪════════╪═══════╡
+│ EDDF ┆ ARR       ┆ 1 frozen precip / freezing fog ┆ 884    ┆ 11.45 ┆ 10.09  ┆ 17.4  │
+│ EDDF ┆ ARR       ┆ 2 cold <=3C, no frozen wx      ┆ 28734  ┆ 9.53  ┆ 8.88   ┆ 13.55 │
+│ EDDF ┆ ARR       ┆ 3 dry >3C                      ┆ 174687 ┆ 9.65  ┆ 8.97   ┆ 14.02 │
+│ EDDF ┆ ARR       ┆ 4 thunderstorm >3C             ┆ 591    ┆ 11.87 ┆ 10.17  ┆ 17.55 │
+│ EDDF ┆ ARR       ┆ 5 rain >3C                     ┆ 25221  ┆ 10.21 ┆ 9.57   ┆ 14.67 │
+│ EDDM ┆ ARR       ┆ 1 frozen precip / freezing fog ┆ 2592   ┆ 6.74  ┆ 6.08   ┆ 9.93  │
+│ EDDM ┆ ARR       ┆ 2 cold <=3C, no frozen wx      ┆ 32173  ┆ 5.87  ┆ 5.2    ┆ 8.15  │
+│ EDDM ┆ ARR       ┆ 3 dry >3C                      ┆ 111214 ┆ 6.12  ┆ 5.92   ┆ 8.85  │
+│ EDDM ┆ ARR       ┆ 4 thunderstorm >3C             ┆ 688    ┆ 6.76  ┆ 6.17   ┆ 9.15  │
+│ EDDM ┆ ARR       ┆ 5 rain >3C                     ┆ 20621  ┆ 6.43  ┆ 6.05   ┆ 8.98  │
+│ EDDM ┆ ARR       ┆ 9 unknown                      ┆ 30     ┆ 7.29  ┆ 6.95   ┆ 9.85  │
+│ EGLL ┆ ARR       ┆ 1 frozen precip / freezing fog ┆ 220    ┆ 13.07 ┆ 9.02   ┆ 24.98 │
+│ EGLL ┆ ARR       ┆ 2 cold <=3C, no frozen wx      ┆ 16142  ┆ 9.34  ┆ 7.82   ┆ 15.82 │
+│ EGLL ┆ ARR       ┆ 3 dry >3C                      ┆ 203803 ┆ 8.68  ┆ 7.12   ┆ 14.12 │
+│ EGLL ┆ ARR       ┆ 4 thunderstorm >3C             ┆ 223    ┆ 11.6  ┆ 8.9    ┆ 23.92 │
+│ EGLL ┆ ARR       ┆ 5 rain >3C                     ┆ 19045  ┆ 9.12  ┆ 7.8    ┆ 15.13 │
+│ EHAM ┆ ARR       ┆ 1 frozen precip / freezing fog ┆ 1878   ┆ 9.87  ┆ 9.52   ┆ 16.05 │
+│ EHAM ┆ ARR       ┆ 2 cold <=3C, no frozen wx      ┆ 23636  ┆ 8.78  ┆ 7.78   ┆ 15.18 │
+│ EHAM ┆ ARR       ┆ 3 dry >3C                      ┆ 186753 ┆ 8.15  ┆ 7.2    ┆ 14.28 │
+│ EHAM ┆ ARR       ┆ 4 thunderstorm >3C             ┆ 151    ┆ 10.51 ┆ 10.7   ┆ 15.82 │
+│ EHAM ┆ ARR       ┆ 5 rain >3C                     ┆ 35085  ┆ 9.06  ┆ 8.75   ┆ 14.9  │
+│ LEBL ┆ ARR       ┆ 2 cold <=3C, no frozen wx      ┆ 345    ┆ 4.15  ┆ 3.37   ┆ 7.08  │
+│ LEBL ┆ ARR       ┆ 3 dry >3C                      ┆ 166234 ┆ 3.9   ┆ 3.42   ┆ 6.4   │
+│ LEBL ┆ ARR       ┆ 4 thunderstorm >3C             ┆ 1354   ┆ 4.72  ┆ 4.22   ┆ 7.05  │
+│ LEBL ┆ ARR       ┆ 5 rain >3C                     ┆ 10710  ┆ 4.38  ┆ 4.05   ┆ 6.82  │
+│ LEBL ┆ ARR       ┆ 9 unknown                      ┆ 3      ┆ 7.74  ┆ 6.23   ┆ 11.63 │
+│ LEMD ┆ ARR       ┆ 1 frozen precip / freezing fog ┆ 13     ┆ 6.7   ┆ 4.95   ┆ 11.78 │
+│ LEMD ┆ ARR       ┆ 2 cold <=3C, no frozen wx      ┆ 9368   ┆ 8.3   ┆ 7.87   ┆ 13.47 │
+│ LEMD ┆ ARR       ┆ 3 dry >3C                      ┆ 188266 ┆ 8.74  ┆ 8.23   ┆ 14.55 │
+│ LEMD ┆ ARR       ┆ 4 thunderstorm >3C             ┆ 1368   ┆ 9.2   ┆ 8.88   ┆ 15.32 │
+│ LEMD ┆ ARR       ┆ 5 rain >3C                     ┆ 12039  ┆ 9.46  ┆ 8.88   ┆ 16.07 │
+│ LEMD ┆ ARR       ┆ 9 unknown                      ┆ 9      ┆ 10.56 ┆ 10.8   ┆ 14.6  │
+│ LFPG ┆ ARR       ┆ 1 frozen precip / freezing fog ┆ 1188   ┆ 12.05 ┆ 10.98  ┆ 17.87 │
+│ LFPG ┆ ARR       ┆ 2 cold <=3C, no frozen wx      ┆ 22505  ┆ 9.8   ┆ 9.05   ┆ 14.07 │
+│ LFPG ┆ ARR       ┆ 3 dry >3C                      ┆ 196871 ┆ 9.73  ┆ 9.05   ┆ 13.93 │
+│ LFPG ┆ ARR       ┆ 4 thunderstorm >3C             ┆ 406    ┆ 12.38 ┆ 10.17  ┆ 16.92 │
+│ LFPG ┆ ARR       ┆ 5 rain >3C                     ┆ 17814  ┆ 10.25 ┆ 9.85   ┆ 14.18 │
+│ LIRF ┆ ARR       ┆ 2 cold <=3C, no frozen wx      ┆ 914    ┆ 10.49 ┆ 9.14   ┆ 14.92 │
+│ LIRF ┆ ARR       ┆ 3 dry >3C                      ┆ 150900 ┆ 10.76 ┆ 9.87   ┆ 15.8  │
+│ LIRF ┆ ARR       ┆ 4 thunderstorm >3C             ┆ 372    ┆ 11.5  ┆ 10.08  ┆ 16.12 │
+│ LIRF ┆ ARR       ┆ 5 rain >3C                     ┆ 8102   ┆ 10.54 ┆ 9.87   ┆ 15.05 │
+│ LIRF ┆ ARR       ┆ 9 unknown                      ┆ 68     ┆ 9.66  ┆ 9.1    ┆ 13.9  │
+│ LSZH ┆ ARR       ┆ 1 frozen precip / freezing fog ┆ 1248   ┆ 6.96  ┆ 6.11   ┆ 9.73  │
+│ LSZH ┆ ARR       ┆ 2 cold <=3C, no frozen wx      ┆ 21956  ┆ 5.92  ┆ 5.57   ┆ 8.38  │
+│ LSZH ┆ ARR       ┆ 3 dry >3C                      ┆ 91131  ┆ 5.86  ┆ 5.48   ┆ 8.45  │
+│ LSZH ┆ ARR       ┆ 4 thunderstorm >3C             ┆ 797    ┆ 5.85  ┆ 5.28   ┆ 8.43  │
+│ LSZH ┆ ARR       ┆ 5 rain >3C                     ┆ 19134  ┆ 5.86  ┆ 5.45   ┆ 8.47  │
+│ LTFM ┆ ARR       ┆ 1 frozen precip / freezing fog ┆ 3601   ┆ 13.31 ┆ 12.02  ┆ 20.98 │
+│ LTFM ┆ ARR       ┆ 2 cold <=3C, no frozen wx      ┆ 5160   ┆ 13.18 ┆ 11.88  ┆ 21.13 │
+│ LTFM ┆ ARR       ┆ 3 dry >3C                      ┆ 241518 ┆ 13.75 ┆ 12.88  ┆ 21.87 │
+│ LTFM ┆ ARR       ┆ 4 thunderstorm >3C             ┆ 540    ┆ 15.55 ┆ 14.85  ┆ 24.18 │
+│ LTFM ┆ ARR       ┆ 5 rain >3C                     ┆ 23061  ┆ 14.33 ┆ 13.08  ┆ 22.2  │
+│ EDDF ┆ DEP       ┆ 1 frozen precip / freezing fog ┆ 686    ┆ 21.26 ┆ 17.29  ┆ 40.08 │
+│ EDDF ┆ DEP       ┆ 2 cold <=3C, no frozen wx      ┆ 26545  ┆ 14.93 ┆ 13.83  ┆ 22.38 │
+│ EDDF ┆ DEP       ┆ 3 dry >3C                      ┆ 177560 ┆ 14.21 ┆ 13.9   ┆ 20.52 │
+│ EDDF ┆ DEP       ┆ 4 thunderstorm >3C             ┆ 560    ┆ 16.77 ┆ 15.31  ┆ 24.87 │
+│ EDDF ┆ DEP       ┆ 5 rain >3C                     ┆ 24786  ┆ 14.88 ┆ 14.38  ┆ 21.72 │
+│ EDDM ┆ DEP       ┆ 1 frozen precip / freezing fog ┆ 2508   ┆ 24.49 ┆ 23.93  ┆ 38.83 │
+│ EDDM ┆ DEP       ┆ 2 cold <=3C, no frozen wx      ┆ 31291  ┆ 14.91 ┆ 13.05  ┆ 23.95 │
+│ EDDM ┆ DEP       ┆ 3 dry >3C                      ┆ 111986 ┆ 12.9  ┆ 12.82  ┆ 17.17 │
+│ EDDM ┆ DEP       ┆ 4 thunderstorm >3C             ┆ 652    ┆ 19.36 ┆ 17.06  ┆ 29.02 │
+│ EDDM ┆ DEP       ┆ 5 rain >3C                     ┆ 20849  ┆ 13.37 ┆ 12.95  ┆ 18.13 │
+│ EDDM ┆ DEP       ┆ 9 unknown                      ┆ 46     ┆ 12.06 ┆ 11.84  ┆ 17.05 │
+│ EGLL ┆ DEP       ┆ 1 frozen precip / freezing fog ┆ 195    ┆ 26.77 ┆ 22.15  ┆ 42.98 │
+│ EGLL ┆ DEP       ┆ 2 cold <=3C, no frozen wx      ┆ 14744  ┆ 22.95 ┆ 21.02  ┆ 32.95 │
+│ EGLL ┆ DEP       ┆ 3 dry >3C                      ┆ 205576 ┆ 22.64 ┆ 21.98  ┆ 30.0  │
+│ EGLL ┆ DEP       ┆ 4 thunderstorm >3C             ┆ 219    ┆ 30.31 ┆ 29.07  ┆ 39.97 │
+│ EGLL ┆ DEP       ┆ 5 rain >3C                     ┆ 18805  ┆ 23.52 ┆ 22.93  ┆ 31.83 │
+│ EHAM ┆ DEP       ┆ 1 frozen precip / freezing fog ┆ 1917   ┆ 19.44 ┆ 14.52  ┆ 38.18 │
+│ EHAM ┆ DEP       ┆ 2 cold <=3C, no frozen wx      ┆ 22528  ┆ 15.08 ┆ 13.5   ┆ 23.2  │
+│ EHAM ┆ DEP       ┆ 3 dry >3C                      ┆ 188061 ┆ 12.89 ┆ 12.33  ┆ 19.03 │
+│ EHAM ┆ DEP       ┆ 4 thunderstorm >3C             ┆ 161    ┆ 12.73 ┆ 12.22  ┆ 18.05 │
+│ EHAM ┆ DEP       ┆ 5 rain >3C                     ┆ 35092  ┆ 12.53 ┆ 11.88  ┆ 18.57 │
+│ LEBL ┆ DEP       ┆ 2 cold <=3C, no frozen wx      ┆ 455    ┆ 14.21 ┆ 13.88  ┆ 19.53 │
+│ LEBL ┆ DEP       ┆ 3 dry >3C                      ┆ 166903 ┆ 15.86 ┆ 15.05  ┆ 22.45 │
+│ LEBL ┆ DEP       ┆ 4 thunderstorm >3C             ┆ 1263   ┆ 21.7  ┆ 19.73  ┆ 36.28 │
+│ LEBL ┆ DEP       ┆ 5 rain >3C                     ┆ 10993  ┆ 16.64 ┆ 15.6   ┆ 24.05 │
+│ LEBL ┆ DEP       ┆ 9 unknown                      ┆ 26     ┆ 12.63 ┆ 11.79  ┆ 16.6  │
+│ LEMD ┆ DEP       ┆ 1 frozen precip / freezing fog ┆ 11     ┆ 21.77 ┆ 21.03  ┆ 32.33 │
+│ LEMD ┆ DEP       ┆ 2 cold <=3C, no frozen wx      ┆ 9484   ┆ 17.56 ┆ 16.53  ┆ 25.28 │
+│ LEMD ┆ DEP       ┆ 3 dry >3C                      ┆ 189134 ┆ 16.82 ┆ 16.37  ┆ 23.2  │
+│ LEMD ┆ DEP       ┆ 4 thunderstorm >3C             ┆ 1379   ┆ 20.01 ┆ 18.65  ┆ 29.52 │
+│ LEMD ┆ DEP       ┆ 5 rain >3C                     ┆ 12211  ┆ 17.51 ┆ 16.85  ┆ 24.28 │
+│ LEMD ┆ DEP       ┆ 9 unknown                      ┆ 20     ┆ 18.41 ┆ 19.17  ┆ 24.7  │
+│ LFPG ┆ DEP       ┆ 1 frozen precip / freezing fog ┆ 936    ┆ 37.61 ┆ 35.8   ┆ 62.92 │
+│ LFPG ┆ DEP       ┆ 2 cold <=3C, no frozen wx      ┆ 21208  ┆ 20.03 ┆ 16.95  ┆ 34.1  │
+│ LFPG ┆ DEP       ┆ 3 dry >3C                      ┆ 199161 ┆ 16.55 ┆ 15.85  ┆ 23.12 │
+│ LFPG ┆ DEP       ┆ 4 thunderstorm >3C             ┆ 384    ┆ 20.1  ┆ 18.03  ┆ 31.18 │
+│ LFPG ┆ DEP       ┆ 5 rain >3C                     ┆ 17723  ┆ 17.18 ┆ 15.98  ┆ 24.87 │
+│ LIRF ┆ DEP       ┆ 2 cold <=3C, no frozen wx      ┆ 715    ┆ 17.68 ┆ 15.95  ┆ 23.83 │
+│ LIRF ┆ DEP       ┆ 3 dry >3C                      ┆ 151203 ┆ 19.42 ┆ 17.05  ┆ 28.07 │
+│ LIRF ┆ DEP       ┆ 4 thunderstorm >3C             ┆ 453    ┆ 28.8  ┆ 20.97  ┆ 51.17 │
+│ LIRF ┆ DEP       ┆ 5 rain >3C                     ┆ 8129   ┆ 20.64 ┆ 18.07  ┆ 30.17 │
+│ LIRF ┆ DEP       ┆ 9 unknown                      ┆ 69     ┆ 19.0  ┆ 17.0   ┆ 24.9  │
+│ LSZH ┆ DEP       ┆ 1 frozen precip / freezing fog ┆ 1119   ┆ 20.1  ┆ 17.02  ┆ 35.17 │
+│ LSZH ┆ DEP       ┆ 2 cold <=3C, no frozen wx      ┆ 22402  ┆ 13.09 ┆ 11.97  ┆ 20.75 │
+│ LSZH ┆ DEP       ┆ 3 dry >3C                      ┆ 90560  ┆ 12.15 ┆ 11.83  ┆ 17.5  │
+│ LSZH ┆ DEP       ┆ 4 thunderstorm >3C             ┆ 740    ┆ 14.84 ┆ 13.56  ┆ 21.03 │
+│ LSZH ┆ DEP       ┆ 5 rain >3C                     ┆ 19410  ┆ 12.16 ┆ 11.85  ┆ 17.4  │
+│ LTFM ┆ DEP       ┆ 1 frozen precip / freezing fog ┆ 3528   ┆ 33.16 ┆ 21.95  ┆ 68.9  │
+│ LTFM ┆ DEP       ┆ 2 cold <=3C, no frozen wx      ┆ 6254   ┆ 20.15 ┆ 16.88  ┆ 34.1  │
+│ LTFM ┆ DEP       ┆ 3 dry >3C                      ┆ 239359 ┆ 17.24 ┆ 16.03  ┆ 24.83 │
+│ LTFM ┆ DEP       ┆ 4 thunderstorm >3C             ┆ 506    ┆ 26.06 ┆ 24.07  ┆ 41.8  │
+│ LTFM ┆ DEP       ┆ 5 rain >3C                     ┆ 23315  ┆ 17.43 ┆ 16.0   ┆ 25.0  │
+└──────┴───────────┴────────────────────────────────┴────────┴───────┴────────┴───────┘
+=== frozen-wx minus dry>3C (minutes) ===
+shape: (20, 13)
+┌──────┬───────────┬──────┬────────┬──────────┬──────────┬────────┬────────┬───────┬───────┬──────────┬────────┬───────┐
+│ APT  ┆ PHASE_mvt ┆ N_1  ┆ N_3    ┆ median_1 ┆ median_3 ┆ mean_1 ┆ mean_3 ┆ p90_1 ┆ p90_3 ┆ d_median ┆ d_mean ┆ d_p90 │
+│ ---  ┆ ---       ┆ ---  ┆ ---    ┆ ---      ┆ ---      ┆ ---    ┆ ---    ┆ ---   ┆ ---   ┆ ---      ┆ ---    ┆ ---   │
+│ str  ┆ str       ┆ u32  ┆ u32    ┆ f64      ┆ f64      ┆ f64    ┆ f64    ┆ f64   ┆ f64   ┆ f64      ┆ f64    ┆ f64   │
+╞══════╪═══════════╪══════╪════════╪══════════╪══════════╪════════╪════════╪═══════╪═══════╪══════════╪════════╪═══════╡
+│ LEBL ┆ DEP       ┆ null ┆ 166903 ┆ null     ┆ 15.05    ┆ null   ┆ 15.86  ┆ null  ┆ 22.45 ┆ null     ┆ null   ┆ null  │
+│ LIRF ┆ DEP       ┆ null ┆ 151203 ┆ null     ┆ 17.05    ┆ null   ┆ 19.42  ┆ null  ┆ 28.07 ┆ null     ┆ null   ┆ null  │
+│ LFPG ┆ DEP       ┆ 936  ┆ 199161 ┆ 35.8     ┆ 15.85    ┆ 37.61  ┆ 16.55  ┆ 62.92 ┆ 23.12 ┆ 19.95    ┆ 21.06  ┆ 39.8  │
+│ EDDM ┆ DEP       ┆ 2508 ┆ 111986 ┆ 23.93    ┆ 12.82    ┆ 24.49  ┆ 12.9   ┆ 38.83 ┆ 17.17 ┆ 11.11    ┆ 11.59  ┆ 21.66 │
+│ LTFM ┆ DEP       ┆ 3528 ┆ 239359 ┆ 21.95    ┆ 16.03    ┆ 33.16  ┆ 17.24  ┆ 68.9  ┆ 24.83 ┆ 5.92     ┆ 15.92  ┆ 44.07 │
+│ LSZH ┆ DEP       ┆ 1119 ┆ 90560  ┆ 17.02    ┆ 11.83    ┆ 20.1   ┆ 12.15  ┆ 35.17 ┆ 17.5  ┆ 5.19     ┆ 7.95   ┆ 17.67 │
+│ LEMD ┆ DEP       ┆ 11   ┆ 189134 ┆ 21.03    ┆ 16.37    ┆ 21.77  ┆ 16.82  ┆ 32.33 ┆ 23.2  ┆ 4.66     ┆ 4.95   ┆ 9.13  │
+│ EDDF ┆ DEP       ┆ 686  ┆ 177560 ┆ 17.29    ┆ 13.9     ┆ 21.26  ┆ 14.21  ┆ 40.08 ┆ 20.52 ┆ 3.39     ┆ 7.05   ┆ 19.56 │
+│ EHAM ┆ DEP       ┆ 1917 ┆ 188061 ┆ 14.52    ┆ 12.33    ┆ 19.44  ┆ 12.89  ┆ 38.18 ┆ 19.03 ┆ 2.19     ┆ 6.55   ┆ 19.15 │
+│ EGLL ┆ DEP       ┆ 195  ┆ 205576 ┆ 22.15    ┆ 21.98    ┆ 26.77  ┆ 22.64  ┆ 42.98 ┆ 30.0  ┆ 0.17     ┆ 4.13   ┆ 12.98 │
+│ LEBL ┆ ARR       ┆ null ┆ 166234 ┆ null     ┆ 3.42     ┆ null   ┆ 3.9    ┆ null  ┆ 6.4   ┆ null     ┆ null   ┆ null  │
+│ LIRF ┆ ARR       ┆ null ┆ 150900 ┆ null     ┆ 9.87     ┆ null   ┆ 10.76  ┆ null  ┆ 15.8  ┆ null     ┆ null   ┆ null  │
+│ EHAM ┆ ARR       ┆ 1878 ┆ 186753 ┆ 9.52     ┆ 7.2      ┆ 9.87   ┆ 8.15   ┆ 16.05 ┆ 14.28 ┆ 2.32     ┆ 1.72   ┆ 1.77  │
+│ LFPG ┆ ARR       ┆ 1188 ┆ 196871 ┆ 10.98    ┆ 9.05     ┆ 12.05  ┆ 9.73   ┆ 17.87 ┆ 13.93 ┆ 1.93     ┆ 2.32   ┆ 3.94  │
+│ EGLL ┆ ARR       ┆ 220  ┆ 203803 ┆ 9.02     ┆ 7.12     ┆ 13.07  ┆ 8.68   ┆ 24.98 ┆ 14.12 ┆ 1.9      ┆ 4.39   ┆ 10.86 │
+│ EDDF ┆ ARR       ┆ 884  ┆ 174687 ┆ 10.09    ┆ 8.97     ┆ 11.45  ┆ 9.65   ┆ 17.4  ┆ 14.02 ┆ 1.12     ┆ 1.8    ┆ 3.38  │
+│ LSZH ┆ ARR       ┆ 1248 ┆ 91131  ┆ 6.11     ┆ 5.48     ┆ 6.96   ┆ 5.86   ┆ 9.73  ┆ 8.45  ┆ 0.63     ┆ 1.1    ┆ 1.28  │
+│ EDDM ┆ ARR       ┆ 2592 ┆ 111214 ┆ 6.08     ┆ 5.92     ┆ 6.74   ┆ 6.12   ┆ 9.93  ┆ 8.85  ┆ 0.16     ┆ 0.62   ┆ 1.08  │
+│ LTFM ┆ ARR       ┆ 3601 ┆ 241518 ┆ 12.02    ┆ 12.88    ┆ 13.31  ┆ 13.75  ┆ 20.98 ┆ 21.87 ┆ -0.86    ┆ -0.44  ┆ -0.89 │
+│ LEMD ┆ ARR       ┆ 13   ┆ 188266 ┆ 4.95     ┆ 8.23     ┆ 6.7    ┆ 8.74   ┆ 11.78 ┆ 14.55 ┆ -3.28    ┆ -2.04  ┆ -2.77 │
+└──────┴───────────┴──────┴────────┴──────────┴──────────┴────────┴────────┴───────┴───────┴──────────┴────────┴───────┘
+=== pooled 10 airports ===
+shape: (6, 6)
+┌───────────┬────────────────────────────────┬─────────┬───────┬────────┬───────┐
+│ PHASE_mvt ┆ wx                             ┆ N       ┆ mean  ┆ median ┆ p90   │
+│ ---       ┆ ---                            ┆ ---     ┆ ---   ┆ ---    ┆ ---   │
+│ str       ┆ str                            ┆ u32     ┆ f64   ┆ f64    ┆ f64   │
+╞═══════════╪════════════════════════════════╪═════════╪═══════╪════════╪═══════╡
+│ ARR       ┆ 1 frozen precip / freezing fog ┆ 11624   ┆ 10.33 ┆ 9.07   ┆ 17.07 │
+│ ARR       ┆ 2 cold <=3C, no frozen wx      ┆ 160933  ┆ 8.26  ┆ 7.17   ┆ 13.27 │
+│ ARR       ┆ 3 dry >3C                      ┆ 1711377 ┆ 8.97  ┆ 8.03   ┆ 15.1  │
+│ DEP       ┆ 1 frozen precip / freezing fog ┆ 10900   ┆ 26.92 ┆ 20.95  ┆ 51.07 │
+│ DEP       ┆ 2 cold <=3C, no frozen wx      ┆ 155626  ┆ 16.52 ┆ 14.72  ┆ 26.2  │
+│ DEP       ┆ 3 dry >3C                      ┆ 1719503 ┆ 16.48 ┆ 15.4   ┆ 24.15 │
+└───────────┴────────────────────────────────┴─────────┴───────┴────────┴───────┘
+LTFM 2025-02-23 METARs: 48 min T: -3.0 max T: 2.0 wx: {'-SHSN': 36, 'VCSH': 2, 'TSSN': 1}
+LTFM 2025-02-19 METARs: 48 min T: 0.0 max T: 5.0 wx: {'-SHSN': 22, 'SHSN': 3, '-SHSNRA': 1, '-SHRA': 1}
+EDDM 2025-12-24 METARs: 48 min T: 0.0 max T: 2.0 wx: {'-SN': 5, '-SN BR': 4, 'BR': 1, '-SHSN': 1, '-SNRA': 1}
+LIRF 2025-07-13 METARs: 48 min T: 19.0 max T: 27.0 wx: {'-SHRA': 5, 'TSRA': 3, '-RA': 3, '+TSRA': 2, 'VCSH': 2, 'SHRA': 1}
+LFPG 2025-01-17 METARs: 48 min T: -1.0 max T: 4.0 wx: {'BR': 13, 'FZFG': 13, 'FG': 13, 'BCFG': 2, 'BCFG BR': 1}
+EDDM 2025-01-15 METARs: 48 min T: -4.0 max T: 1.0 wx: {'BR': 17, '-SN BR': 8, '-DZ BR': 3, '-FZRADZ BR': 2, 'SN BR': 2, 'DZ BR': 2}
+LIRF 2025-07-28 METARs: 48 min T: 19.0 max T: 27.0 wx: {'VCSH': 3, '-SHRA': 2, 'VCTS BLDU': 1, 'VCTS': 1}
+EGLL 2025-09-01 METARs: 48 min T: 13.0 max T: 20.0 wx: {'-RA': 5, '-SHRA': 1, 'SHRA': 1, 'VCSH': 1}
+chart: airports with >=150 departures in frozen-wx class: ['EGLL', 'EHAM', 'EDDF', 'LSZH', 'LTFM', 'EDDM', 'LFPG']

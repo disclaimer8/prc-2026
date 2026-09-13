@@ -1,0 +1,53 @@
+rows with flight info: 4811570 of 4857331
+ADES_flt != ADES_FILED_flt: 4913
+ADES_mvt != ADES_flt: 34060
+ADEP_mvt != ADEP_flt: 28814
+
+Diverted by phase:
+shape: (2, 2)
+┌───────────┬──────┐
+│ PHASE_mvt ┆ len  │
+│ ---       ┆ ---  │
+│ str       ┆ u32  │
+╞═══════════╪══════╡
+│ ARR       ┆ 2433 │
+│ DEP       ┆ 2480 │
+└───────────┴──────┘
+ARR rows diverted: is hub == ADES_flt? 2433  hub == ADES_FILED? 0
+DEP rows diverted: return-to-origin (ADES_flt==ADEP_flt): 531
+DEP rows diverted: ADES_mvt equals ADES_FILED (airport report still shows filed dest): 1699  equals ADES_flt: 746
+ARR diverted rows: ADES_FILED is one of hubs (i.e. hub-to-hub diversion):
+220
+shape: (25, 9)
+┌──────┬───────────┬──────────┬──────────┬──────────┬──────────┬────────────┬───────────┬──────────┐
+│ hub  ┆ PHASE_mvt ┆ ADEP_mvt ┆ ADES_mvt ┆ ADEP_flt ┆ ADES_flt ┆ ADES_FILED ┆ FLIGHT_TY ┆ src      │
+│ ---  ┆ ---       ┆ ---      ┆ ---      ┆ ---      ┆ ---      ┆ _flt       ┆ PE_flt    ┆ ---      │
+│ str  ┆ str       ┆ str      ┆ str      ┆ str      ┆ str      ┆ ---        ┆ ---       ┆ str      │
+│      ┆           ┆          ┆          ┆          ┆          ┆ str        ┆ str       ┆          │
+╞══════╪═══════════╪══════════╪══════════╪══════════╪══════════╪════════════╪═══════════╪══════════╡
+│ LTFM ┆ DEP       ┆ LTFM     ┆ DAAG     ┆ LTFM     ┆ DABC     ┆ DAAG       ┆ S         ┆ training │
+│ EGLL ┆ DEP       ┆ EGLL     ┆ EPKK     ┆ EGLL     ┆ EPWA     ┆ EPKK       ┆ S         ┆ training │
+│ EHAM ┆ DEP       ┆ EHAM     ┆ EDDG     ┆ EHAM     ┆ EDDG     ┆ EDDV       ┆ S         ┆ training │
+│ EGLL ┆ DEP       ┆ EGLL     ┆ EGPH     ┆ EGLL     ┆ EGNT     ┆ EGPH       ┆ S         ┆ training │
+│ LTFM ┆ ARR       ┆ LBWN     ┆ LTFM     ┆ LTFM     ┆ LTFM     ┆ LBWN       ┆ S         ┆ training │
+│ EDDM ┆ DEP       ┆ EDDM     ┆ EDDM     ┆ EDDM     ┆ EDDM     ┆ EHAM       ┆ S         ┆ training │
+│ LTFM ┆ ARR       ┆ EGKK     ┆ LTFM     ┆ EGKK     ┆ LTFM     ┆ LTAI       ┆ S         ┆ ranking  │
+│ EDDF ┆ DEP       ┆ EDDF     ┆ KORD     ┆ EDDF     ┆ EDDF     ┆ KORD       ┆ S         ┆ training │
+│ EDDM ┆ DEP       ┆ EDDM     ┆ LIRN     ┆ EDDM     ┆ LIRF     ┆ LIRN       ┆ S         ┆ training │
+│ LTFM ┆ ARR       ┆ OSDI     ┆ LTFM     ┆ LTFM     ┆ LTFM     ┆ OSDI       ┆ S         ┆ training │
+│ LTFM ┆ DEP       ┆ LTFM     ┆ EHAM     ┆ LTFM     ┆ LTFM     ┆ EHAM       ┆ S         ┆ ranking  │
+│ EGLL ┆ DEP       ┆ EGLL     ┆ OMAA     ┆ EGLL     ┆ OBBI     ┆ OMAA       ┆ S         ┆ training │
+│ LSZH ┆ DEP       ┆ LSZH     ┆ LGTS     ┆ LSZH     ┆ LGAV     ┆ LGTS       ┆ N         ┆ training │
+│ EDDF ┆ ARR       ┆ EGGW     ┆ EDDF     ┆ EGGW     ┆ EDDF     ┆ EDFE       ┆ N         ┆ training │
+│ EDDF ┆ ARR       ┆ LKPR     ┆ EDDF     ┆ LKPR     ┆ EDDF     ┆ EDFE       ┆ G         ┆ training │
+│ EHAM ┆ DEP       ┆ EHAM     ┆ EHAM     ┆ EHAM     ┆ EHAM     ┆ EHRD       ┆ G         ┆ training │
+│ LIRF ┆ ARR       ┆ LTFM     ┆ LIRF     ┆ LTFM     ┆ LIRF     ┆ LIRN       ┆ S         ┆ training │
+│ EGLL ┆ ARR       ┆ KCLT     ┆ EGLL     ┆ KCLT     ┆ EGLL     ┆ EDDM       ┆ S         ┆ training │
+│ EGLL ┆ DEP       ┆ EGLL     ┆ EGAC     ┆ EGLL     ┆ EGAA     ┆ EGAC       ┆ S         ┆ ranking  │
+│ LTFM ┆ DEP       ┆ LTFM     ┆ OAKB     ┆ LTFM     ┆ LTCE     ┆ OAKB       ┆ S         ┆ training │
+│ EDDM ┆ ARR       ┆ LATI     ┆ EDDM     ┆ LATI     ┆ EDDM     ┆ EGGW       ┆ S         ┆ training │
+│ LSZH ┆ ARR       ┆ LSZH     ┆ LSZH     ┆ LSZH     ┆ LSZH     ┆ LWSK       ┆ S         ┆ training │
+│ EHAM ┆ DEP       ┆ EHAM     ┆ EGNM     ┆ EHAM     ┆ EGNM     ┆ EGNT       ┆ S         ┆ training │
+│ EHAM ┆ DEP       ┆ EHAM     ┆ EGPH     ┆ EHAM     ┆ EGSS     ┆ EGWU       ┆ N         ┆ training │
+│ LTFM ┆ DEP       ┆ LTFM     ┆ LTAC     ┆ LTFM     ┆ LTFM     ┆ LTAC       ┆ S         ┆ training │
+└──────┴───────────┴──────────┴──────────┴──────────┴──────────┴────────────┴───────────┴──────────┘

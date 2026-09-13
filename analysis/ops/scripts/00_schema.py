@@ -1,0 +1,12 @@
+import polars as pl, glob
+files = sorted(glob.glob("data/prc-2026-datasets/training_2025-*.parquet"))
+lf = pl.scan_parquet(files)
+print(lf.collect_schema())
+df = pl.read_parquet(files[0], n_rows=5)
+pl.Config.set_tbl_cols(100); pl.Config.set_fmt_str_lengths(40)
+for r in df.head(3).iter_rows(named=True): print(r)
+print("rows total:", lf.select(pl.len()).collect().item())
+r = pl.scan_parquet("data/prc-2026-datasets/ranking.parquet")
+print(r.collect_schema()); print("ranking rows", r.select(pl.len()).collect().item())
+s = pl.scan_parquet("data/prc-2026-datasets/submitting.parquet")
+print(s.collect_schema()); print("submitting rows", s.select(pl.len()).collect().item())

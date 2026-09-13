@@ -1,0 +1,11 @@
+EDDF    17614 lines
+EDDM    17615 lines
+EGLL    17614 lines
+EHAM    17568 lines
+LEBL    17872 lines
+LEMD    17864 lines
+LFPG    17634 lines
+LIRF    17562 lines
+LSZH    17616 lines
+LTFM        0 lines
+LTFM retry:    17611 lines

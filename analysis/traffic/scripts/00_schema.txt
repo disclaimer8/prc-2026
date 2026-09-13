@@ -1,0 +1,135 @@
+training file data/prc-2026-datasets/training_2025-07-01_2025-08-01.parquet (381161, 30)
+MVT_ID_mvt               Float64                      nulls=      0 (0.0%) nuniq= 381161 ex=[191678751.0, 191700880.0, 191700875.0]
+FLIGHT_ID_mvt            Float64                      nulls=   4783 (1.3%) nuniq= 349865 ex=[287027632.0, 287027253.0, 287026131.0]
+FLIGHT_mvt               String                       nulls=     34 (0.0%) nuniq=  23582 ex=['LH400', 'LH077', 'EN8911']
+FLIGHT_RULE_mvt          String                       nulls=    215 (0.1%) nuniq=      3 ex=['I', 'I', 'I']
+ADEP_mvt                 String                       nulls=     11 (0.0%) nuniq=    946 ex=['EDDF', 'EDDL', 'LFLL']
+ADES_mvt                 String                       nulls=      8 (0.0%) nuniq=    961 ex=['KJFK', 'EDDF', 'EDDF']
+PHASE_mvt                String                       nulls=      0 (0.0%) nuniq=      2 ex=['DEP', 'ARR', 'ARR']
+MVT_TIME_UTC_mvt         Datetime(time_unit='us', time_zone='UTC') nulls=      0 (0.0%) nuniq= 325553 ex=[datetime.datetime(2025, 7, 3, 9, 27, 14, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 9, 27, 57, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 9, 30, 9, tzinfo=zoneinfo.ZoneInfo(key='UTC'))]
+BLOCK_TIME_UTC_mvt       Datetime(time_unit='us', time_zone='UTC') nulls=      0 (0.0%) nuniq= 302045 ex=[datetime.datetime(2025, 7, 3, 9, 16, 23, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 9, 35, 39, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 9, 36, 44, tzinfo=zoneinfo.ZoneInfo(key='UTC'))]
+SCHED_TIME_UTC_mvt       Datetime(time_unit='us', time_zone='UTC') nulls=      0 (0.0%) nuniq=   9337 ex=[datetime.datetime(2025, 7, 3, 8, 55, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 9, 35, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 9, 35, tzinfo=zoneinfo.ZoneInfo(key='UTC'))]
+AIRCRAFT_TYPE_mvt        String                       nulls=    359 (0.1%) nuniq=    191 ex=['B744', 'CRJX', 'E195']
+RUNWAY_mvt               String                       nulls=      0 (0.0%) nuniq=     52 ex=['25C', '25C', '25L']
+STAND_mvt                String                       nulls=     12 (0.0%) nuniq=   1616 ex=['A23', 'V121', 'V108']
+TAXITIME_SEC_mvt         Int32                        nulls=      0 (0.0%) nuniq=   3490 ex=[651, 462, 395]
+LOBT_flt                 Datetime(time_unit='us', time_zone='UTC') nulls=   5430 (1.4%) nuniq=  32433 ex=[datetime.datetime(2025, 7, 3, 8, 55, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 8, 45, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 8, 10, tzinfo=zoneinfo.ZoneInfo(key='UTC'))]
+CALLSIGN_flt             String                       nulls=   5430 (1.4%) nuniq=  22767 ex=['DLH400', 'DLH8XU', 'DLA89Y']
+ADEP_flt                 String                       nulls=   5430 (1.4%) nuniq=    910 ex=['EDDF', 'EDDL', 'LFLL']
+ADES_flt                 String                       nulls=   5430 (1.4%) nuniq=    907 ex=['KJFK', 'EDDF', 'EDDF']
+ADES_FILED_flt           String                       nulls=   5430 (1.4%) nuniq=    906 ex=['KJFK', 'EDDF', 'EDDF']
+MARKET_SEGMENT_flt       String                       nulls=   5430 (1.4%) nuniq=      9 ex=['Mainline', 'Regional', 'Regional']
+IOBT_flt                 Datetime(time_unit='us', time_zone='UTC') nulls=   5430 (1.4%) nuniq=  23005 ex=[datetime.datetime(2025, 7, 3, 8, 55, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 8, 45, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 8, 10, tzinfo=zoneinfo.ZoneInfo(key='UTC'))]
+FLIGHT_RULE_flt          String                       nulls=   5442 (1.4%) nuniq=      5 ex=['I', 'I', 'I']
+FLIGHT_TYPE_flt          String                       nulls=   5430 (1.4%) nuniq=      6 ex=['S', 'S', 'S']
+AIRCRAFT_TYPE_flt        String                       nulls=   5430 (1.4%) nuniq=    176 ex=['B744', 'CRJX', 'E195']
+WK_TBL_CAT_flt           String                       nulls=   5442 (1.4%) nuniq=      5 ex=['H', 'M', 'M']
+AIRCRAFT_OPERATOR_flt    String                       nulls=   5430 (1.4%) nuniq=    515 ex=['11dca3faf5500fdddbb17189b5d18bcdc763244fcc850c62a7f4a597bb9a486f', '11dca3faf5500fdddbb17189b5d18bcdc763244fcc850c62a7f4a597bb9a486f', 'af8b67cf63bb6f7021b7845e4f8207a03dea73c99563cf1dd37e6227df6d570f']
+EOBT_1_flt               Datetime(time_unit='us', time_zone='UTC') nulls=   5430 (1.4%) nuniq=  40603 ex=[datetime.datetime(2025, 7, 3, 9, 5, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 8, 50, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 8, 9, tzinfo=zoneinfo.ZoneInfo(key='UTC'))]
+ARVT_1_flt               Datetime(time_unit='us', time_zone='UTC') nulls=   5430 (1.4%) nuniq= 324248 ex=[datetime.datetime(2025, 7, 3, 17, 19, 40, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 9, 41, 28, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 9, 35, 32, tzinfo=zoneinfo.ZoneInfo(key='UTC'))]
+AOBT_3_flt               Datetime(time_unit='us', time_zone='UTC') nulls=   5430 (1.4%) nuniq=  64592 ex=[datetime.datetime(2025, 7, 3, 9, 9, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 8, 50, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 8, 18, tzinfo=zoneinfo.ZoneInfo(key='UTC'))]
+ARVT_3_flt               Datetime(time_unit='us', time_zone='UTC') nulls=   5430 (1.4%) nuniq= 244022 ex=[datetime.datetime(2025, 7, 3, 17, 24, 30, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 9, 28, 16, tzinfo=zoneinfo.ZoneInfo(key='UTC')), datetime.datetime(2025, 7, 3, 9, 31, 2, tzinfo=zoneinfo.ZoneInfo(key='UTC'))]
+shape: (2, 2)
+┌───────────┬────────┐
+│ PHASE_mvt ┆ count  │
+│ ---       ┆ ---    │
+│ str       ┆ u32    │
+╞═══════════╪════════╡
+│ DEP       ┆ 190713 │
+│ ARR       ┆ 190448 │
+└───────────┴────────┘
+shape: (3, 2)
+┌─────────────────┬────────┐
+│ FLIGHT_RULE_mvt ┆ count  │
+│ ---             ┆ ---    │
+│ str             ┆ u32    │
+╞═════════════════╪════════╡
+│ I               ┆ 380357 │
+│ V               ┆ 589    │
+│ null            ┆ 215    │
+└─────────────────┴────────┘
+shape: (9, 2)
+┌────────────────────┬────────┐
+│ MARKET_SEGMENT_flt ┆ count  │
+│ ---                ┆ ---    │
+│ str                ┆ u32    │
+╞════════════════════╪════════╡
+│ Mainline           ┆ 240454 │
+│ Lowcost            ┆ 74335  │
+│ Regional           ┆ 37988  │
+│ Cargo              ┆ 10264  │
+│ Business           ┆ 8526   │
+│ null               ┆ 5430   │
+│ Non-Scheduled      ┆ 2894   │
+│ Other              ┆ 1154   │
+│ Military           ┆ 116    │
+└────────────────────┴────────┘
+shape: (6, 2)
+┌─────────────────┬────────┐
+│ FLIGHT_TYPE_flt ┆ count  │
+│ ---             ┆ ---    │
+│ str             ┆ u32    │
+╞═════════════════╪════════╡
+│ S               ┆ 361631 │
+│ N               ┆ 10191  │
+│ null            ┆ 5430   │
+│ G               ┆ 1930   │
+│ X               ┆ 1878   │
+│ M               ┆ 101    │
+└─────────────────┴────────┘
+shape: (5, 2)
+┌────────────────┬────────┐
+│ WK_TBL_CAT_flt ┆ count  │
+│ ---            ┆ ---    │
+│ str            ┆ u32    │
+╞════════════════╪════════╡
+│ M              ┆ 294086 │
+│ H              ┆ 77183  │
+│ null           ┆ 5442   │
+│ J              ┆ 2598   │
+│ L              ┆ 1852   │
+└────────────────┴────────┘
+shape: (5, 2)
+┌─────────────────┬────────┐
+│ FLIGHT_RULE_flt ┆ count  │
+│ ---             ┆ ---    │
+│ str             ┆ u32    │
+╞═════════════════╪════════╡
+│ I               ┆ 375536 │
+│ null            ┆ 5442   │
+│ Y               ┆ 108    │
+│ Z               ┆ 74     │
+│ V               ┆ 1      │
+└─────────────────┴────────┘
+ranking (689534, 30) True
+MVT_ID_mvt               nulls=0.0%
+FLIGHT_ID_mvt            nulls=1.0%
+FLIGHT_mvt               nulls=0.0%
+FLIGHT_RULE_mvt          nulls=0.0%
+ADEP_mvt                 nulls=0.0%
+ADES_mvt                 nulls=0.0%
+PHASE_mvt                nulls=0.0%
+MVT_TIME_UTC_mvt         nulls=0.0%
+BLOCK_TIME_UTC_mvt       nulls=50.0%
+SCHED_TIME_UTC_mvt       nulls=0.0%
+AIRCRAFT_TYPE_mvt        nulls=0.1%
+RUNWAY_mvt               nulls=0.0%
+STAND_mvt                nulls=0.0%
+TAXITIME_SEC_mvt         nulls=50.0%
+LOBT_flt                 nulls=1.1%
+CALLSIGN_flt             nulls=1.1%
+ADEP_flt                 nulls=1.1%
+ADES_flt                 nulls=1.1%
+ADES_FILED_flt           nulls=1.1%
+MARKET_SEGMENT_flt       nulls=1.1%
+IOBT_flt                 nulls=1.1%
+FLIGHT_RULE_flt          nulls=1.1%
+FLIGHT_TYPE_flt          nulls=1.1%
+AIRCRAFT_TYPE_flt        nulls=1.1%
+WK_TBL_CAT_flt           nulls=1.1%
+AIRCRAFT_OPERATOR_flt    nulls=1.1%
+EOBT_1_flt               nulls=1.1%
+ARVT_1_flt               nulls=1.1%
+AOBT_3_flt               nulls=1.1%
+ARVT_3_flt               nulls=1.1%
+submitting (344841, 2) ['MVT_ID_mvt', 'TAXITIME_SEC_mvt']

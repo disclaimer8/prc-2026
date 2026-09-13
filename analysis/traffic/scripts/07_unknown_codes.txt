@@ -1,0 +1,89 @@
+movements with counterpart code not in OurAirports: 14469 of 4857331
+shape: (15, 2)
+┌───────┬──────┐
+│ other ┆ len  │
+│ ---   ┆ ---  │
+│ str   ┆ u32  │
+╞═══════╪══════╡
+│ ETNB  ┆ 5626 │
+│ LSSB  ┆ 2413 │
+│ OKBK  ┆ 1871 │
+│ NTTT  ┆ 1307 │
+│ APPH  ┆ 811  │
+│ …     ┆ …    │
+│ ZGHK  ┆ 99   │
+│ VGZR  ┆ 36   │
+│ SYTM  ┆ 28   │
+│ LSXA  ┆ 25   │
+│ LSSS  ┆ 18   │
+└───────┴──────┘
+
+ETNB: n=5626
+ by hub: [{'hub': 'EGLL', 'len': 5626}]
+ by month: [{'month': '2025-01', 'len': 414}, {'month': '2025-02', 'len': 400}, {'month': '2025-03', 'len': 398}, {'month': '2025-04', 'len': 391}, {'month': '2025-05', 'len': 398}, {'month': '2025-06', 'len': 368}, {'month': '2025-07', 'len': 367}, {'month': '2025-08', 'len': 362}, {'month': '2025-09', 'len': 424}, {'month': '2025-10', 'len': 478}, {'month': '2025-11', 'len': 420}, {'month': '2025-12', 'len': 440}, {'month': '2026-01', 'len': 374}, {'month': '2026-07', 'len': 392}]
+ by segment: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 5503}, {'MARKET_SEGMENT_flt': 'Lowcost', 'len': 104}, {'MARKET_SEGMENT_flt': 'Other', 'len': 11}, {'MARKET_SEGMENT_flt': None, 'len': 8}]
+ by type: [{'AIRCRAFT_TYPE_mvt': 'A320', 'len': 2145}, {'AIRCRAFT_TYPE_mvt': 'A20N', 'len': 1530}, {'AIRCRAFT_TYPE_mvt': 'A319', 'len': 1266}, {'AIRCRAFT_TYPE_mvt': 'A21N', 'len': 684}]
+ flt ADEP/ADES pairs: [{'ADEP_flt': 'EDDB', 'ADES_flt': 'EGLL', 'len': 2813}, {'ADEP_flt': 'EGLL', 'ADES_flt': 'EDDB', 'len': 2804}, {'ADEP_flt': None, 'ADES_flt': None, 'len': 8}, {'ADEP_flt': 'EGLL', 'ADES_flt': 'EDDH', 'len': 1}]
+
+LSSB: n=2413
+ by hub: [{'hub': 'LFPG', 'len': 2413}]
+ by month: [{'month': '2025-01', 'len': 138}, {'month': '2025-02', 'len': 146}, {'month': '2025-03', 'len': 185}, {'month': '2025-04', 'len': 178}, {'month': '2025-05', 'len': 172}, {'month': '2025-06', 'len': 173}, {'month': '2025-07', 'len': 188}, {'month': '2025-08', 'len': 181}, {'month': '2025-09', 'len': 174}, {'month': '2025-10', 'len': 178}, {'month': '2025-11', 'len': 177}, {'month': '2025-12', 'len': 188}, {'month': '2026-01', 'len': 164}, {'month': '2026-07', 'len': 171}]
+ by segment: [{'MARKET_SEGMENT_flt': 'Regional', 'len': 1456}, {'MARKET_SEGMENT_flt': 'Cargo', 'len': 913}, {'MARKET_SEGMENT_flt': None, 'len': 30}, {'MARKET_SEGMENT_flt': 'Lowcost', 'len': 7}]
+ by type: [{'AIRCRAFT_TYPE_mvt': 'E190', 'len': 796}, {'AIRCRAFT_TYPE_mvt': 'B738', 'len': 747}, {'AIRCRAFT_TYPE_mvt': 'E170', 'len': 694}, {'AIRCRAFT_TYPE_mvt': 'B752', 'len': 153}]
+ flt ADEP/ADES pairs: [{'ADEP_flt': 'LFSB', 'ADES_flt': 'LFPG', 'len': 1205}, {'ADEP_flt': 'LFPG', 'ADES_flt': 'LFSB', 'len': 1177}, {'ADEP_flt': None, 'ADES_flt': None, 'len': 30}, {'ADEP_flt': 'LFPG', 'ADES_flt': 'LFPO', 'len': 1}]
+
+OKBK: n=1871
+ by hub: [{'hub': 'EGLL', 'len': 1865}, {'hub': 'LSZH', 'len': 6}]
+ by month: [{'month': '2025-01', 'len': 177}, {'month': '2025-02', 'len': 160}, {'month': '2025-03', 'len': 146}, {'month': '2025-04', 'len': 138}, {'month': '2025-05', 'len': 140}, {'month': '2025-06', 'len': 138}, {'month': '2025-07', 'len': 142}, {'month': '2025-08', 'len': 142}, {'month': '2025-09', 'len': 138}, {'month': '2025-10', 'len': 130}, {'month': '2025-11', 'len': 96}, {'month': '2025-12', 'len': 104}, {'month': '2026-01', 'len': 106}, {'month': '2026-07', 'len': 114}]
+ by segment: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 1857}, {'MARKET_SEGMENT_flt': None, 'len': 7}, {'MARKET_SEGMENT_flt': 'Business', 'len': 4}, {'MARKET_SEGMENT_flt': 'Other', 'len': 3}]
+ by type: [{'AIRCRAFT_TYPE_mvt': 'B77W', 'len': 1642}, {'AIRCRAFT_TYPE_mvt': 'B788', 'len': 103}, {'AIRCRAFT_TYPE_mvt': 'B789', 'len': 40}, {'AIRCRAFT_TYPE_mvt': 'A338', 'len': 36}]
+ flt ADEP/ADES pairs: [{'ADEP_flt': 'OKKK', 'ADES_flt': 'EGLL', 'len': 933}, {'ADEP_flt': 'EGLL', 'ADES_flt': 'OKKK', 'len': 924}, {'ADEP_flt': None, 'ADES_flt': None, 'len': 7}, {'ADEP_flt': 'OKKK', 'ADES_flt': 'LSZH', 'len': 3}]
+
+NTTT: n=1307
+ by hub: [{'hub': 'LFPG', 'len': 1307}]
+ by month: [{'month': '2025-01', 'len': 65}, {'month': '2025-02', 'len': 53}, {'month': '2025-03', 'len': 78}, {'month': '2025-04', 'len': 90}, {'month': '2025-05', 'len': 97}, {'month': '2025-06', 'len': 106}, {'month': '2025-07', 'len': 124}, {'month': '2025-08', 'len': 124}, {'month': '2025-09', 'len': 103}, {'month': '2025-10', 'len': 87}, {'month': '2025-11', 'len': 79}, {'month': '2025-12', 'len': 98}, {'month': '2026-01', 'len': 79}, {'month': '2026-07', 'len': 124}]
+ by segment: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 1290}, {'MARKET_SEGMENT_flt': None, 'len': 16}, {'MARKET_SEGMENT_flt': 'Other', 'len': 1}]
+ by type: [{'AIRCRAFT_TYPE_mvt': 'A359', 'len': 667}, {'AIRCRAFT_TYPE_mvt': 'B789', 'len': 640}]
+ flt ADEP/ADES pairs: [{'ADEP_flt': 'LFPG', 'ADES_flt': 'KLAX', 'len': 649}, {'ADEP_flt': 'KLAX', 'ADES_flt': 'LFPG', 'len': 638}, {'ADEP_flt': None, 'ADES_flt': None, 'len': 16}, {'ADEP_flt': 'LFPG', 'ADES_flt': 'KSEA', 'len': 2}]
+
+APPH: n=811
+ by hub: [{'hub': 'EGLL', 'len': 811}]
+ by month: [{'month': '2025-01', 'len': 62}, {'month': '2025-02', 'len': 56}, {'month': '2025-03', 'len': 60}, {'month': '2025-04', 'len': 60}, {'month': '2025-05', 'len': 60}, {'month': '2025-06', 'len': 58}, {'month': '2025-07', 'len': 58}, {'month': '2025-08', 'len': 61}, {'month': '2025-09', 'len': 60}, {'month': '2025-10', 'len': 61}, {'month': '2025-11', 'len': 60}, {'month': '2025-12', 'len': 62}, {'month': '2026-01', 'len': 62}, {'month': '2026-07', 'len': 31}]
+ by segment: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 777}, {'MARKET_SEGMENT_flt': None, 'len': 19}, {'MARKET_SEGMENT_flt': 'Non-Scheduled', 'len': 15}]
+ by type: [{'AIRCRAFT_TYPE_mvt': 'B789', 'len': 811}]
+ flt ADEP/ADES pairs: [{'ADEP_flt': 'EGLL', 'ADES_flt': 'YPPH', 'len': 414}, {'ADEP_flt': 'YPPH', 'ADES_flt': 'EGLL', 'len': 378}, {'ADEP_flt': None, 'ADES_flt': None, 'len': 19}]
+
+KBSZ: n=679
+ by hub: [{'hub': 'LTFM', 'len': 679}]
+ by month: [{'month': '2025-08', 'len': 224}, {'month': '2025-09', 'len': 224}, {'month': '2025-10', 'len': 231}]
+ by segment: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 532}, {'MARKET_SEGMENT_flt': 'Cargo', 'len': 134}, {'MARKET_SEGMENT_flt': None, 'len': 7}, {'MARKET_SEGMENT_flt': 'Business', 'len': 6}]
+ by type: [{'AIRCRAFT_TYPE_mvt': 'A21N', 'len': 534}, {'AIRCRAFT_TYPE_mvt': 'A332', 'len': 119}, {'AIRCRAFT_TYPE_mvt': 'A306', 'len': 12}, {'AIRCRAFT_TYPE_mvt': 'A333', 'len': 7}]
+ flt ADEP/ADES pairs: [{'ADEP_flt': 'UCFM', 'ADES_flt': 'LTFM', 'len': 390}, {'ADEP_flt': 'LTFM', 'ADES_flt': 'UCFM', 'len': 282}, {'ADEP_flt': None, 'ADES_flt': None, 'len': 7}]
+
+WRRR: n=418
+ by hub: [{'hub': 'EHAM', 'len': 418}]
+ by month: [{'month': '2025-01', 'len': 31}, {'month': '2025-02', 'len': 28}, {'month': '2025-03', 'len': 30}, {'month': '2025-04', 'len': 30}, {'month': '2025-05', 'len': 31}, {'month': '2025-06', 'len': 28}, {'month': '2025-07', 'len': 30}, {'month': '2025-08', 'len': 31}, {'month': '2025-09', 'len': 30}, {'month': '2025-10', 'len': 29}, {'month': '2025-11', 'len': 28}, {'month': '2025-12', 'len': 31}, {'month': '2026-01', 'len': 30}, {'month': '2026-07', 'len': 31}]
+ by segment: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 403}, {'MARKET_SEGMENT_flt': None, 'len': 15}]
+ by type: [{'AIRCRAFT_TYPE_mvt': 'B77W', 'len': 389}, {'AIRCRAFT_TYPE_mvt': 'B772', 'len': 29}]
+ flt ADEP/ADES pairs: [{'ADEP_flt': 'WSSS', 'ADES_flt': 'EHAM', 'len': 402}, {'ADEP_flt': None, 'ADES_flt': None, 'len': 15}, {'ADEP_flt': 'LTAC', 'ADES_flt': 'EHAM', 'len': 1}]
+
+UTFF: n=396
+ by hub: [{'hub': 'LTFM', 'len': 396}]
+ by month: [{'month': '2025-01', 'len': 33}, {'month': '2025-02', 'len': 24}, {'month': '2025-03', 'len': 20}, {'month': '2025-04', 'len': 51}, {'month': '2025-05', 'len': 53}, {'month': '2025-06', 'len': 48}, {'month': '2025-07', 'len': 45}, {'month': '2025-08', 'len': 40}, {'month': '2025-09', 'len': 44}, {'month': '2025-10', 'len': 38}]
+ by segment: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 396}]
+ by type: [{'AIRCRAFT_TYPE_mvt': 'A320', 'len': 191}, {'AIRCRAFT_TYPE_mvt': 'B739', 'len': 133}, {'AIRCRAFT_TYPE_mvt': 'A21N', 'len': 70}, {'AIRCRAFT_TYPE_mvt': 'A20N', 'len': 2}]
+ flt ADEP/ADES pairs: [{'ADEP_flt': 'UTFF', 'ADES_flt': 'LTFM', 'len': 182}, {'ADEP_flt': 'LTFM', 'ADES_flt': 'UTFF', 'len': 178}, {'ADEP_flt': 'UZFF', 'ADES_flt': 'LTFM', 'len': 18}, {'ADEP_flt': 'LTFM', 'ADES_flt': 'UZFF', 'len': 17}]
+
+UGGG: n=385
+ by hub: [{'hub': 'EGLL', 'len': 385}]
+ by month: [{'month': '2025-03', 'len': 2}, {'month': '2025-04', 'len': 34}, {'month': '2025-05', 'len': 35}, {'month': '2025-06', 'len': 35}, {'month': '2025-07', 'len': 35}, {'month': '2025-08', 'len': 35}, {'month': '2025-09', 'len': 34}, {'month': '2025-10', 'len': 35}, {'month': '2025-11', 'len': 35}, {'month': '2025-12', 'len': 35}, {'month': '2026-01', 'len': 35}, {'month': '2026-07', 'len': 35}]
+ by segment: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 384}, {'MARKET_SEGMENT_flt': None, 'len': 1}]
+ by type: [{'AIRCRAFT_TYPE_mvt': 'A20N', 'len': 373}, {'AIRCRAFT_TYPE_mvt': 'A21N', 'len': 12}]
+ flt ADEP/ADES pairs: [{'ADEP_flt': 'EGLL', 'ADES_flt': 'UGTB', 'len': 192}, {'ADEP_flt': 'UGTB', 'ADES_flt': 'EGLL', 'len': 191}, {'ADEP_flt': None, 'ADES_flt': None, 'len': 1}, {'ADEP_flt': 'EBBR', 'ADES_flt': 'EGLL', 'len': 1}]
+
+ZZZZ: n=243
+ by hub: [{'hub': 'LSZH', 'len': 127}, {'hub': 'EHAM', 'len': 107}, {'hub': 'LIRF', 'len': 8}, {'hub': 'EDDM', 'len': 1}]
+ by month: [{'month': '2025-01', 'len': 13}, {'month': '2025-02', 'len': 19}, {'month': '2025-03', 'len': 17}, {'month': '2025-04', 'len': 19}, {'month': '2025-05', 'len': 10}, {'month': '2025-06', 'len': 34}, {'month': '2025-07', 'len': 19}, {'month': '2025-08', 'len': 13}, {'month': '2025-09', 'len': 10}, {'month': '2025-10', 'len': 11}, {'month': '2025-11', 'len': 23}, {'month': '2025-12', 'len': 15}, {'month': '2026-01', 'len': 13}, {'month': '2026-07', 'len': 27}]
+ by segment: [{'MARKET_SEGMENT_flt': None, 'len': 199}, {'MARKET_SEGMENT_flt': 'Business', 'len': 31}, {'MARKET_SEGMENT_flt': 'Other', 'len': 9}, {'MARKET_SEGMENT_flt': 'Military', 'len': 4}]
+ by type: [{'AIRCRAFT_TYPE_mvt': 'A139', 'len': 65}, {'AIRCRAFT_TYPE_mvt': 'AS50', 'len': 31}, {'AIRCRAFT_TYPE_mvt': 'DH8A', 'len': 20}, {'AIRCRAFT_TYPE_mvt': 'EC30', 'len': 19}]
+ flt ADEP/ADES pairs: [{'ADEP_flt': None, 'ADES_flt': None, 'len': 199}, {'ADEP_flt': 'ZZZZ', 'ADES_flt': 'LSZH', 'len': 5}, {'ADEP_flt': 'EHAM', 'ADES_flt': 'ZZZZ', 'len': 4}, {'ADEP_flt': 'LIRF', 'ADES_flt': 'LIRA', 'len': 3}]

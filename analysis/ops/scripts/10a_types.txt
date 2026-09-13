@@ -1,0 +1,58 @@
+/Users/denyskolomiiets/prc-2026/analysis/ops/scripts/10a_types.py:2: UserWarning: Extension type 'arrow.r.vctrs' is not registered; loading as its storage type.
+
+To avoid this warning, register the extension type or set environment variable 'POLARS_UNKNOWN_EXTENSION_TYPE_BEHAVIOR' to 'load_as_storage' or 'load_as_extension'.
+
+In Polars 2.0, the default behavior will change to 'load_as_extension'.
+  d = pl.scan_parquet(FILES).filter(pl.col("PHASE_mvt")=="DEP").group_by("AIRCRAFT_TYPE_mvt").agg(pl.len().alias("N"), pl.col("WK_TBL_CAT_flt").mode().first().alias("wtc")).sort("N", descending=True).collect()
+shape: (45, 4)
+┌───────────────────┬────────┬─────┬─────────┐
+│ AIRCRAFT_TYPE_mvt ┆ N      ┆ wtc ┆ cum_pct │
+│ ---               ┆ ---    ┆ --- ┆ ---     │
+│ str               ┆ u32    ┆ str ┆ f64     │
+╞═══════════════════╪════════╪═════╪═════════╡
+│ A320              ┆ 342973 ┆ M   ┆ 16.4    │
+│ B738              ┆ 218514 ┆ M   ┆ 26.9    │
+│ A20N              ┆ 169768 ┆ M   ┆ 35.1    │
+│ A321              ┆ 162231 ┆ M   ┆ 42.9    │
+│ A21N              ┆ 149245 ┆ M   ┆ 50.0    │
+│ A319              ┆ 134678 ┆ M   ┆ 56.5    │
+│ E190              ┆ 78863  ┆ M   ┆ 60.3    │
+│ BCS3              ┆ 77321  ┆ M   ┆ 64.0    │
+│ B77W              ┆ 67204  ┆ H   ┆ 67.2    │
+│ B789              ┆ 61322  ┆ H   ┆ 70.1    │
+│ A359              ┆ 56394  ┆ H   ┆ 72.8    │
+│ A333              ┆ 47161  ┆ H   ┆ 75.1    │
+│ B38M              ┆ 45247  ┆ M   ┆ 77.3    │
+│ B772              ┆ 34005  ┆ H   ┆ 78.9    │
+│ A332              ┆ 31981  ┆ H   ┆ 80.4    │
+│ CRJX              ┆ 30026  ┆ M   ┆ 81.9    │
+│ E195              ┆ 28841  ┆ M   ┆ 83.2    │
+│ E295              ┆ 27074  ┆ M   ┆ 84.5    │
+│ B788              ┆ 23693  ┆ H   ┆ 85.7    │
+│ CRJ9              ┆ 20697  ┆ M   ┆ 86.7    │
+│ E75L              ┆ 18792  ┆ M   ┆ 87.6    │
+│ B77L              ┆ 18761  ┆ H   ┆ 88.5    │
+│ B739              ┆ 18728  ┆ M   ┆ 89.4    │
+│ A339              ┆ 17384  ┆ H   ┆ 90.2    │
+│ A388              ┆ 14839  ┆ J   ┆ 90.9    │
+│ B763              ┆ 13338  ┆ H   ┆ 91.6    │
+│ BCS1              ┆ 11337  ┆ M   ┆ 92.1    │
+│ B78X              ┆ 10863  ┆ H   ┆ 92.6    │
+│ A35K              ┆ 10525  ┆ H   ┆ 93.1    │
+│ B737              ┆ 9948   ┆ M   ┆ 93.6    │
+│ E170              ┆ 7227   ┆ M   ┆ 94.0    │
+│ A343              ┆ 6840   ┆ H   ┆ 94.3    │
+│ B748              ┆ 6215   ┆ H   ┆ 94.6    │
+│ A306              ┆ 5345   ┆ H   ┆ 94.8    │
+│ B764              ┆ 4934   ┆ H   ┆ 95.1    │
+│ B744              ┆ 4639   ┆ H   ┆ 95.3    │
+│ AT76              ┆ 4631   ┆ M   ┆ 95.5    │
+│ E290              ┆ 4425   ┆ M   ┆ 95.7    │
+│ C56X              ┆ 4125   ┆ M   ┆ 95.9    │
+│ E55P              ┆ 3917   ┆ M   ┆ 96.1    │
+│ DH8D              ┆ 3912   ┆ M   ┆ 96.3    │
+│ B39M              ┆ 3901   ┆ M   ┆ 96.5    │
+│ A318              ┆ 3801   ┆ M   ┆ 96.7    │
+│ B752              ┆ 3081   ┆ M   ┆ 96.8    │
+│ C68A              ┆ 3030   ┆ M   ┆ 97.0    │
+└───────────────────┴────────┴─────┴─────────┘

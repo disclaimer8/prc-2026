@@ -1,0 +1,63 @@
+EDDF EDDS all movements (arr+dep, any segment): {'2025-01': 245, '2025-07': 311, '2026-01': 243, '2026-07': 28} segments: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 503}, {'MARKET_SEGMENT_flt': 'Regional', 'len': 218}, {'MARKET_SEGMENT_flt': 'Cargo', 'len': 51}]
+EDDF EDDW all movements (arr+dep, any segment): {'2025-01': 234, '2025-07': 286, '2026-01': 219, '2026-07': 5} segments: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 477}, {'MARKET_SEGMENT_flt': 'Regional', 'len': 261}, {'MARKET_SEGMENT_flt': 'Business', 'len': 5}]
+EGLL EDDK all movements (arr+dep, any segment): {'2025-01': 255, '2025-07': 261, '2026-01': 167} segments: [{'MARKET_SEGMENT_flt': 'Lowcost', 'len': 412}, {'MARKET_SEGMENT_flt': 'Mainline', 'len': 266}, {'MARKET_SEGMENT_flt': None, 'len': 5}]
+EDDM EPGD all movements (arr+dep, any segment): {'2025-01': 103, '2025-07': 165, '2026-01': 115, '2026-07': 24} segments: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 196}, {'MARKET_SEGMENT_flt': 'Regional', 'len': 164}, {'MARKET_SEGMENT_flt': 'Cargo', 'len': 34}]
+LEMD SVMI all movements (arr+dep, any segment): {'2025-01': 176, '2025-07': 150, '2026-07': 6} segments: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 249}, {'MARKET_SEGMENT_flt': 'Lowcost', 'len': 63}, {'MARKET_SEGMENT_flt': 'Other', 'len': 7}]
+LEMD ZGGG all movements (arr+dep, any segment): {'2025-01': 14, '2025-07': 14, '2026-01': 44, '2026-07': 49} segments: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 75}, {'MARKET_SEGMENT_flt': 'Cargo', 'len': 43}, {'MARKET_SEGMENT_flt': None, 'len': 2}]
+LEMD SVVA all movements (arr+dep, any segment): {'2026-07': 88} segments: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 33}, {'MARKET_SEGMENT_flt': 'Lowcost', 'len': 32}, {'MARKET_SEGMENT_flt': 'Non-Scheduled', 'len': 19}]
+LSZH KDFW all movements (arr+dep, any segment): {'2026-07': 62} segments: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 61}, {'MARKET_SEGMENT_flt': None, 'len': 1}]
+EDDF EGKK all movements (arr+dep, any segment): {'2025-01': 1, '2026-01': 1, '2026-07': 184} segments: [{'MARKET_SEGMENT_flt': 'Lowcost', 'len': 185}, {'MARKET_SEGMENT_flt': 'Mainline', 'len': 1}]
+LTFM UZTT all movements (arr+dep, any segment): {'2026-01': 464, '2026-07': 592} segments: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 1016}, {'MARKET_SEGMENT_flt': 'Cargo', 'len': 18}, {'MARKET_SEGMENT_flt': 'Non-Scheduled', 'len': 16}]
+LTFM UTTT all movements (arr+dep, any segment): {'2025-01': 409, '2025-07': 528} segments: [{'MARKET_SEGMENT_flt': 'Mainline', 'len': 863}, {'MARKET_SEGMENT_flt': 'Non-Scheduled', 'len': 43}, {'MARKET_SEGMENT_flt': 'Cargo', 'len': 26}]
+
+Domestic (DE) departures, any segment, EDDF/EDDM:
+shape: (8, 3)
+┌──────┬─────────┬──────┐
+│ hub  ┆ month   ┆ len  │
+│ ---  ┆ ---     ┆ ---  │
+│ str  ┆ str     ┆ u32  │
+╞══════╪═════════╪══════╡
+│ EDDF ┆ 2025-01 ┆ 1984 │
+│ EDDF ┆ 2025-07 ┆ 2569 │
+│ EDDF ┆ 2026-01 ┆ 2129 │
+│ EDDF ┆ 2026-07 ┆ 2043 │
+│ EDDM ┆ 2025-01 ┆ 2406 │
+│ EDDM ┆ 2025-07 ┆ 2693 │
+│ EDDM ┆ 2026-01 ┆ 2134 │
+│ EDDM ┆ 2026-07 ┆ 2565 │
+└──────┴─────────┴──────┘
+Regional-segment departures EDDF/EDDM:
+shape: (8, 3)
+┌──────┬─────────┬──────┐
+│ hub  ┆ month   ┆ len  │
+│ ---  ┆ ---     ┆ ---  │
+│ str  ┆ str     ┆ u32  │
+╞══════╪═════════╪══════╡
+│ EDDF ┆ 2025-01 ┆ 2422 │
+│ EDDF ┆ 2025-07 ┆ 3065 │
+│ EDDF ┆ 2026-01 ┆ 2248 │
+│ EDDF ┆ 2026-07 ┆ 1836 │
+│ EDDM ┆ 2025-01 ┆ 2160 │
+│ EDDM ┆ 2025-07 ┆ 2952 │
+│ EDDM ┆ 2026-01 ┆ 1715 │
+│ EDDM ┆ 2026-07 ┆ 1664 │
+└──────┴─────────┴──────┘
+
+A388 movements 2025 by hub, % of all A388 movements at the 10 hubs:
+shape: (10, 3)
+┌──────┬───────┬───────────┐
+│ hub  ┆ len   ┆ pct       │
+│ ---  ┆ ---   ┆ ---       │
+│ str  ┆ u32   ┆ f64       │
+╞══════╪═══════╪═══════════╡
+│ EGLL ┆ 14727 ┆ 49.610915 │
+│ EDDM ┆ 4701  ┆ 15.836281 │
+│ LFPG ┆ 3346  ┆ 11.271686 │
+│ EDDF ┆ 1749  ┆ 5.891865  │
+│ EHAM ┆ 1462  ┆ 4.925046  │
+│ LIRF ┆ 767   ┆ 2.583797  │
+│ LEBL ┆ 736   ┆ 2.479367  │
+│ LEMD ┆ 735   ┆ 2.475998  │
+│ LTFM ┆ 732   ┆ 2.465892  │
+│ LSZH ┆ 730   ┆ 2.459154  │
+└──────┴───────┴───────────┘

@@ -1,0 +1,9 @@
+LEMD Jul25 37483 Jul26 40148 +7.11% | Jan25 33153 Jan26 33899 +2.25%
+LEBL Jul25 33459 Jul26 35688 +6.66% | Jan25 24399 Jan26 24365 -0.14%
+EDDM Jul25 31656 Jul26 30021 -5.16% | Jan25 22481 Jan26 21880 -2.67%
+EDDF Jul25 42657 Jul26 41286 -3.21% | Jan25 30928 Jan26 31284 +1.15%
+EHAM Jul25 44952 Jul26 43847 -2.46% | Jan25 36929 Jan26 32478 -12.05%
+EDDF lowcost share Jul25 16.07
+neo share of A320 family, all hubs Jul25 32.78
+EDDF lowcost share Jul26 20.99
+neo share of A320 family, all hubs Jul26 39.95

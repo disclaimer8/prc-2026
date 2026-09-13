@@ -1,0 +1,27 @@
+EDDF 01 domestic DE departures 1984 -> 2129 (+7.3%) | Regional-segment departures 2422 -> 2248 (-7.2%)
+EDDF 07 domestic DE departures 2569 -> 2043 (-20.5%) | Regional-segment departures 3065 -> 1836 (-40.1%)
+EDDM 01 domestic DE departures 2406 -> 2134 (-11.3%) | Regional-segment departures 2160 -> 1715 (-20.6%)
+EDDM 07 domestic DE departures 2693 -> 2565 (-4.8%) | Regional-segment departures 2952 -> 1664 (-43.6%)
+EDDF EDDS [{'month': '2025-07', 'len': 311}, {'month': '2026-07', 'len': 28}]
+EDDF EDDW [{'month': '2025-07', 'len': 286}, {'month': '2026-07', 'len': 5}]
+EDDM EPGD [{'month': '2025-07', 'len': 165}, {'month': '2026-07', 'len': 24}]
+LEMD SVMI [{'month': '2025-07', 'len': 150}, {'month': '2026-07', 'len': 6}]
+
+Share of 2025 pax departures going to the hub's top-10 destinations:
+shape: (10, 4)
+┌──────┬───────┬────────┬───────────┐
+│ hub  ┆ top10 ┆ tot    ┆ top10_pct │
+│ ---  ┆ ---   ┆ ---    ┆ ---       │
+│ str  ┆ u32   ┆ u32    ┆ f64       │
+╞══════╪═══════╪════════╪═══════════╡
+│ LTFM ┆ 41191 ┆ 251925 ┆ 16.350501 │
+│ LFPG ┆ 38129 ┆ 215415 ┆ 17.700253 │
+│ EHAM ┆ 42963 ┆ 228647 ┆ 18.7901   │
+│ EDDF ┆ 43330 ┆ 212068 ┆ 20.432126 │
+│ EGLL ┆ 51050 ┆ 236383 ┆ 21.596308 │
+│ EDDM ┆ 38025 ┆ 156086 ┆ 24.36157  │
+│ LSZH ┆ 30856 ┆ 118291 ┆ 26.084825 │
+│ LEMD ┆ 51900 ┆ 193613 ┆ 26.806051 │
+│ LIRF ┆ 42082 ┆ 155865 ┆ 26.999006 │
+│ LEBL ┆ 46927 ┆ 167802 ┆ 27.965698 │
+└──────┴───────┴────────┴───────────┘

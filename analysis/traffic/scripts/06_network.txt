@@ -1,0 +1,536 @@
+pax departures (all periods): 2254544  destination not found in OurAirports: 182
+unmatched dest codes (top): [{'other': 'UTFF', 'len': 178}, {'other': 'ZZZZ', 'len': 3}, {'other': 'LYPR', 'len': 1}]
+
+=== 2025 full year, passenger departures per hub: distance bands, domestic share, unique destinations ===
+shape: (10, 10)
+┌──────┬────────┬──────────────┬─────────────────┬───────────────────────┬──────────────┬─────────┬────────────┬──────────────────┬──────────────────┐
+│ hub  ┆ deps   ┆ share_lt1500 ┆ share_1500_4000 ┆ share_longhaul_ge4000 ┆ domestic_pct ┆ mean_km ┆ n_dest_any ┆ n_dest_ge52_deps ┆ n_countries_ge52 │
+│ ---  ┆ ---    ┆ ---          ┆ ---             ┆ ---                   ┆ ---          ┆ ---     ┆ ---        ┆ ---              ┆ ---              │
+│ str  ┆ u32    ┆ f64          ┆ f64             ┆ f64                   ┆ f64          ┆ f64     ┆ u32        ┆ u32              ┆ u32              │
+╞══════╪════════╪══════════════╪═════════════════╪═══════════════════════╪══════════════╪═════════╪════════════╪══════════════════╪══════════════════╡
+│ EGLL ┆ 236383 ┆ 50.3         ┆ 11.7            ┆ 38.0                  ┆ 7.9          ┆ 3350.6  ┆ 247        ┆ 207              ┆ 82               │
+│ LFPG ┆ 215415 ┆ 60.1         ┆ 14.7            ┆ 25.2                  ┆ 11.3         ┆ 2636.0  ┆ 341        ┆ 253              ┆ 107              │
+│ EDDF ┆ 212068 ┆ 64.0         ┆ 15.9            ┆ 20.0                  ┆ 13.0         ┆ 2283.6  ┆ 346        ┆ 254              ┆ 90               │
+│ LEMD ┆ 193613 ┆ 62.5         ┆ 20.1            ┆ 17.4                  ┆ 30.0         ┆ 2334.3  ┆ 300        ┆ 204              ┆ 69               │
+│ EHAM ┆ 228647 ┆ 68.2         ┆ 16.4            ┆ 15.4                  ┆ 0.1          ┆ 1994.9  ┆ 329        ┆ 255              ┆ 81               │
+│ LIRF ┆ 155865 ┆ 72.9         ┆ 13.8            ┆ 13.3                  ┆ 26.0         ┆ 1874.7  ┆ 294        ┆ 215              ┆ 73               │
+│ LSZH ┆ 118291 ┆ 70.4         ┆ 16.5            ┆ 13.1                  ┆ 2.2          ┆ 1809.7  ┆ 237        ┆ 161              ┆ 67               │
+│ LTFM ┆ 251925 ┆ 43.0         ┆ 44.2            ┆ 12.8                  ┆ 24.0         ┆ 2346.4  ┆ 377        ┆ 307              ┆ 115              │
+│ EDDM ┆ 156086 ┆ 74.4         ┆ 14.8            ┆ 10.7                  ┆ 18.0         ┆ 1642.0  ┆ 267        ┆ 198              ┆ 65               │
+│ LEBL ┆ 167802 ┆ 77.1         ┆ 16.4            ┆ 6.5                   ┆ 25.8         ┆ 1463.2  ┆ 271        ┆ 198              ┆ 62               │
+└──────┴────────┴──────────────┴─────────────────┴───────────────────────┴──────────────┴─────────┴────────────┴──────────────────┴──────────────────┘
+
+=== 2025 top-5 destinations per hub (passenger departures) ===
+EDDF EGLL London (GB) 5490 = 2.6%; EDDB Berlin (DE) 5445 = 2.6%; EDDM Munich (DE) 5371 = 2.5%; EDDH Hamburg (DE) 5128 = 2.4%; LOWW Vienna (AT) 4617 = 2.2%
+EDDM EDDF Frankfurt am Main (DE) 5362 = 3.4%; EGLL London (GB) 4757 = 3.0%; EDDH Hamburg (DE) 4728 = 3.0%; EDDL Düsseldorf (DE) 4242 = 2.7%; EHAM Amsterdam (NL) 3852 = 2.5%
+EGLL KJFK New York (US) 7444 = 3.1%; EIDW Dublin (IE) 5905 = 2.5%; EHAM Amsterdam (NL) 5576 = 2.4%; EDDF Frankfurt am Main (DE) 5496 = 2.3%; EDDM Munich (DE) 4784 = 2.0%
+EHAM EGLL London (GB) 5586 = 2.4%; LEBL Barcelona (ES) 5029 = 2.2%; EIDW Dublin (IE) 4626 = 2.0%; EKCH Copenhagen (DK) 4351 = 1.9%; LFPG Paris (Roissy-en-France, Val-d'Oise) (FR) 4140 = 1.8%
+LEBL LEPA Palma de Mallorca (ES) 7801 = 4.6%; LIRF Rome (IT) 4993 = 3.0%; EHAM Amsterdam (NL) 4992 = 3.0%; LEMD Madrid (ES) 4934 = 2.9%; LPPT Lisbon (PT) 4492 = 2.7%
+LEMD LEPA Palma de Mallorca (ES) 6605 = 3.4%; LPPT Lisbon (PT) 6486 = 3.3%; GCLP Gran Canaria Island (ES) 6010 = 3.1%; GCXO Tenerife (ES) 5633 = 2.9%; LIRF Rome (IT) 5522 = 2.9%
+LFPG EGLL London (GB) 4596 = 2.1%; EHAM Amsterdam (NL) 4191 = 1.9%; DAAG Algiers (DZ) 3942 = 1.8%; LFMN Nice, Alpes-Maritimes (FR) 3882 = 1.8%; EDDF Frankfurt am Main (DE) 3840 = 1.8%
+LIRF LICC Catania (IT) 6096 = 3.9%; LICJ Palermo (IT) 5611 = 3.6%; LEMD Madrid (ES) 5563 = 3.6%; LEBL Barcelona (ES) 4992 = 3.2%; LIML Segrate (MI) (IT) 3932 = 2.5%
+LSZH EGLL London (GB) 4281 = 3.6%; EHAM Amsterdam (NL) 3701 = 3.1%; EDDB Berlin (DE) 3674 = 3.1%; EDDF Frankfurt am Main (DE) 3655 = 3.1%; LOWW Vienna (AT) 2915 = 2.5%
+LTFM LTBJ Gaziemir (TR) 5624 = 2.2%; LTAI Antalya (TR) 5509 = 2.2%; LTAC Ankara (TR) 5487 = 2.2%; OIIE Tehran (IR) 4379 = 1.7%; LTDB Tarsus (TR) 3767 = 1.5%
+
+=== 2025 top long-haul (>=4000 km) destinations per hub ===
+EDDF KJFK New York (US) 1569; OMDB Dubai (AE) 1439; KORD Chicago (US) 1355; CYYZ Toronto (CA) 1331; OTHH Doha (QA) 1260
+EDDM OMDB Dubai (AE) 828; KORD Chicago (US) 824; OTHH Doha (QA) 749; VTBS Bangkok (TH) 723; RJTT Tokyo (JP) 713
+EGLL KJFK New York (US) 7444; OMDB Dubai (AE) 3562; OTHH Doha (QA) 3476; KEWR Newark (US) 3176; KLAX Los Angeles (US) 3007
+EHAM KJFK New York (US) 1813; OMDB Dubai (AE) 1518; KATL Atlanta (US) 1443; OTHH Doha (QA) 1298; CYYZ Toronto (CA) 1118
+LEBL OTHH Doha (QA) 1072; KJFK New York (US) 928; OMDB Dubai (AE) 791; OMAA Abu Dhabi (AE) 615; KMIA Miami (US) 520
+LEMD SKBO Bogota (CO) 2923; MMMX Mexico City (MX) 1964; SAEZ Buenos Aires (Ezeiza) (AR) 1918; SBGR São Paulo (BR) 1741; SPJC Lima (PE) 1614
+LFPG KJFK New York (US) 3631; CYUL Montréal (CA) 2055; KLAX Los Angeles (US) 1807; OMDB Dubai (AE) 1606; KATL Atlanta (US) 1601
+LIRF KJFK New York (US) 2106; OMDB Dubai (AE) 1219; CYYZ Toronto (CA) 1070; OTHH Doha (QA) 1024; KIAD Dulles (US) 985
+LSZH OMDB Dubai (AE) 1087; KJFK New York (US) 1044; KORD Chicago (US) 766; VTBS Bangkok (TH) 722; WSSS Singapore (SG) 714
+LTFM VTBS Bangkok (TH) 1319; KJFK New York (US) 1158; RKSI Seoul (KR) 966; WSSS Singapore (SG) 949; WMKK Sepang (MY) 835
+
+=== 2025 long-haul departures by destination continent, per hub (% of hub's long-haul) ===
+shape: (10, 7)
+┌──────┬──────┬──────┬──────┬──────┬─────┬─────┐
+│ hub  ┆ SA   ┆ NA   ┆ AS   ┆ AF   ┆ OC  ┆ EU  │
+│ ---  ┆ ---  ┆ ---  ┆ ---  ┆ ---  ┆ --- ┆ --- │
+│ str  ┆ f64  ┆ f64  ┆ f64  ┆ f64  ┆ f64 ┆ f64 │
+╞══════╪══════╪══════╪══════╪══════╪═════╪═════╡
+│ EDDF ┆ 3.7  ┆ 46.3 ┆ 42.3 ┆ 7.8  ┆ 0.0 ┆ 0.0 │
+│ EDDM ┆ 0.4  ┆ 47.9 ┆ 49.4 ┆ 2.4  ┆ 0.0 ┆ 0.0 │
+│ EGLL ┆ 1.8  ┆ 53.6 ┆ 38.8 ┆ 5.3  ┆ 0.4 ┆ 0.0 │
+│ EHAM ┆ 7.3  ┆ 51.8 ┆ 31.9 ┆ 9.0  ┆ 0.0 ┆ 0.0 │
+│ LEBL ┆ 11.1 ┆ 49.9 ┆ 39.0 ┆ 0.0  ┆ 0.0 ┆ 0.0 │
+│ LEMD ┆ 40.6 ┆ 43.5 ┆ 15.4 ┆ 0.5  ┆ 0.0 ┆ 0.0 │
+│ LFPG ┆ 7.5  ┆ 45.4 ┆ 32.2 ┆ 14.6 ┆ 0.3 ┆ 0.0 │
+│ LIRF ┆ 9.8  ┆ 51.2 ┆ 33.1 ┆ 5.7  ┆ 0.2 ┆ 0.0 │
+│ LSZH ┆ 2.7  ┆ 48.0 ┆ 44.1 ┆ 5.2  ┆ 0.0 ┆ 0.0 │
+│ LTFM ┆ 3.3  ┆ 28.8 ┆ 44.8 ┆ 22.2 ┆ 0.0 ┆ 0.8 │
+└──────┴──────┴──────┴──────┴──────┴─────┴─────┘
+
+=== Destination countries 2025: top-5 foreign countries per hub (% of pax departures) ===
+EDDF IT 7.8%; ES 7.0%; US 6.8%; GB 5.4%; FR 4.9%
+EDDM IT 10.3%; ES 8.3%; FR 5.6%; GB 4.8%; US 4.3%
+EGLL US 17.1%; DE 9.1%; FR 5.0%; ES 4.7%; IT 4.6%
+EHAM GB 16.3%; ES 9.9%; DE 8.6%; IT 6.4%; FR 6.2%
+LEBL IT 11.8%; GB 9.1%; FR 8.2%; DE 7.1%; PT 4.1%
+LEMD IT 9.5%; FR 7.9%; PT 5.4%; GB 5.3%; DE 4.7%
+LFPG IT 8.9%; US 8.0%; GB 7.9%; DE 7.1%; ES 5.7%
+LIRF ES 11.0%; FR 8.0%; DE 5.7%; US 5.5%; GB 4.7%
+LSZH DE 14.4%; ES 9.8%; IT 8.1%; GB 8.0%; US 5.0%
+LTFM DE 5.5%; RU 4.9%; GB 3.3%; SA 3.2%; US 3.0%
+
+=== Long-haul share YoY (Jan, Jul): % of pax departures >=4000 km; N = 31 vs 31 days ===
+shape: (10, 9)
+┌──────┬───────────┬───────────┬───────────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ hub  ┆ lh_2025-0 ┆ lh_2026-0 ┆ lh_2025-0 ┆ lh_2026-0 ┆ pct_2025 ┆ pct_2026 ┆ pct_2025 ┆ pct_2026 │
+│ ---  ┆ 1         ┆ 1         ┆ 7         ┆ 7         ┆ -01      ┆ -01      ┆ -07      ┆ -07      │
+│ str  ┆ ---       ┆ ---       ┆ ---       ┆ ---       ┆ ---      ┆ ---      ┆ ---      ┆ ---      │
+│      ┆ u32       ┆ u32       ┆ u32       ┆ u32       ┆ f64      ┆ f64      ┆ f64      ┆ f64      │
+╞══════╪═══════════╪═══════════╪═══════════╪═══════════╪══════════╪══════════╪══════════╪══════════╡
+│ EDDF ┆ 3310      ┆ 3312      ┆ 3754      ┆ 3847      ┆ 23.5     ┆ 23.1     ┆ 19.2     ┆ 20.0     │
+│ EDDM ┆ 1218      ┆ 1340      ┆ 1504      ┆ 1571      ┆ 11.7     ┆ 13.3     ┆ 10.2     ┆ 11.2     │
+│ EGLL ┆ 7325      ┆ 7460      ┆ 7735      ┆ 7696      ┆ 38.3     ┆ 39.3     ┆ 38.1     ┆ 38.0     │
+│ EHAM ┆ 2823      ┆ 2611      ┆ 3131      ┆ 3232      ┆ 16.5     ┆ 18.1     ┆ 15.2     ┆ 16.0     │
+│ LEBL ┆ 643       ┆ 805       ┆ 1165      ┆ 1235      ┆ 5.6      ┆ 7.1      ┆ 7.6      ┆ 7.5      │
+│ LEMD ┆ 2604      ┆ 2768      ┆ 3205      ┆ 3390      ┆ 17.0     ┆ 18.1     ┆ 19.0     ┆ 18.6     │
+│ LFPG ┆ 4247      ┆ 4324      ┆ 5126      ┆ 5213      ┆ 26.3     ┆ 26.8     ┆ 26.6     ┆ 26.6     │
+│ LIRF ┆ 1278      ┆ 1294      ┆ 2165      ┆ 2217      ┆ 11.6     ┆ 12.1     ┆ 14.8     ┆ 14.6     │
+│ LSZH ┆ 1179      ┆ 1273      ┆ 1393      ┆ 1411      ┆ 14.2     ┆ 15.2     ┆ 12.6     ┆ 12.2     │
+│ LTFM ┆ 2632      ┆ 2903      ┆ 2847      ┆ 2964      ┆ 13.3     ┆ 14.1     ┆ 12.3     ┆ 12.7     │
+└──────┴───────────┴───────────┴───────────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+
+=== Routes new or dropped: >=8 pax departures in month of one year, 0 in same month of other year ===
+
+-- month 01: new/dropped pairs at same hub <60 km apart (code change or airport swap):
+shape: (10, 7)
+┌──────┬───────┬───────────┬────────────────────────┬─────────┬─────┬────────┐
+│ hub  ┆ other ┆ other_old ┆ municipality           ┆ n25_old ┆ n26 ┆ sep_km │
+│ ---  ┆ ---   ┆ ---       ┆ ---                    ┆ ---     ┆ --- ┆ ---    │
+│ str  ┆ str   ┆ str       ┆ str                    ┆ u32     ┆ u32 ┆ f64    │
+╞══════╪═══════╪═══════════╪════════════════════════╪═════════╪═════╪════════╡
+│ EDDF ┆ FNBJ  ┆ FNLU      ┆ Luanda (Ícolo e Bengo) ┆ 11      ┆ 11  ┆ 36     │
+│ EDDF ┆ UZTT  ┆ UTTT      ┆ Tashkent               ┆ 10      ┆ 10  ┆ 0      │
+│ EDDM ┆ UZTT  ┆ UTTT      ┆ Tashkent               ┆ 9       ┆ 9   ┆ 0      │
+│ EGLL ┆ UZTT  ┆ UTTT      ┆ Tashkent               ┆ 9       ┆ 9   ┆ 0      │
+│ LEBL ┆ EGMC  ┆ EGLC      ┆ Southend-on-Sea, Essex ┆ 10      ┆ 9   ┆ 45     │
+│ LFPG ┆ FNBJ  ┆ FNLU      ┆ Luanda (Ícolo e Bengo) ┆ 9       ┆ 13  ┆ 36     │
+│ LTFM ┆ UZTT  ┆ UTTT      ┆ Tashkent               ┆ 196     ┆ 217 ┆ 0      │
+│ LTFM ┆ UZSS  ┆ UTSS      ┆ Samarkand              ┆ 49      ┆ 48  ┆ 0      │
+│ LTFM ┆ HEAX  ┆ HEBA      ┆ Alexandria             ┆ 31      ┆ 38  ┆ 0      │
+│ LTFM ┆ UZNU  ┆ UTNU      ┆ Urgench                ┆ 14      ┆ 12  ┆ 0      │
+└──────┴───────┴───────────┴────────────────────────┴─────────┴─────┴────────┘
+
+-- month 01 (after removing code-change pairs): NEW routes total 88 (long-haul >=4000 km: 31), DROPPED routes total 47 (long-haul: 12)
+shape: (9, 3)
+┌──────┬─────┬─────────┐
+│ hub  ┆ new ┆ dropped │
+│ ---  ┆ --- ┆ ---     │
+│ str  ┆ u32 ┆ u32     │
+╞══════╪═════╪═════════╡
+│ EDDF ┆ 5   ┆ 6       │
+│ EDDM ┆ 8   ┆ 4       │
+│ EGLL ┆ 7   ┆ 3       │
+│ EHAM ┆ 8   ┆ 2       │
+│ LEBL ┆ 12  ┆ 4       │
+│ LEMD ┆ 22  ┆ 6       │
+│ LFPG ┆ 6   ┆ 5       │
+│ LIRF ┆ 8   ┆ 9       │
+│ LTFM ┆ 12  ┆ 8       │
+└──────┴─────┴─────────┘
+NEW:
+shape: (88, 7)
+┌──────┬───────┬─────┬─────┬─────────────────────────────────┬─────────────┬───────┐
+│ hub  ┆ other ┆ n25 ┆ n26 ┆ municipality                    ┆ iso_country ┆ km    │
+│ ---  ┆ ---   ┆ --- ┆ --- ┆ ---                             ┆ ---         ┆ ---   │
+│ str  ┆ str   ┆ u32 ┆ u32 ┆ str                             ┆ str         ┆ f64   │
+╞══════╪═══════╪═════╪═════╪═════════════════════════════════╪═════════════╪═══════╡
+│ EDDF ┆ HTZA  ┆ 0   ┆ 13  ┆ Zanzibar                        ┆ TZ          ┆ 6917  │
+│ EDDF ┆ EPBY  ┆ 0   ┆ 13  ┆ Bydgoszcz                       ┆ PL          ┆ 734   │
+│ EDDF ┆ MPTO  ┆ 0   ┆ 10  ┆ Tocumen                         ┆ PA          ┆ 9089  │
+│ EDDF ┆ EPRZ  ┆ 0   ┆ 10  ┆ Jasionka                        ┆ PL          ┆ 960   │
+│ EDDF ┆ LBWN  ┆ 0   ┆ 8   ┆ Varna                           ┆ BG          ┆ 1647  │
+│ EDDM ┆ OMSJ  ┆ 0   ┆ 28  ┆ Sharjah                         ┆ AE          ┆ 4569  │
+│ EDDM ┆ VHHH  ┆ 0   ┆ 16  ┆ Hong Kong                       ┆ HK          ┆ 9019  │
+│ EDDM ┆ KMCO  ┆ 0   ┆ 14  ┆ Orlando                         ┆ US          ┆ 7904  │
+│ EDDM ┆ FYWH  ┆ 0   ┆ 13  ┆ Windhoek                        ┆ NA          ┆ 7897  │
+│ EDDM ┆ LROD  ┆ 0   ┆ 13  ┆ Oradea                          ┆ RO          ┆ 771   │
+│ EDDM ┆ MDPC  ┆ 0   ┆ 10  ┆ Punta Cana                      ┆ DO          ┆ 7759  │
+│ EDDM ┆ EGGD  ┆ 0   ┆ 10  ┆ Bristol                         ┆ GB          ┆ 1090  │
+│ EDDM ┆ GMMN  ┆ 0   ┆ 8   ┆ Casablanca                      ┆ MA          ┆ 2318  │
+│ EGLL ┆ LEBB  ┆ 0   ┆ 30  ┆ Bilbao                          ┆ ES          ┆ 927   │
+│ EGLL ┆ LEST  ┆ 0   ┆ 25  ┆ Santiago de Compostela          ┆ ES          ┆ 1126  │
+│ EGLL ┆ UGTB  ┆ 0   ┆ 18  ┆ Tbilisi                         ┆ GE          ┆ 3574  │
+│ EGLL ┆ LIRQ  ┆ 0   ┆ 17  ┆ Firenze (FI)                    ┆ IT          ┆ 1218  │
+│ EGLL ┆ MMUN  ┆ 0   ┆ 13  ┆ Cancún                          ┆ MX          ┆ 7951  │
+│ EGLL ┆ CYOW  ┆ 0   ┆ 11  ┆ Ottawa                          ┆ CA          ┆ 5346  │
+│ EGLL ┆ OEDF  ┆ 0   ┆ 9   ┆ Ad Dammam                       ┆ SA          ┆ 5021  │
+│ EHAM ┆ EGTE  ┆ 0   ┆ 21  ┆ Exeter, Devon                   ┆ GB          ┆ 592   │
+│ EHAM ┆ LFPO  ┆ 0   ┆ 19  ┆ Paris (Orly, Val-de-Marne)      ┆ FR          ┆ 433   │
+│ EHAM ┆ VOHS  ┆ 0   ┆ 16  ┆ Hyderabad                       ┆ IN          ┆ 7395  │
+│ EHAM ┆ GMAD  ┆ 0   ┆ 15  ┆ Agadir (Temsia)                 ┆ MA          ┆ 2705  │
+│ EHAM ┆ OOMS  ┆ 0   ┆ 14  ┆ Muscat/Seeb                     ┆ OM          ┆ 5500  │
+│ EHAM ┆ OLBA  ┆ 0   ┆ 13  ┆ Beirut                          ┆ LB          ┆ 3192  │
+│ EHAM ┆ GMME  ┆ 0   ┆ 11  ┆ Rabat                           ┆ MA          ┆ 2228  │
+│ EHAM ┆ TBPB  ┆ 0   ┆ 9   ┆ Bridgetown                      ┆ BB          ┆ 7121  │
+│ LEBL ┆ LZIB  ┆ 0   ┆ 55  ┆ Bratislava                      ┆ SK          ┆ 1415  │
+│ LEBL ┆ LIML  ┆ 0   ┆ 25  ┆ Segrate (MI)                    ┆ IT          ┆ 742   │
+│ LEBL ┆ KDFW  ┆ 0   ┆ 24  ┆ Dallas-Fort Worth               ┆ US          ┆ 8342  │
+│ LEBL ┆ LRBS  ┆ 0   ┆ 22  ┆ Bucharest                       ┆ RO          ┆ 1982  │
+│ LEBL ┆ LTAC  ┆ 0   ┆ 18  ┆ Ankara                          ┆ TR          ┆ 2595  │
+│ LEBL ┆ LCLK  ┆ 0   ┆ 13  ┆ Larnaca                         ┆ CY          ┆ 2835  │
+│ LEBL ┆ LDZA  ┆ 0   ┆ 13  ┆ Velika Gorica                   ┆ HR          ┆ 1229  │
+│ LEBL ┆ LEVT  ┆ 0   ┆ 10  ┆ Alava                           ┆ ES          ┆ 434   │
+│ LEBL ┆ GMMI  ┆ 0   ┆ 9   ┆ Essaouira                       ┆ MA          ┆ 1521  │
+│ LEBL ┆ LEBA  ┆ 0   ┆ 8   ┆ Córdoba                         ┆ ES          ┆ 707   │
+│ LEBL ┆ GMAD  ┆ 0   ┆ 8   ┆ Agadir (Temsia)                 ┆ MA          ┆ 1598  │
+│ LEBL ┆ LWSK  ┆ 0   ┆ 8   ┆ Ilinden                         ┆ MK          ┆ 1623  │
+│ LEMD ┆ EGLC  ┆ 0   ┆ 36  ┆ London                          ┆ GB          ┆ 1256  │
+│ LEMD ┆ LTBJ  ┆ 0   ┆ 26  ┆ Gaziemir                        ┆ TR          ┆ 2639  │
+│ LEMD ┆ SKCG  ┆ 0   ┆ 24  ┆ Cartagena                       ┆ CO          ┆ 7733  │
+│ LEMD ┆ SBKP  ┆ 0   ┆ 22  ┆ Campinas                        ┆ BR          ┆ 8375  │
+│ LEMD ┆ SBRF  ┆ 0   ┆ 20  ┆ Recife                          ┆ BR          ┆ 6289  │
+│ LEMD ┆ HAAB  ┆ 0   ┆ 18  ┆ Addis Ababa                     ┆ ET          ┆ 5447  │
+│ LEMD ┆ KMCO  ┆ 0   ┆ 16  ┆ Orlando                         ┆ US          ┆ 7025  │
+│ LEMD ┆ ZUTF  ┆ 0   ┆ 15  ┆ Chengdu (Jianyang)              ┆ CN          ┆ 9211  │
+│ LEMD ┆ EPWR  ┆ 0   ┆ 14  ┆ Wrocław                         ┆ PL          ┆ 1965  │
+│ LEMD ┆ EPGD  ┆ 0   ┆ 14  ┆ Gdańsk                          ┆ PL          ┆ 2248  │
+│ LEMD ┆ LWSK  ┆ 0   ┆ 13  ┆ Ilinden                         ┆ MK          ┆ 2106  │
+│ LEMD ┆ ZGGG  ┆ 0   ┆ 13  ┆ Guangzhou (Huadu)               ┆ CN          ┆ 10375 │
+│ LEMD ┆ KIAD  ┆ 0   ┆ 12  ┆ Dulles                          ┆ US          ┆ 6125  │
+│ LEMD ┆ OKKK  ┆ 0   ┆ 12  ┆ Kuwait City                     ┆ KW          ┆ 4796  │
+│ LEMD ┆ LTAC  ┆ 0   ┆ 12  ┆ Ankara                          ┆ TR          ┆ 3078  │
+│ LEMD ┆ LICA  ┆ 0   ┆ 10  ┆ Lamezia Terme (CZ)              ┆ IT          ┆ 1701  │
+│ LEMD ┆ EPKT  ┆ 0   ┆ 10  ┆ Katowice                        ┆ PL          ┆ 2073  │
+│ LEMD ┆ LEVT  ┆ 0   ┆ 10  ┆ Alava                           ┆ ES          ┆ 275   │
+│ LEMD ┆ UGKO  ┆ 0   ┆ 9   ┆ Kopitnari                       ┆ GE          ┆ 3803  │
+│ LEMD ┆ LRCV  ┆ 0   ┆ 9   ┆ Craiova                         ┆ RO          ┆ 2283  │
+│ LEMD ┆ EINN  ┆ 0   ┆ 9   ┆ Shannon                         ┆ IE          ┆ 1417  │
+│ LEMD ┆ LRSB  ┆ 0   ┆ 8   ┆ Sibiu                           ┆ RO          ┆ 2307  │
+│ LFPG ┆ WMKK  ┆ 0   ┆ 30  ┆ Sepang                          ┆ MY          ┆ 10442 │
+│ LFPG ┆ KMCO  ┆ 0   ┆ 20  ┆ Orlando                         ┆ US          ┆ 7239  │
+│ LFPG ┆ EICK  ┆ 0   ┆ 18  ┆ Cork                            ┆ IE          ┆ 842   │
+│ LFPG ┆ VTSP  ┆ 0   ┆ 14  ┆ Phuket                          ┆ TH          ┆ 9744  │
+│ LFPG ┆ LIPX  ┆ 0   ┆ 11  ┆ Caselle (VR)                    ┆ IT          ┆ 746   │
+│ LFPG ┆ MDPC  ┆ 0   ┆ 9   ┆ Punta Cana                      ┆ DO          ┆ 7079  │
+│ LIRF ┆ LEZG  ┆ 0   ┆ 17  ┆ Zaragoza                        ┆ ES          ┆ 1102  │
+│ LIRF ┆ HEGN  ┆ 0   ┆ 14  ┆ Hurghada                        ┆ EG          ┆ 2545  │
+│ LIRF ┆ LRCV  ┆ 0   ┆ 12  ┆ Craiova                         ┆ RO          ┆ 985   │
+│ LIRF ┆ LRSB  ┆ 0   ┆ 11  ┆ Sibiu                           ┆ RO          ┆ 1047  │
+│ LIRF ┆ EGNT  ┆ 0   ┆ 9   ┆ Newcastle upon Tyne, Tyne and … ┆ GB          ┆ 1788  │
+│ LIRF ┆ LDDU  ┆ 0   ┆ 9   ┆ Dubrovnik                       ┆ HR          ┆ 502   │
+│ LIRF ┆ FIMP  ┆ 0   ┆ 9   ┆ Plaine Magnien                  ┆ MU          ┆ 8348  │
+│ LIRF ┆ HLLB  ┆ 0   ┆ 9   ┆ Benina                          ┆ LY          ┆ 1292  │
+│ LTFM ┆ URKK  ┆ 0   ┆ 75  ┆ Krasnodar                       ┆ RU          ┆ 944   │
+│ LTFM ┆ LEZL  ┆ 0   ┆ 31  ┆ Seville                         ┆ ES          ┆ 2988  │
+│ LTFM ┆ ORSU  ┆ 0   ┆ 15  ┆ Sulaymaniyah                    ┆ IQ          ┆ 1575  │
+│ LTFM ┆ HKMO  ┆ 0   ┆ 13  ┆ Mombasa                         ┆ KE          ┆ 5157  │
+│ LTFM ┆ OEYN  ┆ 0   ┆ 13  ┆ Yanbu                           ┆ SA          ┆ 2092  │
+│ LTFM ┆ OSAP  ┆ 0   ┆ 10  ┆ Aleppo                          ┆ SY          ┆ 929   │
+│ LTFM ┆ EPGD  ┆ 0   ┆ 10  ┆ Gdańsk                          ┆ PL          ┆ 1642  │
+│ LTFM ┆ LRTR  ┆ 0   ┆ 9   ┆ Timişoara                       ┆ RO          ┆ 780   │
+│ LTFM ┆ HUEN  ┆ 0   ┆ 9   ┆ Entebbe                         ┆ UG          ┆ 4600  │
+│ LTFM ┆ BIKF  ┆ 0   ┆ 9   ┆ Reykjavík                       ┆ IS          ┆ 4113  │
+│ LTFM ┆ UUBW  ┆ 0   ┆ 9   ┆ Moscow                          ┆ RU          ┆ 1730  │
+│ LTFM ┆ EBLG  ┆ 0   ┆ 8   ┆ Grâce-Hollogne                  ┆ BE          ┆ 2067  │
+└──────┴───────┴─────┴─────┴─────────────────────────────────┴─────────────┴───────┘
+DROPPED:
+shape: (47, 7)
+┌──────┬───────┬─────┬─────┬─────────────────────────────┬─────────────┬──────┐
+│ hub  ┆ other ┆ n25 ┆ n26 ┆ municipality                ┆ iso_country ┆ km   │
+│ ---  ┆ ---   ┆ --- ┆ --- ┆ ---                         ┆ ---         ┆ ---  │
+│ str  ┆ str   ┆ u32 ┆ u32 ┆ str                         ┆ str         ┆ f64  │
+╞══════╪═══════╪═════╪═════╪═════════════════════════════╪═════════════╪══════╡
+│ EDDF ┆ LOWL  ┆ 88  ┆ 0   ┆ Linz                        ┆ AT          ┆ 455  │
+│ EDDF ┆ LOWI  ┆ 43  ┆ 0   ┆ Innsbruck                   ┆ AT          ┆ 369  │
+│ EDDF ┆ KMSP  ┆ 16  ┆ 0   ┆ Minneapolis                 ┆ US          ┆ 7049 │
+│ EDDF ┆ GMAD  ┆ 13  ┆ 0   ┆ Agadir (Temsia)             ┆ MA          ┆ 2655 │
+│ EDDF ┆ MUVR  ┆ 13  ┆ 0   ┆ Matanzas                    ┆ CU          ┆ 8067 │
+│ EDDF ┆ MMTL  ┆ 8   ┆ 0   ┆ Tulum                       ┆ MX          ┆ 8732 │
+│ EDDM ┆ EKBI  ┆ 38  ┆ 0   ┆ Billund                     ┆ DK          ┆ 841  │
+│ EDDM ┆ EDLW  ┆ 27  ┆ 0   ┆ Dortmund                    ┆ DE          ┆ 461  │
+│ EDDM ┆ LFRS  ┆ 11  ┆ 0   ┆ Nantes                      ┆ FR          ┆ 1009 │
+│ EDDM ┆ EFOU  ┆ 9   ┆ 0   ┆ Oulu / Oulunsalo            ┆ FI          ┆ 2011 │
+│ EGLL ┆ LTFJ  ┆ 28  ┆ 0   ┆ Pendik, Istanbul            ┆ TR          ┆ 2551 │
+│ EGLL ┆ TLPL  ┆ 14  ┆ 0   ┆ Vieux Fort                  ┆ LC          ┆ 6791 │
+│ EGLL ┆ MBPV  ┆ 10  ┆ 0   ┆ Providenciales              ┆ TC          ┆ 6885 │
+│ EHAM ┆ LATI  ┆ 9   ┆ 0   ┆ Rinas                       ┆ AL          ┆ 1655 │
+│ EHAM ┆ BKPR  ┆ 9   ┆ 0   ┆ Prishtina                   ┆ XK          ┆ 1627 │
+│ LEBL ┆ EKBI  ┆ 15  ┆ 0   ┆ Billund                     ┆ DK          ┆ 1686 │
+│ LEBL ┆ GCTS  ┆ 10  ┆ 0   ┆ Tenerife                    ┆ ES          ┆ 2245 │
+│ LEBL ┆ ESGG  ┆ 9   ┆ 0   ┆ Göteborg                    ┆ SE          ┆ 1958 │
+│ LEBL ┆ GMTN  ┆ 9   ┆ 0   ┆ Tétouan                     ┆ MA          ┆ 903  │
+│ LEMD ┆ SVMI  ┆ 88  ┆ 0   ┆ Maiquetía                   ┆ VE          ┆ 7006 │
+│ LEMD ┆ LOWS  ┆ 12  ┆ 0   ┆ Salzburg                    ┆ AT          ┆ 1547 │
+│ LEMD ┆ LEMI  ┆ 11  ┆ 0   ┆ Corvera                     ┆ ES          ┆ 366  │
+│ LEMD ┆ GMMI  ┆ 9   ┆ 0   ┆ Essaouira                   ┆ MA          ┆ 1151 │
+│ LEMD ┆ EGGP  ┆ 8   ┆ 0   ┆ Liverpool                   ┆ GB          ┆ 1429 │
+│ LEMD ┆ BIKF  ┆ 8   ┆ 0   ┆ Reykjavík                   ┆ IS          ┆ 2890 │
+│ LFPG ┆ LEAL  ┆ 49  ┆ 0   ┆ Alicante                    ┆ ES          ┆ 1218 │
+│ LFPG ┆ FCPP  ┆ 13  ┆ 0   ┆ Pointe Noire                ┆ CG          ┆ 6053 │
+│ LFPG ┆ KDEN  ┆ 13  ┆ 0   ┆ Denver                      ┆ US          ┆ 7834 │
+│ LFPG ┆ GMFF  ┆ 12  ┆ 0   ┆ Saïss                       ┆ MA          ┆ 1788 │
+│ LFPG ┆ GMTN  ┆ 9   ┆ 0   ┆ Tétouan                     ┆ MA          ┆ 1624 │
+│ LIRF ┆ LFML  ┆ 34  ┆ 0   ┆ Marignane, Bouches-du-Rhône ┆ FR          ┆ 604  │
+│ LIRF ┆ EDLW  ┆ 15  ┆ 0   ┆ Dortmund                    ┆ DE          ┆ 1136 │
+│ LIRF ┆ EPPO  ┆ 14  ┆ 0   ┆ Poznań                      ┆ PL          ┆ 1230 │
+│ LIRF ┆ EYVI  ┆ 14  ┆ 0   ┆ Vilnius                     ┆ LT          ┆ 1717 │
+│ LIRF ┆ ZGGG  ┆ 13  ┆ 0   ┆ Guangzhou (Huadu)           ┆ CN          ┆ 9154 │
+│ LIRF ┆ LEXJ  ┆ 11  ┆ 0   ┆ Santander                   ┆ ES          ┆ 1325 │
+│ LIRF ┆ ZSHC  ┆ 11  ┆ 0   ┆ Hangzhou                    ┆ CN          ┆ 9146 │
+│ LIRF ┆ EPRA  ┆ 8   ┆ 0   ┆ Radom                       ┆ PL          ┆ 1265 │
+│ LIRF ┆ EGPH  ┆ 8   ┆ 0   ┆ Ingliston, Edinburgh        ┆ GB          ┆ 1934 │
+│ LTFM ┆ GABS  ┆ 27  ┆ 0   ┆ Bamako                      ┆ ML          ┆ 4780 │
+│ LTFM ┆ UATE  ┆ 17  ┆ 0   ┆ Aktau                       ┆ KZ          ┆ 1848 │
+│ LTFM ┆ LTCL  ┆ 17  ┆ 0   ┆ Siirt                       ┆ TR          ┆ 1180 │
+│ LTFM ┆ UTFF  ┆ 16  ┆ 0   ┆ null                        ┆ null        ┆ null │
+│ LTFM ┆ SVMI  ┆ 13  ┆ 0   ┆ Maiquetía                   ┆ VE          ┆ 9704 │
+│ LTFM ┆ UTFN  ┆ 9   ┆ 0   ┆ Namangan                    ┆ UZ          ┆ 3550 │
+│ LTFM ┆ UTSB  ┆ 9   ┆ 0   ┆ Bukhara                     ┆ UZ          ┆ 3005 │
+│ LTFM ┆ UAIT  ┆ 8   ┆ 0   ┆ Turkıstan                   ┆ KZ          ┆ 3252 │
+└──────┴───────┴─────┴─────┴─────────────────────────────┴─────────────┴──────┘
+
+-- month 07: new/dropped pairs at same hub <60 km apart (code change or airport swap):
+shape: (9, 7)
+┌──────┬───────┬───────────┬────────────────────────┬─────────┬─────┬────────┐
+│ hub  ┆ other ┆ other_old ┆ municipality           ┆ n25_old ┆ n26 ┆ sep_km │
+│ ---  ┆ ---   ┆ ---       ┆ ---                    ┆ ---     ┆ --- ┆ ---    │
+│ str  ┆ str   ┆ str       ┆ str                    ┆ u32     ┆ u32 ┆ f64    │
+╞══════╪═══════╪═══════════╪════════════════════════╪═════════╪═════╪════════╡
+│ EDDF ┆ UZTT  ┆ UTTT      ┆ Tashkent               ┆ 13      ┆ 23  ┆ 0      │
+│ EDDF ┆ FNBJ  ┆ FNLU      ┆ Luanda (Ícolo e Bengo) ┆ 13      ┆ 13  ┆ 36     │
+│ EGLL ┆ UZTT  ┆ UTTT      ┆ Tashkent               ┆ 9       ┆ 8   ┆ 0      │
+│ LFPG ┆ FNBJ  ┆ FNLU      ┆ Luanda (Ícolo e Bengo) ┆ 17      ┆ 13  ┆ 36     │
+│ LIRF ┆ EGGW  ┆ EGLC      ┆ Luton, Luton           ┆ 52      ┆ 63  ┆ 50     │
+│ LTFM ┆ UZTT  ┆ UTTT      ┆ Tashkent               ┆ 235     ┆ 286 ┆ 0      │
+│ LTFM ┆ UZSS  ┆ UTSS      ┆ Samarkand              ┆ 79      ┆ 49  ┆ 0      │
+│ LTFM ┆ HEAX  ┆ HEBA      ┆ Alexandria             ┆ 39      ┆ 34  ┆ 0      │
+│ LTFM ┆ UZNU  ┆ UTNU      ┆ Urgench                ┆ 24      ┆ 19  ┆ 0      │
+└──────┴───────┴───────────┴────────────────────────┴─────────┴─────┴────────┘
+
+-- month 07 (after removing code-change pairs): NEW routes total 114 (long-haul >=4000 km: 39), DROPPED routes total 82 (long-haul: 15)
+shape: (10, 3)
+┌──────┬─────┬─────────┐
+│ hub  ┆ new ┆ dropped │
+│ ---  ┆ --- ┆ ---     │
+│ str  ┆ u32 ┆ u32     │
+╞══════╪═════╪═════════╡
+│ EDDF ┆ 8   ┆ 14      │
+│ EDDM ┆ 8   ┆ 7       │
+│ EGLL ┆ 7   ┆ 4       │
+│ EHAM ┆ 13  ┆ 5       │
+│ LEBL ┆ 14  ┆ 6       │
+│ LEMD ┆ 16  ┆ 2       │
+│ LFPG ┆ 7   ┆ 11      │
+│ LIRF ┆ 17  ┆ 7       │
+│ LSZH ┆ 11  ┆ 4       │
+│ LTFM ┆ 13  ┆ 22      │
+└──────┴─────┴─────────┘
+NEW:
+shape: (114, 7)
+┌──────┬───────┬─────┬─────┬───────────────────────────────┬─────────────┬───────┐
+│ hub  ┆ other ┆ n25 ┆ n26 ┆ municipality                  ┆ iso_country ┆ km    │
+│ ---  ┆ ---   ┆ --- ┆ --- ┆ ---                           ┆ ---         ┆ ---   │
+│ str  ┆ str   ┆ u32 ┆ u32 ┆ str                           ┆ str         ┆ f64   │
+╞══════╪═══════╪═════╪═════╪═══════════════════════════════╪═════════════╪═══════╡
+│ EDDF ┆ EGKK  ┆ 0   ┆ 92  ┆ London                        ┆ GB          ┆ 629   │
+│ EDDF ┆ ZBAD  ┆ 0   ┆ 27  ┆ Beijing                       ┆ CN          ┆ 7828  │
+│ EDDF ┆ ENVA  ┆ 0   ┆ 12  ┆ Trondheim                     ┆ NO          ┆ 1500  │
+│ EDDF ┆ EPRZ  ┆ 0   ┆ 10  ┆ Jasionka                      ┆ PL          ┆ 960   │
+│ EDDF ┆ LIBR  ┆ 0   ┆ 9   ┆ Brindisi                      ┆ IT          ┆ 1272  │
+│ EDDF ┆ ZWWW  ┆ 0   ┆ 8   ┆ Ürümqi                        ┆ CN          ┆ 5743  │
+│ EDDF ┆ FSIA  ┆ 0   ┆ 8   ┆ Victoria                      ┆ SC          ┆ 7562  │
+│ EDDF ┆ ENBO  ┆ 0   ┆ 8   ┆ Bodø                          ┆ NO          ┆ 1944  │
+│ EDDM ┆ OMSJ  ┆ 0   ┆ 26  ┆ Sharjah                       ┆ AE          ┆ 4569  │
+│ EDDM ┆ EGGD  ┆ 0   ┆ 18  ┆ Bristol                       ┆ GB          ┆ 1090  │
+│ EDDM ┆ SBGR  ┆ 0   ┆ 14  ┆ São Paulo                     ┆ BR          ┆ 9857  │
+│ EDDM ┆ GMMN  ┆ 0   ┆ 14  ┆ Casablanca                    ┆ MA          ┆ 2318  │
+│ EDDM ┆ FAOR  ┆ 0   ┆ 13  ┆ Johannesburg                  ┆ ZA          ┆ 8444  │
+│ EDDM ┆ OJAI  ┆ 0   ┆ 12  ┆ Amman                         ┆ JO          ┆ 2747  │
+│ EDDM ┆ ENEV  ┆ 0   ┆ 9   ┆ Evenes                        ┆ NO          ┆ 2256  │
+│ EDDM ┆ LTFD  ┆ 0   ┆ 8   ┆ Edremit                       ┆ TR          ┆ 1558  │
+│ EGLL ┆ EGJB  ┆ 0   ┆ 31  ┆ Saint Peter Port              ┆ GG          ┆ 272   │
+│ EGLL ┆ LEZL  ┆ 0   ┆ 31  ┆ Seville                       ┆ ES          ┆ 1620  │
+│ EGLL ┆ KSTL  ┆ 0   ┆ 18  ┆ St Louis                      ┆ US          ┆ 6742  │
+│ EGLL ┆ WBSB  ┆ 0   ┆ 14  ┆ Bandar Seri Begawan           ┆ BN          ┆ 11282 │
+│ EGLL ┆ LYTV  ┆ 0   ┆ 13  ┆ Tivat                         ┆ ME          ┆ 1763  │
+│ EGLL ┆ OPIS  ┆ 0   ┆ 12  ┆ Attock                        ┆ PK          ┆ 6053  │
+│ EGLL ┆ OEDF  ┆ 0   ┆ 12  ┆ Ad Dammam                     ┆ SA          ┆ 5021  │
+│ EHAM ┆ EGJJ  ┆ 0   ┆ 28  ┆ St. Peter                     ┆ JE          ┆ 598   │
+│ EHAM ┆ GMME  ┆ 0   ┆ 13  ┆ Rabat                         ┆ MA          ┆ 2228  │
+│ EHAM ┆ MROC  ┆ 0   ┆ 13  ┆ San José (Alajuela)           ┆ CR          ┆ 9060  │
+│ EHAM ┆ VOHS  ┆ 0   ┆ 13  ┆ Hyderabad                     ┆ IN          ┆ 7395  │
+│ EHAM ┆ KMIA  ┆ 0   ┆ 13  ┆ Miami                         ┆ US          ┆ 7443  │
+│ EHAM ┆ OSDI  ┆ 0   ┆ 12  ┆ Damascus                      ┆ SY          ┆ 3288  │
+│ EHAM ┆ VVNB  ┆ 0   ┆ 10  ┆ Hanoi (Soc Son)               ┆ VN          ┆ 8872  │
+│ EHAM ┆ LYTV  ┆ 0   ┆ 9   ┆ Tivat                         ┆ ME          ┆ 1518  │
+│ EHAM ┆ UDYZ  ┆ 0   ┆ 9   ┆ Yerevan                       ┆ AM          ┆ 3283  │
+│ EHAM ┆ LIEA  ┆ 0   ┆ 9   ┆ Alghero                       ┆ IT          ┆ 1326  │
+│ EHAM ┆ ZSFZ  ┆ 0   ┆ 8   ┆ Fuzhou (Changle)              ┆ CN          ┆ 9277  │
+│ EHAM ┆ LIBR  ┆ 0   ┆ 8   ┆ Brindisi                      ┆ IT          ┆ 1637  │
+│ EHAM ┆ OLBA  ┆ 0   ┆ 8   ┆ Beirut                        ┆ LB          ┆ 3192  │
+│ LEBL ┆ LZIB  ┆ 0   ┆ 65  ┆ Bratislava                    ┆ SK          ┆ 1415  │
+│ LEBL ┆ LTAC  ┆ 0   ┆ 16  ┆ Ankara                        ┆ TR          ┆ 2595  │
+│ LEBL ┆ SPJC  ┆ 0   ┆ 14  ┆ Lima                          ┆ PE          ┆ 10006 │
+│ LEBL ┆ LYPG  ┆ 0   ┆ 14  ┆ Podgorica                     ┆ ME          ┆ 1425  │
+│ LEBL ┆ LBWN  ┆ 0   ┆ 13  ┆ Varna                         ┆ BG          ┆ 2121  │
+│ LEBL ┆ EGMC  ┆ 0   ┆ 13  ┆ Southend-on-Sea, Essex        ┆ GB          ┆ 1147  │
+│ LEBL ┆ LERJ  ┆ 0   ┆ 13  ┆ Logroño                       ┆ ES          ┆ 387   │
+│ LEBL ┆ KSEA  ┆ 0   ┆ 12  ┆ Seattle                       ┆ US          ┆ 8730  │
+│ LEBL ┆ GMTN  ┆ 0   ┆ 9   ┆ Tétouan                       ┆ MA          ┆ 903   │
+│ LEBL ┆ LEBA  ┆ 0   ┆ 9   ┆ Córdoba                       ┆ ES          ┆ 707   │
+│ LEBL ┆ LJLJ  ┆ 0   ┆ 9   ┆ Zgornji Brnik                 ┆ SI          ┆ 1133  │
+│ LEBL ┆ LRCV  ┆ 0   ┆ 9   ┆ Craiova                       ┆ RO          ┆ 1805  │
+│ LEBL ┆ EGHI  ┆ 0   ┆ 8   ┆ Southampton                   ┆ GB          ┆ 1105  │
+│ LEBL ┆ LEVD  ┆ 0   ┆ 8   ┆ Valladolid                    ┆ ES          ┆ 579   │
+│ LEMD ┆ EGGW  ┆ 0   ┆ 53  ┆ Luton, Luton                  ┆ GB          ┆ 1289  │
+│ LEMD ┆ EGLC  ┆ 0   ┆ 50  ┆ London                        ┆ GB          ┆ 1256  │
+│ LEMD ┆ SVVA  ┆ 0   ┆ 31  ┆ Valencia                      ┆ VE          ┆ 7116  │
+│ LEMD ┆ ZGGG  ┆ 0   ┆ 24  ┆ Guangzhou (Huadu)             ┆ CN          ┆ 10375 │
+│ LEMD ┆ SBFZ  ┆ 0   ┆ 18  ┆ Fortaleza                     ┆ BR          ┆ 6072  │
+│ LEMD ┆ MSLP  ┆ 0   ┆ 16  ┆ San Salvador (San Luis Talpa) ┆ SV          ┆ 8665  │
+│ LEMD ┆ CYHZ  ┆ 0   ┆ 16  ┆ Halifax                       ┆ CA          ┆ 4811  │
+│ LEMD ┆ EPGD  ┆ 0   ┆ 14  ┆ Gdańsk                        ┆ PL          ┆ 2248  │
+│ LEMD ┆ EINN  ┆ 0   ┆ 14  ┆ Shannon                       ┆ IE          ┆ 1417  │
+│ LEMD ┆ SVBC  ┆ 0   ┆ 14  ┆ Barcelona                     ┆ VE          ┆ 6850  │
+│ LEMD ┆ LTAC  ┆ 0   ┆ 14  ┆ Ankara                        ┆ TR          ┆ 3078  │
+│ LEMD ┆ OKKK  ┆ 0   ┆ 13  ┆ Kuwait City                   ┆ KW          ┆ 4796  │
+│ LEMD ┆ FAOR  ┆ 0   ┆ 13  ┆ Johannesburg                  ┆ ZA          ┆ 8106  │
+│ LEMD ┆ HLLM  ┆ 0   ┆ 9   ┆ Tripoli                       ┆ LY          ┆ 1720  │
+│ LEMD ┆ MMQT  ┆ 0   ┆ 9   ┆ Querétaro                     ┆ MX          ┆ 9070  │
+│ LEMD ┆ LUKK  ┆ 0   ┆ 8   ┆ Chişinău                      ┆ MD          ┆ 2687  │
+│ LFPG ┆ HTKJ  ┆ 0   ┆ 22  ┆ Arusha                        ┆ TZ          ┆ 6713  │
+│ LFPG ┆ MMMY  ┆ 0   ┆ 13  ┆ Monterrey                     ┆ MX          ┆ 8733  │
+│ LFPG ┆ KLAS  ┆ 0   ┆ 13  ┆ Las Vegas                     ┆ US          ┆ 8737  │
+│ LFPG ┆ GMTN  ┆ 0   ┆ 9   ┆ Tétouan                       ┆ MA          ┆ 1624  │
+│ LFPG ┆ EGSS  ┆ 0   ┆ 9   ┆ London, Essex                 ┆ GB          ┆ 359   │
+│ LFPG ┆ EGPD  ┆ 0   ┆ 9   ┆ Aberdeen                      ┆ GB          ┆ 964   │
+│ LFPG ┆ FSIA  ┆ 0   ┆ 8   ┆ Victoria                      ┆ SC          ┆ 7850  │
+│ LIRF ┆ LZIB  ┆ 0   ┆ 31  ┆ Bratislava                    ┆ SK          ┆ 808   │
+│ LIRF ┆ EETN  ┆ 0   ┆ 18  ┆ Tallinn                       ┆ EE          ┆ 2141  │
+│ LIRF ┆ KIAH  ┆ 0   ┆ 17  ┆ Houston                       ┆ US          ┆ 9126  │
+│ LIRF ┆ KSEA  ┆ 0   ┆ 17  ┆ Seattle                       ┆ US          ┆ 9130  │
+│ LIRF ┆ LRBV  ┆ 0   ┆ 13  ┆ Brașov (Ghimbav)              ┆ RO          ┆ 1149  │
+│ LIRF ┆ LRTM  ┆ 0   ┆ 13  ┆ Recea                         ┆ RO          ┆ 1099  │
+│ LIRF ┆ OMSJ  ┆ 0   ┆ 13  ┆ Sharjah                       ┆ AE          ┆ 4350  │
+│ LIRF ┆ LBWN  ┆ 0   ┆ 11  ┆ Varna                         ┆ BG          ┆ 1284  │
+│ LIRF ┆ LOWK  ┆ 0   ┆ 9   ┆ Klagenfurt am Wörthersee      ┆ AT          ┆ 563   │
+│ LIRF ┆ LIRJ  ┆ 0   ┆ 9   ┆ Campo nell'Elba (LI)          ┆ IT          ┆ 197   │
+│ LIRF ┆ EKBI  ┆ 0   ┆ 9   ┆ Billund                       ┆ DK          ┆ 1566  │
+│ LIRF ┆ LBBG  ┆ 0   ┆ 9   ┆ Burgas                        ┆ BG          ┆ 1259  │
+│ LIRF ┆ LROD  ┆ 0   ┆ 9   ┆ Oradea                        ┆ RO          ┆ 960   │
+│ LIRF ┆ LRSB  ┆ 0   ┆ 8   ┆ Sibiu                         ┆ RO          ┆ 1047  │
+│ LIRF ┆ LFBL  ┆ 0   ┆ 8   ┆ Limoges/Bellegarde            ┆ FR          ┆ 995   │
+│ LIRF ┆ LZKZ  ┆ 0   ┆ 8   ┆ Košice                        ┆ SK          ┆ 1036  │
+│ LIRF ┆ EHRD  ┆ 0   ┆ 8   ┆ Rotterdam                     ┆ NL          ┆ 1274  │
+│ LSZH ┆ KDFW  ┆ 0   ┆ 31  ┆ Dallas-Fort Worth             ┆ US          ┆ 8413  │
+│ LSZH ┆ EPPO  ┆ 0   ┆ 13  ┆ Poznań                        ┆ PL          ┆ 809   │
+│ LSZH ┆ OEJN  ┆ 0   ┆ 12  ┆ Jeddah                        ┆ SA          ┆ 3960  │
+│ LSZH ┆ FYWH  ┆ 0   ┆ 12  ┆ Windhoek                      ┆ NA          ┆ 7828  │
+│ LSZH ┆ OOMS  ┆ 0   ┆ 12  ┆ Muscat/Seeb                   ┆ OM          ┆ 5108  │
+│ LSZH ┆ GMMN  ┆ 0   ┆ 10  ┆ Casablanca                    ┆ MA          ┆ 2070  │
+│ LSZH ┆ LDRI  ┆ 0   ┆ 9   ┆ Rijeka(Omišalj)               ┆ HR          ┆ 525   │
+│ LSZH ┆ EGPF  ┆ 0   ┆ 9   ┆ Glasgow                       ┆ GB          ┆ 1291  │
+│ LSZH ┆ OKKK  ┆ 0   ┆ 9   ┆ Kuwait City                   ┆ KW          ┆ 3932  │
+│ LSZH ┆ LGKF  ┆ 0   ┆ 8   ┆ Kefallinia Island             ┆ GR          ┆ 1421  │
+│ LSZH ┆ VRMM  ┆ 0   ┆ 8   ┆ Malé                          ┆ MV          ┆ 7804  │
+│ LTFM ┆ URKK  ┆ 0   ┆ 87  ┆ Krasnodar                     ┆ RU          ┆ 944   │
+│ LTFM ┆ EGSS  ┆ 0   ┆ 66  ┆ London, Essex                 ┆ GB          ┆ 2455  │
+│ LTFM ┆ UDYZ  ┆ 0   ┆ 61  ┆ Yerevan                       ┆ AM          ┆ 1325  │
+│ LTFM ┆ LEZL  ┆ 0   ┆ 23  ┆ Seville                       ┆ ES          ┆ 2988  │
+│ LTFM ┆ EPGD  ┆ 0   ┆ 18  ┆ Gdańsk                        ┆ PL          ┆ 1642  │
+│ LTFM ┆ LRTR  ┆ 0   ┆ 18  ┆ Timişoara                     ┆ RO          ┆ 780   │
+│ LTFM ┆ HKMO  ┆ 0   ┆ 14  ┆ Mombasa                       ┆ KE          ┆ 5157  │
+│ LTFM ┆ FSIA  ┆ 0   ┆ 11  ┆ Victoria                      ┆ SC          ┆ 5788  │
+│ LTFM ┆ OEGS  ┆ 0   ┆ 9   ┆ Qassim                        ┆ SA          ┆ 2162  │
+│ LTFM ┆ LHDC  ┆ 0   ┆ 9   ┆ Debrecen                      ┆ HU          ┆ 892   │
+│ LTFM ┆ UZFF  ┆ 0   ┆ 8   ┆ Fergana                       ┆ UZ          ┆ 3584  │
+│ LTFM ┆ UZST  ┆ 0   ┆ 8   ┆ Termez                        ┆ UZ          ┆ 3322  │
+│ LTFM ┆ ORSJ  ┆ 0   ┆ 8   ┆ Sulaymaniyah                  ┆ IQ          ┆ 1575  │
+└──────┴───────┴─────┴─────┴───────────────────────────────┴─────────────┴───────┘
+DROPPED:
+shape: (82, 7)
+┌──────┬───────┬─────┬─────┬─────────────────────────────────┬─────────────┬───────┐
+│ hub  ┆ other ┆ n25 ┆ n26 ┆ municipality                    ┆ iso_country ┆ km    │
+│ ---  ┆ ---   ┆ --- ┆ --- ┆ ---                             ┆ ---         ┆ ---   │
+│ str  ┆ str   ┆ u32 ┆ u32 ┆ str                             ┆ str         ┆ f64   │
+╞══════╪═══════╪═════╪═════╪═════════════════════════════════╪═════════════╪═══════╡
+│ EDDF ┆ EDDW  ┆ 142 ┆ 0   ┆ Bremen                          ┆ DE          ┆ 336   │
+│ EDDF ┆ EDDS  ┆ 142 ┆ 0   ┆ Stuttgart                       ┆ DE          ┆ 156   │
+│ EDDF ┆ EPKT  ┆ 81  ┆ 0   ┆ Katowice                        ┆ PL          ┆ 749   │
+│ EDDF ┆ LFBO  ┆ 80  ┆ 0   ┆ Toulouse/Blagnac                ┆ FR          ┆ 897   │
+│ EDDF ┆ EGPF  ┆ 57  ┆ 0   ┆ Glasgow                         ┆ GB          ┆ 1083  │
+│ EDDF ┆ ENZV  ┆ 56  ┆ 0   ┆ Stavanger                       ┆ NO          ┆ 1002  │
+│ EDDF ┆ LWSK  ┆ 42  ┆ 0   ┆ Ilinden                         ┆ MK          ┆ 1347  │
+│ EDDF ┆ LFBD  ┆ 36  ┆ 0   ┆ Bordeaux                        ┆ FR          ┆ 905   │
+│ EDDF ┆ EGNT  ┆ 29  ┆ 0   ┆ Newcastle upon Tyne, Tyne and … ┆ GB          ┆ 888   │
+│ EDDF ┆ EPBY  ┆ 21  ┆ 0   ┆ Bydgoszcz                       ┆ PL          ┆ 734   │
+│ EDDF ┆ LFMT  ┆ 12  ┆ 0   ┆ Montpellier/Méditerranée        ┆ FR          ┆ 798   │
+│ EDDF ┆ OKKK  ┆ 10  ┆ 0   ┆ Kuwait City                     ┆ KW          ┆ 4021  │
+│ EDDF ┆ MPTO  ┆ 9   ┆ 0   ┆ Tocumen                         ┆ PA          ┆ 9089  │
+│ EDDF ┆ EFOU  ┆ 8   ┆ 0   ┆ Oulu / Oulunsalo                ┆ FI          ┆ 1924  │
+│ EDDM ┆ EPGD  ┆ 83  ┆ 0   ┆ Gdańsk                          ┆ PL          ┆ 814   │
+│ EDDM ┆ LRSB  ┆ 72  ┆ 0   ┆ Sibiu                           ┆ RO          ┆ 973   │
+│ EDDM ┆ EKBI  ┆ 62  ┆ 0   ┆ Billund                         ┆ DK          ┆ 841   │
+│ EDDM ┆ EPRZ  ┆ 60  ┆ 0   ┆ Jasionka                        ┆ PL          ┆ 768   │
+│ EDDM ┆ EPPO  ┆ 56  ┆ 0   ┆ Poznań                          ┆ PL          ┆ 576   │
+│ EDDM ┆ LUKK  ┆ 11  ┆ 0   ┆ Chişinău                        ┆ MD          ┆ 1292  │
+│ EDDM ┆ LIBF  ┆ 8   ┆ 0   ┆ Foggia (FG)                     ┆ IT          ┆ 824   │
+│ EGLL ┆ EDDK  ┆ 129 ┆ 0   ┆ Köln (Cologne)                  ┆ DE          ┆ 534   │
+│ EGLL ┆ LGKL  ┆ 21  ┆ 0   ┆ Kalamata                        ┆ GR          ┆ 2384  │
+│ EGLL ┆ EVRA  ┆ 17  ┆ 0   ┆ Riga                            ┆ LV          ┆ 1690  │
+│ EGLL ┆ LTFJ  ┆ 17  ┆ 0   ┆ Pendik, Istanbul                ┆ TR          ┆ 2551  │
+│ EHAM ┆ LFPO  ┆ 15  ┆ 0   ┆ Paris (Orly, Val-de-Marne)      ┆ FR          ┆ 433   │
+│ EHAM ┆ UATG  ┆ 14  ┆ 0   ┆ Atyrau                          ┆ KZ          ┆ 3370  │
+│ EHAM ┆ DTNH  ┆ 9   ┆ 0   ┆ Enfidha                         ┆ TN          ┆ 1859  │
+│ EHAM ┆ LWSK  ┆ 9   ┆ 0   ┆ Ilinden                         ┆ MK          ┆ 1710  │
+│ EHAM ┆ ENEV  ┆ 8   ┆ 0   ┆ Evenes                          ┆ NO          ┆ 1907  │
+│ LEBL ┆ OKKK  ┆ 17  ┆ 0   ┆ Kuwait City                     ┆ KW          ┆ 4322  │
+│ LEBL ┆ LIRI  ┆ 12  ┆ 0   ┆ Salerno                         ┆ IT          ┆ 1079  │
+│ LEBL ┆ ENTO  ┆ 9   ┆ 0   ┆ Sandefjord(Torp)                ┆ NO          ┆ 2069  │
+│ LEBL ┆ LIPR  ┆ 9   ┆ 0   ┆ Rimini (RN)                     ┆ IT          ┆ 912   │
+│ LEBL ┆ LFBI  ┆ 8   ┆ 0   ┆ Poitiers/Biard                  ┆ FR          ┆ 605   │
+│ LEBL ┆ LICB  ┆ 8   ┆ 0   ┆ Comiso                          ┆ IT          ┆ 1180  │
+│ LEMD ┆ SVMI  ┆ 74  ┆ 0   ┆ Maiquetía                       ┆ VE          ┆ 7006  │
+│ LEMD ┆ ZGSZ  ┆ 9   ┆ 0   ┆ Shenzhen                        ┆ CN          ┆ 10472 │
+│ LFPG ┆ EDDS  ┆ 38  ┆ 0   ┆ Stuttgart                       ┆ DE          ┆ 489   │
+│ LFPG ┆ LEMH  ┆ 21  ┆ 0   ┆ Mahón (Maó)                     ┆ ES          ┆ 1026  │
+│ LFPG ┆ LEST  ┆ 17  ┆ 0   ┆ Santiago de Compostela          ┆ ES          ┆ 1085  │
+│ LFPG ┆ MUHA  ┆ 14  ┆ 0   ┆ Havana                          ┆ CU          ┆ 7744  │
+│ LFPG ┆ HTZA  ┆ 13  ┆ 0   ┆ Zanzibar                        ┆ TZ          ┆ 7096  │
+│ LFPG ┆ RPLL  ┆ 12  ┆ 0   ┆ Manila (Pasay)                  ┆ PH          ┆ 10733 │
+│ LFPG ┆ YPPH  ┆ 11  ┆ 0   ┆ Perth                           ┆ AU          ┆ 14272 │
+│ LFPG ┆ BKPR  ┆ 10  ┆ 0   ┆ Prishtina                       ┆ XK          ┆ 1596  │
+│ LFPG ┆ GMFF  ┆ 9   ┆ 0   ┆ Saïss                           ┆ MA          ┆ 1788  │
+│ LFPG ┆ UTTT  ┆ 9   ┆ 0   ┆ Tashkent                        ┆ UZ          ┆ 5133  │
+│ LFPG ┆ LBWN  ┆ 8   ┆ 0   ┆ Varna                           ┆ BG          ┆ 2040  │
+│ LIRF ┆ LEXJ  ┆ 19  ┆ 0   ┆ Santander                       ┆ ES          ┆ 1325  │
+│ LIRF ┆ EPPO  ┆ 17  ┆ 0   ┆ Poznań                          ┆ PL          ┆ 1230  │
+│ LIRF ┆ EDJA  ┆ 14  ┆ 0   ┆ Memmingen                       ┆ DE          ┆ 706   │
+│ LIRF ┆ LKTB  ┆ 9   ┆ 0   ┆ Brno                            ┆ CZ          ┆ 887   │
+│ LIRF ┆ EPLB  ┆ 9   ┆ 0   ┆ Lublin                          ┆ PL          ┆ 1317  │
+│ LIRF ┆ EICK  ┆ 9   ┆ 0   ┆ Cork                            ┆ IE          ┆ 1922  │
+│ LIRF ┆ HEGN  ┆ 8   ┆ 0   ┆ Hurghada                        ┆ EG          ┆ 2545  │
+│ LSZH ┆ KDEN  ┆ 13  ┆ 0   ┆ Denver                          ┆ US          ┆ 8282  │
+│ LSZH ┆ LGSK  ┆ 9   ┆ 0   ┆ Skiathos                        ┆ GR          ┆ 1516  │
+│ LSZH ┆ DTTA  ┆ 9   ┆ 0   ┆ Tunis                           ┆ TN          ┆ 1187  │
+│ LSZH ┆ EKBI  ┆ 9   ┆ 0   ┆ Billund                         ┆ DK          ┆ 922   │
+│ LTFM ┆ HEGN  ┆ 42  ┆ 0   ┆ Hurghada                        ┆ EG          ┆ 1635  │
+│ LTFM ┆ LTCW  ┆ 31  ┆ 0   ┆ Hakkari                         ┆ TR          ┆ 1393  │
+│ LTFM ┆ LTCU  ┆ 28  ┆ 0   ┆ Bingöl                          ┆ TR          ┆ 1044  │
+│ LTFM ┆ UATE  ┆ 28  ┆ 0   ┆ Aktau                           ┆ KZ          ┆ 1848  │
+│ LTFM ┆ EDDP  ┆ 25  ┆ 0   ┆ Schkeuditz                      ┆ DE          ┆ 1689  │
+│ LTFM ┆ LTCL  ┆ 23  ┆ 0   ┆ Siirt                           ┆ TR          ┆ 1180  │
+│ LTFM ┆ FOOL  ┆ 23  ┆ 0   ┆ Libreville                      ┆ GA          ┆ 4937  │
+│ LTFM ┆ FZAA  ┆ 22  ┆ 0   ┆ Kinshasa                        ┆ CD          ┆ 5254  │
+│ LTFM ┆ UTFF  ┆ 22  ┆ 0   ┆ null                            ┆ null        ┆ null  │
+│ LTFM ┆ EKBI  ┆ 21  ┆ 0   ┆ Billund                         ┆ DK          ┆ 2145  │
+│ LTFM ┆ UTSB  ┆ 20  ┆ 0   ┆ Bukhara                         ┆ UZ          ┆ 3005  │
+│ LTFM ┆ MUHA  ┆ 17  ┆ 0   ┆ Havana                          ┆ CU          ┆ 9956  │
+│ LTFM ┆ UTFN  ┆ 16  ┆ 0   ┆ Namangan                        ┆ UZ          ┆ 3550  │
+│ LTFM ┆ SVMI  ┆ 13  ┆ 0   ┆ Maiquetía                       ┆ VE          ┆ 9704  │
+│ LTFM ┆ OMDW  ┆ 10  ┆ 0   ┆ Dubai(Jebel Ali)                ┆ AE          ┆ 3042  │
+│ LTFM ┆ LGRP  ┆ 10  ┆ 0   ┆ Rhodes                          ┆ GR          ┆ 544   │
+│ LTFM ┆ OENN  ┆ 9   ┆ 0   ┆ Sharma                          ┆ SA          ┆ 1600  │
+│ LTFM ┆ UAKK  ┆ 9   ┆ 0   ┆ Karaganda                       ┆ KZ          ┆ 3544  │
+│ LTFM ┆ EGGD  ┆ 8   ┆ 0   ┆ Bristol                         ┆ GB          ┆ 2637  │
+│ LTFM ┆ UAIT  ┆ 8   ┆ 0   ┆ Turkıstan                       ┆ KZ          ┆ 3252  │
+│ LTFM ┆ LFST  ┆ 8   ┆ 0   ┆ Strasbourg                      ┆ FR          ┆ 1840  │
+│ LTFM ┆ OETF  ┆ 8   ┆ 0   ┆ Taif                            ┆ SA          ┆ 2464  │
+└──────┴───────┴─────┴─────┴─────────────────────────────────┴─────────────┴───────┘
+chart saved

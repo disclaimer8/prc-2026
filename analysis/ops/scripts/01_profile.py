@@ -1,0 +1,30 @@
+from common import *
+lf = pl.scan_parquet(FILES).with_columns(airport_expr())
+df = lf.collect()
+N=len(df); print("N rows", N)
+print("null fraction per column:")
+print(df.null_count().transpose(include_header=True).with_columns((pl.col("column_0")/N).round(4).alias("frac")))
+print(df.group_by("APT","PHASE_mvt").len().pivot(on="PHASE_mvt", index="APT", values="len").sort("APT"))
+print("APT outside 10 list:", df.filter(~pl.col("APT").is_in(["EDDF","EDDM","EGLL","EHAM","LEBL","LEMD","LFPG","LIRF","LSZH","LTFM"])).height)
+print("both ADEP and ADES in list:", df.filter(pl.col("ADEP_mvt").is_in(df["APT"].unique()) & pl.col("ADES_mvt").is_in(df["APT"].unique())).height)
+t = df["TAXITIME_SEC_mvt"]
+print("taxi nulls", t.null_count())
+# check computed
+dep = df.filter(pl.col("PHASE_mvt")=="DEP")
+arr = df.filter(pl.col("PHASE_mvt")=="ARR")
+d1 = dep.select(((pl.col("MVT_TIME_UTC_mvt")-pl.col("BLOCK_TIME_UTC_mvt")).dt.total_seconds()-pl.col("TAXITIME_SEC_mvt")).abs().alias("d"))
+d2 = arr.select(((pl.col("BLOCK_TIME_UTC_mvt")-pl.col("MVT_TIME_UTC_mvt")).dt.total_seconds()-pl.col("TAXITIME_SEC_mvt")).abs().alias("d"))
+print("DEP: taxi==MVT-BLOCK mismatch (>1s):", (d1["d"]>1).sum(), "of", dep.height)
+print("ARR: taxi==BLOCK-MVT mismatch (>1s):", (d2["d"]>1).sum(), "of", arr.height)
+for name, sub in [("DEP",dep),("ARR",arr)]:
+    x = sub["TAXITIME_SEC_mvt"]
+    print(name, "n", x.len(), "mean", round(x.mean(),1), "median", x.median(), "p90", x.quantile(0.9), "p99", x.quantile(0.99), "min", x.min(), "max", x.max())
+    print("  <0:", (x<0).sum(), " ==0:", (x==0).sum(), " <60:", (x<60).sum(), " >3600:", (x>3600).sum(), " >4h:", (x>14400).sum(), " >24h:", (x>86400).sum())
+print(df["MARKET_SEGMENT_flt"].value_counts().sort("count", descending=True))
+print(df["WK_TBL_CAT_flt"].value_counts().sort("count", descending=True))
+print(df["FLIGHT_TYPE_flt"].value_counts().sort("count", descending=True))
+print(df["FLIGHT_RULE_mvt"].value_counts().sort("count", descending=True))
+print("date range MVT:", df["MVT_TIME_UTC_mvt"].min(), df["MVT_TIME_UTC_mvt"].max())
+print("dup MVT_ID:", N - df["MVT_ID_mvt"].n_unique())
+print("runways per airport:")
+print(df.group_by("APT").agg(pl.col("RUNWAY_mvt").n_unique().alias("rwys"), pl.col("STAND_mvt").n_unique().alias("stands"), pl.col("RUNWAY_mvt").null_count().alias("rwy_null"), pl.col("STAND_mvt").null_count().alias("stand_null"), pl.len()).sort("APT"))

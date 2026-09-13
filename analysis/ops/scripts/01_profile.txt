@@ -1,0 +1,142 @@
+/Users/denyskolomiiets/prc-2026/analysis/ops/scripts/01_profile.py:9: DeprecationWarning: `is_in` with a collection of the same datatype is ambiguous and deprecated.
+Please use `implode` to return to previous behavior.
+
+See https://github.com/pola-rs/polars/issues/22149 for more information.
+  print("both ADEP and ADES in list:", df.filter(pl.col("ADEP_mvt").is_in(df["APT"].unique()) & pl.col("ADES_mvt").is_in(df["APT"].unique())).height)
+N rows 4167797
+null fraction per column:
+shape: (31, 3)
+┌───────────────────────┬──────────┬────────┐
+│ column                ┆ column_0 ┆ frac   │
+│ ---                   ┆ ---      ┆ ---    │
+│ str                   ┆ u32      ┆ f64    │
+╞═══════════════════════╪══════════╪════════╡
+│ MVT_ID_mvt            ┆ 0        ┆ 0.0    │
+│ FLIGHT_ID_mvt         ┆ 30930    ┆ 0.0074 │
+│ FLIGHT_mvt            ┆ 410      ┆ 0.0001 │
+│ FLIGHT_RULE_mvt       ┆ 689      ┆ 0.0002 │
+│ ADEP_mvt              ┆ 84       ┆ 0.0    │
+│ ADES_mvt              ┆ 122      ┆ 0.0    │
+│ PHASE_mvt             ┆ 0        ┆ 0.0    │
+│ MVT_TIME_UTC_mvt      ┆ 0        ┆ 0.0    │
+│ BLOCK_TIME_UTC_mvt    ┆ 1        ┆ 0.0    │
+│ SCHED_TIME_UTC_mvt    ┆ 0        ┆ 0.0    │
+│ AIRCRAFT_TYPE_mvt     ┆ 1649     ┆ 0.0004 │
+│ RUNWAY_mvt            ┆ 0        ┆ 0.0    │
+│ STAND_mvt             ┆ 64       ┆ 0.0    │
+│ TAXITIME_SEC_mvt      ┆ 1        ┆ 0.0    │
+│ LOBT_flt              ┆ 37919    ┆ 0.0091 │
+│ CALLSIGN_flt          ┆ 37919    ┆ 0.0091 │
+│ ADEP_flt              ┆ 37919    ┆ 0.0091 │
+│ ADES_flt              ┆ 37919    ┆ 0.0091 │
+│ ADES_FILED_flt        ┆ 37919    ┆ 0.0091 │
+│ MARKET_SEGMENT_flt    ┆ 37919    ┆ 0.0091 │
+│ IOBT_flt              ┆ 37919    ┆ 0.0091 │
+│ FLIGHT_RULE_flt       ┆ 38060    ┆ 0.0091 │
+│ FLIGHT_TYPE_flt       ┆ 37919    ┆ 0.0091 │
+│ AIRCRAFT_TYPE_flt     ┆ 37919    ┆ 0.0091 │
+│ WK_TBL_CAT_flt        ┆ 38060    ┆ 0.0091 │
+│ AIRCRAFT_OPERATOR_flt ┆ 37919    ┆ 0.0091 │
+│ EOBT_1_flt            ┆ 37919    ┆ 0.0091 │
+│ ARVT_1_flt            ┆ 37919    ┆ 0.0091 │
+│ AOBT_3_flt            ┆ 37919    ┆ 0.0091 │
+│ ARVT_3_flt            ┆ 37919    ┆ 0.0091 │
+│ APT                   ┆ 0        ┆ 0.0    │
+└───────────────────────┴──────────┴────────┘
+shape: (10, 3)
+┌──────┬────────┬────────┐
+│ APT  ┆ ARR    ┆ DEP    │
+│ ---  ┆ ---    ┆ ---    │
+│ str  ┆ u32    ┆ u32    │
+╞══════╪════════╪════════╡
+│ EDDF ┆ 230122 ┆ 230141 │
+│ EDDM ┆ 167323 ┆ 167334 │
+│ EGLL ┆ 239511 ┆ 239546 │
+│ EHAM ┆ 247706 ┆ 247951 │
+│ LEBL ┆ 179081 ┆ 179705 │
+│ LEMD ┆ 211091 ┆ 212242 │
+│ LFPG ┆ 238835 ┆ 239552 │
+│ LIRF ┆ 160504 ┆ 160704 │
+│ LSZH ┆ 134691 ┆ 134907 │
+│ LTFM ┆ 273886 ┆ 272965 │
+└──────┴────────┴────────┘
+APT outside 10 list: 0
+both ADEP and ADES in list: 637839
+taxi nulls 1
+DEP: taxi==MVT-BLOCK mismatch (>1s): 0 of 2085047
+ARR: taxi==BLOCK-MVT mismatch (>1s): 0 of 2082750
+DEP n 2085047 mean 991.2 median 912.0 p90 1471.0 p99 2339.0 min -12 max 131167
+  <0: 369  ==0: 19  <60: 1105  >3600: 4126  >4h: 122  >24h: 15
+ARR n 2082750 mean 536.7 median 480.0 p90 903.0 p99 1520.0 min -2652 max 604797
+  <0: 220  ==0: 16  <60: 1348  >3600: 440  >4h: 35  >24h: 3
+shape: (9, 2)
+┌────────────────────┬─────────┐
+│ MARKET_SEGMENT_flt ┆ count   │
+│ ---                ┆ ---     │
+│ str                ┆ u32     │
+╞════════════════════╪═════════╡
+│ Mainline           ┆ 2651434 │
+│ Lowcost            ┆ 800577  │
+│ Regional           ┆ 423167  │
+│ Cargo              ┆ 120075  │
+│ Business           ┆ 88968   │
+│ null               ┆ 37919   │
+│ Non-Scheduled      ┆ 29287   │
+│ Other              ┆ 14974   │
+│ Military           ┆ 1396    │
+└────────────────────┴─────────┘
+shape: (5, 2)
+┌────────────────┬─────────┐
+│ WK_TBL_CAT_flt ┆ count   │
+│ ---            ┆ ---     │
+│ str            ┆ u32     │
+╞════════════════╪═════════╡
+│ M              ┆ 3242067 │
+│ H              ┆ 838013  │
+│ null           ┆ 38060   │
+│ J              ┆ 29394   │
+│ L              ┆ 20263   │
+└────────────────┴─────────┘
+shape: (6, 2)
+┌─────────────────┬─────────┐
+│ FLIGHT_TYPE_flt ┆ count   │
+│ ---             ┆ ---     │
+│ str             ┆ u32     │
+╞═════════════════╪═════════╡
+│ S               ┆ 3976983 │
+│ N               ┆ 108360  │
+│ null            ┆ 37919   │
+│ X               ┆ 23492   │
+│ G               ┆ 19878   │
+│ M               ┆ 1165    │
+└─────────────────┴─────────┘
+shape: (3, 2)
+┌─────────────────┬─────────┐
+│ FLIGHT_RULE_mvt ┆ count   │
+│ ---             ┆ ---     │
+│ str             ┆ u32     │
+╞═════════════════╪═════════╡
+│ I               ┆ 4161029 │
+│ V               ┆ 6079    │
+│ null            ┆ 689     │
+└─────────────────┴─────────┘
+date range MVT: 2025-01-01 00:01:04+00:00 2025-12-31 23:57:36+00:00
+dup MVT_ID: 0
+runways per airport:
+shape: (10, 6)
+┌──────┬──────┬────────┬──────────┬────────────┬────────┐
+│ APT  ┆ rwys ┆ stands ┆ rwy_null ┆ stand_null ┆ len    │
+│ ---  ┆ ---  ┆ ---    ┆ ---      ┆ ---        ┆ ---    │
+│ str  ┆ u32  ┆ u32    ┆ u32      ┆ u32        ┆ u32    │
+╞══════╪══════╪════════╪══════════╪════════════╪════════╡
+│ EDDF ┆ 8    ┆ 246    ┆ 0        ┆ 0          ┆ 460263 │
+│ EDDM ┆ 5    ┆ 211    ┆ 0        ┆ 1          ┆ 334657 │
+│ EGLL ┆ 5    ┆ 238    ┆ 0        ┆ 18         ┆ 479057 │
+│ EHAM ┆ 14   ┆ 264    ┆ 0        ┆ 0          ┆ 495657 │
+│ LEBL ┆ 5    ┆ 232    ┆ 0        ┆ 0          ┆ 358786 │
+│ LEMD ┆ 8    ┆ 374    ┆ 0        ┆ 0          ┆ 423333 │
+│ LFPG ┆ 9    ┆ 418    ┆ 0        ┆ 19         ┆ 478387 │
+│ LIRF ┆ 9    ┆ 143    ┆ 0        ┆ 26         ┆ 321208 │
+│ LSZH ┆ 7    ┆ 212    ┆ 0        ┆ 0          ┆ 269598 │
+│ LTFM ┆ 9    ┆ 421    ┆ 0        ┆ 0          ┆ 546851 │
+└──────┴──────┴────────┴──────────┴────────────┴────────┘

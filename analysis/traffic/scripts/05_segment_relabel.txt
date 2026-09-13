@@ -1,0 +1,84 @@
+rows with operator: 1362139
+operator hashes: 2025(Jan+Jul)=577 2026(Jan+Jul)=587 in both=507
+share of 2026 movements by operators also seen in 2025: 0.9977
+operator-years with >1 segment label: 351 of 1164
+operators whose modal segment changed 2025->2026: 15
+movements of those operators:
+shape: (2, 2)
+┌──────┬──────┐
+│ yr   ┆ len  │
+│ ---  ┆ ---  │
+│ str  ┆ u32  │
+╞══════╪══════╡
+│ 2026 ┆ 4067 │
+│ 2025 ┆ 3275 │
+└──────┴──────┘
+transitions (count of operators, movements in 2026 Jan+Jul, movements 2025 Jan+Jul):
+shape: (9, 5)
+┌───────────────┬───────────────┬───────┬──────────┬──────────┐
+│ seg_2025      ┆ seg_2026      ┆ n_ops ┆ mov_2025 ┆ mov_2026 │
+│ ---           ┆ ---           ┆ ---   ┆ ---      ┆ ---      │
+│ str           ┆ str           ┆ u32   ┆ u32      ┆ u32      │
+╞═══════════════╪═══════════════╪═══════╪══════════╪══════════╡
+│ Regional      ┆ Mainline      ┆ 1     ┆ 3093     ┆ 3302     │
+│ Other         ┆ Mainline      ┆ 2     ┆ 15       ┆ 564      │
+│ Business      ┆ Non-Scheduled ┆ 2     ┆ 86       ┆ 58       │
+│ Non-Scheduled ┆ Regional      ┆ 1     ┆ 25       ┆ 58       │
+│ Non-Scheduled ┆ Business      ┆ 3     ┆ 26       ┆ 34       │
+│ Non-Scheduled ┆ Other         ┆ 2     ┆ 15       ┆ 22       │
+│ Other         ┆ Business      ┆ 2     ┆ 9        ┆ 14       │
+│ Non-Scheduled ┆ Mainline      ┆ 1     ┆ 4        ┆ 9        │
+│ Mainline      ┆ Non-Scheduled ┆ 1     ┆ 2        ┆ 6        │
+└───────────────┴───────────────┴───────┴──────────┴──────────┘
+
+Segment YoY with each operator frozen at its 2025 modal segment (only operators present in 2025):
+shape: (16, 5)
+┌─────┬───────────────┬────────┬────────┬─────────┐
+│ mon ┆ seg_fixed     ┆ 2025   ┆ 2026   ┆ yoy_pct │
+│ --- ┆ ---           ┆ ---    ┆ ---    ┆ ---     │
+│ i8  ┆ str           ┆ u32    ┆ u32    ┆ f64     │
+╞═════╪═══════════════╪════════╪════════╪═════════╡
+│ 1   ┆ Mainline      ┆ 223939 ┆ 220874 ┆ -1.4    │
+│ 1   ┆ Lowcost       ┆ 53356  ┆ 51810  ┆ -2.9    │
+│ 1   ┆ Regional      ┆ 10952  ┆ 11726  ┆ 7.1     │
+│ 1   ┆ Business      ┆ 7869   ┆ 8095   ┆ 2.9     │
+│ 1   ┆ Cargo         ┆ 7485   ┆ 7471   ┆ -0.2    │
+│ 1   ┆ Non-Scheduled ┆ 1026   ┆ 1020   ┆ -0.6    │
+│ 1   ┆ Military      ┆ 56     ┆ 86     ┆ 53.6    │
+│ 1   ┆ Other         ┆ 33     ┆ 307    ┆ 830.3   │
+│ 7   ┆ Mainline      ┆ 267400 ┆ 266828 ┆ -0.2    │
+│ 7   ┆ Lowcost       ┆ 74557  ┆ 79426  ┆ 6.5     │
+│ 7   ┆ Regional      ┆ 14007  ┆ 12613  ┆ -10.0   │
+│ 7   ┆ Business      ┆ 10192  ┆ 10326  ┆ 1.3     │
+│ 7   ┆ Cargo         ┆ 8065   ┆ 7954   ┆ -1.4    │
+│ 7   ┆ Non-Scheduled ┆ 1396   ┆ 1243   ┆ -11.0   │
+│ 7   ┆ Military      ┆ 77     ┆ 47     ┆ -39.0   │
+│ 7   ┆ Other         ┆ 37     ┆ 278    ┆ 651.4   │
+└─────┴───────────────┴────────┴────────┴─────────┘
+shape: (20, 5)
+┌─────┬──────┬──────────┬─────────┬──────────┐
+│ mon ┆ hub  ┆ Regional ┆ Lowcost ┆ Mainline │
+│ --- ┆ ---  ┆ ---      ┆ ---     ┆ ---      │
+│ i8  ┆ str  ┆ f64      ┆ f64     ┆ f64      │
+╞═════╪══════╪══════════╪═════════╪══════════╡
+│ 1   ┆ EDDF ┆ 23.5     ┆ 45.9    ┆ -6.8     │
+│ 1   ┆ EDDM ┆ -21.4    ┆ 10.6    ┆ -2.6     │
+│ 1   ┆ EGLL ┆ -1.4     ┆ -1.2    ┆ -1.0     │
+│ 1   ┆ EHAM ┆ -8.7     ┆ -13.2   ┆ -14.3    │
+│ 1   ┆ LEBL ┆ -4.8     ┆ -3.3    ┆ 1.8      │
+│ 1   ┆ LEMD ┆ 18.4     ┆ -11.1   ┆ 3.8      │
+│ 1   ┆ LFPG ┆ 0.3      ┆ -11.4   ┆ 2.0      │
+│ 1   ┆ LIRF ┆ -15.5    ┆ -1.9    ┆ -3.0     │
+│ 1   ┆ LSZH ┆ 81.7     ┆ 2.1     ┆ -0.0     │
+│ 1   ┆ LTFM ┆ -7.9     ┆ -17.3   ┆ 5.9      │
+│ 7   ┆ EDDF ┆ -34.9    ┆ 26.8    ┆ -5.7     │
+│ 7   ┆ EDDM ┆ -29.0    ┆ 2.4     ┆ -3.4     │
+│ 7   ┆ EGLL ┆ 0.6      ┆ 7.7     ┆ -1.3     │
+│ 7   ┆ EHAM ┆ 21.6     ┆ -6.2    ┆ -1.5     │
+│ 7   ┆ LEBL ┆ 28.8     ┆ 8.0     ┆ 1.5      │
+│ 7   ┆ LEMD ┆ 11.3     ┆ 9.8     ┆ 5.6      │
+│ 7   ┆ LFPG ┆ 3.7      ┆ -7.6    ┆ 1.5      │
+│ 7   ┆ LIRF ┆ -2.1     ┆ 7.2     ┆ 1.3      │
+│ 7   ┆ LSZH ┆ -17.7    ┆ 13.7    ┆ 4.5      │
+│ 7   ┆ LTFM ┆ -23.3    ┆ 1.3     ┆ -0.1     │
+└─────┴──────┴──────────┴─────────┴──────────┘

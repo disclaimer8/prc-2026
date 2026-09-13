@@ -1,0 +1,48 @@
+Rows labelled Military segment: 1815  FLIGHT_TYPE M: 1430
+[{'hub': 'EDDM', 'len': 471}, {'hub': 'LSZH', 'len': 319}, {'hub': 'LEMD', 'len': 230}, {'hub': 'EHAM', 'len': 225}, {'hub': 'LFPG', 'len': 123}, {'hub': 'EDDF', 'len': 117}, {'hub': 'LEBL', 'len': 98}, {'hub': 'LTFM', 'len': 85}, {'hub': 'LIRF', 'len': 84}, {'hub': 'EGLL', 'len': 63}]
+
+Jan 2026 diversion rows: 573
+ of which on 2026-01-01..10 (any hub): 203
+ by hub: [{'hub': 'LTFM', 'len': 130}, {'hub': 'LIRF', 'len': 80}, {'hub': 'EDDM', 'len': 72}, {'hub': 'EDDF', 'len': 61}, {'hub': 'LEMD', 'len': 53}, {'hub': 'EHAM', 'len': 53}, {'hub': 'LSZH', 'len': 47}, {'hub': 'LEBL', 'len': 31}, {'hub': 'EGLL', 'len': 27}, {'hub': 'LFPG', 'len': 19}]
+ top days: [{'date_utc': datetime.date(2026, 1, 8), 'len': 30}, {'date_utc': datetime.date(2026, 1, 28), 'len': 27}, {'date_utc': datetime.date(2026, 1, 4), 'len': 26}, {'date_utc': datetime.date(2026, 1, 22), 'len': 24}, {'date_utc': datetime.date(2026, 1, 9), 'len': 23}, {'date_utc': datetime.date(2026, 1, 6), 'len': 22}]
+Dec 2025 diversion rows by hub: [{'hub': 'LTFM', 'len': 123}, {'hub': 'LIRF', 'len': 83}, {'hub': 'EDDM', 'len': 71}, {'hub': 'EHAM', 'len': 49}, {'hub': 'LEMD', 'len': 47}, {'hub': 'LSZH', 'len': 47}, {'hub': 'EDDF', 'len': 46}, {'hub': 'LFPG', 'len': 27}, {'hub': 'EGLL', 'len': 24}, {'hub': 'LEBL', 'len': 23}]
+
+EGLL: DEP rows whose NM ADES_flt == EGLL (returns) : 2  ARR rows with ADEP_flt == EGLL: 103
+EDDF: ARR rows where ADEP_flt == hub (return to origin seen as arrival): 141;  DEP rows with ADES_flt == hub: 83
+EDDM: ARR rows where ADEP_flt == hub (return to origin seen as arrival): 98;  DEP rows with ADES_flt == hub: 108
+EGLL: ARR rows where ADEP_flt == hub (return to origin seen as arrival): 103;  DEP rows with ADES_flt == hub: 2
+EHAM: ARR rows where ADEP_flt == hub (return to origin seen as arrival): 187;  DEP rows with ADES_flt == hub: 222
+LEBL: ARR rows where ADEP_flt == hub (return to origin seen as arrival): 118;  DEP rows with ADES_flt == hub: 28
+LEMD: ARR rows where ADEP_flt == hub (return to origin seen as arrival): 232;  DEP rows with ADES_flt == hub: 93
+LFPG: ARR rows where ADEP_flt == hub (return to origin seen as arrival): 26;  DEP rows with ADES_flt == hub: 30
+LIRF: ARR rows where ADEP_flt == hub (return to origin seen as arrival): 49;  DEP rows with ADES_flt == hub: 28
+LSZH: ARR rows where ADEP_flt == hub (return to origin seen as arrival): 140;  DEP rows with ADES_flt == hub: 101
+LTFM: ARR rows where ADEP_flt == hub (return to origin seen as arrival): 169;  DEP rows with ADES_flt == hub: 157
+
+Airport-reported counterpart != NM counterpart: 62874 of 4857239
+by hub: [{'hub': 'LFPG', 'len': 25771}, {'hub': 'LTFM', 'len': 14076}, {'hub': 'EGLL', 'len': 9325}, {'hub': 'EHAM', 'len': 7059}, {'hub': 'LSZH', 'len': 3622}, {'hub': 'LIRF', 'len': 2579}, {'hub': 'EDDM', 'len': 241}, {'hub': 'EDDF', 'len': 179}, {'hub': 'LEBL', 'len': 14}, {'hub': 'LEMD', 'len': 8}]
+
+AIRCRAFT_TYPE_mvt != AIRCRAFT_TYPE_flt (both present): 14979
+top mismatched pairs: [{'AIRCRAFT_TYPE_mvt': 'B772', 'AIRCRAFT_TYPE_flt': 'B77L', 'len': 5565}, {'AIRCRAFT_TYPE_mvt': 'AT72', 'AIRCRAFT_TYPE_flt': 'AT76', 'len': 3292}, {'AIRCRAFT_TYPE_mvt': 'E75S', 'AIRCRAFT_TYPE_flt': 'E170', 'len': 1288}, {'AIRCRAFT_TYPE_mvt': 'B763', 'AIRCRAFT_TYPE_flt': 'B738', 'len': 403}, {'AIRCRAFT_TYPE_mvt': 'A320', 'AIRCRAFT_TYPE_flt': 'A20N', 'len': 375}, {'AIRCRAFT_TYPE_mvt': 'AT72', 'AIRCRAFT_TYPE_flt': 'AT75', 'len': 266}, {'AIRCRAFT_TYPE_mvt': 'A20N', 'AIRCRAFT_TYPE_flt': 'A320', 'len': 265}, {'AIRCRAFT_TYPE_mvt': 'E195', 'AIRCRAFT_TYPE_flt': 'E295', 'len': 241}]
+
+Unmatched (no NM flight) % by hub/month:
+shape: (10, 5)
+┌──────┬─────────┬─────────┬─────────┬─────────┐
+│ hub  ┆ 2025-01 ┆ 2025-07 ┆ 2026-01 ┆ 2026-07 │
+│ ---  ┆ ---     ┆ ---     ┆ ---     ┆ ---     │
+│ str  ┆ f64     ┆ f64     ┆ f64     ┆ f64     │
+╞══════╪═════════╪═════════╪═════════╪═════════╡
+│ EDDF ┆ 0.77    ┆ 1.24    ┆ 0.93    ┆ 0.73    │
+│ EDDM ┆ 0.39    ┆ 0.67    ┆ 0.68    ┆ 0.51    │
+│ EGLL ┆ 0.53    ┆ 1.04    ┆ 0.47    ┆ 0.56    │
+│ EHAM ┆ 1.57    ┆ 2.00    ┆ 3.25    ┆ 1.62    │
+│ LEBL ┆ 0.34    ┆ 1.43    ┆ 0.45    ┆ 1.13    │
+│ LEMD ┆ 0.30    ┆ 0.95    ┆ 0.41    ┆ 0.62    │
+│ LFPG ┆ 0.90    ┆ 1.85    ┆ 1.19    ┆ 1.20    │
+│ LIRF ┆ 0.46    ┆ 1.32    ┆ 0.67    ┆ 1.05    │
+│ LSZH ┆ 1.59    ┆ 1.96    ┆ 2.04    ┆ 1.88    │
+│ LTFM ┆ 1.20    ┆ 1.64    ┆ 1.52    ┆ 1.68    │
+└──────┴─────────┴─────────┴─────────┴─────────┘
+
+Movements whose UTC month differs from local month (all data): 0 (sanity=0)
+Rows in Jan/Jul 2026 file whose SCHED time is outside the month: 38
