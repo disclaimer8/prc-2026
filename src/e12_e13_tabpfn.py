@@ -25,7 +25,7 @@ APS = ["EDDF", "EDDM", "EGLL", "EHAM", "LEBL", "LEMD", "LFPG", "LIRF", "LSZH", "
 cols = ["MVT_ID_mvt", "split", "month", "ADEP_mvt", "FLIGHT_ID_mvt", "FLIGHT_mvt", "STAND_mvt", "RUNWAY_mvt", "d_mvt_sched",
         "local_hour", "local_dow", "day_nonm_rate", "dep_before_30", "arr_before_30", Y]
 f = pl.read_parquet("data/features_v9.parquet", columns=cols).filter((pl.col("split") == "train") & pl.col("FLIGHT_ID_mvt").is_null())
-if MODE == "E12":
+if MODE in ("E12", "E12b"):
     f = f.filter((pl.col("ADEP_mvt") == "LIRF") & (pl.col("d_mvt_sched") < 14400))
 else:
     f = f.filter(pl.col("ADEP_mvt") != "LIRF")
@@ -60,6 +60,11 @@ p = np.zeros((val.height, 3))
 for j, c in enumerate(clf.classes_):
     p[:, int(c)] = raw[:, j]
 d, y, r = val["d_mvt_sched"].to_numpy(), val[Y].to_numpy(), val["reg"].to_numpy()
+print("p_day on validation: mean", round(float(p[:, 1].mean()), 4), "max", round(float(p[:, 1].max()), 4), "rows with p_day>0.05:", int((p[:, 1] > 0.05).sum()))
+if MODE.endswith("b"):  # E12b: the one-day shift was only observed at delays >= 14 h in 2025
+    short = d < 43200
+    p[short, 2] += p[short, 1]
+    p[short, 1] = 0.0
 new = p[:, 0] * d + p[:, 1] * (86400 + day_taxi) + p[:, 2] * r
 old = val["pred"].to_numpy()
 se_old, se_new = (old - y) ** 2, (new - y) ** 2
