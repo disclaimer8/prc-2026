@@ -72,9 +72,13 @@ CLF_PARAMS = {**REG_PARAMS, "objective": "multiclass", "num_class": len(CLASSES)
 
 
 def feature_columns(df: pl.DataFrame) -> list[str]:
+    # DROP_PREFIX: comma-separated column prefixes to leave out (ablation experiments)
+    drop_prefix = tuple(p for p in os.environ.get("DROP_PREFIX", "").split(",") if p)
     cols = []
     for name, dtype in df.schema.items():
         if name in DROP or isinstance(dtype, (pl.Datetime, pl.Date)):
+            continue
+        if drop_prefix and name.startswith(drop_prefix):
             continue
         if dtype == pl.String and name not in CATEGORICAL:
             continue
