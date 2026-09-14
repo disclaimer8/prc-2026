@@ -326,14 +326,14 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 
     <header class="doc">
       <h1>Taxi-out, команда <span class="sign">gentle-igloo</span></h1>
-      <p class="lede">Бриф для внешнего ревью решения EUROCONTROL PRC Data Challenge 2026. Состояние на 14.09.2026, 01:15 WEST; учтены два ревью и независимая диагностика предела. Числа получены прогонами кода в репозитории, чужие утверждения помечены отдельно.</p>
+      <p class="lede">Бриф для внешнего ревью решения EUROCONTROL PRC Data Challenge 2026. Состояние на 14.09.2026, 19:05 WEST; учтены два ревью и независимая диагностика предела. Числа получены прогонами кода в репозитории, чужие утверждения помечены отдельно.</p>
     </header>
 
     <div class="strip" role="group" aria-label="Статус">
-      <div class="hl"><div class="k">Лидерборд</div><div class="v">279,56</div><div class="s">v9, лучший сабмит</div></div>
-      <div><div class="k">Место</div><div class="v">25 / 134</div><div class="s">лидер 245,02</div></div>
-      <div><div class="k">Таблица LIRF</div><div class="v">−27,0</div><div class="s">E1: v8 против v7</div></div>
-      <div><div class="k">Следующее</div><div class="v">E3</div><div class="s">CV признаков дня-сбоя, затем переобучение</div></div>
+      <div class="hl"><div class="k">Лидерборд</div><div class="v">274,93</div><div class="s">v13, лучший сабмит</div></div>
+      <div><div class="k">Место</div><div class="v">18 / 134</div><div class="s">лидер 245,02</div></div>
+      <div><div class="k">TabPFN-2</div><div class="v">−4,70</div><div class="s">E11: v13 против v8</div></div>
+      <div><div class="k">Идёт</div><div class="v">E9, E10</div><div class="s">P10 стоянка×ВПП, ветер на ВПП</div></div>
       <div><div class="k">Дедлайн</div><div class="v">11.10</div><div class="s">23:59 CET, 5 сабмитов в день</div></div>
     </div>
 
@@ -415,11 +415,11 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 <td style="text-align: right;">—</td>
 </tr>
 <tr>
-<td><strong>v9</strong></td>
+<td>v9</td>
 <td>v8 + ×1,3 к регулярной части у 1136 строк без NM в дни январского сбоя 2026 (E4)</td>
 <td style="text-align: right;">—</td>
-<td style="text-align: right;"><strong>279,56</strong></td>
-<td style="text-align: right;"><strong>22</strong></td>
+<td style="text-align: right;">279,56</td>
+<td style="text-align: right;">22</td>
 </tr>
 <tr>
 <td>v12</td>
@@ -427,6 +427,13 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 <td style="text-align: right;">390,4</td>
 <td style="text-align: right;">279,80</td>
 <td style="text-align: right;">25</td>
+</tr>
+<tr>
+<td><strong>v13</strong></td>
+<td>v7 + TabPFN-2 вместо таблицы для вероятностей режимов LIRF без NM (E11), те же 42 строки</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><strong>274,93</strong></td>
+<td style="text-align: right;"><strong>18</strong></td>
 </tr>
 </tbody>
 </table></div>
@@ -726,6 +733,27 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 <td>—</td>
 <td>выигрыш &gt; 0 в ≥8 из 12 LOMO-фолдов и ≥50% выигрыша без топ-3 строк</td>
 <td>Не прошло — в сабмит не идёт</td>
+</tr>
+<tr>
+<td>E9</td>
+<td>P10 и P50 taxi-out по стоянке×ВПП (эталон PRU, OOF по месяцам, откат к аэропорт×ВПП при n &lt; 10)</td>
+<td>контроль без них; 6 фолдов пар месяцев</td>
+<td>RMSE на строках с NM (y ≤ 7200) лучше ≥0,5 с в ≥4 фолдах из 6 и средний полный RMSE не хуже</td>
+<td>Принять в модель; иначе отказ</td>
+</tr>
+<tr>
+<td>E10</td>
+<td>Встречная и боковая составляющие ветра на ВПП вылета (METAR IEM)</td>
+<td>тот же контроль</td>
+<td>тот же порог</td>
+<td>Принять в модель; иначе отказ</td>
+</tr>
+<tr>
+<td>E11</td>
+<td>TabPFN-2 (Prior Labs License, Apache-2.0 + атрибуция) вместо таблицы для вероятностей режимов LIRF без NM, 12 фолдов LOMO</td>
+<td>таблица, те же кандидаты</td>
+<td>LOMO-SSE ≥5% ниже, выигрыш без топ-3 строк, ≥8 из 12 месяцев</td>
+<td><strong>Выполнен 14.09: принят</strong> — LOMO-SSE −41,5%, без топ-3 −37,3%, лучше в 11 из 12 месяцев. v13 = v7 + TabPFN в тех же 42 строках, сравнение с v8 на лидерборде <strong>Лидерборд:</strong> v13 274,93 против v8 279,62 = −4,70 с</td>
 </tr>
 </tbody>
 </table></div>
