@@ -7,3 +7,4 @@ __pycache__/
 analysis/*/data_ext/
 analysis/*/ext/
 analysis/sources/samples/
+analysis/literature/
