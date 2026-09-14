@@ -50,6 +50,25 @@ def _encode(stats_src: pl.DataFrame, target_rows: pl.DataFrame, name: str, keys:
     return out
 
 
+def _quantile(stats_src: pl.DataFrame, target_rows: pl.DataFrame, name: str, keys: list[str], parent: list[str], q: float) -> pl.DataFrame:
+    """Unimpeded-taxi reference in the spirit of the EUROCONTROL PRU indicator: the q-quantile of taxi-out per group,
+    falling back to the parent group when the group has fewer than 10 rows."""
+    child = stats_src.group_by(keys).agg(_q=pl.col("_y").quantile(q), _n=pl.len())
+    par = stats_src.group_by(parent).agg(_qp=pl.col("_y").quantile(q))
+    return (
+        target_rows.select("MVT_ID_mvt", *keys)
+        .join(child, on=keys, how="left", nulls_equal=True)
+        .join(par, on=parent, how="left", nulls_equal=True)
+        .select("MVT_ID_mvt", pl.when(pl.col("_n") >= 10).then(pl.col("_q")).otherwise(pl.col("_qp")).alias(name))
+    )
+
+
+QUANTILE_SPECS = [
+    ("tq_p10_stand_rwy", ["ADEP_mvt", "STAND_mvt", "RUNWAY_mvt"], ["ADEP_mvt", "RUNWAY_mvt"], 0.10),
+    ("tq_p50_stand_rwy", ["ADEP_mvt", "STAND_mvt", "RUNWAY_mvt"], ["ADEP_mvt", "RUNWAY_mvt"], 0.50),
+]
+
+
 def add_encodings(fit: pl.DataFrame, pred: pl.DataFrame, fit_labels_regular) -> tuple[pl.DataFrame, pl.DataFrame]:
     """Return (fit, pred) with encoding columns. Only regular-regime fit rows feed the statistics."""
     fit = _prep(fit).with_columns(_regular=pl.Series(fit_labels_regular))
@@ -65,12 +84,16 @@ def add_encodings(fit: pl.DataFrame, pred: pl.DataFrame, fit_labels_regular) -> 
         enc = rows.select("MVT_ID_mvt")
         for name, keys, col in specs:
             enc = enc.join(_encode(src, rows, name, keys, col), on="MVT_ID_mvt")
+        for name, keys, parent, q in QUANTILE_SPECS:
+            enc = enc.join(_quantile(src, rows, name, keys, parent, q), on="MVT_ID_mvt")
         fit_parts.append(enc)
     fit_enc = pl.concat(fit_parts)
 
     pred_enc = pred.select("MVT_ID_mvt")
     for name, keys, col in specs:
         pred_enc = pred_enc.join(_encode(src_all, pred, name, keys, col), on="MVT_ID_mvt")
+    for name, keys, parent, q in QUANTILE_SPECS:
+        pred_enc = pred_enc.join(_quantile(src_all, pred, name, keys, parent, q), on="MVT_ID_mvt")
 
     drop = ["local_hour_int", "_y", "_r"]
     fit = fit.drop(drop + ["_regular"]).join(fit_enc, on="MVT_ID_mvt", how="left")

@@ -386,6 +386,37 @@ def add_day_context(feat: pl.DataFrame, df: pl.DataFrame) -> pl.DataFrame:
     return feat.join(ctx, on="MVT_ID_mvt", how="left")
 
 
+def add_runway_wind(feat: pl.DataFrame) -> pl.DataFrame:
+    """Head- and crosswind on the departure runway from METAR wind (IEM archive) and the runway designator heading."""
+    frames = [pl.read_csv(f"data/metar_wind/{ap}.csv", null_values=["null", "M"], infer_schema_length=0) for ap in AIRPORT_TZ]
+    w = (
+        pl.concat(frames)
+        .select(
+            ADEP_mvt=pl.col("station"),
+            wind_time=pl.col("valid").str.to_datetime("%Y-%m-%d %H:%M", time_zone="UTC").dt.cast_time_unit("us"),
+            drct=pl.col("drct").cast(pl.Float64),
+            sknt=pl.col("sknt").cast(pl.Float64),
+        )
+        .drop_nulls(["wind_time", "sknt"])
+        .sort("wind_time")
+    )
+    base = feat.select(
+        "MVT_ID_mvt", "ADEP_mvt", "RUNWAY_mvt",
+        t=pl.col("MVT_TIME_UTC_mvt"),
+        heading=pl.col("RUNWAY_mvt").str.extract(r"^(\d{2})", 1).cast(pl.Float64) * 10,
+    ).sort("t")
+    j = base.join_asof(w, left_on="t", right_on="wind_time", by="ADEP_mvt", strategy="backward", tolerance="3h")
+    rad = ((pl.col("drct") - pl.col("heading")) * np.pi / 180)
+    j = j.select(
+        "MVT_ID_mvt",
+        # wind direction is where it blows from: positive headwind when it blows along the runway heading's reverse
+        wxr_headwind=pl.when(pl.col("drct") > 0).then(pl.col("sknt") * rad.cos()).otherwise(0.0),
+        wxr_crosswind=pl.when(pl.col("drct") > 0).then((pl.col("sknt") * rad.sin()).abs()).otherwise(0.0),
+        wxr_variable=((pl.col("drct") == 0) & (pl.col("sknt") > 0)).cast(pl.Int8),
+    )
+    return feat.join(j, on="MVT_ID_mvt", how="left")
+
+
 def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
     """Return one row per departure (train + ranking) with features and target."""
     if df is None:
@@ -451,12 +482,13 @@ def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
     feat = add_neighbor_features(feat, df)
     feat = add_runway_arrivals(feat, df)
     feat = add_day_context(feat, df)
+    feat = add_runway_wind(feat)
     feat = add_geometry(feat)
     return add_weather(feat)
 
 
 if __name__ == "__main__":
     f = build()
-    f.write_parquet(os.environ.get("FEATURES_OUT", "data/features_v8.parquet"))
+    f.write_parquet(os.environ.get("FEATURES_OUT", "data/features_v9.parquet"))
     print(f.shape)
     print(f.filter(pl.col("split") == "rank").null_count().transpose(include_header=True).filter(pl.col("column_0") > 0))
