@@ -333,7 +333,7 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
       <div class="hl"><div class="k">Лидерборд</div><div class="v">274,93</div><div class="s">v13, лучший сабмит</div></div>
       <div><div class="k">Место</div><div class="v">18 / 134</div><div class="s">лидер 245,02</div></div>
       <div><div class="k">TabPFN-2</div><div class="v">−4,70</div><div class="s">E11: v13 против v8</div></div>
-      <div><div class="k">Идёт</div><div class="v">E9, E10</div><div class="s">P10 стоянка×ВПП, ветер на ВПП</div></div>
+      <div><div class="k">Следующее</div><div class="v">E12</div><div class="s">TabPFN на другие строки без NM</div></div>
       <div><div class="k">Дедлайн</div><div class="v">11.10</div><div class="s">23:59 CET, 5 сабмитов в день</div></div>
     </div>
 
@@ -739,14 +739,14 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 <td>P10 и P50 taxi-out по стоянке×ВПП (эталон PRU, OOF по месяцам, откат к аэропорт×ВПП при n &lt; 10)</td>
 <td>контроль без них; 6 фолдов пар месяцев</td>
 <td>RMSE на строках с NM (y ≤ 7200) лучше ≥0,5 с в ≥4 фолдах из 6 и средний полный RMSE не хуже</td>
-<td>Принять в модель; иначе отказ</td>
+<td>Принять в модель; иначе отказ <strong>Выполнен 14.09: отклонён</strong> — выигрыш ≥0,5 с на строках с NM в 0 из 6 фолдов (от −0,12 до +0,29 с), средний полный RMSE +0,68</td>
 </tr>
 <tr>
 <td>E10</td>
 <td>Встречная и боковая составляющие ветра на ВПП вылета (METAR IEM)</td>
 <td>тот же контроль</td>
 <td>тот же порог</td>
-<td>Принять в модель; иначе отказ</td>
+<td>Принять в модель; иначе отказ <strong>Выполнен 14.09: отклонён</strong> — 0 из 6 фолдов (от −0,22 до +0,23 с), средний полный RMSE +0,33</td>
 </tr>
 <tr>
 <td>E11</td>
