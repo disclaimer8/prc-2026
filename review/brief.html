@@ -331,7 +331,7 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 
     <div class="strip" role="group" aria-label="Статус">
       <div class="hl"><div class="k">Лидерборд</div><div class="v">279,56</div><div class="s">v9, лучший сабмит</div></div>
-      <div><div class="k">Место</div><div class="v">22 / 132</div><div class="s">лидер 245,02</div></div>
+      <div><div class="k">Место</div><div class="v">25 / 134</div><div class="s">лидер 245,02</div></div>
       <div><div class="k">Таблица LIRF</div><div class="v">−27,0</div><div class="s">E1: v8 против v7</div></div>
       <div><div class="k">Следующее</div><div class="v">E3</div><div class="s">CV признаков дня-сбоя, затем переобучение</div></div>
       <div><div class="k">Дедлайн</div><div class="v">11.10</div><div class="s">23:59 CET, 5 сабмитов в день</div></div>
@@ -421,9 +421,17 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 <td style="text-align: right;"><strong>279,56</strong></td>
 <td style="text-align: right;"><strong>22</strong></td>
 </tr>
+<tr>
+<td>v12</td>
+<td>Гигиена: разметка К2, исправленный <code>taxiing_at_ob</code>, гейт AOBT, В4 (без признаков дня-сбоя) + CatBoost/сиды + таблица LIRF</td>
+<td style="text-align: right;">390,4</td>
+<td style="text-align: right;">279,80</td>
+<td style="text-align: right;">25</td>
+</tr>
 </tbody>
 </table></div>
 <p>Валидация — полный RMSE на январе и июле 2025; модель учится на остальных 10 месяцах. *Таблица применена к предсказаниям валидации v6. Медиана лидерборда — 325,9.</p>
+<p>v12 против v8 (+0,18 с): пакет гигиены нейтрален и на валидации, и на лидерборде — оставлен ради корректности, рычагом не был.</p>
 <p>v4 ухудшил валидацию, но улучшил лидерборд: валидация на 2025 не видит сдвиг 2026. Поэтому признаки, зависящие от 2026, проверяются на лидерборде.</p>
 </section><section id="s3"><h2><span class="n">3</span>Что известно о данных</h2>
 <ol>
