@@ -67,6 +67,10 @@ REG_PARAMS = dict(
     max_cat_to_onehot=8,
     verbose=-1,
     num_threads=10,
+    # reproducibility: fixed seeds and deterministic histogram construction
+    seed=42,
+    deterministic=True,
+    force_row_wise=True,
 )
 CLF_PARAMS = {**REG_PARAMS, "objective": "multiclass", "num_class": len(CLASSES), "num_leaves": 127, "learning_rate": 0.05, "min_data_in_leaf": 100}
 

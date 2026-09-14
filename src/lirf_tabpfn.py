@@ -42,7 +42,7 @@ def main() -> None:
     base, new = int(sys.argv[1]), int(sys.argv[2])
     cols = ["MVT_ID_mvt", "split", "ADEP_mvt", "FLIGHT_ID_mvt", "FLIGHT_mvt", "STAND_mvt", "RUNWAY_mvt", "d_mvt_sched",
             "local_hour", "local_dow", "day_nonm_rate", "dep_before_30", "arr_before_30", Y]
-    f = pl.read_parquet("data/features_v9.parquet", columns=cols)
+    f = pl.read_parquet(os.environ.get("FEATURES", "data/features_v9.parquet"), columns=cols)
     tr = prepare(f.filter(pl.col("split") == "train")).with_columns(
         cls=pl.when((pl.col(Y) - pl.col("d_mvt_sched")).abs() <= 6).then(0).when(pl.col(Y).is_between(86400, 93600)).then(1).otherwise(2)
     )

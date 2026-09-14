@@ -12,5 +12,6 @@ dependencies = [
     "pyarrow>=25.0.1",
     "python-dotenv>=1.2.3",
     "scikit-learn>=1.9.1",
+    "tabpfn>=8.5.0",
     "xgboost>=3.4.1",
 ]
