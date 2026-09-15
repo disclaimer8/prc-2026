@@ -8,3 +8,4 @@ analysis/*/data_ext/
 analysis/*/ext/
 analysis/sources/samples/
 analysis/literature/
+catboost_info/
