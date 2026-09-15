@@ -8,6 +8,7 @@ time, stops) relative to AOBT_3, LOBT, MVT and to the base prediction; plus airp
 prediction. Target: residual y - base, clipped to +-1800 s; training rows with |residual| > 3600 s are dropped (regime tail).
 The correction is applied only to rows with coverage >= 2. Stage model: small LightGBM (31 leaves, min_data 200, 400 rounds,
 lr 0.03), deterministic. For fold (a, b) the stage is trained on the other 10 months only.
+Env (15.09, defaults unchanged): E25_BASE_DIR — folder of base OOF predictions; E25_SAVE_DIR — save corrected OOF per fold.
 Gate (REVIEW_BRIEF.md, E25): total SSE over the 12 months lower by >= 1.0 s LB-equivalent and lower in >= 5 of 6 folds;
 concentration (top-3 rows) reported, not gated. Months without a surface file for a day keep the base prediction.
 """
@@ -62,7 +63,7 @@ def correct(model, d: pl.DataFrame) -> np.ndarray:
     return np.clip(d["base"].to_numpy() + np.where(use, corr, 0.0), 0, None)
 
 
-def oof_base(folder="data/cv_preds_nomonth"):
+def oof_base(folder=os.environ.get("E25_BASE_DIR", "data/cv_preds_nomonth")):
     parts = []
     for p in sorted(glob.glob(f"{folder}/fold_*.npz")):
         z = np.load(p)
@@ -86,6 +87,9 @@ if mode == "cv":
         top3 = np.sort(dl)[:3].sum()
         per_ap = te.with_columns(dl=pl.Series(dl)).group_by("ADEP_mvt").agg(pl.col("dl").sum()).sort("ADEP_mvt")
         res.append((a, b, dl.sum(), top3))
+        if os.environ.get("E25_SAVE_DIR"):  # corrected out-of-fold predictions, for later experiments that use E25 as control
+            os.makedirs(os.environ["E25_SAVE_DIR"], exist_ok=True)
+            np.savez(f"{os.environ['E25_SAVE_DIR']}/fold_{a}_{b}.npz", mvt_id=te["MVT_ID_mvt"].to_numpy(), pred=new, y=y)
         print(f"fold {a}+{b}: rows {te.height} (coverage>=2 {int((te['coverage'] >= 2).sum())}), SSE change {dl.sum():+.3e}, best 3 rows {top3:+.3e}; "
               f"by airport {dict(zip(per_ap['ADEP_mvt'], np.round(per_ap['dl'].to_numpy() / 1e6)))} (1e6)", flush=True)
     tot = sum(r[2] for r in res)
