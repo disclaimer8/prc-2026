@@ -53,7 +53,10 @@ values = np.column_stack(values)
 proba = np.where(np.isnan(values), 0.0, proba)
 proba = T.mask_infeasible(proba, values, rank)
 proba = proba / proba.sum(axis=1, keepdims=True)
-pred = np.clip(T.lobt_clip(np.sum(proba * np.nan_to_num(values), axis=1), rank), 0, None)
+pred = np.clip(T.lobt_clip(np.sum(proba * np.nan_to_num(values), axis=1), rank), 0, T.REG_CLIP[1])
+# LEMD and LEBL have a ceiling at 3598-3604 s; clip to 3604 to avoid wasting SSE on impossible values
+is_lemd_lebl = rank["ADEP_mvt"].is_in(["LEMD", "LEBL"]).to_numpy()
+pred = np.where(is_lemd_lebl, np.minimum(pred, 3604.0), pred)
 
 template = pl.read_parquet("data/prc-2026-datasets/submitting.parquet")
 preds = rank.select("MVT_ID_mvt").with_columns(pl.Series(TARGET, pred))

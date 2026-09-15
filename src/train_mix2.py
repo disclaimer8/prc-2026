@@ -136,7 +136,10 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
     has_sched = ~np.isnan(d_sched)
     p = np.where(has_sched, p, 0.0)
     out = np.where(has_sched, p * np.nan_to_num(d_sched) + (1 - p) * r, r)
-    return np.clip(out, 0, None), {"p": p, "reg": r}, best, (clf, reg)
+    out = np.clip(out, 0, 7200)
+    is_lemd_lebl = pred["ADEP_mvt"].is_in(["LEMD", "LEBL"]).to_numpy()
+    out = np.where(is_lemd_lebl, np.minimum(out, 3604.0), out)
+    return out, {"p": p, "reg": r}, best, (clf, reg)
 
 
 def main() -> None:
