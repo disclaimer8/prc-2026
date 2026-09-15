@@ -216,11 +216,7 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
     proba = mask_infeasible(proba, values, pred)
     proba = proba / proba.sum(axis=1, keepdims=True)
     out = lobt_clip(np.sum(proba * np.nan_to_num(values), axis=1), pred)
-    out = np.clip(out, 0, REG_CLIP[1])
-    # LEMD and LEBL have a ceiling at 3598-3604 s; clip to 3604 to avoid wasting SSE on impossible values
-    is_lemd_lebl = pred["ADEP_mvt"].is_in(["LEMD", "LEBL"]).to_numpy()
-    out = np.where(is_lemd_lebl, np.minimum(out, 3604.0), out)
-    return out, {"p": 1 - proba[:, 0], "reg": r, "proba": proba, "values": values}, best, (clf, reg, cols)
+    return np.clip(out, 0, None), {"p": 1 - proba[:, 0], "reg": r, "proba": proba, "values": values}, best, (clf, reg, cols)
 
 
 def main() -> None:
