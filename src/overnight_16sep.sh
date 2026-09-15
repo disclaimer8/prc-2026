@@ -1,9 +1,8 @@
 #!/bin/zsh
 # Overnight queue 15->16.09 (Mac). Every branch acts only on a pre-registered DECISION line; uploads go through submit_slot.sh.
 #   E37 (seeds of the ADS-B stage, Mac)      -> accept: apply on v26 -> v31 -> upload
-#   E36 (stand geometry, home PC)            -> accept: offblock5 on the Mac for all days, apply on v26 -> v30 -> upload
+#   E36 (stand geometry, Mac; relaunched 22:45) -> accept: apply on v26 -> v30 -> upload
 #   E32 (ADS-B features in the model, Mac)   -> accept: full rebuild v32..v35, E30 stage -> v36 -> upload
-#   refill of 2025 days                      -> offblock3/5 for the new days
 # Log: data/overnight_16sep.log
 cd "${0:a:h}/.."
 log() { echo "[$(date +%H:%M)] $*"; }
@@ -23,19 +22,11 @@ feats_all() {  # offblock3 and offblock5 for every day with a surface file
   else log "E37: $(grep DECISION data/e37.log)"; fi
 ) &
 
-# --- refill -> features for new days ---
+# --- E36 on the Mac (offblock5 for all days was built here at 22:35; the home PC was 40 s per day) ---
 (
-  until grep -q "fill done" data/adsb_fill2.log 2>/dev/null; do sleep 60; done
-  log "refill done"; feats_all
-) &
-
-# --- E36 from the home PC ---
-(
-  until scp -q home-pc-lan:C:/Users/HiMaxym/prc-2026/data/e36.log data/e36.log 2>/dev/null && grep -q "DECISION E36" data/e36.log; do sleep 300; done
+  .venv/bin/python src/e36_adsb_stand_geometry.py cv 2>&1 | grep -v Warning > data/e36.log
   log "$(grep 'DECISION E36' data/e36.log)"
   if grep -q "DECISION E36 (vs E30 stage): ACCEPT" data/e36.log; then
-    until grep -q "fill done" data/adsb_fill2.log 2>/dev/null; do sleep 60; done
-    feats_all
     PARTS=submissions/parts_v24.npz .venv/bin/python src/e36_adsb_stand_geometry.py apply 26 30 2>&1 | grep -v Warning
     ./src/submit_slot.sh 30
   fi
