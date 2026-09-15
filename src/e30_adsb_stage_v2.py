@@ -76,7 +76,7 @@ def correct(model, d: pl.DataFrame) -> np.ndarray:
     return np.clip(d["base"].to_numpy() + np.where(use, corr, 0.0), 0, None)
 
 
-def oof_base(folder="data/cv_preds_nomonth"):
+def oof_base(folder=os.environ.get("E30_BASE_DIR", "data/cv_preds_nomonth")):
     parts = []
     for p in sorted(glob.glob(f"{folder}/fold_*.npz")):
         z = np.load(p)
@@ -101,6 +101,9 @@ if mode == "cv":
         top3 = np.sort(dl)[:3].sum()
         per_ap = te.with_columns(dl=pl.Series(dl)).group_by("ADEP_mvt").agg(pl.col("dl").sum()).sort("ADEP_mvt")
         res.append((a, b, dl.sum(), top3))
+        if os.environ.get("E30_SAVE_DIR"):  # corrected out-of-fold predictions of the E30 stage (15.09, default off)
+            os.makedirs(os.environ["E30_SAVE_DIR"], exist_ok=True)
+            np.savez(f"{os.environ['E30_SAVE_DIR']}/fold_{a}_{b}.npz", mvt_id=te["MVT_ID_mvt"].to_numpy(), pred=new, y=y)
         print(f"fold {a}+{b}: rows {te.height} (coverage>=2 {int((te['coverage'] >= 2).sum())}), SSE change {dl.sum():+.3e}, best 3 rows {top3:+.3e}; "
               f"by airport {dict(zip(per_ap['ADEP_mvt'], np.round(per_ap['dl'].to_numpy() / 1e6)))} (1e6)", flush=True)
     tot = sum(r[2] for r in res)
