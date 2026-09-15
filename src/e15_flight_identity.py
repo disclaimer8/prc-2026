@@ -71,4 +71,4 @@ total, total_wo = sum(r[2] for r in results), sum(r[3] for r in results)
 not_worse = sum(d <= 0 for *_, d in results)
 ok = lower >= 5 and total > 0 and total_wo >= 0.5 * total and not_worse >= 4
 print(f"DECISION E15: {'ACCEPT' if ok else 'REJECT'} (SSE lower {lower}/6, kept without top-3 {total_wo / total if total else 0:.2f}, "
-      f"full not worse {not_worse}/6, total SSE gain {total:.3e} = {total / (2 * 274.93 * 344841):.2f} s LB-equivalent)")
+      f"full not worse {not_worse}/6, total SSE gain {total:.3e} = {total / 6 / (2 * 274.93 * 344841):.2f} s LB-equivalent: 6 folds cover 12 months, ranking has 2)")
