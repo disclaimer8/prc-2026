@@ -335,14 +335,14 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 
     <header class="doc">
       <h1>Taxi-out, команда <span class="sign">gentle-igloo</span></h1>
-      <p class="lede">Бриф для внешнего ревью решения EUROCONTROL PRC Data Challenge 2026. Состояние на 15.09.2026, 14:25 WEST; учтены ревью и отчёты в разделах 6, 11, 13, 15–20. Числа получены прогонами кода в репозитории, чужие утверждения помечены отдельно. <strong>Перед предложениями сверьтесь с разделом 0 «Уже проверено».</strong></p>
+      <p class="lede">Бриф для внешнего ревью решения EUROCONTROL PRC Data Challenge 2026. Состояние на 15.09.2026, 14:35 WEST; учтены ревью и отчёты в разделах 6, 11, 13, 15–20. Числа получены прогонами кода в репозитории, чужие утверждения помечены отдельно. <strong>Перед предложениями сверьтесь с разделом 0 «Уже проверено».</strong></p>
     </header>
 
     <div class="strip" role="group" aria-label="Статус">
-      <div class="hl"><div class="k">Лидерборд</div><div class="v">274,28</div><div class="s">v18 = v14 + E14</div></div>
-      <div><div class="k">Место</div><div class="v">18 / 143</div><div class="s">3-е место 247,01</div></div>
-      <div><div class="k">E14</div><div class="v">−0,84</div><div class="s">v18 против v14</div></div>
-      <div><div class="k">Следующее</div><div class="v">v22 · E25</div><div class="s">финал без month; ADS-B переоткрыт</div></div>
+      <div class="hl"><div class="k">Лидерборд</div><div class="v">273,41</div><div class="s">v22: без month + E14</div></div>
+      <div><div class="k">Место</div><div class="v">17 / 144</div><div class="s">3-е место 246,48</div></div>
+      <div><div class="k">E24</div><div class="v">−0,87</div><div class="s">v22 против v18</div></div>
+      <div><div class="k">Следующее</div><div class="v">E25</div><div class="s">наземные треки adsb.lol</div></div>
       <div><div class="k">Дедлайн</div><div class="v">11.10</div><div class="s">23:59 CET, 5 сабмитов в день</div></div>
     </div>
 
@@ -518,8 +518,8 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 <tr>
 <td>Модель</td>
 <td>Признак <code>month</code></td>
-<td>E24</td>
-<td><strong>принято на CV</strong> (−2,2 с, выигрыш в 18 строках); LB v22 ждёт</td>
+<td>E24 → v22</td>
+<td><strong>принято</strong>: CV −2,2 с, LB −0,87</td>
 <td>разд. 7</td>
 </tr>
 <tr>
@@ -674,11 +674,18 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 <td style="text-align: right;">—</td>
 </tr>
 <tr>
-<td><strong>v18</strong></td>
+<td>v18</td>
 <td>v14 + E14 (история номера рейса, LIRF без NM при 0 &lt; D &lt; 4 ч, 43 строки ranking)</td>
 <td style="text-align: right;">—</td>
-<td style="text-align: right;"><strong>274,28</strong></td>
-<td style="text-align: right;"><strong>18</strong></td>
+<td style="text-align: right;">274,28</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr>
+<td><strong>v22</strong></td>
+<td>Пересборка без признака <code>month</code> (E24): режимы и регрессор, CatBoost + сиды, TabPFN, E14; от v18 отличается на 30,9 с RMS</td>
+<td style="text-align: right;">391,3</td>
+<td style="text-align: right;"><strong>273,41</strong></td>
+<td style="text-align: right;"><strong>17</strong></td>
 </tr>
 </tbody>
 </table></div>
@@ -747,7 +754,7 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 <li>Многоклассовая LightGBM оценивает вероятности режимов: обычный, SCHED, IOBT, LOBT, EOBT, +сутки.</li>
 <li>Для LIRF без NM при задержке от расписания 4–30 ч вероятности режимов SCHED / +сутки / обычный берёт TabPFN-2 (<code>src/lirf_tabpfn.py</code>, E11), обученный на всех строках LIRF без NM за 2025 год. Признаки: задержка, час, день недели, <code>day_nonm_rate</code>, счётчики движений, номер стоянки, курс ВПП, номер рейса, флаг искажённого позывного. До v13 здесь была сглаженная таблица по бинам задержки (<code>src/lirf_table.py</code>). Бин больше 30 ч (1 строка в 2025) оставлен модели.</li>
 <li>Регрессор на строках обычного режима учит остаток от калиброванной цепочки AOBT_3 → LOBT → EOBT_1. Это бленд 0,65 CatBoost и 0,35 LightGBM, LightGBM усреднён по 5 сидам.
-   Признак <code>month</code> из модели убирается (E24, принято на CV; финал v22 без него собирается <code>src/run_final_nomonth.sh</code>).</li>
+   Признак <code>month</code> из модели убран (E24, v22 = 273,41; сборка <code>src/run_final_nomonth.sh</code>).</li>
 <li>Прогноз = Σ p_k · кандидат_k. Это оптимальная точечная оценка при квадратичной ошибке.</li>
 <li>Режимам с кандидатом вне окна LOBT ±3606 с ставится вероятность 0; итоговый прогноз клипается в это окно.</li>
 <li>Для LIRF без NM при 0 &lt; D &lt; 4 ч и истории номера рейса ≥ 3 строк вероятность «= SCHED» даёт логит по истории номера в 2025 (E14, <code>src/e14_apply.py</code>).</li>
@@ -1080,7 +1087,7 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 <td>Замечание В6 первого ревью: признак <code>month</code> среди входов модели (может переносить артефакты месяцев 2025, например закрытие 09R/27L в LFPG). Вариант — полный пайплайн <code>train.fit_predict</code> без <code>month</code> (DROP_PREFIX дополняется <code>month</code>, других колонок с таким префиксом нет), те же 6 фолдов пар месяцев, та же схема ранней остановки</td>
 <td>сохранённые OOF-прогнозы полной модели с <code>month</code> (<code>data/cv_preds</code>)</td>
 <td>полная SSE шести фолдов ниже на эквивалент ≥ 0,25 с LB и ниже в ≥ 4 из 6 фолдов; дополнительно показывается RMSE на строках с NM при y ≤ 7200</td>
-<td>Принять → убрать <code>month</code> из признаков, пересобрать финал (регрессор, CatBoost, TabPFN, E14) и отправить. Иначе пункт В6 закрыт. Зарегистрирован 15.09 до прогона. <strong>Выполнен 15.09: принят</strong> — полная SSE шести фолдов −2,48·10⁹ (≈ −2,18 с на LB), ниже в 4 из 6 (1+7 −0,38; 2+8 −1,47; 3+9 −1,21; 4+10 +0,12; 5+11 −0,05; 6+12 +0,50, в 10⁹). RMSE регрессора при y ≤ 7200 чуть хуже во всех фолдах (+0,08…+0,30 с): выигрыш даёт часть режимов. <strong>Чувствительность:</strong> без трёх лучших строк каждого фолда суммарное изменение +0,59·10⁹ — выигрыш сосредоточен в 18 строках; решает лидерборд. Финал без <code>month</code> собирается <code>src/run_final_nomonth.sh</code> (v19 → v22 = + TabPFN + E14), сабмит v22 против v18</td>
+<td>Принять → убрать <code>month</code> из признаков, пересобрать финал (регрессор, CatBoost, TabPFN, E14) и отправить. Иначе пункт В6 закрыт. Зарегистрирован 15.09 до прогона. <strong>Выполнен 15.09: принят</strong> — полная SSE шести фолдов −2,48·10⁹ (≈ −2,18 с на LB), ниже в 4 из 6 (1+7 −0,38; 2+8 −1,47; 3+9 −1,21; 4+10 +0,12; 5+11 −0,05; 6+12 +0,50, в 10⁹). RMSE регрессора при y ≤ 7200 чуть хуже во всех фолдах (+0,08…+0,30 с): выигрыш даёт часть режимов. <strong>Чувствительность:</strong> без трёх лучших строк каждого фолда суммарное изменение +0,59·10⁹ — выигрыш сосредоточен в 18 строках; решает лидерборд. Финал без <code>month</code> собирается <code>src/run_final_nomonth.sh</code> (v19 → v22 = + TabPFN + E14). <strong>Лидерборд: v22 273,41 против v18 274,28 = −0,87 с</strong> — направление подтверждено, величина меньше CV-оценки (−2,18)</td>
 </tr>
 </tbody>
 </table></div>
@@ -1107,7 +1114,7 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 <li><strong>Легитимность AOBT_3 и LOBT</strong> организаторами не подтверждена.</li>
 <li><strong>Воспроизводимость.</strong> v13 собран на старой линии признаков и из текущего кода бит в бит не воспроизводится. Финал собирается <code>src/run_final.sh</code> с фиксированными сидами; прогон с нуля сверяется с v14. CatBoost учится около часа, полный прогон — около двух. Фоновые очереди на локальной машине перезагрузку не переживают: 14.09 обновление ОС оборвало прогон с нуля и E14. Шаги пишут артефакты по отдельности, поэтому продолжение идёт с оборванного шага.</li>
 <li><strong>EHAM в январе 2026 вне диапазона обучения.</strong> 805 строк без NM против 293 в январе 2025, <code>day_nonm_rate</code> до 0,212 при максимуме 0,069 в обучении, 5,5% строк с невиданной конфигурацией ВПП.</li>
-<li><strong>E24 сосредоточен.</strong> Выигрыш без <code>month</code> на CV держится на 18 строках; без трёх лучших строк каждого фолда суммарный эффект +0,59·10⁹. Решает лидерборд v22.</li>
+<li><strong>E24 сосредоточен.</strong> Выигрыш без <code>month</code> на CV держится на 18 строках; лидерборд подтвердил направление (−0,87 с против −2,18 на CV).</li>
 <li><strong>Строки-ставки.</strong> Две строки LIRF в ranking стоят ±33 и ±42 с к RMSE: ITY340 (прогноз клипается окном LOBT) и NOSOS431 (задержка больше 30 ч). Сознательно не меняем.</li>
 <li><strong>История рейса не переносится на 2026 целиком.</strong> В ranking у 59% строк LIRF без NM при задержке &lt; 4 ч нет истории номера рейса (на валидации 11%).</li>
 </ul>
