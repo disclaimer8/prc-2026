@@ -23,7 +23,8 @@ if ev.schema["event_time"] == pl.String:
     ev = ev.with_columns(t=pl.col("event_time").str.to_datetime("%Y-%m-%d %H:%M:%S", time_zone="UTC"))
 else:
     ev = ev.with_columns(t=pl.col("event_time").dt.replace_time_zone("UTC") if ev.schema["event_time"].time_zone is None else pl.col("event_time"))
-fl = pl.read_parquet(list_file, columns=["id", "flt_id", "adep"])
+# OPDI pads flt_id with spaces to 8 characters (95.6% of July 2025 rows); strip before joining with PRC call signs (bug found by review, 15.09)
+fl = pl.read_parquet(list_file, columns=["id", "flt_id", "adep"]).with_columns(pl.col("flt_id").str.strip_chars())
 ev = ev.join(fl, left_on="flight_id", right_on="id", how="inner").filter(pl.col("adep").is_in(APS))
 first = ev.group_by("flight_id", "type").agg(t=pl.col("t").min(), flt_id=pl.col("flt_id").first(), adep=pl.col("adep").first())
 wide = first.pivot(on="type", index=["flight_id", "flt_id", "adep"], values="t")
