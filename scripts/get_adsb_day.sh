@@ -7,6 +7,16 @@ cd "${0:a:h}/.."
 day=$1
 [[ -f data/adsblol/surface_$day.parquet ]] && { echo "$day exists"; exit 0; }
 repo=adsblol/globe_history_${day:0:4}
+# preferred replica per day (prod / staging / *tmp) from the archive's own list; falls back to probing tags
+pref=data/adsblol/PREFERRED_${day:0:4}.txt
+[[ -s $pref ]] || gh api repos/$repo/contents/PREFERRED_RELEASES.txt -q .content | base64 -d > $pref
+urls=($(grep "/v${day//-/.}-planes-readsb-" $pref | head -1 | tr ',' ' '))
+if (( ${#urls} )); then
+  mkdir -p data/adsblol
+  echo "preferred ${urls[1]:h:t}" >&2
+  for u in $urls; do curl -sfL --retry 5 --retry-delay 10 "$u" || { echo "DOWNLOAD FAILED $day ${u:t}" >&2; exit 2; }; done | .venv/bin/python src/adsb_extract.py $day
+  exit $?
+fi
 # some days only exist under a suffixed tag (e.g. 2025-05-28..06-11: "prod-0tmp"), or only as staging
 for suffix in prod-0 prod-0tmp staging-0 staging-0tmp; do
   tag=v${day//-/.}-planes-readsb-$suffix

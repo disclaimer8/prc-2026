@@ -117,8 +117,13 @@ elif mode == "apply":
     m = fit_stage(build(raw, oof_base(), load_adsb("data/adsblol/offblock2_2025-*.parquet")))
     rk = pl.read_parquet("data/prc-2026-datasets/ranking.parquet", columns=[c for c in cols if c != Y]).filter(pl.col("PHASE_mvt") == "DEP")
     sub = pl.read_parquet(f"submissions/gentle-igloo_v{base_v}.parquet")
-    parts = np.load(f"submissions/parts_v{base_v - 2}.npz") if os.path.exists(f"submissions/parts_v{base_v - 2}.npz") else None
-    pn = pl.DataFrame({"MVT_ID_mvt": parts["mvt_id"], "p_nonreg": 1 - parts["proba"][:, 0]}) if parts is not None else None
+    # regime probabilities of the base: explicit file (PARTS=submissions/parts_vN.npz, the blend step of the base chain); no silent zero
+    parts_path = os.environ.get("PARTS", f"submissions/parts_v{base_v - 2}.npz")
+    if not os.path.exists(parts_path):
+        sys.exit(f"missing {parts_path}: set PARTS to the parts file of the blend that produced v{base_v}")
+    parts = np.load(parts_path)
+    print("regime probabilities from", parts_path)
+    pn = pl.DataFrame({"MVT_ID_mvt": parts["mvt_id"], "p_nonreg": 1 - parts["proba"][:, 0]})
     base = sub.rename({Y: "base"}).with_columns(pl.col("base").cast(pl.Float64))
     base = base.join(pn, on="MVT_ID_mvt", how="left") if pn is not None else base.with_columns(p_nonreg=pl.lit(0.0))
     d = build(rk.with_columns(pl.lit(None, dtype=pl.Int32).alias(Y)), base, load_adsb("data/adsblol/offblock2_2026-*.parquet"))
