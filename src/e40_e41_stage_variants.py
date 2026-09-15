@@ -9,6 +9,7 @@ stage model (63 leaves, 800 rounds). Control: the E25 stage recomputed on the sa
 E25 description follows.
 
     python src/e40_e41_stage_variants.py cv E40|E41
+    PARTS=submissions/parts_v24.npz python src/e40_e41_stage_variants.py apply 26 37 E40
     .venv/bin/python src/e30_adsb_stage_v2.py apply <base> <new>  (base must NOT already contain E25)
 Base: out-of-fold predictions of the canonical model without `month` (data/cv_preds_nomonth). Features per departure from
 data/adsblol/offblock2_<day>.parquet (coverage, first surface point, first movement after the stand, last stop end, surface
@@ -148,8 +149,10 @@ if mode == "cv":
           f"without best 3 rows per fold {(tot - sum(r[3] for r in res)) / LB_SCALE:+.2f} s)")
 elif mode == "apply":
     base_v, new_v = int(sys.argv[2]), int(sys.argv[3])
+    ARM = sys.argv[4] if len(sys.argv) > 4 else "E40"
     raw = pl.concat([pl.read_parquet(f, columns=cols) for f in sorted(glob.glob("data/prc-2026-datasets/training_*.parquet"))]).filter(pl.col("PHASE_mvt") == "DEP")
-    m = fit_stage(build(raw, oof_base(), load_adsb("data/adsblol/offblock2_2025-*.parquet")))
+    full = build(raw, oof_base(), load_adsb("data/adsblol/offblock2_2025-*.parquet"))
+    m = PerAirport(full) if ARM == "E40" else CatStage(full)  # apply added 15.09 after E40 was accepted; CV code unchanged
     rk = pl.read_parquet("data/prc-2026-datasets/ranking.parquet", columns=[c for c in cols if c != Y]).filter(pl.col("PHASE_mvt") == "DEP")
     sub = pl.read_parquet(f"submissions/gentle-igloo_v{base_v}.parquet")
     # regime probabilities of the base: explicit file (PARTS=submissions/parts_vN.npz, the blend step of the base chain); no silent zero
@@ -162,7 +165,7 @@ elif mode == "apply":
     base = sub.rename({Y: "base"}).with_columns(pl.col("base").cast(pl.Float64))
     base = base.join(pn, on="MVT_ID_mvt", how="left") if pn is not None else base.with_columns(p_nonreg=pl.lit(0.0))
     d = build(rk.with_columns(pl.lit(None, dtype=pl.Int32).alias(Y)), base, load_adsb("data/adsblol/offblock2_2026-*.parquet"))
-    new = correct(m, d)
+    new = m.correct(d) if ARM == "E40" else correct(m, d)
     out = sub.join(pl.DataFrame({"MVT_ID_mvt": d["MVT_ID_mvt"], "new": new}), on="MVT_ID_mvt", how="left").with_columns(
         pl.coalesce(pl.col("new").round(0).cast(sub.schema[Y]), pl.col(Y)).alias(Y)).select(sub.columns)
     dd = (out.sort("MVT_ID_mvt")[Y].cast(float) - sub.sort("MVT_ID_mvt")[Y].cast(float)).to_numpy()
