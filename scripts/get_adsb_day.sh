@@ -7,9 +7,14 @@ cd "${0:a:h}/.."
 day=$1
 [[ -f data/adsblol/surface_$day.parquet ]] && { echo "$day exists"; exit 0; }
 repo=adsblol/globe_history_${day:0:4}
-tag=v${day//-/.}-planes-readsb-prod-0
-assets=($(gh api "repos/$repo/releases/tags/$tag" -q '.assets[].name' 2>/dev/null | sort))
+# some days only exist under a suffixed tag (e.g. 2025-05-28..06-11: "prod-0tmp"), or only as staging
+for suffix in prod-0 prod-0tmp staging-0 staging-0tmp; do
+  tag=v${day//-/.}-planes-readsb-$suffix
+  assets=($(gh api "repos/$repo/releases/tags/$tag" -q '.assets[].name' 2>/dev/null | sort))
+  (( ${#assets} )) && break
+done
 (( ${#assets} )) || { echo "NO RELEASE $day"; exit 1; }
+echo "tag $tag" >&2
 mkdir -p data/adsblol
 for a in $assets; do curl -sfL --retry 5 --retry-delay 10 "https://github.com/$repo/releases/download/$tag/$a" || { echo "DOWNLOAD FAILED $day $a" >&2; exit 2; }; done \
   | .venv/bin/python src/adsb_extract.py $day
