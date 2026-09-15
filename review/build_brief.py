@@ -8,7 +8,7 @@ root = Path(__file__).resolve().parent.parent
 md = (root / "REVIEW_BRIEF.md").read_text()
 page = (root / "review" / "brief.html").read_text()
 
-body_md = md[md.index("## 1. Задача"):]
+body_md = md[md.index("\n## ") + 1:]  # from the first numbered section (0. already checked), the status table above stays in the header
 html = markdown.markdown(body_md, extensions=["tables", "fenced_code", "sane_lists"])
 
 # section anchors and table containers
