@@ -41,5 +41,5 @@ for name, ctrl, cand in (("leaky rounds (as in the gates)", "data/cv_preds_e28",
         print(f"{name}: not computed yet")
         continue
     print(f"{name}: per-airport vs one model over {n} folds — SSE {tot:+.3e} = {tot / LB:+.2f} s LB-equivalent, lower in {lower}/{n}")
-    dec, all_, small, trim, low2, _ = compare_full(ctrl, cand, lb_rmse=258.18, quiet=True)
-    print(f"    on the rows the base model decides {dec:+.2f} s (lower in {low2}/{n}); y<=7200 {small:+.2f} s; trimmed {trim:+.2f} s")
+    dec, all_, small, trim, low2, _, strict = compare_full(ctrl, cand, lb_rmse=258.18, quiet=True)
+    print(f"    on the rows the base model decides {dec:+.2f} s (lower in {low2}/{n}); strict {strict:+.2f} s; y<=7200 {small:+.2f} s; trimmed {trim:+.2f} s")

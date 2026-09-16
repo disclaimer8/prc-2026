@@ -20,7 +20,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 from fold_metrics import compare  # noqa: E402
 
-dec, tot, small, trim, lower, n = compare("data/cv_preds_nested", "data/cv_preds_e46")
+dec, tot, small, trim, lower, n, strict = compare("data/cv_preds_nested", "data/cv_preds_e46")
 ok = n == 6 and -dec >= 0.3 and lower >= 4 and -small >= 0.3
 print(f"DECISION E46: {'ACCEPT' if ok else 'REJECT'} (folds {n}, lower in {lower}; decided rows {dec:+.2f} s, "
-      f"all rows {tot:+.2f} s, y<=7200 {small:+.2f} s, trimmed {trim:+.2f} s, all LB-equivalent)")
+      f"strict {strict:+.2f} s, all rows {tot:+.2f} s, y<=7200 {small:+.2f} s, trimmed {trim:+.2f} s, all LB-equivalent)")

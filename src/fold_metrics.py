@@ -25,18 +25,27 @@ FEATURES = os.environ.get("FEATURES", "data/features_e28.parquet")
 TAIL_TABLE_DELAY = 14400  # lirf_table.py: LIRF, no FLIGHT_ID, D >= 4 h
 
 
-def decided_map(features_path: str = FEATURES) -> dict:
-    """MVT_ID -> True when the base model's prediction survives into the submission."""
+def decided_map(features_path: str = FEATURES, strict: bool = False) -> dict:
+    """MVT_ID -> True when the base model's prediction survives into the submission.
+
+    strict also drops the E14 population (the same LIRF rows at 0 < D < 4 h), where the submission keeps only the
+    "regular" part of the base prediction and mixes it with the schedule by a logistic weight. Those rows are another
+    5-28% of fold SSE, so the strict number says whether a gain survives outside every row a later stage touches.
+    """
     df = pl.read_parquet(features_path, columns=["MVT_ID_mvt", "ADEP_mvt", "FLIGHT_ID_mvt", "d_mvt_sched"])
-    return {r[0]: not (r[1] == "LIRF" and r[2] is None and r[3] is not None and r[3] >= TAIL_TABLE_DELAY)
-            for r in df.iter_rows()}
+    out = {}
+    for mvt, ap, fid, d in df.iter_rows():
+        tail = ap == "LIRF" and fid is None and d is not None
+        out[mvt] = not (tail and (d >= TAIL_TABLE_DELAY or (strict and d > 0)))
+    return out
 
 
 def compare(ctrl_dir: str, cand_dir: str, lb_rmse: float = 252.43, features_path: str = FEATURES, quiet: bool = False):
-    """Print per-fold numbers and return (decided, total, y<=7200, trimmed, lower_decided, n) in LB-equivalent seconds."""
+    """Print per-fold numbers and return (decided, total, y<=7200, trimmed, lower_decided, n, strict) in LB-equivalent seconds."""
     dec = decided_map(features_path)
+    strict = decided_map(features_path, strict=True)
     lb = 6 * 2 * lb_rmse * 344841
-    tot = dd = small = trim = 0.0
+    tot = dd = small = trim = st = 0.0
     lower = n = 0
     for p in sorted(glob.glob(f"{ctrl_dir}/fold_*.npz")):
         q = p.replace(ctrl_dir, cand_dir)
@@ -48,14 +57,16 @@ def compare(ctrl_dir: str, cand_dir: str, lb_rmse: float = 252.43, features_path
         d = (e["pred"][idx] - c["y"]) ** 2 - (c["pred"] - c["y"]) ** 2
         m = np.array([dec[k] for k in c["mvt_id"]])
         s = np.sort(d)
+        ms = np.array([strict[k] for k in c["mvt_id"]])
         tot += d.sum()
         dd += d[m].sum()
+        st += d[ms].sum()
         small += d[c["y"] <= 7200].sum()
         trim += d.sum() - s[:3].sum() - s[-3:].sum()
         lower += d[m].sum() < 0
         n += 1
         if not quiet:
-            print(f"{os.path.basename(p)[5:-4]}: decided {d[m].sum() / lb:+.2f} s | all {d.sum() / lb:+.2f} | "
-                  f"y<=7200 {d[c['y'] <= 7200].sum() / lb:+.2f} | trimmed {(d.sum() - s[:3].sum() - s[-3:].sum()) / lb:+.2f} "
-                  f"({(~m).sum()} rows go to the tail table)")
-    return dd / lb, tot / lb, small / lb, trim / lb, lower, n
+            print(f"{os.path.basename(p)[5:-4]}: decided {d[m].sum() / lb:+.2f} s | strict {d[ms].sum() / lb:+.2f} | "
+                  f"all {d.sum() / lb:+.2f} | y<=7200 {d[c['y'] <= 7200].sum() / lb:+.2f} | "
+                  f"trimmed {(d.sum() - s[:3].sum() - s[-3:].sum()) / lb:+.2f} ({(~m).sum()} rows go to the tail table)")
+    return dd / lb, tot / lb, small / lb, trim / lb, lower, n, st / lb
