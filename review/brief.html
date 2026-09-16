@@ -304,7 +304,7 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
   <nav class="toc" aria-label="Содержание">
     <div class="toc-label">Содержание</div>
     <ol>
-      <li><a href="#s0">Уже проверено — не предлагать повторно (на 15.09)</a></li>
+      <li><a href="#s0">Уже проверено — не предлагать повторно (на 16.09)</a></li>
       <li><a href="#s1">Задача</a></li>
       <li><a href="#s2">Где мы сейчас</a></li>
       <li><a href="#s3">Что известно о данных</a></li>
@@ -347,7 +347,7 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
       <div><div class="k">Дедлайн</div><div class="v">11.10</div><div class="s">23:59 CET, 5 сабмитов в день</div></div>
     </div>
 
-    <section id="s0"><h2><span class="n">0</span>Уже проверено — не предлагать повторно (на 15.09)</h2>
+    <section id="s0"><h2><span class="n">0</span>Уже проверено — не предлагать повторно (на 16.09)</h2>
 <blockquote>
 <p><strong>Ревьюверам: перед любым предложением сверьтесь с таблицей «Уже проверено» ниже.</strong> Всё из неё проверено прогонами кода; повторное предложение без новых данных или нового механизма не нужно. Если идея похожа на закрытую, укажите, чем она отличается.</p>
 </blockquote>
@@ -697,6 +697,20 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 <td>замер 15.07.2026</td>
 <td>данные только с 29.06.2026; 0 наземных точек у всех 10 аэропортов</td>
 <td><code>analysis/gemini_deep_research_review_2026-09-15.md</code></td>
+</tr>
+<tr>
+<td>Геометрия</td>
+<td>Длина руления по графу рулёжек OSM вместо прямой линии</td>
+<td>E51, 16.09</td>
+<td>+0,01 с по решающей метрике, ниже в 3 из 6; категориальные <code>ap_stand</code>/<code>ap_runway</code> уже несут эффект пары «стоянка × ВПП»</td>
+<td>разд. 7</td>
+</tr>
+<tr>
+<td>Внешние данные</td>
+<td>Другие копии архива adsb.lol за тот же день (<code>staging-0</code>, <code>mlatonly-0</code>)</td>
+<td>E49, 16.09</td>
+<td>+0,5 % наземных точек и всё в аэропортах, где покрытие и так есть; в LFPG/LIRF/LTFM — ноль</td>
+<td><code>analysis/coverage_ceiling_2026-09-16.md</code></td>
 </tr>
 </tbody>
 </table></div>
