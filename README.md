@@ -39,6 +39,11 @@ blank; departure block times are never used as inputs.
 * Smoothed out-of-fold target encodings (stand x runway, runway x hour, stand, operator, type, destination)
   (`src/target_encoding.py`).
 
+After the mixture is assembled, two more stages run: an empirical tail table with TabPFN-2 probabilities
+for LIRF departures without an NM record and a delay of 4 h or more (`src/lirf_table.py`,
+`src/lirf_tabpfn.py`), a logistic correction for the same rows below 4 h (`src/e14_apply.py`), and a
+LightGBM stage over the ADS-B surface features (`src/e36_adsb_stand_geometry.py`).
+
 ## Reproduce
 
 ```bash
@@ -55,11 +60,18 @@ FEATURES=data/features_v4.parquet uv run python src/train.py submit <N>
 
 | Source | Use | Licence |
 |---|---|---|
+| [adsb.lol globe_history](https://github.com/adsblol/globe_history_2026) (feeds of adsb.lol, FlyItalyADSB and TheAirTraffic) | surface tracks: when the aircraft was seen standing, when it first moved, path and stops before take-off — a second-stage correction of the prediction | ODbL 1.0 |
 | Iowa Environmental Mesonet ASOS/METAR archive, Iowa State University | weather features | freely usable, attribution requested |
 | OpenStreetMap via Overpass API, © OpenStreetMap contributors | stand and runway geometry | ODbL 1.0 |
 
-Exploratory probes that did not enter the model: adsb.lol globe_history (ODbL, too little surface
-coverage at EDDM, LFPG, EGLL and LTFM), ERA5 snow variables.
+Surface coverage is uneven and decides how much the ADS-B stage can do: the aircraft is seen standing
+at its stand before push-back on 70% of departures at EDDM but on 0.0% at LTFM and 21-25% at LFPG,
+because no receiver near those aerodromes hears ground-level transmissions. The other two replicas of
+the same archive (`staging-0`, `mlatonly-0`) were checked and add nothing there (`src/e49_replica_probe.py`).
+
+Exploratory probes that did not enter the model: ERA5 snow variables, OPDI stand events (no licence in
+the repository), ADSB IQ (no surface points at our aerodromes), OpenSky (terms of use are
+non-commercial research only, which is not an open licence).
 
 ## Analyses
 
