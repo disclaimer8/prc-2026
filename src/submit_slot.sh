@@ -8,7 +8,7 @@ target=$(date -u -j -f "%Y-%m-%d %H:%M" "2026-09-16 00:05" +%s)
 while [ "$(date -u +%s)" -lt "$target" ]; do sleep 60; done
 until mkdir data/.submit_lock 2>/dev/null; do sleep 20; done
 trap 'rmdir data/.submit_lock' EXIT
-n=$(cat data/submit_16sep.log data/overnight_16sep.log data/run_final_e38.log 2>/dev/null | grep -c "uploaded v" || echo 0)  # uploads are logged by whichever queue ran them
+n=$(cat data/*.log 2>/dev/null | grep -oE "^\[[0-9:]+Z\] uploaded v[0-9]+" | sort -u | wc -l | tr -d " ")  # one line per upload, any queue log
 if [ "$n" -ge 5 ]; then echo "[$(date -u +%H:%M)Z] limit reached, v$v NOT uploaded"; exit 1; fi
 [ -f submissions/gentle-igloo_v$v.parquet ] || { echo "[$(date -u +%H:%M)Z] v$v missing"; exit 1; }
 printf 'FINAL submissions/gentle-igloo_v%s.parquet\n' $v > data/ready_v$v.log
