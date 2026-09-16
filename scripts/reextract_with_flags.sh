@@ -2,8 +2,19 @@
 # E44: re-extract surface points WITH the readsb staleness flag (src/adsb_extract.py, 16.09). One day at a time, streamed;
 # the old flagless file is replaced only after the new one is written.  scripts/reextract_with_flags.sh 2025-01 2025-02 ...
 cd "${0:a:h}/.."
+# A build's ADS-B stage reads every offblock day at once, and this loop deletes a day's files for a minute or
+# two while rebuilding them. Three times on 16.09 the two nearly overlapped. So: hold while data/.adsb_lock
+# exists (a build creates it), and check before every day rather than once at the start.
+wait_for_lock() {
+  while [ -e data/.adsb_lock ]; do
+    echo "[$(date +%H:%M)] data/.adsb_lock present — holding"
+    sleep 60
+  done
+}
+
 for ym in "$@"; do
   for f in data/adsblol/surface_$ym-*.parquet; do
+    wait_for_lock
     [[ -e $f ]] || continue
     d=${${f:t:r}#surface_}
     .venv/bin/python -c "

@@ -5,6 +5,9 @@
 # nothing else changed, so the leaderboard reads v65 against v30 as the effect of this one change.
 set -euo pipefail
 cd "${0:a:h}/.."
+# hold the ADS-B re-extraction off the offblock files for as long as this build runs (its stage step reads every day)
+mkdir -p data && touch data/.adsb_lock
+trap 'rm -f data/.adsb_lock' EXIT
 git diff --quiet HEAD -- src/train.py src/features.py src/target_encoding.py src/blend.py src/catboost_reg.py src/seed_avg.py src/lirf_tabpfn.py src/e14_apply.py src/e36_adsb_stand_geometry.py || { echo "ABORT: uncommitted model code"; exit 1; }
 export FEATURES=data/features_e28.parquet DROP_PREFIX=day_,tq_,wxr_,month TABPFN_ALLOW_CPU_LARGE_DATASET=1 REGIME_RATES=1
 V=61
