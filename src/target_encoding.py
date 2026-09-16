@@ -80,6 +80,12 @@ RATE_KEYS = {
     "rr_op_ap": ["ADEP_mvt", "AIRCRAFT_OPERATOR_flt"],
     "rr_stand": ["ADEP_mvt", "STAND_mvt"],
     "rr_hour": ["ADEP_mvt", "local_hour_int"],
+    # by flight number: measured 16.09 on LIRF departures that do have an NM record — of the flights whose other months
+    # are planned in >= 95% of rows, 99.0% of the current month's rows are planned too (2122 rows), against 9.1% for
+    # flights below 5%. Taking the candidate outright in that band is worth -0.53 s, while replacing the model's
+    # probability by this rate everywhere is worth +19.5 s: the model must keep conditioning on the row itself,
+    # so the rate goes in as a feature, not as a rule.
+    "rr_flight": ["ADEP_mvt", "FLIGHT_mvt"],
 }
 
 
