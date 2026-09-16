@@ -29,10 +29,17 @@ def compare(ctrl_dir, cand_dir):
     return tot, lower, n
 
 
+import sys
+
+sys.path.insert(0, os.path.dirname(__file__))
+from fold_metrics import compare as compare_full  # noqa: E402
+
 for name, ctrl, cand in (("leaky rounds (as in the gates)", "data/cv_preds_e28", "data/cv_preds_e38"),
                          ("nested rounds", "data/cv_preds_nested", "data/cv_preds_nested_ap")):
     tot, lower, n = compare(ctrl, cand)
-    if n:
-        print(f"{name}: per-airport vs one model over {n} folds — SSE {tot:+.3e} = {tot / LB:+.2f} s LB-equivalent, lower in {lower}/{n}")
-    else:
+    if not n:
         print(f"{name}: not computed yet")
+        continue
+    print(f"{name}: per-airport vs one model over {n} folds — SSE {tot:+.3e} = {tot / LB:+.2f} s LB-equivalent, lower in {lower}/{n}")
+    dec, all_, small, trim, low2, _ = compare_full(ctrl, cand, lb_rmse=258.18, quiet=True)
+    print(f"    on the rows the base model decides {dec:+.2f} s (lower in {low2}/{n}); y<=7200 {small:+.2f} s; trimmed {trim:+.2f} s")
