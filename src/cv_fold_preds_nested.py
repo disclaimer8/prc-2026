@@ -45,8 +45,19 @@ print("saved", a, b, float(np.sqrt(np.mean((np.concatenate(preds) - np.concatena
 '''
 out = os.environ.get("CV_OUT", "data/cv_preds_nested")
 os.makedirs(out, exist_ok=True)
+failed: list[tuple[int, int]] = []
 for a, b in PAIRS:
     if os.path.exists(f"{out}/fold_{a}_{b}.npz"):
         continue
     proc = subprocess.run([sys.executable, "-c", RUNNER, f"{a},{b}"], env={**os.environ, "POLARS_MAX_THREADS": "10"}, capture_output=True, text=True)
     print(proc.stdout.strip()[-600:] or proc.stderr[-2000:], flush=True)
+    # A fold can train fine and die while saving; stdout is then non-empty, so printing "stdout or stderr"
+    # hides the traceback and the comparison silently runs on fewer folds (E53, 16.09: fold 3+9 vanished
+    # this way and the result was reported on five folds). Check the artefact, not the exit code.
+    if not os.path.exists(f"{out}/fold_{a}_{b}.npz"):
+        print(f"FOLD {a}_{b} PRODUCED NO FILE (exit {proc.returncode})\n--- stderr tail ---\n{proc.stderr[-2000:]}", flush=True)
+        failed.append((a, b))
+
+if failed:
+    raise SystemExit(f"{len(failed)} of {len(PAIRS)} folds produced no file: {failed} — the comparison would silently use fewer folds")
+print(f"all {len(PAIRS)} folds saved in {out}", flush=True)
