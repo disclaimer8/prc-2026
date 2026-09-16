@@ -146,8 +146,24 @@ def proxy_base(fit_r: pl.DataFrame, pred: pl.DataFrame):
     cf = chain(fit_r).with_columns(y=fit_r[TARGET].clip(0, 7200))
     off = cf.filter(pl.col("raw").is_not_null()).group_by("ADEP_mvt", "src").agg(off=(pl.col("y") - pl.col("raw")).median())
     med = cf.group_by("ADEP_mvt").agg(med=pl.col("y").median())
+    # PROXY_SCALE=1 (E46, 16.09): instead of a median offset, scale the proxy by a per-airport, per-source coefficient
+    # "how much of MVT - filed time is really taxi", fitted by least squares on the fit rows and shrunk to the global
+    # coefficient with PROXY_SCALE_RIDGE pseudo-rows (a competitor reports 0.23 at LSZH vs 0.86 at EGLL).
+    scale = None
+    if os.environ.get("PROXY_SCALE") == "1":
+        k = float(os.environ.get("PROXY_SCALE_RIDGE", "1000"))
+        cs = cf.filter(pl.col("raw").is_not_null() & (pl.col("raw") > 0))
+        g = cs.select(sxy=(pl.col("raw") * pl.col("y")).sum(), sxx=(pl.col("raw") ** 2).sum())
+        a_global = float(g["sxy"][0] / max(float(g["sxx"][0]), 1e-9))
+        scale = cs.group_by("ADEP_mvt", "src").agg(sxy=(pl.col("raw") * pl.col("y")).sum(), sxx=(pl.col("raw") ** 2).sum()).with_columns(
+            a=(pl.col("sxy") + k * a_global * 1e6) / (pl.col("sxx") + k * 1e6)).select("ADEP_mvt", "src", "a")
+        print("proxy scale: global %.3f, per airport-source %s" % (a_global, scale.sort("a").to_dicts()), flush=True)
     def apply(d):
-        c = chain(d).with_row_index("_i").join(off, on=["ADEP_mvt", "src"], how="left").join(med, on="ADEP_mvt", how="left").sort("_i")
+        c = chain(d).with_row_index("_i").join(off, on=["ADEP_mvt", "src"], how="left").join(med, on="ADEP_mvt", how="left")
+        if scale is not None:
+            c = c.join(scale, on=["ADEP_mvt", "src"], how="left").sort("_i")
+            return c.select(pl.coalesce(pl.col("raw") * pl.col("a").fill_null(1.0), pl.col("med"))).to_series().to_numpy()
+        c = c.sort("_i")
         return c.select(pl.coalesce(pl.col("raw") + pl.col("off").fill_null(0), pl.col("med"))).to_series().to_numpy()
     return apply(fit_r), apply(pred)
 
