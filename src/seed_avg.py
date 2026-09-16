@@ -30,7 +30,7 @@ else:
     fit, pred = train, df.filter(pl.col("split") == "rank")
 
 lab = T.regime_label(fit)
-fit, pred = add_encodings(fit, pred, lab == 0)
+fit, pred = add_encodings(fit, pred, lab == 0, fit_labels=lab)
 cols = T.feature_columns(fit)
 fit_r = fit.filter(pl.Series(lab == 0))
 Xf, cats = T.to_pandas(fit_r, cols, None)

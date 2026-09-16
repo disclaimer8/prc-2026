@@ -20,7 +20,7 @@ iterations = int(sys.argv[1])
 df = pl.read_parquet(T.FEATURES_PATH)
 train, rank = df.filter(pl.col("split") == "train"), df.filter(pl.col("split") == "rank")
 lab = T.regime_label(train)
-train, rank = add_encodings(train, rank, lab == 0)
+train, rank = add_encodings(train, rank, lab == 0, fit_labels=lab)
 cols = T.feature_columns(train)
 cat_cols = [c for c in CATEGORICAL if c in cols]
 

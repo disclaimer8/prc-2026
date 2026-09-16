@@ -128,7 +128,12 @@ def add_encodings(fit: pl.DataFrame, pred: pl.DataFrame, fit_labels_regular, fit
     for name, keys, parent, q in QUANTILE_SPECS:
         pred_enc = pred_enc.join(_quantile(src_all, pred, name, keys, parent, q), on="MVT_ID_mvt")
 
-    if os.environ.get("REGIME_RATES") == "1" and fit_labels is not None:
+    if os.environ.get("REGIME_RATES") == "1" and fit_labels is None:
+        # Silently skipping the columns here would leave each caller with a different feature set: on 16.09
+        # train.py trained with them while seed_avg/catboost/blend trained without, and only blend.py's
+        # feature-name assert caught it, an hour of CatBoost later.
+        raise ValueError("REGIME_RATES=1 but the caller passed no fit_labels; pass fit_labels=regime_label(fit)")
+    if os.environ.get("REGIME_RATES") == "1":
         lab = pl.Series(fit_labels)
         fit = fit.with_columns([(lab == i).alias(f"_lab_{n}") for i, n in enumerate(("sched", "iobt", "lobt", "eobt"), start=1)]
                                + [(lab > 0).alias("_lab_any")])
