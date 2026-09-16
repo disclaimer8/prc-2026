@@ -181,7 +181,7 @@ def mask_infeasible(proba: np.ndarray, values: np.ndarray, df: pl.DataFrame) -> 
 def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: dict | None, val_y=None):
     """Fit regime classifier + regressor on `fit`, return (prediction, parts, best rounds, models)."""
     lab = regime_label(fit)
-    fit, pred = add_encodings(fit, pred, lab == 0)
+    fit, pred = add_encodings(fit, pred, lab == 0, fit_labels=lab)
     cols = feature_columns(fit)
     cat_cols = [c for c in CATEGORICAL if c in cols]
     Xf, cats = to_pandas(fit, cols, None)

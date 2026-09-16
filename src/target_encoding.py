@@ -5,6 +5,8 @@ values (folds = calendar months), prediction rows get values from all training r
 """
 from __future__ import annotations
 
+import os
+
 import polars as pl
 
 TARGET = "TAXITIME_SEC_mvt"
@@ -69,7 +71,32 @@ QUANTILE_SPECS = [
 ]
 
 
-def add_encodings(fit: pl.DataFrame, pred: pl.DataFrame, fit_labels_regular) -> tuple[pl.DataFrame, pl.DataFrame]:
+# E50 (REGIME_RATES=1): how often a group records the block time from a planned time at all. The classifier currently has
+# to learn that from raw categories; the ceiling of perfect regime detection is -16.2 s on the rows the base model decides
+# (measured 16.09 on the fold predictions), so the prior is worth giving it directly. Shares are out-of-fold by month,
+# smoothed towards the airport share, exactly like the taxi encodings above.
+RATE_KEYS = {
+    "rr_ap": ["ADEP_mvt"],
+    "rr_op_ap": ["ADEP_mvt", "AIRCRAFT_OPERATOR_flt"],
+    "rr_stand": ["ADEP_mvt", "STAND_mvt"],
+    "rr_hour": ["ADEP_mvt", "local_hour_int"],
+}
+
+
+def _rates(stats_src: pl.DataFrame, target_rows: pl.DataFrame, name: str, keys: list[str]) -> pl.DataFrame:
+    """Share of each planned regime (and of "any planned") in the group, smoothed towards the airport share."""
+    cols = [c for c in stats_src.columns if c.startswith("_lab")]
+    prior = stats_src.group_by("ADEP_mvt").agg([pl.col(c).mean().alias(f"_p{c}") for c in cols])
+    stats = stats_src.group_by(keys).agg([pl.col(c).sum().alias(f"_s{c}") for c in cols] + [pl.len().alias("_n")])
+    out = (target_rows.select("MVT_ID_mvt", *keys)
+           .join(stats, on=keys, how="left", nulls_equal=True)
+           .join(prior, on="ADEP_mvt", how="left")
+           .with_columns([((pl.col(f"_s{c}").fill_null(0) + SMOOTH * pl.col(f"_p{c}")) / (pl.col("_n").fill_null(0) + SMOOTH)
+                           ).alias(f"{name}{c[4:]}") for c in cols]))
+    return out.select("MVT_ID_mvt", *[f"{name}{c[4:]}" for c in cols])
+
+
+def add_encodings(fit: pl.DataFrame, pred: pl.DataFrame, fit_labels_regular, fit_labels=None) -> tuple[pl.DataFrame, pl.DataFrame]:
     """Return (fit, pred) with encoding columns. Only regular-regime fit rows feed the statistics."""
     fit = _prep(fit).with_columns(_regular=pl.Series(fit_labels_regular))
     pred = _prep(pred)
@@ -94,6 +121,25 @@ def add_encodings(fit: pl.DataFrame, pred: pl.DataFrame, fit_labels_regular) -> 
         pred_enc = pred_enc.join(_encode(src_all, pred, name, keys, col), on="MVT_ID_mvt")
     for name, keys, parent, q in QUANTILE_SPECS:
         pred_enc = pred_enc.join(_quantile(src_all, pred, name, keys, parent, q), on="MVT_ID_mvt")
+
+    if os.environ.get("REGIME_RATES") == "1" and fit_labels is not None:
+        lab = pl.Series(fit_labels)
+        fit = fit.with_columns([(lab == i).alias(f"_lab_{n}") for i, n in enumerate(("sched", "iobt", "lobt", "eobt"), start=1)]
+                               + [(lab > 0).alias("_lab_any")])
+        rate_parts = []
+        for m in months:
+            rows = fit.filter(pl.col("month") == m)
+            src = fit.filter(pl.col("month") != m)
+            enc = rows.select("MVT_ID_mvt")
+            for name, keys in RATE_KEYS.items():
+                enc = enc.join(_rates(src, rows, name, keys), on="MVT_ID_mvt")
+            rate_parts.append(enc)
+        fit_enc = fit_enc.join(pl.concat(rate_parts), on="MVT_ID_mvt", how="left")
+        pr = pred.select("MVT_ID_mvt")
+        for name, keys in RATE_KEYS.items():
+            pr = pr.join(_rates(fit, pred, name, keys), on="MVT_ID_mvt")
+        pred_enc = pred_enc.join(pr, on="MVT_ID_mvt", how="left")
+        fit = fit.drop([c for c in fit.columns if c.startswith("_lab")])
 
     drop = ["local_hour_int", "_y", "_r"]
     fit = fit.drop(drop + ["_regular"]).join(fit_enc, on="MVT_ID_mvt", how="left")
