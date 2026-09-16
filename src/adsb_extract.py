@@ -12,6 +12,7 @@ from __future__ import annotations
 import gzip
 import json
 import math
+import os
 import sys
 import tarfile
 
@@ -87,7 +88,7 @@ def main() -> None:
             if n_files % 20000 == 0:
                 print(f"{n_files} traces, {len(rows['t'])} points", file=sys.stderr, flush=True)
     df = pl.DataFrame(rows)
-    out = f"data/adsblol/surface_{day}.parquet"
+    out = os.environ.get("SURFACE_OUT", f"data/adsblol/surface_{day}.parquet")  # SURFACE_OUT: probe a second replica without overwriting the day
     df.write_parquet(out)
     print(f"{n_files} traces -> {df.height} points -> {out}")
 
