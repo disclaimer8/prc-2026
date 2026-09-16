@@ -44,7 +44,7 @@ def near_airport(lat: float, lon: float) -> str | None:
 
 def main() -> None:
     day = sys.argv[1]
-    rows: dict[str, list] = {k: [] for k in ("icao", "airport", "t", "lat", "lon", "alt", "on_ground", "gs", "track", "callsign")}
+    rows: dict[str, list] = {k: [] for k in ("icao", "airport", "t", "lat", "lon", "alt", "on_ground", "gs", "track", "callsign", "stale")}
     n_files = 0
     with tarfile.open(fileobj=sys.stdin.buffer, mode="r|") as tar:
         for member in tar:
@@ -81,6 +81,9 @@ def main() -> None:
                 rows["gs"].append(None if p[4] is None else float(p[4]))
                 rows["track"].append(None if p[5] is None else float(p[5]))
                 rows["callsign"].append(callsign)
+                # readsb trace flags (p[6]), bit 0: this position is stale — no reception for 20 s, the point repeats the
+                # last known position. Kept because a repeated position at a stand is not the same evidence as a fresh one.
+                rows["stale"].append(bool(int(p[6]) & 1) if len(p) > 6 and p[6] is not None else None)
             if n_files % 20000 == 0:
                 print(f"{n_files} traces, {len(rows['t'])} points", file=sys.stderr, flush=True)
     df = pl.DataFrame(rows)
