@@ -100,7 +100,11 @@ def main() -> None:
         g = by_icao[ok[0]].filter(pl.col("airport") == ap)
         e = estimate(g["t"].to_numpy(), g["gs"].to_numpy(), g["surf"].to_numpy(), float(to))
         out.append((mvt_id, *e, g.height, 1))
-    res = pl.DataFrame(out, schema=["MVT_ID_mvt", "coverage", "t_first", "t_move", "t_to", "t_first_move", "stat_total", "n_stops", "n_pts", "n_cand"], orient="row")
+    # explicit dtypes: on a day whose first rows are all nulls polars infers the wrong type and the append fails
+    # (2025-06-11 had no offblock2 file for that reason until 16.09)
+    schema = {"MVT_ID_mvt": pl.Float64, "coverage": pl.Int64, "t_first": pl.Float64, "t_move": pl.Float64, "t_to": pl.Float64,
+              "t_first_move": pl.Float64, "stat_total": pl.Float64, "n_stops": pl.Int64, "n_pts": pl.Int64, "n_cand": pl.Int64}
+    res = pl.DataFrame(out, schema=schema, orient="row")
     res.write_parquet(f"data/adsblol/offblock2_{day}.parquet")
     if y == 2025:
         j = dep.join(res, on="MVT_ID_mvt").with_columns(blk=pl.col("BLOCK_TIME_UTC_mvt").dt.epoch("s").cast(pl.Float64))
