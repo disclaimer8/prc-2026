@@ -23,5 +23,6 @@ LGB_SEEDS=submissions/lgb_reg_seeds_v$V.npz uv run python src/blend.py $V $((V+1
 uv run python src/lirf_tabpfn.py $((V+1)) $((V+2)) | grep -E "^wrote"
 uv run python src/e14_apply.py $((V+2)) $((V+1)) $((V+3)) | grep -E "^wrote"
 echo "[$(date +%H:%M)] stage E36 on the new base"
-PARTS=submissions/parts_v$V.npz .venv/bin/python src/e36_adsb_stand_geometry.py apply $((V+3)) 50 2>&1 | grep -E "^wrote|regime probabilities"
+# the stage needs the parts of the BLEND step (as v26 used parts_v24), not of the regimes step
+PARTS=submissions/parts_v$((V+1)).npz .venv/bin/python src/e36_adsb_stand_geometry.py apply $((V+3)) 50 2>&1 | grep -E "^wrote|regime probabilities"
 echo "[$(date +%H:%M)] FINAL submissions/gentle-igloo_v50.parquet"
