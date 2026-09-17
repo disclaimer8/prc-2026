@@ -27,7 +27,10 @@ from features import CATEGORICAL, TARGET
 from target_encoding import add_encodings
 
 FEATURES_PATH = os.environ.get("FEATURES", "data/features.parquet")
-REG_CLIP = (0, 7200)
+# E56 (17.09): the regressor answers for the regular regime and the mixture owns the tail, so the clip is a
+# calibration choice, not a property of the data: only 0.028% of training rows exceed 7200 s and 0.2% exceed
+# 3600 s. REG_CLIP_HI moves it.
+REG_CLIP = (0, int(os.environ.get("REG_CLIP_HI", "7200")))
 # A planned time substitutes the block time within +-6 s (a plateau in the histogram of BLOCK - SCHED seconds);
 # EDDF, EHAM and LSZH record block time to the second and show no plateau, so planned regimes are not labelled there.
 TOL = int(os.environ.get("REGIME_TOL", "6"))
