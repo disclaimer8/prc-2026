@@ -14,6 +14,14 @@ exactly the mismatch. Type of change (REVIEW_BRIEF.md, "Read first" #2): the sta
 flight, the second family that has transferred (E25 -15.2, E30 -2.0, E36 -3.7 s on the leaderboard). No new capacity:
 same model, same features, correct control.
 
+Caveat, recorded before the run: oof_base() also reads `proba` to build the p_nonreg feature, and
+src/cv_fold_preds_nested.py saves only mvt_id/pred/reg/y, so data/cv_preds_e46 has no probabilities. NEW_BASE is
+data/cv_preds_e46_proba_from_nomonth: pred/reg/y from the E46 folds with proba substituted from cv_preds_nomonth by
+MVT_ID (verified row for row, no unmatched rows). That holds p_nonreg identical on both sides, so the single difference
+between control and candidate stays the base prediction itself - which is the thing being measured - but the candidate
+stage is fitted with one feature (1 of 36) taken from the older chain. Fixing that would need a 43-minute refit of the
+E46 folds with probabilities saved; if E59 passes, it is worth doing before the final apply.
+
 Gate: SSE over the rows the base model actually decides (src/fold_metrics.py) lower by >= 0.3 s LB-equivalent and lower
 in >= 4 of 6 folds; the same on the rows with y <= 7200. Strict, total and trimmed are reported, not gated.
 
@@ -37,7 +45,7 @@ sys.argv = _argv
 from fold_metrics import compare  # noqa: E402
 
 CTRL_DIR, CAND_DIR = "data/cv_preds_e59_ctrl", "data/cv_preds_e59"
-OLD_BASE, NEW_BASE = "data/cv_preds_nomonth", "data/cv_preds_e46"
+OLD_BASE, NEW_BASE = "data/cv_preds_nomonth", "data/cv_preds_e46_proba_from_nomonth"
 
 raw = pl.concat([pl.read_parquet(f, columns=E36.cols) for f in sorted(glob.glob("data/prc-2026-datasets/training_*.parquet"))]).filter(
     pl.col("PHASE_mvt") == "DEP")
