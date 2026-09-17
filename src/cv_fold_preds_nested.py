@@ -12,7 +12,11 @@ import os
 import subprocess
 import sys
 
-PAIRS = [(1, 7), (2, 8), (3, 9), (4, 10), (5, 11), (6, 12)]
+ALL_PAIRS = [(1, 7), (2, 8), (3, 9), (4, 10), (5, 11), (6, 12)]
+# FOLDS=1,3,5 runs only those month pairs, so the six independent folds can be split across machines
+# (they never share state; the comparison scripts read whatever files are present and count them).
+PAIRS = ([p for p in ALL_PAIRS if p[0] in {int(x) for x in os.environ["FOLDS"].split(",")}]
+         if os.environ.get("FOLDS") else ALL_PAIRS)
 RUNNER = r'''
 import os, sys
 os.environ.setdefault("POLARS_UNKNOWN_EXTENSION_TYPE_BEHAVIOR", "load_as_storage")
