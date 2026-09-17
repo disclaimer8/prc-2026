@@ -31,7 +31,7 @@ tr = df.filter(pl.col("split") == "train")
 del df
 fit_all, val_all = tr.filter(~pl.col("month").is_in([a, b])), tr.filter(pl.col("month").is_in([a, b]))
 groups = sorted(tr["ADEP_mvt"].unique().to_list()) if per_airport else [None]
-ids, preds, regs, ys = [], [], [], []
+ids, preds, regs, ys, probas, vals = [], [], [], [], [], []
 for ap in groups:
     f = fit_all if ap is None else fit_all.filter(pl.col("ADEP_mvt") == ap)
     v = val_all if ap is None else val_all.filter(pl.col("ADEP_mvt") == ap)
@@ -42,9 +42,11 @@ for ap in groups:
     rounds = {k: int(x * 1.1) for k, x in best.items()}
     pred, parts, _, _ = T.fit_predict(f, v, T.feature_columns(f), rounds)
     ids.append(v["MVT_ID_mvt"].to_numpy()); preds.append(pred); regs.append(parts["reg"]); ys.append(v[T.TARGET].to_numpy())
+    probas.append(parts["proba"]); vals.append(parts["values"])
     print(ap or "all", rounds, float(np.sqrt(np.mean((pred - ys[-1]) ** 2))), flush=True)
 out = os.environ.get("CV_OUT", "data/cv_preds_nested")
-np.savez(f"{out}/fold_{a}_{b}.npz", mvt_id=np.concatenate(ids), pred=np.concatenate(preds), reg=np.concatenate(regs), y=np.concatenate(ys))
+np.savez(f"{out}/fold_{a}_{b}.npz", mvt_id=np.concatenate(ids), pred=np.concatenate(preds), reg=np.concatenate(regs), y=np.concatenate(ys),
+         proba=np.concatenate(probas).astype(np.float32), values=np.concatenate(vals).astype(np.float32))
 print("saved", a, b, float(np.sqrt(np.mean((np.concatenate(preds) - np.concatenate(ys)) ** 2))))
 '''
 out = os.environ.get("CV_OUT", "data/cv_preds_nested")
