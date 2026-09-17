@@ -40,7 +40,10 @@ SF = ["sf_path_km", "sf_straight_km", "sf_move_time", "sf_longest_stop", "sf_las
 FEATS25 = list(FEATS)
 FEATS30 = FEATS + SF
 GS = ["gs_stand_known", "gs_d_first", "gs_d_firstmove", "gs_d_lastmove", "gs_d_lastmove_rwy", "gs_dwell_stand", "gs_seen_at_stand", "gs_mvt_leave", "gs_aobt_leave"]
-FEATS = FEATS30 + GS
+FEATS36 = FEATS30 + GS
+# what the receiver actually heard, as opposed to what readsb repeated: src/adsb_stale_features.py
+ST = ["stale_share", "stale_first", "stale_at_move", "stale_run_max", "stale_before_to", "fresh_before_move"]
+FEATS = FEATS36 + ST
 PARAMS = dict(objective="regression", learning_rate=0.03, num_leaves=31, min_data_in_leaf=200, feature_fraction=0.9,
               bagging_fraction=0.8, bagging_freq=1, lambda_l2=10.0, verbose=-1, seed=42, deterministic=True, force_row_wise=True, num_threads=8)
 
@@ -114,7 +117,7 @@ if mode == "cv":
     for a, b in [(1, 7), (2, 8), (3, 9), (4, 10), (5, 11), (6, 12)]:
         tr, te = d.filter(~pl.col("month").is_in([a, b])), d.filter(pl.col("month").is_in([a, b]))
         m = fit_stage(tr)
-        m30 = fit_stage(tr, FEATS30)
+        m30 = fit_stage(tr, FEATS36)   # control: the E36 stage without the reception features
         new, y, old = correct(m, te), te[Y].to_numpy(), correct(m30, te)
         dl = (new - y) ** 2 - (old - y) ** 2
         top3 = np.sort(dl)[:3].sum()
@@ -128,7 +131,7 @@ if mode == "cv":
     tot = sum(r[2] for r in res)
     lower = sum(r[2] < 0 for r in res)
     ok = -tot / LB_SCALE >= 0.3 and lower >= 4
-    print(f"DECISION E36 (vs E30 stage): {'ACCEPT' if ok else 'REJECT'} (lower in {lower}/6, total SSE change {tot:+.3e} = {tot / LB_SCALE:+.2f} s LB-equivalent RMSE; "
+    print(f"DECISION E44 (staleness vs the E36 stage): {'ACCEPT' if ok else 'REJECT'} (lower in {lower}/6, total SSE change {tot:+.3e} = {tot / LB_SCALE:+.2f} s LB-equivalent RMSE; "
           f"without best 3 rows per fold {(tot - sum(r[3] for r in res)) / LB_SCALE:+.2f} s)")
 elif mode == "apply":
     base_v, new_v = int(sys.argv[2]), int(sys.argv[3])
