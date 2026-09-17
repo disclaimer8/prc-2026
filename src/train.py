@@ -149,6 +149,26 @@ def proxy_base(fit_r: pl.DataFrame, pred: pl.DataFrame):
     # PROXY_SCALE=1 (E46, 16.09): instead of a median offset, scale the proxy by a per-airport, per-source coefficient
     # "how much of MVT - filed time is really taxi", fitted by least squares on the fit rows and shrunk to the global
     # coefficient with PROXY_SCALE_RIDGE pseudo-rows (a competitor reports 0.23 at LSZH vs 0.86 at EGLL).
+    # PROXY_ISO=1 (E55, 17.09): the proxy does not err proportionally — it is accurate while it is small and
+    # over-predicts badly once it grows (AOBT: ~0 s below 1200 s, +580 s at 2400-3600; LOBT: +64 s below 1200 s,
+    # +1502 s at 2400-3600). A single coefficient (E46) fits a straight line through that, so calibrate the
+    # shape instead: an isotonic curve per airport and source, fitted on the fit rows, falling back to the
+    # source-wide curve and then to the E46 coefficient where a group is too small to carry one.
+    iso = None
+    if os.environ.get("PROXY_ISO") == "1":
+        from sklearn.isotonic import IsotonicRegression
+        min_rows = int(os.environ.get("PROXY_ISO_MIN", "500"))
+        cs = cf.filter(pl.col("raw").is_not_null() & (pl.col("raw") >= 0))
+        iso = {}
+        for src_name in cs["src"].unique().to_list():
+            g = cs.filter(pl.col("src") == src_name)
+            iso[(None, src_name)] = IsotonicRegression(out_of_bounds="clip").fit(g["raw"].to_numpy(), g["y"].to_numpy())
+        for ap, src_name in cs.select("ADEP_mvt", "src").unique().iter_rows():
+            g = cs.filter((pl.col("ADEP_mvt") == ap) & (pl.col("src") == src_name))
+            if g.height >= min_rows:
+                iso[(ap, src_name)] = IsotonicRegression(out_of_bounds="clip").fit(g["raw"].to_numpy(), g["y"].to_numpy())
+        print(f"proxy isotonic: {len(iso)} curves ({sum(1 for k in iso if k[0] is None)} source-wide), min rows {min_rows}", flush=True)
+
     scale = None
     if os.environ.get("PROXY_SCALE") == "1":
         k = float(os.environ.get("PROXY_SCALE_RIDGE", "1000"))
@@ -160,6 +180,18 @@ def proxy_base(fit_r: pl.DataFrame, pred: pl.DataFrame):
         print("proxy scale: global %.3f, per airport-source %s" % (a_global, scale.sort("a").to_dicts()), flush=True)
     def apply(d):
         c = chain(d).with_row_index("_i").join(off, on=["ADEP_mvt", "src"], how="left").join(med, on="ADEP_mvt", how="left")
+        if iso is not None:
+            c = c.sort("_i")
+            r = c["raw"].to_numpy(); aps = c["ADEP_mvt"].to_numpy(); srcs = c["src"].to_numpy()
+            out = c["med"].to_numpy().astype(float).copy()
+            ok = np.isfinite(r.astype(float))
+            for key in set(zip(aps[ok], srcs[ok])):
+                m = ok & (aps == key[0]) & (srcs == key[1])
+                curve = iso.get(key) or iso.get((None, key[1]))
+                if curve is None:
+                    continue
+                out[m] = curve.predict(r[m].astype(float))
+            return np.clip(out, 0, 7200)
         if scale is not None:
             c = c.join(scale, on=["ADEP_mvt", "src"], how="left").sort("_i")
             return c.select(pl.coalesce(pl.col("raw") * pl.col("a").fill_null(1.0), pl.col("med"))).to_series().to_numpy()
