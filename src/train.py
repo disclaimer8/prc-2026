@@ -172,6 +172,31 @@ def proxy_base(fit_r: pl.DataFrame, pred: pl.DataFrame):
                 iso[(ap, src_name)] = IsotonicRegression(out_of_bounds="clip").fit(g["raw"].to_numpy(), g["y"].to_numpy())
         print(f"proxy isotonic: {len(iso)} curves ({sum(1 for k in iso if k[0] is None)} source-wide), min rows {min_rows}", flush=True)
 
+    # PROXY_AFFINE=1 (E57, 17.09): E46 scales the proxy through the origin, so all of "how much of MVT - filed
+    # time is really taxi" has to be carried by the slope. Least squares says the relation has a fixed part too:
+    # with an intercept the slopes fall to 0.29-0.93 and the intercepts land at +25 s (EDDF) to +592 s (EDDM),
+    # and the held-out proxy RMSE drops in all six folds (358->339, 345->335, 323->300, 321->300, 322->301,
+    # 332->311). Unlike the isotonic curve of E55 this stays a smooth, shape-preserving map - one more parameter,
+    # not a step function - and both parameters are stable across fit sets (intercept spread <= 24 s at nine
+    # airports; LTFM, the January-disruption one, spreads 159 s). Shrinkage matches E46: PROXY_SCALE_RIDGE
+    # pseudo-rows drawn from the global design moment, shrinking each group towards the global (a, b).
+    affine = None
+    if os.environ.get("PROXY_AFFINE") == "1":
+        k = float(os.environ.get("PROXY_SCALE_RIDGE", "1000"))
+        cs = cf.filter(pl.col("raw").is_not_null() & (pl.col("raw") > 0))
+        xg = cs["raw"].to_numpy().astype(float)
+        Xg = np.column_stack([xg, np.ones_like(xg)])
+        gb = np.linalg.solve(Xg.T @ Xg, Xg.T @ cs["y"].to_numpy().astype(float))
+        moment = (Xg.T @ Xg) / len(xg)  # average per-row design moment: k of these = k pseudo-rows
+        rows = []
+        for key, g in cs.group_by(["ADEP_mvt", "src"]):
+            xi = g["raw"].to_numpy().astype(float)
+            Xi = np.column_stack([xi, np.ones_like(xi)])
+            sol = np.linalg.solve(Xi.T @ Xi + k * moment, Xi.T @ g["y"].to_numpy().astype(float) + k * moment @ gb)
+            rows.append({"ADEP_mvt": key[0], "src": key[1], "a": float(sol[0]), "b": float(sol[1])})
+        affine = pl.DataFrame(rows), gb
+        print("proxy affine: global a %.3f b %+.0f, per airport-source %s" % (gb[0], gb[1], affine[0].sort("b").to_dicts()), flush=True)
+
     scale = None
     if os.environ.get("PROXY_SCALE") == "1":
         k = float(os.environ.get("PROXY_SCALE_RIDGE", "1000"))
@@ -195,6 +220,11 @@ def proxy_base(fit_r: pl.DataFrame, pred: pl.DataFrame):
                     continue
                 out[m] = curve.predict(r[m].astype(float))
             return np.clip(out, 0, 7200)
+        if affine is not None:
+            tab, gb = affine
+            c = c.join(tab, on=["ADEP_mvt", "src"], how="left").sort("_i")
+            fit_val = pl.col("raw") * pl.col("a").fill_null(gb[0]) + pl.col("b").fill_null(gb[1])
+            return c.select(pl.coalesce(fit_val, pl.col("med")).clip(0, 7200)).to_series().to_numpy()
         if scale is not None:
             c = c.join(scale, on=["ADEP_mvt", "src"], how="left").sort("_i")
             return c.select(pl.coalesce(pl.col("raw") * pl.col("a").fill_null(1.0), pl.col("med"))).to_series().to_numpy()
