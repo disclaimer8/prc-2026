@@ -255,6 +255,16 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
     Xp, _ = to_pandas(pred, cols, cats)
     y = fit[TARGET].to_numpy()
     reg_mask = lab == 0
+    # E73 / MB3 (kind-mango, -5.99 s on their leaderboard, 18.09): the LIRF tail table overwrites every LIRF
+    # departure with no NM record and D >= 4 h, so the regressor is currently being shaped by labels whose
+    # predictions never reach a submission. Same population fold_metrics.decided_map already excludes from
+    # the gate. Their own hold-out could not price this -- it showed up only on the board.
+    if os.environ.get("SERVED_ONLY") == "1":
+        tail = ((pl.col("ADEP_mvt") == "LIRF") & pl.col("FLIGHT_ID_mvt").is_null()
+                & (pl.col("d_mvt_sched") >= 14400)).fill_null(False)
+        drop = fit.select(tail.alias("t"))["t"].to_numpy()
+        reg_mask = reg_mask & ~drop
+        print(f"SERVED_ONLY: regressor drops {int(drop.sum())} rows the tail table overwrites", flush=True)
 
     # the regressor learns the residual against a calibrated NM off-block proxy
     base_f, base_p = proxy_base(fit.filter(pl.Series(reg_mask)), pred)

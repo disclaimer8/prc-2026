@@ -394,6 +394,30 @@ def add_day_context(feat: pl.DataFrame, df: pl.DataFrame) -> pl.DataFrame:
     return feat.join(ctx, on="MVT_ID_mvt", how="left")
 
 
+def add_hour_context(feat: pl.DataFrame) -> pl.DataFrame:
+    """The NM taxi proxy level of the airport-HOUR, the hour-resolution twin of day_da_med (E72, 18.09).
+
+    merry-quicksand credit this with -3.12 s on the leaderboard for the rows without an NM record, where the
+    flight's own proxy is missing and the neighbours' is all there is. Our day_da_med is per airport-day,
+    twenty-four times coarser. Computed over the matched rows of the same airport-hour, so it reads other
+    flights' AOBT and never a label; null where fewer than five matched rows support it.
+    """
+    key = feat.select("MVT_ID_mvt", "ADEP_mvt", "d_mvt_aobt", "aobt_infeasible",
+                      hour=pl.col("MVT_TIME_UTC_mvt").dt.truncate("1h"))
+    stats = (
+        key.filter(pl.col("d_mvt_aobt").is_between(0, 7200) & (pl.col("aobt_infeasible") != 1))
+        .group_by("ADEP_mvt", "hour")
+        .agg(x_hprox_med=pl.col("d_mvt_aobt").median(), x_hprox_n=pl.len())
+    )
+    ctx = (
+        key.select("MVT_ID_mvt", "ADEP_mvt", "hour")
+        .join(stats, on=["ADEP_mvt", "hour"], how="left")
+        .with_columns(x_hprox_med=pl.when(pl.col("x_hprox_n") >= 5).then(pl.col("x_hprox_med")))
+        .select("MVT_ID_mvt", "x_hprox_med", "x_hprox_n")
+    )
+    return feat.join(ctx, on="MVT_ID_mvt", how="left")
+
+
 def add_runway_wind(feat: pl.DataFrame) -> pl.DataFrame:
     """Head- and crosswind on the departure runway from METAR wind (IEM archive) and the runway designator heading."""
     frames = [pl.read_csv(f"data/metar_wind/{ap}.csv", null_values=["null", "M"], infer_schema_length=0) for ap in AIRPORT_TZ]
@@ -471,6 +495,11 @@ def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
             d_eobt_iobt=_secs("EOBT_1_flt", "IOBT_flt"),
             d_aobt_sched=_secs(AOBT_SRC, "SCHED_TIME_UTC_mvt"),
             flight_time_plan=_secs("ARVT_1_flt", "EOBT_1_flt"),
+            # E72 (18.09): a second anchor clock, independent of the off-block family. kind-mango credit
+            # MVT - ARVT_1 with -3.19 s on the leaderboard (v44 299.85 -> v45 296.13). Kept as the raw
+            # difference rather than their route-median residual: the residual needs a reference period,
+            # and out-of-fold target encoding already carries the route level.
+            x_plan_res=_secs("MVT_TIME_UTC_mvt", "ARVT_1_flt"),
             diverted=(pl.col("ADES_flt") != pl.col("ADES_FILED_flt")).cast(pl.Int8),
             month=pl.col("MVT_TIME_UTC_mvt").dt.month(),
             doy=pl.col("MVT_TIME_UTC_mvt").dt.ordinal_day(),
@@ -490,6 +519,7 @@ def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
     feat = add_neighbor_features(feat, df)
     feat = add_runway_arrivals(feat, df)
     feat = add_day_context(feat, df)
+    feat = add_hour_context(feat)
     feat = add_runway_wind(feat)
     feat = add_geometry(feat)
     return add_weather(feat)
