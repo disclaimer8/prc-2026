@@ -24,6 +24,10 @@ sys.path.insert(0, os.path.dirname(__file__))
 from adsb_offblock_v2 import surface_mask  # noqa: E402
 
 N_DAYS = int(sys.argv[1]) if len(sys.argv) > 1 else 12
+# каталог с offblock2: контроль data/adsblol или кандидат E61 data/adsblol_standwalk (сырые surface_* всегда из data/adsblol)
+O2DIR = os.environ.get("O2DIR", "data/adsblol")
+# набор суток задаётся одним каталогом для обоих прогонов, иначе контроль и кандидат считаются на разных днях
+DAYS_IN = os.environ.get("DAYS_IN", "data/adsblol")
 
 
 def main() -> None:
@@ -40,11 +44,14 @@ def main() -> None:
     out = []
     for day in days:
         path = f"data/adsblol/surface_{day}.parquet"
-        if not os.path.exists(path):
-            print(f"{day}: файла нет", flush=True)
+        # сравнение контроля и кандидата должно идти по одному набору суток, поэтому день без файла в ЛЮБОМ
+        # из каталогов пропускается в обоих прогонах, а не только в том, где его нет
+        if not os.path.exists(path) or not os.path.exists(f"{O2DIR}/offblock2_{day}.parquet") \
+                or not os.path.exists(f"{DAYS_IN}/offblock2_{day}.parquet"):
+            print(f"{day}: пропущен (нет файла)", flush=True)
             continue
         pts = pl.read_parquet(path).with_columns(surf=surface_mask(pl.read_parquet(path)))
-        o2 = pl.read_parquet(f"data/adsblol/offblock2_{day}.parquet", columns=["MVT_ID_mvt", "coverage", "t_first", "t_first_move"])
+        o2 = pl.read_parquet(f"{O2DIR}/offblock2_{day}.parquet", columns=["MVT_ID_mvt", "coverage", "t_first", "t_first_move"])
         dep = f.filter(pl.col("day") == day)
         cand: dict[tuple, list] = {}
         for cs, ap, icao in pts.filter(pl.col("callsign").is_not_null()).select("callsign", "airport", "icao").unique().iter_rows():
@@ -68,7 +75,7 @@ def main() -> None:
         print(f"{day}: сопоставлено {len(out)}", flush=True)
     r = pl.DataFrame(out, schema=["MVT_ID_mvt", "ADEP_mvt", "y", "raw_first_minus_block", "seg_first_minus_block",
                                   "pts_around_block", "pts_block_to_to", "max_gap", "coverage"], orient="row")
-    r.write_parquet("data/longtail_raw_probe.parquet")
+    r.write_parquet(f"data/longtail_raw_probe_{os.path.basename(O2DIR)}.parquet")
     print()
     for lab, sub in (("длинные (y > 3600)", r.filter(pl.col("y") > 3600)),
                      ("обычные (600–1800)", r.filter(pl.col("y").is_between(600, 1800)))):
