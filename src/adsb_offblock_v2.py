@@ -19,7 +19,14 @@ import numpy as np
 import polars as pl
 
 ELEV_FT = {"EDDF": 364, "EDDM": 1487, "EGLL": 83, "EHAM": -11, "LEBL": 12, "LEMD": 1998, "LFPG": 392, "LIRF": 13, "LSZH": 1416, "LTFM": 325}
-GAP_S, STOP_S, MOVING_KT, SURFACE_KT = 900, 90, 3.0, 40.0
+GAP_S, STOP_S, SURFACE_KT = 900, 90, 40.0
+# E71 (18.09): the movement threshold, 3 kt by default so the accepted path is unchanged. Measured
+# against known block times on 18 050 departures: 3 kt gives 302.6 s median absolute error, 1 kt gives
+# 193.5 s at higher coverage, because 4.2% of ground samples sit in the 0.5-3 kt pushback band that a
+# 3 kt rule discards. Our gs is broadcast on 98.02% of ground samples at 0.1 kt resolution, so unlike
+# OPDI we have no reason to derive it from positions, and a median filter with a sustain rule measured
+# worse at every threshold.
+MOVING_KT = float(os.environ.get("MOVING_KT", "3.0"))
 
 
 def surface_mask(df: pl.DataFrame) -> pl.Expr:
