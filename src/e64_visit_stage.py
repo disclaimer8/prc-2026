@@ -57,7 +57,7 @@ d = (raw.join(base, on="MVT_ID_mvt", how="inner").join(cov, on="MVT_ID_mvt", how
                       ap=pl.col("ADEP_mvt").replace_strict({a: i for i, a in enumerate(AIRPORTS)}, return_dtype=pl.Int32),
                       has_nm=pl.col("FLIGHT_ID_mvt").is_not_null().cast(pl.Int8),
                       D=(pl.col("MVT_TIME_UTC_mvt").dt.epoch("s") - pl.col("SCHED_TIME_UTC_mvt").dt.epoch("s")).cast(pl.Float64)))
-usable = (pl.col("coverage") < 2) & (pl.col("vi_has_prev") == 1)
+usable = ((pl.col("coverage") < 2) & (pl.col("vi_has_prev") == 1)).fill_null(False)
 print(f"rows {d.height}; coverage < 2: {d.filter(pl.col('coverage') < 2).height}; "
       f"of them with an identified airframe and a previous visit: {d.filter(usable).height}", flush=True)
 
