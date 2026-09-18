@@ -40,6 +40,8 @@ FEATS25 = list(FEATS)
 FEATS30 = FEATS + SF
 GS = ["gs_stand_known", "gs_d_first", "gs_d_firstmove", "gs_d_lastmove", "gs_d_lastmove_rwy", "gs_dwell_stand", "gs_seen_at_stand", "gs_mvt_leave", "gs_aobt_leave"]
 SW = ["sw_recovered", "sw_extra_s", "sw_gap_s"]  # E62: describe a reconstructed stand dwell instead of hiding it
+# E65 (18.09, accepted -1.73 s): the airframe's own visit, from the airborne points we already download.
+VISIT = ["vi_first_seen", "vi_turnaround", "vi_gap", "vi_n_pts", "vi_prev_pts", "vi_alt_first", "vi_gs_first", "vi_has_prev"]
 FEATS = FEATS30 + GS
 PARAMS = dict(objective="regression", learning_rate=0.03, num_leaves=31, min_data_in_leaf=200, feature_fraction=0.9,
               bagging_fraction=0.8, bagging_freq=1, lambda_l2=10.0, verbose=-1, seed=42, deterministic=True, force_row_wise=True, num_threads=8)
@@ -129,7 +131,16 @@ if mode == "cv":
 elif mode == "apply":
     base_v, new_v = int(sys.argv[2]), int(sys.argv[3])
     raw = pl.concat([pl.read_parquet(f, columns=cols) for f in sorted(glob.glob("data/prc-2026-datasets/training_*.parquet"))]).filter(pl.col("PHASE_mvt") == "DEP")
-    m = fit_stage(build(raw, oof_base(), load_adsb("data/adsblol/offblock2_2025-*.parquet")))
+    visit_on = os.environ.get("VISIT_FEATS") == "1"
+    feats = FEATS + VISIT if visit_on else None
+
+    def with_visit(d, year):
+        if not visit_on:
+            return d
+        v = pl.concat([pl.read_parquet(f) for f in sorted(glob.glob(f"data/adsblol/visit_{year}-*.parquet"))])
+        return d.join(v, on="MVT_ID_mvt", how="left")
+
+    m = fit_stage(with_visit(build(raw, oof_base(), load_adsb("data/adsblol/offblock2_2025-*.parquet")), 2025), feats)
     rk = pl.read_parquet("data/prc-2026-datasets/ranking.parquet", columns=[c for c in cols if c != Y]).filter(pl.col("PHASE_mvt") == "DEP")
     sub = pl.read_parquet(f"submissions/gentle-igloo_v{base_v}.parquet")
     # regime probabilities of the base: explicit file (PARTS=submissions/parts_vN.npz, the blend step of the base chain); no silent zero
@@ -141,7 +152,7 @@ elif mode == "apply":
     pn = pl.DataFrame({"MVT_ID_mvt": parts["mvt_id"], "p_nonreg": 1 - parts["proba"][:, 0]})
     base = sub.rename({Y: "base"}).with_columns(pl.col("base").cast(pl.Float64))
     base = base.join(pn, on="MVT_ID_mvt", how="left") if pn is not None else base.with_columns(p_nonreg=pl.lit(0.0))
-    d = build(rk.with_columns(pl.lit(None, dtype=pl.Int32).alias(Y)), base, load_adsb("data/adsblol/offblock2_2026-*.parquet"))
+    d = with_visit(build(rk.with_columns(pl.lit(None, dtype=pl.Int32).alias(Y)), base, load_adsb("data/adsblol/offblock2_2026-*.parquet")), 2026)
     new = correct(m, d)
     out = sub.join(pl.DataFrame({"MVT_ID_mvt": d["MVT_ID_mvt"], "new": new}), on="MVT_ID_mvt", how="left").with_columns(
         pl.coalesce(pl.col("new").round(0).cast(sub.schema[Y]), pl.col(Y)).alias(Y)).select(sub.columns)
