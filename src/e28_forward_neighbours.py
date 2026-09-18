@@ -18,7 +18,7 @@ import polars as pl
 
 if sys.argv[1] == "build":
     from features import _window_stats
-    feat = pl.read_parquet("data/features_final.parquet")
+    feat = pl.read_parquet(os.environ.get("E28_IN", "data/features_final.parquet"))
     dep = feat.select("MVT_ID_mvt", "ADEP_mvt", "RUNWAY_mvt", "t_mvt",
                       prox=pl.when(pl.col("d_mvt_aobt").is_between(0, 7200) & (pl.col("aobt_infeasible") != 1)).then(pl.col("d_mvt_aobt")))
     out = []
@@ -42,7 +42,7 @@ if sys.argv[1] == "build":
         new = new.join(p_, on="MVT_ID_mvt", how="left")
     assert new.height == feat.height
     print("columns added:", [c for c in new.columns if c.startswith("fw_")])
-    new.write_parquet("data/features_e28.parquet")
+    new.write_parquet(os.environ.get("E28_OUT", "data/features_e28.parquet"))
 else:
     LB_SCALE = 6 * 2 * 273.41 * 344841
     rows = []

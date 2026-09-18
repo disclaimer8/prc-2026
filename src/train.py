@@ -134,6 +134,8 @@ def proxy_base(fit_r: pl.DataFrame, pred: pl.DataFrame):
     per-airport, per-source median offset learned on the fit rows; airport median taxi when nothing is available."""
     def chain(d):
         def ok(c):
+            if c == "d_mvt_aobt" and os.environ.get("NO_AOBT") == "1":  # abstinence measurement: no AOBT link
+                return pl.when(pl.lit(False)).then(pl.col(c))
             cond = pl.col(c).is_between(0, 7200)
             if c == "d_mvt_aobt" and os.environ.get("AOBT_GATE", "1") == "1":  # AOBT_3 outside the LOBT window cannot be the off-block time
                 cond = cond & ((pl.col("d_mvt_aobt") - pl.col("d_mvt_lobt")).abs() <= LOBT_WINDOW).fill_null(True)

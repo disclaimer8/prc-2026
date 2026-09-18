@@ -17,6 +17,14 @@ import polars as pl
 DATA = "data/prc-2026-datasets/"
 TARGET = "TAXITIME_SEC_mvt"
 
+# NO_AOBT=1 (18.09): measure what abstaining from AOBT_3_flt costs. Every place that reads the NM actual
+# off-block time reads the filed LOBT instead, so the derived columns (congestion around off-block,
+# neighbours, day median, target encoding) keep their names and meaning but no longer carry AOBT_3.
+# The direct AOBT columns then duplicate their LOBT twins and are left out of the model matrix by
+# DROP_PREFIX; the proxy chain skips the AOBT link (train.py).
+NO_AOBT = os.environ.get("NO_AOBT") == "1"
+AOBT_SRC = "LOBT_flt" if NO_AOBT else "AOBT_3_flt"
+
 AIRPORT_TZ = {
     "EDDF": "Europe/Berlin",
     "EDDM": "Europe/Berlin",
@@ -168,7 +176,7 @@ def load_metar() -> pl.DataFrame:
 def add_weather(feat: pl.DataFrame) -> pl.DataFrame:
     m = load_metar()
     feat = feat.with_columns(
-        pl.col("AOBT_3_flt").fill_null(pl.col("MVT_TIME_UTC_mvt") - pl.duration(minutes=15)).alias("_ob_time")
+        pl.col(AOBT_SRC).fill_null(pl.col("MVT_TIME_UTC_mvt") - pl.duration(minutes=15)).alias("_ob_time")
     ).sort("_ob_time")
     out = feat.join_asof(
         m.sort("metar_time"), left_on="_ob_time", right_on="metar_time", by="ADEP_mvt", strategy="backward",
@@ -425,7 +433,7 @@ def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
     df = df.with_columns(
         t_mvt=_epoch("MVT_TIME_UTC_mvt"),
         t_block=_epoch("BLOCK_TIME_UTC_mvt"),
-        t_aobt=_epoch("AOBT_3_flt"),
+        t_aobt=_epoch(AOBT_SRC),
     )
 
     # airport of the movement: departures report ADEP, arrivals report ADES
@@ -454,14 +462,14 @@ def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
         .join(rwy, on="MVT_ID_mvt", how="left")
         .join(local, on="MVT_ID_mvt", how="left")
         .with_columns(
-            d_mvt_aobt=_secs("MVT_TIME_UTC_mvt", "AOBT_3_flt"),
+            d_mvt_aobt=_secs("MVT_TIME_UTC_mvt", AOBT_SRC),
             d_mvt_eobt=_secs("MVT_TIME_UTC_mvt", "EOBT_1_flt"),
             d_mvt_lobt=_secs("MVT_TIME_UTC_mvt", "LOBT_flt"),
             d_mvt_iobt=_secs("MVT_TIME_UTC_mvt", "IOBT_flt"),
             d_mvt_sched=_secs("MVT_TIME_UTC_mvt", "SCHED_TIME_UTC_mvt"),
-            d_aobt_eobt=_secs("AOBT_3_flt", "EOBT_1_flt"),
+            d_aobt_eobt=_secs(AOBT_SRC, "EOBT_1_flt"),
             d_eobt_iobt=_secs("EOBT_1_flt", "IOBT_flt"),
-            d_aobt_sched=_secs("AOBT_3_flt", "SCHED_TIME_UTC_mvt"),
+            d_aobt_sched=_secs(AOBT_SRC, "SCHED_TIME_UTC_mvt"),
             flight_time_plan=_secs("ARVT_1_flt", "EOBT_1_flt"),
             diverted=(pl.col("ADES_flt") != pl.col("ADES_FILED_flt")).cast(pl.Int8),
             month=pl.col("MVT_TIME_UTC_mvt").dt.month(),
@@ -471,9 +479,9 @@ def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
             ap_stand=pl.col("ADEP_mvt") + "_" + pl.col("STAND_mvt").fill_null("NA"),
             ades_region=pl.col("ADES_mvt").str.slice(0, 2),
             airline_prefix=pl.col("CALLSIGN_flt").str.extract(r"^([A-Z]{3})", 1),
-            aobt_minute_exact=(pl.col("AOBT_3_flt").dt.second() == 0).cast(pl.Int8),
+            aobt_minute_exact=(pl.col(AOBT_SRC).dt.second() == 0).cast(pl.Int8),
             # block time lies within 3606 s of LOBT on every 2025 row, so an AOBT_3 further than that from LOBT cannot be the off-block
-            aobt_infeasible=((pl.col("AOBT_3_flt") - pl.col("LOBT_flt")).dt.total_seconds().abs() > 3606).cast(pl.Int8),
+            aobt_infeasible=((pl.col(AOBT_SRC) - pl.col("LOBT_flt")).dt.total_seconds().abs() > 3606).cast(pl.Int8),
         )
     )
     from geometry import add_geometry
