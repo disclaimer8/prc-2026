@@ -17,7 +17,7 @@ import numpy as np
 import polars as pl
 
 sys.path.insert(0, os.path.dirname(__file__))
-from adsb_offblock_v2 import GAP_S, MOVING_KT, surface_mask  # noqa: E402
+from adsb_offblock_v2 import GAP_S, MOVING_KT, OUT_DIR, segment_start, surface_mask  # noqa: E402
 
 
 def segment_features(t, lat, lon, gs, ground, takeoff):
@@ -25,9 +25,7 @@ def segment_features(t, lat, lon, gs, ground, takeoff):
     if len(idx) == 0 or takeoff - t[idx[-1]] > 900:
         return None
     end = idx[-1]
-    start = end
-    while start > 0 and ground[start - 1] and t[start] - t[start - 1] <= GAP_S:
-        start -= 1
+    start = segment_start(t, gs, ground, end, lat, lon)
     st, la, lo, sg = t[start:end + 1], lat[start:end + 1], lon[start:end + 1], np.nan_to_num(gs[start:end + 1])
     k = math.cos(math.radians(float(np.nanmean(la))))
     dy, dx = np.diff(la) * 111.2, np.diff(lo) * 111.2 * k
@@ -75,7 +73,8 @@ def main() -> None:
             g = by_icao[ok[0]].filter(pl.col("airport") == ap)
             f = segment_features(g["t"].to_numpy(), g["lat"].to_numpy(), g["lon"].to_numpy(), g["gs"].to_numpy(), g["surf"].to_numpy(), float(to))
         out.append((mvt_id, *(f if f is not None else [None] * len(names))))
-    pl.DataFrame(out, schema=["MVT_ID_mvt", *names], orient="row").write_parquet(f"data/adsblol/offblock3_{day}.parquet")
+    os.makedirs(OUT_DIR, exist_ok=True)
+    pl.DataFrame(out, schema=["MVT_ID_mvt", *names], orient="row").write_parquet(f"{OUT_DIR}/offblock3_{day}.parquet")
 
 
 if __name__ == "__main__":

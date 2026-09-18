@@ -23,7 +23,7 @@ import numpy as np
 import polars as pl
 
 sys.path.insert(0, os.path.dirname(__file__))
-from adsb_offblock_v2 import GAP_S, MOVING_KT, surface_mask  # noqa: E402
+from adsb_offblock_v2 import GAP_S, MOVING_KT, OUT_DIR, segment_start, surface_mask  # noqa: E402
 from geometry import load_tables, norm_stand, strip_suffix  # noqa: E402
 
 NEAR_M = 150.0
@@ -39,9 +39,7 @@ def features(t, lat, lon, gs, ground, takeoff, stand, rwy):
     if len(idx) == 0 or takeoff - t[idx[-1]] > 900:
         return None
     end = idx[-1]
-    start = end
-    while start > 0 and ground[start - 1] and t[start] - t[start - 1] <= GAP_S:
-        start -= 1
+    start = segment_start(t, gs, ground, end, lat, lon)
     st, la, lo, sg = t[start:end + 1], lat[start:end + 1], lon[start:end + 1], np.nan_to_num(gs[start:end + 1])
     moving = sg > MOVING_KT
     k0 = int(np.argmax(moving)) if moving.any() else len(st) - 1  # first moving point
@@ -101,7 +99,8 @@ def main() -> None:
             f = features(g["t"].to_numpy(), g["lat"].to_numpy(), g["lon"].to_numpy(), g["gs"].to_numpy(), g["surf"].to_numpy(), float(to),
                          stand, rw_map.get((ap, runway)))
         rows.append((mvt_id, *([f[n] for n in names] if f else [None] * len(names))))
-    pl.DataFrame(rows, schema={"MVT_ID_mvt": pl.Float64, **{n: pl.Float64 for n in names}}, orient="row").write_parquet(f"data/adsblol/offblock5_{day}.parquet")
+    os.makedirs(OUT_DIR, exist_ok=True)
+    pl.DataFrame(rows, schema={"MVT_ID_mvt": pl.Float64, **{n: pl.Float64 for n in names}}, orient="row").write_parquet(f"{OUT_DIR}/offblock5_{day}.parquet")
 
 
 if __name__ == "__main__":

@@ -27,16 +27,51 @@ def surface_mask(df: pl.DataFrame) -> pl.Expr:
     return pl.col("on_ground") | ((pl.col("gs").fill_null(0) <= SURFACE_KT) & (pl.col("alt").is_null() | (pl.col("alt") <= elev + 800)))
 
 
-def estimate(t: np.ndarray, gs: np.ndarray, ground: np.ndarray, takeoff: float):
+STAND_M = float(os.environ.get("STAND_M", "150"))
+OUT_DIR = os.environ.get("ADSB_OUT_DIR", "data/adsblol")
+
+
+def dist_m(lat1, lon1, lat2, lon2):
+    """Great-circle metres; scalars or arrays."""
+    R = 6371000.0
+    p1, p2 = np.radians(lat1), np.radians(lat2)
+    dp, dl = np.radians(np.asarray(lat2) - np.asarray(lat1)), np.radians(np.asarray(lon2) - np.asarray(lon1))
+    a = np.sin(dp / 2) ** 2 + np.cos(p1) * np.cos(p2) * np.sin(dl / 2) ** 2
+    return 2 * R * np.arcsin(np.clip(np.sqrt(a), 0, 1))
+
+
+def segment_start(t, gs, ground, end, lat=None, lon=None):
+    """First index of the surface segment that ends at `end`.
+
+    Default: the last continuous ground run - walk back while the previous point is ground and the gap is at
+    most GAP_S. That rule exists so the inbound taxi of the same airframe cannot be swallowed, but it also
+    throws away the stand dwell whenever reception drops for more than 15 minutes, which is most of the time:
+    on four 2026 days 74.4% of matched departures had earlier ground points discarded, the aircraft having
+    moved a median of 62 m across the break, and 2476 of them lost their first-movement estimate entirely.
+
+    STAND_WALK=1 (E61, 18.09) additionally extends the segment backwards through points that are BOTH
+    stationary and within STAND_M of the segment start, so the walk stops at the last moment the aircraft was
+    in motion - the end of the inbound taxi - and cannot cross it. Walking back on distance alone does swallow
+    it: that variant scored RMSE 1927 against the recorded block time, against 444 for the current rule.
+    """
+    start = end
+    while start > 0 and ground[start - 1] and t[start] - t[start - 1] <= GAP_S:
+        start -= 1
+    if os.environ.get("STAND_WALK") == "1" and lat is not None:
+        while (start > 0 and np.nan_to_num(gs[start - 1]) <= MOVING_KT
+               and dist_m(lat[start - 1], lon[start - 1], lat[start], lon[start]) <= STAND_M):
+            start -= 1
+    return start
+
+
+def estimate(t: np.ndarray, gs: np.ndarray, ground: np.ndarray, takeoff: float, lat=None, lon=None):
     idx = np.where(ground & (t <= takeoff + 300))[0]
     if len(idx) == 0:
         return 1, None, None, None, None, None, None
     end = idx[-1]
     if takeoff - t[end] > 900:
         return 1, None, None, None, None, None, None
-    start = end
-    while start > 0 and ground[start - 1] and t[start] - t[start - 1] <= GAP_S:
-        start -= 1
+    start = segment_start(t, gs, ground, end, lat, lon)
     st, sg = t[start:end + 1], np.nan_to_num(gs[start:end + 1])
     stat = sg <= MOVING_KT
     # first movement after an initial stationary stretch (push-back / taxi start from the stand)
@@ -98,14 +133,16 @@ def main() -> None:
             out.append((mvt_id, 0 if not cand_map.get((cs, ap)) else 1, None, None, None, None, None, None, 0, len(ok)))
             continue
         g = by_icao[ok[0]].filter(pl.col("airport") == ap)
-        e = estimate(g["t"].to_numpy(), g["gs"].to_numpy(), g["surf"].to_numpy(), float(to))
+        e = estimate(g["t"].to_numpy(), g["gs"].to_numpy(), g["surf"].to_numpy(), float(to),
+                     g["lat"].to_numpy(), g["lon"].to_numpy())
         out.append((mvt_id, *e, g.height, 1))
     # explicit dtypes: on a day whose first rows are all nulls polars infers the wrong type and the append fails
     # (2025-06-11 had no offblock2 file for that reason until 16.09)
     schema = {"MVT_ID_mvt": pl.Float64, "coverage": pl.Int64, "t_first": pl.Float64, "t_move": pl.Float64, "t_to": pl.Float64,
               "t_first_move": pl.Float64, "stat_total": pl.Float64, "n_stops": pl.Int64, "n_pts": pl.Int64, "n_cand": pl.Int64}
     res = pl.DataFrame(out, schema=schema, orient="row")
-    res.write_parquet(f"data/adsblol/offblock2_{day}.parquet")
+    os.makedirs(OUT_DIR, exist_ok=True)
+    res.write_parquet(f"{OUT_DIR}/offblock2_{day}.parquet")
     if y == 2025:
         j = dep.join(res, on="MVT_ID_mvt").with_columns(blk=pl.col("BLOCK_TIME_UTC_mvt").dt.epoch("s").cast(pl.Float64))
         pl.Config.set_tbl_width_chars(250)

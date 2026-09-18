@@ -44,7 +44,11 @@ PARAMS = dict(objective="regression", learning_rate=0.03, num_leaves=31, min_dat
               bagging_fraction=0.8, bagging_freq=1, lambda_l2=10.0, verbose=-1, seed=42, deterministic=True, force_row_wise=True, num_threads=8)
 
 
+ADSB_DIR = os.environ.get("ADSB_DIR", "data/adsblol")  # E61: point the stage at a re-extracted feature set
+
+
 def load_adsb(pattern: str) -> pl.DataFrame:
+    pattern = pattern.replace("data/adsblol/", ADSB_DIR + "/")
     files = sorted(glob.glob(pattern))
     o2 = pl.concat([pl.read_parquet(f) for f in files])
     o3 = pl.concat([pl.read_parquet(f.replace("offblock2_", "offblock3_")) for f in files if os.path.exists(f.replace("offblock2_", "offblock3_"))])
