@@ -39,6 +39,7 @@ SF = ["sf_path_km", "sf_straight_km", "sf_move_time", "sf_longest_stop", "sf_las
 FEATS25 = list(FEATS)
 FEATS30 = FEATS + SF
 GS = ["gs_stand_known", "gs_d_first", "gs_d_firstmove", "gs_d_lastmove", "gs_d_lastmove_rwy", "gs_dwell_stand", "gs_seen_at_stand", "gs_mvt_leave", "gs_aobt_leave"]
+SW = ["sw_recovered", "sw_extra_s", "sw_gap_s"]  # E62: describe a reconstructed stand dwell instead of hiding it
 FEATS = FEATS30 + GS
 PARAMS = dict(objective="regression", learning_rate=0.03, num_leaves=31, min_data_in_leaf=200, feature_fraction=0.9,
               bagging_fraction=0.8, bagging_freq=1, lambda_l2=10.0, verbose=-1, seed=42, deterministic=True, force_row_wise=True, num_threads=8)

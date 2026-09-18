@@ -40,7 +40,7 @@ def dist_m(lat1, lon1, lat2, lon2):
     return 2 * R * np.arcsin(np.clip(np.sqrt(a), 0, 1))
 
 
-def segment_start(t, gs, ground, end, lat=None, lon=None):
+def segment_start(t, gs, ground, end, lat=None, lon=None, report=False):
     """First index of the surface segment that ends at `end`.
 
     Default: the last continuous ground run - walk back while the previous point is ground and the gap is at
@@ -57,21 +57,28 @@ def segment_start(t, gs, ground, end, lat=None, lon=None):
     start = end
     while start > 0 and ground[start - 1] and t[start] - t[start - 1] <= GAP_S:
         start -= 1
-    if os.environ.get("STAND_WALK") == "1" and lat is not None:
+    plain = start
+    if os.environ.get("STAND_WALK") in ("1", "2") and lat is not None:
         while (start > 0 and np.nan_to_num(gs[start - 1]) <= MOVING_KT
                and dist_m(lat[start - 1], lon[start - 1], lat[start], lon[start]) <= STAND_M):
             start -= 1
-    return start
+    return (start, plain) if report else start
 
 
 def estimate(t: np.ndarray, gs: np.ndarray, ground: np.ndarray, takeoff: float, lat=None, lon=None):
     idx = np.where(ground & (t <= takeoff + 300))[0]
     if len(idx) == 0:
-        return 1, None, None, None, None, None, None
+        return 1, None, None, None, None, None, None, 0.0, 0.0, 0.0
     end = idx[-1]
     if takeoff - t[end] > 900:
-        return 1, None, None, None, None, None, None
-    start = segment_start(t, gs, ground, end, lat, lon)
+        return 1, None, None, None, None, None, None, 0.0, 0.0, 0.0
+    start, plain = segment_start(t, gs, ground, end, lat, lon, report=True)
+    # E62 (18.09): E61 showed the recovered dwell helps its own rows (-0.063 s) but silently changing the feature
+    # mix costs more on the untouched ones (+0.261 s). So report the reconstruction instead of hiding it: the
+    # coverage class stays the one the uninterrupted segment earns, and the walk is described by its own features.
+    sw_recovered = float(plain - start)
+    sw_extra_s = float(t[plain] - t[start]) if start < plain else 0.0
+    sw_gap_s = float(t[plain] - t[plain - 1]) if start < plain and plain > 0 else 0.0
     st, sg = t[start:end + 1], np.nan_to_num(gs[start:end + 1])
     stat = sg <= MOVING_KT
     # first movement after an initial stationary stretch (push-back / taxi start from the stand)
@@ -86,20 +93,24 @@ def estimate(t: np.ndarray, gs: np.ndarray, ground: np.ndarray, takeoff: float, 
     stat_total = float(dt[stat].sum())
     n_stops = int(np.sum(stat[1:] & ~stat[:-1]))
     extra = (t_first_move, stat_total, n_stops)
-    cov, t_move = 2, st[0]
-    i = len(st) - 1
+    # STAND_WALK=2: decide the coverage class on the uninterrupted segment, so a reconstructed dwell cannot
+    # silently relabel a flight as "seen stationary at the stand" - that relabelling is half of what E61 cost.
+    cst = t[plain:end + 1] if os.environ.get("STAND_WALK") == "2" else st
+    csg = np.nan_to_num(gs[plain:end + 1]) if os.environ.get("STAND_WALK") == "2" else sg
+    cov, t_move = 2, cst[0]
+    i = len(cst) - 1
     while i >= 0:  # last stationary stretch of >= STOP_S before take-off
-        if sg[i] <= MOVING_KT:
+        if csg[i] <= MOVING_KT:
             j = i
-            while j > 0 and sg[j - 1] <= MOVING_KT:
+            while j > 0 and csg[j - 1] <= MOVING_KT:
                 j -= 1
-            if st[i] - st[j] >= STOP_S:
-                cov, t_move = 3, st[i]
+            if cst[i] - cst[j] >= STOP_S:
+                cov, t_move = 3, cst[i]
                 break
             i = j - 1
         else:
             i -= 1
-    return (cov, float(st[0]), float(t_move), float(t[end])) + extra
+    return (cov, float(st[0]), float(t_move), float(t[end])) + extra + (sw_recovered, sw_extra_s, sw_gap_s)
 
 
 def main() -> None:
@@ -130,7 +141,7 @@ def main() -> None:
             if len(before) and to - before[-1] <= 900:
                 ok.append(icao)
         if len(ok) != 1:
-            out.append((mvt_id, 0 if not cand_map.get((cs, ap)) else 1, None, None, None, None, None, None, 0, len(ok)))
+            out.append((mvt_id, 0 if not cand_map.get((cs, ap)) else 1, None, None, None, None, None, None, 0.0, 0.0, 0.0, 0, len(ok)))
             continue
         g = by_icao[ok[0]].filter(pl.col("airport") == ap)
         e = estimate(g["t"].to_numpy(), g["gs"].to_numpy(), g["surf"].to_numpy(), float(to),
@@ -139,7 +150,9 @@ def main() -> None:
     # explicit dtypes: on a day whose first rows are all nulls polars infers the wrong type and the append fails
     # (2025-06-11 had no offblock2 file for that reason until 16.09)
     schema = {"MVT_ID_mvt": pl.Float64, "coverage": pl.Int64, "t_first": pl.Float64, "t_move": pl.Float64, "t_to": pl.Float64,
-              "t_first_move": pl.Float64, "stat_total": pl.Float64, "n_stops": pl.Int64, "n_pts": pl.Int64, "n_cand": pl.Int64}
+              "t_first_move": pl.Float64, "stat_total": pl.Float64, "n_stops": pl.Int64,
+              "sw_recovered": pl.Float64, "sw_extra_s": pl.Float64, "sw_gap_s": pl.Float64,
+              "n_pts": pl.Int64, "n_cand": pl.Int64}
     res = pl.DataFrame(out, schema=schema, orient="row")
     os.makedirs(OUT_DIR, exist_ok=True)
     res.write_parquet(f"{OUT_DIR}/offblock2_{day}.parquet")
