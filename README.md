@@ -82,3 +82,7 @@ non-commercial research only, which is not an open licence).
 
 Data: EUROCONTROL Performance Review Commission Data Challenge 2026, with the support of the
 OpenSky Network.
+
+## Sources
+
+Every dataset this solution reads, with its licence, and every source that was evaluated and dropped: [SOURCES.md](SOURCES.md).
