@@ -47,15 +47,23 @@ def features(t, lat, lon, gs, ground, takeoff, stand, rwy):
     stat_idx = np.where(~moving)[0]
     k_last = int(stat_idx[-1] + 1) if len(stat_idx) and stat_idx[-1] + 1 < len(st) else k0
     out = dict(gs_stand_known=0.0, gs_d_first=None, gs_d_firstmove=None, gs_d_lastmove=None, gs_d_lastmove_rwy=None,
-               gs_t_leave=None, gs_dwell_stand=None, gs_seen_at_stand=None)
+               gs_t_leave=None, gs_dwell_stand=None, gs_seen_at_stand=None,
+               gs_d_first_rwy=None, gs_frac_done=None, gs_d_stand_rwy=None)
     if rwy is not None:
         out["gs_d_lastmove_rwy"] = float(dist_m(la[k_last], lo[k_last], *rwy))
+        # E66 (18.09): where on the taxi we catch the aircraft, and how much of it is left. This is a property of
+        # THIS track, not of the stand-runway pair - E51 measured the pair and was absorbed by ap_stand/ap_runway.
+        out["gs_d_first_rwy"] = float(dist_m(la[0], lo[0], *rwy))
     if stand is None:
         return out
     d = dist_m(la, lo, *stand)
     near = d <= NEAR_M
     out.update(gs_stand_known=1.0, gs_d_first=float(d[0]), gs_d_firstmove=float(d[k0]), gs_d_lastmove=float(d[k_last]),
                gs_seen_at_stand=float(near.any()))
+    if rwy is not None:
+        out["gs_d_stand_rwy"] = float(dist_m(stand[0], stand[1], *rwy))
+        tot = out["gs_d_first"] + out["gs_d_first_rwy"]
+        out["gs_frac_done"] = float(out["gs_d_first"] / tot) if tot > 0 else None
     if near.any():
         first_near = int(np.argmax(near))
         after = np.where(~near[first_near:])[0]
@@ -86,7 +94,8 @@ def main() -> None:
         cand_map.setdefault((cs, ap), []).append(icao)
     surf_t = {(r[0], r[1]): np.sort(np.asarray(r[2])) for r in pts.filter(pl.col("surf")).group_by("icao", "airport").agg(pl.col("t")).iter_rows()}
     by_icao = {k[0]: g for k, g in pts.group_by(["icao"])}
-    names = ["gs_stand_known", "gs_d_first", "gs_d_firstmove", "gs_d_lastmove", "gs_d_lastmove_rwy", "gs_t_leave", "gs_dwell_stand", "gs_seen_at_stand"]
+    names = ["gs_stand_known", "gs_d_first", "gs_d_firstmove", "gs_d_lastmove", "gs_d_lastmove_rwy", "gs_t_leave", "gs_dwell_stand", "gs_seen_at_stand",
+             "gs_d_first_rwy", "gs_frac_done", "gs_d_stand_rwy"]
     rows = []
     for mvt_id, ap, cs, to, stand_raw, runway in dep.select("MVT_ID_mvt", "ADEP_mvt", "cs", "to", "STAND_mvt", "RUNWAY_mvt").iter_rows():
         ok = [icao for icao in cand_map.get((cs, ap), []) if (ts := surf_t.get((icao, ap))) is not None
