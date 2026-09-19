@@ -22,6 +22,11 @@ TARGET = "TAXITIME_SEC_mvt"
 # neighbours, day median, target encoding) keep their names and meaning but no longer carry AOBT_3.
 # The direct AOBT columns then duplicate their LOBT twins and are left out of the model matrix by
 # DROP_PREFIX; the proxy chain skips the AOBT link (train.py).
+# E72 (19.09): x_plan_res and x_hprox_* were measured and REJECTED (+0.06 s, lower in 3 of 6). They stay in
+# the code because the measurement is worth keeping reproducible, but off by default: the canonical
+# DROP_PREFIX is "day_,tq_,wxr_,month" and does not drop x_, so a rebuild would otherwise put three
+# rejected features into the accepted configuration without anyone choosing it.
+X_FEATS = os.environ.get("X_FEATS") == "1"
 NO_AOBT = os.environ.get("NO_AOBT") == "1"
 AOBT_SRC = "LOBT_flt" if NO_AOBT else "AOBT_3_flt"
 
@@ -499,7 +504,7 @@ def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
             # MVT - ARVT_1 with -3.19 s on the leaderboard (v44 299.85 -> v45 296.13). Kept as the raw
             # difference rather than their route-median residual: the residual needs a reference period,
             # and out-of-fold target encoding already carries the route level.
-            x_plan_res=_secs("MVT_TIME_UTC_mvt", "ARVT_1_flt"),
+            x_plan_res=_secs("MVT_TIME_UTC_mvt", "ARVT_1_flt") if X_FEATS else pl.lit(None, dtype=pl.Float64),
             diverted=(pl.col("ADES_flt") != pl.col("ADES_FILED_flt")).cast(pl.Int8),
             month=pl.col("MVT_TIME_UTC_mvt").dt.month(),
             doy=pl.col("MVT_TIME_UTC_mvt").dt.ordinal_day(),
@@ -519,7 +524,8 @@ def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
     feat = add_neighbor_features(feat, df)
     feat = add_runway_arrivals(feat, df)
     feat = add_day_context(feat, df)
-    feat = add_hour_context(feat)
+    if X_FEATS:
+        feat = add_hour_context(feat)
     feat = add_runway_wind(feat)
     feat = add_geometry(feat)
     return add_weather(feat)
