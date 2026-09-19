@@ -42,8 +42,9 @@ FEATS = E36.FEATS + NAMES + SW + NEW + NAMES_M
 
 raw = pl.concat([pl.read_parquet(f, columns=E36.cols) for f in sorted(glob.glob("data/prc-2026-datasets/training_*.parquet"))]).filter(
     pl.col("PHASE_mvt") == "DEP")
-vis = pl.concat([pl.read_parquet(f) for f in sorted(glob.glob("data/adsblol/visit_2025-*.parquet"))])
-vim = pl.concat([pl.read_parquet(f) for f in sorted(glob.glob("data/adsblol/visit_m_2025-*.parquet"))])
+VISIT_DIR = os.environ.get("VISIT_DIR", "data/adsblol")  # E75: visits re-extracted across midnight live elsewhere
+vis = pl.concat([pl.read_parquet(f) for f in sorted(glob.glob(f"{VISIT_DIR}/visit_2025-*.parquet"))])
+vim = pl.concat([pl.read_parquet(f) for f in sorted(glob.glob(f"{VISIT_DIR}/visit_m_2025-*.parquet"))])
 
 
 def frame(adsb_dir: str, walk_dir: str) -> pl.DataFrame:

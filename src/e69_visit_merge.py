@@ -33,6 +33,8 @@ sys.path.insert(0, os.path.dirname(__file__))
 import numpy as np
 import polars as pl
 
+from adsb_visit import load_surface  # E75: the 12 h lookback is otherwise cut at midnight
+
 from geometry import _haversine, load_tables, norm_stand, strip_suffix
 
 VISIT_GAP = float(os.environ.get("VISIT_GAP", "1800"))
@@ -72,8 +74,7 @@ def resolve(lk: dict, ap: str, stand: str | None):
 
 
 def one_day(day: str, lk: dict) -> pl.DataFrame:
-    pts = pl.read_parquet(f"data/adsblol/surface_{day}.parquet",
-                          columns=["icao", "airport", "t", "lat", "lon", "callsign"]).sort("icao", "t")
+    pts, pts_id = load_surface(day, columns=["icao", "airport", "t", "lat", "lon", "callsign"])
     y, m, d_ = map(int, day.split("-"))
     src = pl.read_parquet("data/prc-2026-datasets/" + ("training_*.parquet" if y == 2025 else "ranking.parquet"))
     dep = src.filter((pl.col("PHASE_mvt") == "DEP") & (pl.col("MVT_TIME_UTC_mvt").dt.date() == pl.date(y, m, d_))).with_columns(
@@ -81,7 +82,7 @@ def one_day(day: str, lk: dict) -> pl.DataFrame:
         to=pl.col("MVT_TIME_UTC_mvt").dt.epoch("s").cast(pl.Float64))
 
     cmap: dict[tuple, list] = {}
-    for cs, ap, ic in pts.filter(pl.col("callsign").is_not_null()).select("callsign", "airport", "icao").unique().iter_rows():
+    for cs, ap, ic in pts_id.filter(pl.col("callsign").is_not_null()).select("callsign", "airport", "icao").unique().iter_rows():
         cmap.setdefault((cs, ap), []).append(ic)
     by = {(k[0], k[1]): g.sort("t") for k, g in pts.group_by(["icao", "airport"])}
 

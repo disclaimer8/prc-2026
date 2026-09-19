@@ -38,8 +38,9 @@ base_v, new_v = int(sys.argv[1]), int(sys.argv[2])
 
 
 def augment(d: pl.DataFrame, year: int) -> pl.DataFrame:
-    vis = pl.concat([pl.read_parquet(f) for f in sorted(glob.glob(f"data/adsblol/visit_{year}-*.parquet"))])
-    vim = pl.concat([pl.read_parquet(f) for f in sorted(glob.glob(f"data/adsblol/visit_m_{year}-*.parquet"))])
+    vd = os.environ.get("VISIT_DIR", "data/adsblol")  # E75: visits re-extracted across midnight live elsewhere
+    vis = pl.concat([pl.read_parquet(f) for f in sorted(glob.glob(f"{vd}/visit_{year}-*.parquet"))])
+    vim = pl.concat([pl.read_parquet(f) for f in sorted(glob.glob(f"{vd}/visit_m_{year}-*.parquet"))])
     walk = os.environ.get("WALK_DIR", "data/adsblol_standwalk")  # E74: the 1 kt stand-walk lives elsewhere
     walked = pl.concat([pl.read_parquet(f, columns=["MVT_ID_mvt", "coverage", "t_first", "t_first_move"])
                         for f in sorted(glob.glob(f"{walk}/offblock2_{year}-*.parquet"))]).rename(

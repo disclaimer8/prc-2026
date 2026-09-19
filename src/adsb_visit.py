@@ -17,6 +17,7 @@ times anything else measured on 17-18.09. Mean |residual| by turnaround quartile
     .venv/bin/python src/adsb_visit.py 2025-07-15     writes data/adsblol/visit_<day>.parquet
 """
 import glob
+import datetime
 import os
 import sys
 
@@ -26,6 +27,26 @@ import polars as pl
 
 VISIT_GAP = float(os.environ.get("VISIT_GAP", "1800"))
 LOOKBACK = 12 * 3600
+PREV_DAY = os.environ.get("VISIT_PREV_DAY") == "1"  # E75: the 12 h lookback is otherwise cut at midnight
+
+
+def load_surface(day: str, columns: list | None = None) -> tuple:
+    """Points for `day`, and with VISIT_PREV_DAY=1 the previous day as well.
+
+    Returns (pool, today). The lookback on the departure reaches 12 h back, so for any departure before
+    12:00 UTC the history it asks for lies in the previous file and is silently absent without this.
+    Airframe identification must stay on `today`: yesterday's callsign reuse would change which icao a
+    flight is matched to, which is a different experiment.
+    """
+    today = pl.read_parquet(f"data/adsblol/surface_{day}.parquet", columns=columns)
+    if not PREV_DAY:
+        return today.sort("icao", "t"), today
+    prev = (datetime.date(*map(int, day.split("-"))) - datetime.timedelta(days=1)).isoformat()
+    pf = f"data/adsblol/surface_{prev}.parquet"
+    if not os.path.exists(pf):
+        return today.sort("icao", "t"), today
+    pool = pl.concat([pl.read_parquet(pf, columns=columns), today]).sort("icao", "t")
+    return pool, today
 OUT_DIR = os.environ.get("ADSB_OUT_DIR", "data/adsblol")
 NAMES = ["vi_first_seen", "vi_turnaround", "vi_gap", "vi_n_pts", "vi_prev_pts",
          "vi_alt_first", "vi_gs_first", "vi_has_prev"]
@@ -33,14 +54,14 @@ NAMES = ["vi_first_seen", "vi_turnaround", "vi_gap", "vi_n_pts", "vi_prev_pts",
 
 def main() -> None:
     day = sys.argv[1]
-    pts = pl.read_parquet(f"data/adsblol/surface_{day}.parquet").sort("icao", "t")
+    pts, pts_id = load_surface(day)
     y, m, d = map(int, day.split("-"))
     src = pl.read_parquet("data/prc-2026-datasets/" + ("training_*.parquet" if y == 2025 else "ranking.parquet"))
     dep = src.filter((pl.col("PHASE_mvt") == "DEP") & (pl.col("MVT_TIME_UTC_mvt").dt.date() == pl.date(y, m, d))).with_columns(
         cs=pl.col("CALLSIGN_flt").fill_null(pl.col("FLIGHT_mvt")).str.replace_all(" ", ""),
         to=pl.col("MVT_TIME_UTC_mvt").dt.epoch("s").cast(pl.Float64))
     cmap: dict[tuple, list] = {}
-    for cs, ap, ic in pts.filter(pl.col("callsign").is_not_null()).select("callsign", "airport", "icao").unique().iter_rows():
+    for cs, ap, ic in pts_id.filter(pl.col("callsign").is_not_null()).select("callsign", "airport", "icao").unique().iter_rows():
         cmap.setdefault((cs, ap), []).append(ic)
     by = {(k[0], k[1]): g.select("t", "alt", "gs").sort("t") for k, g in pts.group_by(["icao", "airport"])}
     out = []
