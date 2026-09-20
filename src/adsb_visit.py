@@ -54,7 +54,7 @@ NAMES = ["vi_first_seen", "vi_turnaround", "vi_gap", "vi_n_pts", "vi_prev_pts",
 
 def main() -> None:
     day = sys.argv[1]
-    pts, pts_id = load_surface(day)
+    pts, pts_id = load_surface(day, columns=["icao", "airport", "t", "alt", "gs", "callsign"])
     y, m, d = map(int, day.split("-"))
     src = pl.read_parquet("data/prc-2026-datasets/" + ("training_*.parquet" if y == 2025 else "ranking.parquet"))
     dep = src.filter((pl.col("PHASE_mvt") == "DEP") & (pl.col("MVT_TIME_UTC_mvt").dt.date() == pl.date(y, m, d))).with_columns(
