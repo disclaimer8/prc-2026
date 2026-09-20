@@ -33,7 +33,8 @@ os.environ.setdefault("POLARS_UNKNOWN_EXTENSION_TYPE_BEHAVIOR", "load_as_storage
 import numpy as np
 import polars as pl
 
-SRC = {"nbf": "d_mvt_lobt", "nbs": "d_mvt_sched"}
+# distinct prefixes: the control arm must be able to drop THESE and keep E77's accepted nbf_/nbs_ columns
+SRC = {"nlf": "d_mvt_lobt", "nls": "d_mvt_sched"}
 GROUPS = {"ap": ["ADEP_mvt"], "rwy": ["ADEP_mvt", "RUNWAY_mvt"]}
 STALE = 3 * 86400
 
@@ -84,4 +85,4 @@ if __name__ == "__main__":
     print(", ".join(new))
     lt = res.filter(pl.col("ADEP_mvt") == "LTFM")
     print(f"LTFM spread of the last observed neighbour: AOBT {float(lt['nb_ap_last'].std()):.1f} s "
-          f"vs LOBT {float(lt['nbf_ap_last'].std()):.1f} s vs SCHED {float(lt['nbs_ap_last'].std()):.1f} s")
+          f"vs LOBT {float(lt['nlf_ap_last'].std()):.1f} s vs SCHED {float(lt['nls_ap_last'].std()):.1f} s")
