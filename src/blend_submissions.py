@@ -41,6 +41,18 @@ score is RMSE over one fixed row set for every file -- and every number derived 
 -1.004 s figure we are declining to use) has to be re-examined.
 
     .venv/bin/python src/blend_submissions.py 89
+    BLEND_BASE=97 BLEND_PARTS=44:0.1214,60:0.0270 .venv/bin/python src/blend_submissions.py 98
+
+E77 rebuilt the chain, so the weights were refitted against a reference that matches the new submission --
+the stage output on the new base (data/cv_preds_e77_stage), not the bare base OOF. That distinction is the
+whole lesson of v91: fitted against the bare base, NNLS put 0.75 on v60 and the identity priced the result
+5.2 s WORSE; fitted against the stage output it puts 0.12 and 0.03, and the identity prices it better.
+
+    v97 + 0.1214 v44 + 0.0270 v60 -> 243.8343, i.e. -0.6564 s.  CV: decided -0.447 (6/6),
+    strict -0.204, y<=7200 -0.257, trimmed -0.431 -- a formal reject on the y<=7200 leg, exactly as E76 was
+    before it delivered -0.83 on the board. The board number here is arithmetic, not a forecast.
+
+REGISTERED FOR v98, WRITTEN BEFORE THE UPLOAD: 243.8343, gate |actual - 243.8343| <= 0.05 s.
 """
 import os
 import sys
@@ -50,8 +62,10 @@ import numpy as np
 import polars as pl
 
 T = "TAXITIME_SEC_mvt"
-BASE, PARTS = 82, {44: 0.1344, 60: 0.0532}   # CV-fitted, NNLS on the decided rows of data/cv_preds_e74
-SCORES = {82: 247.7501, 44: 256.3401, 60: 252.1044}   # fetched from the challenge bucket, 20.09
+BASE = int(os.environ.get("BLEND_BASE", "82"))
+PARTS = {int(k): float(v) for k, v in (p.split(":") for p in
+         os.environ.get("BLEND_PARTS", "44:0.1344,60:0.0532").split(","))}
+SCORES = {82: 247.7501, 44: 256.3401, 60: 252.1044, 97: 244.4907}   # from the challenge bucket, 20.09
 
 
 def main() -> None:
