@@ -5,11 +5,13 @@ set -uo pipefail
 cd "${0:a:h}/.."
 say() { print -r -- "[$(date +%H:%M)] $*" }
 
-for i in $(seq 1 90); do
+for i in $(seq 1 200); do
   scp -q hetzner:/root/prc-2026/data/cv_preds_e82_ctrl/fold_4_10.npz data/cv_preds_e82_ctrl/ 2>/dev/null
   scp -q hetzner:/root/prc-2026/data/cv_preds_e82_cand/fold_4_10.npz data/cv_preds_e82_cand/ 2>/dev/null
   for arm in ctrl cand; do
-    scp -q "home-pc-lan:prc-2026/data/cv_preds_e82_${arm}_hp/*.npz" data/cv_preds_e82_$arm/ 2>/dev/null
+    # scp не раскрывает шаблоны в пути Windows — тянем каталог целиком
+    rm -rf /tmp/e82hp_$arm && scp -qr "home-pc-lan:prc-2026/data/cv_preds_e82_${arm}_hp" /tmp/e82hp_$arm 2>/dev/null
+    [[ -d /tmp/e82hp_$arm ]] && cp -n /tmp/e82hp_$arm/*.npz data/cv_preds_e82_$arm/ 2>/dev/null
   done
   c=$(ls data/cv_preds_e82_ctrl/fold_*.npz 2>/dev/null | wc -l | tr -d ' ')
   d=$(ls data/cv_preds_e82_cand/fold_*.npz 2>/dev/null | wc -l | tr -d ' ')
