@@ -66,7 +66,6 @@ own archive. So the open lead is not a dataset but a person: **which feeder cove
 silent** (`info@flyitalyadsb.com`), because a local feeder may still hold its own ring buffer; and spotters
 running mobile receivers near Istanbul. A drop point for anything such a feeder might send is already up on
 our Hetzner box (`adsbdrop`, key-only).
-and spotters running mobile receivers near Istanbul.
 
 ---
 
