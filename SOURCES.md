@@ -8,7 +8,7 @@ so the licence column has to survive a reader who checks it. The second reason i
 shaped a decision is listed here with the verdict it earned, including the ones that were measured and dropped,
 because a source that cost a day and produced nothing is worth recording exactly once.
 
-Last updated 18 September 2026.
+Last updated 20 September 2026.
 
 ---
 
@@ -47,7 +47,7 @@ LFPG 0.210 / 0.251, LIRF 0.785 / 0.062, LTFM 0.000 / 0.003 (January / July), aga
 |---|---|---|
 | **OpenSky Network** (state vectors, Trino/MinIO) | Terms restrict use to non-commercial research — not an open licence. Participants also report Trino access is disallowed for the challenge | 16.09 |
 | **ADS-B Exchange** archive | Commercial subscription. Its free sample proves the observations exist — in the same fourteen instants of 01.07.2026 it shows 52 aircraft on the ground at LIRF, 36 at LTFM, 14 at LFPG, where we have 0 and 0 for whole days — but the archive itself is closed by the rules | 18.09 |
-| **Airplanes.Live** | **Corrected the same evening — the first half of what we recorded was wrong.** A public, unauthenticated historical archive does exist, at `globe.airplanes.live/globe_history/YYYY/MM/DD/traces/<last 2 of hex>/trace_full_<hex>.json`. Verified here by direct fetch: HTTP 200, and one 2026-07-01 trace carried 6465 points of which **825 were on the ground**, with the aircraft's registration and ICAO type at the root. Retention reaches back to at least 2025-07-01, so both ranking months are inside it. It fails the licence bar, and **only** that: Airplanes.Live has never published one — the Terms of Use page renders an empty body, the API docs page likewise, and the About page states a mission without naming a licence. **This is the highest-value outreach available to us**: one sentence on one web page, with adsb.lol's ODbL 1.0 as the precedent. Coverage measured by the search agent against ADS-B Exchange's free samples and not re-verified here: LIRF recovered 13 of 14 ground aircraft on 2026-01-01 and 11 of 21 on 2026-07-01; LTFM and LFPG marginal | 18.09, corrected same day |
+| **Airplanes.Live** | **Two corrections, a day apart, in opposite directions — and the line ends closed.** On 17.09 we recorded that they keep no archive; that was wrong, and the correction stands: a public, unauthenticated historical archive does exist at `globe.airplanes.live/globe_history/YYYY/MM/DD/traces/<last 2 of hex>/trace_full_<hex>.json`, verified by direct fetch (HTTP 200; one 2026-07-01 trace carried 6465 points of which 825 were on the ground, with registration and ICAO type at the root), and retention reaches back past 2025-07-01, so both ranking months are inside it. On 19.09 we measured the archive itself rather than its existence, and **the hole we need it for is empty in it too**: at LIRF the share of airframes with any ground point runs 87.5 % on 15 January but 26.7 % on 8 July and 5.0 % on 20 July, and the share with 30 or more ground points falls from 47.5 % to **zero on both July days** (best airframe: 244 points in January, 20 and 3 in July), against a median of 369 ground points per airframe at a working airport. The diagnosis is physical, not archival: in July 96.7 % of airframes are tracked down to 500 ft or below with a median minimum altitude of 225–250 ft, and the track stops there — a clean altitude floor, not thinning, i.e. the messages were never received and a raw Beast feed would carry the same emptiness. No separate MLAT branch (`globe_history_mlat` → 404). Their January is richer than ours, but January is not the hole: our own LIRF coverage there is 0.785. **The licence question was therefore never reached** — it remains unanswered (the Terms of Use page renders an empty body), but answering it would buy nothing | 18.09, measured and closed 19.09 |
 | **adsb.fi**, **ADSBHub**, **Planespotters Radar** | Live state only, no archive | 16–18.09 |
 | **ADSBiq** (Sky Power Services) | A network that did not exist at our earlier sweep. Explicit **ODbL 1.0**, daily Parquet on GitHub Releases, no account — it passes the licence bar outright. Fails the other two: data begins 2026-06-28, so January is absent, and coverage at our airports measured effectively zero (LFPG 0 rows, LIRF 60 rows and no ground points, LTFM 0, on 2026-07-01) | 18.09 |
 | adsb.lol `mlatonly-0` release | The half of the adsb.lol archive we do not ingest. Scanned in full for 2026-07-01, 38 925 traces: **zero ground points at all three airports**. A cheap negative — no reason to ingest it | 18.09 |
@@ -61,7 +61,11 @@ LFPG 0.210 / 0.251, LIRF 0.785 / 0.062, LTFM 0.000 / 0.003 (January / July), aga
 | **Schiphol Flight API** | Does expose `actualOffBlockTime`, but only for EHAM, where ground coverage is already 0.93–0.96. No value against the hole | 18.09 |
 | **ERAU and ROSA P repositories** | Hold US documents and US airports; no per-flight data for the ten European airports | 16–18.09 |
 
-Open leads are people, not sites: individual FlyItalyADSB feeders (`info@flyitalyadsb.com`) for Rome in July,
+July at Rome closes for nobody — not adsb.lol, not Airplanes.Live, and FlyItalyADSB say the same about their
+own archive. So the open lead is not a dataset but a person: **which feeder covered Rome and when it went
+silent** (`info@flyitalyadsb.com`), because a local feeder may still hold its own ring buffer; and spotters
+running mobile receivers near Istanbul. A drop point for anything such a feeder might send is already up on
+our Hetzner box (`adsbdrop`, key-only).
 and spotters running mobile receivers near Istanbul.
 
 ---
