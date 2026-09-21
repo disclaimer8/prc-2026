@@ -61,6 +61,16 @@ LFPG 0.210 / 0.251, LIRF 0.785 / 0.062, LTFM 0.000 / 0.003 (January / July), aga
 | **Schiphol Flight API** | Does expose `actualOffBlockTime`, but only for EHAM, where ground coverage is already 0.93–0.96. No value against the hole | 18.09 |
 | **ERAU and ROSA P repositories** | Hold US documents and US airports; no per-flight data for the ten European airports | 16–18.09 |
 
+| **TartanAviation** (CMU AirLab) | Terminal-area ADS-B, 3.1 M images and 3 374 h of ATC speech — but at two regional airports near Pittsburgh (KAGC, KBTP), 2020-2023. Wrong airports, wrong years | 21.09 |
+| **Contrails.org API** (Breakthrough Energy, data by Spire) | A common ADS-B source for contrail research. Fails the licence bar in the same words as OpenSky and OPDI: "solely for research or other non-commercial purposes", "may not sublicense, provide or redistribute". Contrail work is cruise altitude; ground movements are not its subject | 21.09 |
+| **Zenodo / IEEE DataPort ADS-B anomaly sets** | What is actually published are derived aggregates **from OpenSky** (117 M aircraft-hour aggregates over 2025) and low-altitude surveillance sets: in-flight kinematics, not surface tracks, and they inherit OpenSky's licence | 21.09 |
+| **FlightAware FlightFeeder** | 43 000+ receivers feeding a commercial platform; the data is FlightAware's product, not an open dataset | 21.09 |
+| **Derad Network** | A DePIN marketplace by construction: miners supply, third parties buy. No published licence, no documented historical archive | 21.09 |
+| **Apify actors** for OpenSky / Planefinder / ADS-B Exchange | A way to obtain data whose terms we already rejected, not a way to acquire rights to it, and scraping breaches those terms besides | 21.09 |
+| **SkyLink API** | Commercial from $18.59/mo with a 365-day archive; resells the same feeder networks | 21.09 |
+
+**The binding constraint is reception, not access.** Measured 19.09: July at Rome is physically empty in every archive -- 96.7 % of tracks stop at or below 500 ft with a median minimum altitude of 225-250 ft, a clean altitude floor rather than thinning, so the messages were never received. A new source helps only if it owns **ground receivers near LIRF, LFPG or LTFM**. Commercial aggregators resell the same feeds plus satellite, and satellite ADS-B does not see surface movement at all: buying access would buy the same emptiness, without the right to publish it.
+
 July at Rome closes for nobody — not adsb.lol, not Airplanes.Live, and FlyItalyADSB say the same about their
 own archive. So the open lead is not a dataset but a person: **which feeder covered Rome and when it went
 silent** (`info@flyitalyadsb.com`), because a local feeder may still hold its own ring buffer; and spotters
