@@ -35,6 +35,7 @@ from scipy.optimize import minimize
 from sklearn.linear_model import LogisticRegression
 
 LB = 6 * 2 * 243.8347 * 344841
+LAM = float(os.environ.get("E87_L2", "0.5"))  # 1/(2C) при C=1.0, как у логистики
 FOLDS = [(1, 7), (2, 8), (3, 9), (4, 10), (5, 11), (6, 12)]
 
 src = open("src/e14_flight_history.py").read().split("\nresults = []")[0]
@@ -53,10 +54,14 @@ def regular_candidate() -> dict:
     return out
 
 
-def sse_fit(X: np.ndarray, y: np.ndarray, r: np.ndarray, s: np.ndarray, w0: np.ndarray) -> np.ndarray:
+def sse_fit(X: np.ndarray, y: np.ndarray, r: np.ndarray, s: np.ndarray, w0: np.ndarray,
+            lam: float) -> np.ndarray:
+    """L2 матчится с логистикой: sklearn C=1.0 — это штраф 1/(2C)·||w||² на СУММЕ, у нас он на среднем."""
+    scale = float(np.mean((s - r) ** 2)) or 1.0
     def loss(w):
         p = 1.0 / (1.0 + np.exp(-np.clip(X @ w, -30, 30)))
-        return float(np.mean((y - r - p * (s - r)) ** 2))
+        pen = lam * float(np.dot(w[:-1], w[:-1])) * scale / len(y)   # свободный член не штрафуется
+        return float(np.mean((y - r - p * (s - r)) ** 2)) + pen
     res = minimize(loss, w0, method="L-BFGS-B", options={"maxiter": 500})
     return res.x if res.fun <= loss(w0) else w0
 
@@ -90,7 +95,7 @@ def main() -> None:
         Xtr1 = np.column_stack([Xtr, np.ones(len(Xtr))])
         Xte1 = np.column_stack([Xte, np.ones(len(Xte))])
         w0 = np.append(lr.coef_.ravel(), lr.intercept_[0])
-        w = sse_fit(Xtr1, ytr, rtr, str_, w0)
+        w = sse_fit(Xtr1, ytr, rtr, str_, w0, LAM)
 
         p_old = lr.predict_proba(Xte)[:, 1]
         p_new = 1.0 / (1.0 + np.exp(-np.clip(Xte1 @ w, -30, 30)))
