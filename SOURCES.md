@@ -69,7 +69,27 @@ LFPG 0.210 / 0.251, LIRF 0.785 / 0.062, LTFM 0.000 / 0.003 (January / July), aga
 | **Apify actors** for OpenSky / Planefinder / ADS-B Exchange | A way to obtain data whose terms we already rejected, not a way to acquire rights to it, and scraping breaches those terms besides | 21.09 |
 | **SkyLink API** | Commercial from $18.59/mo with a 365-day archive; resells the same feeder networks | 21.09 |
 
-**The binding constraint is reception, not access.** Measured 19.09: July at Rome is physically empty in every archive -- 96.7 % of tracks stop at or below 500 ft with a median minimum altitude of 225-250 ft, a clean altitude floor rather than thinning, so the messages were never received. A new source helps only if it owns **ground receivers near LIRF, LFPG or LTFM**. Commercial aggregators resell the same feeds plus satellite, and satellite ADS-B does not see surface movement at all: buying access would buy the same emptiness, without the right to publish it.
+**Two different walls, and they must not be confused** (corrected 21.09; the earlier wording here said the
+constraint was reception everywhere, which is false for one source).
+
+*Reception* is the wall for the community archives. At adsb.lol and Airplanes.Live July at Rome is physically
+empty: 96.7 % of tracks stop at or below 500 ft with a median minimum altitude of 225-250 ft -- a clean
+altitude floor rather than thinning, so the messages were never received, and a raw feed would carry the same
+emptiness. Satellite-fed sources (Spire, and the resellers built on it) never see the surface at all.
+
+*Licence* is the wall for exactly one source that **does hold the data we need**: ADS-B Exchange. Its own free
+sample shows 52 aircraft on the ground at LIRF, 36 at LTFM and 14 at LFPG in the same fourteen instants of
+01.07.2026 where we have none -- its receivers heard what the others did not. Their terms, read 21.09:
+"Our data products are delivered as ongoing subscription services with **minimum annual commitments**";
+"ADS-B Exchange does **not offer one-time data extracts or project-based access**"; the free Community API is
+"for personal and **non-commercial** use" and carries live data, not the archive; and the academic-access
+thread on their own forum stands unanswered. Against the organiser's bar -- *"if their license applies as open
+data, ok"* -- that fails on every clause, and money does not fix it: `eligibility.html` requires an external
+dataset to be open and documented, so a subscription archive would make the solution non-compliant and
+irreproducible even if bought.
+
+So the only path left to July at Rome is a **feeder with local logs**, who can state terms we can publish --
+the person, not the platform. A drop point is ready (`adsbdrop` on our Hetzner box, key-only).
 
 July at Rome closes for nobody — not adsb.lol, not Airplanes.Live, and FlyItalyADSB say the same about their
 own archive. So the open lead is not a dataset but a person: **which feeder covered Rome and when it went
