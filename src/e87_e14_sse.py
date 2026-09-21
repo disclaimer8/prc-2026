@@ -48,7 +48,7 @@ def regular_candidate() -> dict:
     """r — кандидат «обычное руление» из сохранённых OOF принятой цепочки (колонка 0 массива values)."""
     out = {}
     for a, b in FOLDS:
-        d = np.load(f"data/cv_preds_e77_stage/fold_{a}_{b}.npz")
+        d = np.load(f"data/cv_preds_e77_cand/fold_{a}_{b}.npz")
         out.update(dict(zip(d["mvt_id"].tolist(), d["values"][:, 0].tolist())))
     return out
 
