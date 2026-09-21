@@ -91,6 +91,33 @@ irreproducible even if bought.
 So the only path left to July at Rome is a **feeder with local logs**, who can state terms we can publish --
 the person, not the platform. A drop point is ready (`adsbdrop` on our Hetzner box, key-only).
 
+### Открытая линия, заведённая 21.09: ACARS/VDL2 вместо ADS-B
+
+Все источники выше — один физический канал: транспондер 1090 МГц, услышанный чьим-то приёмником. Если под
+Фьюмичино в июле землю не слышали, ни один агрегатор ADS-B этого не восстановит. **ACARS — другой канал**
+(VDL Mode 2, 136 МГц, другие приёмники), и сообщение OOOI `Out` формирует сам борт в момент отхода от
+стоянки: это не реконструкция времени отхода из трека, а его прямое измерение — ровно та величина, которой
+нам не хватает и которая в `AOBT_3` дана лишь оценкой.
+
+Кандидат: **airframes.io** — сообщество-агрегатор ACARS / VDL2 / HFDL / SATCOM. Установлено 21.09: «billions
+of decoded ACARS and VDL messages», есть страница исторического поиска с фильтрами по номеру рейса, борту и
+метке, есть REST API по ключу, доступ ярусный — **фидерам бесплатно**, прочим по подписке.
+
+Проверять строго в этом порядке, каждый пункт закрывает линию, если ответ «нет»:
+
+1. **Содержание.** Есть ли в архиве OOOI по европейским перевозчикам в LIRF, LFPG и LTFM за январь и июль
+   2026. OOOI передают не все компании, многие — через SATCOM или в проприетарном формате, набор меток у
+   каждой свой. Без этого остальное неважно.
+2. **Лицензия.** В документации есть раздел «Data Licensing & Attribution», его текст не прочитан. Барьер
+   тот же: *«if their license applies as open data, ok»* плюс требование `eligibility.html` об открытости и
+   документированности.
+3. **Объём.** Годится ли доступ для выборки за два месяца по десяти аэропортам, или API ограничит частотой.
+
+Отдельно отмечено, что **не** годится: A-CDM (закрыт по устройству), DDR2 с DPI (заявка и подписанное
+соглашение), A-SMGCS и наземный радар (нигде не публичны), API аэропортов (у EHAM есть `actualOffBlockTime`,
+но там покрытие и так 0,93–0,96), агрегаты AIU (проверены и отклонены), MLAT-ветка adsb.lol (ноль наземных
+точек).
+
 July at Rome closes for nobody — not adsb.lol, not Airplanes.Live, and FlyItalyADSB say the same about their
 own archive. So the open lead is not a dataset but a person: **which feeder covered Rome and when it went
 silent** (`info@flyitalyadsb.com`), because a local feeder may still hold its own ring buffer; and spotters
