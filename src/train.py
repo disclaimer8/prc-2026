@@ -276,15 +276,27 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
     # spread of its candidates, normalised to the median and clipped so no row dominates the fit.
     clf_w = None
     if os.environ.get("CLF_COST_WEIGHT") == "1":
-        cand = np.column_stack([fit[c].to_numpy().astype(float) for c in CANDIDATES.values()]
-                               + [np.full(fit.height, 900.0)])  # 900 s stands for the regular candidate
+        # the regular candidate stands at the airport's own median taxi on the fit rows, not a constant
+        reg_med = (fit.filter(pl.Series(lab == 0)).group_by("ADEP_mvt")
+                   .agg(pl.col(TARGET).median().alias("m")))
+        mm = dict(zip(reg_med["ADEP_mvt"].to_list(), reg_med["m"].to_list()))
+        reg_cand = np.array([mm.get(a, 900.0) for a in fit["ADEP_mvt"].to_list()], dtype=float)
+        cand = np.column_stack([fit[c].to_numpy().astype(float) for c in CANDIDATES.values()])
+        # a planned candidate outside the LOBT window can never be chosen (mask_infeasible), so it must not
+        # inflate the cost of a mistake either
+        d_lobt = fit["d_mvt_lobt"].to_numpy().astype(float)[:, None]
+        far = ~np.isnan(d_lobt) & (np.abs(np.nan_to_num(cand) - np.nan_to_num(d_lobt)) > LOBT_WINDOW)
+        cand = np.where(far, np.nan, cand)
+        cand = np.column_stack([cand, reg_cand])
         with np.errstate(invalid="ignore"):
             spread = np.nanmax(cand, axis=1) - np.nanmin(cand, axis=1)
         spread = np.nan_to_num(spread, nan=0.0)
         med = float(np.median(spread[spread > 0])) or 1.0
-        clf_w = np.clip((spread / med) ** 2, 0.05, 20.0)
-        print(f"CLF_COST_WEIGHT: медиана разброса {med:.0f} с, вес от {clf_w.min():.2f} до {clf_w.max():.2f}, "
-              f"доля строк с весом > 1: {100 * np.mean(clf_w > 1):.1f} %", flush=True)
+        # the ceiling is 400, not 20: at 20 the clip flattened 92.8 % of the LIRF no-NM 0-4 h rows, exactly
+        # the group whose cost of a mistake varies 74-fold inside itself
+        clf_w = np.clip((spread / med) ** 2, 0.05, 400.0)
+        print(f"CLF_COST_WEIGHT: медиана разброса {med:.0f} с, вес {clf_w.min():.2f}..{clf_w.max():.1f}, "
+              f"на верхней обрезке {100 * np.mean(clf_w >= 399.9):.2f} %", flush=True)
 
     callbacks = [lgb.log_evaluation(500)]
     best = {}
