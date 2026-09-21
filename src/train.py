@@ -270,13 +270,29 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
     base_f, base_p = proxy_base(fit.filter(pl.Series(reg_mask)), pred)
     resid_target = np.clip(np.clip(y[reg_mask], *REG_CLIP) - base_f, -7200, 7200)
 
+    # E86: the classifier is scored by the squared error of the MIXTURE, but trained on plain multiclass
+    # log-loss, which prices a probability slip identically whether the candidates lie 100 s or 10 000 s
+    # apart. CLF_COST_WEIGHT=1 weights each row by how expensive a regime mistake is there: the squared
+    # spread of its candidates, normalised to the median and clipped so no row dominates the fit.
+    clf_w = None
+    if os.environ.get("CLF_COST_WEIGHT") == "1":
+        cand = np.column_stack([fit[c].to_numpy().astype(float) for c in CANDIDATES.values()]
+                               + [np.full(fit.height, 900.0)])  # 900 s stands for the regular candidate
+        with np.errstate(invalid="ignore"):
+            spread = np.nanmax(cand, axis=1) - np.nanmin(cand, axis=1)
+        spread = np.nan_to_num(spread, nan=0.0)
+        med = float(np.median(spread[spread > 0])) or 1.0
+        clf_w = np.clip((spread / med) ** 2, 0.05, 20.0)
+        print(f"CLF_COST_WEIGHT: медиана разброса {med:.0f} с, вес от {clf_w.min():.2f} до {clf_w.max():.2f}, "
+              f"доля строк с весом > 1: {100 * np.mean(clf_w > 1):.1f} %", flush=True)
+
     callbacks = [lgb.log_evaluation(500)]
     best = {}
     if rounds is None:
         val_lab = regime_label(pred)
         clf = lgb.train(
             CLF_PARAMS,
-            lgb.Dataset(Xf, lab, categorical_feature=cat_cols),
+            lgb.Dataset(Xf, lab, weight=clf_w, categorical_feature=cat_cols),
             num_boost_round=5000,
             valid_sets=[lgb.Dataset(Xp, val_lab)],
             callbacks=callbacks + [lgb.early_stopping(200, verbose=False)],
@@ -290,7 +306,7 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
         )
         best = {"clf": clf.best_iteration, "reg": reg.best_iteration}
     else:
-        clf = lgb.train(CLF_PARAMS, lgb.Dataset(Xf, lab, categorical_feature=cat_cols), rounds["clf"])
+        clf = lgb.train(CLF_PARAMS, lgb.Dataset(Xf, lab, weight=clf_w, categorical_feature=cat_cols), rounds["clf"])
         reg = lgb.train(
             REG_PARAMS,
             lgb.Dataset(Xf[reg_mask], resid_target, categorical_feature=cat_cols),
