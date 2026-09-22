@@ -305,6 +305,25 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
         print(f"CLF_COST_WEIGHT: медиана разброса {med:.0f} с, вес {clf_w.min():.2f}..{clf_w.max():.1f}, "
               f"на верхней обрезке {100 * np.mean(clf_w >= 399.9):.2f} %", flush=True)
 
+
+    def _reg_weight(models):
+        """E94 (22.09, form proposed by the external review): the regressor's error is paid only in proportion
+        to the probability that its own candidate is the one used, so rows whose candidates lie within an hour
+        keep weight 1 and wider rows are priced by p_regular^2. Weight only, nothing else moves."""
+        if os.environ.get("REG_COST_WEIGHT") != "1":
+            return None
+        cand_r = np.column_stack([fit[c].to_numpy().astype(float) for c in CANDIDATES.values()])
+        d_l = fit["d_mvt_lobt"].to_numpy().astype(float)[:, None]
+        far_r = ~np.isnan(d_l) & (np.abs(np.nan_to_num(cand_r) - np.nan_to_num(d_l)) > LOBT_WINDOW)
+        cand_r = np.where(far_r, np.nan, cand_r)
+        with np.errstate(invalid="ignore"):
+            spread_r = np.nan_to_num(np.nanmax(cand_r, axis=1) - np.nanmin(cand_r, axis=1), nan=0.0)
+        p_reg = np.mean([m.predict(Xf) for m in models], axis=0)[:, 0]
+        thr = float(os.environ.get("REG_COST_MIN_SPREAD", "3600"))
+        w = np.where(spread_r <= thr, 1.0, np.clip(p_reg ** 2, 0.05, 1.0))[reg_mask]
+        print(f"REG_COST_WEIGHT: ниже 1 у {100 * np.mean(w < 1):.2f} % строк регрессора, минимум {w.min():.3f}", flush=True)
+        return w
+
     callbacks = [lgb.log_evaluation(500)]
     best = {}
     if rounds is None:
@@ -319,7 +338,7 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
         clf = [clf]
         reg = lgb.train(
             REG_PARAMS,
-            lgb.Dataset(Xf[reg_mask], resid_target, categorical_feature=cat_cols),
+            lgb.Dataset(Xf[reg_mask], resid_target, weight=_reg_weight(clf), categorical_feature=cat_cols),
             num_boost_round=5000,
             valid_sets=[lgb.Dataset(Xp[val_lab == 0], np.clip(val_y[val_lab == 0], *REG_CLIP) - base_p[val_lab == 0])],
             callbacks=callbacks + [lgb.early_stopping(200, verbose=False)],
@@ -335,7 +354,7 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
                for i in seeds]
         reg = lgb.train(
             REG_PARAMS,
-            lgb.Dataset(Xf[reg_mask], resid_target, categorical_feature=cat_cols),
+            lgb.Dataset(Xf[reg_mask], resid_target, weight=_reg_weight(clf), categorical_feature=cat_cols),
             rounds["reg"],
         )
 
