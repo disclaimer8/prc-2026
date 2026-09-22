@@ -113,6 +113,13 @@ of decoded ACARS and VDL messages», есть страница историче�
    документированности.
 3. **Объём.** Годится ли доступ для выборки за два месяца по десяти аэропортам, или API ограничит частотой.
 
+**Закрыто 22.09 на пункте 2 (лицензия).** Страница `docs.airframes.io/api/licensing`: открытой лицензии нет
+(ни CC, ни ODbL); *«Bulk redistribution, resale, or commercial use beyond your access tier requires prior
+arrangement»*; атрибуция обязательна; сами условия помечены *«still being finalized»*. Лицензия
+`github.com/airframesio/data` («non-commercial allowed & encouraged», коммерческое — платно) относится
+к справочникам (аэропорты, борта, станции VDL), а не к архиву сообщений. Та же стена, что у ADS-B Exchange:
+наблюдение есть, открытости нет. Пункт 1 (есть ли OOOI в LIRF/LFPG/LTFM) не проверялся — без лицензии он не нужен.
+
 Отдельно отмечено, что **не** годится: A-CDM (закрыт по устройству), DDR2 с DPI (заявка и подписанное
 соглашение), A-SMGCS и наземный радар (нигде не публичны), API аэропортов (у EHAM есть `actualOffBlockTime`,
 но там покрытие и так 0,93–0,96), агрегаты AIU (проверены и отклонены), MLAT-ветка adsb.lol (ноль наземных
