@@ -24,7 +24,7 @@ fi
 
 for i in $(seq 1 120); do
   grep -q "FINAL submissions/gentle-igloo_v${V}.parquet" data/final_e86.log 2>/dev/null && break
-  if ! pgrep -qf "run_final_e8[6]"; then
+  if ! pgrep -qf "_final_e8[6]"; then
     tg "PRC E86 ПРОШЁЛ ворота ($line), но сборка цепочки не довела файл до конца. Отправлять нечего."
     exit 1
   fi
