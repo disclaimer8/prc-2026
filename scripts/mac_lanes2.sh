@@ -2,6 +2,7 @@
 # Продолжение после снятия третьей полосы: ждём двух полос E92 (по числу файлов), добираем фолд 6,
 # затем E95 в ДВЕ полосы (по памяти: один фолд ~10 ГБ из 48, три полосы упирались в компрессор).
 set -uo pipefail
+setopt NULL_GLOB  # zsh: несовпавший шаблон иначе рубит команду целиком
 cd /Users/denyskolomiiets/prc-2026
 say() { print -r -- "[$(date +%H:%M)] $*" }
 tg() { ssh -o BatchMode=yes hetzner "set -a; . /etc/flightfinder/telegram.env; set +a; curl -s -m 20 -X POST \"https://api.telegram.org/bot\$TELEGRAM_BOT_TOKEN/sendMessage\" -d chat_id=90206238 --data-urlencode text=\"$1\" >/dev/null" 2>/dev/null; }
