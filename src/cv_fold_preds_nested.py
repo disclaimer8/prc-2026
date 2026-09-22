@@ -30,6 +30,12 @@ df = pl.read_parquet(T.FEATURES_PATH)
 tr = df.filter(pl.col("split") == "train")
 del df
 fit_all, val_all = tr.filter(~pl.col("month").is_in([a, b])), tr.filter(pl.col("month").is_in([a, b]))
+# E96 (22.09): FIT_FRAC=f keeps a random f of the fit rows, same seed for every fold. Measures the learning
+# curve -- how much the model still gains from more data of the kind it already has. Default 1.0 = unchanged.
+frac = float(os.environ.get("FIT_FRAC", "1"))
+if frac < 1.0:
+    fit_all = fit_all.sample(fraction=frac, seed=42)
+    print(f"FIT_FRAC={frac}: fit rows {fit_all.height}", flush=True)
 groups = sorted(tr["ADEP_mvt"].unique().to_list()) if per_airport else [None]
 ids, preds, regs, ys, probas, vals = [], [], [], [], [], []
 for ap in groups:
