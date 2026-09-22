@@ -316,6 +316,7 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
             valid_sets=[lgb.Dataset(Xp, val_lab)],
             callbacks=callbacks + [lgb.early_stopping(200, verbose=False)],
         )
+        clf = [clf]
         reg = lgb.train(
             REG_PARAMS,
             lgb.Dataset(Xf[reg_mask], resid_target, categorical_feature=cat_cols),
@@ -323,16 +324,22 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
             valid_sets=[lgb.Dataset(Xp[val_lab == 0], np.clip(val_y[val_lab == 0], *REG_CLIP) - base_p[val_lab == 0])],
             callbacks=callbacks + [lgb.early_stopping(200, verbose=False)],
         )
-        best = {"clf": clf.best_iteration, "reg": reg.best_iteration}
+        best = {"clf": clf[0].best_iteration, "reg": reg.best_iteration}
     else:
-        clf = lgb.train(CLF_PARAMS, lgb.Dataset(Xf, lab, weight=clf_w, categorical_feature=cat_cols), rounds["clf"])
+        # E95: seed-average the classifier (CLF_SEEDS=k). Variance reduction, no added capacity -- the same
+        # change already accepted for the regressor as E37. Only the sampling seeds move; rounds stay as chosen.
+        seeds = range(int(os.environ.get("CLF_SEEDS", "1")))
+        clf = [lgb.train(CLF_PARAMS if i == 0 else  # i=0 must stay bit-identical to the pre-E95 model
+                         {**CLF_PARAMS, "seed": 42 + i, "bagging_seed": 3 + i, "feature_fraction_seed": 2 + i},
+                         lgb.Dataset(Xf, lab, weight=clf_w, categorical_feature=cat_cols), rounds["clf"])
+               for i in seeds]
         reg = lgb.train(
             REG_PARAMS,
             lgb.Dataset(Xf[reg_mask], resid_target, categorical_feature=cat_cols),
             rounds["reg"],
         )
 
-    proba = clf.predict(Xp)  # (n, n_classes)
+    proba = np.mean([c.predict(Xp) for c in clf], axis=0)  # (n, n_classes), averaged over CLF_SEEDS models
     r = reg.predict(Xp) + base_p
     values = [r]
     for col in CANDIDATES.values():
@@ -397,7 +404,9 @@ def main() -> None:
         os.makedirs("submissions", exist_ok=True)
         path = f"submissions/gentle-igloo_v{version}.parquet"
         sub.write_parquet(path)
-        clf.save_model(f"submissions/clf_v{version}.txt")
+        clf[0].save_model(f"submissions/clf_v{version}.txt")
+        for i, c in enumerate(clf[1:], start=1):  # E95: extra seeds, read back by blend.py if present
+            c.save_model(f"submissions/clf_v{version}_s{i}.txt")
         reg.save_model(f"submissions/reg_v{version}.txt")
         print(f"wrote {path} rows={sub.height} rounds={rounds} mean={sub[TARGET].mean():.0f} max={sub[TARGET].max()}")
 

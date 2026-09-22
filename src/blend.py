@@ -5,6 +5,7 @@
 Loads submissions/clf_v<base>.txt and reg_v<base>.txt (LightGBM) and submissions/cat_reg_rank.npz,
 recomputes the ranking feature matrix exactly as in train.py, and writes gentle-igloo_v<new>.parquet.
 """
+import glob
 import os
 import sys
 
@@ -27,10 +28,13 @@ cols = T.feature_columns(train)
 _, cats = T.to_pandas(train, cols, None)
 Xr, _ = T.to_pandas(rank, cols, cats)
 
-clf = lgb.Booster(model_file=f"submissions/clf_v{base}.txt")
+clfs = [lgb.Booster(model_file=f"submissions/clf_v{base}.txt")]
+clfs += [lgb.Booster(model_file=f) for f in sorted(glob.glob(f"submissions/clf_v{base}_s*.txt"))]  # E95 seeds
+clf = clfs[0]
 reg = lgb.Booster(model_file=f"submissions/reg_v{base}.txt")
 assert clf.feature_name() == [c.replace(" ", "_") for c in cols], "feature list differs from the saved model"
-proba = clf.predict(Xr)
+proba = np.mean([c.predict(Xr) for c in clfs], axis=0)
+print(f"classifier models averaged: {len(clfs)}")
 _, base_p = T.proxy_base(train.filter(pl.Series(lab == 0)), rank)
 r_lgb = reg.predict(Xr) + base_p  # the regressor predicts the residual against the NM proxy
 if os.environ.get("LGB_SEEDS"):  # seed-averaged LightGBM regressor from src/seed_avg.py
