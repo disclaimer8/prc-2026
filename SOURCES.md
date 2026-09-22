@@ -121,6 +121,23 @@ arrangement»*; атрибуция обязательна; сами услови
 к справочникам (аэропорты, борта, станции VDL), а не к архиву сообщений. Та же стена, что у ADS-B Exchange:
 наблюдение есть, открытости нет. Пункт 1 (есть ли OOOI в LIRF/LFPG/LTFM) не проверялся — без лицензии он не нужен.
 
+### Airplanes.Live отвечает: не «нет данных», а «не бесплатно» (22.09, Discord)
+
+Спросили в их `#questions` (аккаунт Disclaimer, 22.09 21:04), есть ли у кого локальные логи по FCO/IST за
+январь и июль 2026. Ответ от `aerspeed` (роль ADSB, то есть из команды сети), дословно:
+
+* *«We've been getting spamming by people demanding we license all our data for free and allow commercial use.
+  But they never want to cover the costs. One guy refused to even cover the egress costs to get him data.»*
+* *«they abusing the free sites to try to scramble and win $5000»*, *«but the competition requires the data
+  license allows anyone to profit commercially from it»*
+* *«OpenSky sucks up millions in EU tax dollars and produces very little, do they not have this?»*
+* про наш пост: *«this is a chatgpt translation .. pretty sure he emailed too»*
+
+**Три вывода.** (1) Барьер здесь не технический и не лицензионный по существу, а **денежный и репутационный**:
+данные у них есть, отдать готовы при возмещении затрат, но не под лицензией, разрешающей коммерческое
+использование всем. (2) **Мы не первые** — участники челленджа уже приходили с той же просьбой, канал выжжен.
+(3) Писать туда надо по-человечески и коротко: машинный текст опознают с первого взгляда.
+
 ### Закрыто 22.09: радиообмен «диспетчер — пилот» (предложение Denys)
 
 Механизм безупречен: `push-back approved` по земле — это и есть момент отхода, произнесённый вслух, а не
