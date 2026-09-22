@@ -295,6 +295,13 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
         # the ceiling is 400, not 20: at 20 the clip flattened 92.8 % of the LIRF no-NM 0-4 h rows, exactly
         # the group whose cost of a mistake varies 74-fold inside itself
         clf_w = np.clip((spread / med) ** 2, 0.05, 400.0)
+        # E89: E86 bought the tail with ordinary rows (y <= 7200 +6.96 s, worse in 6 of 6): down-weighting the
+        # light majority broke the calibration where it worked. CLF_COST_MIN_SPREAD=T keeps every row whose
+        # candidates lie within T seconds at weight exactly 1 and prices only the rows beyond, relative to T.
+        t_min = float(os.environ.get("CLF_COST_MIN_SPREAD", "0"))
+        if t_min > 0:
+            clf_w = np.where(spread <= t_min, 1.0, np.clip((spread / t_min) ** 2, 1.0, 400.0))
+            print(f"CLF_COST_MIN_SPREAD={t_min:.0f}: вес выше 1 у {100 * np.mean(clf_w > 1):.2f} % строк", flush=True)
         print(f"CLF_COST_WEIGHT: медиана разброса {med:.0f} с, вес {clf_w.min():.2f}..{clf_w.max():.1f}, "
               f"на верхней обрезке {100 * np.mean(clf_w >= 399.9):.2f} %", flush=True)
 
