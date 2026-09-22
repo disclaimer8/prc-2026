@@ -5,7 +5,7 @@ set -uo pipefail
 cd /Users/denyskolomiiets/prc-2026
 say() { print -r -- "[$(date +%H:%M)] $*" }
 tg() { ssh -o BatchMode=yes hetzner "set -a; . /etc/flightfinder/telegram.env; set +a; curl -s -m 20 -X POST \"https://api.telegram.org/bot\$TELEGRAM_BOT_TOKEN/sendMessage\" -d chat_id=90206238 --data-urlencode text=\"$1\" >/dev/null" 2>/dev/null; }
-until grep -q "DECISION E88" data/e88_cv.log 2>/dev/null || grep -q "упало" data/e88_queue.log 2>/dev/null; do sleep 60; done
+until grep -q "DECISION E88" data/e88_cv.log 2>/dev/null || ! pgrep -qf "e88_queu[e]"; do sleep 60; done
 out=data/cv_preds_e89_cand; mkdir -p $out
 say "E89 cand: фолды 1,2,3,5,6 -> $out"
 env CLF_COST_WEIGHT=1 CLF_COST_MIN_SPREAD=3600 FEATURES=data/features_e77.parquet DROP_PREFIX=day_,tq_,wxr_,month \
