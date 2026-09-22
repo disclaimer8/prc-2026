@@ -65,7 +65,7 @@ T = "TAXITIME_SEC_mvt"
 BASE = int(os.environ.get("BLEND_BASE", "82"))
 PARTS = {int(k): float(v) for k, v in (p.split(":") for p in
          os.environ.get("BLEND_PARTS", "44:0.1344,60:0.0532").split(","))}
-SCORES = {82: 247.7501, 44: 256.3401, 60: 252.1044, 97: 244.4907}   # from the challenge bucket, 20.09
+SCORES = {82: 247.7501, 44: 256.3401, 60: 252.1044, 97: 244.4907, 115: 243.3072}   # from the challenge bucket, 20.09; v115 22.09
 
 
 def main() -> None:
