@@ -324,6 +324,48 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
         print(f"REG_COST_WEIGHT: ниже 1 у {100 * np.mean(w < 1):.2f} % строк регрессора, минимум {w.min():.3f}", flush=True)
         return w
 
+
+    def _mix_objective():
+        """E97 (23.09): train the regime classifier on the squared error of the MIXTURE it produces, not on
+        multiclass log-loss. E89 priced the same asymmetry through sample weights and transferred to the board
+        (-1.18 s); this changes the loss itself. L = (y - sum_k p_k v_k)^2 with p = softmax(F), so
+        dL/dF_k = 2 r p_k (v_k - m) and h_k = 2 (p_k (v_k - m))^2, r = m - y, m = sum_k p_k v_k.
+        Candidate values are the same ones the mixture uses; the regular candidate is the calibrated NM proxy,
+        which is known before the regressor is trained. Rounds come from the unchanged inner selection."""
+        if os.environ.get("CLF_MIX_OBJ") != "1":
+            return None
+        _, base_all = proxy_base(fit.filter(pl.Series(reg_mask)), fit)
+        V = np.column_stack([base_all] + [fit[c].to_numpy().astype(float) for c in CANDIDATES.values()]
+                            + [base_all + DAY])
+        d_l = fit["d_mvt_lobt"].to_numpy().astype(float)[:, None]
+        far_v = ~np.isnan(d_l) & (np.abs(np.nan_to_num(V) - np.nan_to_num(d_l)) > LOBT_WINDOW)
+        far_v[:, 0] = False
+        avail = np.isfinite(V) & ~far_v
+        Vf = np.where(avail, np.nan_to_num(V), 0.0)
+        yv = np.clip(fit[TARGET].to_numpy().astype(float), 0, 3 * DAY)
+        scale = float(np.mean(yv ** 2)) or 1.0
+
+        def obj(raw, _ds):
+            F = np.asarray(raw, dtype=float).reshape(len(yv), len(CLASSES), order="F" if raw.ndim == 1 else "C")
+            F = np.where(avail, F, -1e9)
+            F -= F.max(axis=1, keepdims=True)
+            P = np.exp(F)
+            P /= P.sum(axis=1, keepdims=True)
+            m = np.sum(P * Vf, axis=1)
+            # bounded form: the day-shift candidate sits 86 400 s from the rest, so an unbounded gradient is
+            # dominated by those rows and destroys the calibrated solution (probe 23.09: decided +5.95 s).
+            # Both the residual and the candidate distance are clipped, which is the same discipline E89 used
+            # when it capped its weight at 400.
+            cap = float(os.environ.get("CLF_MIX_CAP", "1800"))
+            r = np.clip(m - yv, -cap, cap)[:, None]
+            diff = np.clip(Vf - m[:, None], -cap, cap)
+            g = 2.0 * r * P * diff / scale
+            h = np.maximum(2.0 * (P * diff) ** 2 / scale, 1e-6)
+            return (g.ravel(order="F"), h.ravel(order="F")) if raw.ndim == 1 else (g, h)
+
+        print(f"CLF_MIX_OBJ: строк {len(yv)}, доступных кандидатов в среднем {avail.sum(1).mean():.2f}", flush=True)
+        return obj
+
     callbacks = [lgb.log_evaluation(500)]
     best = {}
     if rounds is None:
@@ -352,13 +394,32 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
                          {**CLF_PARAMS, "seed": 42 + i, "bagging_seed": 3 + i, "feature_fraction_seed": 2 + i},
                          lgb.Dataset(Xf, lab, weight=clf_w, categorical_feature=cat_cols), rounds["clf"])
                for i in seeds]
+        mix_obj = _mix_objective()
+        if mix_obj is not None:
+            # E97: refine the logistic solution, never replace it -- a custom objective starts from raw zeros,
+            # i.e. uniform probabilities, and the probe (fold 1+7, RMSE 441.5 against 375) showed it cannot
+            # travel that far in the rounds the inner selection picked. Here the logistic raw scores are the
+            # init_score and the mixture-SSE model only adds to them.
+            init = clf[0].predict(Xf, raw_score=True)
+            ds = lgb.Dataset(Xf, lab, weight=clf_w, categorical_feature=cat_cols,
+                             init_score=init.ravel(order="F"))
+            mix_rounds = int(os.environ.get("CLF_MIX_ROUNDS", "300"))
+            mix_model = lgb.train({**CLF_PARAMS, "objective": mix_obj, "learning_rate": float(os.environ.get("CLF_MIX_LR", "0.03"))},
+                                  ds, mix_rounds)
+            clf = [clf[0], mix_model]  # read back as base + correction by the predict block below
         reg = lgb.train(
             REG_PARAMS,
             lgb.Dataset(Xf[reg_mask], resid_target, weight=_reg_weight(clf), categorical_feature=cat_cols),
             rounds["reg"],
         )
 
-    proba = np.mean([c.predict(Xp) for c in clf], axis=0)  # (n, n_classes), averaged over CLF_SEEDS models
+    if os.environ.get("CLF_MIX_OBJ") == "1" and rounds is not None:
+        raw = clf[0].predict(Xp, raw_score=True) + clf[1].predict(Xp, raw_score=True)
+        raw = raw - raw.max(axis=1, keepdims=True)
+        proba = np.exp(raw)
+        proba = proba / proba.sum(axis=1, keepdims=True)
+    else:
+        proba = np.mean([c.predict(Xp) for c in clf], axis=0)  # averaged over CLF_SEEDS models
     r = reg.predict(Xp) + base_p
     values = [r]
     for col in CANDIDATES.values():
