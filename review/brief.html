@@ -386,6 +386,7 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
       <li><a href="#s21bd">E102 — пред-регистрация: сеть без AOBT_3 (23.09, до прогона)</a></li>
       <li><a href="#s21be">E103 — веса сдвига 2025 → 2026 (23.09, подготовка до регистрации)</a></li>
       <li><a href="#s22">Репозиторий</a></li>
+      <li><a href="#s21bf">E105 — пред-регистрация: снять идентичность стоянки поверх E99 (23.09, до прогона)</a></li>
     </ol>
   </nav>
 
@@ -1228,11 +1229,25 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 <td style="text-align: right;">—</td>
 </tr>
 <tr>
-<td><strong>v162</strong></td>
-<td><strong>v115 + смесь по весам CV: v44 0,010 · v60 0,064 · сеть-партнёр 0,132</strong></td>
+<td>v162</td>
+<td>v115 + смесь по весам CV: v44 0,010 · v60 0,064 · сеть-партнёр 0,132</td>
 <td style="text-align: right;">—</td>
-<td style="text-align: right;"><strong>242,5609</strong></td>
-<td style="text-align: right;"><strong>6 / 180, до третьего 3,91 с</strong></td>
+<td style="text-align: right;">242,5609</td>
+<td style="text-align: right;">6 / 180</td>
+</tr>
+<tr>
+<td>v155</td>
+<td>цепочка E89 без целевых кодировок (E99)</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">243,1402</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td><strong>v163</strong></td>
+<td><strong>v155 + смесь E81</strong></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><strong>242,2622</strong></td>
+<td style="text-align: right;"><strong>6 / 180, до третьего 3,61 с</strong></td>
 </tr>
 </tbody>
 </table></div>
@@ -7587,7 +7602,33 @@ review/brief.html        этот бриф страницей
 - веса TabPFN-2 — Prior Labs License (Apache 2.0 + атрибуция).</p>
 <p>Данные челленджа и ключи в репозиторий не входят.</p>
 <hr />
-<p>Данные: EUROCONTROL Performance Review Commission Data Challenge 2026 при поддержке OpenSky Network. Карта стоянок © OpenStreetMap contributors.</p></section>
+<p>Данные: EUROCONTROL Performance Review Commission Data Challenge 2026 при поддержке OpenSky Network. Карта стоянок © OpenStreetMap contributors.</p>
+<h3>E99 на доске: v155 = 243,1402 — снятие кодировок переносится вопреки CV (23.09, 13:50)</h3>
+<p><strong>Факт v155: 243,1402, −0,167 к v115</strong>, внутри записанного коридора 242,6…245,5 и у хорошего края (прогноз 244,1).
+В CV то же изменение стоило <strong>+0,94</strong> (решаемые) и +0,89 (strict), хуже в 0 фолдах из 6. Расхождение CV и доски
+≈ −1,1 с: целевые кодировки 2025 года (среднее руление по стоянке×ВПП, ВПП×часу, оператору, типу…) выигрывают
+внутри 2025 года и <strong>проигрывают на переносе в 2026</strong>. Это первое прямое подтверждение зеркальной стороны правила п. 2:
+снятие выученной ёмкости на агрегатах обучающего периода переносится лучше, чем говорит CV (прецедент — E24, <code>month</code>).</p>
+<p><strong>По записанному условию</strong> — смесь E81 поверх v155 (веса v116 — v44 0,1214 · v60 0,0270, как было записано: «собрать
+смесь E81 поверх v155»). Тождество: <strong>v163 = 242,2622, −0,30 к v162</strong>. Перенос состава v162 (с сетью-партнёром) дал бы
+242,4995 — не берём: выбор между двумя переносами по доске был бы подбором по доске.
+<strong>v163 записан до отправки: 242,2622, ворота |факт − 242,2622| ≤ 0,05.</strong></p>
+<p><strong>Следующее по той же записи:</strong> снять ещё одну ёмкость того же рода. Кандидаты — <code>rr_*</code> (доли режимов по группам, E50
+не взят, но в цепочке их нет — проверить), соседские агрегаты за прошлые дни не трогаем (они по 2026 году). Ближайшее —
+<code>ap_stand</code>/<code>ap_runway</code> и другие категориальные пары, которые модель учит как ёмкость 2025 года.</p>
+</section><section id="s21bf"><h2><span class="n">21bf</span>E105 — пред-регистрация: снять идентичность стоянки поверх E99 (23.09, до прогона)</h2>
+<p><strong>Механизм.</strong> E99 показал на доске, что ёмкость «среднее 2025 года по группе» переносится хуже, чем говорит CV
+(CV +0,94 → доска −0,167). Вторая по величине ёмкость того же рода — категориальная <strong>идентичность стоянки</strong>:
+<code>STAND_mvt</code> (1 899 значений) и <code>ap_stand</code> (2 725), по которым GBDT учит эффект конкретной стоянки в 2025 году.
+Физика стоянки остаётся: <code>geo_*</code> (расстояние, направление, продольная и поперечная составляющие до ВПП),
+<code>stand_prefix</code> (57 значений), стояночные признаки соседей по 2026 году. Оператор и авиакомпания <strong>не</strong> снимаются:
+по ним классификатор узнаёт, кто пишет время отхода по расписанию, а это правило записи, а не агрегат периода.</p>
+<p><strong>Плечо:</strong> цепочка E99 + <code>DROP_PREFIX=...,STAND_mvt,ap_stand</code> (<code>src/run_final_e105.sh</code> → v180…<strong>v185</strong>), с нуля,
+после E103. CV не считается: после E99 известно, что он в этом классе ошибается со знаком.
+<strong>Прогноз v185, записан до отправки: 243,0, коридор 242,2 … 244,3</strong> (центр чуть лучше v155 = 243,1402).
+<strong>v185 &lt; 243,1402</strong> — смесь E81 поверх v185 по тождеству и следующая ёмкость (<code>rwy_config</code>, 1 235 значений, 0,98 %
+строк ranking с невиданной конфигурацией). <strong>Иначе</strong> — стоянку вернуть, линия «снятие» остаётся на E99.</p>
+<p><strong>Факт v163 = 242,2622</strong> — совпало с тождеством до четвёртого знака. <strong>Новый лучший, −0,30 к v162.</strong> Место 6 из 180, до третьего (238,6506) <strong>3,61 с</strong>, до пятого (241,9536) 0,31 с.</p></section>
 
     <footer class="doc">Данные: EUROCONTROL Performance Review Commission Data Challenge 2026 при поддержке OpenSky Network. Карта стоянок © OpenStreetMap contributors.</footer>
   </main>
