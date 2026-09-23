@@ -380,12 +380,12 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
       <li><a href="#s21ax">E89 перепроверен на другой архитектуре: совпадение до второго знака (23.09, 03:30)</a></li>
       <li><a href="#s21ay">Кривая обучения: вторая точка; E98 (снос уровня по прилётам) отклонён (23.09, ночь)</a></li>
       <li><a href="#s21az">Внешний разбор 23.09 утром: три идеи, три замера, все закрыты (23.09)</a></li>
-      <li><a href="#s22">Репозиторий</a></li>
       <li><a href="#s21ba">E99 — пред-регистрация: снять целевые кодировки 2025 года (23.09, до прогона)</a></li>
       <li><a href="#s21bb">E100 — пред-регистрация: партнёр смеси из другого семейства моделей (23.09, до прогона)</a></li>
       <li><a href="#s21bc">E101 — пред-регистрация: три сида сети-партнёра (23.09, до прогона)</a></li>
       <li><a href="#s21bd">E102 — пред-регистрация: сеть без AOBT_3 (23.09, до прогона)</a></li>
       <li><a href="#s21be">E103 — веса сдвига 2025 → 2026 (23.09, подготовка до регистрации)</a></li>
+      <li><a href="#s22">Репозиторий</a></li>
     </ol>
   </nav>
 
@@ -1172,11 +1172,67 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 <td style="text-align: right;">—</td>
 </tr>
 <tr>
-<td><strong>v78</strong></td>
-<td><strong>v76 + признаки визита этапу E36 (E65)</strong></td>
+<td>v78</td>
+<td>v76 + признаки визита этапу E36 (E65)</td>
 <td style="text-align: right;">—</td>
-<td style="text-align: right;"><strong>248,7737</strong></td>
-<td style="text-align: right;"><strong>5 / 152, до третьего 3,75 с</strong></td>
+<td style="text-align: right;">248,7737</td>
+<td style="text-align: right;">5 / 152</td>
+</tr>
+<tr>
+<td>v82</td>
+<td>v78 + этап E70 (всё подпороговое семейство E63/E66/E69) + E74</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">247,7501</td>
+<td style="text-align: right;">6 / 160</td>
+</tr>
+<tr>
+<td>v89</td>
+<td>v82 + смесь сабмитов v44 · v60 (E76, веса CV, тождество Грама)</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">246,9205</td>
+<td style="text-align: right;">6 / 167</td>
+</tr>
+<tr>
+<td>v97</td>
+<td>цепочка на соседях по поданному времени (E77)</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">244,4907</td>
+<td style="text-align: right;">5 / 167</td>
+</tr>
+<tr>
+<td>v98</td>
+<td>v97 + смесь E81 (v44 0,1214 · v60 0,0270)</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">243,8347</td>
+<td style="text-align: right;">4 / 167</td>
+</tr>
+<tr>
+<td>v115</td>
+<td>цепочка E89: вес классификатора по цене ошибки за пределом часа</td>
+<td style="text-align: right;">358,0</td>
+<td style="text-align: right;">243,3072</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>v116</td>
+<td>v115 + смесь E81</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">242,6556</td>
+<td style="text-align: right;">6 / 173</td>
+</tr>
+<tr>
+<td>v161</td>
+<td>v115 + 0,158 · сеть-партнёр E100</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">243,0518</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td><strong>v162</strong></td>
+<td><strong>v115 + смесь по весам CV: v44 0,010 · v60 0,064 · сеть-партнёр 0,132</strong></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><strong>242,5609</strong></td>
+<td style="text-align: right;"><strong>6 / 180, до третьего 3,91 с</strong></td>
 </tr>
 </tbody>
 </table></div>
@@ -1249,6 +1305,10 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 <li>Прогноз = Σ p_k · кандидат_k. Это оптимальная точечная оценка при квадратичной ошибке.</li>
 <li>Режимам с кандидатом вне окна LOBT ±3606 с ставится вероятность 0; итоговый прогноз клипается в это окно.</li>
 <li>Для LIRF без NM при 0 &lt; D &lt; 4 ч и истории номера рейса ≥ 3 строк вероятность «= SCHED» даёт логит по истории номера в 2025 (E14, <code>src/e14_apply.py</code>).</li>
+<li><strong>Признаки соседей по поданному времени</strong> (E77, <code>features_e77.parquet</code>): «взлёт минус LOBT / SCHED» у соседей — в LTFM прокси AOBT вырожден. Прокси калибруется множителем по аэропорту × источнику (E46, <code>PROXY_SCALE=1</code>).</li>
+<li><strong>Вес классификатора по цене ошибки</strong> (E89, <code>CLF_COST_WEIGHT=1 CLF_COST_MIN_SPREAD=3600</code>): строки с разбросом кандидатов до часа — вес 1, шире — <code>(разброс/3600)²</code> до 400.</li>
+<li><strong>Этапы ADS-B поверх смеси</strong> (adsb.lol, наземные треки): E70 (<code>src/e70_apply.py</code>, строки с наземным отрезком: геометрия стоянки, первое движение, визиты, починка разрыва приёма) и E64 (<code>src/e64_apply.py</code>, строки без наземного отрезка: визиты своего борта по воздушным точкам). Цепочка целиком — <code>src/run_final_e89.sh</code> → v115; воспроизводится с нуля без единого отличия (<code>src/repro_check_e89.sh</code>).</li>
+<li><strong>Смесь полных сабмитов</strong> (<code>src/blend_submissions.py</code>): веса — совместная LOFO-NNLS подгонка CV против этапного выхода, цена считается тождеством Грама по оценённым файлам до отправки. Сейчас v162 = 0,0906 · v115 + 0,010 · v44 + 0,064 · v60 + 0,8354 · v161, где v161 = v115 + 0,158 · (сеть-партнёр − v115) на строках strict (<code>src/e100_rank.py</code>: регрессор — MLP, <code>src/e100_nn_partner.py</code>).</li>
 </ol>
 </section><section id="s5"><h2><span class="n">5</span>Журнал экспериментов</h2>
 <p>RMSE регрессора на строках обычного режима валидации при y ≤ 7200 с, если не указано иное.</p>
@@ -7306,39 +7366,6 @@ EHAM −3,1 и <strong>LTFM −102,5 с</strong> (9 124 строки). Даже 
 и групповой поправкой оно не берётся — ровно как весь остальной бюджет (разд. 8).</p>
 <p><strong>Поправка к их арифметике:</strong> разрыв до третьего места на утро 23.09 не 3,34 с, а <strong>3,64 с</strong> — верхушка ушла
 вперёд за ночь (лидер 235,31).</p>
-</section><section id="s22"><h2><span class="n">22</span>Репозиторий</h2>
-<pre><code>src/run_final.sh         весь финальный пайплайн с нуля: признаки → режимы → сиды → CatBoost → бленд → TabPFN
-src/resume_final_15.sh   продолжение прогона 15 с шага CatBoost после перезагрузки, затем E14
-src/submit_at_reset.sh   отправка версий после сброса дневного лимита (00:05 UTC)
-src/upload.py            проверка сабмита по шаблону и загрузка в бакет команды
-src/features.py          признаки → data/features_final.parquet
-src/geometry.py          OSM-геометрия стоянок и ВПП
-src/target_encoding.py   out-of-fold target encoding
-src/train.py             validate | submit N: смесь режимов, окно LOBT, остаток
-src/lirf_tabpfn.py       TabPFN-2 для режимов LIRF без NM (E11)
-src/lirf_table.py        таблица режимов LIRF без NM (до v13)
-src/cv_fold_preds.py     OOF-прогнозы полной модели на 6 фолдах пар месяцев
-src/e14_flight_history.py  E14: история номера рейса
-src/e14_apply.py         применение E14 к ranking (v18)
-src/e15_flight_identity.py  E15: идентичность рейса без меток (отклонён)
-src/e21_arrival_link.py  E21: связка через прилёт (отклонён)
-src/crux_m3_probe.py     доля SCHED по регулярности рейса, 2025
-src/xlink_probe.py       проба связки через прилёт
-src/catboost_reg.py      CatBoost-регрессор на всём 2025
-src/seed_avg.py          усреднение сидов LightGBM
-src/blend.py             сборка сабмита из сохранённых моделей
-src/exp_reg.py           эксперименты с регрессором
-analysis/                аналитика данных, внешние источники, решения прошлых лет,
-                         публичные репозитории 2026, полный текст первого ревью
-review/brief.html        этот бриф страницей
-</code></pre>
-<p><strong>Внешние данные:</strong>
-- METAR, Iowa Environmental Mesonet — свободное использование, атрибуция приветствуется;
-- OpenStreetMap через Overpass — ODbL 1.0;
-- веса TabPFN-2 — Prior Labs License (Apache 2.0 + атрибуция).</p>
-<p>Данные челленджа и ключи в репозиторий не входят.</p>
-<hr />
-<p>Данные: EUROCONTROL Performance Review Commission Data Challenge 2026 при поддержке OpenSky Network. Карта стоянок © OpenStreetMap contributors.</p>
 </section><section id="s21ba"><h2><span class="n">21ba</span>E99 — пред-регистрация: снять целевые кодировки 2025 года (23.09, до прогона)</h2>
 <p><strong>Механизм.</strong> Правило п. 2 «Читать первым» говорит, что новая выученная ёмкость на агрегатах обучающего периода
 на доску не переносится (E32, E38, E50: +0,33 · +3,79 · +5,78). Зеркальная сторона того же правила ни разу не
@@ -7527,7 +7554,40 @@ NN» (242,49) склеен из двух раздельных подгонок �
 корреляция ошибок 0,95; с весом E89 ломается (707 с). Потолок смеси, оптимистичный (вес подогнан на том же фолде):
 <strong>−0,048</strong> против −0,224 у E100 на том же фолде. Logloss меряет не то: смесь решают несколько процентов вероятности
 на кандидатах, отстоящих на часы, а их откалибрована лучше у GBDT. Линия нейросетей закрыта целиком: в v162 взят её
-потолок.</p></section>
+потолок.</p>
+</section><section id="s22"><h2><span class="n">22</span>Репозиторий</h2>
+<pre><code>src/run_final.sh         весь финальный пайплайн с нуля: признаки → режимы → сиды → CatBoost → бленд → TabPFN
+src/resume_final_15.sh   продолжение прогона 15 с шага CatBoost после перезагрузки, затем E14
+src/submit_at_reset.sh   отправка версий после сброса дневного лимита (00:05 UTC)
+src/upload.py            проверка сабмита по шаблону и загрузка в бакет команды
+src/features.py          признаки → data/features_final.parquet
+src/geometry.py          OSM-геометрия стоянок и ВПП
+src/target_encoding.py   out-of-fold target encoding
+src/train.py             validate | submit N: смесь режимов, окно LOBT, остаток
+src/lirf_tabpfn.py       TabPFN-2 для режимов LIRF без NM (E11)
+src/lirf_table.py        таблица режимов LIRF без NM (до v13)
+src/cv_fold_preds.py     OOF-прогнозы полной модели на 6 фолдах пар месяцев
+src/e14_flight_history.py  E14: история номера рейса
+src/e14_apply.py         применение E14 к ranking (v18)
+src/e15_flight_identity.py  E15: идентичность рейса без меток (отклонён)
+src/e21_arrival_link.py  E21: связка через прилёт (отклонён)
+src/crux_m3_probe.py     доля SCHED по регулярности рейса, 2025
+src/xlink_probe.py       проба связки через прилёт
+src/catboost_reg.py      CatBoost-регрессор на всём 2025
+src/seed_avg.py          усреднение сидов LightGBM
+src/blend.py             сборка сабмита из сохранённых моделей
+src/exp_reg.py           эксперименты с регрессором
+analysis/                аналитика данных, внешние источники, решения прошлых лет,
+                         публичные репозитории 2026, полный текст первого ревью
+review/brief.html        этот бриф страницей
+</code></pre>
+<p><strong>Внешние данные:</strong>
+- METAR, Iowa Environmental Mesonet — свободное использование, атрибуция приветствуется;
+- OpenStreetMap через Overpass — ODbL 1.0;
+- веса TabPFN-2 — Prior Labs License (Apache 2.0 + атрибуция).</p>
+<p>Данные челленджа и ключи в репозиторий не входят.</p>
+<hr />
+<p>Данные: EUROCONTROL Performance Review Commission Data Challenge 2026 при поддержке OpenSky Network. Карта стоянок © OpenStreetMap contributors.</p></section>
 
     <footer class="doc">Данные: EUROCONTROL Performance Review Commission Data Challenge 2026 при поддержке OpenSky Network. Карта стоянок © OpenStreetMap contributors.</footer>
   </main>
