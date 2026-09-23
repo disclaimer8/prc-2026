@@ -111,8 +111,10 @@ def regular_candidate(fit: pl.DataFrame, pred: pl.DataFrame) -> np.ndarray:
     sd = float(y.std())
     xnf, xcf, xnp, xcp, card = prepare(fit.filter(pl.Series(reg_mask)), pred, cols)
     print(f"  rows {len(y)}, numeric {xnf.shape[1]}, categorical {len(card)}, resid sd {sd:.0f}", flush=True)
-    net = fit_nn(xnf, xcf, y / sd, card)
-    return predict(net, xnp, xcp) * sd + base_p
+    # E101: NN_SEEDS=k averages k networks (seed 0 alone is bit-for-bit the E100 arm)
+    k = int(os.environ.get("NN_SEEDS", "1"))
+    out = np.mean([predict(fit_nn(xnf, xcf, y / sd, card, seed=s), xnp, xcp) for s in range(k)], axis=0)
+    return out * sd + base_p
 
 
 def main() -> None:

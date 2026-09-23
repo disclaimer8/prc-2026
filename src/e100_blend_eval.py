@@ -3,7 +3,8 @@ import numpy as np
 from scipy.optimize import nnls
 import fold_metrics as FM
 
-REF, ARM = "data/cv_preds_e89_stage", "data/cv_preds_e100_nn"
+import os
+REF, ARM = "data/cv_preds_e89_stage", os.environ.get("E100_ARM", "data/cv_preds_e100_nn")
 FOLDS = [f"fold_{a}_{a + 6}" for a in range(1, 7)]
 dec, st = FM.decided_map(), FM.decided_map(strict=True)
 lb = 6 * 2 * 242.6556 * 344841
