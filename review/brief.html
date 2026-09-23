@@ -389,8 +389,10 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
       <li><a href="#s21bg">E106 — пред-регистрация: префикс авиакомпании у строк без записи NM (23.09, до прогона)</a></li>
       <li><a href="#s21bh">E107 — пред-регистрация: построчный выбор внутри четвёрки плановых времён (23.09)</a></li>
       <li><a href="#s21bi">E108 — пред-регистрация: восстановить поля NM у строк без записи (23.09, до прогона)</a></li>
+      <li><a href="#s21bl">E110 — пред-регистрация: полное снятие целевых кодировок, включая ter_* (23.09, до прогона)</a></li>
       <li><a href="#s21bj">Литература и внешние обзоры 23.09: ничего с механизмом</a></li>
       <li><a href="#s22">Репозиторий</a></li>
+      <li><a href="#s21bk">E109 — пред-регистрация: дочистка префикса E106 (23.09, до прогона)</a></li>
     </ol>
   </nav>
 
@@ -7398,7 +7400,7 @@ EHAM −3,1 и <strong>LTFM −102,5 с</strong> (9 124 строки). Даже 
 доска −0,87. Самая крупная оставшаяся ёмкость этого рода — восемь целевых кодировок <code>te_*</code>/<code>ter_*</code> (среднее руление
 2025 года по стоянке×ВПП, ВПП×часу, стоянке, оператору, типу, направлению). В январе и июле 2026 конфигурация ВПП
 и распределение стоянок другие (разд. 3, п. 6).</p>
-<p><strong>Плечо:</strong> цепочка E89, <code>DROP_PREFIX=...,te_</code> (уходят и <code>te_*</code>, и <code>ter_*</code>). Контроль <code>data/cv_preds_e89_cand</code>.</p>
+<p><strong>Плечо:</strong> цепочка E89, <code>DROP_PREFIX=...,te_</code>. Контроль <code>data/cv_preds_e89_cand</code>. <strong>Поправка 23.09, 19:10:</strong> здесь было написано «уходят и <code>te_*</code>, и <code>ter_*</code>» — неверно: <code>'ter_…'.startswith('te_')</code> ложно, E99 снял 12 колонок <code>te_*</code>, а 4 колонки <code>ter_*</code> остались (проверено по <code>submissions/clf_v150.txt</code>); см. E110.</p>
 <p><strong>CV здесь не судья, а фильтр цены.</strong> CV меряет 2025 → 2025 и по построению не видит того сдвига, ради которого
 это делается. Записано до прогона: decided <strong>≤ +1,0 с</strong> → собрать полную цепочку и проверить на доске (слотом, по
 решению Denys) и как партнёр смеси; <strong>&gt; +1,0 с</strong> → закрыть. Прогноз CV: +0,2 … +1,5, центр +0,6.</p>
@@ -7808,6 +7810,18 @@ RYR 30 % · ITY 9 % · EJU 6 % · EZY 4 % при средней 46 %. Модел
 (0,988), сегмент рынка (0,916) — мода по префиксу; категория турбулентности — мода по <code>AIRCRAFT_TYPE_mvt</code>
 (<code>src/e108_impute_nm_fields.py</code> → <code>features_e108</code>). <strong>Плечо:</strong> E106 + импутация; контроль — <code>cv_preds_e106_air</code>
 (та же машина, hetzner). <strong>Ворота стандартные. Прогноз: −0,1 … −0,8, центр −0,3.</strong></p>
+</section><section id="s21bl"><h2><span class="n">21bl</span>E110 — пред-регистрация: полное снятие целевых кодировок, включая ter_* (23.09, до прогона)</h2>
+<p><strong>Дефект E99, найденный внешним разбором и подтверждённый по моделям.</strong> <code>DROP_PREFIX=...,te_</code> не снимает <code>ter_*</code>
+(третий символ <code>r</code>, а не <code>_</code>). В v150, v180, v190 остались <code>ter_stand_rwy</code>, <code>ter_op_ap</code> и их счётчики, и после снятия
+<code>te_*</code> модель на них опирается сильнее: регрессор v150 — <code>ter_stand_rwy</code> 16-е место из 160 (1,71 % прироста),
+<code>ter_op_ap</code> 19-е; классификатор — <code>ter_op_ap_n</code> (число строк оператора в 2025) 11-е место, 2,94 %. Значит, E99
+проверил <strong>частичное</strong> снятие; полное не проверено. И E105 сохраняет эффект стоянка × ВПП 2025 года через
+<code>ter_stand_rwy</code>, то есть проверяет не то, что заявлено.</p>
+<p><strong>Плечо:</strong> E106 (<code>features_e106</code>) + <code>DROP_PREFIX=...,te_,ter_</code>, <code>src/run_final_e110.sh</code> → v210…<strong>v215</strong>. Судья — доска
+(класс «снятие ёмкости», CV к нему слеп). Компаратор — <strong>v195</strong> (то же без снятия <code>ter_*</code>).
+<strong>Прогноз, записан до отправки: v215 − v195 = −0,1 … −0,8, центр −0,3.</strong> Лучше v195 → смесь E81 поверх по тождеству,
+E105 повторить поверх E110. Хуже v195 на &gt; 0,3 → <code>ter_*</code> несут переносимый сигнал (остаток к прокси, а не уровень),
+вернуть. Очередь на маке: E106 → <strong>E110</strong> → E108.</p>
 </section><section id="s21bj"><h2><span class="n">21bj</span>Литература и внешние обзоры 23.09: ничего с механизмом</h2>
 <p><strong>Свип ORCID / Crossref / OpenAlex</strong> (агент, <code>analysis/orcid_taxi_out_sweep_2026-09-23.md</code>): 1 053 профиля, 41 429 работ,
 отобрано 290, около 120 по теме. Открытых наземных данных по LIRF/LTFM/LFPG за январь и июль 2026 <strong>нет</strong>
@@ -7853,7 +7867,88 @@ review/brief.html        этот бриф страницей
 - веса TabPFN-2 — Prior Labs License (Apache 2.0 + атрибуция).</p>
 <p>Данные челленджа и ключи в репозиторий не входят.</p>
 <hr />
-<p>Данные: EUROCONTROL Performance Review Commission Data Challenge 2026 при поддержке OpenSky Network. Карта стоянок © OpenStreetMap contributors.</p></section>
+<p>Данные: EUROCONTROL Performance Review Commission Data Challenge 2026 при поддержке OpenSky Network. Карта стоянок © OpenStreetMap contributors.</p>
+<h3>E108: формально REJECT, по правилу 21y — на доску (23.09, 19:05)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>фолд</th>
+<th style="text-align: right;">решаемые</th>
+<th style="text-align: right;">strict</th>
+<th style="text-align: right;">все</th>
+<th style="text-align: right;">y ≤ 7200</th>
+<th style="text-align: right;">усечённая</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1+7</td>
+<td style="text-align: right;">−0,18</td>
+<td style="text-align: right;">−0,04</td>
+<td style="text-align: right;">−2,91</td>
+<td style="text-align: right;">−0,43</td>
+<td style="text-align: right;">−0,83</td>
+</tr>
+<tr>
+<td>2+8</td>
+<td style="text-align: right;">−0,02</td>
+<td style="text-align: right;">−0,06</td>
+<td style="text-align: right;">−1,83</td>
+<td style="text-align: right;">−0,14</td>
+<td style="text-align: right;">−0,16</td>
+</tr>
+<tr>
+<td>3+9</td>
+<td style="text-align: right;">−0,07</td>
+<td style="text-align: right;">−0,01</td>
+<td style="text-align: right;">−1,35</td>
+<td style="text-align: right;">−0,82</td>
+<td style="text-align: right;">−0,29</td>
+</tr>
+<tr>
+<td>4+10</td>
+<td style="text-align: right;">−0,05</td>
+<td style="text-align: right;">−0,03</td>
+<td style="text-align: right;">+0,05</td>
+<td style="text-align: right;">−0,08</td>
+<td style="text-align: right;">−0,09</td>
+</tr>
+<tr>
+<td>5+11</td>
+<td style="text-align: right;">+0,15</td>
+<td style="text-align: right;">+0,00</td>
+<td style="text-align: right;">+0,16</td>
+<td style="text-align: right;">+0,10</td>
+<td style="text-align: right;">+0,06</td>
+</tr>
+<tr>
+<td>6+12</td>
+<td style="text-align: right;">+0,38</td>
+<td style="text-align: right;">+0,00</td>
+<td style="text-align: right;">+4,61</td>
+<td style="text-align: right;">−0,18</td>
+<td style="text-align: right;">+0,65</td>
+</tr>
+<tr>
+<td><strong>итого</strong></td>
+<td style="text-align: right;"><strong>+0,20</strong> (4/6)</td>
+<td style="text-align: right;">−0,13</td>
+<td style="text-align: right;">−1,27</td>
+<td style="text-align: right;">−1,55</td>
+<td style="text-align: right;"><strong>−0,67</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Стандартные ворота не пройдены (решаемые +0,20). Но решаемые и усечённая расходятся по знаку, а весь плюс решаемых —
+фолд 6+12, где все строки +4,61 при усечённой +0,65, то есть несколько строк. По правилу разд. 21y при таком
+расхождении решает усечённая: −0,67, ниже в 4 из 6. При итоге по лучшему файлу слот ничего не стоит — собираем
+цепочку <code>src/run_final_e108.sh</code> (v200…<strong>v205</strong>) после E106 и отправляем третьим слотом 24.09.
+<strong>Прогноз v205, записан до отправки: относительно v195 −0,3 … +0,5, центр 0.</strong></p>
+</section><section id="s21bk"><h2><span class="n">21bk</span>E109 — пред-регистрация: дочистка префикса E106 (23.09, до прогона)</h2>
+<p>У 7 393 строк без NM префикс после E106 пуст: 5 085 — номер рейса в форме IATA (KL, LH, HV, DE, LY…; в ICAO через
+OpenFlights, ODbL, 94 %), 427 — задвоенные буквы (WZZZZ401, KMMMM615, ISRSR344 → первые три), 1 517 — бортовые
+регистрации (→ <code>_REG</code>). <code>src/e109_prefix_cleanup.py</code> → <code>features_e109</code>. Плечо — E106 на <code>features_e109</code>; контроль —
+<code>cv_preds_e106_air</code> (hetzner). <strong>Ворота стандартные, прогноз −0,05 … −0,5, центр −0,15.</strong></p></section>
 
     <footer class="doc">Данные: EUROCONTROL Performance Review Commission Data Challenge 2026 при поддержке OpenSky Network. Карта стоянок © OpenStreetMap contributors.</footer>
   </main>
