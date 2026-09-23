@@ -355,8 +355,30 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
         if os.environ.get("CLF_MIX_OBJ") != "1":
             return None
         _, base_all = proxy_base(fit.filter(pl.Series(reg_mask)), fit)
-        V = np.column_stack([base_all] + [fit[c].to_numpy().astype(float) for c in CANDIDATES.values()]
-                            + [base_all + DAY])
+        reg_cand = base_all
+        # E111 (23.09, external review): the loss above priced the mixture with the NM proxy as the regular candidate,
+        # while predictions use the trained regressor (RMS 280 s apart; RMSE 444 vs 359 on Jan+Jul 2025), so the
+        # probabilities were fitted to compensate proxy errors. MIX_REG_CROSSFIT=1 uses regressor predictions
+        # cross-fitted inside the fit rows instead: five groups of months, each predicted by a regressor that never
+        # saw them, with the rounds already chosen for this fold. Unset = the E97 behaviour, bit for bit.
+        if os.environ.get("MIX_REG_CROSSFIT") == "1":
+            months = fit["month"].to_numpy()
+            um = np.unique(months)
+            groups = [um[i::5] for i in range(5)]
+            rt_full = np.full(len(fit), np.nan)
+            rt_full[reg_mask] = resid_target
+            reg_cand = np.full(len(fit), np.nan)
+            for g in groups:
+                hold = np.isin(months, g)
+                tr_m = reg_mask & ~hold
+                m_in = lgb.train(REG_PARAMS, lgb.Dataset(Xf[tr_m], rt_full[tr_m], categorical_feature=cat_cols), rounds["reg"])
+                reg_cand[hold] = m_in.predict(Xf[hold]) + base_all[hold]
+            yr = fit[TARGET].to_numpy().astype(float)
+            ok = reg_mask & (yr <= 7200)
+            print(f"MIX_REG_CROSSFIT: regular-row RMSE proxy {np.sqrt(np.mean((base_all[ok] - yr[ok]) ** 2)):.1f} "
+                  f"-> cross-fitted regressor {np.sqrt(np.mean((reg_cand[ok] - yr[ok]) ** 2)):.1f}", flush=True)
+        V = np.column_stack([reg_cand] + [fit[c].to_numpy().astype(float) for c in CANDIDATES.values()]
+                            + [reg_cand + DAY])
         d_l = fit["d_mvt_lobt"].to_numpy().astype(float)[:, None]
         far_v = ~np.isnan(d_l) & (np.abs(np.nan_to_num(V) - np.nan_to_num(d_l)) > LOBT_WINDOW)
         far_v[:, 0] = False
