@@ -235,6 +235,16 @@ def proxy_base(fit_r: pl.DataFrame, pred: pl.DataFrame):
     return apply(fit_r), apply(pred)
 
 
+def adv_weights(rows: pl.DataFrame):
+    """E103: ADV_WEIGHT shift weights for these fit rows (** ADV_WEIGHT_POW, mean 1), or None when unset."""
+    if not os.environ.get("ADV_WEIGHT"):
+        return None
+    aw = pl.read_parquet(os.environ["ADV_WEIGHT"])
+    w = rows.select("MVT_ID_mvt").join(aw, on="MVT_ID_mvt", how="left", maintain_order="left")["adv_w"].fill_null(1.0).to_numpy()
+    w = w ** float(os.environ.get("ADV_WEIGHT_POW", "0.5"))
+    return w / w.mean()
+
+
 def mask_infeasible(proba: np.ndarray, values: np.ndarray, df: pl.DataFrame) -> np.ndarray:
     """Zero the probability of non-regular regimes whose candidate lies outside the LOBT window."""
     d = df["d_mvt_lobt"].to_numpy()[:, None]
@@ -306,12 +316,22 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
               f"на верхней обрезке {100 * np.mean(clf_w >= 399.9):.2f} %", flush=True)
 
 
+    # E103: ADV_WEIGHT=path multiplies every fit row's weight (classifier and regressor) by its 2025 -> 2026 shift
+    # weight from src/e103_propensity.py, raised to ADV_WEIGHT_POW (0.5 keeps 73.5 % effective sample) and
+    # renormalised to mean 1 on the rows being fitted. Unset = bit-for-bit unchanged.
+    adv_w = None
+    if os.environ.get("ADV_WEIGHT"):
+        adv_w = adv_weights(fit)
+        clf_w = adv_w if clf_w is None else clf_w * adv_w
+        print(f"ADV_WEIGHT: вес {adv_w.min():.2f}..{adv_w.max():.2f}, эффективный объём "
+              f"{adv_w.sum() ** 2 / (adv_w ** 2).sum() / len(adv_w):.3f}", flush=True)
+
     def _reg_weight(models):
         """E94 (22.09, form proposed by the external review): the regressor's error is paid only in proportion
         to the probability that its own candidate is the one used, so rows whose candidates lie within an hour
         keep weight 1 and wider rows are priced by p_regular^2. Weight only, nothing else moves."""
         if os.environ.get("REG_COST_WEIGHT") != "1":
-            return None
+            return None if adv_w is None else adv_w[reg_mask]
         cand_r = np.column_stack([fit[c].to_numpy().astype(float) for c in CANDIDATES.values()])
         d_l = fit["d_mvt_lobt"].to_numpy().astype(float)[:, None]
         far_r = ~np.isnan(d_l) & (np.abs(np.nan_to_num(cand_r) - np.nan_to_num(d_l)) > LOBT_WINDOW)
@@ -322,7 +342,7 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
         thr = float(os.environ.get("REG_COST_MIN_SPREAD", "3600"))
         w = np.where(spread_r <= thr, 1.0, np.clip(p_reg ** 2, 0.05, 1.0))[reg_mask]
         print(f"REG_COST_WEIGHT: ниже 1 у {100 * np.mean(w < 1):.2f} % строк регрессора, минимум {w.min():.3f}", flush=True)
-        return w
+        return w if adv_w is None else w * adv_w[reg_mask]
 
 
     def _mix_objective():

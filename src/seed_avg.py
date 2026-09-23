@@ -37,7 +37,7 @@ Xf, cats = T.to_pandas(fit_r, cols, None)
 Xp, _ = T.to_pandas(pred, cols, cats)
 base_f, base_p = T.proxy_base(fit_r, pred)
 yf = np.clip(np.clip(fit_r[TARGET].to_numpy(), *T.REG_CLIP) - base_f, -7200, 7200)
-dtrain = lgb.Dataset(Xf, yf, categorical_feature=[c for c in CATEGORICAL if c in cols], free_raw_data=False)
+dtrain = lgb.Dataset(Xf, yf, weight=T.adv_weights(fit_r), categorical_feature=[c for c in CATEGORICAL if c in cols], free_raw_data=False)
 
 preds = []
 for s in range(n_seeds):

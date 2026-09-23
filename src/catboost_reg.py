@@ -25,17 +25,17 @@ cols = T.feature_columns(train)
 cat_cols = [c for c in CATEGORICAL if c in cols]
 
 
-def pool(d, y=None):
+def pool(d, y=None, w=None):
     pdf = d.select(cols).to_pandas()
     for c in cat_cols:
         pdf[c] = pdf[c].fillna("NA").astype(str)
-    return Pool(pdf, y, cat_features=cat_cols)
+    return Pool(pdf, y, cat_features=cat_cols, weight=w)
 
 
 fit = train.filter(pl.Series(lab == 0))
 model = CatBoostRegressor(iterations=iterations, learning_rate=0.08, depth=8, loss_function="RMSE", thread_count=8, verbose=500, random_seed=0)
 base_f, base_p = T.proxy_base(fit, rank)
-model.fit(pool(fit, np.clip(np.clip(fit[TARGET].to_numpy(), *T.REG_CLIP) - base_f, -7200, 7200)))
+model.fit(pool(fit, np.clip(np.clip(fit[TARGET].to_numpy(), *T.REG_CLIP) - base_f, -7200, 7200), T.adv_weights(fit)))
 reg = model.predict(pool(rank)) + base_p
 np.savez("submissions/cat_reg_rank.npz", mvt_id=rank["MVT_ID_mvt"].to_numpy(), reg=reg)
 model.save_model("submissions/cat_reg_rank.cbm")
