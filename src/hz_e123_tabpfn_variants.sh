@@ -25,7 +25,10 @@ run_tail "" 330
 .venv/bin/python - <<'PY'
 import polars as pl
 a=pl.read_parquet("submissions/gentle-igloo_v334.parquet").sort("MVT_ID_mvt"); b=pl.read_parquet("submissions/gentle-igloo_v245.parquet").sort("MVT_ID_mvt")
-print("control v334 == v245:", a.equals(b)); assert a.equals(b), "tail of the chain does not reproduce v245 on hetzner"
+d=(a["TAXITIME_SEC_mvt"].to_numpy().astype(float)-b["TAXITIME_SEC_mvt"].to_numpy().astype(float))
+n=int((d!=0).sum()); rms=float((d**2).mean()**0.5)
+print(f"control v334 vs v245: differing rows {n}, RMS {rms:.3f} s (TabPFN on x86 vs Apple Silicon differs in the 42 TabPFN rows only; 25.09: 39 rows, RMS 0.609)")
+assert n <= 42 and rms < 1.0, "divergence beyond the TabPFN rows — stop"
 PY
 echo "[$(date +%H:%M)] both"; run_tail "pfx,local_change" 300
 echo "[$(date +%H:%M)] pfx"; run_tail "pfx" 310
