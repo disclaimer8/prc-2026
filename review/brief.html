@@ -400,6 +400,7 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
       <li><a href="#s21bt">E121 — пред-регистрация: усреднение CatBoost по сидам (25.09, 16:20 EEST, до прогона)</a></li>
       <li><a href="#s21bu">E118b — пред-регистрация: E118 с построчным кандидатом, как в цепочке (25.09, 17:15 EEST, до прогона)</a></li>
       <li><a href="#s21bv">Инвентарь искусственных порогов и E123 — снятые правилом месяцев варианты TabPFN на доску (25.09, 18:05, до прогона)</a></li>
+      <li><a href="#s21bw">Discord конкурса: полный экспорт и что из него меняет решения (25.09, 19:05)</a></li>
       <li><a href="#s21bj">Литература и внешние обзоры 23.09: ничего с механизмом</a></li>
       <li><a href="#s22">Репозиторий</a></li>
       <li><a href="#s21bk">E109 — пред-регистрация: дочистка префикса E106 (23.09, до прогона)</a></li>
@@ -8263,6 +8264,32 @@ v326 RMS 7,3 с (макс. 1 539 с, −137 с), v306 RMS 19,6 с (макс. 7 0
 <strong>Прогноз до отправки (нумерация исправлена):</strong> v316 − v247 ≈ −0,27 (коридор −0,5 … +0,1); v326 − v247 ≈ −0,30
 (коридор −0,5 … +0,1); v306 — не сумма, ожидание −0,35 (коридор −0,6 … +0,1). Ворота: доска; принимается лучший, если
 &lt; 239,9169 − 0,05. Очередь 26.09 (<code>src/submit_26sep_c.sh</code>): v265 → v316 → v326 → v285 (если досчитан) → v248; v306 — 27.09.</p>
+</section><section id="s21bw"><h2><span class="n">21bw</span>Discord конкурса: полный экспорт и что из него меняет решения (25.09, 19:05)</h2>
+<p>Канал <code>#prc-data-competition</code> выгружен целиком (605 сообщений, 08.11.2024 – 25.09.2026; файлы в <code>analysis/discord/</code>, вне git).
+Дайджест — <code>analysis/discord/digest_2026-09.md</code>. Что меняется:</p>
+<ol>
+<li><strong><code>AOBT_3_flt</code> легитимен — закрыто прямым словом организатора.</strong> 08.09: «we are not providing values as ground truth …
+   If you think that any value provided is a proxy (or the value itself) then use it». 16.09: «BLOCK_TIME_UTC_mvt and
+   TAXITIME_SEC_mvt are masked … The rest in the same row and other rows is available to your model». 19.09 про ADS-B:
+   «if you can find open trajectory data with good ground coverage and extract off-block times, we are ok». Открытый вопрос
+   разд. 21h (18.09) снимается; риск (2) «пересуживание постфактум» из четырёх — закрыт.</li>
+<li><strong>Фаза 2 не планируется, но право оставлено</strong> (05.09, 11.09, 12.09), и поводом названо прощупывание меток («reverse
+   engineering the ranking (which we despise)»). 25.09 Piyush прямо спросил о финальном подсчёте — ответа пока нет.
+   Следствие: риск (4) «финал по другому файлу» остаётся; заморозка 6–7.10 и страховка без <code>AOBT_3</code> (NO_AOBT, разд. 21o) —
+   в силе.</li>
+<li><strong>Прыжки лидеров</strong> участники (03.09, 12.09) объясняют инверсией RMSE: одна отправка с одной изменённой строкой
+   восстанавливает метку, римские строки без NM стоят 1–3 с каждая; «flat plateaus, then one large step nobody learning
+   from 2025 can follow». Организатор ввёл лимит 3, затем 5 в день. Наше правило «не прощупывать» остаётся.</li>
+<li><strong>Методы конкурентов сходятся с нашими выводами:</strong> vibrant-jewel — снятие сезонных колонок CV +43 с → доска −7,6 с
+   (наш урок о ёмкости, разд. 21ba); подбор весов смеси на холдауте проигрывал 4/4; XGBoost вес 0. Piyush — «якорь на
+   взлёт минус NM off-block был единственным большим шагом», январь и июль проверять раздельно. GREKI — adsb.lol на
+   полных месяцах «moved us a lot», типы ВС в очереди +0,25 с. 3-е место (SoK/Le): adsb.lol + погода + apt.dat.</li>
+<li><strong>Разрешён явно новый источник:</strong> дневные файлы EUROCONTROL AIU (17.09: «can be considered open data for the
+   challenge») — проверка по содержанию в журнале №58.</li>
+<li>24.09 организатор: «getting perfect score … because you get some extra data source with relevant off-block … BUT the
+   goal … is on designing a MODEL, its documentation, its implementation» — README при открытии репозитория должен
+   подавать решение как модель (режимы записи, классификатор, этапы), а ADS-B — как задокументированный открытый вход.</li>
+</ol>
 </section><section id="s21bj"><h2><span class="n">21bj</span>Литература и внешние обзоры 23.09: ничего с механизмом</h2>
 <p><strong>Свип ORCID / Crossref / OpenAlex</strong> (агент, <code>analysis/orcid_taxi_out_sweep_2026-09-23.md</code>): 1 053 профиля, 41 429 работ,
 отобрано 290, около 120 по теме. Открытых наземных данных по LIRF/LTFM/LFPG за январь и июль 2026 <strong>нет</strong>

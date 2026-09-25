@@ -4182,6 +4182,33 @@ v326 RMS 7,3 с (макс. 1 539 с, −137 с), v306 RMS 19,6 с (макс. 7 0
 (коридор −0,5 … +0,1); v306 — не сумма, ожидание −0,35 (коридор −0,6 … +0,1). Ворота: доска; принимается лучший, если
 < 239,9169 − 0,05. Очередь 26.09 (`src/submit_26sep_c.sh`): v265 → v316 → v326 → v285 (если досчитан) → v248; v306 — 27.09.
 
+## 21bw. Discord конкурса: полный экспорт и что из него меняет решения (25.09, 19:05)
+
+Канал `#prc-data-competition` выгружен целиком (605 сообщений, 08.11.2024 – 25.09.2026; файлы в `analysis/discord/`, вне git).
+Дайджест — `analysis/discord/digest_2026-09.md`. Что меняется:
+
+1. **`AOBT_3_flt` легитимен — закрыто прямым словом организатора.** 08.09: «we are not providing values as ground truth …
+   If you think that any value provided is a proxy (or the value itself) then use it». 16.09: «BLOCK_TIME_UTC_mvt and
+   TAXITIME_SEC_mvt are masked … The rest in the same row and other rows is available to your model». 19.09 про ADS-B:
+   «if you can find open trajectory data with good ground coverage and extract off-block times, we are ok». Открытый вопрос
+   разд. 21h (18.09) снимается; риск (2) «пересуживание постфактум» из четырёх — закрыт.
+2. **Фаза 2 не планируется, но право оставлено** (05.09, 11.09, 12.09), и поводом названо прощупывание меток («reverse
+   engineering the ranking (which we despise)»). 25.09 Piyush прямо спросил о финальном подсчёте — ответа пока нет.
+   Следствие: риск (4) «финал по другому файлу» остаётся; заморозка 6–7.10 и страховка без `AOBT_3` (NO_AOBT, разд. 21o) —
+   в силе.
+3. **Прыжки лидеров** участники (03.09, 12.09) объясняют инверсией RMSE: одна отправка с одной изменённой строкой
+   восстанавливает метку, римские строки без NM стоят 1–3 с каждая; «flat plateaus, then one large step nobody learning
+   from 2025 can follow». Организатор ввёл лимит 3, затем 5 в день. Наше правило «не прощупывать» остаётся.
+4. **Методы конкурентов сходятся с нашими выводами:** vibrant-jewel — снятие сезонных колонок CV +43 с → доска −7,6 с
+   (наш урок о ёмкости, разд. 21ba); подбор весов смеси на холдауте проигрывал 4/4; XGBoost вес 0. Piyush — «якорь на
+   взлёт минус NM off-block был единственным большим шагом», январь и июль проверять раздельно. GREKI — adsb.lol на
+   полных месяцах «moved us a lot», типы ВС в очереди +0,25 с. 3-е место (SoK/Le): adsb.lol + погода + apt.dat.
+5. **Разрешён явно новый источник:** дневные файлы EUROCONTROL AIU (17.09: «can be considered open data for the
+   challenge») — проверка по содержанию в журнале №58.
+6. 24.09 организатор: «getting perfect score … because you get some extra data source with relevant off-block … BUT the
+   goal … is on designing a MODEL, its documentation, its implementation» — README при открытии репозитория должен
+   подавать решение как модель (режимы записи, классификатор, этапы), а ADS-B — как задокументированный открытый вход.
+
 ## 21bj. Литература и внешние обзоры 23.09: ничего с механизмом
 
 **Свип ORCID / Crossref / OpenAlex** (агент, `analysis/orcid_taxi_out_sweep_2026-09-23.md`): 1 053 профиля, 41 429 работ,
