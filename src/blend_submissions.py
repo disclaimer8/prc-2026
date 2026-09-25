@@ -82,14 +82,18 @@ def main() -> None:
     blend = sum(w[v] * p[v] for v in w)
 
     vers = sorted(w)
+    if any(v not in SCORES for v in vers):  # unscored base (e.g. a variant built for the board): no identity possible, just blend
+        print("identity skipped: no board score for " + ", ".join(f"v{v}" for v in vers if v not in SCORES))
+        vers = []
     mse = np.array([SCORES[v] ** 2 for v in vers])
-    D = np.array([[np.mean((p[i] - p[j]) ** 2) for j in vers] for i in vers])
-    G = (mse[:, None] + mse[None, :] - D) / 2
-    ww = np.array([w[v] for v in vers])
-    print("weights: " + ", ".join(f"v{v} {w[v]:.4f}" for v in vers))
-    print(f"Gram min eigenvalue {np.linalg.eigvalsh(G).min():+.4f} (>= 0 required)")
-    print(f"identity: unrounded blend scores {float(np.sqrt(ww @ G @ ww)):.4f} "
-          f"({float(np.sqrt(ww @ G @ ww)) - SCORES[BASE]:+.4f} s against v{BASE})")
+    print("weights: " + ", ".join(f"v{v} {w[v]:.4f}" for v in sorted(w)))
+    if vers:
+        D = np.array([[np.mean((p[i] - p[j]) ** 2) for j in vers] for i in vers])
+        G = (mse[:, None] + mse[None, :] - D) / 2
+        ww = np.array([w[v] for v in vers])
+        print(f"Gram min eigenvalue {np.linalg.eigvalsh(G).min():+.4f} (>= 0 required)")
+        print(f"identity: unrounded blend scores {float(np.sqrt(ww @ G @ ww)):.4f} "
+              f"({float(np.sqrt(ww @ G @ ww)) - SCORES[BASE]:+.4f} s against v{BASE})")
 
     res = base.with_columns(pl.Series(T, np.rint(blend)).cast(pl.Int32))
     if res.height != base.height or res[T].null_count():
