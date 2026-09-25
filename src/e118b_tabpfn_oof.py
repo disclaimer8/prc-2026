@@ -95,7 +95,8 @@ for tag, a, b in (("reg_c (as E118)", "tab_c", "pfn_c"), ("OOF regressor (as the
     st, sp = np.concatenate(res[a]), np.concatenate(res[b])
     top3 = np.argsort(-st)[:3]
     mask = np.ones(len(st), bool); mask[top3] = False
-    wins = sum(1 for row in months if row[months[0].index(row[0]) if False else 0] is not None and (row[3 if a == "tab_c" else 5] < row[2 if a == "tab_c" else 4]))
+    i_t, i_p = (2, 3) if a == "tab_c" else (4, 5)
+    wins = sum(1 for row in months if row[i_p] < row[i_t])
     gain = 100 * (sp.sum() / st.sum() - 1); gain_wo = 100 * (sp[mask].sum() / st[mask].sum() - 1)
     print(f"[{tag}] LOMO-SSE E11={st.sum():.3e} E118={sp.sum():.3e} ({gain:+.1f}%), without top-3 ({gain_wo:+.1f}%), months better {wins}/{len(months)}")
     print(f"[{tag}] DECISION:", "ADOPT" if gain <= -5 and gain_wo < 0 and wins >= 8 else "REJECT")
