@@ -38,19 +38,41 @@ def prepare(df: pl.DataFrame) -> pl.DataFrame:
     )
 
 
+EXTRA = [x for x in os.environ.get("TABPFN_EXTRA", "").split(",") if x]  # hypothesis 56: "pfx" (E118), "local_change" (E26a)
+
+
+def add_extra(tr: pl.DataFrame, rank: pl.DataFrame):
+    feats, cat = list(FEATS), []
+    if "local_change" in EXTRA:  # E26a: local (Europe/Rome) date differs between schedule and take-off
+        lc = lambda d: d.with_columns(local_change=(pl.col("MVT_TIME_UTC_mvt").dt.convert_time_zone("Europe/Rome").dt.date()
+                                                    != pl.col("SCHED_TIME_UTC_mvt").dt.convert_time_zone("Europe/Rome").dt.date()).cast(pl.Float64))
+        tr, rank = lc(tr), lc(rank); feats.append("local_change")
+    if "pfx" in EXTRA:  # E118: airline prefix (E113 lookup) as a categorical code, codes for prefixes with >= 5 rows in 2025
+        ap = pl.read_parquet(os.environ.get("PFX_FEATURES", "data/features_e113.parquet"), columns=["MVT_ID_mvt", "airline_prefix"])
+        tr, rank = tr.join(ap, on="MVT_ID_mvt", how="left"), rank.join(ap, on="MVT_ID_mvt", how="left")
+        vc = tr["airline_prefix"].value_counts().sort("count", descending=True)
+        code = {p: i + 1 for i, p in enumerate(vc.filter(pl.col("count") >= 5)["airline_prefix"].drop_nulls().to_list())}
+        enc = lambda d: d.with_columns(pfx=pl.col("airline_prefix").map_elements(lambda p: float(code.get(p, 0)), return_dtype=pl.Float64).fill_null(0.0))
+        tr, rank = enc(tr), enc(rank); feats.append("pfx"); cat = [len(feats) - 1]
+        print(f"prefix codes {len(code)}, coverage train {float((tr['pfx'] > 0).mean()):.3f} rank {float((rank['pfx'] > 0).mean()):.3f}")
+    return tr, rank, feats, cat
+
+
 def main() -> None:
     base, new = int(sys.argv[1]), int(sys.argv[2])
     cols = ["MVT_ID_mvt", "split", "ADEP_mvt", "FLIGHT_ID_mvt", "FLIGHT_mvt", "STAND_mvt", "RUNWAY_mvt", "d_mvt_sched",
-            "local_hour", "local_dow", "day_nonm_rate", "dep_before_30", "arr_before_30", Y]
+            "local_hour", "local_dow", "day_nonm_rate", "dep_before_30", "arr_before_30", Y] + (["MVT_TIME_UTC_mvt", "SCHED_TIME_UTC_mvt"] if "local_change" in EXTRA else [])
     f = pl.read_parquet(os.environ.get("FEATURES", "data/features_v9.parquet"), columns=cols)
     tr = prepare(f.filter(pl.col("split") == "train")).with_columns(
         cls=pl.when((pl.col(Y) - pl.col("d_mvt_sched")).abs() <= 6).then(0).when(pl.col(Y).is_between(86400, 93600)).then(1).otherwise(2)
     )
     day_taxi = float(f.filter((pl.col("split") == "train") & pl.col(Y).is_between(86400, 93600)).select((pl.col(Y) - 86400).median()).item())
     rank = prepare(f.filter(pl.col("split") == "rank")).filter(pl.col("b").is_in(L.OVERRIDE))
-    clf = TabPFNClassifier.create_default_for_version(ModelVersion.V2, device="cpu", random_state=0)
-    clf.fit(tr.select(FEATS).to_numpy(), tr["cls"].to_numpy())
-    raw = clf.predict_proba(rank.select(FEATS).to_numpy())
+    tr, rank, feats, cat = add_extra(tr, rank)
+    print("TabPFN features:", feats, "categorical idx:", cat)
+    clf = TabPFNClassifier.create_default_for_version(ModelVersion.V2, device="cpu", random_state=0, **({"categorical_features_indices": cat} if cat else {}))
+    clf.fit(tr.select(feats).to_numpy(), tr["cls"].to_numpy())
+    raw = clf.predict_proba(rank.select(feats).to_numpy())
     p = np.zeros((rank.height, 3))
     for j, c in enumerate(clf.classes_):
         p[:, int(c)] = raw[:, j]
