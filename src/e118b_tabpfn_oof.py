@@ -34,7 +34,8 @@ ids, regs = [], []
 for p in sorted(glob.glob(f"{CV_DIR}/fold_*.npz")):
     d = np.load(p)
     ids.append(d["mvt_id"]); regs.append(d["reg"])
-oof = pl.DataFrame({"MVT_ID_mvt": np.concatenate(ids).astype(np.int64), "oof_reg": np.concatenate(regs).astype(np.float64)})
+oof = pl.DataFrame({"MVT_ID_mvt": np.concatenate(ids).astype(np.int64), "oof_reg": np.concatenate(regs).astype(np.float64)}).with_columns(
+    pl.col("MVT_ID_mvt").cast(f.schema["MVT_ID_mvt"]))
 print(f"OOF rows {oof.height} from {CV_DIR}")
 t = f.filter((pl.col("ADEP_mvt") == "LIRF") & pl.col("FLIGHT_ID_mvt").is_null()).with_columns(
     cls=pl.when((pl.col(Y) - pl.col("d_mvt_sched")).abs() <= 6).then(0)
