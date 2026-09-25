@@ -49,8 +49,9 @@ for day in sys.argv[1:]:
     msgs = [json.loads(l) for l in open(f"data/airframes/oooi_{day}.jsonl")]
     outs = [m for m in msgs if m["label"] in ("QP", "QA", "QT") and m.get("dep_parsed") in HUBS and m.get("flightNumber")]
     tr = pl.read_parquet("data/features_e106.parquet", columns=["MVT_ID_mvt", "split", "ADEP_mvt", "FLIGHT_mvt", "t_block", "t_mvt", "TAXITIME_SEC_mvt"])
-    t0 = pl.datetime(*[int(x) for x in day.split("-")], time_zone="UTC").dt.epoch("s")
-    dep = tr.filter((pl.col("split") == "train") & (pl.col("t_mvt") >= pl.lit(t0)) & (pl.col("t_mvt") < pl.lit(t0) + 86400))
+    import calendar, time as _t
+    t0 = calendar.timegm(_t.strptime(day, "%Y-%m-%d"))
+    dep = tr.filter((pl.col("split") == "train") & (pl.col("t_mvt") >= t0) & (pl.col("t_mvt") < t0 + 86400))
     ob = pl.read_parquet(f"data/adsblol/offblock2_{day}.parquet", columns=["MVT_ID_mvt", "t_move"]) if os.path.exists(f"data/adsblol/offblock2_{day}.parquet") else None
     if ob is not None:
         dep = dep.join(ob, on="MVT_ID_mvt", how="left")
