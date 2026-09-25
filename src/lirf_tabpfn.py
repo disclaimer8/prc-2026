@@ -70,12 +70,20 @@ def main() -> None:
     rank = prepare(f.filter(pl.col("split") == "rank")).filter(pl.col("b").is_in(L.OVERRIDE))
     tr, rank, feats, cat = add_extra(tr, rank)
     print("TabPFN features:", feats, "categorical idx:", cat)
-    clf = TabPFNClassifier.create_default_for_version(ModelVersion.V2, device="cpu", random_state=0, **({"categorical_features_indices": cat} if cat else {}))
-    clf.fit(tr.select(feats).to_numpy(), tr["cls"].to_numpy())
-    raw = clf.predict_proba(rank.select(feats).to_numpy())
+    # E126 (hypothesis 62): ensemble the tail classifier — several TabPFN seeds averaged (TABPFN_SEEDS="0,1,2,3,4") and/or
+    # more internal estimators (TABPFN_N_EST). Capacity-free: only the variance of one draw is removed.
+    seeds = [int(x) for x in os.environ.get("TABPFN_SEEDS", "0").split(",")]
+    extra_kw = {"categorical_features_indices": cat} if cat else {}
+    if os.environ.get("TABPFN_N_EST"):
+        extra_kw["n_estimators"] = int(os.environ["TABPFN_N_EST"])
     p = np.zeros((rank.height, 3))
-    for j, c in enumerate(clf.classes_):
-        p[:, int(c)] = raw[:, j]
+    for sd in seeds:
+        clf = TabPFNClassifier.create_default_for_version(ModelVersion.V2, device="cpu", random_state=sd, **extra_kw)
+        clf.fit(tr.select(feats).to_numpy(), tr["cls"].to_numpy())
+        raw = clf.predict_proba(rank.select(feats).to_numpy())
+        for j, c in enumerate(clf.classes_):
+            p[:, int(c)] += raw[:, j] / len(seeds)
+    print(f"TabPFN seeds {seeds}, extra {extra_kw}")
 
     parts = np.load(f"submissions/parts_v{base}.npz")
     reg = dict(zip(parts["mvt_id"], parts["reg"]))
