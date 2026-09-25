@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 # E121b (25.09): the same CatBoost seed averaging on the E116 configuration (v240 chain) — the hedge for the case
 # that E120 (v265) loses to v245 on the board. Runs after E121. Output v291..v295. Seed 0 is taken from
 # submissions/cat_reg_rank_v240.npz when present, otherwise fitted here (same params, random_seed=0).
