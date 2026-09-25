@@ -25,6 +25,12 @@ g2 = np.isfinite(lo) & (p - lo > 2) & (p - lo <= 60)
 out = p.copy()
 out[g1] = lo[g1] + 1074
 out[g2] = np.maximum(p[g2], lo[g2] + 165)
+# hypothesis 54: re-impose the window itself (stages after blend.py do not re-clip); LOBT_CLIP=0 disables
+if os.environ.get("LOBT_CLIP", "1") == "1":
+    ok = np.isfinite(lo)
+    n_before = int(((out < lo) | (out > lo + 7212))[ok].sum())
+    out[ok] = np.clip(out[ok], lo[ok], lo[ok] + 7212)
+    print(f"window clip: {n_before} rows moved back inside [LOBT-3606, LOBT+3606]")
 print(f"lifted exact {int(g1.sum())} near {int(g2.sum())} RMS change {np.sqrt(((out - p) ** 2).mean()):.2f} s")
 s.with_columns(pl.Series("TAXITIME_SEC_mvt", np.round(out)).cast(s.schema["TAXITIME_SEC_mvt"])).write_parquet(
     f"submissions/gentle-igloo_v{new}.parquet")
