@@ -15,5 +15,5 @@ upload_and_wait () {
     if [ -n "$s" ]; then echo "[$(date -u +%H:%MZ)] SCORE $s" >> $LOG; break; fi
   done
 }
-for v in 366 376 386 306; do upload_and_wait $v; done
+for v in 366 376 386 306 396; do upload_and_wait $v; done
 echo "[$(date -u +%H:%MZ)] end" >> $LOG
