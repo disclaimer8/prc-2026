@@ -67,7 +67,9 @@ def main() -> None:
         cls=pl.when((pl.col(Y) - pl.col("d_mvt_sched")).abs() <= 6).then(0).when(pl.col(Y).is_between(86400, 93600)).then(1).otherwise(2)
     )
     day_taxi = float(f.filter((pl.col("split") == "train") & pl.col(Y).is_between(86400, 93600)).select((pl.col(Y) - 86400).median()).item())
-    rank = prepare(f.filter(pl.col("split") == "rank")).filter(pl.col("b").is_in(L.OVERRIDE))
+    # E136 (26.09): bins served by TabPFN (default = the tail table bins); E12b rule: no one-day shift below P_DAY_MIN_D s
+    bins = os.environ.get("TABPFN_BINS", ",".join(L.OVERRIDE)).split(",")
+    rank = prepare(f.filter(pl.col("split") == "rank")).filter(pl.col("b").is_in(bins))
     tr, rank, feats, cat = add_extra(tr, rank)
     print("TabPFN features:", feats, "categorical idx:", cat)
     # E126 (hypothesis 62): ensemble the tail classifier — several TabPFN seeds averaged (TABPFN_SEEDS="0,1,2,3,4") and/or
@@ -85,6 +87,12 @@ def main() -> None:
             p[:, int(c)] += raw[:, j] / len(seeds)
     print(f"TabPFN seeds {seeds}, extra {extra_kw}")
 
+    pdmin = float(os.environ.get("P_DAY_MIN_D", "0"))
+    if pdmin > 0:
+        low = rank["d_mvt_sched"].to_numpy() < pdmin
+        p[low, 1] = 0.0
+        p[low] = p[low] / p[low].sum(axis=1, keepdims=True)
+        print(f"p_day zeroed on {int(low.sum())} rows with D < {pdmin:.0f} s")
     parts = np.load(f"submissions/parts_v{base}.npz")
     reg = dict(zip(parts["mvt_id"], parts["reg"]))
     r = np.array([reg[m] for m in rank["MVT_ID_mvt"].to_numpy()])
