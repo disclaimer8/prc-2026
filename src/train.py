@@ -114,8 +114,15 @@ def regime_label(df: pl.DataFrame) -> np.ndarray:
     y = pl.col(TARGET)
     expr = pl.when((y >= DAY) & (y <= DAY + 7200)).then(len(CLASSES) - 1)
     planned_ok = ~pl.col("ADEP_mvt").is_in(list(PLANNED_REGIME_EXCLUDED))
+    # E138 (26.09, external review): schedule copies on long delays are also written 7-15 s and ~60 s off the slot
+    # (2025, D > 3600: 138 rows at 6-15 s, 117 at 55-65 s, none at 15-45 s). SCHED_TOL_LONG widens only the schedule class,
+    # only where D = MVT - SCHED > 3600 s; 0 keeps the old labels.
+    tol_long = float(os.environ.get("SCHED_TOL_LONG", "0"))
     for i, col in enumerate(CANDIDATES.values(), start=1):
-        expr = expr.when((((y - pl.col(col)).abs() <= TOL) & planned_ok).fill_null(False)).then(i)
+        tol = pl.lit(float(TOL))
+        if tol_long > 0 and col == "d_mvt_sched":
+            tol = pl.when(pl.col("d_mvt_sched") > 3600).then(pl.lit(tol_long)).otherwise(pl.lit(float(TOL)))
+        expr = expr.when((((y - pl.col(col)).abs() <= tol) & planned_ok).fill_null(False)).then(i)
     return df.select(expr.otherwise(0)).to_series().to_numpy()
 
 
