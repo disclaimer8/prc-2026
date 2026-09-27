@@ -48,8 +48,11 @@ tr = build(tr_raw,
            pl.concat([pl.read_parquet(f) for f in sorted(glob.glob("data/adsblol/visit_2025-*.parquet"))]))
 t = tr.filter(usable & ((pl.col(Y) - pl.col("base")).abs() <= 3600))
 print(f"stage trained on {t.height} rows of 2025", flush=True)
-m = lgb.train(PARAMS, lgb.Dataset(t.select(FEATS).to_numpy(),
-                                  np.clip((t[Y] - t["base"]).to_numpy(), -1800, 1800), categorical_feature=[0]), ROUNDS)
+SEEDS = [int(x) for x in os.environ.get("STAGE_SEEDS", "42").split(",")]  # E143: 42,1,2,3,4 averages the stage
+models = [lgb.train({**PARAMS, "seed": sd}, lgb.Dataset(t.select(FEATS).to_numpy(),
+                                                        np.clip((t[Y] - t["base"]).to_numpy(), -1800, 1800), categorical_feature=[0]), ROUNDS)
+          for sd in SEEDS]
+print("stage seeds", SEEDS, flush=True)
 
 rk = pl.read_parquet("data/prc-2026-datasets/ranking.parquet", columns=cols).filter(pl.col("PHASE_mvt") == "DEP")
 sub = pl.read_parquet(f"submissions/gentle-igloo_v{base_v}.parquet")
@@ -64,7 +67,7 @@ d = build(rk, rk_base,
           pl.concat([pl.read_parquet(f, columns=["MVT_ID_mvt", "coverage"]) for f in sorted(glob.glob(f"{ADSB_DIR}/offblock2_2026-*.parquet"))]),
           pl.concat([pl.read_parquet(f) for f in sorted(glob.glob("data/adsblol/visit_2026-*.parquet"))]))
 use = d.select(usable).to_series().to_numpy()
-new = np.clip(d["base"].to_numpy() + np.where(use, m.predict(d.select(FEATS).to_numpy()), 0.0), 0, None)
+new = np.clip(d["base"].to_numpy() + np.where(use, np.mean([m.predict(d.select(FEATS).to_numpy()) for m in models], axis=0), 0.0), 0, None)
 out = sub.join(pl.DataFrame({"MVT_ID_mvt": d["MVT_ID_mvt"], "new": new}), on="MVT_ID_mvt", how="left").with_columns(
     pl.coalesce(pl.col("new").round(0).cast(sub.schema[Y]), pl.col(Y)).alias(Y)).select(sub.columns)
 dd = (out.sort("MVT_ID_mvt")[Y].cast(float) - sub.sort("MVT_ID_mvt")[Y].cast(float)).to_numpy()
