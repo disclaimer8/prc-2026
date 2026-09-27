@@ -1,6 +1,6 @@
 #!/bin/bash
 # E144 tail (journal 110) on hetzner: base v441 (blend with 10 CatBoost seeds) -> the v424 line.
-#   check: TabPFN pfx on v291 -> v450 must equal v361
+#   TabPFN rows transplanted from v361 (TabPFN is not deterministic run to run)
 #   v441 -> v442 TabPFN pfx -> v443 E14 -> v444 E141 x5 -> v445 E64 x5 -> v446 E81 -> v447 LOBT (FINAL)
 set -Eeuo pipefail
 cd /root/prc-2026
@@ -11,11 +11,19 @@ PY=.venv/bin/python
 rm -f data/e144t.failed
 trap 'echo "[$(date +%H:%M)] FAILED at line $LINENO" | tee data/e144t.failed' ERR
 same () { $PY -c "import sys, polars as pl; a, b = (pl.read_parquet(f'submissions/gentle-igloo_v{v}.parquet').sort('MVT_ID_mvt') for v in sys.argv[1:3]); print(f'v{sys.argv[1]} == v{sys.argv[2]}:', a.equals(b)); sys.exit(0 if a.equals(b) else 1)" "$1" "$2"; }
-echo "[$(date +%H:%M)] check: TabPFN pfx v291 -> v450 == v361"
-TABPFN_EXTRA=pfx $PY src/lirf_tabpfn.py 291 450 2>&1 | grep -E "^wrote|prefix codes" || true
-same 450 361
 echo "[$(date +%H:%M)] tail on v441"
-TABPFN_EXTRA=pfx $PY src/lirf_tabpfn.py 441 442 2>&1 | grep -E "^wrote|prefix codes" || true
+# TabPFN is not deterministic run to run on this box (two runs on identical inputs differ on all 42 rows, up to 873 s):
+# keep the exact TabPFN draw of the v366 line by transplanting the 42 rows v361 changed against v291.
+$PY - <<'PY'
+import polars as pl
+Y = "TAXITIME_SEC_mvt"
+r = lambda v: pl.read_parquet(f"submissions/gentle-igloo_v{v}.parquet")
+b, t, s = r(291), r(361), r(441)
+chg = t.join(b, on="MVT_ID_mvt", suffix="_b").filter(pl.col(Y) != pl.col(f"{Y}_b")).select("MVT_ID_mvt", pl.col(Y).alias("tab"))
+out = s.join(chg, on="MVT_ID_mvt", how="left").with_columns(pl.coalesce("tab", Y).alias(Y)).select(s.columns)
+out.write_parquet("submissions/gentle-igloo_v442.parquet")
+print(f"wrote v442: v441 + the {chg.height} TabPFN rows of v361")
+PY
 $PY src/e14_apply.py 442 441 443 2>&1 | grep -E "^wrote"
 STAGE_SEEDS=42,1,2,3,4 ADSB_DIR=data/adsblol_kt1 WALK_DIR=data/adsblol_sw_kt1 PARTS=submissions/parts_v441.npz $PY src/e141_apply.py 443 444 2>&1 | grep -E "seeds|^wrote"
 STAGE_SEEDS=42,1,2,3,4 ADSB_DIR=data/adsblol_kt1 PARTS=submissions/parts_v441.npz $PY src/e64_apply.py 444 445 2>&1 | grep -E "seeds|^wrote"
