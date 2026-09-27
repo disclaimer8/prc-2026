@@ -17,6 +17,8 @@ cand_d (E141, journal 98, 27.09): control + HEAD + explicit missing-time estimat
 E134_ONLY=ctrl,cand_d limits the run to those models (the other folders keep their previous predictions).
 cand_e / cand_f (E142, journal 103, 27.09): the stage averaged over 5 LightGBM seeds (42, 1, 2, 3, 4), no capacity added;
   cand_e = control features, cand_f = control + HEAD + E141. Compared with the one-seed control; same gate.
+cand_g (E147, journal 120): cand_f minus the reception-density features that drift 2025 -> 2026 (src/e146_stage_drift.py):
+  n_pts, sf_n_seg, vi_n_pts, vi_prev_pts, vi_alt_first, vm_n_pts, vm_prev_pts. 5 seeds; compared with cand_f.
 """
 import glob
 import os
@@ -40,7 +42,8 @@ HEAD = ["hd_gs0", "hd_gs_mean5", "hd_moving0", "hd_accel30", "hd_frac_mov60", "h
 E141 = ["e141_d_missed", "e141_t_rough"]
 DIRS = {"ctrl": "data/cv_preds_e134_ctrl", "cand_a": "data/cv_preds_e134_a", "cand_b": "data/cv_preds_e134_b",
         "cand_c": "data/cv_preds_e140", "cand_d": "data/cv_preds_e141",
-        "cand_e": "data/cv_preds_e142_ctrl5", "cand_f": "data/cv_preds_e142_hd5"}
+        "cand_e": "data/cv_preds_e142_ctrl5", "cand_f": "data/cv_preds_e142_hd5", "cand_g": "data/cv_preds_e147_nodrift5"}
+DRIFT = ["n_pts", "sf_n_seg", "vi_n_pts", "vi_prev_pts", "vi_alt_first", "vm_n_pts", "vm_prev_pts"]
 SEEDS5 = [42, 1, 2, 3, 4]
 E140 = ["nb_full", "nb_pace", "nb_n", "e140_missing", "e140_total"]
 ONLY = [c for c in os.environ.get("E134_ONLY", "").split(",") if c]
@@ -127,10 +130,11 @@ for a, b in [(1, 7), (2, 8), (3, 9), (4, 10), (5, 11), (6, 12)]:
     line = []
     for name, train, feats in (("ctrl", tr, CTRL), ("cand_a", tr, CTRL + HEAD), ("cand_b", tr_aug, CTRL + HEAD),
                                 ("cand_c", tr, CTRL + E140), ("cand_d", tr, CTRL + HEAD + E141),
-                                ("cand_e", tr, CTRL), ("cand_f", tr, CTRL + HEAD + E141)):
+                                ("cand_e", tr, CTRL), ("cand_f", tr, CTRL + HEAD + E141),
+                                ("cand_g", tr, [c for c in CTRL + HEAD + E141 if c not in DRIFT])):
         if ONLY and name not in ONLY:
             continue
-        if name in ("cand_e", "cand_f"):
+        if name in ("cand_e", "cand_f", "cand_g"):
             pred = np.mean([E36.correct(E36.fit_stage(train, feats, {**E36.PARAMS30, "seed": sd}), te) for sd in SEEDS5], axis=0)
         else:
             pred = E36.correct(E36.fit_stage(train, feats), te)
@@ -139,9 +143,10 @@ for a, b in [(1, 7), (2, 8), (3, 9), (4, 10), (5, 11), (6, 12)]:
         line.append(f"{name} {np.sqrt(np.mean((pred - y) ** 2)):.2f}")
     print(f"fold {a}+{b}: " + " | ".join(line), flush=True)
 
-for name in [c for c in ("cand_a", "cand_b", "cand_c", "cand_d", "cand_e", "cand_f") if not ONLY or c in ONLY]:
+for name in [c for c in ("cand_a", "cand_b", "cand_c", "cand_d", "cand_e", "cand_f", "cand_g") if not ONLY or c in ONLY]:
     dec, tot, small, trim, lower, n, strict = compare(DIRS["ctrl"], DIRS[name])
     ok = n == 6 and dec < 0 and lower >= 4 and small < 0 and trim < 0  # magnitude is left to the board (REVIEW_BRIEF 21bv)
-    label = {"cand_c": "E140", "cand_d": "E141", "cand_e": "E142 ctrl x5 seeds", "cand_f": "E142 HEAD+E141 x5 seeds"}.get(name, "E134 " + name)
+    label = {"cand_c": "E140", "cand_d": "E141", "cand_e": "E142 ctrl x5 seeds", "cand_f": "E142 HEAD+E141 x5 seeds",
+             "cand_g": "E147 vs ctrl (no drift features)"}.get(name, "E134 " + name)
     print(f"DECISION {label}: {'TO BOARD' if ok else 'REJECT'} (folds {n}, lower in {lower}; decided {dec:+.2f} s, "
           f"strict {strict:+.2f} s, all {tot:+.2f} s, y<=7200 {small:+.2f} s, trimmed {trim:+.2f} s)")
