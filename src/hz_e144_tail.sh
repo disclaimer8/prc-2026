@@ -2,9 +2,9 @@
 # E144 tail (journal 110) on hetzner: base v441 (blend with 10 CatBoost seeds) -> the v424 line.
 #   check: TabPFN pfx on v291 -> v450 must equal v361
 #   v441 -> v442 TabPFN pfx -> v443 E14 -> v444 E141 x5 -> v445 E64 x5 -> v446 E81 -> v447 LOBT (FINAL)
-set -euo pipefail
+set -Eeuo pipefail
 cd /root/prc-2026
-export OMP_NUM_THREADS=6 POLARS_MAX_THREADS=6 POLARS_UNKNOWN_EXTENSION_TYPE_BEHAVIOR=load_as_storage
+export OMP_NUM_THREADS=4 POLARS_MAX_THREADS=4 POLARS_UNKNOWN_EXTENSION_TYPE_BEHAVIOR=load_as_storage  # the hz_e135 environment that built v361
 export FEATURES=data/features_e106.parquet TABPFN_ALLOW_CPU_LARGE_DATASET=1 PROXY_SCALE=1 CLF_COST_WEIGHT=1 CLF_COST_MIN_SPREAD=3600
 export DROP_PREFIX=day_,tq_,wxr_,month,te_,ter_,STAND_mvt,ap_stand,rwy_config
 PY=.venv/bin/python
