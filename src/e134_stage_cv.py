@@ -9,7 +9,7 @@ Gate (21bz): decided metric >= 0.3 s lower, lower in >= 4 of 6 folds, the same o
 dropping each fold's three best and three worst rows; then post_e14 after the chain tail (reported by the shell).
 Prediction before the run: -0.3 ... +0.2, centre -0.05.
 cand_c (E140, journal 89): control + neighbour-pace reconstruction of the unseen start, same gate; prediction -0.2 ... +0.05.
-cand_d (E141, journal 98, 28.09): control + HEAD + explicit missing-time estimate.
+cand_d (E141, journal 98, 27.09): control + HEAD + explicit missing-time estimate.
   e141_d_missed = gs_d_first (metres from stand to first observation, the unseen portion).
   e141_t_rough  = 2 * gs_d_first / (max(hd_gs0, 5 kt) * 0.5144): seconds, linear acceleration from 0 to hd_gs0
                   (average speed hd_gs0/2); the 5 kt floor keeps a standing first point from blowing up. Null where
