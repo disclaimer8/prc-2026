@@ -7,7 +7,14 @@ Control: the accepted E70 stage (E36.FEATS + visit + stand-walk + geometry + mer
           and HEAD recomputed); the copies carry no visit/geometry features (NaN). Evaluated on real rows only.
 Gate (21bz): decided metric >= 0.3 s lower, lower in >= 4 of 6 folds, the same on y <= 7200, and the gain survives
 dropping each fold's three best and three worst rows; then post_e14 after the chain tail (reported by the shell).
-Prediction before the run: -0.3 ... +0.2, centre -0.05.\ncand_c (E140, journal 89): control + neighbour-pace reconstruction of the unseen start, same gate; prediction -0.2 ... +0.05.
+Prediction before the run: -0.3 ... +0.2, centre -0.05.
+cand_c (E140, journal 89): control + neighbour-pace reconstruction of the unseen start, same gate; prediction -0.2 ... +0.05.
+cand_d (E141, journal 98, 28.09): control + HEAD + explicit missing-time estimate.
+  e141_d_missed = gs_d_first (metres from stand to first observation, the unseen portion).
+  e141_t_rough  = 2 * gs_d_first / (max(hd_gs0, 5 kt) * 0.5144): seconds, linear acceleration from 0 to hd_gs0
+                  (average speed hd_gs0/2); the 5 kt floor keeps a standing first point from blowing up. Null where
+                  hd_gs0 is null.
+E134_ONLY=ctrl,cand_d limits the run to those models (the other folders keep their previous predictions).
 """
 import glob
 import os
@@ -28,9 +35,11 @@ from fold_metrics import compare  # noqa: E402
 SW = ["sw_mvt_first", "sw_mvt_first_move", "sw_coverage", "sw_extra_s", "sw_recovered"]
 NEW = ["gs_d_first_rwy", "gs_frac_done", "gs_d_stand_rwy"]
 HEAD = ["hd_gs0", "hd_gs_mean5", "hd_moving0", "hd_accel30", "hd_frac_mov60", "hd_t_first_stop", "hd_turn5", "hd_path_frac"]
+E141 = ["e141_d_missed", "e141_t_rough"]
 DIRS = {"ctrl": "data/cv_preds_e134_ctrl", "cand_a": "data/cv_preds_e134_a", "cand_b": "data/cv_preds_e134_b",
-        "cand_c": "data/cv_preds_e140"}
+        "cand_c": "data/cv_preds_e140", "cand_d": "data/cv_preds_e141"}
 E140 = ["nb_full", "nb_pace", "nb_n", "e140_missing", "e140_total"]
+ONLY = [c for c in os.environ.get("E134_ONLY", "").split(",") if c]
 
 
 def e140_features(d: pl.DataFrame, half: float = 1800.0) -> pl.DataFrame:
@@ -85,6 +94,11 @@ d = d.join(walked, on="MVT_ID_mvt", how="left").with_columns(
 d = d.join(pl.concat([pl.read_parquet(f) for f in sorted(glob.glob("data/adsblol/visit_m_2025-*.parquet"))]), on="MVT_ID_mvt", how="left")
 hd = pl.concat([pl.read_parquet(f) for f in sorted(glob.glob("data/adsblol/head_2025-*.parquet"))]).unique("MVT_ID_mvt")
 d = e140_features(d.join(hd, on="MVT_ID_mvt", how="left"))
+d = d.with_columns(
+    e141_d_missed=pl.col("gs_d_first"),
+    e141_t_rough=(pl.col("gs_d_first") * 2.0 /
+                  (pl.col("hd_gs0").clip(lower_bound=5.0) * 0.5144)).fill_nan(None),
+)
 print("E140 coverage on coverage>=2:", d.filter(pl.col("coverage") >= 2).select(
     pl.col("nb_full").is_not_null().mean(), pl.col("e140_missing").is_not_null().mean()).to_dicts(), flush=True)
 
@@ -108,15 +122,18 @@ for a, b in [(1, 7), (2, 8), (3, 9), (4, 10), (5, 11), (6, 12)]:
     y = te[E36.Y].to_numpy()
     line = []
     for name, train, feats in (("ctrl", tr, CTRL), ("cand_a", tr, CTRL + HEAD), ("cand_b", tr_aug, CTRL + HEAD),
-                                ("cand_c", tr, CTRL + E140)):
+                                ("cand_c", tr, CTRL + E140), ("cand_d", tr, CTRL + HEAD + E141)):
+        if ONLY and name not in ONLY:
+            continue
         pred = E36.correct(E36.fit_stage(train, feats), te)
         ids = te["MVT_ID_mvt"].to_numpy()
         np.savez(f"{DIRS[name]}/fold_{a}_{b}.npz", mvt_id=ids, pred=pred, y=y, reg=np.array([_reg.get(m, np.nan) for m in ids.tolist()]))
         line.append(f"{name} {np.sqrt(np.mean((pred - y) ** 2)):.2f}")
     print(f"fold {a}+{b}: " + " | ".join(line), flush=True)
 
-for name in ("cand_a", "cand_b", "cand_c"):
+for name in [c for c in ("cand_a", "cand_b", "cand_c", "cand_d") if not ONLY or c in ONLY]:
     dec, tot, small, trim, lower, n, strict = compare(DIRS["ctrl"], DIRS[name])
     ok = n == 6 and -dec >= 0.3 and lower >= 4 and -small >= 0.3 and -trim >= 0.3
-    print(f"DECISION {'E140' if name == 'cand_c' else 'E134 ' + name}: {'ACCEPT' if ok else 'REJECT'} (folds {n}, lower in {lower}; decided {dec:+.2f} s, "
+    label = {"cand_c": "E140", "cand_d": "E141"}.get(name, "E134 " + name)
+    print(f"DECISION {label}: {'ACCEPT' if ok else 'REJECT'} (folds {n}, lower in {lower}; decided {dec:+.2f} s, "
           f"strict {strict:+.2f} s, all {tot:+.2f} s, y<=7200 {small:+.2f} s, trimmed {trim:+.2f} s)")
