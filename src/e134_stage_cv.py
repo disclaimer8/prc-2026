@@ -44,6 +44,25 @@ DIRS = {"ctrl": "data/cv_preds_e134_ctrl", "cand_a": "data/cv_preds_e134_a", "ca
         "cand_c": "data/cv_preds_e140", "cand_d": "data/cv_preds_e141",
         "cand_e": "data/cv_preds_e142_ctrl5", "cand_f": "data/cv_preds_e142_hd5", "cand_g": "data/cv_preds_e147_nodrift5"}
 DRIFT = ["n_pts", "sf_n_seg", "vi_n_pts", "vi_prev_pts", "vi_alt_first", "vm_n_pts", "vm_prev_pts"]
+DIRS["cand_h"] = "data/cv_preds_e148_twofam"  # E148 (journal 121): 0.5 x cand_f (LightGBM x5) + 0.5 x CatBoost stage, same features
+
+
+def fit_stage_cat(tr, feats, seed=0):
+    from catboost import CatBoostRegressor
+    t = tr.filter((pl.col("coverage") >= 2) & ((pl.col(E36.Y) - pl.col("base")).abs() <= 3600))
+    target = np.clip((t[E36.Y] - t["base"]).to_numpy(), -1800, 1800)
+    X = t.select(feats).to_pandas(); X[feats[0]] = X[feats[0]].fillna(-1).astype(int)
+    m = CatBoostRegressor(iterations=800, depth=6, learning_rate=0.05, loss_function="RMSE", random_seed=seed,
+                          thread_count=int(os.environ.get("OMP_NUM_THREADS", "6")), verbose=0, cat_features=[0])
+    m.fit(X, target)
+    m.feats = feats
+    return m
+
+
+def correct_cat(model, d):
+    X = d.select(model.feats).to_pandas(); X[model.feats[0]] = X[model.feats[0]].fillna(-1).astype(int)
+    use = d["coverage"].to_numpy() >= 2
+    return np.clip(d["base"].to_numpy() + np.where(use, model.predict(X), 0.0), 0, None)
 SEEDS5 = [42, 1, 2, 3, 4]
 E140 = ["nb_full", "nb_pace", "nb_n", "e140_missing", "e140_total"]
 ONLY = [c for c in os.environ.get("E134_ONLY", "").split(",") if c]
@@ -131,10 +150,16 @@ for a, b in [(1, 7), (2, 8), (3, 9), (4, 10), (5, 11), (6, 12)]:
     for name, train, feats in (("ctrl", tr, CTRL), ("cand_a", tr, CTRL + HEAD), ("cand_b", tr_aug, CTRL + HEAD),
                                 ("cand_c", tr, CTRL + E140), ("cand_d", tr, CTRL + HEAD + E141),
                                 ("cand_e", tr, CTRL), ("cand_f", tr, CTRL + HEAD + E141),
-                                ("cand_g", tr, [c for c in CTRL + HEAD + E141 if c not in DRIFT])):
+                                ("cand_g", tr, [c for c in CTRL + HEAD + E141 if c not in DRIFT]),
+                                ("cand_h", tr, CTRL + HEAD + E141)):
         if ONLY and name not in ONLY:
             continue
-        if name in ("cand_e", "cand_f", "cand_g"):
+        if name == "cand_h":
+            zf = np.load(f"{DIRS['cand_f']}/fold_{a}_{b}.npz")
+            lgb5 = dict(zip(zf["mvt_id"].tolist(), zf["pred"].tolist()))
+            pl5 = np.array([lgb5[m] for m in te["MVT_ID_mvt"].to_list()])
+            pred = 0.5 * pl5 + 0.5 * correct_cat(fit_stage_cat(train, feats), te)
+        elif name in ("cand_e", "cand_f", "cand_g"):
             pred = np.mean([E36.correct(E36.fit_stage(train, feats, {**E36.PARAMS30, "seed": sd}), te) for sd in SEEDS5], axis=0)
         else:
             pred = E36.correct(E36.fit_stage(train, feats), te)
@@ -143,10 +168,10 @@ for a, b in [(1, 7), (2, 8), (3, 9), (4, 10), (5, 11), (6, 12)]:
         line.append(f"{name} {np.sqrt(np.mean((pred - y) ** 2)):.2f}")
     print(f"fold {a}+{b}: " + " | ".join(line), flush=True)
 
-for name in [c for c in ("cand_a", "cand_b", "cand_c", "cand_d", "cand_e", "cand_f", "cand_g") if not ONLY or c in ONLY]:
+for name in [c for c in ("cand_a", "cand_b", "cand_c", "cand_d", "cand_e", "cand_f", "cand_g", "cand_h") if not ONLY or c in ONLY]:
     dec, tot, small, trim, lower, n, strict = compare(DIRS["ctrl"], DIRS[name])
     ok = n == 6 and dec < 0 and lower >= 4 and small < 0 and trim < 0  # magnitude is left to the board (REVIEW_BRIEF 21bv)
     label = {"cand_c": "E140", "cand_d": "E141", "cand_e": "E142 ctrl x5 seeds", "cand_f": "E142 HEAD+E141 x5 seeds",
-             "cand_g": "E147 vs ctrl (no drift features)"}.get(name, "E134 " + name)
+             "cand_g": "E147 vs ctrl (no drift features)", "cand_h": "E148 vs ctrl (LGB x5 + CatBoost)"}.get(name, "E134 " + name)
     print(f"DECISION {label}: {'TO BOARD' if ok else 'REJECT'} (folds {n}, lower in {lower}; decided {dec:+.2f} s, "
           f"strict {strict:+.2f} s, all {tot:+.2f} s, y<=7200 {small:+.2f} s, trimmed {trim:+.2f} s)")

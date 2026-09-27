@@ -49,10 +49,12 @@ tr = build(tr_raw,
 t = tr.filter(usable & ((pl.col(Y) - pl.col("base")).abs() <= 3600))
 print(f"stage trained on {t.height} rows of 2025", flush=True)
 SEEDS = [int(x) for x in os.environ.get("STAGE_SEEDS", "42").split(",")]  # E143: 42,1,2,3,4 averages the stage
+DROP = [c for c in os.environ.get("DROP_FEATS", "").split(",") if c]  # E147b
+FEATS = [c for c in FEATS if c not in DROP]
 models = [lgb.train({**PARAMS, "seed": sd}, lgb.Dataset(t.select(FEATS).to_numpy(),
                                                         np.clip((t[Y] - t["base"]).to_numpy(), -1800, 1800), categorical_feature=[0]), ROUNDS)
           for sd in SEEDS]
-print("stage seeds", SEEDS, flush=True)
+print("stage seeds", SEEDS, "dropped", DROP, flush=True)
 
 rk = pl.read_parquet("data/prc-2026-datasets/ranking.parquet", columns=cols).filter(pl.col("PHASE_mvt") == "DEP")
 sub = pl.read_parquet(f"submissions/gentle-igloo_v{base_v}.parquet")

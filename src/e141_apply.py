@@ -41,6 +41,8 @@ HEAD = ["hd_gs0", "hd_gs_mean5", "hd_moving0", "hd_accel30", "hd_frac_mov60", "h
 E141 = ["e141_d_missed", "e141_t_rough"]
 FEATS = E36.FEATS + E36.VISIT + SW + NEW + NAMES_M + HEAD + E141
 SEEDS = [int(x) for x in os.environ.get("STAGE_SEEDS", "42").split(",")]
+DROP = [c for c in os.environ.get("DROP_FEATS", "").split(",") if c]  # E147: reception-density features that drift 2025 -> 2026
+FEATS = [c for c in FEATS if c not in DROP]
 
 base_v, new_v = int(sys.argv[1]), int(sys.argv[2])
 
@@ -76,7 +78,7 @@ tr = augment(E36.build(raw, E36.oof_base(), E36.load_adsb("data/adsblol/offblock
 print(f"fit rows {tr.height}; visit known {int(tr['vi_first_seen'].is_not_null().sum())}, "
       f"merged {int((tr['vm_merged'] > 0).sum())}, walk extended {int(tr['sw_recovered'].sum())}", flush=True)
 models = [E36.fit_stage(tr, FEATS, {**E36.PARAMS30, "seed": sd}) for sd in SEEDS]
-print("stage seeds", SEEDS, flush=True)
+print("stage seeds", SEEDS, "dropped", DROP, flush=True)
 
 rk = pl.read_parquet("data/prc-2026-datasets/ranking.parquet",
                      columns=[c for c in E36.cols if c != E36.Y]).filter(pl.col("PHASE_mvt") == "DEP")
