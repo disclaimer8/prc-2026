@@ -54,9 +54,14 @@ def load_adsb(pattern: str) -> pl.DataFrame:
     pattern = pattern.replace("data/adsblol/", ADSB_DIR + "/")
     files = sorted(glob.glob(pattern))
     o2 = pl.concat([pl.read_parquet(f) for f in files])
-    o3 = pl.concat([pl.read_parquet(f.replace("offblock2_", "offblock3_")) for f in files if os.path.exists(f.replace("offblock2_", "offblock3_"))])
-    o5 = pl.concat([pl.read_parquet(f.replace("offblock2_", "offblock5_")) for f in files if os.path.exists(f.replace("offblock2_", "offblock5_"))])
-    return o2.join(o3, on="MVT_ID_mvt", how="left").join(o5, on="MVT_ID_mvt", how="left")
+    o3_files = [f.replace("offblock2_", "offblock3_") for f in files if os.path.exists(f.replace("offblock2_", "offblock3_"))]
+    o5_files = [f.replace("offblock2_", "offblock5_") for f in files if os.path.exists(f.replace("offblock2_", "offblock5_"))]
+    result = o2
+    if o3_files:
+        result = result.join(pl.concat([pl.read_parquet(f) for f in o3_files]), on="MVT_ID_mvt", how="left")
+    if o5_files:
+        result = result.join(pl.concat([pl.read_parquet(f) for f in o5_files]), on="MVT_ID_mvt", how="left")
+    return result
 
 
 def build(raw: pl.DataFrame, base: pl.DataFrame, adsb: pl.DataFrame) -> pl.DataFrame:
