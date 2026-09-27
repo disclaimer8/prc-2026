@@ -15,6 +15,8 @@ cand_d (E141, journal 98, 27.09): control + HEAD + explicit missing-time estimat
                   (average speed hd_gs0/2); the 5 kt floor keeps a standing first point from blowing up. Null where
                   hd_gs0 is null.
 E134_ONLY=ctrl,cand_d limits the run to those models (the other folders keep their previous predictions).
+cand_e / cand_f (E142, journal 103, 27.09): the stage averaged over 5 LightGBM seeds (42, 1, 2, 3, 4), no capacity added;
+  cand_e = control features, cand_f = control + HEAD + E141. Compared with the one-seed control; same gate.
 """
 import glob
 import os
@@ -37,7 +39,9 @@ NEW = ["gs_d_first_rwy", "gs_frac_done", "gs_d_stand_rwy"]
 HEAD = ["hd_gs0", "hd_gs_mean5", "hd_moving0", "hd_accel30", "hd_frac_mov60", "hd_t_first_stop", "hd_turn5", "hd_path_frac"]
 E141 = ["e141_d_missed", "e141_t_rough"]
 DIRS = {"ctrl": "data/cv_preds_e134_ctrl", "cand_a": "data/cv_preds_e134_a", "cand_b": "data/cv_preds_e134_b",
-        "cand_c": "data/cv_preds_e140", "cand_d": "data/cv_preds_e141"}
+        "cand_c": "data/cv_preds_e140", "cand_d": "data/cv_preds_e141",
+        "cand_e": "data/cv_preds_e142_ctrl5", "cand_f": "data/cv_preds_e142_hd5"}
+SEEDS5 = [42, 1, 2, 3, 4]
 E140 = ["nb_full", "nb_pace", "nb_n", "e140_missing", "e140_total"]
 ONLY = [c for c in os.environ.get("E134_ONLY", "").split(",") if c]
 
@@ -122,18 +126,22 @@ for a, b in [(1, 7), (2, 8), (3, 9), (4, 10), (5, 11), (6, 12)]:
     y = te[E36.Y].to_numpy()
     line = []
     for name, train, feats in (("ctrl", tr, CTRL), ("cand_a", tr, CTRL + HEAD), ("cand_b", tr_aug, CTRL + HEAD),
-                                ("cand_c", tr, CTRL + E140), ("cand_d", tr, CTRL + HEAD + E141)):
+                                ("cand_c", tr, CTRL + E140), ("cand_d", tr, CTRL + HEAD + E141),
+                                ("cand_e", tr, CTRL), ("cand_f", tr, CTRL + HEAD + E141)):
         if ONLY and name not in ONLY:
             continue
-        pred = E36.correct(E36.fit_stage(train, feats), te)
+        if name in ("cand_e", "cand_f"):
+            pred = np.mean([E36.correct(E36.fit_stage(train, feats, {**E36.PARAMS30, "seed": sd}), te) for sd in SEEDS5], axis=0)
+        else:
+            pred = E36.correct(E36.fit_stage(train, feats), te)
         ids = te["MVT_ID_mvt"].to_numpy()
         np.savez(f"{DIRS[name]}/fold_{a}_{b}.npz", mvt_id=ids, pred=pred, y=y, reg=np.array([_reg.get(m, np.nan) for m in ids.tolist()]))
         line.append(f"{name} {np.sqrt(np.mean((pred - y) ** 2)):.2f}")
     print(f"fold {a}+{b}: " + " | ".join(line), flush=True)
 
-for name in [c for c in ("cand_a", "cand_b", "cand_c", "cand_d") if not ONLY or c in ONLY]:
+for name in [c for c in ("cand_a", "cand_b", "cand_c", "cand_d", "cand_e", "cand_f") if not ONLY or c in ONLY]:
     dec, tot, small, trim, lower, n, strict = compare(DIRS["ctrl"], DIRS[name])
     ok = n == 6 and -dec >= 0.3 and lower >= 4 and -small >= 0.3 and -trim >= 0.3
-    label = {"cand_c": "E140", "cand_d": "E141"}.get(name, "E134 " + name)
+    label = {"cand_c": "E140", "cand_d": "E141", "cand_e": "E142 ctrl x5 seeds", "cand_f": "E142 HEAD+E141 x5 seeds"}.get(name, "E134 " + name)
     print(f"DECISION {label}: {'ACCEPT' if ok else 'REJECT'} (folds {n}, lower in {lower}; decided {dec:+.2f} s, "
           f"strict {strict:+.2f} s, all {tot:+.2f} s, y<=7200 {small:+.2f} s, trimmed {trim:+.2f} s)")
