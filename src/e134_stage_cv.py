@@ -141,7 +141,7 @@ for a, b in [(1, 7), (2, 8), (3, 9), (4, 10), (5, 11), (6, 12)]:
 
 for name in [c for c in ("cand_a", "cand_b", "cand_c", "cand_d", "cand_e", "cand_f") if not ONLY or c in ONLY]:
     dec, tot, small, trim, lower, n, strict = compare(DIRS["ctrl"], DIRS[name])
-    ok = n == 6 and -dec >= 0.3 and lower >= 4 and -small >= 0.3 and -trim >= 0.3
+    ok = n == 6 and dec < 0 and lower >= 4 and small < 0 and trim < 0  # magnitude is left to the board (REVIEW_BRIEF 21bv)
     label = {"cand_c": "E140", "cand_d": "E141", "cand_e": "E142 ctrl x5 seeds", "cand_f": "E142 HEAD+E141 x5 seeds"}.get(name, "E134 " + name)
-    print(f"DECISION {label}: {'ACCEPT' if ok else 'REJECT'} (folds {n}, lower in {lower}; decided {dec:+.2f} s, "
+    print(f"DECISION {label}: {'TO BOARD' if ok else 'REJECT'} (folds {n}, lower in {lower}; decided {dec:+.2f} s, "
           f"strict {strict:+.2f} s, all {tot:+.2f} s, y<=7200 {small:+.2f} s, trimmed {trim:+.2f} s)")
