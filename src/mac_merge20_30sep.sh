@@ -7,8 +7,9 @@ cd ~/prc-2026
 export CLF_COST_WEIGHT=1 CLF_COST_MIN_SPREAD=3600 PROXY_SCALE=1 POLARS_UNKNOWN_EXTENSION_TYPE_BEHAVIOR=load_as_storage
 export FEATURES=data/features_e106.parquet DROP_PREFIX=day_,tq_,wxr_,month,te_,ter_,STAND_mvt,ap_stand,rwy_config
 L=data/merge20_30sep.log
-until grep -qE "\] (done|FAILED)" data/e144_catseeds.log; do sleep 120; done
-grep -q "FAILED" data/e144_catseeds.log && { echo "[$(date +%H:%M)] seed run FAILED, nothing merged" >> $L; exit 1; }
+# wait for the artifacts, never for a marker line: e144_catseeds.log is appended across runs and already held "] done"
+# from 27.09, so the first version of this wait passed at once (28.09 09:03, merge failed on the missing seed 16)
+until [[ -s submissions/cat_reg_rank_seed19.npz ]]; do sleep 120; done
 blend () {  # blend <cat seeds npz> <out version>; cat_reg_rank.npz is a fixed path, restored afterwards
   cp -p submissions/cat_reg_rank.npz submissions/cat_reg_rank_before_merge20.npz
   cp -f $1 submissions/cat_reg_rank.npz
