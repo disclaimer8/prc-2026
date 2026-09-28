@@ -69,7 +69,8 @@ def build():
            .with_columns(zone=pl.coalesce(pl.col("stand_prefix"), cell("geo_dist_along") + "_" + cell("geo_dist_across"))))
     arr = raw.filter(pl.col("PHASE_mvt") == "ARR").select(
         ap=pl.col("ADES_mvt"), rwy=pl.col("RUNWAY_mvt"), zone=pl.col("STAND_mvt").str.extract(r"^([A-Za-z]+)", 1),
-        s=ep("MVT_TIME_UTC_mvt"), e=ep("MVT_TIME_UTC_mvt") + pl.col("TAXITIME_SEC_mvt").cast(pl.Float64)).drop_nulls(["s", "e"])
+        s=ep("MVT_TIME_UTC_mvt"), e=ep("MVT_TIME_UTC_mvt") + pl.col("TAXITIME_SEC_mvt").cast(pl.Float64)).drop_nulls(["s", "e"]
+    ).filter((pl.col("e") - pl.col("s")).is_between(0, 7200))  # counts need s <= e: 259 arrivals have a negative taxi-in, 168 exceed 2 h
 
     def level(name, dkeys, akey_of):
         akeys = {"ap": ["ap"], "rw": ["ap", "rwy"], "cor": ["ap", "zone"]}[name]
