@@ -30,7 +30,7 @@ MAIN=/root/prc-2026
 : "${RANKING:?set RANKING=/path/to/the new ranking.parquet}"
 SUBMITTING=${SUBMITTING:-}
 TAG=${TAG:-$(date -u +%Y%m%d)}
-WORK=${WORK:-/root/prc-final-$TAG}
+WORK=${WORK:-/srv/prc-final-$TAG}   # /srv: 41 GB free, / only 16 GB (28.09); a WORK takes ~8 GB
 VB=${VB:-900}                  # base: vVB (regimes + regressor), vVB+1 (LightGBM/CatBoost blend, parts_vVB+1)
 VT=${VT:-$((VB + 10))}         # tail: vVT+2 TabPFN, +3 E14, +4 E70, +5 E64, +6 E81, +7 LOBT lift/clip = FINAL
 CAT_SEEDS=${CAT_SEEDS:-10}         # any N >= 1: seed 0 = catboost_reg.py, seeds 1..N-1 = catboost_seeds.py (5 -> 10 seeds: board -0.08)
@@ -80,7 +80,7 @@ for f in $WAIT_FOR; do
   until [[ -e $f ]]; do echo "[$(date -u +%H:%MZ)] waiting for $f"; sleep 300; done
 done
 [[ -s $RANKING ]] || { echo "no $RANKING" >&2; false; }
-[[ $E81 == drop || $E81 == rebuild ]] || { echo "E81 must be drop|rebuild" >&2; false; }
+[[ $E81 == drop || $E81 == rebuild || $E81 == reuse ]] || { echo "E81 must be drop|rebuild|reuse" >&2; false; }
 [[ $ADSB == download || $ADSB == skip ]] || { echo "ADSB must be download|skip" >&2; false; }
 [[ $ADSB == skip && $E81 == rebuild ]] && { echo "E81=rebuild needs ADS-B (E36/E42 stages of v44/v60)" >&2; false; }
 
@@ -98,7 +98,7 @@ log "WORK=$WORK RANKING=$RANKING VB=$VB VT=$VT $(cat logs/recipe_base_v$VB) $(ca
 
 STEP=preflight
 for p in src .venv analysis; do [[ -e $p ]] || ln -s "$MAIN/$p" "$p"; done
-[[ -e scripts/get_adsb_day.sh ]] || cp "$MAIN/scripts/get_adsb_day.sh" scripts/   # copied, not linked: it cd-s to ${0:a:h}/..
+[[ -e scripts/get_adsb_day.sh ]] || cp "$MAIN/scripts/get_adsb_day.sh" scripts/   # copied, not linked: it cd-s to $(dirname $0)/..
 for p in ext cv_preds_nomonth; do [[ -e data/$p ]] || ln -s "$MAIN/data/$p" "data/$p"; done
 for f in "$MAIN"/data/prc-2026-datasets/training_*.parquet; do ln -sf "$f" data/prc-2026-datasets/; done
 cp -f "$RANKING" data/prc-2026-datasets/ranking.parquet
@@ -203,7 +203,7 @@ adsb_day () {  # always returns 0; a day that cannot be completed leaves logs/ad
   local d=$1 v
   cd "$WORK"
   if [[ ! -s data/adsblol/surface_$d.parquet ]]; then
-    zsh scripts/get_adsb_day.sh "$d" > "logs/adsb_get_$d.log" 2>&1 || { echo "download" > "logs/adsb_missing_$d"; return 0; }
+    bash scripts/get_adsb_day.sh "$d" > "logs/adsb_get_$d.log" 2>&1 || { echo "download" > "logs/adsb_missing_$d"; return 0; }
   fi
   {
     for v in 2 3 5; do
@@ -227,8 +227,7 @@ export -f adsb_day
 
 if [[ $ADSB == download ]]; then
   STEP=adsb
-  command -v gh > /dev/null && gh auth status > /dev/null 2>&1 || { echo "gh CLI missing or not logged in (get_adsb_day.sh needs gh api)" >&2; false; }
-  command -v zsh > /dev/null || { echo "zsh missing (get_adsb_day.sh is zsh)" >&2; false; }
+  command -v curl > /dev/null || { echo "curl missing (get_adsb_day.sh streams the archive and reads the GitHub API with it)" >&2; false; }
   log "ADS-B: $(wc -w <<< "$DAYS") days, $ADSB_P in parallel"
   printf '%s\n' $DAYS | xargs -P "$ADSB_P" -I{} bash -c 'adsb_day {}'
   missing=$(ls logs/adsb_missing_* 2>/dev/null | sed 's/.*adsb_missing_//' | tr '\n' ' ' || true)
