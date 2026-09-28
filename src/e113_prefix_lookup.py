@@ -32,7 +32,7 @@ def rules(fl):
 f = pl.read_parquet("data/features_e106.parquet")
 nm = f.filter(pl.col("FLIGHT_ID_mvt").is_not_null() & pl.col("CALLSIGN_flt").is_not_null())
 lk = (nm.with_columns(cp=pl.col("CALLSIGN_flt").str.extract(r"^([A-Z]{3})", 1)).drop_nulls(["FLIGHT_mvt", "cp"])
-        .group_by("FLIGHT_mvt", "cp").len().sort("len", descending=True).group_by("FLIGHT_mvt").agg(_lk=pl.col("cp").first()))
+        .group_by("FLIGHT_mvt", "cp").len().sort(["len", "cp"], descending=[True, False]).group_by("FLIGHT_mvt").agg(_lk=pl.col("cp").first()))
 todo = pl.col("FLIGHT_ID_mvt").is_null() & pl.col("airline_prefix").is_null()
 before = f.filter(todo).height
 f = f.join(lk, on="FLIGHT_mvt", how="left", maintain_order="left").with_columns(

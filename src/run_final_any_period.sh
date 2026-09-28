@@ -294,8 +294,11 @@ for name in ("features_e106", "features_e113"):
             a, b = a.fill_nan(None), b.fill_nan(None)
         diff = int((a.is_null() != b.is_null()).sum() + ((a != b) & a.is_not_null() & b.is_not_null()).fill_null(False).sum())
         print(f"{name}.{c}: 2025 rows differing from the reference {diff}")
-        if diff and c in ("airline_prefix", "d_mvt_lobt", "d_mvt_aobt", "local_hour"):
-            sys.exit(f"{name}.{c} does not reproduce on 2025 rows")
+        # e113: the reference tables carry random tie-breaks of the flight-number lookup (fixed 28.09: ties -> alphabetical
+        # prefix), so ~10-20 rows of placeholder numbers (YY98xxx) always differ; a missing lookup or OpenFlights file moves thousands
+        tol = 100 if (name, c) == ("features_e113", "airline_prefix") else 0
+        if diff > tol and c in ("airline_prefix", "d_mvt_lobt", "d_mvt_aobt", "local_hour"):
+            sys.exit(f"{name}.{c} does not reproduce on 2025 rows ({diff} > {tol})")
 print("parity ok")
 PY
   echo ok > logs/features_parity.ok; }
