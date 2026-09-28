@@ -77,8 +77,22 @@ raw = pl.concat([pl.read_parquet(f, columns=E36.cols) for f in sorted(glob.glob(
 tr = augment(E36.build(raw, E36.oof_base(), E36.load_adsb("data/adsblol/offblock2_2025-*.parquet")), 2025)
 print(f"fit rows {tr.height}; visit known {int(tr['vi_first_seen'].is_not_null().sum())}, "
       f"merged {int((tr['vm_merged'] > 0).sum())}, walk extended {int(tr['sw_recovered'].sum())}", flush=True)
-models = [E36.fit_stage(tr, FEATS, {**E36.PARAMS30, "seed": sd}) for sd in SEEDS]
-print("stage seeds", SEEDS, "dropped", DROP, flush=True)
+KEEP = os.environ.get("STAGE_KEEP_ALL") == "1"  # E150: also train on rows with |y - base| > 3600 (target still clipped +-1800)
+
+
+def fit(tr, feats, params):
+    if not KEEP:
+        return E36.fit_stage(tr, feats, params)
+    import lightgbm as lgb
+    t = tr.filter(pl.col("coverage") >= 2)
+    m = lgb.train(params, lgb.Dataset(t.select(feats).to_numpy(), np.clip((t[E36.Y] - t["base"]).to_numpy(), -1800, 1800),
+                                      categorical_feature=[0]), 800)
+    m.feats = feats
+    return m
+
+
+models = [fit(tr, FEATS, {**E36.PARAMS30, "seed": sd}) for sd in SEEDS]
+print("stage seeds", SEEDS, "dropped", DROP, "keep all rows", KEEP, flush=True)
 
 rk = pl.read_parquet("data/prc-2026-datasets/ranking.parquet",
                      columns=[c for c in E36.cols if c != E36.Y]).filter(pl.col("PHASE_mvt") == "DEP")
