@@ -280,6 +280,8 @@ for name in ("features_e106", "features_e113"):
     if dict(ref_s) != dict(new_s):
         sys.exit(f"{name}: schema differs from the reference: only ref {sorted(set(ref_s) - set(new_s))}, only new {sorted(set(new_s) - set(ref_s))}, "
                  f"dtype {[(c, str(ref_s[c]), str(new_s[c])) for c in ref_s if c in new_s and ref_s[c] != new_s[c]]}")
+    if list(ref_s) != list(new_s):   # the model matrix follows file order, and feature_fraction samples by position
+        sys.exit(f"{name}: same columns in another order; first difference at {next(i for i, (a, b) in enumerate(zip(ref_s, new_s)) if a != b)}")
     cols = [c for c in chk if c in new_s]
     ref = pl.read_parquet(f"{os.environ['REF']}/{name}.parquet", columns=cols + ["split"]).filter(pl.col("split") == "train").drop("split")
     new = pl.read_parquet(f"data/{name}.parquet", columns=cols + ["split"]).filter(pl.col("split") == "train").drop("split")

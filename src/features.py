@@ -504,7 +504,9 @@ def build(df: pl.DataFrame | None = None) -> pl.DataFrame:
             # MVT - ARVT_1 with -3.19 s on the leaderboard (v44 299.85 -> v45 296.13). Kept as the raw
             # difference rather than their route-median residual: the residual needs a reference period,
             # and out-of-fold target encoding already carries the route level.
-            x_plan_res=_secs("MVT_TIME_UTC_mvt", "ARVT_1_flt") if X_FEATS else pl.lit(None, dtype=pl.Float64),
+            # 28.09: absent, not an all-null column, when X_FEATS is off: the accepted tables never had it, and an extra
+            # column shifts which features feature_fraction=0.8 samples, so a rebuild would not reproduce the base
+            **({"x_plan_res": _secs("MVT_TIME_UTC_mvt", "ARVT_1_flt")} if X_FEATS else {}),
             diverted=(pl.col("ADES_flt") != pl.col("ADES_FILED_flt")).cast(pl.Int8),
             month=pl.col("MVT_TIME_UTC_mvt").dt.month(),
             doy=pl.col("MVT_TIME_UTC_mvt").dt.ordinal_day(),
