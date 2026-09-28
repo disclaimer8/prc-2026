@@ -10,7 +10,8 @@ For departure i with interval [a_i, t_i] = [AOBT_3 (LOBT where missing), MVT] an
     D4/A4  a_i < s_j < t_i, e_j > t_i           started during my taxi, still going
 Levels: ap (airport), rw (departure runway; arrivals landing on it), cor (runway x stand zone; zone = stand_prefix, else
 a 600 m cell of the runway-relative stand position; arrivals into the same zone, letter prefixes only), plus dprop =
-D / (D + A) per level. Rows whose own interval is missing or outside 0..7200 s get nulls. The probe on 2025
+D / (D + A) per level, and the sums Wu et al. 2026 (Sci. Rep. 16:10066) model with: qdep = D1 + D2, qarr = A2 + A4,
+push = D2 + D3, dall = D1..D4 (SHAP top-2 there: the two queues). Rows whose own interval is missing or outside 0..7200 s get nulls. The probe on 2025
 (src/e151_corridor_probe.py) reported partial Spearman with the base OOF residual up to |0.02|, sign stable by half year.
 """
 import glob
@@ -79,7 +80,14 @@ def build():
             parts.append(pl.DataFrame(out))
         res = pl.concat(parts)
         D = sum(pl.col(f"e151_{name}_D{i}") for i in range(1, 5)); A = sum(pl.col(f"e151_{name}_A{i}") for i in range(1, 5))
-        return res.with_columns((D / (D + A)).alias(f"e151_{name}_dprop"))
+        c = lambda k, i: pl.col(f"e151_{name}_{k}{i}")
+        # Wu et al. 2026 (Sci. Rep. 16:10066, table 1, eqs. 2-5) use sums of these classes; SHAP top-2 are the two queues.
+        # Trees rebuild sums from parts poorly, so the sums go in as columns of their own.
+        return res.with_columns((D / (D + A)).alias(f"e151_{name}_dprop"),
+                                (c("D", 1) + c("D", 2)).alias(f"e151_{name}_qdep"),   # departures that took off during my taxi (Wu x3)
+                                (c("A", 2) + c("A", 4)).alias(f"e151_{name}_qarr"),   # arrivals that landed during my taxi (Wu x4)
+                                (c("D", 2) + c("D", 3)).alias(f"e151_{name}_push"),   # Wu x1
+                                D.alias(f"e151_{name}_dall"))                         # Wu x2
 
     fl = level("ap", ["ap"], lambda k: (k[0],))
     fl = fl.join(level("rw", ["ap", "rwy"], lambda k: (k[0], k[1])), on="MVT_ID_mvt", how="left")
