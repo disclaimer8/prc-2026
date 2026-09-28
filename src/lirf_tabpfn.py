@@ -50,7 +50,9 @@ def add_extra(tr: pl.DataFrame, rank: pl.DataFrame):
     if "pfx" in EXTRA:  # E118: airline prefix (E113 lookup) as a categorical code, codes for prefixes with >= 5 rows in 2025
         ap = pl.read_parquet(os.environ.get("PFX_FEATURES", "data/features_e113.parquet"), columns=["MVT_ID_mvt", "airline_prefix"])
         tr, rank = tr.join(ap, on="MVT_ID_mvt", how="left"), rank.join(ap, on="MVT_ID_mvt", how="left")
-        vc = tr["airline_prefix"].value_counts().sort("count", descending=True)
+        # 28.09 (journal 133): ties broken by the prefix. value_counts comes out in hash order, which changes from process
+        # to process, so a count-only sort gave tied prefixes different codes run to run and TabPFN different inputs
+        vc = tr["airline_prefix"].value_counts().sort(["count", "airline_prefix"], descending=[True, False], nulls_last=True)
         code = {p: i + 1 for i, p in enumerate(vc.filter(pl.col("count") >= 5)["airline_prefix"].drop_nulls().to_list())}
         enc = lambda d: d.with_columns(pfx=pl.col("airline_prefix").map_elements(lambda p: float(code.get(p, 0)), return_dtype=pl.Float64).fill_null(0.0))
         tr, rank = enc(tr), enc(rank); feats.append("pfx"); cat = [len(feats) - 1]
