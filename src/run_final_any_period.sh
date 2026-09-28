@@ -1,5 +1,5 @@
 #!/bin/bash
-# PRC 2026 — the v316 / v366-family chain on an ARBITRARY period (draft 26.09.2026, NOT executed yet).
+# PRC 2026 — the v447-family chain on an ARBITRARY period (draft 26.09.2026, updated 28.09 to the v447 recipe; NOT executed end to end yet).
 # Audit and reasoning: analysis/final_any_period_audit_2026-09-26.md
 #
 # Run on hetzner:
@@ -20,6 +20,9 @@
 #   v376-like : CAT_SEEDS=5 TABPFN_EXTRA=pfx TABPFN_SEEDS=0,1,2,3,4          (default)
 #   v386-like : CAT_SEEDS=5 TABPFN_EXTRA=pfx,local_change TABPFN_SEEDS=0,1,2,3,4
 #   v396-like : CAT_SEEDS=5 TABPFN_EXTRA=pfx TABPFN_SEEDS=0,1,2,3,4 E136=1
+#   v447-like : CAT_SEEDS=10 TABPFN_EXTRA=pfx TABPFN_SEEDS=0 STAGE=e141 STAGE_SEEDS=42,1,2,3,4 E81=rebuild   (default since 28.09;
+#               235.350 on the board). Same period as the board (Jan/Jul 2026): add TABPFN_ROWS_FROM=361:291 to keep the TabPFN
+#               draw of the v366/v447 line; lirf_tabpfn.py is not deterministic run to run (journal 118).
 # A second tail on the same base: rerun with the same TAG/VB and another VT (base steps are skipped).
 set -Eeuo pipefail
 
@@ -30,11 +33,16 @@ TAG=${TAG:-$(date -u +%Y%m%d)}
 WORK=${WORK:-/root/prc-final-$TAG}
 VB=${VB:-900}                  # base: vVB (regimes + regressor), vVB+1 (LightGBM/CatBoost blend, parts_vVB+1)
 VT=${VT:-$((VB + 10))}         # tail: vVT+2 TabPFN, +3 E14, +4 E70, +5 E64, +6 E81, +7 LOBT lift/clip = FINAL
-CAT_SEEDS=${CAT_SEEDS:-5}
+CAT_SEEDS=${CAT_SEEDS:-10}         # any N >= 1: seed 0 = catboost_reg.py, seeds 1..N-1 = catboost_seeds.py (5 -> 10 seeds: board -0.08)
+STAGE=${STAGE:-e141}               # e141 (E70 + HEAD + E141, journal 98) | e70
+STAGE_SEEDS=${STAGE_SEEDS:-42,1,2,3,4}   # LightGBM seeds averaged in both ADS-B stages (E142/E143: board -0.05)
+E70_DROP=${E70_DROP:-}             # E147: comma list of stage features to drop (e.g. the drifting reception counts)
+E64_DROP=${E64_DROP:-}
+TABPFN_ROWS_FROM=${TABPFN_ROWS_FROM:-}   # "A:B": instead of running TabPFN, copy the rows where $MAIN vA != vB (same period only)
 TABPFN_EXTRA=${TABPFN_EXTRA:-pfx}
 TABPFN_SEEDS=${TABPFN_SEEDS:-0}         # 1 seed matches v366 (235.524); 5 seeds = v376 (236.381, +0.857)
 E136=${E136:-0}
-E81=${E81:-drop}               # drop | rebuild
+E81=${E81:-rebuild}            # rebuild | reuse (same period: $MAIN v44/v60) | drop. Board 28.09: v314 (no E81, no lift) 237.009 vs v316 236.321 -> E81 + lift worth -0.69 s
 LOBT_LIFT=${LOBT_LIFT:-1}
 ADSB=${ADSB:-download}         # download | skip
 ADSB_P=${ADSB_P:-3}
@@ -85,7 +93,7 @@ if [[ -f logs/recipe_base_v$VB ]]; then
 else
   echo "CAT_SEEDS=$CAT_SEEDS" > logs/recipe_base_v$VB
 fi
-echo "TABPFN_EXTRA=$TABPFN_EXTRA TABPFN_SEEDS=$TABPFN_SEEDS E136=$E136 E81=$E81 LOBT_LIFT=$LOBT_LIFT ADSB=$ADSB" > logs/recipe_tail_v$VT
+echo "TABPFN_EXTRA=$TABPFN_EXTRA TABPFN_SEEDS=$TABPFN_SEEDS TABPFN_ROWS_FROM=$TABPFN_ROWS_FROM E136=$E136 STAGE=$STAGE STAGE_SEEDS=$STAGE_SEEDS E70_DROP=$E70_DROP E64_DROP=$E64_DROP E81=$E81 LOBT_LIFT=$LOBT_LIFT ADSB=$ADSB" > logs/recipe_tail_v$VT
 log "WORK=$WORK RANKING=$RANKING VB=$VB VT=$VT $(cat logs/recipe_base_v$VB) $(cat logs/recipe_tail_v$VT)"
 
 STEP=preflight
@@ -156,7 +164,8 @@ cat logs/preflight.log
 
 # 2025 ADS-B outputs: one symlink per file, so the stage globs see 2025 + the new days and nothing of Jan/Jul 2026
 for d in adsblol adsblol_kt1 adsblol_sw_kt1; do
-  for f in "$MAIN"/data/$d/offblock[235]_2025-*.parquet "$MAIN"/data/$d/visit_2025-*.parquet "$MAIN"/data/$d/visit_m_2025-*.parquet; do
+  for f in "$MAIN"/data/$d/offblock[235]_2025-*.parquet "$MAIN"/data/$d/visit_2025-*.parquet "$MAIN"/data/$d/visit_m_2025-*.parquet \
+           "$MAIN"/data/$d/head_2025-*.parquet; do
     [[ -e $f ]] && ln -sf "$f" data/$d/
   done
 done
@@ -204,10 +213,12 @@ adsb_day () {  # always returns 0; a day that cannot be completed leaves logs/ad
     done
     [[ -s data/adsblol/visit_$d.parquet ]] || "$PY" src/adsb_visit.py "$d"
     [[ -s data/adsblol/visit_m_$d.parquet ]] || "$PY" src/e69_visit_merge.py "$d"
+    [[ -s data/adsblol/head_$d.parquet ]] || "$PY" src/e134_head_features.py "$d"   # E141 stage (HEAD of the surface track)
   } > "logs/adsb_extract_$d.log" 2>&1 || { echo "extract" > "logs/adsb_missing_$d"; return 0; }
   local f
   for f in data/adsblol/offblock{2,3,5}_$d.parquet data/adsblol_kt1/offblock{2,3,5}_$d.parquet \
-           data/adsblol_sw_kt1/offblock{2,3,5}_$d.parquet data/adsblol/visit_$d.parquet data/adsblol/visit_m_$d.parquet; do
+           data/adsblol_sw_kt1/offblock{2,3,5}_$d.parquet data/adsblol/visit_$d.parquet data/adsblol/visit_m_$d.parquet \
+           data/adsblol/head_$d.parquet; do
     [[ -s $f ]] || { echo "incomplete $f" > "logs/adsb_missing_$d"; return 0; }
   done
   rm -f "logs/adsb_missing_$d"
@@ -298,15 +309,16 @@ step submit "$(sub $VB)" "$PY" src/train.py submit $VB
 REG=$("$PY" -c "import json;print(int(json.load(open('data/validation_v$VB.json'))['best']['reg']*1.1))")
 step lgb_seeds submissions/lgb_reg_seeds_v$VB.npz bash -c "'$PY' src/seed_avg.py rank 5 $REG && cp submissions/lgb_reg_seeds.npz submissions/lgb_reg_seeds_v$VB.npz"
 step catboost0 submissions/cat_reg_rank_v$VB.npz bash -c "'$PY' src/catboost_reg.py 5600 && cp submissions/cat_reg_rank.npz submissions/cat_reg_rank_v$VB.npz"
-if [[ $CAT_SEEDS == 5 ]]; then
+if [[ $CAT_SEEDS -gt 1 ]]; then
   [[ -e submissions/cat_reg_rank_seed0.npz ]] || cp submissions/cat_reg_rank_v$VB.npz submissions/cat_reg_rank_seed0.npz
+  EXTRA_SEEDS=$(seq -s ' ' 1 $((CAT_SEEDS - 1))); ALL_SEEDS=$(seq -s ' ' 0 $((CAT_SEEDS - 1)))
   step catboost_seeds submissions/cat_reg_rank_seeds_v$VB.npz bash -c \
-    "'$PY' src/catboost_seeds.py 5600 1 2 3 4 && '$PY' src/catboost_seeds.py merge 0 1 2 3 4 && cp submissions/cat_reg_rank_seeds.npz submissions/cat_reg_rank_seeds_v$VB.npz"
+    "'$PY' src/catboost_seeds.py 5600 $EXTRA_SEEDS && '$PY' src/catboost_seeds.py merge $ALL_SEEDS && cp submissions/cat_reg_rank_seeds.npz submissions/cat_reg_rank_seeds_v$VB.npz"
   CAT=submissions/cat_reg_rank_seeds_v$VB.npz
 elif [[ $CAT_SEEDS == 1 ]]; then
   CAT=submissions/cat_reg_rank_v$VB.npz
 else
-  STEP=catboost_seeds; echo "CAT_SEEDS must be 1 or 5" >&2; false
+  STEP=catboost_seeds; echo "CAT_SEEDS must be >= 1" >&2; false
 fi
 cp -f "$CAT" submissions/cat_reg_rank.npz   # blend.py reads this fixed path
 step blend "$(sub $((VB + 1)))" env LGB_SEEDS=submissions/lgb_reg_seeds_v$VB.npz "$PY" src/blend.py $VB $((VB + 1)) 0.65
@@ -316,12 +328,26 @@ B=$((VB + 1)); PARTS=submissions/parts_v$B.npz
 # ---------------------------------------------------------------- 5. tail: TabPFN -> E14 -> E70 -> E64
 TAB_ENV=(TABPFN_EXTRA="$TABPFN_EXTRA" TABPFN_SEEDS="$TABPFN_SEEDS" PFX_FEATURES=data/features_e113.parquet)
 [[ $E136 == 1 ]] && TAB_ENV+=(TABPFN_BINS="<2h,2-4h,4-8h,8-12h,12-30h" P_DAY_MIN_D=43200)
-step tabpfn "$(sub $((VT + 2)))" env "${TAB_ENV[@]}" "$PY" src/lirf_tabpfn.py $B $((VT + 2))
+if [[ -n $TABPFN_ROWS_FROM ]]; then   # keep the TabPFN draw of an earlier file on the same period (journal 118)
+  step tabpfn "$(sub $((VT + 2)))" env A=${TABPFN_ROWS_FROM%%:*} Z=${TABPFN_ROWS_FROM##*:} B=$B OUT=$((VT + 2)) "$PY" -c "
+import os, polars as pl
+Y = 'TAXITIME_SEC_mvt'; M = os.environ['MAIN']
+r = lambda p: pl.read_parquet(p)
+a, z, s = r(f\"{M}/submissions/gentle-igloo_v{os.environ['A']}.parquet\"), r(f\"{M}/submissions/gentle-igloo_v{os.environ['Z']}.parquet\"), r(f\"submissions/gentle-igloo_v{os.environ['B']}.parquet\")
+assert set(a['MVT_ID_mvt'].to_list()) == set(s['MVT_ID_mvt'].to_list()), 'TABPFN_ROWS_FROM needs the same ranking rows'
+chg = a.join(z, on='MVT_ID_mvt', suffix='_z').filter(pl.col(Y) != pl.col(f'{Y}_z')).select('MVT_ID_mvt', pl.col(Y).alias('tab'))
+s.join(chg, on='MVT_ID_mvt', how='left').with_columns(pl.coalesce('tab', Y).alias(Y)).select(s.columns).write_parquet(f\"submissions/gentle-igloo_v{os.environ['OUT']}.parquet\")
+print(f'wrote v{os.environ[\"OUT\"]}: {chg.height} TabPFN rows copied from v{os.environ[\"A\"]}')
+"
+else
+  step tabpfn "$(sub $((VT + 2)))" env "${TAB_ENV[@]}" "$PY" src/lirf_tabpfn.py $B $((VT + 2))
+fi
 grep -E "prefix codes|wrote" logs/tabpfn.log | tee -a logs/chain.log || true
 step e14 "$(sub $((VT + 3)))" "$PY" src/e14_apply.py $((VT + 2)) $B $((VT + 3))
 if [[ $ADSB == download ]]; then
-  step e70 "$(sub $((VT + 4)))" env ADSB_DIR=data/adsblol_kt1 WALK_DIR=data/adsblol_sw_kt1 PARTS=$PARTS "$PY" src/e70_apply.py $((VT + 3)) $((VT + 4))
-  step e64 "$(sub $((VT + 5)))" env ADSB_DIR=data/adsblol_kt1 PARTS=$PARTS "$PY" src/e64_apply.py $((VT + 4)) $((VT + 5))
+  STAGE_PY=src/e141_apply.py; [[ $STAGE == e70 ]] && STAGE_PY=src/e70_apply.py
+  step e70 "$(sub $((VT + 4)))" env STAGE_SEEDS=$STAGE_SEEDS DROP_FEATS=$E70_DROP ADSB_DIR=data/adsblol_kt1 WALK_DIR=data/adsblol_sw_kt1 PARTS=$PARTS "$PY" $STAGE_PY $((VT + 3)) $((VT + 4))
+  step e64 "$(sub $((VT + 5)))" env STAGE_SEEDS=$STAGE_SEEDS DROP_FEATS=$E64_DROP ADSB_DIR=data/adsblol_kt1 PARTS=$PARTS "$PY" src/e64_apply.py $((VT + 4)) $((VT + 5))
 else
   step e70 "$(sub $((VT + 4)))" cp "$(sub $((VT + 3)))" "$(sub $((VT + 4)))"
   step e64 "$(sub $((VT + 5)))" cp "$(sub $((VT + 4)))" "$(sub $((VT + 5)))"
@@ -366,8 +392,21 @@ if [[ $E81 == rebuild ]]; then
   ln -sf "$W2/$(sub $((P60 + 4)))" "$(sub $((P60 + 4)))"
   step e81 "$(sub $((VT + 6)))" env BLEND_BASE=$((VT + 5)) BLEND_PARTS="$((P44 + 4)):0.1214,$((P60 + 4)):0.0270" \
     "$PY" src/blend_submissions.py $((VT + 6))
+elif [[ $E81 == reuse ]]; then
+  # same period only: the E81 partners v44 / v60 of the board line, checked against this ranking's rows
+  P44=$((VB + 40)); P60=$((VB + 56))
+  "$PY" -c "
+import polars as pl, sys
+ids = set(pl.read_parquet('$(sub $((VT + 5)))')['MVT_ID_mvt'].to_list())
+for v in (44, 60):
+    assert set(pl.read_parquet('$MAIN/submissions/gentle-igloo_v%d.parquet' % v)['MVT_ID_mvt'].to_list()) == ids, 'E81=reuse needs the same ranking rows'
+"
+  ln -sf "$MAIN/submissions/gentle-igloo_v44.parquet" "$(sub $((P44 + 4)))"
+  ln -sf "$MAIN/submissions/gentle-igloo_v60.parquet" "$(sub $((P60 + 4)))"
+  step e81 "$(sub $((VT + 6)))" env BLEND_BASE=$((VT + 5)) BLEND_PARTS="$((P44 + 4)):0.1214,$((P60 + 4)):0.0270" \
+    "$PY" src/blend_submissions.py $((VT + 6))
 else
-  log "E81=drop: no submission blend (expected cost ~ +0.2 s, REVIEW_BRIEF 21cb)"
+  log "E81=drop: no submission blend (expected cost ~ +0.69 s: board 28.09, v314 vs v316)"
   step e81 "$(sub $((VT + 6)))" cp "$(sub $((VT + 5)))" "$(sub $((VT + 6)))"
 fi
 
