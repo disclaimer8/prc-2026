@@ -22,25 +22,34 @@ import numpy as np
 import polars as pl
 
 CELL = 600.0
-KMAX = 400
 DATA = "data/prc-2026-datasets/"
 
 
-def counts(a, t, s, e):
-    """D1..D4 for queries [a, t] against objects [s, e]; self (identical interval) is excluded by the strict inequalities."""
+def counts(a, t, s, e, self_included):
+    """D1..D4 for queries [a, t] against objects [s, e]. Ties (28.09, journal 136): 'started with or before me' = s <= a,
+    'finished during my taxi' = a < e <= t, so every overlapping object (e > a, s <= t) falls into exactly one class:
+    D1 s<=a, a<e<=t | D2 s>a, e<=t | D3 s<=a, e>t | D4 a<s<=t, e>t. When the objects are the queries themselves, each
+    query's own interval sits in D1 and is taken out. The first version used strict bounds on both sides and lost the
+    s == a ties in D3's identity: D3 = -1 for a neighbour pushed in the same minute that finished first (AOBT_3 is
+    rounded to the minute, so 353 624 training rows had a negative count). Checked against brute force on 300 random
+    groups with ties (departures with self, arrivals)."""
     o = np.argsort(s, kind="stable"); s, e = s[o], e[o]
     es = np.sort(e)
-    n_s_lt_a = np.searchsorted(s, a, "left")
-    n_e_lt_t = np.searchsorted(es, t, "left")
-    start_in = np.searchsorted(s, t, "left") - np.searchsorted(s, a, "right")
-    end_in = n_e_lt_t - np.searchsorted(es, a, "right")
-    lo, hi = np.searchsorted(s, a, "right"), np.searchsorted(s, t, "left")
+    n_s_le_a = np.searchsorted(s, a, "right")
+    n_e_le_t = np.searchsorted(es, t, "right")
+    end_in = n_e_le_t - np.searchsorted(es, a, "right")                        # a < e <= t
+    start_in = np.searchsorted(s, t, "right") - np.searchsorted(s, a, "right")  # a < s <= t
+    lo, hi = np.searchsorted(s, a, "right"), np.searchsorted(s, t, "right")     # s in (a, t]
     nested = np.zeros(len(a))
-    for k in range(min(KMAX, int((hi - lo).max(initial=0)))):
+    for k in range(int((hi - lo).max(initial=0))):
         j = lo + k
         ok = j < hi
-        nested[ok] += e[j[ok]] < t[ok]
-    return end_in - nested, nested, n_s_lt_a - n_e_lt_t + nested, start_in - nested
+        nested[ok] += e[j[ok]] <= t[ok]
+    d1, d2, d3, d4 = end_in - nested, nested, n_s_le_a - n_e_le_t + nested, start_in - nested
+    if self_included:
+        d1 = d1 - (t > a)
+    assert min(d1.min(initial=0), d2.min(initial=0), d3.min(initial=0), d4.min(initial=0)) >= 0
+    return d1, d2, d3, d4
 
 
 def build():
@@ -69,13 +78,13 @@ def build():
         for key, g in dep.drop_nulls(dkeys).group_by(dkeys):
             a, t = g["a"].to_numpy(), g["t"].to_numpy()
             out = {"MVT_ID_mvt": g["MVT_ID_mvt"]}
-            for i, v in enumerate(counts(a, t, a.copy(), t.copy()), 1):
+            for i, v in enumerate(counts(a, t, a.copy(), t.copy(), True), 1):
                 out[f"e151_{name}_D{i}"] = v
             ag = agroups.get(akey_of(key))
             for i in range(1, 5):
                 out[f"e151_{name}_A{i}"] = np.full(len(a), np.nan)
             if ag is not None and ag.height:
-                for i, v in enumerate(counts(a, t, ag["s"].to_numpy(), ag["e"].to_numpy()), 1):
+                for i, v in enumerate(counts(a, t, ag["s"].to_numpy(), ag["e"].to_numpy(), False), 1):
                     out[f"e151_{name}_A{i}"] = v
             parts.append(pl.DataFrame(out))
         res = pl.concat(parts)
