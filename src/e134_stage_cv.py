@@ -47,12 +47,13 @@ DRIFT = ["n_pts", "sf_n_seg", "vi_n_pts", "vi_prev_pts", "vi_alt_first", "vm_n_p
 DIRS["cand_h"] = "data/cv_preds_e148_twofam"  # E148 (journal 121): 0.5 x cand_f (LightGBM x5) + 0.5 x CatBoost stage, same features
 DIRS["cand_i"] = "data/cv_preds_e150_keep"  # E150 (journal 127): cand_d but the stage also trains on rows with |y - base| > 3600
 DIRS["cand_j"] = "data/cv_preds_e150b_w025"  # E150b (journal 128): as cand_i, the added rows weighted 0.25
+DIRS["cand_k"] = "data/cv_preds_e150d_clip3600"  # E150d (journal 129): as cand_i, target clipped to +-3600
 
 
-def fit_stage_keep(tr, feats, w_contra=1.0):
+def fit_stage_keep(tr, feats, w_contra=1.0, clip=1800):
     import lightgbm as lgb
     t = tr.filter(pl.col("coverage") >= 2)  # no |y - base| <= 3600 filter: rows where the record contradicts the sensor stay
-    target = np.clip((t[E36.Y] - t["base"]).to_numpy(), -1800, 1800)
+    target = np.clip((t[E36.Y] - t["base"]).to_numpy(), -clip, clip)
     w = np.where(np.abs((t[E36.Y] - t["base"]).to_numpy()) > 3600, w_contra, 1.0)
     m = lgb.train(E36.PARAMS30, lgb.Dataset(t.select(feats).to_numpy(), target, weight=w, categorical_feature=[0]), 800)
     m.feats = feats
@@ -164,13 +165,15 @@ for a, b in [(1, 7), (2, 8), (3, 9), (4, 10), (5, 11), (6, 12)]:
                                 ("cand_e", tr, CTRL), ("cand_f", tr, CTRL + HEAD + E141),
                                 ("cand_g", tr, [c for c in CTRL + HEAD + E141 if c not in DRIFT]),
                                 ("cand_h", tr, CTRL + HEAD + E141), ("cand_i", tr, CTRL + HEAD + E141),
-                                ("cand_j", tr, CTRL + HEAD + E141)):
+                                ("cand_j", tr, CTRL + HEAD + E141), ("cand_k", tr, CTRL + HEAD + E141)):
         if ONLY and name not in ONLY:
             continue
         if name == "cand_i":
             pred = E36.correct(fit_stage_keep(train, feats), te)
         elif name == "cand_j":
             pred = E36.correct(fit_stage_keep(train, feats, 0.25), te)
+        elif name == "cand_k":
+            pred = E36.correct(fit_stage_keep(train, feats, 1.0, 3600), te)
         elif name == "cand_h":
             zf = np.load(f"{DIRS['cand_f']}/fold_{a}_{b}.npz")
             lgb5 = dict(zip(zf["mvt_id"].tolist(), zf["pred"].tolist()))
@@ -185,10 +188,10 @@ for a, b in [(1, 7), (2, 8), (3, 9), (4, 10), (5, 11), (6, 12)]:
         line.append(f"{name} {np.sqrt(np.mean((pred - y) ** 2)):.2f}")
     print(f"fold {a}+{b}: " + " | ".join(line), flush=True)
 
-for name in [c for c in ("cand_a", "cand_b", "cand_c", "cand_d", "cand_e", "cand_f", "cand_g", "cand_h", "cand_i", "cand_j") if not ONLY or c in ONLY]:
+for name in [c for c in ("cand_a", "cand_b", "cand_c", "cand_d", "cand_e", "cand_f", "cand_g", "cand_h", "cand_i", "cand_j", "cand_k") if not ONLY or c in ONLY]:
     dec, tot, small, trim, lower, n, strict = compare(DIRS["ctrl"], DIRS[name])
     ok = n == 6 and dec < 0 and lower >= 4 and small < 0 and trim < 0  # magnitude is left to the board (REVIEW_BRIEF 21bv)
     label = {"cand_c": "E140", "cand_d": "E141", "cand_e": "E142 ctrl x5 seeds", "cand_f": "E142 HEAD+E141 x5 seeds",
-             "cand_g": "E147 vs ctrl (no drift features)", "cand_h": "E148 vs ctrl (LGB x5 + CatBoost)", "cand_i": "E150 vs ctrl (keep contradicting rows)", "cand_j": "E150b vs ctrl (contradicting rows at weight 0.25)"}.get(name, "E134 " + name)
+             "cand_g": "E147 vs ctrl (no drift features)", "cand_h": "E148 vs ctrl (LGB x5 + CatBoost)", "cand_i": "E150 vs ctrl (keep contradicting rows)", "cand_j": "E150b vs ctrl (contradicting rows at weight 0.25)", "cand_k": "E150d vs ctrl (keep-all, clip 3600)"}.get(name, "E134 " + name)
     print(f"DECISION {label}: {'TO BOARD' if ok else 'REJECT'} (folds {n}, lower in {lower}; decided {dec:+.2f} s, "
           f"strict {strict:+.2f} s, all {tot:+.2f} s, y<=7200 {small:+.2f} s, trimmed {trim:+.2f} s)")
