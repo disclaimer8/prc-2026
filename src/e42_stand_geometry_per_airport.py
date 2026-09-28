@@ -49,7 +49,7 @@ PARAMS = dict(objective="regression", learning_rate=0.03, num_leaves=31, min_dat
 
 def load_adsb(pattern: str) -> pl.DataFrame:
     files = sorted(glob.glob(pattern))
-    o2 = pl.concat([pl.read_parquet(f) for f in files])
+    o2 = pl.concat([pl.read_parquet(f) for f in files], how="diagonal_relaxed")  # diagonal: 3 kt files extracted before E61 (18.09) lack sw_*, new days carry them; stages pick features by name
     o3 = pl.concat([pl.read_parquet(f.replace("offblock2_", "offblock3_")) for f in files if os.path.exists(f.replace("offblock2_", "offblock3_"))])
     o5 = pl.concat([pl.read_parquet(f.replace("offblock2_", "offblock5_")) for f in files if os.path.exists(f.replace("offblock2_", "offblock5_"))])
     return o2.join(o3, on="MVT_ID_mvt", how="left").join(o5, on="MVT_ID_mvt", how="left")

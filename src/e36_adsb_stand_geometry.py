@@ -53,7 +53,7 @@ ADSB_DIR = os.environ.get("ADSB_DIR", "data/adsblol")  # E61: point the stage at
 def load_adsb(pattern: str) -> pl.DataFrame:
     pattern = pattern.replace("data/adsblol/", ADSB_DIR + "/")
     files = sorted(glob.glob(pattern))
-    o2 = pl.concat([pl.read_parquet(f) for f in files])
+    o2 = pl.concat([pl.read_parquet(f) for f in files], how="diagonal_relaxed")  # diagonal: 3 kt files extracted before E61 (18.09) lack sw_*, new days carry them; stages pick features by name
     o3_files = [f.replace("offblock2_", "offblock3_") for f in files if os.path.exists(f.replace("offblock2_", "offblock3_"))]
     o5_files = [f.replace("offblock2_", "offblock5_") for f in files if os.path.exists(f.replace("offblock2_", "offblock5_"))]
     result = o2

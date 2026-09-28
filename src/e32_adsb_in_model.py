@@ -19,7 +19,7 @@ import numpy as np
 import polars as pl
 
 if sys.argv[1] == "build":
-    o = pl.concat([pl.read_parquet(f) for f in sorted(glob.glob("data/adsblol/offblock2_*.parquet"))])
+    o = pl.concat([pl.read_parquet(f) for f in sorted(glob.glob("data/adsblol/offblock2_*.parquet"))], how="diagonal_relaxed")  # diagonal: 3 kt files extracted before E61 (18.09) lack sw_*, new days carry them; stages pick features by name
     cols = ["MVT_ID_mvt", "PHASE_mvt", "MVT_TIME_UTC_mvt", "AOBT_3_flt", "LOBT_flt"]
     files = sorted(glob.glob("data/prc-2026-datasets/training_*.parquet")) + ["data/prc-2026-datasets/ranking.parquet"]
     raw = pl.concat([pl.read_parquet(f, columns=cols) for f in files]).filter(pl.col("PHASE_mvt") == "DEP")
