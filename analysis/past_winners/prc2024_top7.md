@@ -23,7 +23,7 @@
 
 ## 2. Разбор по командам
 
-**likable_jelly** (ENAC; README и код, статья «Inference of the Actual Take-Off Mass…» есть на ResearchGate, но отдаёт 403, прочитать не смог)
+**likable_jelly** (ENAC; README и код. Исправлено 29.09: статья «Inference of the Actual Take-Off Mass…» на ResearchGate — не их, а Somnath Panigrahi, team_honest_turtle, 8-е место; прочитана, журнал №157)
 - **Очистка:**
   - убирают повторы ADS-B и свой FilterDerivative (`filter_trajs.py:21-26`);
   - выкидывают «изолированные» точки, если соседние дальше 20 с (`filterclassic.py:65-73`);
