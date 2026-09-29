@@ -76,6 +76,11 @@ REG_PARAMS = dict(
     force_row_wise=True,
 )
 CLF_PARAMS = {**REG_PARAMS, "objective": "multiclass", "num_class": len(CLASSES), "num_leaves": 127, "learning_rate": 0.05, "min_data_in_leaf": 100}
+# E155 (journal 146): REG_OVERRIDE='{"min_data_in_leaf": 500, ...}' changes the regressor only; the classifier above is
+# already built from the unchanged dict. Unset = bit-for-bit unchanged.
+if os.environ.get("REG_OVERRIDE"):
+    import json as _json
+    REG_PARAMS = {**REG_PARAMS, **_json.loads(os.environ["REG_OVERRIDE"])}
 
 
 def feature_columns(df: pl.DataFrame) -> list[str]:
