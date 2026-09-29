@@ -42,7 +42,11 @@ win = (pl.col("d_mvt_sched") > 0) & (pl.col("d_mvt_sched") < 14400)
 tot = {"e14": 0.0, "u2a": 0.0, "u2b": 0.0}
 low = {"u2a": 0, "u2b": 0}
 trim = {}
-for path in sorted(glob.glob("data/cv_preds/fold_*.npz")):
+base_vs = []
+CVDIR = os.environ.get("CVDIR", "data/cv_preds")
+MINP = int(os.environ.get("MINP", "20"))
+print("control", CVDIR, "prefix threshold", MINP)
+for path in sorted(glob.glob(f"{CVDIR}/fold_*.npz")):
     z = np.load(path)
     a, b = [int(x) for x in os.path.basename(path)[5:-4].split("_")]
     base = pl.DataFrame({"MVT_ID_mvt": z["mvt_id"], "pred": z["pred"], "reg": z["reg"], "y": z["y"]})
@@ -57,8 +61,10 @@ for path in sorted(glob.glob("data/cv_preds/fold_*.npz")):
         p = m.predict_proba(design(val, pfx))[:, 1]
         out[arm] = np.where(n >= 3, p * D + (1 - p) * reg, old)
         if pfx:
-            out["u2b"] = np.where((n >= 3) | (npx >= 20), p * D + (1 - p) * reg, old)
+            out["u2b"] = np.where((n >= 3) | (npx >= MINP), p * D + (1 - p) * reg, old)
     sse = {k: float(((v - y) ** 2).sum()) for k, v in out.items()}
+    sse["base"] = float(((old - y) ** 2).sum())
+    base_vs.append(((sse["e14"] - sse["base"]) / (2 * 344841 * 235.35), (sse["u2a"] - sse["base"]) / (2 * 344841 * 235.35)))
     for k in ("u2a", "u2b"):
         d = (out[k] - y) ** 2 - (out["e14"] - y) ** 2
         keep = np.ones(len(d), bool); keep[np.argsort(-np.abs(d))[:3]] = False
@@ -68,7 +74,7 @@ for path in sorted(glob.glob("data/cv_preds/fold_*.npz")):
         tot[k] += sse[k]
     for k in low:
         low[k] += sse[k] < sse["e14"]
-    print(f"fold {a}+{b}: rows {len(y)}, applied e14 {(n >= 3).sum()} u2b {((n >= 3) | (npx >= 20)).sum()} | vs e14: u2a {(sse['u2a'] - sse['e14']) / lb:+.3f} s, u2b {(sse['u2b'] - sse['e14']) / lb:+.3f} s (board-scale)")
+    print(f"fold {a}+{b}: rows {len(y)}, applied e14 {(n >= 3).sum()} u2b {((n >= 3) | (npx >= MINP)).sum()} | vs e14: u2a {(sse['u2a'] - sse['e14']) / lb:+.3f} s, u2b {(sse['u2b'] - sse['e14']) / lb:+.3f} s (board-scale)")
 lb = 2 * 344841 * 235.35
 print(f"TOTAL vs e14: u2a {(tot['u2a'] - tot['e14']) / lb:+.3f} s (lower {low['u2a']}/6), u2b {(tot['u2b'] - tot['e14']) / lb:+.3f} s (lower {low['u2b']}/6)")
 print("trimmed (without the 3 largest changes per fold) vs e14:", {k: f"{sum(v) / lb:+.3f} s, lower {sum(x < 0 for x in v)}/6" for k, v in trim.items()})
@@ -78,3 +84,4 @@ rk = pl.read_parquet("data/features_e106.parquet", columns=["MVT_ID_mvt", "split
     pl.read_parquet("data/features_e113.parquet", columns=["MVT_ID_mvt", "airline_prefix"]), on="MVT_ID_mvt", how="left").with_columns(pfx=pl.col("airline_prefix").fill_null("?")).filter(win)
 rk = rk.join(f.group_by("FLIGHT_mvt").agg(n=pl.len()), on="FLIGHT_mvt", how="left").join(f.group_by("pfx").agg(np_=pl.len()), on="pfx", how="left").with_columns(pl.col("n", "np_").fill_null(0))
 print(f"2026 ranking LIRF no-NM 0<D<4h: {rk.height}; e14 applies to {rk.filter(pl.col('n') >= 3).height}; u2b to {rk.filter((pl.col('n') >= 3) | (pl.col('np_') >= 20)).height}")
+print("vs the control's own prediction (no E14): e14 " + " ".join(f"{a:+.3f}" for a, _ in base_vs) + f" = {sum(a for a, _ in base_vs):+.3f} s; u2a " + " ".join(f"{b:+.3f}" for _, b in base_vs) + f" = {sum(b for _, b in base_vs):+.3f} s")
