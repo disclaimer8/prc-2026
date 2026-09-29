@@ -9,7 +9,7 @@ PY=.venv/bin/python
 L=data/mac_catseeds_e51.log
 while pgrep -f "[m]ac_e155_regcv.sh" > /dev/null; do sleep 120; done
 mkdir -p submissions/e51_catseeds
-s=200
+s=${START_SEED:-200}
 echo "[$(date +%H:%M)] start" >> $L
 while :; do
   hm=$(date +%H%M)
