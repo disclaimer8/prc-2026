@@ -46,7 +46,9 @@ tr = build(tr_raw,
            tr_base,
            pl.concat([pl.read_parquet(f, columns=["MVT_ID_mvt", "coverage"]) for f in sorted(glob.glob(f"{ADSB_DIR}/offblock2_2025-*.parquet"))]),
            pl.concat([pl.read_parquet(f) for f in sorted(glob.glob("data/adsblol/visit_2025-*.parquet"))]))
-t = tr.filter(usable & ((pl.col(Y) - pl.col("base")).abs() <= 3600))
+KEEP = os.environ.get("E64_KEEP_ALL") == "1"  # E150c (journal 128): also train on rows with |y - base| > 3600, as src/e150c_e64_keep_cv.py
+t = tr.filter(usable) if KEEP else tr.filter(usable & ((pl.col(Y) - pl.col("base")).abs() <= 3600))
+print("E64 keep all rows", KEEP, "train rows", t.height, flush=True)
 print(f"stage trained on {t.height} rows of 2025", flush=True)
 SEEDS = [int(x) for x in os.environ.get("STAGE_SEEDS", "42").split(",")]  # E143: 42,1,2,3,4 averages the stage
 DROP = [c for c in os.environ.get("DROP_FEATS", "").split(",") if c]  # E147b
