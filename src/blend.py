@@ -51,6 +51,13 @@ if w_cat > 0:
 else:  # reproduces the base submission; used to check this script
     r_cat = r_lgb
 r = w_cat * r_cat + (1 - w_cat) * r_lgb
+if os.environ.get("E130_REG2"):  # E130 (journal 166): raw-target regressor mixed into the regular candidate at weight E130_W
+    z2 = np.load(os.environ["E130_REG2"])
+    reg2_map = dict(zip(z2["mvt_id"], z2["reg"]))
+    reg2 = np.array([reg2_map[m] for m in rank["MVT_ID_mvt"].to_numpy()])
+    w2 = float(os.environ["E130_W"])
+    print(f"E130: raw regressor at w {w2}, corr with the blend {np.corrcoef(r, reg2)[0, 1]:.4f}, RMS diff {np.sqrt(np.mean((r - reg2) ** 2)):.1f} s")
+    r = (1 - w2) * r + w2 * reg2
 
 values = [r] + [rank[c].to_numpy() for c in T.CANDIDATES.values()] + [r + T.DAY]
 values = np.column_stack(values)
