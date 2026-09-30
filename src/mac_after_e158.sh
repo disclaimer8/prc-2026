@@ -1,5 +1,5 @@
 #!/bin/bash
-# Mac chain (journal 180): after the E158 CV -> E162 CV (same-operator inbound on the stand, classifier-only inb_*), gates,
+# Mac chain (journal 180, 182): after the E158 CV -> E162 CV (same-operator inbound on the stand, inb_* in the whole base: H17 showed the regressor gains too), gates,
 # then the CatBoost seeds on features_e106_e51_e157 resume from 302.
 cd ~/prc-2026
 export POLARS_UNKNOWN_EXTENSION_TYPE_BEHAVIOR=load_as_storage OMP_NUM_THREADS=6 POLARS_MAX_THREADS=6
@@ -10,8 +10,8 @@ while pgrep -f "[m]ac_e158.sh" > /dev/null || pgrep -f "[e]130_rank.py" > /dev/n
 L=data/e162.log
 echo "[$(date +%H:%M)] E162 CV start" >> $L
 mkdir -p data/cv_preds_e162
-CLF_ONLY_PREFIX=inb_ FOLDS=1,2,3 CV_OUT=data/cv_preds_e162 FEATURES=data/features_e162.parquet $PY src/cv_fold_preds_nested.py > data/e162_cv_a.log 2>&1 &
-CLF_ONLY_PREFIX=inb_ FOLDS=4,5,6 CV_OUT=data/cv_preds_e162 FEATURES=data/features_e162.parquet $PY src/cv_fold_preds_nested.py > data/e162_cv_b.log 2>&1 &
+FOLDS=1,2,3 CV_OUT=data/cv_preds_e162 FEATURES=data/features_e162.parquet $PY src/cv_fold_preds_nested.py > data/e162_cv_a.log 2>&1 &
+FOLDS=4,5,6 CV_OUT=data/cv_preds_e162 FEATURES=data/features_e162.parquet $PY src/cv_fold_preds_nested.py > data/e162_cv_b.log 2>&1 &
 wait
 PYTHONPATH=src $PY src/fold_metrics.py data/cv_preds_e116prod data/cv_preds_e162 2>&1 | tail -9 >> $L
 PYTHONPATH=src $PY src/post_e14.py data/cv_preds_e116prod data/cv_preds_e162 2>&1 | tail -8 >> $L
