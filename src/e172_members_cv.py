@@ -28,6 +28,11 @@ G = np.round(np.arange(0.0, 0.61, 0.05), 2)
 WMAX = float(os.environ.get("E172_WMAX", "0.6"))
 G = np.round(np.arange(0.0, WMAX + 0.01, 0.05), 2)
 GRID = [w for w in itertools.product(G, repeat=len(MEM)) if sum(w) <= WMAX + 1e-9]
+if os.environ.get("E172_BOX"):  # per-member ranges "lo-hi,lo-hi,..." around a known optimum (the full 4-member grid is 7 315 points)
+    box = [tuple(float(v) for v in r.split("-")) for r in os.environ["E172_BOX"].split(",")]
+    GRID = [w for w in GRID if all(lo - 1e-9 <= x <= hi + 1e-9 for x, (lo, hi) in zip(w, box))]
+    GRID = [tuple(0.0 for _ in MEM)] + [w for w in GRID if any(w)]
+print(f"grid {len(GRID)} points", flush=True)
 lobt = pl.read_parquet(T.FEATURES_PATH, columns=["MVT_ID_mvt", "split", "d_mvt_lobt"]).filter(pl.col("split") == "train").drop("split")
 
 
