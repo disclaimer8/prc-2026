@@ -275,6 +275,11 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
     cat_cols = [c for c in CATEGORICAL if c in cols]
     Xf, cats = to_pandas(fit, cols, None)
     Xp, _ = to_pandas(pred, cols, cats)
+    # E158 (journal 169): columns whose names start with a CLF_ONLY_PREFIX prefix feed the regime classifier only; the
+    # regressor gets exactly the matrix it had before (same columns, same order), so it must reproduce the control
+    clf_only = tuple(p for p in os.environ.get("CLF_ONLY_PREFIX", "").split(",") if p)
+    reg_cols = [c for c in cols if not (clf_only and c.startswith(clf_only))]
+    Xf_r, Xp_r = (Xf[reg_cols], Xp[reg_cols]) if clf_only else (Xf, Xp)
     y = fit[TARGET].to_numpy()
     reg_mask = lab == 0
     # E73 / MB3 (kind-mango, -5.99 s on their leaderboard, 18.09): the LIRF tail table overwrites every LIRF
@@ -383,8 +388,8 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
             for g in groups:
                 hold = np.isin(months, g)
                 tr_m = reg_mask & ~hold
-                m_in = lgb.train(REG_PARAMS, lgb.Dataset(Xf[tr_m], rt_full[tr_m], categorical_feature=cat_cols), rounds["reg"])
-                reg_cand[hold] = m_in.predict(Xf[hold]) + base_all[hold]
+                m_in = lgb.train(REG_PARAMS, lgb.Dataset(Xf_r[tr_m], rt_full[tr_m], categorical_feature=cat_cols), rounds["reg"])
+                reg_cand[hold] = m_in.predict(Xf_r[hold]) + base_all[hold]
             yr = fit[TARGET].to_numpy().astype(float)
             ok = reg_mask & (yr <= 7200)
             print(f"MIX_REG_CROSSFIT: regular-row RMSE proxy {np.sqrt(np.mean((base_all[ok] - yr[ok]) ** 2)):.1f} "
@@ -434,9 +439,9 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
         clf = [clf]
         reg = lgb.train(
             REG_PARAMS,
-            lgb.Dataset(Xf[reg_mask], resid_target, weight=_reg_weight(clf), categorical_feature=cat_cols),
+            lgb.Dataset(Xf_r[reg_mask], resid_target, weight=_reg_weight(clf), categorical_feature=cat_cols),
             num_boost_round=5000,
-            valid_sets=[lgb.Dataset(Xp[val_lab == 0], np.clip(val_y[val_lab == 0], *REG_CLIP) - base_p[val_lab == 0])],
+            valid_sets=[lgb.Dataset(Xp_r[val_lab == 0], np.clip(val_y[val_lab == 0], *REG_CLIP) - base_p[val_lab == 0])],
             callbacks=callbacks + [lgb.early_stopping(200, verbose=False)],
         )
         best = {"clf": clf[0].best_iteration, "reg": reg.best_iteration}
@@ -463,7 +468,7 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
             clf = [clf[0], mix_model]  # read back as base + correction by the predict block below
         reg = lgb.train(
             REG_PARAMS,
-            lgb.Dataset(Xf[reg_mask], resid_target, weight=_reg_weight(clf), categorical_feature=cat_cols),
+            lgb.Dataset(Xf_r[reg_mask], resid_target, weight=_reg_weight(clf), categorical_feature=cat_cols),
             rounds["reg"],
         )
 
@@ -474,7 +479,7 @@ def fit_predict(fit: pl.DataFrame, pred: pl.DataFrame, cols: list[str], rounds: 
         proba = proba / proba.sum(axis=1, keepdims=True)
     else:
         proba = np.mean([c.predict(Xp) for c in clf], axis=0)  # averaged over CLF_SEEDS models
-    r = reg.predict(Xp) + base_p
+    r = reg.predict(Xp_r) + base_p
     values = [r]
     for col in CANDIDATES.values():
         values.append(pred[col].to_numpy())
