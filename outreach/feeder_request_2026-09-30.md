@@ -10,3 +10,9 @@ Subject: Istanbul Airport ADS-B data from your ist-airport-decision-support-syst
 ## 3. FlyItalyADSB (X DM, sent 26.09, asked for January 2026) — waiting; July: "we switched systems and no longer have July coverage".
 
 ## 4. forum.fibra.click d/85637 (IT, posted 26.09) — a reply arrived 30.09 (Denys); the forum is behind Cloudflare for scripts, text to be pasted by Denys.
+
+## 5. Hugging Face `juliangehring/adsb` (extended) — access request text (Denys's HF account)
+> Hi! I'd like access to the `extended` partition for the PRC Data Challenge 2026 (EUROCONTROL/OpenSky), predicting taxi-out times at ten European airports. I only need January and July 2026 around our airports, to check whether `extended` adds ground-level positions beyond adsb.lol. Credit will be given in our GPLv3 code. Thanks!
+
+## 6. Discord #prc-data-competition — question to espinielli about OPDI (Denys posts)
+> @espinielli thanks again for the OK on OPDI (06.09). Is a v0.0.3 data release with the fixed ground-event detector (the `airport_admit_on_ground` fix, off-block milestones) planned before 11.10? And would data from it count as allowed for the challenge like v0.0.2?
