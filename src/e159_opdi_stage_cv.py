@@ -67,3 +67,25 @@ if __name__ == "__main__":
             if name == "target cov<2":
                 tot["base"] += float((e0 ** 2).sum()); tot["stage"] += float((e1 ** 2).sum())
     print(f"target rows both directions: dSSE {(tot['stage'] - tot['base']) / 1e6:+.2f}e6 -> per 344841 ranking rows {(tot['stage'] - tot['base']) / 344841:+.1f} s^2")
+
+
+def airport_offsets(aps, ref="LSZH") -> dict:
+    """Per-airport shift that puts an airport's OPDI exit-parking on LSZH's footing (journal 173): the offset exit - BLOCK is
+    estimated through our adsb.lol detector, median(exit - t_first, 2026) + median(t_first - BLOCK, 2025, coverage >= 2), and the
+    shift is that offset minus LSZH's. EDDF: exit lags BLOCK by ~291 s against ~152 s at LSZH (OPDI 2025 EDDF is unusable directly)."""
+    cols = ["MVT_ID_mvt", "PHASE_mvt", "ADEP_mvt", "MVT_TIME_UTC_mvt", "BLOCK_TIME_UTC_mvt", "CALLSIGN_flt", "FLIGHT_mvt"]
+    want = sorted(set(aps) | {ref})
+    tr = pl.concat([pl.read_parquet(p, columns=cols) for p in sorted(glob.glob("data/prc-2026-datasets/training_*.parquet"))]).filter(
+        (pl.col("PHASE_mvt") == "DEP") & pl.col("ADEP_mvt").is_in(want)).with_columns(blk=pl.col("BLOCK_TIME_UTC_mvt").dt.epoch("s").cast(pl.Float64))
+    c25 = pl.concat([pl.read_parquet(f, columns=["MVT_ID_mvt", "coverage", "t_first"]) for f in sorted(glob.glob("data/adsblol_kt1/offblock2_2025-*.parquet"))]).unique("MVT_ID_mvt")
+    a = tr.join(c25, on="MVT_ID_mvt", how="inner").filter(pl.col("coverage") >= 2).group_by("ADEP_mvt").agg(tb=(pl.col("t_first") - pl.col("blk")).median())
+    rk = pl.read_parquet("data/prc-2026-datasets/ranking.parquet", columns=[c for c in cols if c != "BLOCK_TIME_UTC_mvt"]).filter(
+        (pl.col("PHASE_mvt") == "DEP") & pl.col("ADEP_mvt").is_in(want)).with_columns(
+        mvt=pl.col("MVT_TIME_UTC_mvt").dt.epoch("s").cast(pl.Float64), cs=pl.coalesce("CALLSIGN_flt", "FLIGHT_mvt").str.replace_all(" ", "")).select("MVT_ID_mvt", "ADEP_mvt", "mvt", "cs")
+    c26 = pl.concat([pl.read_parquet(f, columns=["MVT_ID_mvt", "coverage", "t_first"]) for f in sorted(glob.glob("data/adsblol_kt1/offblock2_2026-*.parquet"))]).unique("MVT_ID_mvt")
+    b = match(rk, opdi_wide()).filter(pl.col("exit").is_not_null()).join(c26, on="MVT_ID_mvt", how="inner").filter(pl.col("coverage") >= 2) \
+        .group_by("ADEP_mvt").agg(et=(pl.col("exit") - pl.col("t_first")).median())
+    off = {r[0]: r[1] + r[2] for r in a.join(b, on="ADEP_mvt").select("ADEP_mvt", "tb", "et").iter_rows()}
+    shift = {ap: off[ap] - off[ref] for ap in aps}
+    print(f"OPDI exit - BLOCK via adsb.lol: {({k: round(v, 1) for k, v in off.items()})}; shift vs {ref}: {({k: round(v, 1) for k, v in shift.items()})}")
+    return shift

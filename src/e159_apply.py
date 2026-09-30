@@ -17,7 +17,7 @@ import lightgbm as lgb  # noqa: E402
 import numpy as np  # noqa: E402
 import polars as pl  # noqa: E402
 
-from e159_opdi_stage_cv import match, opdi_wide  # noqa: E402
+from e159_opdi_stage_cv import airport_offsets, match, opdi_wide  # noqa: E402
 
 final_v, base_v, new_v = (int(x) for x in sys.argv[1:4])
 APS = os.environ.get("E159_APS", "EDDF,LSZH").split(",")
@@ -43,7 +43,8 @@ rk = prep(pl.read_parquet("data/prc-2026-datasets/ranking.parquet", columns=cols
 cov = pl.concat([pl.read_parquet(f, columns=["MVT_ID_mvt", "coverage"]) for f in sorted(glob.glob("data/adsblol_kt1/offblock2_2026-*.parquet"))]).unique("MVT_ID_mvt")
 base = pl.read_parquet(f"submissions/gentle-igloo_v{base_v}.parquet").rename({Y: "pred"}).with_columns(pl.col("pred").cast(pl.Float64))
 lobt = pl.read_parquet("data/features_e106.parquet", columns=["MVT_ID_mvt", "split", "d_mvt_lobt"]).filter(pl.col("split") == "rank").drop("split")
-b = match(rk, w).filter(pl.col("exit").is_not_null()).join(cov, on="MVT_ID_mvt", how="left").with_columns(pl.col("coverage").fill_null(0)) \
+SH = airport_offsets(APS) if os.environ.get("E159_SHIFT", "1") == "1" else {a_: 0.0 for a_ in APS}  # journal 173
+b = match(rk, w).filter(pl.col("exit").is_not_null()).with_columns(exit=pl.col("exit") - pl.col("ADEP_mvt").replace_strict(SH, return_dtype=pl.Float64)).join(cov, on="MVT_ID_mvt", how="left").with_columns(pl.col("coverage").fill_null(0)) \
     .filter(pl.col("coverage") < 2).join(base, on="MVT_ID_mvt", how="inner").join(lobt, on="MVT_ID_mvt", how="left").with_columns(
     t_opdi=pl.col("mvt") - pl.col("exit"), twy_s=pl.col("twy") - pl.col("exit")).with_columns(d_opdi=pl.col("t_opdi") - pl.col("pred"))
 new = b["pred"].to_numpy() + g.predict(b.select(F).to_numpy())
