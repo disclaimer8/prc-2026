@@ -65,6 +65,15 @@ if os.environ.get("E130_REG2"):  # E130 (journal 166): raw-target regressor mixe
         w3 = float(os.environ["E130_W3"])
         print(f"E171: second member at w {w3}, corr with reg2 {np.corrcoef(reg2, reg3)[0, 1]:.4f}")
     r = (1 - w2 - w3) * r + w2 * reg2 + w3 * reg3
+elif os.environ.get("E130_MEMBERS"):  # E172 (journal 207): any number of members, "path:w,path:w,..."
+    mem = [(p_, float(w_)) for p_, w_ in (x.rsplit(":", 1) for x in os.environ["E130_MEMBERS"].split(","))]
+    regs = []
+    for p_, w_ in mem:
+        zm = np.load(p_)
+        mm = dict(zip(zm["mvt_id"], zm["reg"]))
+        regs.append(np.array([mm[m] for m in rank["MVT_ID_mvt"].to_numpy()]))
+        print(f"E172 member {p_} at w {w_}, corr with the blend {np.corrcoef(r, regs[-1])[0, 1]:.4f}")
+    r = (1 - sum(w_ for _, w_ in mem)) * r + sum(w_ * g for (_, w_), g in zip(mem, regs))
 
 values = [r] + [rank[c].to_numpy() for c in T.CANDIDATES.values()] + [r + T.DAY]
 values = np.column_stack(values)
