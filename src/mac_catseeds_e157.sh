@@ -12,6 +12,7 @@ mkdir -p submissions/e51e157_catseeds
 s=${START_SEED:-300}
 echo "[$(date +%H:%M)] start" >> $L
 while [ $s -lt 325 ]; do
+  [ -s submissions/e51e157_catseeds/cat_reg_rank_seed$s.npz ] && { s=$((s + 1)); continue; }  # already done (resume after a pause)
   echo "[$(date +%H:%M)] seed $s" >> $L
   nice -n 10 $PY src/catboost_seeds.py 5600 $s >> data/mac_catseeds_e157_run.log 2>&1 || { echo "[$(date +%H:%M)] seed $s FAILED" >> $L; break; }
   mv submissions/cat_reg_rank_seed$s.npz submissions/e51e157_catseeds/
