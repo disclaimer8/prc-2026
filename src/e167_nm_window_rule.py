@@ -63,6 +63,6 @@ np.savez(f"submissions/parts_v{new_v}.npz", **z)
 sub = pl.read_parquet(f"submissions/gentle-igloo_v{src_v}.parquet")
 upd = pl.DataFrame({"MVT_ID_mvt": ids[chg], "new": np.round(pred[chg])})
 out = sub.join(upd, on="MVT_ID_mvt", how="left").with_columns(pl.coalesce("new", Y).cast(sub.schema[Y]).alias(Y)).select(sub.columns)
-assert out.height == 344841 and out[Y].null_count() == 0
+assert out.height == sub.height and out[Y].null_count() == 0  # any period (was 344841, the Jan/Jul ranking)
 out.write_parquet(f"submissions/gentle-igloo_v{new_v}.parquet")
 print(f"wrote v{new_v} and parts_v{new_v}")

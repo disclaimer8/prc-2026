@@ -20,31 +20,45 @@
 #   v376-like : CAT_SEEDS=5 TABPFN_EXTRA=pfx TABPFN_SEEDS=0,1,2,3,4          (default)
 #   v386-like : CAT_SEEDS=5 TABPFN_EXTRA=pfx,local_change TABPFN_SEEDS=0,1,2,3,4
 #   v396-like : CAT_SEEDS=5 TABPFN_EXTRA=pfx TABPFN_SEEDS=0,1,2,3,4 E136=1
-#   v447-like : CAT_SEEDS=10 TABPFN_EXTRA=pfx TABPFN_SEEDS=0 STAGE=e141 STAGE_SEEDS=42,1,2,3,4 E81=rebuild   (default since 28.09;
-#               235.350 on the board). Same period as the board (Jan/Jul 2026): add TABPFN_ROWS_FROM=361:291 to keep the TabPFN
-#               draw of the v366/v447 line; lirf_tabpfn.py is not deterministic run to run (journal 118).
+#   v447-like : CAT_SEEDS=10 TABPFN_SEEDS=0 MEMBERS=none E167=0 E14=1 STAGE_KEEP_ALL=0 E64_KEEP_ALL=0 E70_DROP= E64_DROP= E152=0
+#               PROTECT=0   (235.350 on the board, 28.09)
+#   T2-members: the defaults since 1.10 (journal 214) = the v808 line: CatBoost 25 seeds, E130/E172 members in the regular
+#               candidate, E167 A+B, tail T2 (no E14, keep-all ADS-B stages without the reception counts, E152 gate, E81,
+#               LOBT lift), the TabPFN rows protected at the end. TabPFN = the E156 ensemble (seeds 0-9) on a new period.
+#               v808 itself = MEMBERS with the three members of journal 207 (raw 0.13, lobt 0.17, sched 0.13) and the TabPFN
+#               rows of v361 (same period: TABPFN_ROWS_FROM=361:291; lirf_tabpfn.py is not deterministic run to run, journal 118).
+# Not in the chain yet (journal 214): the E163/E170/FIN1 feature table (base stays on E106), OPDI E159b, E173 members.
 # A second tail on the same base: rerun with the same TAG/VB and another VT (base steps are skipped).
 set -Eeuo pipefail
 
-MAIN=/root/prc-2026
+MAIN=${MAIN:-/root/prc-2026}
 : "${RANKING:?set RANKING=/path/to/the new ranking.parquet}"
 SUBMITTING=${SUBMITTING:-}
 TAG=${TAG:-$(date -u +%Y%m%d)}
 WORK=${WORK:-/srv/prc-final-$TAG}   # /srv: 41 GB free, / only 16 GB (28.09); a WORK takes ~8 GB
 VB=${VB:-900}                  # base: vVB (regimes + regressor), vVB+1 (LightGBM/CatBoost blend, parts_vVB+1)
-VT=${VT:-$((VB + 10))}         # tail: vVT+2 TabPFN, +3 E14, +4 E70, +5 E64, +6 E81, +7 LOBT lift/clip = FINAL
-CAT_SEEDS=${CAT_SEEDS:-10}         # any N >= 1: seed 0 = catboost_reg.py, seeds 1..N-1 = catboost_seeds.py (5 -> 10 seeds: board -0.08)
+VT=${VT:-$((VB + 10))}         # tail: vVT+2 TabPFN, +3 E14, +4 E70, +5 E64, +6 E152, +7 E81, +8 LOBT lift/clip, +9 protected = FINAL
+CAT_SEEDS=${CAT_SEEDS:-25}         # any N >= 1: seed 0 = catboost_reg.py, seeds 1..N-1 = catboost_seeds.py (board line: 25, seeds_v530)
+MEMBERS=${MEMBERS:-raw:2678:0.10,lobt:2678:0.13,sched:2826:0.10,eobt:2551:0.13}   # mode:rounds:weight of the E130/E172 members
+                                   # (weights = CV x 2/3, journal 211; rounds = mean nested choice), "none" = off
+MEMBER_SEEDS=${MEMBER_SEEDS:-5}
+E167=${E167:-1}                    # E167 rule A+B on no-NM departures linked to a hub arrival (journal 196)
+E14=${E14:-0}                      # T2 has no E14
 STAGE=${STAGE:-e141}               # e141 (E70 + HEAD + E141, journal 98) | e70
 STAGE_SEEDS=${STAGE_SEEDS:-42,1,2,3,4}   # LightGBM seeds averaged in both ADS-B stages (E142/E143: board -0.05)
-E70_DROP=${E70_DROP:-}             # E147: comma list of stage features to drop (e.g. the drifting reception counts)
-E64_DROP=${E64_DROP:-}
+STAGE_KEEP_ALL=${STAGE_KEEP_ALL:-1}      # E150: stage rows kept at every coverage
+E64_KEEP_ALL=${E64_KEEP_ALL:-1}          # E150c
+E70_DROP=${E70_DROP-n_pts,sf_n_seg,vi_n_pts,vi_prev_pts,vi_alt_first,vm_n_pts,vm_prev_pts}   # E147: the drifting reception counts
+E64_DROP=${E64_DROP-vi_n_pts,vi_prev_pts,vi_alt_first}   # (no colon: an explicit empty value means "drop nothing")
+E152=${E152:-1}                    # E152 gate 0.95: confident filed-time rows go back to the pre-stage value
+PROTECT=${PROTECT:-1}              # Fable 3.3: the TabPFN rows keep their TabPFN values after the stages, E81 and LOBT
 TABPFN_ROWS_FROM=${TABPFN_ROWS_FROM:-}   # "A:B": instead of running TabPFN, copy the rows where $MAIN vA != vB (same period only)
 TABPFN_EXTRA=${TABPFN_EXTRA:-pfx}
-TABPFN_SEEDS=${TABPFN_SEEDS:-0}         # 1 seed matches v366 (235.524); 5 seeds = v376 (236.381, +0.857)
+TABPFN_SEEDS=${TABPFN_SEEDS:-0,1,2,3,4,5,6,7,8,9}   # E156 A1 (journal 157, LOMO -5.0 %); 1 seed matched v366, 5 seeds = v376 (+0.857)
 E136=${E136:-0}
 E81=${E81:-rebuild}            # rebuild | reuse (same period: $MAIN v44/v60) | drop. Board 28.09: v314 (no E81, no lift) 237.009 vs v316 236.321 -> E81 + lift worth -0.69 s
 LOBT_LIFT=${LOBT_LIFT:-1}
-ADSB=${ADSB:-download}         # download | skip
+ADSB=${ADSB:-download}         # download | skip | reuse (same period as $MAIN only: link its extracted stage inputs of the ranking days)
 ADSB_P=${ADSB_P:-3}
 ADSB_ALLOW_MISSING=${ADSB_ALLOW_MISSING:-0}
 WAIT_FOR=${WAIT_FOR:-}         # space-separated artifact paths to wait for before starting (never process names)
@@ -81,19 +95,20 @@ for f in $WAIT_FOR; do
 done
 [[ -s $RANKING ]] || { echo "no $RANKING" >&2; false; }
 [[ $E81 == drop || $E81 == rebuild || $E81 == reuse ]] || { echo "E81 must be drop|rebuild|reuse" >&2; false; }
-[[ $ADSB == download || $ADSB == skip ]] || { echo "ADSB must be download|skip" >&2; false; }
+[[ $ADSB == download || $ADSB == skip || $ADSB == reuse ]] || { echo "ADSB must be download|skip|reuse" >&2; false; }
 [[ $ADSB == skip && $E81 == rebuild ]] && { echo "E81=rebuild needs ADS-B (E36/E42 stages of v44/v60)" >&2; false; }
 
 mkdir -p "$WORK"/{logs,submissions,scripts,data/prc-2026-datasets,data/adsblol,data/adsblol_kt1,data/adsblol_sw_kt1,data/metar,data/metar_wind}
 cd "$WORK"
 STEP=recipe
 # a base built with one CAT_SEEDS must not be reused silently by a run with another
+BASE_RECIPE="CAT_SEEDS=$CAT_SEEDS MEMBERS=$MEMBERS MEMBER_SEEDS=$MEMBER_SEEDS E167=$E167"
 if [[ -f logs/recipe_base_v$VB ]]; then
-  grep -qx "CAT_SEEDS=$CAT_SEEDS" logs/recipe_base_v$VB || { echo "base v$VB was built with $(cat logs/recipe_base_v$VB); use another VB" >&2; false; }
+  grep -qxF "$BASE_RECIPE" logs/recipe_base_v$VB || { echo "base v$VB was built with $(cat logs/recipe_base_v$VB); use another VB" >&2; false; }
 else
-  echo "CAT_SEEDS=$CAT_SEEDS" > logs/recipe_base_v$VB
+  echo "$BASE_RECIPE" > logs/recipe_base_v$VB
 fi
-echo "TABPFN_EXTRA=$TABPFN_EXTRA TABPFN_SEEDS=$TABPFN_SEEDS TABPFN_ROWS_FROM=$TABPFN_ROWS_FROM E136=$E136 STAGE=$STAGE STAGE_SEEDS=$STAGE_SEEDS E70_DROP=$E70_DROP E64_DROP=$E64_DROP E81=$E81 LOBT_LIFT=$LOBT_LIFT ADSB=$ADSB" > logs/recipe_tail_v$VT
+echo "TABPFN_EXTRA=$TABPFN_EXTRA TABPFN_SEEDS=$TABPFN_SEEDS TABPFN_ROWS_FROM=$TABPFN_ROWS_FROM E136=$E136 E14=$E14 STAGE=$STAGE STAGE_SEEDS=$STAGE_SEEDS STAGE_KEEP_ALL=$STAGE_KEEP_ALL E64_KEEP_ALL=$E64_KEEP_ALL E70_DROP=$E70_DROP E64_DROP=$E64_DROP E152=$E152 E81=$E81 LOBT_LIFT=$LOBT_LIFT PROTECT=$PROTECT ADSB=$ADSB" > logs/recipe_tail_v$VT
 log "WORK=$WORK RANKING=$RANKING VB=$VB VT=$VT $(cat logs/recipe_base_v$VB) $(cat logs/recipe_tail_v$VT)"
 
 STEP=preflight
@@ -225,7 +240,18 @@ adsb_day () {  # always returns 0; a day that cannot be completed leaves logs/ad
 }
 export -f adsb_day
 
-if [[ $ADSB == download ]]; then
+if [[ $ADSB == reuse ]]; then
+  STEP=adsb_reuse   # same-period test of the chain: the stage inputs $MAIN already extracted for these days
+  for d in $DAYS; do
+    for dir in adsblol adsblol_kt1 adsblol_sw_kt1; do
+      for f in "$MAIN"/data/$dir/offblock[235]_$d.parquet "$MAIN"/data/$dir/visit_$d.parquet "$MAIN"/data/$dir/visit_m_$d.parquet \
+               "$MAIN"/data/$dir/head_$d.parquet; do
+        [[ -e $f ]] && ln -sf "$f" data/$dir/
+      done
+    done
+  done
+  log "ADSB=reuse: linked $(ls data/adsblol*/*_2026-*.parquet 2>/dev/null | wc -l | tr -d ' ') stage input files of $MAIN"
+elif [[ $ADSB == download ]]; then
   STEP=adsb
   command -v curl > /dev/null || { echo "curl missing (get_adsb_day.sh streams the archive and reads the GitHub API with it)" >&2; false; }
   log "ADS-B: $(wc -w <<< "$DAYS") days, $ADSB_P in parallel"
@@ -324,12 +350,33 @@ elif [[ $CAT_SEEDS == 1 ]]; then
 else
   STEP=catboost_seeds; echo "CAT_SEEDS must be >= 1" >&2; false
 fi
+# E130/E172 members: the same regressor-only LightGBM on anchored targets, fit on all 2025 (src/e130_rank.py, fixed name
+# submissions/e130_<mode>_rank.npz, kept per base as ..._v$VB.npz), mixed into the regular candidate by blend.py
+MEMBER_SPEC=""
+if [[ $MEMBERS != none ]]; then
+  for m in ${MEMBERS//,/ }; do
+    IFS=: read -r mode rounds w <<< "$m"
+    [[ -n $mode && -n $rounds && -n $w ]] || { STEP=members; echo "MEMBERS entry '$m' is not mode:rounds:weight" >&2; false; }
+    step member_$mode submissions/e130_${mode}_rank_v$VB.npz bash -c \
+      "E130_MODE=$mode '$PY' src/e130_rank.py $MEMBER_SEEDS $rounds && cp submissions/e130_${mode}_rank.npz submissions/e130_${mode}_rank_v$VB.npz"
+    MEMBER_SPEC+="${MEMBER_SPEC:+,}submissions/e130_${mode}_rank_v$VB.npz:$w"
+  done
+fi
 cp -f "$CAT" submissions/cat_reg_rank.npz   # blend.py reads this fixed path
-step blend "$(sub $((VB + 1)))" env LGB_SEEDS=submissions/lgb_reg_seeds_v$VB.npz "$PY" src/blend.py $VB $((VB + 1)) 0.65
-B=$((VB + 1)); PARTS=submissions/parts_v$B.npz
+step blend "$(sub $((VB + 1)))" env LGB_SEEDS=submissions/lgb_reg_seeds_v$VB.npz ${MEMBER_SPEC:+E130_MEMBERS=$MEMBER_SPEC} \
+  "$PY" src/blend.py $VB $((VB + 1)) 0.65
+[[ -z $MEMBER_SPEC ]] || grep -E "^E172 member|^E130 member|^wrote" logs/blend.log | tee -a logs/chain.log
+B=$((VB + 1))
+if [[ $E167 == 1 ]]; then   # rule A+B on parts_v$B -> v$B+1 and parts_v$B+1 (reads the WORK ranking and features_e106)
+  step e167 "$(sub $((B + 1)))" "$PY" src/e167_nm_window_rule.py $B $((B + 1))
+  grep -E "^linked|^changed" logs/e167.log | tee -a logs/chain.log
+  B=$((B + 1))
+fi
+PARTS=submissions/parts_v$B.npz
 [[ -s $PARTS ]] || { STEP=blend; echo "no $PARTS" >&2; false; }
 
-# ---------------------------------------------------------------- 5. tail: TabPFN -> E14 -> E70 -> E64
+# ---------------------------------------------------------------- 5. tail T2: TabPFN -> (E14) -> E70/E141 -> E64 -> E152
+export FEATURES=data/features_e106.parquet   # the tail reads its inputs from the E106 table (as src/hz_build_e172.sh)
 TAB_ENV=(TABPFN_EXTRA="$TABPFN_EXTRA" TABPFN_SEEDS="$TABPFN_SEEDS" PFX_FEATURES=data/features_e113.parquet)
 [[ $E136 == 1 ]] && TAB_ENV+=(TABPFN_BINS="<2h,2-4h,4-8h,8-12h,12-30h" P_DAY_MIN_D=43200)
 if [[ -n $TABPFN_ROWS_FROM ]]; then   # keep the TabPFN draw of an earlier file on the same period (journal 118)
@@ -347,14 +394,23 @@ else
   step tabpfn "$(sub $((VT + 2)))" env "${TAB_ENV[@]}" "$PY" src/lirf_tabpfn.py $B $((VT + 2))
 fi
 grep -E "prefix codes|wrote" logs/tabpfn.log | tee -a logs/chain.log || true
-step e14 "$(sub $((VT + 3)))" "$PY" src/e14_apply.py $((VT + 2)) $B $((VT + 3))
-if [[ $ADSB == download ]]; then
+if [[ $E14 == 1 ]]; then
+  step e14 "$(sub $((VT + 3)))" "$PY" src/e14_apply.py $((VT + 2)) $B $((VT + 3))
+else
+  step e14 "$(sub $((VT + 3)))" cp "$(sub $((VT + 2)))" "$(sub $((VT + 3)))"
+fi
+if [[ $ADSB != skip ]]; then
   STAGE_PY=src/e141_apply.py; [[ $STAGE == e70 ]] && STAGE_PY=src/e70_apply.py
-  step e70 "$(sub $((VT + 4)))" env STAGE_SEEDS=$STAGE_SEEDS DROP_FEATS=$E70_DROP ADSB_DIR=data/adsblol_kt1 WALK_DIR=data/adsblol_sw_kt1 PARTS=$PARTS "$PY" $STAGE_PY $((VT + 3)) $((VT + 4))
-  step e64 "$(sub $((VT + 5)))" env STAGE_SEEDS=$STAGE_SEEDS DROP_FEATS=$E64_DROP ADSB_DIR=data/adsblol_kt1 PARTS=$PARTS "$PY" src/e64_apply.py $((VT + 4)) $((VT + 5))
+  step e70 "$(sub $((VT + 4)))" env STAGE_KEEP_ALL=$STAGE_KEEP_ALL STAGE_SEEDS=$STAGE_SEEDS DROP_FEATS=$E70_DROP ADSB_DIR=data/adsblol_kt1 WALK_DIR=data/adsblol_sw_kt1 PARTS=$PARTS "$PY" $STAGE_PY $((VT + 3)) $((VT + 4))
+  step e64 "$(sub $((VT + 5)))" env E64_KEEP_ALL=$E64_KEEP_ALL STAGE_SEEDS=$STAGE_SEEDS DROP_FEATS=$E64_DROP ADSB_DIR=data/adsblol_kt1 PARTS=$PARTS "$PY" src/e64_apply.py $((VT + 4)) $((VT + 5))
 else
   step e70 "$(sub $((VT + 4)))" cp "$(sub $((VT + 3)))" "$(sub $((VT + 4)))"
   step e64 "$(sub $((VT + 5)))" cp "$(sub $((VT + 4)))" "$(sub $((VT + 5)))"
+fi
+if [[ $E152 == 1 && $ADSB != skip ]]; then   # (pre-stage file, staged file, parts of the tail base, out), as t2 in hz_build_e172.sh
+  step e152 "$(sub $((VT + 6)))" "$PY" src/e152_stage_gate.py $((VT + 3)) $((VT + 5)) $B $((VT + 6))
+else
+  step e152 "$(sub $((VT + 6)))" cp "$(sub $((VT + 5)))" "$(sub $((VT + 6)))"
 fi
 
 # ---------------------------------------------------------------- 6. E81 submission blend
@@ -394,53 +450,60 @@ if [[ $E81 == rebuild ]]; then
   )   # a failure inside stops the run through the inherited ERR trap (no "||" here: it would switch set -e off inside)
   ln -sf "$W2/$(sub $((P44 + 4)))" "$(sub $((P44 + 4)))"
   ln -sf "$W2/$(sub $((P60 + 4)))" "$(sub $((P60 + 4)))"
-  step e81 "$(sub $((VT + 6)))" env BLEND_BASE=$((VT + 5)) BLEND_PARTS="$((P44 + 4)):0.1214,$((P60 + 4)):0.0270" \
-    "$PY" src/blend_submissions.py $((VT + 6))
+  step e81 "$(sub $((VT + 7)))" env BLEND_BASE=$((VT + 6)) BLEND_PARTS="$((P44 + 4)):0.1214,$((P60 + 4)):0.0270" \
+    "$PY" src/blend_submissions.py $((VT + 7))
 elif [[ $E81 == reuse ]]; then
   # same period only: the E81 partners v44 / v60 of the board line, checked against this ranking's rows
   P44=$((VB + 40)); P60=$((VB + 56))
   "$PY" -c "
 import polars as pl, sys
-ids = set(pl.read_parquet('$(sub $((VT + 5)))')['MVT_ID_mvt'].to_list())
+ids = set(pl.read_parquet('$(sub $((VT + 6)))')['MVT_ID_mvt'].to_list())
 for v in (44, 60):
     assert set(pl.read_parquet('$MAIN/submissions/gentle-igloo_v%d.parquet' % v)['MVT_ID_mvt'].to_list()) == ids, 'E81=reuse needs the same ranking rows'
 "
   ln -sf "$MAIN/submissions/gentle-igloo_v44.parquet" "$(sub $((P44 + 4)))"
   ln -sf "$MAIN/submissions/gentle-igloo_v60.parquet" "$(sub $((P60 + 4)))"
-  step e81 "$(sub $((VT + 6)))" env BLEND_BASE=$((VT + 5)) BLEND_PARTS="$((P44 + 4)):0.1214,$((P60 + 4)):0.0270" \
-    "$PY" src/blend_submissions.py $((VT + 6))
+  step e81 "$(sub $((VT + 7)))" env BLEND_BASE=$((VT + 6)) BLEND_PARTS="$((P44 + 4)):0.1214,$((P60 + 4)):0.0270" \
+    "$PY" src/blend_submissions.py $((VT + 7))
 else
   log "E81=drop: no submission blend (expected cost ~ +0.69 s: board 28.09, v314 vs v316)"
-  step e81 "$(sub $((VT + 6)))" cp "$(sub $((VT + 5)))" "$(sub $((VT + 6)))"
+  step e81 "$(sub $((VT + 7)))" cp "$(sub $((VT + 6)))" "$(sub $((VT + 7)))"
 fi
 
 # ---------------------------------------------------------------- 7. LOBT edge lift + window clip
 if [[ $LOBT_LIFT == 1 ]]; then
-  step lobt "$(sub $((VT + 7)))" env LOBT_CLIP=1 "$PY" src/lobt_edge_lift.py $((VT + 6)) $((VT + 7))
+  step lobt "$(sub $((VT + 8)))" env LOBT_CLIP=1 "$PY" src/lobt_edge_lift.py $((VT + 7)) $((VT + 8))
 else
-  step lobt "$(sub $((VT + 7)))" "$PY" src/lobt_window_clip.py $((VT + 6)) $((VT + 7))
+  step lobt "$(sub $((VT + 8)))" "$PY" src/lobt_window_clip.py $((VT + 7)) $((VT + 8))
 fi
-FINAL=$WORK/$(sub $((VT + 7)))
+if [[ $PROTECT == 1 ]]; then   # rows = where the TabPFN file differs from the tail base; values = the TabPFN file's
+  step protect "$(sub $((VT + 9)))" env TAB_BASE=$B "$PY" src/protect_tabpfn_rows.py $((VT + 8)) $((VT + 2)) $((VT + 9))
+else
+  step protect "$(sub $((VT + 9)))" cp "$(sub $((VT + 8)))" "$(sub $((VT + 9)))"
+fi
+FINAL=$WORK/$(sub $((VT + 9)))
 
 # ---------------------------------------------------------------- 8. final checks and size of every stage
 STEP=final_check
-VB=$VB VT=$VT "$PY" - > logs/final_check.log 2>&1 <<'PY'
+VB=$VB VT=$VT B=$B "$PY" - > logs/final_check.log 2>&1 <<'PY'
 import os, sys
 import numpy as np, polars as pl
-VB, VT = int(os.environ["VB"]), int(os.environ["VT"])
+VB, VT, B = int(os.environ["VB"]), int(os.environ["VT"]), int(os.environ["B"])
 T = "TAXITIME_SEC_mvt"
 tpl = pl.read_parquet("data/prc-2026-datasets/submitting.parquet")
 rd = lambda v: pl.read_parquet(f"submissions/gentle-igloo_v{v}.parquet").sort("MVT_ID_mvt")
-fin = rd(VT + 7)
+fin = rd(VT + 9)
 assert fin.schema == tpl.schema, (fin.schema, tpl.schema)
 assert fin["MVT_ID_mvt"].equals(tpl["MVT_ID_mvt"].sort()), "MVT_ID set differs from the template"
 assert fin[T].null_count() == 0 and int(fin[T].min()) >= 0, "null or negative predictions"
 f = pl.read_parquet("data/features_e106.parquet", columns=["MVT_ID_mvt", "split", "d_mvt_lobt"]).filter(pl.col("split") == "rank")
 j = fin.join(f, on="MVT_ID_mvt", how="left")
 out = ((j[T] < j["d_mvt_lobt"] - 3606) | (j[T] > j["d_mvt_lobt"] + 3606)).fill_null(False).sum()
-print(f"final v{VT + 7}: rows {fin.height}, mean {fin[T].mean():.1f}, max {fin[T].max()}, outside the LOBT window {out}")
+print(f"final v{VT + 9}: rows {fin.height}, mean {fin[T].mean():.1f}, max {fin[T].max()}, outside the LOBT window {out}")
 prev = rd(VB + 1)
-for name, v in (("TabPFN", VT + 2), ("E14", VT + 3), ("E70", VT + 4), ("E64", VT + 5), ("E81", VT + 6), ("LOBT", VT + 7)):
+steps = ([("E167", B)] if B != VB + 1 else []) + [("TabPFN", VT + 2), ("E14", VT + 3), ("E70", VT + 4), ("E64", VT + 5),
+                                                   ("E152", VT + 6), ("E81", VT + 7), ("LOBT", VT + 8), ("protect", VT + 9)]
+for name, v in steps:
     cur = rd(v)
     d = cur[T].cast(float).to_numpy() - prev[T].cast(float).to_numpy()
     print(f"{name:6s} v{v}: changed {int((d != 0).sum())} rows, RMS change {np.sqrt((d ** 2).mean()):.3f} s, max |d| {np.abs(d).max():.0f} s")
