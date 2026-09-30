@@ -1,6 +1,6 @@
 #!/bin/zsh
-# 1.10 slots (journal 166, 173): S1' v655 (T2 control) -> v729 (E159b LSZH on v588) -> v719 (E159b LSZH+EDDF on v588) -> S2' v695 (E130) -> S3' v685 (E157).
-# Fallback for a missing hetzner file: E156 v665, then U3 v675. Files come from hetzner once src/hz_builds_1oct.sh has finished.
+# 1.10 slots (journal 166, 173, 186): S1' v655 (T2 control) -> v729 (E159b LSZH on v588) -> v719 (E159b LSZH+EDDF on v588) -> S2' v695 (E130) -> S5' v665 (E156, tail rows).
+# Fallback for a missing hetzner file: E157 v685, then U3 v675. Files come from hetzner once src/hz_builds_1oct.sh has finished.
 set -uo pipefail
 cd ~/prc-2026
 LOG=data/submit_1oct.log
@@ -22,9 +22,9 @@ upload_and_wait () {
   done
 }
 n=0
-for pair in "655 588" "729 588" "719 729" "695 655" "685 655"; do
+for pair in "655 588" "729 588" "719 729" "695 655" "665 655"; do
   set -- ${=pair}
   upload_and_wait $1 $2 && n=$((n + 1))
 done
-[ $n -lt 5 ] && upload_and_wait 665 655; [ $n -lt 4 ] && upload_and_wait 675 655
+[ $n -lt 5 ] && upload_and_wait 685 655; [ $n -lt 4 ] && upload_and_wait 675 655
 echo "[$(date -u +%H:%MZ)] end ($n)" >> $LOG
