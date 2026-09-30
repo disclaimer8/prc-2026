@@ -13,6 +13,6 @@ echo "[$(date +%H:%M)] E170 features" > $L
 echo "[$(date +%H:%M)] E170 CV" >> $L
 mkdir -p data/cv_preds_e170_hz
 CV_OUT=data/cv_preds_e170_hz FEATURES=data/features_e170.parquet .venv/bin/python src/cv_fold_preds_nested.py > data/e170_cv.log 2>&1
-PYTHONPATH=src .venv/bin/python src/fold_metrics.py data/cv_preds_e163_hz data/cv_preds_e170_hz 2>&1 | tail -9 >> $L
-PYTHONPATH=src .venv/bin/python src/fold_metrics.py data/cv_preds_e116prod_hz data/cv_preds_e170_hz 2>&1 | tail -9 >> $L
+FEATURES=data/features_e106.parquet .venv/bin/python src/gate.py data/cv_preds_e163_hz data/cv_preds_e170_hz 2>&1 | grep -viE "warn|extension|Polars 2.0" >> $L
+FEATURES=data/features_e106.parquet .venv/bin/python src/gate.py data/cv_preds_e116prod_hz data/cv_preds_e170_hz 2>&1 | grep SUMMARY >> $L
 echo "[$(date +%H:%M)] done" >> $L

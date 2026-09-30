@@ -57,7 +57,14 @@ if os.environ.get("E130_REG2"):  # E130 (journal 166): raw-target regressor mixe
     reg2 = np.array([reg2_map[m] for m in rank["MVT_ID_mvt"].to_numpy()])
     w2 = float(os.environ["E130_W"])
     print(f"E130: raw regressor at w {w2}, corr with the blend {np.corrcoef(r, reg2)[0, 1]:.4f}, RMS diff {np.sqrt(np.mean((r - reg2) ** 2)):.1f} s")
-    r = (1 - w2) * r + w2 * reg2
+    w3, reg3 = 0.0, 0.0
+    if os.environ.get("E130_REG3"):  # E171 (journal 204): a second member (raw + lobt together), r = (1 - w2 - w3) r + w2 reg2 + w3 reg3
+        z3 = np.load(os.environ["E130_REG3"])
+        reg3_map = dict(zip(z3["mvt_id"], z3["reg"]))
+        reg3 = np.array([reg3_map[m] for m in rank["MVT_ID_mvt"].to_numpy()])
+        w3 = float(os.environ["E130_W3"])
+        print(f"E171: second member at w {w3}, corr with reg2 {np.corrcoef(reg2, reg3)[0, 1]:.4f}")
+    r = (1 - w2 - w3) * r + w2 * reg2 + w3 * reg3
 
 values = [r] + [rank[c].to_numpy() for c in T.CANDIDATES.values()] + [r + T.DAY]
 values = np.column_stack(values)

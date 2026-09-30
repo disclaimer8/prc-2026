@@ -40,8 +40,8 @@ def target(d: pl.DataFrame) -> tuple[np.ndarray, np.ndarray]:
     y = np.clip(d[T.TARGET].to_numpy().astype(float), *T.REG_CLIP)
     if MODE == "raw":
         anchor = np.zeros(d.height)
-    elif MODE == "lobt":
-        l = d["d_mvt_lobt"].to_numpy().astype(float)
+    elif MODE in ("lobt", "sched", "eobt", "iobt"):  # E172 (journal 205): the same anchored form on the other planned times
+        l = d[f"d_mvt_{MODE}"].to_numpy().astype(float)
         anchor = np.where(np.isnan(l), 0.0, np.clip(np.nan_to_num(l), 0, 7200))
     else:
         raise SystemExit(f"unknown E130_MODE {MODE}")

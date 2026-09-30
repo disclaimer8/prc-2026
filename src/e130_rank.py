@@ -36,7 +36,7 @@ MODE = os.environ.get("E130_MODE", "raw")
 def anchor(d):
     if MODE == "raw":
         return np.zeros(d.height)
-    l = d["d_mvt_lobt"].to_numpy().astype(float)
+    l = d[f"d_mvt_{MODE}"].to_numpy().astype(float)  # lobt; sched / eobt / iobt for E172
     return np.where(np.isnan(l), 0.0, np.clip(np.nan_to_num(l), 0, 7200))
 af, ap = anchor(fit), anchor(pred)
 yf = np.clip(np.clip(fit[T.TARGET].to_numpy().astype(float), *T.REG_CLIP) - af, -7200, 7200)
