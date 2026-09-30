@@ -1,0 +1,27 @@
+# New open-data sweep, 26.09.2026: AOBT / ground movement for LFPG, LIRF, LTFM (Jan + Jul 2026)
+
+The bar is the one in SOURCES.md: the licence must be open (organiser, 17.09: "if their license applies as open data, ok").
+Everything below was opened and checked on 26.09. **Result: nothing new passes that bar and adds observations
+at the three blind airports.** Ranked by how close each one came.
+
+| # | Candidate | What it is (checked) | Jan/Jul 2026 at LFPG/LIRF/LTFM | Licence | Verdict |
+|---|---|---|---|---|---|
+| 1 | **OPDI code, `euctrl-pru/OPDI`** PR #22 `events_v0.3.0` (milestones on the flight list, merged 16.09), #25 worldwide coverage (merged 21.09); `opdi-portal` PR #14 "AOBT/AIBT measured" (11.09) | Code and a paper, **no data release**. The v4 campaign (OpenSky, 05–07.06.2026, 20 aerodromes) takes pooled AOBT coverage from 9.1% to 90.1% after a bug fix: `airport_admit_on_ground` never took effect because `on_ground` had been projected out, so surface reports failed the altitude gate without any error. `papers/flight-events-v4/data/per_airport_2026.csv` lists EBBR, EDDS, EDDP, ESSA, LEIB, LSZH, LFPO, LHBP, EFHK and others, but **none of LFPG, LIRF or LTFM** | No data. Study dates are 5–7 June only | Repos have no LICENSE (404). OPDI data is non-commercial | **Not usable as data.** Watch for a v0.0.3 data drop: if it reprocesses Jan/Jul with the fix, OPDI block times would become dense. The licence wall would still stand. Worth checking whether our own ADS-B stages drop `on_ground`-only points the same way |
+| 2 | **OPDI v0.0.2 files for Jun–Jul 2026** (`flight_events_20260629_20260709` … `20260729_20260808`, `flight_list_202607`, measurements) | HTTP 200, 0.5 GB per 10 days, Last-Modified 17.08.2026. The site says "refreshed July 2026" and covers 01.2022–07.2026 | July is present, but v0.0.2 has the old detector, so block-event coverage is ~LSZH only (as measured earlier) | EUROCONTROL disclaimer: non-commercial, no modification | Already in SOURCES.md (Jan 2022–Jul 2026). Nothing has changed since 20.09. Closed |
+| 3 | **`juliangehring/adsb`** (Hugging Face, created 05.09, updated 07.09) | New sibling of `adsb-core`: `core` plus a new **`extended`** partition, daily for 2023–2026-09-04, including all of Jan and Jul 2026 (core 1.08 GB/day, extended 0.47 GB/day) | Same source as `adsb-core`, which was measured on 22.09 as a strict subset of our adsb.lol archive within 7 km (LFPG +0, LTFM 1 vs 35). `extended` looks like extra columns for the same points, not new receivers | Tag ODbL. Gated, **manual approval** | Low value. Request access only to confirm that `extended` adds no new aircraft |
+| 4 | **Internet Archive captures of the departure boards** | CDX counts: adr.it `pax-fco-voli*` Jan 146 / Jul 14 captures (all of July's on the morning of 10.07); istairport.com departure page Jan 6 / Jul 2; parisaeroport.fr CDG departures 0/0 | An opened ADR July capture shows "Nessun elemento è stato trovato" (rendered empty). An IST capture (11.01) contains 0 flight numbers because the page is filled by JS | Airport site content, not open | **Dead**, on both content and licence |
+| 5 | Airport and national portals: data.gouv.fr (queried by API), ENAC/ADR, İBB Açık Veri, DHMİ, Aena | data.gouv.fr has only CDG/Orly monthly passengers and movements (2014) and **Lyon** real-time departures (live, not history). ADR and ENAC offer live boards and monthly statistics. İBB has no airport dataset. DHMİ and iGA are live only | None | — | Nothing historical per flight. Confirms the 18.09 finding |
+| 6 | Zenodo / HF / Kaggle / GitHub sweep (2026 records) | Zenodo 20127242 "ML predictions of TOBT… all European CDM airports" is a single PDF paper (CC BY-SA). HF `nefelisxt/inbound-flight-data` is EDDF–LGTS from OpenSky (CC BY-NC). `345rf4gt56t4r3e3/flight-delays-europe-2023-2025` is derived from OPDI and ends in 2025. OpenSky Zenodo flightlists stopped in 2022 (NC). Amelia-42 is US only. GitHub IST scrapers (`ist-flight-monitor`, `trackist`) keep live data or a 5-day sample only. Zenodo ADS-B datasets are San Diego, Philippines, Caribbean (ADSBiq) | None | Mixed | Nothing relevant |
+| 7 | Other ADS-B networks with a `globe_history` endpoint | globe.adsb.one → 521; theairtraffic.com → 403 (and it already feeds adsb.lol); adsb.fi → 403; adsb.exposed is a front end over adsb.lol and similar | None | — | Nothing new |
+| 8 | ADP VITRAIL (vitrail.entrevoisins.org) | Radar tracks around CDG/ORY with a 30-minute delay, airborne only, viewer with no export | No ground or off-block data | Not open | Not useful |
+
+## Bottom line
+- No open source with Jan/Jul 2026 off-block or surface observations at LFPG, LIRF or LTFM has appeared since 20.09.
+- The only real movement is OPDI's block-time fix (code plus paper, September). It shows the observations exist in
+  OpenSky at ~90% of aerodromes. But no dataset has been released, our three airports are not in the study set, and
+  the licence stays non-commercial.
+- A side lesson for our pipeline, from OPDI PR #14: surface reports carry no altitude, so any altitude gate or
+  column projection that drops `on_ground` silently deletes stand sightings. Check `adsb_offblock_*` for the same pattern.
+
+Sources: opdi.aero/flight-event-data; github.com/euctrl-pru/OPDI/pull/22, /pull/25; github.com/euctrl-pru/opdi-portal/pull/14;
+huggingface.co/datasets/juliangehring/adsb; zenodo.org/records/20127242; web.archive.org CDX; data.gouv.fr API.
