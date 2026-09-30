@@ -30,7 +30,10 @@ prep = lambda df: df.filter(pl.col("PHASE_mvt") == "DEP").with_columns(
     mvt=pl.col("MVT_TIME_UTC_mvt").dt.epoch("s").cast(pl.Float64), month=pl.col("MVT_TIME_UTC_mvt").dt.month(),
     cs=pl.coalesce("CALLSIGN_flt", "FLIGHT_mvt").str.replace_all(" ", "")).drop("CALLSIGN_flt", "FLIGHT_mvt", "MVT_TIME_UTC_mvt", "PHASE_mvt")
 tr = prep(pl.concat([pl.read_parquet(p, columns=cols) for p in sorted(glob.glob("data/prc-2026-datasets/training_*.parquet"))]))
-tr = tr.filter((pl.col("ADEP_mvt") == "LSZH") & pl.col("month").is_in([1, 7]))
+# E159c (journal 177): E159_MONTHS=all fits on every 2025 month (LOMO 12/12); default Jan + Jul as the first build
+tr = tr.filter(pl.col("ADEP_mvt") == "LSZH")
+if os.environ.get("E159_MONTHS", "1,7") != "all":
+    tr = tr.filter(pl.col("month").is_in([int(x) for x in os.environ.get("E159_MONTHS", "1,7").split(",")]))
 st = pl.concat([pl.DataFrame({k: np.load(p)[k] for k in ("mvt_id", "pred", "y")}) for p in sorted(glob.glob(f"{BASE}/fold_*.npz"))]).rename({"mvt_id": "MVT_ID_mvt"})
 a = match(tr, w).filter(pl.col("exit").is_not_null()).join(st, on="MVT_ID_mvt", how="inner").with_columns(
     t_opdi=pl.col("mvt") - pl.col("exit"), twy_s=pl.col("twy") - pl.col("exit")).with_columns(d_opdi=pl.col("t_opdi") - pl.col("pred"), r=pl.col("y") - pl.col("pred"))
