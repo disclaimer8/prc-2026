@@ -27,7 +27,8 @@ import polars as pl
 
 sys.path.insert(0, os.path.dirname(__file__))
 
-OUT = "submissions/cat_reg_rank_seed{}.npz"
+OUT = os.environ.get("CAT_SEED_OUT", "submissions/cat_reg_rank_seed{}.npz")   # E175: another table must not overwrite the E106 seeds
+MERGED = os.environ.get("CAT_MERGE_OUT", "submissions/cat_reg_rank_seeds.npz")
 
 
 def merge(seeds: list[int]) -> None:
@@ -48,8 +49,8 @@ def merge(seeds: list[int]) -> None:
     print(f"seeds merged: {[s for s, _ in have]}")
     print(f"per-row seed variance {spread:.1f} s^2 (sd {np.sqrt(spread):.1f} s); "
           f"averaging {len(P)} removes {1 - 1 / len(P):.2f} of it")
-    np.savez("submissions/cat_reg_rank_seeds.npz", mvt_id=ids, reg=P.mean(axis=0), per_seed=P)
-    print(f"wrote submissions/cat_reg_rank_seeds.npz over {len(P)} seeds, mean {float(P.mean()):.1f}")
+    np.savez(MERGED, mvt_id=ids, reg=P.mean(axis=0), per_seed=P)
+    print(f"wrote {MERGED} over {len(P)} seeds, mean {float(P.mean()):.1f}")
 
 
 def fit_one(iterations: int, seed: int) -> None:
