@@ -365,11 +365,11 @@ fi
 cp -f "$CAT" submissions/cat_reg_rank.npz   # blend.py reads this fixed path
 step blend "$(sub $((VB + 1)))" env LGB_SEEDS=submissions/lgb_reg_seeds_v$VB.npz ${MEMBER_SPEC:+E130_MEMBERS=$MEMBER_SPEC} \
   "$PY" src/blend.py $VB $((VB + 1)) 0.65
-[[ -z $MEMBER_SPEC ]] || grep -E "^E172 member|^E130 member|^wrote" logs/blend.log | tee -a logs/chain.log
+[[ -z $MEMBER_SPEC ]] || { grep -hE "^E172 member|^E130 member|^wrote" logs/blend.log 2>/dev/null | tee -a logs/chain.log || true; }   # no log when the step was skipped
 B=$((VB + 1))
 if [[ $E167 == 1 ]]; then   # rule A+B on parts_v$B -> v$B+1 and parts_v$B+1 (reads the WORK ranking and features_e106)
   step e167 "$(sub $((B + 1)))" "$PY" src/e167_nm_window_rule.py $B $((B + 1))
-  grep -E "^linked|^changed" logs/e167.log | tee -a logs/chain.log
+  grep -hE "^linked|^changed" logs/e167.log 2>/dev/null | tee -a logs/chain.log || true
   B=$((B + 1))
 fi
 PARTS=submissions/parts_v$B.npz
