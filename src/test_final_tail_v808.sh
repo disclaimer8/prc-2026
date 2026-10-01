@@ -13,7 +13,11 @@ WORK=${WORK:-$HOME/prc-final-test808}
 PY=${PY:-$MAIN/.venv/bin/python}
 mkdir -p "$WORK"/{logs,submissions,data/prc-2026-datasets}
 cd "$WORK"
-for f in features_final features_e28 features_e77 features_e106 features_e113; do ln -sf "$MAIN/data/$f.parquet" data/$f.parquet; done
+for f in features_e106 features_e113; do ln -sf "$MAIN/data/$f.parquet" data/$f.parquet; done
+# features_final/e28/e77 are only inputs of the (skipped) feature steps; hetzner has no features_final -> placeholders
+for f in features_final features_e28 features_e77; do
+  if [[ -s $MAIN/data/$f.parquet ]]; then ln -sf "$MAIN/data/$f.parquet" data/$f.parquet; else ln -sf "$MAIN/data/features_e106.parquet" data/$f.parquet; fi
+done
 "$PY" -c "
 import json; j = json.load(open('$MAIN/data/last_validation.json')); assert 'reg' in j['best']; json.dump(j, open('data/validation_v900.json', 'w'))"
 S=$MAIN/submissions
