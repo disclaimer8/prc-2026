@@ -4,7 +4,8 @@
 # parts_v801. The tail then runs for real: TabPFN rows of v361 -> (no E14) -> E141 keep-all -> E64 keep-all -> E152 -> E81
 # reuse -> LOBT lift -> protected rows = FINAL v919, compared stage by stage with the hetzner build v802..v808
 # (src/hz_build_e172.sh). On hetzner the files must be identical; on the Mac the ADS-B stage LightGBM runs on ARM, so small
-# differences in v914+ are expected (v912/v913 must still be identical).
+# differences in v914+ are expected (v912/v913 must still be identical). The Mac lacks the head_* inputs of E141: run on hetzner
+# (hz_queue/22_test808.sh, WORK on /srv).
 #   MAIN=~/prc-2026 PY=~/prc-2026/.venv/bin/python bash src/test_final_tail_v808.sh
 set -euo pipefail
 MAIN=${MAIN:-$HOME/prc-2026}
@@ -18,8 +19,9 @@ import json; j = json.load(open('$MAIN/data/last_validation.json')); assert 'reg
 S=$MAIN/submissions
 ln -sf "$S/gentle-igloo_v240.parquet" submissions/gentle-igloo_v900.parquet    # skipped 'submit' (only blend reads it; blend is skipped)
 ln -sf "$S/lgb_reg_seeds_v240.npz" submissions/lgb_reg_seeds_v900.npz
-ln -sf "$S/cat_reg_rank_seed10.npz" submissions/cat_reg_rank_v900.npz          # placeholders: blend is skipped
-ln -sf "$S/cat_reg_rank_seed10.npz" submissions/cat_reg_rank_seeds_v900.npz
+CATP=$S/cat_reg_rank_seeds_v530.npz; [[ -s $CATP ]] || CATP=$S/cat_reg_rank_seed10.npz   # placeholders: blend is skipped
+ln -sf "$CATP" submissions/cat_reg_rank_v900.npz
+ln -sf "$CATP" submissions/cat_reg_rank_seeds_v900.npz
 for m in raw lobt sched; do ln -sf "$S/e130_${m}_rank.npz" submissions/e130_${m}_rank_v900.npz; done
 cp -f "$S/gentle-igloo_v801.parquet" submissions/gentle-igloo_v901.parquet
 cp -f "$S/parts_v801.npz" submissions/parts_v901.npz
