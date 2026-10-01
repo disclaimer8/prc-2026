@@ -8,8 +8,28 @@ root = Path(__file__).resolve().parent.parent
 md = (root / "REVIEW_BRIEF.md").read_text()
 page = (root / "review" / "brief.html").read_text()
 
-body_md = md[md.index("\n## ") + 1:]  # from the first numbered section (0. already checked), the status table above stays in the header
+body_md = md[md.index("\n## ") + 1:]  # from the first numbered section (0. already checked)
 html = markdown.markdown(body_md, extensions=["tables", "fenced_code", "sane_lists"])
+
+# 01.10: the header of the page comes from the markdown too (it had been frozen at 16.09): the "state as of" lede, the status
+# strip from the status table row, and the "read first" block (### before the first ##) as its own section
+head_md = md[:md.index("\n## ")]
+lede_line = next(l for l in head_md.splitlines() if "Состояние на" in l).lstrip("> ").strip()
+lede_html = markdown.markdown(lede_line)[3:-4]  # strip <p></p>
+row = next(l for l in head_md.splitlines() if l.startswith("| **") and "|" in l[3:])
+cells = [c.strip() for c in row.strip().strip("|").split("|")]
+bold = lambda c: (re.search(r"\*\*(.+?)\*\*", c) or re.search(r"(.+)", c)).group(1)
+plain = lambda c, n: re.sub(r"\*\*|`", "", re.sub(r"\s*\(.*", "", c))[:n]
+strip_html = (
+    '<div class="strip" role="group" aria-label="Статус">\n'
+    f'      <div class="hl"><div class="k">Лидерборд</div><div class="v">{bold(cells[0])}</div><div class="s">{(re.search(r"\(v\d+", cells[0]) or re.search(r"(.)", "?")).group(0).lstrip("(")} — лучший файл</div></div>\n'
+    f'      <div><div class="k">Место</div><div class="v">{bold(cells[1])}</div><div class="s">{re.sub(r"[*]", "", cells[1].split("(", 1)[1].rstrip(")"))[:90] if "(" in cells[1] else ""}</div></div>\n'
+    f'      <div><div class="k">В очереди</div><div class="v">доска</div><div class="s">{plain(cells[3], 90)}</div></div>\n'
+    f'      <div><div class="k">Дедлайн</div><div class="v">11.10</div><div class="s">23:59 CET, 5 сабмитов в день</div></div>\n'
+    '    </div>')
+first_md = head_md[head_md.index("### Читать первым"):] if "### Читать первым" in head_md else ""
+first_html = markdown.markdown(first_md.replace("### Читать первым", "## Ч. Читать первым", 1), extensions=["tables", "fenced_code", "sane_lists"]) if first_md else ""
+html = first_html + html
 
 # section anchors and table containers
 toc = []
@@ -34,5 +54,7 @@ page = head + "<ol>\n" + toc_html + "\n    </ol>" + rest
 start = page.index('<section id="')  # first content section, whatever its id
 end = page.index('<footer class="doc">')
 page = page[:start] + html + "\n\n    " + page[end:]
+page = re.sub(r'<p class="lede">.*?</p>', lambda m: f'<p class="lede">{lede_html}</p>', page, count=1, flags=re.S)
+page = re.sub(r'<div class="strip" role="group" aria-label="Статус">.*?\n    </div>', lambda m: strip_html, page, count=1, flags=re.S)
 (root / "review" / "brief.html").write_text(page)
 print("sections:", [n for _, _, n in toc])
