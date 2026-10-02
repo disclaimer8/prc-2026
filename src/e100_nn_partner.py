@@ -76,7 +76,7 @@ class Net(nn.Module):
 
 def fit_nn(xn, xc, y, card, seed=0):
     torch.manual_seed(seed); np.random.seed(seed)
-    net = Net(xn.shape[1], card).to(DEV)
+    net = Net(xn.shape[1], card, width=int(os.environ.get("NN_WIDTH", "512"))).to(DEV)   # E181: NN_WIDTH (default = E100)
     opt = torch.optim.AdamW(net.parameters(), lr=2e-3, weight_decay=1e-5)
     bs, n = 4096, len(y)
     steps = EPOCHS * (n // bs)
