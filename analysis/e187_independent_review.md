@@ -1,0 +1,32 @@
+# Независимое ревью E187 и защиты артефактов
+
+Проверено 04.10.2026 в `prc-2026-codex-e187`, без изменения кода, реальных OOF-расчётов или обучения. Прочитаны AGENTS, execution plan, три отчёта, эксперимент/гейт/публикация и тесты, исходная математика E172/fold_metrics, №256 и submission plan. Запущены только синтетические проверки: **56/56 PASS**, `git diff --check` чистый. Запрещённые legacy scripts/queues не изменены.
+
+## Исправить до заявления о полной готовности
+
+1. **P2 — разрешённая замена старого final может уничтожить новый competing final.** `src/rank_artifact.py:78`, `:126`, `:138`. `_replace_existing` запоминает лишь существование файла в начале; если при `overwrite=True` legacy/другой writer заменяет тот файл во время расчёта, `publish` безусловно вызывает `os.replace` и уничтожает новый результат. Эксклюзивный lock защищает только пользователей этого helper. Синтетически проверено: old final → вход writer(overwrite=True) → другой файл атомарно заменяет final → publish; `competing_final_preserved=False`. Это противоречит заявлению Task 2, что overwrite авторизует именно существовавший на старте final, и требованию защиты competing writer. Fresh path/default no-overwrite корректны, поэтому это не блокирует сам E187. Исправление: выбрать явно поддерживаемый контракт для overwrite; как минимум фиксировать identity/hash исходного final и отклонять изменение до публикации, не заявляя абсолютную защиту от некооперативного writer при обычном check+replace (остаётся TOCTOU). Полная гарантия требует всех publishers под одним lock либо публикации только в новый путь. Добавить тест с существовавшим old final и его заменой во время fit.
+
+2. **P2 — malformed E187 завершается как valid reject (exit 1), а не invalid (exit 2).** `src/e187_weight_objective.py:124`, `:175`, `:430`. `read_npz` не переводит `zipfile.BadZipFile` в `InvalidInput`; проверки `np.isfinite` без проверки dtype выпускают `TypeError`. Обе ошибки не входят в CLI except. Синтетически: строковый массив `pred=np.full(8, 'bad')` в полном fixture вызывает escaped TypeError из `main`; файл `b'PK\x03\x04broken'` вызывает escaped BadZipFile из reader. Необработанное исключение процесса даёт 1 — тот же код, что зарегистрированный корректный REJECT. Исправление: явная проверка numeric dtype/shape до numpy операций; нормализовать ошибки чтения malformed NPZ (включая BadZipFile) в InvalidInput; тестировать subprocess exit 2 для обоих случаев. Не скрывать KeyboardInterrupt/SystemExit. В отличие от standalone strict gate, E187 также пока не отклоняет duplicate NPZ member names.
+
+## Что подтверждено ревью
+
+- Grid и порядок соответствуют E172; clipping, preserved stored delta и восстановление regular/day values соответствуют исходной формуле. Scoring использует эквивалентную affine-сумму с точным clipping; неизбежная float64 погрешность ограничена обязательным reference parity.
+- Выбор fold k явно суммирует только другие пять folds, без cancellation через собственный score. Никаких новых tuning knobs или выбора по ranking. Прежний LOFO не является полностью вложенным stacking, и журнал/отчёт это правильно ограничивают.
+- До расчёта первичных метрик проходят все шесть reference checks; веса дополнительно восстанавливаются из сохранённого reg. Rank-deficient ambiguity явно отражена. Реальное совпадение ещё не проверено и должно остаться обязательным gate после prereg commit.
+- Первичный gate, masks, trimmed и нормализация совпадают с утверждённым протоколом. Строгий validator выравнивает IDs, сверяет y с features и coverage/months до SSE; stale values остаются диагностикой. Синтетические тесты подтверждают exit 0/1/2, audit-only и ключевые malformed inputs.
+- Обычный ranking run публикует только полный seed mean, checkpoint отделён, fresh-path final защищён атомарным no-clobber. Математика model/anchor/target/seed mean по diff сохранена.
+- №256 содержит фиксированный протокол и честные прогнозы до результатов. Submission plan отделяет готовность от обещаний, не выдаёт pre-tail OOF за v1139 и требует отдельное production-weight правило до ranking. Новых неподдержанных обещаний по содержанию не найдено; снимок реальных jobs/leaderboard в рамках ревью не перепроверялся.
+
+## Неблокирующее ограничение provenance
+
+`RankArtifactWriter` хеширует features при входе, но не проверяет сохранность файла после чтения/fit и перед final. Если источник заменится между hash и `pl.read_parquet`, финальный manifest может указывать hash другого содержимого. Для воспроизводимости стоит повторно проверить features hash перед publish (как уже сделано в E187), либо использовать immutable input snapshot. Реального изменения источников не наблюдалось.
+
+Рекомендация: исправить два P2, повторить соответствующие синтетические тесты, затем preregistration commit. Настоящий E187 запуск возможен только после него; он сам обязан подтвердить saved-reference parity до интерпретации результатов.
+
+## Повторная проверка Task 2
+
+Первое P2 **закрыто**: `overwrite=True` теперь отклоняется в конструкторе до чтения features; существующий final всегда отклоняется, `publish` всегда использует атомарный no-clobber `os.link`. Небезопасного check+replace для final больше нет. Изменённый контракт отражён в script docstring, тестах и Task 2 report. Сценарии collision/existing final/overwrite flag/interruption покрыты. SHA256 features повторно проверяется перед publish, поэтому замечание о provenance также закрыто в рамках согласованной проверки неизменности источника. Независимый повторный запуск Task 2: **18/18 PASS**. Второе P2 (malformed E187 exit status) на момент этого дополнения ещё ожидает исправления.
+
+## Повторная проверка Task 1 и окончательный статус
+
+Второе P2 **закрыто**: numeric dtype проверяется перед numpy ufuncs в prediction/member/metadata/ID; `BadZipFile` нормализуется в `InvalidInput`; reader отвергает NPY под именем NPZ и duplicate archive names. Два отдельных subprocess сценария из исходного repro теперь возвращают **exit 2**, содержат `INVALID:` без traceback и не создают completed manifest. Независимо запущены Task 1 **13/13 PASS**, затем весь актуальный набор **61/61 PASS** (3,023 s); `git diff --check` чистый. Новых блокирующих замечаний в исправлениях нет. Оба исходных P2 и дополнительное provenance замечание закрыты; реализация готова к preregistration commit, после которого возможен зарегистрированный реальный запуск с обязательной saved-reference parity. Фактических OOF результатов этим ревью не утверждается.

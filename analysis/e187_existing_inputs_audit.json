@@ -1,0 +1,234 @@
+{
+  "status": "audit_valid",
+  "valid": true,
+  "gate_passed": true,
+  "audit_only": true,
+  "require_body": false,
+  "control": "/Users/denyskolomiiets/prc-2026/data/cv_preds_fin1b_hz",
+  "candidate": "/Users/denyskolomiiets/prc-2026/data/cv_preds_e172_raw_lobt_sched_eobt_aobt_mlpa_f1b",
+  "features": "/Users/denyskolomiiets/prc-2026/data/features_fin1b.parquet",
+  "fold_count": 6,
+  "rows": 2085047,
+  "target_verified_against_features": true,
+  "sse_delta": {
+    "decided": -2117804842.0927072,
+    "strict": -2030663408.8651597,
+    "all": -2120697944.3917,
+    "body": -2036497821.110597,
+    "trimmed": -2042684372.8233986
+  },
+  "metrics": {
+    "decided": -2.0274251415566806,
+    "strict": -1.9440025668768377,
+    "all": -2.030194777465284,
+    "body": -1.9495879890259893,
+    "trimmed": -1.9555105226951828,
+    "lower_decided": 6
+  },
+  "gate_flags": {
+    "decided_lower": true,
+    "four_of_six": true,
+    "trimmed_lower": true,
+    "body_lower": true
+  },
+  "folds": [
+    {
+      "name": "fold_1_7.npz",
+      "rows": 344419,
+      "tail_rows": 45,
+      "sse_delta": {
+        "all": -491942368.344017,
+        "decided": -478062347.0861425,
+        "strict": -458518789.3552003,
+        "body": -468806163.3109909,
+        "trimmed": -464262054.58129007
+      },
+      "metrics": {
+        "all": -0.470948175183149,
+        "decided": -0.45766049942368253,
+        "strict": -0.4389509849719056,
+        "body": -0.4487993336884737,
+        "trimmed": -0.44444914990314477
+      }
+    },
+    {
+      "name": "fold_2_8.npz",
+      "rows": 334914,
+      "tail_rows": 23,
+      "sse_delta": {
+        "all": -596060391.8060776,
+        "decided": -591508079.9352074,
+        "strict": -563813674.264504,
+        "body": -511521463.5581214,
+        "trimmed": -565816232.8702334
+      },
+      "metrics": {
+        "all": -0.5706228450396879,
+        "decided": -0.5662648081914535,
+        "strict": -0.5397522923914749,
+        "body": -0.4896917105160754,
+        "trimmed": -0.5416693895592596
+      }
+    },
+    {
+      "name": "fold_3_9.npz",
+      "rows": 348399,
+      "tail_rows": 19,
+      "sse_delta": {
+        "all": -279694707.0174253,
+        "decided": -282081262.997257,
+        "strict": -277653025.8101491,
+        "body": -289036453.1361942,
+        "trimmed": -273427542.20211655
+      },
+      "metrics": {
+        "all": -0.267758421218415,
+        "decided": -0.27004312824102333,
+        "strict": -0.2658038710500504,
+        "body": -0.27670149782811637,
+        "trimmed": -0.2617587147014156
+      }
+    },
+    {
+      "name": "fold_4_10.npz",
+      "rows": 360962,
+      "tail_rows": 12,
+      "sse_delta": {
+        "all": -231968584.99275857,
+        "decided": -231282005.93733105,
+        "strict": -223235674.88184032,
+        "body": -238227246.02214944,
+        "trimmed": -233030048.2983537
+      },
+      "metrics": {
+        "all": -0.22206906506121732,
+        "decided": -0.22141178653820456,
+        "strict": -0.21370884169883483,
+        "body": -0.22806063070091503,
+        "trimmed": -0.22308522922791973
+      }
+    },
+    {
+      "name": "fold_5_11.npz",
+      "rows": 347534,
+      "tail_rows": 10,
+      "sse_delta": {
+        "all": -233336133.43676284,
+        "decided": -233212768.59245613,
+        "strict": -207153038.39979795,
+        "body": -211930273.8638894,
+        "trimmed": -221216826.45144856
+      },
+      "metrics": {
+        "all": -0.22337825183922622,
+        "decided": -0.22326015172822425,
+        "strict": -0.19831254979405788,
+        "body": -0.20288591136851933,
+        "trimmed": -0.21177614989295346
+      }
+    },
+    {
+      "name": "fold_6_12.npz",
+      "rows": 348819,
+      "tail_rows": 18,
+      "sse_delta": {
+        "all": -287695758.79465896,
+        "decided": -301658377.5443131,
+        "strict": -300289206.15366817,
+        "body": -316976221.2192516,
+        "trimmed": -284931668.41995627
+      },
+      "metrics": {
+        "all": -0.27541801912358876,
+        "decided": -0.2887847674340926,
+        "strict": -0.287474026970514,
+        "body": -0.3034489049238896,
+        "trimmed": -0.27277188941048947
+      }
+    }
+  ],
+  "normalization": {
+    "lb_rmse": 252.43,
+    "ranking_rows": 344841,
+    "denominator": 1044578563.56
+  },
+  "body_definition": "y <= 7200",
+  "values_consistency": {
+    "control": {
+      "fold_1_7.npz": {
+        "checked": true,
+        "consistent": false,
+        "max_abs_seconds": 0.0039062495343387127,
+        "tolerance_seconds": 1e-06
+      },
+      "fold_2_8.npz": {
+        "checked": true,
+        "consistent": false,
+        "max_abs_seconds": 0.0039062451833160594,
+        "tolerance_seconds": 1e-06
+      },
+      "fold_3_9.npz": {
+        "checked": true,
+        "consistent": false,
+        "max_abs_seconds": 0.0039062373543856665,
+        "tolerance_seconds": 1e-06
+      },
+      "fold_4_10.npz": {
+        "checked": true,
+        "consistent": false,
+        "max_abs_seconds": 0.0039062493160599843,
+        "tolerance_seconds": 1e-06
+      },
+      "fold_5_11.npz": {
+        "checked": true,
+        "consistent": false,
+        "max_abs_seconds": 0.0039062438590917736,
+        "tolerance_seconds": 1e-06
+      },
+      "fold_6_12.npz": {
+        "checked": true,
+        "consistent": false,
+        "max_abs_seconds": 0.003906243742676452,
+        "tolerance_seconds": 1e-06
+      }
+    },
+    "candidate": {
+      "fold_1_7.npz": {
+        "checked": true,
+        "consistent": false,
+        "max_abs_seconds": 1896.6486287281732,
+        "tolerance_seconds": 1e-06
+      },
+      "fold_2_8.npz": {
+        "checked": true,
+        "consistent": false,
+        "max_abs_seconds": 2184.974458680303,
+        "tolerance_seconds": 1e-06
+      },
+      "fold_3_9.npz": {
+        "checked": true,
+        "consistent": false,
+        "max_abs_seconds": 2183.6548093324227,
+        "tolerance_seconds": 1e-06
+      },
+      "fold_4_10.npz": {
+        "checked": true,
+        "consistent": false,
+        "max_abs_seconds": 2463.6087289627076,
+        "tolerance_seconds": 1e-06
+      },
+      "fold_5_11.npz": {
+        "checked": true,
+        "consistent": false,
+        "max_abs_seconds": 2001.6504684263673,
+        "tolerance_seconds": 1e-06
+      },
+      "fold_6_12.npz": {
+        "checked": true,
+        "consistent": false,
+        "max_abs_seconds": 2066.996058834382,
+        "tolerance_seconds": 1e-06
+      }
+    }
+  }
+}
