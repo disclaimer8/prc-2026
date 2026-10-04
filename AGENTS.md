@@ -39,7 +39,11 @@
   Код туда копируется `scp`, не git — перед запуском сверять `md5` нужных файлов с маком.
   Фоновый запуск по ssh: `ssh -f hetzner 'cd /root/prc-2026 && setsid nohup bash X.sh > log 2>&1 < /dev/null &' < /dev/null`
   (без `-f`/`setsid` локальная сессия висит).
-- home-pc — только LLM, для PRC не использовать.
+- **home-pc** (с 04.10 — Ubuntu 26.04): `ssh home-pc-lan` из домашней сети (быстро, ~40 МБ/с) или `ssh home-pc` через minipc.
+  `~/prc-2026`, `.venv` на Python 3.12 с теми же версиями, что на маке, но **только стек LightGBM** (polars, numpy,
+  lightgbm, pandas, pyarrow, scikit-learn, scipy) — без catboost/torch/tabpfn. 24 потока, 29 ГБ. Делит машину с
+  раннером GitHub (≤ 12 ядер / 12 ГБ) и Ollama (видеокарта): PRC — не больше **12 потоков**. Данные копировать
+  `rsync -a` по LAN (на маке `rsync` — openrsync, без `--info`), результаты забирать обратно на мак.
 
 ## Сборка лучшего файла и загрузка
 
