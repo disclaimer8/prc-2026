@@ -5,6 +5,8 @@
 Same configuration as the OOF arm that passed as the 6th member (data/cv_preds_e100_nn: features_e77, DROP_PREFIX
 day_,tq_,wxr_,month, PROXY_SCALE=1, fold target encodings, residual to the calibrated NM proxy), fitted on all of 2025.
 NN_SEEDS=3 averages three networks (E101: three seeds = one seed in CV, -0.646 vs -0.657), which only removes draw noise.
+E181a (journal 244-246): the same network on the final table,
+    env -u DROP_PREFIX FEATURES=data/features_fin1b.parquet E176_OUT=submissions/e130_mlpa_rank.npz NN_SEEDS=3 ...
 """
 import os
 import sys
@@ -17,7 +19,7 @@ import e100_nn_partner as N  # noqa: E402  (sets the E100 FEATURES / DROP_PREFIX
 import train as T  # noqa: E402
 
 assert os.environ["DROP_PREFIX"] == "day_,tq_,wxr_,month", os.environ["DROP_PREFIX"]
-assert os.environ["FEATURES"].endswith("features_e77.parquet"), os.environ["FEATURES"]
+assert os.environ["FEATURES"].endswith(("features_e77.parquet", "features_fin1b.parquet")), os.environ["FEATURES"]
 df = pl.read_parquet(T.FEATURES_PATH)
 fit, rank = df.filter(pl.col("split") == "train"), df.filter(pl.col("split") == "rank")
 del df
