@@ -35,6 +35,7 @@
   **Никогда не запускать `uv run` / `uv sync`**: они пересоздают `.venv` под работающими задачами. 14 ядер, 48 ГБ.
 - **hetzner** — `ssh hetzner`, `/root/prc-2026`, свой `.venv`. 12 ядер, 62 ГБ. На этой же машине живёт прод
   FlightFinder: не больше **6 потоков**, `nice`. **Один CV LightGBM за раз** (два одновременно — в 10 раз медленнее).
+  Для nested CV дополнительно `taskset -c 0-5 nice -n 10`: в `cv_fold_preds_nested.py`/`train.py` пока жёстко указано 10 потоков, одного `OMP_NUM_THREADS=6` недостаточно. Текущий E184 ограничен affinity без рестарта; подробности в HANDOFF.
   Код туда копируется `scp`, не git — перед запуском сверять `md5` нужных файлов с маком.
   Фоновый запуск по ssh: `ssh -f hetzner 'cd /root/prc-2026 && setsid nohup bash X.sh > log 2>&1 < /dev/null &' < /dev/null`
   (без `-f`/`setsid` локальная сессия висит).
