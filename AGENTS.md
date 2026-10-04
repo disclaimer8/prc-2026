@@ -19,11 +19,12 @@
 
 | Что | Где |
 |---|---|
-| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №250) | `HYPOTHESES_LOG.md` |
+| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №257) | `HYPOTHESES_LOG.md` |
 | Бриф для ревью: «Читать первым», раздел 0 (закрытое — не повторять), последние итоги — раздел 21cn | `REVIEW_BRIEF.md`; после правки — `.venv/bin/python review/build_brief.py` |
 | Обходы конкурентов и источников данных | `analysis/competitor_repos/_UPDATE_2026-10-04.md`, `analysis/data_sources_2026-10-04_{fable,sonnet}.md`, `SOURCES.md` |
 | Таблицы признаков (не в git) | `data/features_e106.parquet`, `data/features_e163.parquet`, **`data/features_fin1b.parquet`** (боевая) |
 | OOF для CV (не в git) | `data/cv_preds_*/fold_*.npz`; боевой контроль — **`data/cv_preds_fin1b_hz`**; члены смеси — `data/cv_e130<имя>/` |
+| Строгая проверка готовности OOF | `src/strict_oof_gate.py CONTROL CANDIDATE --features data/features_fin1b.parquet --audit-only`; после проверки применять исходный зарегистрированный гейт |
 | Сабмиты и прогнозы на ranking (не в git) | `submissions/gentle-igloo_vN.parquet`, `submissions/e130_*_rank.npz`, `submissions/cat_fin1b_seeds*.npz` |
 | Сборочные очереди hetzner | `hz_queue/*.sh` (последняя доска — `95_builds_4oct.sh`) |
 | Очереди загрузки | `src/submit_<дата>.sh` (последняя — `src/submit_4oct.sh`) |
@@ -66,6 +67,7 @@
 4. **Слоты тратить все 5 в день**, загружать только полные файлы, с прогнозом, записанным до загрузки.
    Веса по доске не подбирать, строки доской не прощупывать.
 5. Смешивать можно только полные сабмиты, а не части.
+   Для E130 ranking на FIN1b обязателен **новый** `E130_OUT` (например `submissions/e130_rawf_rank.npz`); final только после всех сидов, checkpoint не является готовым членом. Существующий final не перезаписывается даже с `E130_OVERWRITE=1`.
 6. **TabPFN недетерминирован** — не пересчитывать: переносить 42 строки из v361 (`tabpfn_rows` в сборочных скриптах).
 7. Контроль для CV — **боевой OOF** (`data/cv_preds_fin1b_hz`), не старые каталоги.
 8. Пробы резать по месяцам (временной разрез), не случайно.

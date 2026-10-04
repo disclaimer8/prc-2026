@@ -67,11 +67,11 @@ Tests first: shuffled row alignment passes; missing sixth fold rejects; duplicat
 ## Integration and review
 
 - [x] Root reviews each diff and runs the owned tests; a fresh reviewer checks the whole patch before use. Two P2 findings fixed and independently re-reviewed; 61 synthetic tests pass.
-- [ ] Root writes E187 preregistration in HYPOTHESES_LOG (next free number), forecast decided−0.02s, interval[−0.20,+0.20]; this is judgment, not data-derived. Forecast board0.00s, interval[−0.10,+0.10]. Commit journal+experiment+tests together before real OOF selection.
-- [ ] Run E187 with source-data root and fresh output; save complete results and gate evidence. Record a separate verdict entry with forecast-interval status; do not change protocol after seeing results.
-- [ ] Validate existing current control/reference with strict audit-only mode; run strict metrics on E187 outputs.
-- [ ] Integrate reviewed file changes into main checkout without changing the queued E172/gate scripts. Keep the isolation branch until work is integrated and evidence is saved.
-- [ ] Update operational handoff with exact paths, command, hashes/commit and result; verify Mac/Hetzner jobs continue.
+- [x] Root writes E187 preregistration in HYPOTHESES_LOG (№256), forecast decided−0.02s, interval[−0.20,+0.20]; this is judgment, not data-derived. Forecast board0.00s, interval[−0.10,+0.10]. Journal+experiment+tests committed together as `47c1005` before real OOF selection (started 20:27Z).
+- [x] Run E187 with source-data root and fresh output; save complete results and gate evidence. `data/e187_20261004_47c1005`, decided−0.004902s, 3/6 lower, rejected. Separate verdict №257, forecast inside interval; protocol unchanged.
+- [x] Validate existing current control/reference with strict audit-only mode; run strict metrics on E187 outputs. Both valid; independent E187 gate reproduces rejection and exact metrics; reg/values consistent.
+- [x] Integrate reviewed code into main checkout by fast-forward to `47c1005`; 67/67 tests there, including existing E186 tests. Queued E172/gate/metric/scripts unchanged. Keep isolation branch and saved evidence.
+- [x] Update operational handoff with paths, commands, hashes/commit and result; Mac AOBT E182 continues, Hetzner E182 finished and E184 started. Three guard files copied to Hetzner after verifying/backing up its original e130_rank.py; SHA256 equal locally/remotely, remote py_compile and strict CLI --help pass.
 
 ## Review focus
 
