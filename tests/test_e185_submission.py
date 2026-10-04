@@ -1,9 +1,11 @@
 """E185 recipe boundary checks; never starts a model fit or an upload."""
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'src'))
 try:
@@ -67,6 +69,21 @@ class BuilderTests(unittest.TestCase):
         E.reserve_versions(self.root, 'a'*40)
         with self.assertRaises((E.GuardError, FileExistsError)):
             E.reserve_versions(self.root, 'a'*40)
+
+    def test_upload_credential_file_is_private_and_limited_to_competition_keys(self):
+        keys = {'PRC_ACCESS_KEY': 'synthetic-access', 'PRC_SECRET_KEY': 'synthetic-secret'}
+        path = self.write('.prc-upload-credentials.json', json.dumps(keys))
+        path.chmod(0o644)
+        with self.assertRaises(E.GuardError):
+            E.load_upload_credentials(self.root)
+        path.chmod(0o600)
+        with patch.dict(os.environ, {}, clear=True):
+            E.load_upload_credentials(self.root)
+            self.assertEqual({k: os.environ[k] for k in keys}, keys)
+            self.assertEqual(set(os.environ), set(keys))
+        path.write_text(json.dumps({**keys, 'UNRELATED_KEY': 'unexpected'}))
+        with self.assertRaises(E.GuardError):
+            E.load_upload_credentials(self.root)
 
     def test_stage_plan_uses_post_e167_parts_for_both_adsb_stages(self):
         plan = E.stage_commands()

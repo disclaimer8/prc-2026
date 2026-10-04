@@ -12,3 +12,5 @@ catboost_info/
 private_notes/
 analysis/discord/
 analysis/competitor_repos/
+
+/.prc-upload-credentials.json

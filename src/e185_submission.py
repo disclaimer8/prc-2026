@@ -17,6 +17,7 @@ import os
 from pathlib import Path
 import re
 import shutil
+import stat
 import subprocess
 import sys
 import time
@@ -257,10 +258,33 @@ def preflight(root):
     return manifest
 
 
+def load_upload_credentials(root):
+    """Use only the two competition keys; never print or persist their values."""
+    credential_file = root/'.prc-upload-credentials.json'
+    if credential_file.exists():
+        info = credential_file.stat()
+        if (credential_file.is_symlink() or not stat.S_ISREG(info.st_mode)
+                or info.st_uid != os.getuid() or stat.S_IMODE(info.st_mode) & 0o077):
+            raise GuardError('competition credential file must be private and owned by this user')
+        try:
+            credentials = json.loads(credential_file.read_text())
+        except (ValueError, OSError):
+            raise GuardError('competition credential file is unreadable') from None
+        expected = {'PRC_ACCESS_KEY', 'PRC_SECRET_KEY'}
+        if (not isinstance(credentials, dict) or set(credentials) != expected
+                or not all(isinstance(v, str) and v for v in credentials.values())):
+            raise GuardError('competition credential file must contain exactly two nonempty keys')
+        os.environ.update(credentials)
+    else:
+        from dotenv import load_dotenv
+        load_dotenv(root/'.env')
+    if not all(os.environ.get(key) for key in ('PRC_ACCESS_KEY', 'PRC_SECRET_KEY')):
+        raise GuardError('competition upload credentials are unavailable on this node')
+
+
 def bucket_inventory(root):
-    from dotenv import load_dotenv
     from minio import Minio
-    load_dotenv(root/'.env')
+    load_upload_credentials(root)
     client = Minio('s3.opensky-network.org', access_key=os.environ['PRC_ACCESS_KEY'],
                    secret_key=os.environ['PRC_SECRET_KEY'], secure=True)
     objects = []
