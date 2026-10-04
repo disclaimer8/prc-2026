@@ -19,7 +19,7 @@
 
 | Что | Где |
 |---|---|
-| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №261) | `HYPOTHESES_LOG.md` |
+| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №262) | `HYPOTHESES_LOG.md` |
 | Бриф для ревью: «Читать первым», раздел 0 (закрытое — не повторять), последние итоги — раздел 21cn | `REVIEW_BRIEF.md`; после правки — `.venv/bin/python review/build_brief.py` |
 | Обходы конкурентов и источников данных | `analysis/competitor_repos/_UPDATE_2026-10-04.md`, `analysis/data_sources_2026-10-04_{fable,sonnet}.md`, `SOURCES.md` |
 | Таблицы признаков (не в git) | `data/features_e106.parquet`, `data/features_e163.parquet`, **`data/features_fin1b.parquet`** (боевая) |
@@ -62,7 +62,7 @@
   Оценка: `.venv/bin/python src/leaderboard.py | grep v<N>.parquet` (появляется через ~2 мин). Публичный API доски:
   `https://datacomp.opensky-network.org/api/competitions/bb3693e1-26bc-4a9e-8619-4fe78b4eab0c/leaderboard`
   (`{items, nextCursor}`).
-- Имя файла строго `gentle-igloo_vN.parquet`, N не повторять (занято до 1139; e2e-каталог hetzner использует 1001–1060).
+- Имя файла строго `gentle-igloo_vN.parquet`, N не повторять (лучший v1139; в служебных артефактах есть v9249; для E185 зарезервированы 12000–12019, финал12008; e2e использует 1001–1060).
 
 ## Правила работы (каждое оплачено ошибкой)
 
