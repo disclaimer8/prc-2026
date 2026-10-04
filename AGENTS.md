@@ -40,9 +40,13 @@
   Фоновый запуск по ssh: `ssh -f hetzner 'cd /root/prc-2026 && setsid nohup bash X.sh > log 2>&1 < /dev/null &' < /dev/null`
   (без `-f`/`setsid` локальная сессия висит).
 - **home-pc** (с 04.10 — Ubuntu 26.04): `ssh home-pc-lan` из домашней сети (быстро, ~40 МБ/с) или `ssh home-pc` через minipc.
-  `~/prc-2026`, `.venv` на Python 3.12 с теми же версиями, что на маке, но **только стек LightGBM** (polars, numpy,
-  lightgbm, pandas, pyarrow, scikit-learn, scipy) — без catboost/torch/tabpfn. 24 потока, 29 ГБ. Делит машину с
-  раннером GitHub (≤ 12 ядер / 12 ГБ) и Ollama (видеокарта): PRC — не больше **12 потоков**. Данные копировать
+  `~/prc-2026`, `.venv` на Python 3.12 со стеком LightGBM; рабочую среду текущего E185 не менять. Ryzen 9 7900X3D,
+  24 логических CPU, 30 713 MiB RAM, Radeon RX 7900 XTX 24 GiB. **04.10 Denys разрешил все CPU/GPU для PRC и временно отменил LLM**:
+  `flight-llm-api.service` и `ollama.service` остановлены, оба `inactive/MainPID=0` проверены. Старый предел 12 потоков
+  для новых PRC-задач снят; запущенный E185 остаётся на своих 12 потоках до завершения. Не останавливать чужие CI jobs.
+  GPU-среда **`.venv-rocm`** отдельная: официальный torch 2.13.0+rocm10.0.0, устройство `cuda:0` = RX 7900 XTX.
+  amdgpu уже был установлен; системный драйвер не заменялся. Синтетические forward/backward и CPU parity прошли;
+  это не проверка полного CV. Данные копировать
   `rsync -a` по LAN (на маке `rsync` — openrsync, без `--info`), результаты забирать обратно на мак.
 
 ## Сборка лучшего файла и загрузка
