@@ -284,8 +284,92 @@ class IngestionTests(unittest.TestCase):
         self.assertEqual(self.read("measurements")["opdi_event_id"].to_pylist(), [str(big)])
         self.assertEqual(self.read("measurements")["id"].to_pylist(), [-17])
 
+    def legacy_pair(self):
+        old = "20241201_1005022351812"
+        event = dict(self.events[0], id=10842447142759660653)
+        schema = pa.Table.from_pylist([self.events[0]]).schema.set(0, pa.field("id", pa.uint64()))
+        self.payloads[f"flight_events_{W}.parquet"] = parquet_bytes([event], schema)
+        rows = [dict(id=f"measurement_{n}", event_id=old, type=typ, value=3.5, version="v0.0.2")
+                for n, typ in enumerate(("Distance flown (NM)", "Time Passed (s)"))]
+        self.payloads[f"measurements_{W}.parquet"] = parquet_bytes(rows)
+        return rows
+
+    def test_legacy_measurement_strings_use_verified_seed_zero_and_preserve_source_ids(self):
+        self.legacy_pair()
+        report = self.run_ingest()
+        self.assertEqual(report["status"], "complete")
+        rows = self.read("measurements").to_pylist()
+        self.assertEqual(rows[0]["event_id"], "20241201_1005022351812")
+        self.assertEqual(rows[0]["opdi_event_id"], "10842447142759660653")
+        self.assertEqual(rows[0]["id"], "measurement_0")
+        audit = report["windows"][W]["measurements"]["audit"]
+        self.assertEqual(audit["join_key_mapping_rows"], {"xxh64_utf8_seed0_uint64": 2})
+        self.assertEqual(audit["matched_event_ids"], 1)
+
+    def test_opaque_event_keys_are_identity_when_event_source_is_string(self):
+        self.events = [dict(self.events[0], id="opaque_event_001")]
+        self.measurements = [dict(self.measurements[0], event_id="opaque_event_001")]
+        self.set_sources(W)
+        report = self.run_ingest()
+        self.assertEqual(report["status"], "complete")
+        self.assertEqual(self.read("events")["opdi_event_id"].to_pylist(), ["opaque_event_001"])
+        self.assertEqual(self.read("measurements")["opdi_event_id"].to_pylist(), ["opaque_event_001"])
+
+    def test_legacy_and_numeric_aliases_detect_conflicting_measurement_values(self):
+        rows = self.legacy_pair()
+        rows.append(dict(rows[0], id="conflict", event_id="10842447142759660653", value=999.0))
+        self.payloads[f"measurements_{W}.parquet"] = parquet_bytes(rows)
+        report = self.run_ingest()
+        self.assertEqual(report["status"], "incomplete")
+        self.assertIn("Conflicting measurement", report["windows"][W]["measurements"]["error"])
+
+    def test_known_previous_integer_event_checkpoint_reused_after_measurement_fix(self):
+        old_sha = "e372d1a05d1e2fb7b83c0e7089c922f47430a6ff53205dc86fe119f1cb6a5f8a"
+        ingestor = M.Ingestor(self.root, self.flights, windows=[W], opener=self.opener, retries=1)
+        ingestor.code_sha = old_sha
+        with patch.object(M, "PIPELINE_VERSION", 1):
+            self.assertEqual(ingestor.run()["status"], "complete")
+        self.payloads.pop(f"flight_events_{W}.parquet")
+        report = self.run_ingest()
+        self.assertEqual(report["status"], "complete")
+        self.assertEqual(report["windows"][W]["events"]["reused_from"]["code_sha256"], old_sha)
+
+    def test_changed_flight_inputs_prevent_previous_event_checkpoint_migration(self):
+        old_sha = "e372d1a05d1e2fb7b83c0e7089c922f47430a6ff53205dc86fe119f1cb6a5f8a"
+        ingestor = M.Ingestor(self.root, self.flights, windows=[W], opener=self.opener, retries=1)
+        ingestor.code_sha = old_sha
+        with patch.object(M, "PIPELINE_VERSION", 1):
+            self.assertEqual(ingestor.run()["status"], "complete")
+        self.flight("202601", [(4, "KJFK", "KLAX", "2026-01-01")])
+        self.payloads.pop(f"flight_events_{W}.parquet")
+        self.assertEqual(self.run_ingest()["status"], "incomplete")
+
+    def test_event_compatibility_migration_survives_interruption_before_first_window(self):
+        old_sha = "e372d1a05d1e2fb7b83c0e7089c922f47430a6ff53205dc86fe119f1cb6a5f8a"
+        ingestor = M.Ingestor(self.root, self.flights, windows=[W], opener=self.opener, retries=1)
+        ingestor.code_sha = old_sha
+        with patch.object(M, "PIPELINE_VERSION", 1):
+            self.assertEqual(ingestor.run()["status"], "complete")
+        with patch.object(M.Ingestor, "flight_inputs", side_effect=KeyboardInterrupt):
+            with self.assertRaises(KeyboardInterrupt):
+                self.run_ingest()
+        self.payloads.pop(f"flight_events_{W}.parquet")
+        self.assertEqual(self.run_ingest()["status"], "complete")
+
 
 class WindowTests(unittest.TestCase):
+    def test_string_ids_are_opaque_and_invalid_id_types_reject(self):
+        values = ["20241201_1005022349580", "000123", "+123", "123"]
+        self.assertEqual(M.keys(pa.array(values)), values)
+        for array in (pa.array([None], type=pa.string()), pa.array([1.5]), pa.array([True])):
+            with self.assertRaises(ValueError):
+                M.keys(array)
+
+    def test_portable_legacy_hash_matches_independent_xxhash_vectors(self):
+        self.assertEqual(M.legacy_xxhash64("20241201_1005022351812", portable=True), 10842447142759660653)
+        self.assertEqual(M.legacy_xxhash64("20241201_1005022354001", portable=True), 2581909214055292463)
+        self.assertEqual(M.legacy_xxhash64("20241201_1005022354889", portable=True), 5289981801981732348)
+
     def test_grid_bounds_and_release_horizon(self):
         windows = M.target_windows()
         self.assertEqual(len(windows), 45)

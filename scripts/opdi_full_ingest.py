@@ -9,8 +9,11 @@ It does not mean that the published source covers every day or every flight.
 import argparse
 import calendar
 from collections import Counter
+import ctypes
+import ctypes.util
 from datetime import date, datetime, timedelta, timezone
 import fcntl
+from functools import lru_cache
 import hashlib
 import json
 import os
@@ -33,8 +36,18 @@ EPOCH = date(2022, 1, 1)
 RELEASE_END = date(2026, 8, 1)  # Exclusive published horizon, despite August window suffix.
 MONTHS = [f"2025{m:02d}" for m in range(1, 13)] + ["202601", "202607"]
 KNOWN_EVENT_GAPS = {"20251002_20251012"}
-PIPELINE_VERSION = 1
+PIPELINE_VERSION = 2
 MEASUREMENT_TYPES = ("Distance flown (NM)", "Time Passed (s)")
+COMPATIBLE_INTEGER_EVENT_CODE = "e372d1a05d1e2fb7b83c0e7089c922f47430a6ff53205dc86fe119f1cb6a5f8a"
+LEGACY_EVENT_ID = re.compile(r"[0-9]{8}_[0-9]{1,20}\Z")
+LEGACY_MAPPING = {"algorithm": "XXH64(UTF-8 source event_id, seed=0), unsigned uint64",
+                  "status": "empirically_verified_compatibility_not_official_export_contract",
+                  "evidence_window": "20241226_20250105",
+                  "source_measurement_sha256": "b37eab2a859f7eaa3d835bf85d3491c7138e82ab27dcaf385f6501fbf3a76935",
+                  "retained_event_ids_matched": 1174049,
+                  "reference_time_rows_exact": 1096679,
+                  "reference_time_rows_checked": 1174049,
+                  "warning": "Reference altitude-crossing Time Passed mostly disagrees with event_time minus first_seen; preserve as source data, do not assume physical validity"}
 
 
 def now():
@@ -100,7 +113,7 @@ def required_months(windows):
 
 
 def keys(array):
-    """IDs never pass through float or a signed fixed-width integer."""
+    """Preserve opaque strings; integer IDs never pass through float/int64."""
     if not (pa.types.is_integer(array.type) or pa.types.is_string(array.type)
             or pa.types.is_large_string(array.type)):
         raise ValueError(f"Non-integer ID type: {array.type}")
@@ -108,10 +121,75 @@ def keys(array):
     for value in array.to_pylist():
         if value is None:
             raise ValueError("Null ID in source")
-        if isinstance(value, str) and not re.fullmatch(r"[+-]?\d+", value.strip()):
-            raise ValueError(f"Non-integer ID string: {value!r}")
-        result.append(str(int(value)))
+        if isinstance(value, str) and not value:
+            raise ValueError("Empty ID in source")
+        result.append(value if isinstance(value, str) else str(value))
     return result
+
+
+@lru_cache(maxsize=1)
+def native_xxhash64():
+    """Use an existing system library when available; never install packages."""
+    library = ctypes.util.find_library("xxhash")
+    if not library:
+        return None
+    try:
+        function = ctypes.CDLL(library).XXH64
+        function.argtypes = [ctypes.c_void_p, ctypes.c_size_t, ctypes.c_ulonglong]
+        function.restype = ctypes.c_ulonglong
+        return function
+    except (OSError, AttributeError):
+        return None
+
+
+def legacy_xxhash64(value, *, portable=False):
+    """XXH64 seed 0 for observed ASCII legacy keys (<32 bytes).
+
+    The portable short-input algorithm follows xxHash's BSD-licensed XXH64
+    specification: https://github.com/Cyan4973/xxHash/blob/dev/doc/xxhash_spec.md
+    This is an empirically validated publisher compatibility rule, not Spark's
+    xxhash64 (which uses seed 42). Never apply it to modern signed integer IDs.
+    """
+    if not LEGACY_EVENT_ID.fullmatch(value):
+        raise ValueError(f"Unsupported legacy event ID format: {value!r}")
+    data = value.encode("ascii")
+    native = None if portable else native_xxhash64()
+    if native:
+        return native(data, len(data), 0)
+    p1, p2, p3 = 11400714785074694791, 14029467366897019727, 1609587929392839161
+    p4, p5, mask = 9650029242287828579, 2870177450012600261, (1 << 64) - 1
+
+    def rotate(number, bits):
+        number &= mask
+        return ((number << bits) | (number >> (64 - bits))) & mask
+
+    h, offset = (p5 + len(data)) & mask, 0
+    while offset + 8 <= len(data):
+        lane = int.from_bytes(data[offset:offset + 8], "little")
+        lane = (rotate(lane * p2, 31) * p1) & mask
+        h = (rotate(h ^ lane, 27) * p1 + p4) & mask
+        offset += 8
+    if offset + 4 <= len(data):
+        h ^= (int.from_bytes(data[offset:offset + 4], "little") * p1) & mask
+        h = (rotate(h, 23) * p2 + p3) & mask
+        offset += 4
+    for byte in data[offset:]:
+        h = (rotate(h ^ ((byte * p5) & mask), 11) * p1) & mask
+    h = ((h ^ (h >> 33)) * p2) & mask
+    h = ((h ^ (h >> 29)) * p3) & mask
+    return h ^ (h >> 32)
+
+
+def measurement_keys(array, event_id_type):
+    result, modes = [], Counter()
+    for ident in keys(array):
+        if pa.types.is_uint64(event_id_type) and LEGACY_EVENT_ID.fullmatch(ident):
+            result.append(str(legacy_xxhash64(ident)))
+            modes["xxh64_utf8_seed0_uint64"] += 1
+        else:
+            result.append(ident)
+            modes["identity"] += 1
+    return result, modes
 
 
 def metadata(path):
@@ -158,6 +236,7 @@ class Ingestor:
         pa.set_io_thread_count(threads)
         self.code_sha = digest(__file__)
         self.report = {}
+        self.compatible_event_dependency = None
 
     def save(self):
         self.report["updated_at"] = now()
@@ -279,7 +358,7 @@ class Ingestor:
         path = self.root / "raw" / name
         return path, self.download(url, path), True
 
-    def filter_source(self, kind, raw, destination, accepted):
+    def filter_source(self, kind, raw, destination, accepted, event_id_type=None):
         parquet = pq.ParquetFile(raw)
         required = ("id", "flight_id", "type", "event_time", "info") if kind == "events" else ("id", "event_id", "type", "value")
         require_columns(parquet.schema_arrow, required)
@@ -293,12 +372,16 @@ class Ingestor:
         selected_ids, selected_flights = set(), set()
         by_type = {}
         source_types, kept_types, versions, days = Counter(), Counter(), Counter(), Counter()
+        key_mapping = Counter()
         rows = duplicates = info_nonempty = 0
         try:
             with pq.ParquetWriter(tmp, schema, compression="zstd") as writer:
                 for batch in parquet.iter_batches(batch_size=self.batch_size):
                     table = pa.Table.from_batches([batch])
                     foreign = keys(table["flight_id" if kind == "events" else "event_id"])
+                    if kind == "measurements":
+                        foreign, modes = measurement_keys(table["event_id"], event_id_type)
+                        key_mapping.update(modes)
                     mask = [key in accepted for key in foreign]
                     counter_update(source_types, table["type"])
                     if "version" in table.column_names:
@@ -318,10 +401,12 @@ class Ingestor:
                         info_nonempty += sum(x not in (None, "", "{}", "null") for x in chosen["info"].to_pylist())
                     else:
                         selected_ids.update(chosen_foreign)
-                        for ident, value_type in zip(chosen_foreign, chosen["type"].to_pylist()):
-                            seen = by_type.setdefault(str(value_type), set())
+                        for ident, value_type, value in zip(chosen_foreign, chosen["type"].to_pylist(), chosen["value"].to_pylist()):
+                            seen = by_type.setdefault(str(value_type), {})
                             duplicates += ident in seen
-                            seen.add(ident)
+                            if ident in seen and seen[ident] != value:
+                                raise ValueError(f"Conflicting measurement values for EVENT {ident}, type {value_type}")
+                            seen[ident] = value
                         chosen = chosen.append_column("opdi_event_id", pa.array(chosen_foreign, type=pa.string()))
                     counter_update(kept_types, chosen["type"])
                     writer.write_table(chosen)
@@ -345,12 +430,25 @@ class Ingestor:
             audit.update(matched_event_ids=len(selected_ids), retained_event_ids=len(accepted),
                          events_without_measurements=len(accepted - selected_ids),
                          duplicate_event_type_rows=duplicates,
+                         conflicting_event_type_values=0,
+                         join_key_mapping_rows=dict(key_mapping),
+                         legacy_mapping=LEGACY_MAPPING if key_mapping["xxh64_utf8_seed0_uint64"] else None,
                          matched_ids_by_type={k: len(v) for k, v in by_type.items()},
-                         events_without_type={k: len(accepted - by_type.get(k, set())) for k in MEASUREMENT_TYPES})
+                         events_without_type={k: len(accepted.difference(by_type.get(k, {}))) for k in MEASUREMENT_TYPES})
         return output, audit
 
-    def process(self, kind, window, accepted, dependency_hash, previous):
+    def process(self, kind, window, accepted, dependency_hash, previous, event_id_type=None):
         destination = self.root / kind / f"{kind}_{window}.parquet"
+        if (kind == "events" and self.compatible_event_dependency is not None
+                and previous.get("dependency_hash") == self.compatible_event_dependency
+                and previous.get("status") == "complete" and previous.get("output", {}).get("rows", 0) > 0
+                and verified(destination, previous.get("output", {}))):
+            schema = pq.ParquetFile(destination).schema_arrow
+            if pa.types.is_integer(schema.field("id").type) and pa.types.is_integer(schema.field("flight_id").type):
+                return {**previous, "dependency_hash": dependency_hash,
+                        "reused_from": {"code_sha256": COMPATIBLE_INTEGER_EVENT_CODE,
+                                        "dependency_hash": self.compatible_event_dependency,
+                                        "reason": "Numeric EVENT extraction unchanged; verified output and FLIGHT inputs"}}
         if (previous.get("status") == "complete" and previous.get("dependency_hash") == dependency_hash
                 and previous.get("output", {}).get("rows", 0) > 0
                 and verified(destination, previous.get("output", {}))):
@@ -360,7 +458,7 @@ class Ingestor:
         raw = None
         try:
             raw, source, owned = self.acquire(kind, window)
-            output, audit = self.filter_source(kind, raw, destination, accepted)
+            output, audit = self.filter_source(kind, raw, destination, accepted, event_id_type)
             return {"status": "complete", "dependency_hash": dependency_hash,
                     "source": source, "output": output, "audit": audit, "completed_at": now()}
         except Exception as error:
@@ -433,18 +531,24 @@ class Ingestor:
                 raise
 
     def _run(self):
+        self.compatible_event_dependency = None
         for folder in ("flights", "events", "measurements", "raw"):
             (self.root / folder).mkdir(exist_ok=True)
         manifest = self.root / "manifest.json"
         old = json.loads(manifest.read_text()) if manifest.exists() else {}
         if old and old.get("requested_windows") != self.windows:
             raise ValueError("Output root belongs to a different window selection; use a separate root")
+        compatibility = old.get("event_checkpoint_compatibility")
+        if old.get("code_sha256") == COMPATIBLE_INTEGER_EVENT_CODE and old.get("pipeline_version") == 1:
+            compatibility = {"code_sha256": COMPATIBLE_INTEGER_EVENT_CODE, "pipeline_version": 1,
+                             "input_hash": old.get("input_hash")}
         self.report = {"status": "running", "created_at": old.get("created_at", now()),
                        "release": "OPDI/v002", "release_end_exclusive": RELEASE_END.isoformat(),
                        "requested_months": MONTHS, "requested_windows": self.windows,
                        "required_flight_months": self.required, "airports": sorted(AIRPORTS),
                        "filter": "FLIGHT.adep in airports OR FLIGHT.ades in airports; no event-time/type/MVT/label filter",
                        "pipeline_version": PIPELINE_VERSION, "code_sha256": self.code_sha,
+                       "event_checkpoint_compatibility": compatibility,
                        "flight_sources": old.get("flight_sources", {}), "flight_errors": {},
                        "windows": old.get("windows", {}),
                        "completion_meaning": "Available archive ingestion, not continuous source-day coverage"}
@@ -458,6 +562,16 @@ class Ingestor:
         input_hash = object_hash({"flights": {m: s["sha256"] for m, s in sources.items()},
                                   "airports": sorted(AIRPORTS), "pipeline": PIPELINE_VERSION,
                                   "code": self.code_sha})
+        if (compatibility and compatibility.get("code_sha256") == COMPATIBLE_INTEGER_EVENT_CODE
+                and compatibility.get("pipeline_version") == 1):
+            old_dependency = object_hash({"flights": {m: s["sha256"] for m, s in sources.items()},
+                                          "airports": sorted(AIRPORTS), "pipeline": 1,
+                                          "code": COMPATIBLE_INTEGER_EVENT_CODE})
+            integer_flight_sources = all(
+                pa.types.is_integer(pq.ParquetFile(self.root / "flights" / f"flight_list_{month}.parquet").schema_arrow.field("id").type)
+                for month in sources)
+            if compatibility.get("input_hash") == old_dependency and integer_flight_sources:
+                self.compatible_event_dependency = old_dependency
         self.report["input_hash"] = input_hash
         for index, window in enumerate(self.windows, 1):
             print(f"[{index}/{len(self.windows)}] {window}", flush=True)
@@ -472,7 +586,8 @@ class Ingestor:
                 event_ids = self.load_event_keys(window)
                 dependencies = object_hash({"input_hash": input_hash, "event_sha256": event["output"]["sha256"]})
                 measurement = self.process("measurements", window, event_ids, dependencies,
-                                           previous.get("measurements", {}))
+                                           previous.get("measurements", {}),
+                                           pq.ParquetFile(self.root / "events" / f"events_{window}.parquet").schema_arrow.field("id").type)
                 del event_ids
             self.report["windows"][window]["measurements"] = measurement
             self.save()
