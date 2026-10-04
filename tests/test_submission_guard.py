@@ -83,7 +83,7 @@ class GuardTests(unittest.TestCase):
             G.validate_rank(rank, log, ids, expected_rows=3)
 
     def test_submission_preserves_exact_ids_schema_and_42_donor_rows(self):
-        ids = np.arange(50)
+        ids = np.arange(50, dtype=np.float64)  # Official template uses Float64 IDs.
         def frame(values):
             return pl.DataFrame({'MVT_ID_mvt': ids, 'TAXITIME_SEC_mvt': np.array(values, dtype=np.int32)})
         template = frame(np.zeros(50))
@@ -99,6 +99,18 @@ class GuardTests(unittest.TestCase):
                           frame(np.r_[np.full(41, 200), 199, np.full(8, 101)])]:
             with self.subTest(schema=candidate.schema), self.assertRaises(G.GuardError):
                 check(candidate)
+
+    def test_exact_integer_float_ids_match_official_template_without_rounding(self):
+        template = np.array([202180234., 213809059., 210000000.])
+        G.exact_ids(template[::-1], template, 3)
+        G.exact_ids(template.astype(np.int64), template, 3)
+        for bad in [np.array([202180234.5, 213809059., 210000000.]),
+                    np.array([np.nan, 213809059., 210000000.]),
+                    np.array([np.inf, 213809059., 210000000.]),
+                    np.array([float(2**54), 213809059., 210000000.]),
+                    np.array([2**64-1, 213809059, 210000000], dtype=np.uint64)]:
+            with self.subTest(bad=bad), self.assertRaises(G.GuardError):
+                G.exact_ids(bad, template, 3)
 
     def test_hash_manifest_refuses_changes_and_path_escape(self):
         p = self.root/'input'; p.write_bytes(b'unchanged')

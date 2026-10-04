@@ -68,8 +68,16 @@ def exact_ids(ids, expected, rows):
     a, b = np.asarray(ids), np.asarray(expected)
     if a.ndim != 1 or len(a) != rows or b.ndim != 1 or len(b) != rows:
         raise GuardError('ID row count mismatch')
-    if a.dtype.kind not in 'iu' or b.dtype.kind not in 'iu':
-        raise GuardError('IDs require integer dtype')
+    for values in (a, b):
+        if values.dtype.kind not in 'iuf' or not np.isfinite(values).all():
+            raise GuardError('IDs require finite exact integers')
+        if values.dtype.kind == 'f' and (np.any(np.abs(values) > 2**53)
+                                         or np.any(values != np.floor(values))):
+            raise GuardError('Float IDs must be exact integers in the safe range')
+        if values.dtype.kind == 'u' and np.any(values > np.iinfo(np.int64).max):
+            raise GuardError('IDs exceed signed integer range')
+    # The official template uses Float64 IDs. Validate first; never round them.
+    a, b = a.astype(np.int64), b.astype(np.int64)
     if len(np.unique(a)) != rows or len(np.unique(b)) != rows or not np.array_equal(np.sort(a), np.sort(b)):
         raise GuardError('IDs are duplicated or differ from template')
 
