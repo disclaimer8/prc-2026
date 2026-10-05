@@ -22,7 +22,7 @@ os.environ.setdefault('POLARS_UNKNOWN_EXTENSION_TYPE_BEHAVIOR','load_as_storage'
 import numpy as np
 import polars as pl
 
-PROTOCOL='E191-observable-offblock-bracket-label-free-365days-v1'
+PROTOCOL='E191-observable-offblock-bracket-label-free-365days-v2-missing-flags'
 ID='MVT_ID_mvt'
 DAYS=[f'2025-{m:02}-{d:02}' for m in range(1,13) for d in range(1,calendar.monthrange(2025,m)[1]+1)]
 FIELDS=['icao','airport','callsign','t','lat','lon','gs','on_ground','stale']
@@ -95,18 +95,23 @@ def pack(root,bundle,registration):
         d=d.select(ID,'ADEP_mvt','CALLSIGN_flt','FLIGHT_mvt','MVT_TIME_UTC_mvt',pl.col('FLIGHT_ID_mvt').is_not_null().alias('has_nm'),'stand_lat','stand_lon')
         target=bundle/f'2025-{month:02}.parquet';d.write_parquet(target);inputs[str(target.relative_to(root))]=sha(target);n+=d.height
     if n!=2085047:raise ValueError('packed population differs')
+    flagless=[]
     for day in DAYS:
         p=root/f'data/adsblol/surface_{day}.parquet'
         if not p.exists():
             if day!='2025-12-31':raise ValueError(f'unregistered sensor gap {day}')
-        else:inputs[str(p.relative_to(root))]=sha(p)
+        else:
+            inputs[str(p.relative_to(root))]=sha(p)
+            schema=pl.read_parquet_schema(p)
+            if set(FIELDS)-set(schema)-{'stale'}:raise ValueError(f'unexpected surface schema {day}')
+            if 'stale' not in schema:flagless.append(day)
     for p,h in upstream.items():
         if sha(root/p)!=h:raise ValueError(f'upstream drift {p}')
     inputs['scripts/e191_physical_support.py']=sha(__file__)
     save(bundle/'manifest.json',dict(protocol=PROTOCOL,registration_commit=registration,upstream_sha256=upstream,
         runtime_input_sha256=inputs,days=DAYS,rows=n,worker_sha256=sha(__file__),
-        missing_sensor_days={'2025-12-31':4715},workers=3,polars_threads_per_worker=2,
-        limitation='Observable consistency only; not validated physical truth, not model CV. No targets or predictions used.'))
+        missing_sensor_days={'2025-12-31':4715},missing_stale_flag_days=flagless,workers=3,polars_threads_per_worker=2,
+        limitation='Observable consistency only; not validated physical truth, not model CV. No targets or predictions used. Days without the stale flag remain unknown, never fresh.'))
     print(f'PACKED {n} target-free departures, 364 sensor days',flush=True)
 
 
@@ -117,19 +122,25 @@ def day_worker(root,bundle,out,day,inputs):
     d=pl.read_parquet(path).filter(pl.col('MVT_TIME_UTC_mvt').dt.strftime('%Y-%m-%d')==day).with_columns(
         cs=pl.col('CALLSIGN_flt').fill_null(pl.col('FLIGHT_mvt')).str.replace_all(' ',''),
         to=pl.col('MVT_TIME_UTC_mvt').dt.epoch('s').cast(pl.Float64))
-    surface=root/f'data/adsblol/surface_{day}.parquet';by={};cmap={};point_count=0
+    surface=root/f'data/adsblol/surface_{day}.parquet';by={};cmap={};point_count=0;has_flag=False
     if surface.exists():
         if sha(surface)!=inputs[str(surface.relative_to(root))]:raise ValueError('surface SHA differs')
-        pts=pl.read_parquet(surface,columns=FIELDS).sort('icao','airport','t');point_count=pts.height
-        for cs,ap,icao in pts.filter(pl.col('callsign').is_not_null()).select('callsign','airport','icao').unique().iter_rows():cmap.setdefault((cs,ap),[]).append(icao)
-        for (icao,ap),g in pts.group_by(['icao','airport'],maintain_order=True):
-            by[(icao,ap)]=[g[c].to_numpy() if c not in ('on_ground','stale') else g[c].fill_null(c=='stale').to_numpy() for c in ['t','lat','lon','gs','on_ground','stale','callsign']]
+        schema=pl.read_parquet_schema(surface)
+        if set(FIELDS)-set(schema)-{'stale'}:raise ValueError('unexpected surface schema')
+        has_flag='stale' in schema
+        if has_flag:
+            pts=pl.read_parquet(surface,columns=FIELDS).sort('icao','airport','t');point_count=pts.height
+            for cs,ap,icao in pts.filter(pl.col('callsign').is_not_null()).select('callsign','airport','icao').unique().iter_rows():cmap.setdefault((cs,ap),[]).append(icao)
+            for (icao,ap),g in pts.group_by(['icao','airport'],maintain_order=True):
+                by[(icao,ap)]=[g[c].to_numpy() if c not in ('on_ground','stale') else g[c].fill_null(c=='stale').to_numpy() for c in ['t','lat','lon','gs','on_ground','stale','callsign']]
+        else:point_count=pl.scan_parquet(surface).select(pl.len()).collect().item()
     elif day!='2025-12-31' or d.height!=4715:raise ValueError('unexpected absent surface')
     rows=[]
     for mid,ap,cs,to,nm,la,lo in d.select(ID,'ADEP_mvt','cs','to','has_nm','stand_lat','stand_lon').iter_rows():
         matches=cmap.get((cs,ap),[]);track=by.get((matches[0],ap)) if len(matches)==1 else None
         if track is None:
-            result=dict(reason='missing_sensor_day' if not surface.exists() else 'ambiguous_or_missing_identity',q_mid=None,bracket_s=None,dwell_s=None,return_to_stand=False,n_segment=0)
+            reason='missing_sensor_day' if not surface.exists() else 'missing_stale_flag' if not has_flag else 'ambiguous_or_missing_identity'
+            result=dict(reason=reason,q_mid=None,bracket_s=None,dwell_s=None,return_to_stand=False,n_segment=0)
         else:result=observe(*track[:6],to,(la,lo) if la is not None and lo is not None else None,callsigns=track[6],expected_callsign=cs)
         rows.append(dict(MVT_ID_mvt=mid,airport=ap,month=int(day[5:7]),has_nm=nm,**result))
     schema={ID:pl.Float64,'airport':pl.String,'month':pl.Int8,'has_nm':pl.Boolean,'reason':pl.String,'q_mid':pl.Float64,'bracket_s':pl.Float64,'dwell_s':pl.Float64,'return_to_stand':pl.Boolean,'n_segment':pl.Int64}
@@ -137,7 +148,7 @@ def day_worker(root,bundle,out,day,inputs):
     if f.height!=d.height or f[ID].n_unique()!=d.height:raise ValueError('day ID coverage differs')
     dest=out/'days'/f'{day}.parquet';f.write_parquet(dest)
     if surface.exists() and sha(surface)!=inputs[str(surface.relative_to(root))]:raise ValueError('surface changed during extraction')
-    return dict(day=day,rows=f.height,points=point_count,eligible=f.filter(pl.col('reason')=='eligible').height,seconds=time.monotonic()-start,sha256=sha(dest))
+    return dict(day=day,rows=f.height,points=point_count,stale_flag_available=has_flag,eligible=f.filter(pl.col('reason')=='eligible').height,seconds=time.monotonic()-start,sha256=sha(dest))
 
 
 def run(root,bundle,out,registration):
