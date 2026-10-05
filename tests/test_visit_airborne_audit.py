@@ -150,6 +150,44 @@ class VisitAirborneTests(unittest.TestCase):
         self.assertEqual(len(captured), 1)
         assert_frame_equal(actual, captured[0], check_exact=True)
 
+    def test_duplicate_timestamp_conflicting_values_match_original_load_surface_sort(self):
+        # Unsorted 32-point fixture: with current Polars the historical one-sort
+        # audit picked alt1008/gs108 for C0; the original double-sort picks
+        # alt1018/gs118. Exercise the actual original load_surface, not a mock
+        # that could accidentally hide its required global sort.
+        rng = np.random.default_rng(1)
+        codes = rng.integers(0, 3, 32)
+        times = rng.integers(0, 8, 32).astype(float) + 9000
+        day = "2025-01-15"
+        base = dt.datetime(2025, 1, 15, tzinfo=dt.timezone.utc).timestamp()
+        frame = pl.DataFrame({"icao": [f"ic{i}" for i in codes], "airport": ["EDDF"] * 32,
+                              "t": base + times, "alt": np.arange(32, dtype=float) + 1000,
+                              "gs": np.arange(32, dtype=float) + 100, "on_ground": [False] * 32,
+                              "callsign": [f"C{i}" for i in codes]})
+        normalized = pl.DataFrame({"MVT_ID_mvt": [1., 2., 3.], "ADEP_mvt": ["EDDF"] * 3,
+                                   "cs": ["C0", "C1", "C2"], "to": [base + 10000] * 3})
+        raw = pl.DataFrame({"MVT_ID_mvt": [1., 2., 3.], "ADEP_mvt": ["EDDF"] * 3,
+                            "PHASE_mvt": ["DEP"] * 3, "CALLSIGN_flt": ["C0", "C1", "C2"],
+                            "FLIGHT_mvt": ["unused"] * 3,
+                            "MVT_TIME_UTC_mvt": [dt.datetime.fromtimestamp(base+10000, dt.timezone.utc)] * 3})
+        spec = importlib.util.spec_from_file_location("original_visit_tie_sort", ROOT / "src/adsb_visit.py")
+        original = importlib.util.module_from_spec(spec); spec.loader.exec_module(original)
+        original.PREV_DAY = False
+        captured = []
+        def read_original(path, columns=None):
+            data = frame if "surface_" in str(path) else raw
+            return data.select(columns) if columns is not None else data
+        self.assertFalse(frame.equals(frame.sort("icao", "t")))
+        self.assertLess(frame.select("icao", "airport", "t").unique().height, frame.height)
+        with patch.object(original.pl, "read_parquet", side_effect=read_original), \
+             patch.object(original.pl.DataFrame, "write_parquet", lambda self, *a, **k: captured.append(self.clone())), \
+             patch.object(original.os, "makedirs"), patch.object(sys, "argv", ["adsb_visit.py", day]), \
+             contextlib.redirect_stdout(io.StringIO()):
+            original.main()
+        actual, _ = A.extract(frame, normalized)
+        self.assertEqual(len(captured), 1)
+        assert_frame_equal(actual, captured[0], check_exact=True)
+
     def test_saved_control_parity_is_order_invariant_and_detects_all_vi_changes(self):
         frame = points([1000, 1100, 9000, 9900])
         control, _ = A.extract(frame, pl.concat([deps(mvt_id=1.), deps(mvt_id=2.)]))

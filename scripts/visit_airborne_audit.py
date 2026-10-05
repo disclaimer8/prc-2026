@@ -26,7 +26,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 import adsb_visit as V
 from adsb_offblock_v2 import surface_mask
 
-PROTOCOL = "visit-airborne-label-free-124days-v1"
+PROTOCOL = "visit-airborne-label-free-124days-v2-original-sort"
 SOURCES = {"adsb_visit.py": "3921f23cc8956faf36fe3caf80843fa68f78a885274f78d5a1b68c1035f7e1a3",
            "adsb_offblock_v2.py": "c843aae5e7643c78d5968ae530af8022e45a6164efe8e6c26f7ffb6f61b2500b"}
 CONFIG_SOURCES = {"e185_submission.py": "b1031e156dcd5ab65f808def63664b71eadfa99574d92112cd18b80c9dfef46c",
@@ -67,6 +67,9 @@ def extract(points, deps):
     cmap = {}
     for cs, ap, ic in points.filter(pl.col("callsign").is_not_null()).select("callsign", "airport", "icao").unique().iter_rows():
         cmap.setdefault((cs, ap), []).append(ic)
+    # Original load_surface sorts before main groups/sorts again. Both sorts
+    # matter for equal timestamps with different altitude/speed observations.
+    points = points.sort("icao", "t")
     by = {(k[0], k[1]): g.select("t", "alt", "gs").sort("t") for k, g in points.group_by(["icao", "airport"])}
     out, identity = [], {}
     for mid, ap, cs, to in deps.select("MVT_ID_mvt", "ADEP_mvt", "cs", "to").iter_rows():
