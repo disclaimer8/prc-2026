@@ -1,0 +1,49 @@
+{
+  "days": [
+    {
+      "day": "2025-07-01",
+      "old_points": 1087151,
+      "new_points": 1087151,
+      "parity": true,
+      "eligible": 5
+    },
+    {
+      "day": "2025-08-01",
+      "old_points": 1223017,
+      "new_points": 1223017,
+      "parity": true,
+      "eligible": 3
+    },
+    {
+      "day": "2025-09-01",
+      "old_points": 1052891,
+      "new_points": 1051854,
+      "parity": false,
+      "eligible": null
+    },
+    {
+      "day": "2025-10-01",
+      "old_points": 1280542,
+      "new_points": 1280542,
+      "parity": true,
+      "eligible": 5
+    },
+    {
+      "day": "2025-11-01",
+      "old_points": 1080905,
+      "new_points": 1080905,
+      "parity": true,
+      "eligible": 0
+    },
+    {
+      "day": "2025-12-01",
+      "old_points": 1281858,
+      "new_points": 1282406,
+      "parity": false,
+      "eligible": null
+    }
+  ],
+  "report_sha256": "0cd597934ecbf9d3ffe28d3f5f00502d94b728346f8ad3942581dfb906e6f4fb",
+  "accepted_for_training": false,
+  "stop_expansion": true
+}

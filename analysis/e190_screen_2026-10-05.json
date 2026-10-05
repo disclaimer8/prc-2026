@@ -1,0 +1,36 @@
+{
+  "protocol": "E190-ple48-d12-vB-mlp3-rocm-production-weights-lgb5-screen-v1",
+  "registration_commit": "3157b2d7556dec75e7be3472026736411eb45f6a",
+  "rows": 2085047,
+  "valid": true,
+  "gate_passed": true,
+  "metrics": {
+    "all": -0.47712180122005104,
+    "body": -0.45280986612096,
+    "decided": -0.4851315734584601,
+    "lower_decided": 6,
+    "strict": -0.4307051769985912,
+    "trimmed": -0.4561266636261547
+  },
+  "sse_delta": {
+    "all": -498391205.76160073,
+    "body": -472995479.5184283,
+    "decided": -506758042.1408408,
+    "strict": -449905395.1070439,
+    "trimmed": -476460135.09202397
+  },
+  "normalization": {
+    "denominator": 1044578563.56,
+    "lb_rmse": 252.43,
+    "ranking_rows": 344841
+  },
+  "gate_flags": {
+    "body_lower": true,
+    "decided_lower": true,
+    "four_of_six": true,
+    "trimmed_lower": true
+  },
+  "proceed_to_current_chain": true,
+  "accepted_for_submission": false,
+  "limitation": "LGB5-only base, production member weights, same ROCm control. No Cat15 or downstream stages; screen only."
+}
