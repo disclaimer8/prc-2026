@@ -19,7 +19,7 @@
 
 | Что | Где |
 |---|---|
-| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №287) | `HYPOTHESES_LOG.md` |
+| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №288) | `HYPOTHESES_LOG.md` |
 | Бриф для ревью: «Читать первым», раздел 0 (закрытое — не повторять), последние итоги — раздел 21cn | `REVIEW_BRIEF.md`; после правки — `.venv/bin/python review/build_brief.py` |
 | Обходы конкурентов и источников данных | `analysis/competitor_repos/_UPDATE_2026-10-04.md`, `analysis/data_sources_2026-10-04_{fable,sonnet}.md`, `SOURCES.md` |
 | Таблицы признаков (не в git) | `data/features_e106.parquet`, `data/features_e163.parquet`, **`data/features_fin1b.parquet`** (боевая) |
@@ -49,20 +49,24 @@
   это не проверка полного CV. Данные копировать
   `rsync -a` по LAN (на маке `rsync` — openrsync, без `--info`), результаты забирать обратно на мак.
 
+- **Дополнительный ноутбук** — `ssh a1@192.168.1.171`, i3-1215U, около 14 GiB RAM и 204 GB диска, без GPU для расчётов. Изолированная среда ещё настраивается; не считать PRC-задачу запущенной до отдельной проверки.
+- **Текущий MLP OOF №287**: Mac выполняет `scripts/mlp_split_queue.py` под `caffeinate` (PID32792 на снимке 16:51Z), лог `data/mlp_split_20261005.log`; готовит immutable tensors и передаёт на домашнюю Radeon. Первый сервис `prc-mlp-split-f1-20261005`, дома MemoryMax12G/CPU200%/nice10; Cat90 идёт отдельно. Фолд публикуется только после трёх сидов и проверки SHA/ID. Подробности состояния — в HANDOFF.
+
 ## Сборка лучшего файла и загрузка
 
-- **Лучший на05.10 10:13Z: v12048 = 232,2411** (12-е из230). Полная комбинация E182+E185; журнал№273/278, immutable manifest `submissions/gentle-igloo_v12048.manifest.json`, сборщик `src/e182_e185_submission.py`.
-  Родитель `src/e182_submission.py`: FIN1b v870, CatBoost15сидов/.65, LGB5; FIN1b-члены rawf **.0333333333333333**, lobtf/schedf/eobtf/aobtf **по.10**, MLP E181a **.25**.
-  Из parent v12020/parts12020 вставляется E185 **.2333333333333333** только LOBT-null/внеLIRF → E167 → 42TabPFN v361 → E141/E169 с cv_preds_e116prod → E64 keep-all → E152.95 → E81(v44 .1214,v60 .027) → LOBT → protect42.
-  Прежние рецепты1139/12008 сохранены в старых manifests; weights/parts разных цепочек не смешивать. Итог12048SHA `0c72511bf5be05ecb9d68a72245e244feeb6088b92372732bb3aae0dc7dddbb1`.
+- **Лучший на 05.10 16:51Z: v12061 = 231,9882** (13-е из 230; третье место 217,2782, разрыв 14,7100 с). Текущий рецепт — **полный бленд 50:50 v12048 + v12060** с округлением `blend_submissions.py`; все 42 TabPFN-значения сохранены. Оба файла и вес 0,5 зарегистрированы до первой оценки (№285), транспорт №286; текущего полного OOF этого шага нет. Итоговый SHA v12061 `8d3b589213240bd6960984d6b2a46c6716617262c635ac2dc02d35b50b876015`.
+  **v12060 = v12048 + E159b/c только LSZH**: старые 44 OPDI-архива, 12 месяцев 2025, OOF `cv_preds_e150c_e64_keep`, E159_SHIFT=0 (LSZH — референс), 300 деревьев/4 потока. Новую OPDI-выгрузку сюда не подмешивать. Сборщик `src/e159_fixed_submission.py`; immutable receipt `submissions/e159_fixed_v12060_12061.manifest.json`, SHA `2958dae1ed7e8cab6ae5aa31463463a129443bf9b808ec4d6b81148a91e326f8`.
+  **Родитель v12048 = E182+E185**: `src/e182_e185_submission.py`, manifest `submissions/gentle-igloo_v12048.manifest.json`. FIN1b v870, CatBoost15/.65, LGB5; FIN1b-члены rawf **.0333333333333333**, lobtf/schedf/eobtf/aobtf **по .10**, MLP E181a **.25**.
+  Из v12020/parts12020 вставляется E185 **.2333333333333333** только LOBT-null/вне LIRF → E167 → 42 TabPFN v361 → E141/E169 с cv_preds_e116prod → E64 keep-all → E152 .95 → E81(v44 .1214,v60 .027) → LOBT → protect42. SHA родителя v12048 `0c72511bf5be05ecb9d68a72245e244feeb6088b92372732bb3aae0dc7dddbb1`.
+  Прежние рецепты1139/12008 сохранены в старых manifests; weights/parts разных цепочек не смешивать. Новый улучшенный родитель следует проводить через весь зафиксированный хвост и финальный LSZH-бленд, сохраняя доноров и lineage.
 - Загрузка с 05.10: только проверенный single-PUT entry point с immutable manifest, проверкой квоты и общим
-  серверным `data/submission_upload_ledger.jsonl`/lock. Для E185 — `src/e185_single_put_upload.py`; для других
+  серверным `data/submission_upload_ledger.jsonl`/lock. Для пары LSZH — `src/e159_fixed_single_put_upload.py`, для E185 — `src/e185_single_put_upload.py`; для других
   рецептов нужен соответствующий preflight. Старый `src/upload.py` автоматически повторяет PUT и больше не
-  подходит для новых подач. Ключи PRC приватные, не печатать; на Hetzner они в отдельном файле root0600.
+  подходит для новых подач. За 05.10 уже использованы и обработаны все **5/5** слотов. Ключи PRC приватные, не печатать; на Hetzner они в отдельном файле root0600.
   Оценка: `.venv/bin/python src/leaderboard.py | grep v<N>.parquet` (появляется через ~2 мин). Публичный API доски:
   `https://datacomp.opensky-network.org/api/competitions/bb3693e1-26bc-4a9e-8619-4fe78b4eab0c/leaderboard`
   (`{items, nextCursor}`).
-- Имя файла строго `gentle-igloo_vN.parquet`, N не повторять (лучший v12048; E185 резерв12000–12019, E18212020–12039, комбинация12040–12059; в служебных артефактах есть v9249; e2e использует1001–1060).
+- Имя файла строго `gentle-igloo_vN.parquet`, N не повторять (лучший v12061; E185 резерв12000–12019, E18212020–12039, комбинация12040–12059, LSZH12060/12061; в служебных артефактах есть v9249; e2e использует1001–1060).
 
 ## Правила работы (каждое оплачено ошибкой)
 

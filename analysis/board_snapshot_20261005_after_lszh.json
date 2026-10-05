@@ -1,0 +1,144 @@
+{
+  "best": {
+    "filename": "gentle-igloo_v12061.parquet",
+    "processedAt": "2026-10-05T16:42:50.78501Z",
+    "score": 231.9882,
+    "submissionId": "a59ccd41-82c3-4130-bd81-11c278b4ddb6",
+    "teamName": "gentle-igloo"
+  },
+  "candidates": [
+    {
+      "filename": "gentle-igloo_v12061.parquet",
+      "processedAt": "2026-10-05T16:42:50.78501Z",
+      "score": 231.9882,
+      "submissionId": "a59ccd41-82c3-4130-bd81-11c278b4ddb6",
+      "teamName": "gentle-igloo"
+    },
+    {
+      "filename": "gentle-igloo_v12060.parquet",
+      "processedAt": "2026-10-05T16:42:26.531404Z",
+      "score": 232.1,
+      "submissionId": "08aa1020-813f-4bcf-8d72-083147ea3917",
+      "teamName": "gentle-igloo"
+    },
+    {
+      "filename": "gentle-igloo_v12048.parquet",
+      "processedAt": "2026-10-05T10:12:28.122036Z",
+      "score": 232.2411,
+      "submissionId": "66b4ed3a-8d44-4653-b729-77da627302d2",
+      "teamName": "gentle-igloo"
+    },
+    {
+      "filename": "gentle-igloo_v12008.parquet",
+      "processedAt": "2026-10-05T06:57:03.21269Z",
+      "score": 232.3586,
+      "submissionId": "7150e0bd-8435-45fe-8b06-50878b69e385",
+      "teamName": "gentle-igloo"
+    },
+    {
+      "filename": "gentle-igloo_v12028.parquet",
+      "processedAt": "2026-10-05T10:11:45.901132Z",
+      "score": 232.5004,
+      "submissionId": "4bb4bd7b-43dd-407c-b2b7-6548962d5923",
+      "teamName": "gentle-igloo"
+    }
+  ],
+  "checked_utc": "2026-10-05T16:51:22.746481+00:00",
+  "leaders": [
+    {
+      "filename": "strong-crane_v118.parquet",
+      "processedAt": "2026-10-04T08:19:56.38672Z",
+      "score": 213.9176,
+      "submissionId": "14c078af-54de-4d80-bf33-10387da49b56",
+      "teamName": "strong-crane"
+    },
+    {
+      "filename": "vigorous-whistle_v65.parquet",
+      "processedAt": "2026-10-04T08:33:12.511609Z",
+      "score": 216.8814,
+      "submissionId": "7ec05a78-e756-4af2-9f73-3c7406f18d28",
+      "teamName": "vigorous-whistle"
+    },
+    {
+      "filename": "jolly-lobster_v146.parquet",
+      "processedAt": "2026-10-05T13:41:43.12921Z",
+      "score": 217.2782,
+      "submissionId": "d5753889-db41-457d-93ee-0b4f6513fdc8",
+      "teamName": "jolly-lobster"
+    }
+  ],
+  "ledger": [
+    {
+      "at": "2026-10-05T06:56:28.014865+00:00",
+      "event": "intent",
+      "filename": "gentle-igloo_v12008.parquet",
+      "sha256": "bb7896d5b2698faf2de95cc0109604b34474bb36342e7f972e982bdd846dfb4a",
+      "used_before": 0
+    },
+    {
+      "at": "2026-10-05T06:56:28.014865+00:00",
+      "event": "uploaded",
+      "filename": "gentle-igloo_v12008.parquet",
+      "sha256": "bb7896d5b2698faf2de95cc0109604b34474bb36342e7f972e982bdd846dfb4a",
+      "used_before": 0
+    },
+    {
+      "at": "2026-10-05T10:11:19.508575+00:00",
+      "event": "intent",
+      "filename": "gentle-igloo_v12028.parquet",
+      "sha256": "bf621d9a36dcdbb83b38013625a863f8380ef15e3ee6b1d8093d02caab6f19b3",
+      "used_before": 1
+    },
+    {
+      "at": "2026-10-05T10:11:19.508575+00:00",
+      "event": "uploaded",
+      "filename": "gentle-igloo_v12028.parquet",
+      "sha256": "bf621d9a36dcdbb83b38013625a863f8380ef15e3ee6b1d8093d02caab6f19b3",
+      "used_before": 1
+    },
+    {
+      "at": "2026-10-05T10:11:51.639004+00:00",
+      "event": "intent",
+      "filename": "gentle-igloo_v12048.parquet",
+      "sha256": "0c72511bf5be05ecb9d68a72245e244feeb6088b92372732bb3aae0dc7dddbb1",
+      "used_before": 2
+    },
+    {
+      "at": "2026-10-05T10:11:51.639004+00:00",
+      "event": "uploaded",
+      "filename": "gentle-igloo_v12048.parquet",
+      "sha256": "0c72511bf5be05ecb9d68a72245e244feeb6088b92372732bb3aae0dc7dddbb1",
+      "used_before": 2
+    },
+    {
+      "at": "2026-10-05T16:41:51.055831+00:00",
+      "event": "intent",
+      "filename": "gentle-igloo_v12060.parquet",
+      "sha256": "ae7ce28cf0718bfd39e92d54315dc1bbf62610a30c46768d7fd395dfd1695268",
+      "used_before": 3
+    },
+    {
+      "at": "2026-10-05T16:41:51.055831+00:00",
+      "event": "uploaded",
+      "filename": "gentle-igloo_v12060.parquet",
+      "sha256": "ae7ce28cf0718bfd39e92d54315dc1bbf62610a30c46768d7fd395dfd1695268",
+      "used_before": 3
+    },
+    {
+      "at": "2026-10-05T16:42:17.186760+00:00",
+      "event": "intent",
+      "filename": "gentle-igloo_v12061.parquet",
+      "sha256": "8d3b589213240bd6960984d6b2a46c6716617262c635ac2dc02d35b50b876015",
+      "used_before": 4
+    },
+    {
+      "at": "2026-10-05T16:42:17.186760+00:00",
+      "event": "uploaded",
+      "filename": "gentle-igloo_v12061.parquet",
+      "sha256": "8d3b589213240bd6960984d6b2a46c6716617262c635ac2dc02d35b50b876015",
+      "used_before": 4
+    }
+  ],
+  "rank": 13,
+  "teams": 230
+}
