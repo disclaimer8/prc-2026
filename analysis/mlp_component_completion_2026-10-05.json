@@ -1,0 +1,133 @@
+{
+  "protocol": "mlp-fin1b-split-rocm-oof-3seed-v1",
+  "registration_commit": "a926f3848baaae7415bd3cb773cbd39728ce1851",
+  "folds": [
+    {
+      "fold": 1,
+      "rows": 344419,
+      "sha256": "8f495984e2381e8483f1e7d1bb1956e1be13be87bc2dcbc2ef627d76689f953f",
+      "execution": {
+        "cgroup": {
+          "cpu_max": [
+            200000,
+            100000
+          ],
+          "memory_max": 12884901888,
+          "path": "/user.slice/user-1000.slice/user@1000.service/app.slice/prc-mlp-split-f1-20261005.service",
+          "swap_max": 0
+        },
+        "gpu_allocated_bytes": 67108864,
+        "gpu_reserved_bytes": 627048448,
+        "peak_rss_gib": 3.6357765197753906
+      }
+    },
+    {
+      "fold": 2,
+      "rows": 334914,
+      "sha256": "3a60d85d5c838c9dbdbf52bbd807d515a860a66f9596dde4323629e68f0caf4d",
+      "execution": {
+        "cgroup": {
+          "cpu_max": [
+            200000,
+            100000
+          ],
+          "memory_max": 12884901888,
+          "path": "/user.slice/user-1000.slice/user@1000.service/app.slice/prc-mlp-split-f2-20261005.service",
+          "swap_max": 0
+        },
+        "gpu_allocated_bytes": 67108864,
+        "gpu_reserved_bytes": 627048448,
+        "peak_rss_gib": 3.6650733947753906
+      }
+    },
+    {
+      "fold": 3,
+      "rows": 348399,
+      "sha256": "b525211ff56217562179b8caecfd0cd89b38e973b2bd703c160217e1c603271c",
+      "execution": {
+        "cgroup": {
+          "cpu_max": [
+            200000,
+            100000
+          ],
+          "memory_max": 12884901888,
+          "path": "/user.slice/user-1000.slice/user@1000.service/app.slice/prc-mlp-split-f3-20261005.service",
+          "swap_max": 0
+        },
+        "gpu_allocated_bytes": 67108864,
+        "gpu_reserved_bytes": 627048448,
+        "peak_rss_gib": 3.664093017578125
+      }
+    },
+    {
+      "fold": 4,
+      "rows": 360962,
+      "sha256": "a98df930027b647be2cfeb212cb160332f332e9996a562ad3bc066f0a6dfccb7",
+      "execution": {
+        "cgroup": {
+          "cpu_max": [
+            200000,
+            100000
+          ],
+          "memory_max": 12884901888,
+          "path": "/user.slice/user-1000.slice/user@1000.service/app.slice/prc-mlp-split-f4-20261005.service",
+          "swap_max": 0
+        },
+        "gpu_allocated_bytes": 67108864,
+        "gpu_reserved_bytes": 627048448,
+        "peak_rss_gib": 3.6661720275878906
+      }
+    },
+    {
+      "fold": 5,
+      "rows": 347534,
+      "sha256": "1cc632e1fb3689f3a635fbda5aed72c0bc18d12609dec994a9e1cf6196d88e9c",
+      "execution": {
+        "cgroup": {
+          "cpu_max": [
+            200000,
+            100000
+          ],
+          "memory_max": 12884901888,
+          "path": "/user.slice/user-1000.slice/user@1000.service/app.slice/prc-mlp-split-f5-20261005.service",
+          "swap_max": 0
+        },
+        "gpu_allocated_bytes": 67108864,
+        "gpu_reserved_bytes": 627048448,
+        "peak_rss_gib": 3.66571044921875
+      }
+    },
+    {
+      "fold": 6,
+      "rows": 348819,
+      "sha256": "9e5668f1b3d8b3be03dab7589de80b840fd3c3c65b7e8ac11fd0dab280d614ce",
+      "execution": {
+        "cgroup": {
+          "cpu_max": [
+            200000,
+            100000
+          ],
+          "memory_max": 12884901888,
+          "path": "/user.slice/user-1000.slice/user@1000.service/app.slice/prc-mlp-split-f6-20261005.service",
+          "swap_max": 0
+        },
+        "gpu_allocated_bytes": 67108864,
+        "gpu_reserved_bytes": 627048448,
+        "peak_rss_gib": 3.6647491455078125
+      }
+    }
+  ],
+  "rows": 2085047,
+  "fit_count": 18,
+  "runtime": {
+    "device": "AMD Radeon RX 7900 XTX",
+    "hip": "7.15.26333",
+    "lightgbm": "4.7.0",
+    "numpy": "2.5.3",
+    "polars": "1.44.2",
+    "python": "3.12.15 (main, Oct  3 2026, 01:03:07) [Clang 22.1.3 ]",
+    "torch": "2.13.0+rocm10.0.0",
+    "total_memory": 25753026560
+  },
+  "scope": "retrospective component OOF; no quality claim or complete assembled-chain validation"
+}

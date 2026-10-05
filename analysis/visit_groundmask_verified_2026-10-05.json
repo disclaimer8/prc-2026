@@ -1,0 +1,380 @@
+{
+  "rows": 689260,
+  "days": 124,
+  "points": 125049648,
+  "retained_unknown_altitude": 0,
+  "gate": {
+    "exact_control_parity": true,
+    "no_identity_switches": true,
+    "ranking_july_previous_visit_survives": true,
+    "training_jan_and_july_have_synthetic_rows": true,
+    "training_july_changes_active_vi": true
+  },
+  "report_sha256": "8bc8982bc11aba03f2ceceb328ee0d92286f5de544fba690f8e74ee3cf3e7f36",
+  "lirf_nm": {
+    "2025-01|LIRF|nm=1": {
+      "airborne_e64_reachable": 3137,
+      "airborne_prev": 3165,
+      "baseline_prev": 3169,
+      "changed_active_vi": 72,
+      "changed_any_vi": 91,
+      "coverage_ge2_with_airborne_prev": 28,
+      "coverage_lt2": 11190,
+      "current_e64_reachable": 3141,
+      "delta": {
+        "vi_alt_first": {
+          "both_finite": 9623,
+          "changed": 67,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_first_seen": {
+          "both_finite": 9623,
+          "changed": 67,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_gap": {
+          "both_finite": 3165,
+          "changed": 33,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_gs_first": {
+          "both_finite": 8644,
+          "changed": 48,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_has_prev": {
+          "both_finite": 11257,
+          "changed": 4,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_n_pts": {
+          "both_finite": 9623,
+          "changed": 67,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_prev_pts": {
+          "both_finite": 3165,
+          "changed": 24,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_turnaround": {
+          "both_finite": 3165,
+          "changed": 5,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "identity_gained": 0,
+      "identity_lost": 0,
+      "identity_switched": 0,
+      "rows": 11257,
+      "same_airframe": 9675,
+      "synthetic_same_identity": 28,
+      "synthetic_training_rows_from_coverage_ge2": 28
+    },
+    "2025-07|LIRF|nm=1": {
+      "airborne_e64_reachable": 496,
+      "airborne_prev": 12802,
+      "baseline_prev": 12809,
+      "changed_active_vi": 14355,
+      "changed_any_vi": 14360,
+      "coverage_ge2_with_airborne_prev": 12306,
+      "coverage_lt2": 870,
+      "current_e64_reachable": 488,
+      "delta": {
+        "vi_alt_first": {
+          "both_finite": 515,
+          "changed": 14098,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            25.0
+          ]
+        },
+        "vi_first_seen": {
+          "both_finite": 14475,
+          "changed": 14120,
+          "delta_p10_p50_p90": [
+            -960.2760001182556,
+            -411.7299997806549,
+            -153.6679998397827
+          ]
+        },
+        "vi_gap": {
+          "both_finite": 12765,
+          "changed": 12725,
+          "delta_p10_p50_p90": [
+            368.69799995422363,
+            744.059999704361,
+            1385.9199999809266
+          ]
+        },
+        "vi_gs_first": {
+          "both_finite": 14409,
+          "changed": 14103,
+          "delta_p10_p50_p90": [
+            57.5,
+            88.0,
+            143.22000000000008
+          ]
+        },
+        "vi_has_prev": {
+          "both_finite": 14874,
+          "changed": 81,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_n_pts": {
+          "both_finite": 14475,
+          "changed": 14124,
+          "delta_p10_p50_p90": [
+            -69.0,
+            -33.0,
+            -9.0
+          ]
+        },
+        "vi_prev_pts": {
+          "both_finite": 12765,
+          "changed": 11311,
+          "delta_p10_p50_p90": [
+            -47.0,
+            -15.0,
+            0.0
+          ]
+        },
+        "vi_turnaround": {
+          "both_finite": 12765,
+          "changed": 11304,
+          "delta_p10_p50_p90": [
+            0.0,
+            323.6399998664856,
+            573.0819999694826
+          ]
+        }
+      },
+      "identity_gained": 18,
+      "identity_lost": 2,
+      "identity_switched": 0,
+      "rows": 14874,
+      "same_airframe": 14476,
+      "synthetic_same_identity": 12298,
+      "synthetic_training_rows_from_coverage_ge2": 12298
+    },
+    "2026-01|LIRF|nm=1": {
+      "airborne_e64_reachable": 1706,
+      "airborne_prev": 8990,
+      "baseline_prev": 9038,
+      "changed_active_vi": 9650,
+      "changed_any_vi": 9652,
+      "coverage_ge2_with_airborne_prev": 7284,
+      "coverage_lt2": 2331,
+      "current_e64_reachable": 1708,
+      "delta": {
+        "vi_alt_first": {
+          "both_finite": 1998,
+          "changed": 8675,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_first_seen": {
+          "both_finite": 10549,
+          "changed": 8682,
+          "delta_p10_p50_p90": [
+            -863.1620001316071,
+            -232.46000003814697,
+            0.0
+          ]
+        },
+        "vi_gap": {
+          "both_finite": 8972,
+          "changed": 8386,
+          "delta_p10_p50_p90": [
+            64.732000041008,
+            591.5499999523163,
+            1340.49499976635
+          ]
+        },
+        "vi_gs_first": {
+          "both_finite": 10424,
+          "changed": 8664,
+          "delta_p10_p50_p90": [
+            0.0,
+            136.8,
+            160.39999999999998
+          ]
+        },
+        "vi_has_prev": {
+          "both_finite": 10954,
+          "changed": 84,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_n_pts": {
+          "both_finite": 10549,
+          "changed": 8685,
+          "delta_p10_p50_p90": [
+            -29.0,
+            -10.0,
+            0.0
+          ]
+        },
+        "vi_prev_pts": {
+          "both_finite": 8972,
+          "changed": 7212,
+          "delta_p10_p50_p90": [
+            -53.0,
+            -14.0,
+            0.0
+          ]
+        },
+        "vi_turnaround": {
+          "both_finite": 8972,
+          "changed": 7207,
+          "delta_p10_p50_p90": [
+            0.0,
+            359.0749999284744,
+            564.1810000658036
+          ]
+        }
+      },
+      "identity_gained": 3,
+      "identity_lost": 4,
+      "identity_switched": 0,
+      "rows": 10954,
+      "same_airframe": 10552,
+      "synthetic_same_identity": 7284,
+      "synthetic_training_rows_from_coverage_ge2": 7284
+    },
+    "2026-07|LIRF|nm=1": {
+      "airborne_e64_reachable": 10521,
+      "airborne_prev": 11352,
+      "baseline_prev": 11359,
+      "changed_active_vi": 995,
+      "changed_any_vi": 1006,
+      "coverage_ge2_with_airborne_prev": 831,
+      "coverage_lt2": 14596,
+      "current_e64_reachable": 10528,
+      "delta": {
+        "vi_alt_first": {
+          "both_finite": 13115,
+          "changed": 970,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_first_seen": {
+          "both_finite": 13147,
+          "changed": 966,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_gap": {
+          "both_finite": 11352,
+          "changed": 860,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_gs_first": {
+          "both_finite": 11926,
+          "changed": 917,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_has_prev": {
+          "both_finite": 15562,
+          "changed": 7,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_n_pts": {
+          "both_finite": 13147,
+          "changed": 966,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_prev_pts": {
+          "both_finite": 11352,
+          "changed": 38,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "vi_turnaround": {
+          "both_finite": 11352,
+          "changed": 29,
+          "delta_p10_p50_p90": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "identity_gained": 0,
+      "identity_lost": 1,
+      "identity_switched": 0,
+      "rows": 15562,
+      "same_airframe": 13175,
+      "synthetic_same_identity": 831,
+      "synthetic_training_rows_from_coverage_ge2": 831
+    }
+  }
+}
