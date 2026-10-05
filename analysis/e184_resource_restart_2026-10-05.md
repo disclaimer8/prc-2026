@@ -1,9 +1,32 @@
 # E184: resource-only restart after confirmed OpenMP spinning
 
-The original registered model/gate/forecast remain journal254. No scored E184 fold
-has been obtained: `data/cv_preds_e184_hz` contains zero NPZ files. The interrupted
-attempt's input, empty output, logs and controller/worker identity must be preserved.
-Root, not this implementation agent, owns any stop or restart.
+The original registered model/gate/forecast remain journal254. This document first
+described the zero-fold state at operational preregistration268. During a later SSH
+approval pause the old run completed fold_1_7; the retirement guard refused to stop
+on stale assumptions. Amendment269 recorded that fold before the operational
+restart. Its metrics were not used to select the repair. The old fold, inputs and
+logs are preserved separately and are never mixed with the new run.
+
+## Verified execution on October 5
+
+Registration commits: `d3d5ce5bafc3d2f7228b4e4e29c3c54daf258dbf` (code plus268)
+and `0e005f5` (late-fold preservation269). Root verified the then-current process
+identities and retired controller2894663 and worker3096556. Their evidence is in
+`data/e184_retired_20261005.json`; the old fold is 26,177,308 bytes.
+
+The new systemd service `prc-e184-cv-6t-20261005.service` started around09:00UTC.
+At09:13UTC it remained active, with actual inner-fit iteration progress in
+`data/e184_resource_20261005/logs/fold_1_7.log`. A fresh three-second perf sample
+after the restart showed 96.60–96.82% of cycles in libLightGBM and 0.18% in libgomp,
+with no lost samples. CPU use was about519%, RSS about10GiB. This confirms removal
+of the observed spin bottleneck, not a model-quality result or an end-to-end ETA.
+
+Launcher SHA256:
+`06fdb23edf0395c0d4bba2f36568a95e19449803e51448377eb116b920397b80`.
+Feature SHA256:
+`d3cd51f7541fbe15e512d57babfcfe22ec2ef1942355c89ad96f5051c1c49f7e`.
+Keep the active service running; no second restart is needed. Completion only
+means six saved folds. The original scientific gate must still be evaluated.
 
 ## Current evidence
 

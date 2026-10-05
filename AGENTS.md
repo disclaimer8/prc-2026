@@ -57,8 +57,10 @@
   MLP E181a `e130_mlpa_rank.npz` **0,30** — полный вес) → правило E167 → хвост T2 (42 строки TabPFN из v361 → этап
   E141 с `E36_BASE_DIR=data/cv_preds_e116prod` (E169) → E64 keep-all → E152 → смесь E81 (v44 0,1214 · v60 0,027) →
   подъём у края LOBT) → `protect_tabpfn_rows.py`.
-- Загрузка: `UPLOAD_REF=submissions/gentle-igloo_v<ссылка>.parquet .venv/bin/python src/upload.py <N>` — сверяет файл
-  с шаблоном и ссылкой, ключи берёт из `.env` (`PRC_ACCESS_KEY`, `PRC_SECRET_KEY`; файл не в git, не печатать).
+- Загрузка с 05.10: только проверенный single-PUT entry point с immutable manifest, проверкой квоты и общим
+  серверным `data/submission_upload_ledger.jsonl`/lock. Для E185 — `src/e185_single_put_upload.py`; для других
+  рецептов нужен соответствующий preflight. Старый `src/upload.py` автоматически повторяет PUT и больше не
+  подходит для новых подач. Ключи PRC приватные, не печатать; на Hetzner они в отдельном файле root0600.
   Оценка: `.venv/bin/python src/leaderboard.py | grep v<N>.parquet` (появляется через ~2 мин). Публичный API доски:
   `https://datacomp.opensky-network.org/api/competitions/bb3693e1-26bc-4a9e-8619-4fe78b4eab0c/leaderboard`
   (`{items, nextCursor}`).
