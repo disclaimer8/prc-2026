@@ -19,7 +19,7 @@
 
 | Что | Где |
 |---|---|
-| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №274) | `HYPOTHESES_LOG.md` |
+| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №279) | `HYPOTHESES_LOG.md` |
 | Бриф для ревью: «Читать первым», раздел 0 (закрытое — не повторять), последние итоги — раздел 21cn | `REVIEW_BRIEF.md`; после правки — `.venv/bin/python review/build_brief.py` |
 | Обходы конкурентов и источников данных | `analysis/competitor_repos/_UPDATE_2026-10-04.md`, `analysis/data_sources_2026-10-04_{fable,sonnet}.md`, `SOURCES.md` |
 | Таблицы признаков (не в git) | `data/features_e106.parquet`, `data/features_e163.parquet`, **`data/features_fin1b.parquet`** (боевая) |
@@ -51,12 +51,10 @@
 
 ## Сборка лучшего файла и загрузка
 
-- **Лучший на05.10 07:01Z: v12008 = 232,3586** (12-е из230). Это E185вес0,2333333333333333 передE167 в рецепте v1139; journal№267 и manifestv12008. Рецепт v1139 — `hz_queue/95_builds_4oct.sh`, ветка T4:
-  база FIN1b v870 (`lgb_reg_seeds_v870.npz`, CatBoost FIN1b 15 сидов `cat_fin1b_seeds15.npz`, `blend.py … 0.65`)
-  + члены через `E130_MEMBERS` (raw 0,033 · LOBT 0,10 · SCHED 0,067 · EOBT 0,083 · AOBT 0,10 — это ×2/3 весов CV;
-  MLP E181a `e130_mlpa_rank.npz` **0,30** — полный вес) → правило E167 → хвост T2 (42 строки TabPFN из v361 → этап
-  E141 с `E36_BASE_DIR=data/cv_preds_e116prod` (E169) → E64 keep-all → E152 → смесь E81 (v44 0,1214 · v60 0,027) →
-  подъём у края LOBT) → `protect_tabpfn_rows.py`.
+- **Лучший на05.10 10:13Z: v12048 = 232,2411** (12-е из230). Полная комбинация E182+E185; журнал№273/278, immutable manifest `submissions/gentle-igloo_v12048.manifest.json`, сборщик `src/e182_e185_submission.py`.
+  Родитель `src/e182_submission.py`: FIN1b v870, CatBoost15сидов/.65, LGB5; FIN1b-члены rawf **.0333333333333333**, lobtf/schedf/eobtf/aobtf **по.10**, MLP E181a **.25**.
+  Из parent v12020/parts12020 вставляется E185 **.2333333333333333** только LOBT-null/внеLIRF → E167 → 42TabPFN v361 → E141/E169 с cv_preds_e116prod → E64 keep-all → E152.95 → E81(v44 .1214,v60 .027) → LOBT → protect42.
+  Прежние рецепты1139/12008 сохранены в старых manifests; weights/parts разных цепочек не смешивать. Итог12048SHA `0c72511bf5be05ecb9d68a72245e244feeb6088b92372732bb3aae0dc7dddbb1`.
 - Загрузка с 05.10: только проверенный single-PUT entry point с immutable manifest, проверкой квоты и общим
   серверным `data/submission_upload_ledger.jsonl`/lock. Для E185 — `src/e185_single_put_upload.py`; для других
   рецептов нужен соответствующий preflight. Старый `src/upload.py` автоматически повторяет PUT и больше не
@@ -64,7 +62,7 @@
   Оценка: `.venv/bin/python src/leaderboard.py | grep v<N>.parquet` (появляется через ~2 мин). Публичный API доски:
   `https://datacomp.opensky-network.org/api/competitions/bb3693e1-26bc-4a9e-8619-4fe78b4eab0c/leaderboard`
   (`{items, nextCursor}`).
-- Имя файла строго `gentle-igloo_vN.parquet`, N не повторять (лучший v1139; в служебных артефактах есть v9249; для E185 зарезервированы 12000–12019, финал12008; e2e использует 1001–1060).
+- Имя файла строго `gentle-igloo_vN.parquet`, N не повторять (лучший v12048; E185 резерв12000–12019, E18212020–12039, комбинация12040–12059; в служебных артефактах есть v9249; e2e использует1001–1060).
 
 ## Правила работы (каждое оплачено ошибкой)
 
