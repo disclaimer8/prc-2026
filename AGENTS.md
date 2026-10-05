@@ -19,7 +19,7 @@
 
 | Что | Где |
 |---|---|
-| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №297) | `HYPOTHESES_LOG.md` |
+| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №298) | `HYPOTHESES_LOG.md` |
 | Бриф для ревью: «Читать первым», раздел 0 (закрытое — не повторять), последние итоги — раздел 21cn | `REVIEW_BRIEF.md`; после правки — `.venv/bin/python review/build_brief.py` |
 | Обходы конкурентов и источников данных | `analysis/competitor_repos/_UPDATE_2026-10-04.md`, `analysis/data_sources_2026-10-04_{fable,sonnet}.md`, `SOURCES.md` |
 | Таблицы признаков (не в git) | `data/features_e106.parquet`, `data/features_e163.parquet`, **`data/features_fin1b.parquet`** (боевая) |
@@ -60,7 +60,8 @@
 
 ## Новые эксперименты 05.10 вечером
 
-- **E188 №293/296/297 завершён:** шестьпарstage-screenPASS на natural LIRFNM (−0,606867с,4/6,body/trim<0) иsynthetic (−2,772305с,6/6,body/trim<0). Это локальныепоказатели/прежнийnomonthtraining-parent, не полныйv12061CV и не разрешениенаподачу. **Следующийэтап — полныйcurrent-chainконтроль/кандидат; Cat15/LGB5ещёсчитаются.** Не повторятьscreen. Артефакты`data/visit_mask_20261005_v2`скопированыMac, SHA/ID/y/metricsverified, отчёт`analysis/e188_groundmask_screen_2026-10-05.md`. Ноутбучныйserviceиsleepinhibitorуспешнозавершены, ноутбуксвободен.
+- **На 21:32Z LGB30 завершён**, 6/6 компонентов скопированы на Mac и независимо проверены по SHA/ID/y/month/точному среднему 5 сидов; `analysis/lgb_component_completion_2026-10-05.json`. Home Cat продолжает 10/90 fit, около 70ч по последнему fit. Это контроль существующего рецепта, не новые кандидаты. У E188 нет текущего full-chain результата; по масштабу natural screen даёт ΔMSE−6,867 на полный training (условно−0,0137с при глобальном RMSE250, **не прогноз доски**). Не считать ожидание Cat запретом независимой работы. Новые задачи на свободные машины пока не поставлены.
+- **E188 №293/296/297 завершён:** шестьпарstage-screenPASS на natural LIRFNM (−0,606867с,4/6,body/trim<0) иsynthetic (−2,772305с,6/6,body/trim<0). Это локальныепоказатели/прежнийnomonthtraining-parent, не полныйv12061CV и не разрешениенаподачу. **Следующийэтап — полныйcurrent-chainконтроль/кандидат; Cat15ещёсчитается, LGB5завершён21:32Z.** Не повторятьscreen. Артефакты`data/visit_mask_20261005_v2`скопированыMac, SHA/ID/y/metricsverified, отчёт`analysis/e188_groundmask_screen_2026-10-05.md`. Ноутбучныйserviceиsleepinhibitorуспешнозавершены, ноутбуксвободен.
 - 364дня имеютсенсоры;4715рейсов31.12 сохраненыбезних. Две границыraw-файлов исправленыразбиениемпоactualUTCmonth. Регистрацияv2`da89a73846aa675d591ba5121bd2391241652a80`; failedrunсохранён.
 - **E189 TabICLv2 №294/295 отклонён** вдвухпарах; большогоCV/rankingдляэтогопротоколанет. `.venv-tabicl`домаизолирована ииспользует`.venv-rocm`readonly; среды не обновлять. GPUпослеscreenсвободна. РезультатскопированMac:`analysis/tabicl_ltfm_screen_2026-10-05.md`.
 

@@ -1,0 +1,52 @@
+{
+  "status": "verified",
+  "checked_at_utc": "2026-10-05T21:31:54.598957+00:00",
+  "fits": 30,
+  "folds": 6,
+  "rows": 2085047,
+  "lineage": "d1749457e64d8a428c59c519036472c7f5894c014280b471b67d5d6e4dade7f7",
+  "registration": "b8fed14992f22b3c43f1d8903d91851dcb8cad55",
+  "runtime": {
+    "packages": {
+      "lightgbm": "4.7.0",
+      "numpy": "2.5.3",
+      "pandas": "3.0.5",
+      "polars": "1.44.2",
+      "pyarrow": "25.0.1"
+    },
+    "python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]"
+  },
+  "folds_verified": [
+    {
+      "fold": 1,
+      "rows": 344419,
+      "sha256": "9a8eed95e6bb21016d286b95e635843206d9e4d463905e1548dae02297865c51"
+    },
+    {
+      "fold": 2,
+      "rows": 334914,
+      "sha256": "781073e3e598c9e4b510062934eaef3a08d93495eaad7dd8104770f6d16bcb65"
+    },
+    {
+      "fold": 3,
+      "rows": 348399,
+      "sha256": "2522419b7561dcfb2d42386ed181683d7af8a6998a1e1c2d703d11774e51df77"
+    },
+    {
+      "fold": 4,
+      "rows": 360962,
+      "sha256": "bcb652a8f1217430ed50340a94db34dd468f3e65d9cac9cae93924d7277a864d"
+    },
+    {
+      "fold": 5,
+      "rows": 347534,
+      "sha256": "1c4e0ee426484c06dc19d62babfb2580fe9bcf8078f00d82719ba7dd9544825e"
+    },
+    {
+      "fold": 6,
+      "rows": 348819,
+      "sha256": "c869d621b6aefdb5d2bb37a56dcb6c1e358af6c7b4ec883c3c3565ff72c93f59"
+    }
+  ],
+  "scope": "Independent local verification of copied component artifacts, source and manifest lineage, exact IDs/y/months and five-seed means. Large per-fold feature views and fit logs retained on Hetzner; no full-chain or independent nested validation claim."
+}
