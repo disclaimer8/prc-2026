@@ -24,7 +24,7 @@ import polars as pl
 import visit_airborne_audit as A
 
 ID, Y = 'MVT_ID_mvt', 'TAXITIME_SEC_mvt'
-PROTOCOL = 'LIRF-ground-mask-train-augmentation-screen-v1'
+PROTOCOL = 'LIRF-ground-mask-train-augmentation-screen-v2-utc-partition'
 MONTHS = [f'2025-{m:02}' for m in range(1,13)]
 DAYS = [f'{m}-{d:02}' for m in MONTHS for d in range(1,calendar.monthrange(2025,int(m[5:]))[1]+1)]
 # Upstream sensor archive has no Dec31 files on any machine. Keep all 4715
@@ -68,6 +68,16 @@ def missing_observations(meta):
             dtype=pl.Int64 if c in ('vi_n_pts','vi_prev_pts','vi_has_prev') else pl.Float64
             fields.append(pl.lit(0 if c=='vi_has_prev' else None,dtype=dtype).alias(prefix+c))
     return meta.with_columns(*fields)
+
+
+def partition_departures(frames):
+    # Canonical extractor reads all raw files before filtering UTC timestamp.
+    # Filename month is not authoritative at the two observed boundary rows.
+    d=pl.concat(frames)
+    if d[ID].n_unique()!=d.height:raise RuntimeError('duplicate departure IDs')
+    parts={m:d.filter(pl.col('MVT_TIME_UTC_mvt').dt.strftime('%Y-%m')==m) for m in MONTHS}
+    if sum(f.height for f in parts.values())!=d.height:raise RuntimeError('departure outside registered calendar')
+    return parts
 
 
 def split_frames(natural, audit, a):
@@ -121,7 +131,7 @@ def prepare(root,bundle,registration):
     expected_missing=[f'data/{directory}/{prefix}_{day}.parquet' for day in MISSING_SOURCE_DAYS
                       for directory,prefix in [('adsblol','surface'),('adsblol','visit'),('adsblol_kt1','offblock2')]]
     if set(missing)!=set(expected_missing):raise RuntimeError(f'unregistered missing-source set: {missing}')
-    training=[]
+    training=[];departures=[]
     for month in MONTHS:
         files=sorted((root/'data/prc-2026-datasets').glob(f'training_{month}-01_*.parquet'))
         if len(files)!=1: raise RuntimeError(f'raw month missing: {month}')
@@ -130,11 +140,13 @@ def prepare(root,bundle,registration):
         for day,n in MISSING_SOURCE_DAYS.items():
             if day.startswith(month) and raw.filter(pl.col('MVT_TIME_UTC_mvt').dt.strftime('%Y-%m-%d')==day).height!=n:
                 raise RuntimeError('missing-source departure count drift')
-        raw.select(A.DEP_COLS).write_parquet(bundle/'departures'/f'{month}.parquet')
+        departures.append(raw.select(A.DEP_COLS))
         training.append(raw.select(ID,Y,'ADEP_mvt',
             pl.col('MVT_TIME_UTC_mvt').dt.month().alias('month'),
             pl.col('FLIGHT_ID_mvt').is_not_null().alias('has_nm'),
             (pl.col('MVT_TIME_UTC_mvt').dt.epoch('s')-pl.col('SCHED_TIME_UTC_mvt').dt.epoch('s')).cast(pl.Float64).alias('D')))
+    for month,dep in partition_departures(departures).items():
+        dep.write_parquet(bundle/'departures'/f'{month}.parquet')
     bases=[]
     for a in range(1,7):
         path=root/f'data/cv_preds_nomonth/fold_{a}_{a+6}.npz'

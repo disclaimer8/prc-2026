@@ -3,6 +3,7 @@ import importlib.util
 from pathlib import Path
 import sys
 import unittest
+import datetime as dt
 
 import numpy as np
 import polars as pl
@@ -84,6 +85,19 @@ class VisitMaskTests(unittest.TestCase):
         self.assertEqual(missing['coverage'].null_count(),2)
         self.assertEqual(missing['base_vi_has_prev'].to_list(),[0,0])
         self.assertFalse(E.synthetic_mask(missing).any())
+
+    def test_partition_uses_utc_departure_month_not_source_filename(self):
+        E=self.module()
+        self.assertTrue(hasattr(E,'partition_departures'),'UTC repartition missing')
+        # March file contains a February departure; September file an August one.
+        march=pl.DataFrame({'MVT_ID_mvt':[185722540.,3.], 'MVT_TIME_UTC_mvt':[
+            dt.datetime(2025,2,28,23,59,57,tzinfo=dt.timezone.utc),dt.datetime(2025,3,1,tzinfo=dt.timezone.utc)]})
+        sept=pl.DataFrame({'MVT_ID_mvt':[196701297.], 'MVT_TIME_UTC_mvt':[
+            dt.datetime(2025,8,31,23,59,57,tzinfo=dt.timezone.utc)]})
+        parts=E.partition_departures([march,sept])
+        self.assertEqual(parts['2025-02']['MVT_ID_mvt'].to_list(),[185722540.])
+        self.assertEqual(parts['2025-08']['MVT_ID_mvt'].to_list(),[196701297.])
+        self.assertEqual(sum(f.height for f in parts.values()),3)
 
 
 if __name__ == '__main__': unittest.main()
