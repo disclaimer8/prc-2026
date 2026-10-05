@@ -19,7 +19,7 @@
 
 | Что | Где |
 |---|---|
-| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №267) | `HYPOTHESES_LOG.md` |
+| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №268) | `HYPOTHESES_LOG.md` |
 | Бриф для ревью: «Читать первым», раздел 0 (закрытое — не повторять), последние итоги — раздел 21cn | `REVIEW_BRIEF.md`; после правки — `.venv/bin/python review/build_brief.py` |
 | Обходы конкурентов и источников данных | `analysis/competitor_repos/_UPDATE_2026-10-04.md`, `analysis/data_sources_2026-10-04_{fable,sonnet}.md`, `SOURCES.md` |
 | Таблицы признаков (не в git) | `data/features_e106.parquet`, `data/features_e163.parquet`, **`data/features_fin1b.parquet`** (боевая) |
@@ -35,7 +35,7 @@
   **Никогда не запускать `uv run` / `uv sync`**: они пересоздают `.venv` под работающими задачами. 14 ядер, 48 ГБ.
 - **hetzner** — `ssh hetzner`, `/root/prc-2026`, свой `.venv`. 12 ядер, 62 ГБ. На этой же машине живёт прод
   FlightFinder: не больше **6 потоков**, `nice`. **Один CV LightGBM за раз** (два одновременно — в 10 раз медленнее).
-  Для nested CV дополнительно `taskset -c 0-5 nice -n 10`: в `cv_fold_preds_nested.py`/`train.py` пока жёстко указано 10 потоков, одного `OMP_NUM_THREADS=6` недостаточно. Текущий E184 ограничен affinity без рестарта; подробности в HANDOFF.
+  Для nested CV одного OMP=6 недостаточно: старые `cv_fold_preds_nested.py`/`train.py` задают10 потоков и вызывают OpenMP spin. На этой машине CPU0–5 — лишь3 физических ядра; используйте `taskset -c 0,2,4,6,8,10 nice -n 10` и реальные num_threads≤6, OMP_THREAD_LIMIT=6, OMP_WAIT_POLICY=PASSIVE, GOMP_SPINCOUNT=0, Polars≤6. E184 перезапускается по №268 через отдельный `scripts/e184_resource_cv.py`; общие исходники сохранены. Подробности в HANDOFF.
   Код туда копируется `scp`, не git — перед запуском сверять `md5` нужных файлов с маком.
   Фоновый запуск по ssh: `ssh -f hetzner 'cd /root/prc-2026 && setsid nohup bash X.sh > log 2>&1 < /dev/null &' < /dev/null`
   (без `-f`/`setsid` локальная сессия висит).
