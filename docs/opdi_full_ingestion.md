@@ -65,3 +65,41 @@ Full validation of `20241226_20250105` read all **8,624,020** original MEASUREME
 The matched legacy events in this sample are altitude crossings, level start/end, take-off, landing and top-of-climb/descent. **No parking/taxiway/runway entry/exit measurements were matched**. Therefore availability of MEASUREMENT alone does not establish a measured ground-path distance signal.
 
 An independent time check compared each `Time Passed (s)` with `EVENT.event_time − first_seen` of the same flight. **1,096,679 / 1,174,049** matched exactly. All **1,096,570** landing/take-off/level/top-of-climb/descent rows matched exactly, but only **109 / 77,479 altitude-crossing rows** did. The latter require investigation of source consistency/semantics before use; all original rows remain preserved and the compatibility manifest explicitly warns about this limitation. Exact ID joins alone do not certify physical validity. Distances in the retained sample were finite, 0–9,519.59 NM. Diagnostic files on home PC are `/tmp/opdi_legacy_debug/{hash_join_validation,fixed_filter_validation,legacy_semantic_validation}.json`.
+
+## Scoped December flight-key repair
+
+The full ingestion finished 43/45 windows on 2026-10-04 at 23:06 UTC: **113,140,967 EVENT rows**, **124,882,662 MEASUREMENT rows**, and **62,441,331 matched event IDs**. The 17 intact FLIGHT months contain 22,454,373 rows. October 2–12 remains a publisher EVENT 404. December 1–11 failed closed because its uint64 `EVENT.flight_id` values have zero direct or signed/unsigned-bitcast matches to the native int64 December FLIGHT IDs.
+
+The December mismatch has a deterministic compatibility explanation. The original full track key is:
+
+```text
+SHA256(UTF8(concat_ws('', icao24, flt_id))).hexdigest() + '_' + offset + '_2025_12'
+```
+
+The full **64-character** SHA256 and untrimmed callsign are essential. The recipe is pinned to [official source commit d09e4ccb, track construction lines 223–252](https://github.com/euctrl-pru/OPDI/blob/d09e4ccb0327d3a7fdf4b40a48d7c6d61f76f98b/python/v2.0.0/02_osn_tracks_etl.py#L223-L252). An earlier April implementation used a truncated digest and cannot explain these files. For each source group, candidate offsets 0–4095 are accepted **only** when `XXH64(key, seed=42)` matches the exact native FLIGHT ID bits. The same verified preimage hashed with seed 0 provides the uint64 EVENT alias. The recipe is official source code; this relationship between the two exported hashes is **empirically verified compatibility**, not a documented publisher contract. No timestamp proximity or fuzzy callsign match participates.
+
+An exhaustive source-only audit reconstructed **all 1,166,309 distinct December FLIGHT IDs** and matched **all 378,773 distinct flight IDs in all 8,739,132 raw December EVENT rows**, with zero unrecovered or unmapped flight IDs. There are 1,174 duplicated rows in the full December FLIGHT source; native IDs sharing a group can be deduplicated for the mapping. A conflicting group for one native ID rejects the repair. Source EVENT and FLIGHT `first_seen` timestamps can differ; neither is replaced or inferred.
+
+The separate repair command leaves `opdi_full_ingest.py` unchanged, locks the dataset, verifies recorded source hashes and schemas, and processes only `20251201_20251211`. It checks every crosswalk row against both hashes, requires complete native-FLIGHT coverage and complete raw-EVENT flight-key coverage, then applies the same airport OR filter. All original EVENT columns, including uint64 `flight_id`, remain unchanged. Only added `opdi_flight_id` becomes the native signed FLIGHT ID encoded as a decimal string, consistent with the other windows. MEASUREMENT uses the existing checked legacy event-ID rule.
+
+```sh
+.venv/bin/python scripts/opdi_repair_december.py \
+  --output-root data/opdi_full_v002 \
+  --raw-cache /tmp/opdi_legacy_debug \
+  --crosswalk /tmp/opdi_legacy_debug/december_flight_crosswalk_extended.parquet
+```
+
+Omit `--crosswalk` to reconstruct it independently from the verified full December FLIGHT source. The optional candidate is copied and fully revalidated; its auxiliary columns are never trusted for airport selection. No package installation is needed. An existing `libxxhash` accelerates hashing; `opdi_id_hashes.py` provides a tested arbitrary-length fallback. PyArrow uses two CPU and I/O workers, and each source is processed in 65,536-row batches. Memory scales with one month's flight registry/crosswalk and one window's event keys; full production peak RSS is to be measured on the authorized repair run.
+
+Both output files are staged before publication. A source-manifest backup, a persistent crosswalk addressed by SHA256, the method source commit, repair/helper code hashes, original producer/input hashes, and full mapping/count audits accompany the repair. The 43 completed windows are neither reprocessed nor rewritten. The original ingestor verifies and reuses the repaired checkpoints because its code and dependency hashes are unchanged. Conflicting measurement values, altered IDs, incomplete mappings, and stale resume dependencies reject the repair. A normal exception before manifest commit rolls back published output files. A hard kill during the publication interval can leave uncommitted files; a retry fails closed and identifies the files for inspection instead of assuming success.
+
+The scoped command exits 0 when this repair succeeds or an identical verified repair already exists. **That does not mean the whole dataset is complete:** successful repair should bring archive completion to **44/45**, while October remains explicitly incomplete. Raw cache files remain intact; any newly downloaded December source also remains available for investigation.
+
+Recorded source-only audit artifacts (2026-10-05, before production repair):
+
+- Raw December EVENT: 251,261,371 bytes, SHA256 `ce8fe8ec415f660bc666e9a9c31323f14c76b2f75631667458c2a0eb16b58b4a`.
+- Raw December MEASUREMENT: 192,394,322 bytes, SHA256 `dbe38985fe167ce04e0d761ffbd497858ac4cec69c4b7cf221d7b64f7e826e2e`.
+- Candidate crosswalk: 55,731,034 bytes, SHA256 `55a9214fd766aa795b79644c7a3c6f3f183b4850dc3a17880bb0f2512cc64165`.
+- Home audit files: `/tmp/opdi_legacy_debug/december_crosswalk_extended.json` and `/tmp/opdi_legacy_debug/full_inventory_20261005.json`.
+
+Offline tests cover the hash preimages, preservation of arrival-only flights/native fields, all 43 unaffected checkpoints, primary-ingestor reuse, source/crosswalk tampering, unmapped flight IDs, duplicate mappings, measurement conflicts, locking, publication rollback, and stale dependency rejection. These are ingestion validations; they do not establish predictive value or physical validity of measurements.
