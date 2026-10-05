@@ -1,0 +1,90 @@
+{
+  "rows": 2085047,
+  "eligible": 223,
+  "days": 365,
+  "ids_unique_and_exact": true,
+  "all_day_sha256_verified": true,
+  "eligible_exact": true,
+  "report_sha256": "31e29f7dffe6e4a67ce465689dd5cfbd3ad39b8a4d94a43fbfc978afd5d473fc",
+  "accepted_for_training": false,
+  "reasons": [
+    {
+      "reason": "ambiguous_or_missing_identity",
+      "len": 233378
+    },
+    {
+      "reason": "conflicting_segment_callsign",
+      "len": 24795
+    },
+    {
+      "reason": "duplicate_segment_timestamps",
+      "len": 171
+    },
+    {
+      "reason": "eligible",
+      "len": 223
+    },
+    {
+      "reason": "missing_sensor_day",
+      "len": 4715
+    },
+    {
+      "reason": "missing_stale_flag",
+      "len": 1038065
+    },
+    {
+      "reason": "movement_not_sustained",
+      "len": 626
+    },
+    {
+      "reason": "no_initial_stand_dwell",
+      "len": 403592
+    },
+    {
+      "reason": "no_movement",
+      "len": 5363
+    },
+    {
+      "reason": "no_observed_stand_exit",
+      "len": 127
+    },
+    {
+      "reason": "no_recent_ground",
+      "len": 298668
+    },
+    {
+      "reason": "no_segment_callsign",
+      "len": 15227
+    },
+    {
+      "reason": "unknown_stand",
+      "len": 60016
+    },
+    {
+      "reason": "wide_bracket",
+      "len": 81
+    }
+  ],
+  "eligible_airports": [
+    {
+      "airport": "EDDM",
+      "len": 1
+    },
+    {
+      "airport": "EHAM",
+      "len": 61
+    },
+    {
+      "airport": "LEBL",
+      "len": 13
+    },
+    {
+      "airport": "LEMD",
+      "len": 23
+    },
+    {
+      "airport": "LSZH",
+      "len": 125
+    }
+  ]
+}
