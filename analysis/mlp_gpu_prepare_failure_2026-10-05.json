@@ -1,0 +1,20 @@
+{
+  "registration_commit": "b54e0b0cbb46b4c77bee88ced3646fd4cc103792",
+  "protocol": "mlp-fin1b-rocm-prepare-only-v1",
+  "unit": "prc-mlp-gpu-prepare-20261005.service",
+  "verified_utc": "2026-10-05T16:33:56.330801+00:00",
+  "result": "oom-kill",
+  "exec_main_status": 15,
+  "memory_peak_bytes": 12884901888,
+  "last_phase": "before_target_encodings",
+  "last_reported_peak_rss_gib": 5.986419677734375,
+  "startup_peak_rss_gib": 1.0294380187988281,
+  "fit_calls": 0,
+  "predictions_written": false,
+  "probe_json_created": false,
+  "memory_gate_passed": false,
+  "cat_service_state_after": "active/running",
+  "manifest_sha256": "98a851ed704f293c8db5d9c5d6503c9e0c7d6a2fd67355704754157de302a9cb",
+  "systemd_evidence": "Kernel OOM killer killed some processes in this unit; 56.905s CPU over40.446s wall;12Gpeak. Unit start2026-10-05T16:25:07Z;failed16:25:47Z.",
+  "next_design": "prepare tensors on Mac48GiB; train from immutable tensors on homeGPU; no increase of home12GiB limit"
+}
