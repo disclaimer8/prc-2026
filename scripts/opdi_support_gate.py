@@ -117,7 +117,9 @@ def prepared_events(frame):
     frame = frame.with_columns(canonical_ids(frame["opdi_event_id"]), canonical_ids(frame["opdi_flight_id"]))
     if "event_s" not in frame.columns:
         frame = frame.with_columns(seconds(frame, "event_time").alias("event_s"))
-    return frame
+    # Legacy timestamp[us] and modern string sources must share one shard
+    # schema. Downstream pairing/anchors use event_s; originals stay untouched.
+    return frame.drop("event_time", strict=False)
 
 
 def check_global_event_ids(paths):

@@ -110,6 +110,22 @@ class SupportGateTests(unittest.TestCase):
         self.assertEqual(anchors["anchor_type"].to_list(), ["take-off", "first-xing-fl50", "first_seen"])
         self.assertEqual(anchors["anchor_s"].to_list(), [10, 20, 30])
 
+    def test_mixed_legacy_datetime_and_modern_string_windows_share_canonical_schema(self):
+        legacy = pl.DataFrame([event(1, "entry", 10)]).with_columns(
+            pl.col("event_time").str.to_datetime(time_unit="us"))
+        modern = pl.DataFrame([event(2, "exit", 40)])
+        for name, raw in (("old", legacy), ("new", modern)):
+            G.shard_write(G.prepared_events(raw), self.root, "events", name, "opdi_flight_id")
+        paths = sorted((self.root / "events").glob("*/*.parquet"))
+        combined = G.collect(pl.scan_parquet(paths))
+        self.assertNotIn("event_time", combined.columns)
+        self.assertEqual(combined.schema["event_s"], pl.Int64)
+        pairs, _ = G.validate_pairs(combined, self.flights, self.centers)
+        self.assertEqual(pairs["valid"].sum(), 1)
+        self.assertEqual(pairs["exit_s"][0] - pairs["entry_s"][0], 30)
+        self.assertEqual(legacy.schema["event_time"], pl.Datetime("us"))
+        self.assertEqual(modern.schema["event_time"], pl.String)
+
     def test_prc_reader_projects_only_allowlisted_columns(self):
         path = self.root / "training.parquet"
         pq.write_table(pa.table({"MVT_ID_mvt": [123.], "PHASE_mvt": ["DEP"], "ADEP_mvt": ["EDDF"],

@@ -1,0 +1,365 @@
+{
+  "allowed_columns": {
+    "adsb": [
+      "MVT_ID_mvt",
+      "coverage"
+    ],
+    "events": [
+      "opdi_event_id",
+      "opdi_flight_id",
+      "type",
+      "event_time",
+      "longitude",
+      "latitude",
+      "altitude",
+      "info"
+    ],
+    "flights": [
+      "id",
+      "flt_id",
+      "icao24",
+      "adep",
+      "ades",
+      "first_seen",
+      "last_seen"
+    ],
+    "prc": [
+      "MVT_ID_mvt",
+      "PHASE_mvt",
+      "ADEP_mvt",
+      "ADES_mvt",
+      "MVT_TIME_UTC_mvt",
+      "CALLSIGN_flt",
+      "FLIGHT_mvt",
+      "STAND_mvt",
+      "RUNWAY_mvt"
+    ]
+  },
+  "altitude_units": "Feet in official v002 generator; absolute cleaned barometric height, not AGL; no audit threshold applied",
+  "duplicate_event_scope": "All used ground,anchor,landing EVENT IDs globally; duplicate IDs reject audit",
+  "error": "SchemaError: data type mismatch for column event_time: incoming: String != target: Datetime('\u03bcs')",
+  "geometry_inputs": [
+    {
+      "path": "/home/a1/prc-2026/analysis/sources/samples/osm_overpass/EDDF.json",
+      "sha256": "51cad2d7b5fecd19bf07d8122eb52a37d96920bf3f759209c320d2c3d2b06afa"
+    },
+    {
+      "path": "/home/a1/prc-2026/analysis/sources/samples/osm_overpass/EDDM.json",
+      "sha256": "1d4b774dcfe5cae8009df494eb29a7fee4fd725dc530c6aa69b9896d221e506a"
+    },
+    {
+      "path": "/home/a1/prc-2026/analysis/sources/samples/osm_overpass/EGLL.json",
+      "sha256": "e82754ef9888828114101fef3e2f95e95598b848531d65fb8ee58f0d4c27247f"
+    },
+    {
+      "path": "/home/a1/prc-2026/analysis/sources/samples/osm_overpass/EHAM.json",
+      "sha256": "160a400a5768e4bda0c6a53d13c2212a8b24a81deb15e34254619abf9e519a8d"
+    },
+    {
+      "path": "/home/a1/prc-2026/analysis/sources/samples/osm_overpass/LEBL.json",
+      "sha256": "c2638803d1e14065e31f5016c770925e38bc22f0ac407a94af62dff4999eb67a"
+    },
+    {
+      "path": "/home/a1/prc-2026/analysis/sources/samples/osm_overpass/LEMD.json",
+      "sha256": "0f6f9583e338d3fc07e4336e9e545cbfe9439f7b9764b32a33c293b627faa181"
+    },
+    {
+      "path": "/home/a1/prc-2026/analysis/sources/samples/osm_overpass/LFPG.json",
+      "sha256": "942120b817648c686a2fc57c281e95d635d0469a42b2be373fd0477117e6f8af"
+    },
+    {
+      "path": "/home/a1/prc-2026/analysis/sources/samples/osm_overpass/LIRF.json",
+      "sha256": "70bc37151c3a2e5f18d00c9b62cb65278096090c8926cb5c9211bf91b4df92a6"
+    },
+    {
+      "path": "/home/a1/prc-2026/analysis/sources/samples/osm_overpass/LSZH.json",
+      "sha256": "1de443f157229da46d6114f3746bd25fac280e666e85230e5fe095d4ca227a23"
+    },
+    {
+      "path": "/home/a1/prc-2026/analysis/sources/samples/osm_overpass/LTFM.json",
+      "sha256": "36fa062045a746cc30c8ab7c2f99dd4ef91364a59b76438ab221616b3bd55ec5"
+    }
+  ],
+  "incremental_meaning": "Additional sensor support where known ADS-B coverage<2; not residual information or model gain",
+  "labels_predictions_models_read": false,
+  "manifest_sha256": "c9d00dd169631f1ffd842a5bbead733f0b942005dc8fbfee7434b051682a2aae",
+  "matching_code_sha256": "ac5ab93a7a4b515740f2abd4a18a1435d660e88776114c69aa1d72aaa2f3ec75",
+  "matching_rule": "normalized uppercase whitespace-free callsign+ADEP; earliest take-off else first-xing-fl50 else first_seen; inclusive anchor-MVT[-900,+1800]seconds; prune both candidate graph degrees globally",
+  "missing_event_windows": [
+    "20251002_20251012"
+  ],
+  "months": [
+    "202501",
+    "202502",
+    "202503",
+    "202504",
+    "202505",
+    "202506",
+    "202507",
+    "202508",
+    "202509",
+    "202510",
+    "202511",
+    "202512",
+    "202601",
+    "202607"
+  ],
+  "opdi_inputs": [
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202412.parquet",
+      "sha256": "9691067291915545db4721c37222a370d5d3041475c2c4b68c6ec25ba466796c"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202501.parquet",
+      "sha256": "ea1a74434f8da4a842404e39ae75431e2a046d6cc3fbc46aaf4f293ae435a5de"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202502.parquet",
+      "sha256": "32443853de81cb7eb0874d97ee8d86c84bbb0a964a2622b06c701317d44588b2"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202503.parquet",
+      "sha256": "e631049e8fb544133b145877c36674436efdb6c337893a1a36dd5e5c5e2f8597"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202504.parquet",
+      "sha256": "d271a4d640da1b213f7a7b8aa5ab0205366b1d13504966d4757722f32b717f91"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202505.parquet",
+      "sha256": "a9b744da426195038b8e9537003492759daa1dadeafc7022006a79d88be56cc6"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202506.parquet",
+      "sha256": "49e5131d698190e7fdb69f1293adf055935583faae1f7e1c9da2ed049007d863"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202507.parquet",
+      "sha256": "d41ca50bfdeb1d86b57c7a4e2bad72f54f1980be521d8a97bc8af8a958a6bdd1"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202508.parquet",
+      "sha256": "523e7d53970f01362a6d18203b84bf999f3684acc8108338cc411bfa175d4e81"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202509.parquet",
+      "sha256": "e6a2b680410fdc6f202e8d825c6382e8755ce12fc0df2b6e4ce78669e4f3a3b8"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202510.parquet",
+      "sha256": "1b0c30ff62d285548d50afb51c9114f77ed45595bfdd13a675a3e4b397af3435"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202511.parquet",
+      "sha256": "7d3d468302f492de62e82780195d084f175095d39eaf163de5fe83c1c6029fba"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202512.parquet",
+      "sha256": "be9be06daa058aef5d8de1bb7f5753616b9bfc4f16fbbe10309526d5eab2e7fb"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202601.parquet",
+      "sha256": "536fc4c262a61d774ac764bc84d3cb12e1648e7d67c5a3aa2e3e15bb65f8f63a"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202602.parquet",
+      "sha256": "4e8534f75b2584b49ea5757a1cc4c16c6ef46d4a3269527babf75d8c731f2e2b"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202606.parquet",
+      "sha256": "b835a16dd9a60b4cc49a6a764245246fe14f33a7c6c553f03b93623df2d195ff"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/flights/flight_list_202607.parquet",
+      "sha256": "5b38d9bcb6bf2a4535cda7233304ed186f42b839b54e687ccb75263edc013cd6"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20241226_20250105.parquet",
+      "sha256": "d5af52773db0e2fc69f28e8be899f1c602e5b6135633f024bd5cef21455516e1"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250105_20250115.parquet",
+      "sha256": "2f31bfcbeb4ff63fc795f4d4fa48677778476d9e3a5d5762f52dfaa2191175a4"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250115_20250125.parquet",
+      "sha256": "93e2a5f7eaa4264780efec257bb6ef21da28066a5b2f71790417e1b9495879ba"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250125_20250204.parquet",
+      "sha256": "5c1f3afefa6879ab2f12e51d3247880d5eee744e0756b3d86dd6ccadc4c738a8"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250204_20250214.parquet",
+      "sha256": "11385d58f61f90d8e6834c67fe2752aa111a52f2c072848fb9a002400b812240"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250214_20250224.parquet",
+      "sha256": "5aaeb1e8249baa891ff4bd7bcae8d96d34378d4655a25889d63e36bccfa8a8df"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250224_20250306.parquet",
+      "sha256": "731a88f6f8ee066add0cd19c227a1d9e282361fe0e9ebdf7fc62d58abf69a775"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250306_20250316.parquet",
+      "sha256": "4da79838db7a7a86cba30fb2d50051fdd992fcf2c12330f89d6bde300f423204"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250316_20250326.parquet",
+      "sha256": "e13911e6dea276de035a2d7e1000a5ca61c1243b8f835bf2d459dfcd589fa538"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250326_20250405.parquet",
+      "sha256": "103c01fd6847308016fe4f27e6a2975e0593826e9381f34043d5d6a14fa3df33"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250405_20250415.parquet",
+      "sha256": "bacbb37b2db871ca138fe8fe884ebb52a4c8649588221d2676e3299b7f7e4a3f"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250415_20250425.parquet",
+      "sha256": "07d6a9d406f387846bf5bc9a2828df4d966672dc24c0ec7b960ef2548055b509"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250425_20250505.parquet",
+      "sha256": "fba87405a1463fed49cfd561318b0bac6266920104d40662815b7f77b4b4273e"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250505_20250515.parquet",
+      "sha256": "ef93c068e1d492090a0e67b7ac1281c77963da9ea31d150a8282b769636ebe7a"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250515_20250525.parquet",
+      "sha256": "7bbf4f09854e72667c0357d3dbdf3cc85c5f0b549e9072b318f5c7841c8ef1e8"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250525_20250604.parquet",
+      "sha256": "b9a9d2d1ed7792e92446a6ad7f418dd6a1352d70db4096cfa26fe1aceda4c494"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250604_20250614.parquet",
+      "sha256": "efed793da20ba0eef6447c91d765d9b088fbcf8a6a48cff672c13bcdebe63bb6"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250614_20250624.parquet",
+      "sha256": "9cf41f2ca63f4adf180a773a99770e02a134ef0f0300f5bbffc0e8dfd2ad0ea7"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250624_20250704.parquet",
+      "sha256": "2b07f975dd9a96614c2157f9222676784f642f89f14727fe479a17f4c5c378c8"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250704_20250714.parquet",
+      "sha256": "a424b323764586c60dc81ec96095fc64a0b1967e6b83efd72efb6eaf2183bcdf"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250714_20250724.parquet",
+      "sha256": "9782bb823953c2b4f520465c1052c7521bdff5bdf624f5a08f6c617816b87edf"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250724_20250803.parquet",
+      "sha256": "1872664848b5953f88e1d1b8b45461b70d921b60c4dee03245983edbf48566ff"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250803_20250813.parquet",
+      "sha256": "935a9645f3442cacfd2f5b00a4a3d78dc42f0301373e7caa182503e7b425aeb1"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250813_20250823.parquet",
+      "sha256": "a1641283df2fd0e78e4a16247ed8385cc646a477494f8306e4b35d644f14d169"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250823_20250902.parquet",
+      "sha256": "151a223f053f8c17b31f76709b9de060e036f7678b6cfe99c6564a60ab740d06"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250902_20250912.parquet",
+      "sha256": "3da90837684c86aaf2b12ac8d0a4837059140448ff6feae9da276cbeded0a512"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250912_20250922.parquet",
+      "sha256": "d625f58f92778777b0138741ec72a7985fc2047b3ec118596ea1d303fa222c18"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20250922_20251002.parquet",
+      "sha256": "050625636eeed9cdad409a5e091d8f50141038cc7ddc08dc75d0a3186bcc7aee"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20251012_20251022.parquet",
+      "sha256": "14300a8cd5de07f1eae5effb9d4a55f0c15abba9349557dd741a44179d296eb4"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20251022_20251101.parquet",
+      "sha256": "7c0d453a760466b7de402dc25b5ef1ef4ed0020813f88a5078a35f29e78a10de"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20251101_20251111.parquet",
+      "sha256": "c12ffc2cd91a6a14d162e9a73b0425edf91c4709ffd229bd313550df2961a487"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20251111_20251121.parquet",
+      "sha256": "290f747a97f1730ec139d1901808b9cc87d748b38f2758f4459a7beb835ab164"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20251121_20251201.parquet",
+      "sha256": "fac9156dcbf3d09c00e0e79793a1e1a34deda051205a9fafbab4ccf940e33065"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20251201_20251211.parquet",
+      "sha256": "3a18e0711738988688dbde75567fe7a9516bf9207dd6d201de596a6ed6ac75de"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20251211_20251221.parquet",
+      "sha256": "7e3f3388e6cd9a4b656a2b6041607d7f937507fa97cbc33ca67bbecd62b08d97"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20251221_20251231.parquet",
+      "sha256": "2664276d3db73ba5037023e80654b0f1ff70802d6da45fd4f71c4ce8bd981660"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20251231_20260110.parquet",
+      "sha256": "f56d43704fb3d6606376ed9be86e7d840e1b4b353125ed0d209c025d4f82e4fd"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20260110_20260120.parquet",
+      "sha256": "b269bfe53f01cbf3ab16d39605815aa8340f363d2243c4689fbef3051f2958b6"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20260120_20260130.parquet",
+      "sha256": "4ab221088495809d6a24bd7a0b7742d3b8a897bd6c231c83ed61a36eb7e7ad9a"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20260130_20260209.parquet",
+      "sha256": "693aa5e9534b4388e409a911412e3a0d32bb751a2f88be3f513587fa743b490f"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20260629_20260709.parquet",
+      "sha256": "18b26d080ace3d680493f3d2f7b99ab9f1b91831098a3cca1101b78bc023ce83"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20260709_20260719.parquet",
+      "sha256": "d78e8cfe7be16f20d851844fd4995fb46cbe120989d63a72f2eefe44c7319dc2"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20260719_20260729.parquet",
+      "sha256": "01022ee4191ac4c4a9d1d8defb18ef43b30e895e8aa27101d539c942869f9461"
+    },
+    {
+      "path": "/home/a1/prc-2026/data/opdi_full_v002/events/events_20260729_20260808.parquet",
+      "sha256": "41328ae6365313972f8747f8b9006c972284198fc0cba2fb39f082d340e43b86"
+    }
+  ],
+  "pair_meaning": "Coherent observed polygon entry/exit, not proof of ground contact or causal delay",
+  "script_sha256": "4edc0c21606847bfb1f0ad997b4abd2deb1c1b4bef2cb7627f2bf72f7df51f9c",
+  "shards": 16,
+  "source_semantics": {
+    "caveat": "Pinned historical v002 generator; current publisher shard-by-shard source lineage not independently established",
+    "commit": "8bf973d0997d3ef202e44e3ecc6426c714de0086",
+    "filter": "flight_level<=20 (absolute2000ft), H3res12 airport polygons; no on_ground/speed/phase/AGL check",
+    "interval": "min/max matched timestamps, trace split only gap>300s; not interpolated crossing times",
+    "path": "python/v2.0.0/04_opdi_flight_events_etl.py"
+  },
+  "status": "invalid_or_incomplete",
+  "threads": 2
+}
