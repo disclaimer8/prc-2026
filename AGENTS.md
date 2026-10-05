@@ -19,7 +19,7 @@
 
 | Что | Где |
 |---|---|
-| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №266) | `HYPOTHESES_LOG.md` |
+| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №267) | `HYPOTHESES_LOG.md` |
 | Бриф для ревью: «Читать первым», раздел 0 (закрытое — не повторять), последние итоги — раздел 21cn | `REVIEW_BRIEF.md`; после правки — `.venv/bin/python review/build_brief.py` |
 | Обходы конкурентов и источников данных | `analysis/competitor_repos/_UPDATE_2026-10-04.md`, `analysis/data_sources_2026-10-04_{fable,sonnet}.md`, `SOURCES.md` |
 | Таблицы признаков (не в git) | `data/features_e106.parquet`, `data/features_e163.parquet`, **`data/features_fin1b.parquet`** (боевая) |
@@ -51,7 +51,7 @@
 
 ## Сборка лучшего файла и загрузка
 
-- **Лучший сейчас: v1139 = 232,6200** (12-е из 226). Рецепт — `hz_queue/95_builds_4oct.sh`, ветка T4:
+- **Лучший на05.10 07:01Z: v12008 = 232,3586** (12-е из230). Это E185вес0,2333333333333333 передE167 в рецепте v1139; journal№267 и manifestv12008. Рецепт v1139 — `hz_queue/95_builds_4oct.sh`, ветка T4:
   база FIN1b v870 (`lgb_reg_seeds_v870.npz`, CatBoost FIN1b 15 сидов `cat_fin1b_seeds15.npz`, `blend.py … 0.65`)
   + члены через `E130_MEMBERS` (raw 0,033 · LOBT 0,10 · SCHED 0,067 · EOBT 0,083 · AOBT 0,10 — это ×2/3 весов CV;
   MLP E181a `e130_mlpa_rank.npz` **0,30** — полный вес) → правило E167 → хвост T2 (42 строки TabPFN из v361 → этап

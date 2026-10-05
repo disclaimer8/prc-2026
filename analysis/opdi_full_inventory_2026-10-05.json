@@ -1,0 +1,162 @@
+{
+  "status": "incomplete",
+  "updated_at": "2026-10-04T23:06:28.457124+00:00",
+  "code_sha256": "23ce263a3793953cb2c84ebda3f9624ee20160f900098f053613503edc4007ac",
+  "flight_months": [
+    "202412",
+    "202501",
+    "202502",
+    "202503",
+    "202504",
+    "202505",
+    "202506",
+    "202507",
+    "202508",
+    "202509",
+    "202510",
+    "202511",
+    "202512",
+    "202601",
+    "202602",
+    "202606",
+    "202607"
+  ],
+  "eligible_unique_flight_ids": 4973412,
+  "counts": {
+    "full_flight_rows": 22454373,
+    "full_flight_bytes": 704035030,
+    "events_complete_windows": 43,
+    "events_source_bytes": 14224519172,
+    "events_source_rows": 471048105,
+    "events_output_bytes": 7186014668,
+    "events_output_rows": 113140967,
+    "measurements_complete_windows": 43,
+    "measurements_source_bytes": 11720407310,
+    "measurements_source_rows": 653929376,
+    "measurements_output_bytes": 2788408548,
+    "measurements_output_rows": 124882662,
+    "matched_event_ids": 62441331,
+    "events_without_measurements": 50699636,
+    "duplicate_event_type_rows": 0,
+    "conflicting_event_type_values": 0,
+    "events_missing_windows": 1,
+    "measurements_blocked_missing_events_windows": 2,
+    "events_error_windows": 1
+  },
+  "flight_direction_rows": {
+    "eligible_flight_rows": 4973412,
+    "arrival_only_flight_rows": 2259814
+  },
+  "mapping_source_rows": {
+    "xxh64_utf8_seed0_uint64": 506357080,
+    "identity": 121132916
+  },
+  "gaps": [
+    {
+      "window": "20251002_20251012",
+      "stages": {
+        "events": {
+          "dependency_hash": "a8fde64add400e3bae01f7eff44ddb3d7d3598e0979a7c0b592f9660161711a9",
+          "error": "HTTP Error 404: Not Found",
+          "expected_missing": true,
+          "http_status": 404,
+          "source": null,
+          "status": "missing",
+          "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_events/flight_events_20251002_20251012.parquet"
+        },
+        "measurements": {
+          "audit": {
+            "matched_event_ids": null,
+            "retained_rows": null,
+            "source_row_versions": {
+              "v0.0.2": 15349440
+            },
+            "source_rows": 15349440,
+            "source_types": {
+              "Distance flown (NM)": 7674720,
+              "Time Passed (s)": 7674720
+            }
+          },
+          "dependency_hash": "a8fde64add400e3bae01f7eff44ddb3d7d3598e0979a7c0b592f9660161711a9",
+          "reason": "missing",
+          "source": {
+            "bytes": 265925226,
+            "fetched_at": "2026-10-04T22:54:12.751555+00:00",
+            "http_status": 200,
+            "origin": "http",
+            "response_headers": {
+              "Content-Length": "265925226",
+              "Last-Modified": "Mon, 26 Jan 2026 11:25:48 GMT"
+            },
+            "row_groups": 15,
+            "rows": 15349440,
+            "schema": "id: string\nevent_id: string\ntype: string\nvalue: double\nversion: string\n-- schema metadata --\npandas: '{\"index_columns\": [{\"kind\": \"range\", \"name\": null, \"start\": 0, \"' + 819",
+            "sha256": "42cbddfe0b68fbb40418f8c519cd519348f6737bd786a54736a0cfac3995d657",
+            "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/measurements/measurements_20251002_20251012.parquet"
+          },
+          "source_scan_complete": true,
+          "status": "blocked_missing_events",
+          "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/measurements/measurements_20251002_20251012.parquet"
+        }
+      }
+    },
+    {
+      "window": "20251201_20251211",
+      "stages": {
+        "events": {
+          "dependency_hash": "a8fde64add400e3bae01f7eff44ddb3d7d3598e0979a7c0b592f9660161711a9",
+          "error": "Zero retained events rows: source/key coverage must be investigated",
+          "expected_missing": false,
+          "http_status": null,
+          "source": {
+            "bytes": 251261371,
+            "local_path": "/tmp/opdi_legacy_debug/flight_events_20251201_20251211.parquet",
+            "origin": "local_raw_cache",
+            "remote_bytes_verified": false,
+            "row_groups": 9,
+            "rows": 8739132,
+            "schema": "id: uint64\nflight_id: uint64\ntype: string\nevent_time: string\nlongitude: double\nlatitude: double\naltitude: double\nsource: string\nversion: string\ninfo: string",
+            "sha256": "ce8fe8ec415f660bc666e9a9c31323f14c76b2f75631667458c2a0eb16b58b4a",
+            "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_events/flight_events_20251201_20251211.parquet"
+          },
+          "status": "error",
+          "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_events/flight_events_20251201_20251211.parquet"
+        },
+        "measurements": {
+          "audit": {
+            "matched_event_ids": null,
+            "retained_rows": null,
+            "source_row_versions": {
+              "v0.0.2": 11089940
+            },
+            "source_rows": 11089940,
+            "source_types": {
+              "Distance flown (NM)": 5544970,
+              "Time Passed (s)": 5544970
+            }
+          },
+          "dependency_hash": "a8fde64add400e3bae01f7eff44ddb3d7d3598e0979a7c0b592f9660161711a9",
+          "reason": "error",
+          "source": {
+            "bytes": 192394322,
+            "fetched_at": "2026-10-04T22:58:47.188184+00:00",
+            "http_status": 200,
+            "origin": "http",
+            "response_headers": {
+              "Content-Length": "192394322",
+              "Last-Modified": "Wed, 18 Feb 2026 14:36:04 GMT"
+            },
+            "row_groups": 11,
+            "rows": 11089940,
+            "schema": "id: string\nevent_id: string\ntype: string\nvalue: double\nversion: string\n-- schema metadata --\npandas: '{\"index_columns\": [{\"kind\": \"range\", \"name\": null, \"start\": 0, \"' + 819",
+            "sha256": "dbe38985fe167ce04e0d761ffbd497858ac4cec69c4b7cf221d7b64f7e826e2e",
+            "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/measurements/measurements_20251201_20251211.parquet"
+          },
+          "source_scan_complete": true,
+          "status": "blocked_missing_events",
+          "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/measurements/measurements_20251201_20251211.parquet"
+        }
+      }
+    }
+  ]
+}
