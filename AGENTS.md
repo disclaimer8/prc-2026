@@ -62,6 +62,8 @@
 
 Обновление17:38Z: ASUS176 подключён, **использовать PowerShell7**, путь `C:\Users\admin\prc-2026\runtime\PowerShell-7.6.6\pwsh.exe`. WindowsTask `PRC-Ally-Cat-Qualification-20261006-v2` обучает квалификацию№317/9c0d087, не productionfit.6threads/6GiB cap/AC/6h. PASS ещё нет,90fit назначения неизменны; никаких auto-retry/merge. Первая попытка failed доfit и сохранена. Полное состояние/пути в верхнем блокеHANDOFF. Mac свою очередь16fit завершил по логу; независимая проверка последних2receipt остаётся.
 
+Обновление19:09Z: ASUSонлайн/Cat1669итераций; UMA4→1GiB записан, **вступитвсилупослерестарта**. Активназадача `PRC-Ally-VRAM-After-Training-20261006`: дождётсяfullreport/выходаPython/backup+SHA/AC≥20%заряда ипопроситперезагрузкубезforce. Startupзадача `PRC-Ally-VRAM-Verify-20261006` сохранитpostboot.json. ДоэтогоновыйPythonсчётнаASUSненазначать. Полныйпорядок/условиявначалеHANDOFF; покафактическаяRAM11.7GiB, целевая~14.7ещёнепроверена.
+
 - Пятыйузел175: `ssh a1@192.168.1.175`, `/home/a1/prc-2026`, i5-1035G7/4c8t/14GiB, `.venv-cat-parity`Python3.14.4/pinned6packages. Userunit`prc-cat-extra175-20261006`активен,1500/5600итераций exact-квалификации.6threads/12GiB/swap0/nice10, Linger=yes, rootinhibitorcap2d. Все пути/очередь/порядокtransferвпервомблокеHANDOFF.
 - Новыйкод`cat_extra175.py`, регистрация№313/05f7d28: только послеexactPASS175 активируетwatchdog171 иберётseed14/folds4,5,6. 171сохраняетпервые7; activeoriginalhelpers/manifestsнеправить. Доактивацииисходная171очередьнеизменна. Послеактивацииобъединятьчерезновыйoverlaymerge87+3, нестарыйQ.merge. Приfailureникакогоавтоматическогоfallback/resume.
 - MacexactквалификацияPASS/max_abs0, ужеучитназначенные16fit.175qualificationещёнеполная. Новыхподачнет.

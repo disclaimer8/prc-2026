@@ -1,0 +1,101 @@
+{
+  "UTC": "2026-10-06T17:56:05.8721923Z",
+  "BeforeFreeKiB": 3292272,
+  "AfterFreeKiB": 3919312,
+  "Processes": [
+    {
+      "Name": "msedge",
+      "Id": 4832,
+      "OK": true,
+      "Before": 73846784,
+      "After": 0
+    },
+    {
+      "Name": "msedge",
+      "Id": 10872,
+      "OK": true,
+      "Before": 88993792,
+      "After": 0
+    },
+    {
+      "Name": "msedge",
+      "Id": 10912,
+      "OK": true,
+      "Before": 13848576,
+      "After": 0
+    },
+    {
+      "Name": "msedge",
+      "Id": 10920,
+      "OK": true,
+      "Before": 242544640,
+      "After": 0
+    },
+    {
+      "Name": "msedge",
+      "Id": 11560,
+      "OK": true,
+      "Before": 57016320,
+      "After": 0
+    },
+    {
+      "Name": "msedge",
+      "Id": 13204,
+      "OK": true,
+      "Before": 49106944,
+      "After": 0
+    },
+    {
+      "Name": "msedge",
+      "Id": 14384,
+      "OK": true,
+      "Before": 160555008,
+      "After": 0
+    },
+    {
+      "Name": "msedge",
+      "Id": 15648,
+      "OK": true,
+      "Before": 66220032,
+      "After": 0
+    },
+    {
+      "Name": "msedge",
+      "Id": 17056,
+      "OK": true,
+      "Before": 36737024,
+      "After": 0
+    },
+    {
+      "Name": "msedge",
+      "Id": 19964,
+      "OK": true,
+      "Before": 48783360,
+      "After": 0
+    },
+    {
+      "Name": "msedge",
+      "Id": 20352,
+      "OK": true,
+      "Before": 21692416,
+      "After": 0
+    },
+    {
+      "Name": "msedge",
+      "Id": 22608,
+      "OK": true,
+      "Before": 153702400,
+      "After": 0
+    },
+    {
+      "Name": "PhoneExperienceHost",
+      "Id": 13200,
+      "OK": true,
+      "Before": 234254336,
+      "After": 110592
+    }
+  ],
+  "ModelPID": 13812,
+  "ModelCPU": 6261.40625,
+  "ModelRSS": 1246990336
+}
