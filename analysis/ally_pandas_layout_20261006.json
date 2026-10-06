@@ -1,0 +1,16 @@
+[
+  {
+    "table": "train",
+    "rows": 1622159,
+    "columns": 170,
+    "exact": true,
+    "seconds": 1.9688805420009885
+  },
+  {
+    "table": "rank",
+    "rows": 344419,
+    "columns": 170,
+    "exact": true,
+    "seconds": 0.4392260000022361
+  }
+]
