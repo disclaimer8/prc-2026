@@ -1,0 +1,56 @@
+{
+  "utc": "2026-10-06T20:56:18.470925+00:00",
+  "verified_unique_fits": 75,
+  "required": 90,
+  "nodes": {
+    "hetzner": {
+      "verified": 14,
+      "assigned": 20,
+      "recent_fit_minutes": [
+        77.57,
+        78.29,
+        77.7
+      ],
+      "complete_marker": false
+    },
+    "home": {
+      "verified": 37,
+      "assigned": 44,
+      "recent_fit_minutes": [
+        51.23,
+        51.2,
+        52.86
+      ],
+      "complete_marker": false
+    },
+    "laptop": {
+      "verified": 6,
+      "assigned": 7,
+      "recent_fit_minutes": [
+        137.51,
+        132.35,
+        131.82
+      ],
+      "complete_marker": false
+    },
+    "laptop175": {
+      "verified": 2,
+      "assigned": 3,
+      "recent_fit_minutes": [],
+      "complete_marker": false,
+      "qualification_exact_independent": true
+    },
+    "mac": {
+      "verified": 16,
+      "assigned": 16,
+      "recent_fit_minutes": [
+        33.53,
+        34.9,
+        39.43
+      ],
+      "complete_marker": true
+    }
+  },
+  "merged": false,
+  "submission_ready": false
+}
