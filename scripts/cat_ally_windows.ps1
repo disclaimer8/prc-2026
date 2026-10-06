@@ -5,8 +5,8 @@ $ProjectRoot = Split-Path $PSScriptRoot -Parent
 $Python = Join-Path $ProjectRoot '.venv-prc/Scripts/python.exe'
 $Worker = Join-Path $PSScriptRoot 'cat_ally_windows.py'
 $Bundle = Join-Path $ProjectRoot 'data/cat_laptop_inputs_20261005'
-$Output = Join-Path $ProjectRoot 'data/cat_ally_20261006'
-$Log = Join-Path $ProjectRoot 'data/cat_ally_launcher_20261006.log'
+$Output = Join-Path $ProjectRoot 'data/cat_ally_20261006_v2'
+$Log = Join-Path $ProjectRoot 'data/cat_ally_launcher_20261006_v2.log'
 if (Test-Path $Log) { throw 'Launcher log already exists; automatic retry is forbidden' }
 & $Python -u $Worker run --bundle $Bundle --out $Output --registration-commit $Registration *> $Log
 exit $LASTEXITCODE

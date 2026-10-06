@@ -18,7 +18,7 @@ import threading
 import time
 import traceback
 
-PROTOCOL = 'cat-ally-windows-exact-qualification-v1'
+PROTOCOL = 'cat-ally-windows-exact-qualification-v2'
 PARAMETERS = dict(iterations=5600, learning_rate=.08, depth=8,
                   loss_function='RMSE', thread_count=6, verbose=500, random_seed=0)
 PACKAGES = dict(catboost='1.2.10', lightgbm='4.7.0', numpy='2.5.3',
@@ -67,6 +67,11 @@ def compare(ids, reference, got_ids, prediction):
         raise ValueError('Invalid prediction population')
     return dict(rows=len(ids), exact=bool(np.array_equal(reference, prediction)),
                 max_abs=float(np.max(np.abs(reference - prediction))))
+
+
+def pandas_view(frame):
+    # Arrow consolidation otherwise allocates another ~1.56 GiB float matrix.
+    return frame.to_pandas(split_blocks=True)
 
 
 def windows_limit(memory_limit=MEMORY_LIMIT):
@@ -195,7 +200,7 @@ def run(bundle, out, registration):
             frame = pl.read_parquet(bundle / f'{name}.parquet')
             if frame.columns != m['columns']:
                 raise ValueError('Feature order differs')
-            pdf = frame.to_pandas()
+            pdf = pandas_view(frame)
             del frame
             for column in m['categoricals']:
                 pdf[column] = pdf[column].fillna('NA').astype(str)
