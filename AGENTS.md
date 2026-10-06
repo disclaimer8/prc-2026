@@ -19,7 +19,7 @@
 
 | Что | Где |
 |---|---|
-| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №312) | `HYPOTHESES_LOG.md` |
+| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №314) | `HYPOTHESES_LOG.md` |
 | Бриф для ревью: «Читать первым», раздел 0 (закрытое — не повторять), последние итоги — раздел 21cn | `REVIEW_BRIEF.md`; после правки — `.venv/bin/python review/build_brief.py` |
 | Обходы конкурентов и источников данных | `analysis/competitor_repos/_UPDATE_2026-10-04.md`, `analysis/data_sources_2026-10-04_{fable,sonnet}.md`, `SOURCES.md` |
 | Таблицы признаков (не в git) | `data/features_e106.parquet`, `data/features_e163.parquet`, **`data/features_fin1b.parquet`** (боевая) |
@@ -57,6 +57,12 @@
   те же семь версий научных пакетов, imports/pip check PASS. Включён Linger=yes; GitHub Actions runner сохранён.
   Для аудита №289:6CPU/MemoryMax10G/swap0/nice10, один день за раз, только наблюдаемые ADS-B данные.
   Большие Cat/LGB задачи с других машин не дублировать: они требуют больше RAM и имеют собственные фиксированные очереди.
+
+## Актуальное дополнение 06.10 12:03Z
+
+- Пятыйузел175: `ssh a1@192.168.1.175`, `/home/a1/prc-2026`, i5-1035G7/4c8t/14GiB, `.venv-cat-parity`Python3.14.4/pinned6packages. Userunit`prc-cat-extra175-20261006`активен,1500/5600итераций exact-квалификации.6threads/12GiB/swap0/nice10, Linger=yes, rootinhibitorcap2d. Все пути/очередь/порядокtransferвпервомблокеHANDOFF.
+- Новыйкод`cat_extra175.py`, регистрация№313/05f7d28: только послеexactPASS175 активируетwatchdog171 иберётseed14/folds4,5,6. 171сохраняетпервые7; activeoriginalhelpers/manifestsнеправить. Доактивацииисходная171очередьнеизменна. Послеактивацииобъединятьчерезновыйoverlaymerge87+3, нестарыйQ.merge. Приfailureникакогоавтоматическогоfallback/resume.
+- MacexactквалификацияPASS/max_abs0, ужеучитназначенные16fit.175qualificationещёнеполная. Новыхподачнет.
 
 ## Актуальные расчёты 06.10 07:13Z
 

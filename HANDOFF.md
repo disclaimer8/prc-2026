@@ -1,6 +1,17 @@
-# HANDOFF — передача работы (05.10.2026; оперативные обновления выше исторических снимков)
+# HANDOFF — передача работы (06.10.2026; оперативные обновления выше исторических снимков)
 
 Правила, машины, рецепты — в `AGENTS.md`. Здесь — позиция, что считается и что делать дальше.
+
+## Оперативное обновление 06.10 12:03Z — пятый узел175 подключён
+
+- **a1@192.168.1.175**, hostname `a1-G1619-01`, Ubuntu26.04.1, i5-1035G7/4ядра8потоков, около14GiB RAM,433GiB диска приподключении. `/home/a1/prc-2026`, отдельная `.venv-cat-parity` Python3.14.4. Cat1.2.10/LGB4.7.0/NumPy2.5.3/Polars1.44.2/Pandas3.0.5/PyArrow25.0.1; imports/pipcheckPASS. Linger=yes, входMac поSSHключу, пароль не сохранён.
+- **Уже обучает полный технический повтор:** userunit `prc-cat-extra175-20261006.service`, PID14885,6threads/CPU600%/Memory12GiB/swap0/nice10. На12:03Z1500/5600iter, текущаяRAM4,69GiB. Log `data/cat_extra175_20261006.log`; детальный `data/cat_extra175_20261006/qualification.log`. Рабочийoutput `data/cat_extra175_20261006`. PASS ещёнеизвестен, требуются все344419предсказания/max_abs0, не промежуточнаяtrain-loss.
+- **Регистрация №313:** `05f7d2804a2e399d2d20d45423aaa0a2a17e285c`, новыйкод `scripts/cat_extra175.py`, overlay `data/cat_extra175_inputs_20261006`, lineage `78ae852b4b0fccec580fda8c724ff476e8f7405add1af0cf73f6936c299a2b78`. 31CatcontracttestsPASS, read-onlyreview; исправлены атомарнаяпубликацияarmed иранняяпроверкаchildlog. Базоваярегистрация41129d5, Q/C/L/helpers/4узловыевходы не изменены.
+- После **exactPASS**175 автоматически отдаёт171 ограниченнуюSSHкомандуактивации. Проверяетвсеretainedreceipts/отсутствиеattempts+логов+готовыхtailjobs/active171. Watchdoguserunit `prc-cat-extra175-drain-20261006.service` на171 ждёт конкретныепервые7из10, затемостанавливаетвесьстарый171unit/MainPID0, сохраняетpartial иSHA7receipts. Егоoutput `data/cat_extra175_drain_20261006` на171. Только послеarmedподтверждения175учит фиксированные `(seed14,fold4),(seed14,fold5),(seed14,fold6)`. ДоPASS/активации171сохраняетвсе10 задач; неостанавливатьего заранее. Read-onlySSHpreflight успешно выполнен, активации ещёнет.
+- Доступ175→171 ограничен ключом `/home/a1/.ssh/prc_transfer175_20261006`, `restrict/from=192.168.1.175/forcedcommand`; pin171 в`/home/a1/.ssh/prc_transfer175_known_hosts`. Ключнедаётshell/portforwarding. Диагностика `ssh ... preflight` делает только проверку ивернётошибкупослеактивациипоfresh-workправилу. Не запускатькомандубезpreflightвручнуюдоквалификации.
+- Послеактивации **финальноеобъединение через cat_extra175.py merge**, строго87оригинальных+3новых/90unique/6×15; basework —скопированное`data/cat_night_20261006`, work —175output, drainwork —скопированное171`data/cat_extra175_drain_20261006`, snapshot/bundleкакраньше, overlayновый. ОбычныйQ.mergeпослеtransferнеподходит: онждётвсе10от171. Если175FAILдоактивации, исходныйQ.merge остаётсядействующим. Ниfallbackпоscore, ниauto-resume; приSSHответеlostпослеактивациисначалапроверитьwatchdog/receipts.
+- Сон175 блокируетrootunit `prc-laptop175-awake-20261006` сRuntimeMaxSec2d. Попытка заменитьегонаinhibitorпоPIDнепрошлаsudo-timeout; job-boundunitнебылсоздан. **Послеокончания175очередиостановитьэтотrootunit**, показащитаотснаактивна.
+- MacквалификациязавершиласьточнымPASS, max_abs0/outputSHA008f3a29f387bc02a5eafe6e0eb6138521dd9754a0b91b9f757fbba92bac779e,16-fitочередьпродолжается. Снимок11:24Z:Home26/44,Hetzner7/20,Mac6/16,1711/10; всевработе. Новыхподачнет. Второйдополнительныйноутбукещёнедан.
 
 ## Оперативное обновление 06.10 07:13Z — Cat90 распределён на четыре машины
 
