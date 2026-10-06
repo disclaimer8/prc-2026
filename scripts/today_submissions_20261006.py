@@ -85,6 +85,12 @@ def prepare(root,commit):
     E.prepare_workspace(root,work,sorted(inputs),[],[])
     for name in parent['scratch_sources']:
         dest=work/name;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(frozen/name,dest)
+    # LSZH was a separately built extension, absent from the older E182 source snapshot.
+    extra_sources={n:h for n,h in lszh['sources'].items() if n not in parent['scratch_sources']}
+    G.verify_hashes(root,extra_sources)
+    for name in extra_sources:
+        dest=work/name;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(root/name,dest)
+    source_inventory={**parent['scratch_sources'],**extra_sources}
     # Historical import executes six unused CV fits. Keep only its original
     # constants/imports in this PRIVATE copy; the actual ranking fit is unchanged.
     p=work/'src/e64_visit_stage.py';s=p.read_text()
@@ -92,7 +98,7 @@ def prepare(root,commit):
     p.write_text(s.split('\ncols = ',1)[0]+'\n')
     (work/'submissions/cat_reg_rank.npz').symlink_to((root/'submissions/cat_fin1b_seeds15.npz').resolve())
     save(work/'setup.json',dict(protocol=PROTOCOL,registration=commit,created=now().isoformat(),
-         source_before=parent['scratch_sources'],source_after={n:G.sha256(work/n) for n in parent['scratch_sources']},
+         source_before=source_inventory,source_after={n:G.sha256(work/n) for n in source_inventory},
          inputs={n:G.sha256(root/n) for n in inputs if (root/n).is_file()},full_chain_cv_waived_by_user=True))
     print('PRIVATE WORKSPACE READY',flush=True)
 
