@@ -66,9 +66,10 @@ def validate_registration(root, commit):
 
 
 def load_lgb():
-    # macOS libomp ordering is required; never import an executable E64 module.
-    import torch
-    torch.set_num_threads(4)
+    # This LGB-only worker must not load Torch's competing libomp on macOS.
+    # A synthetic fit reproduces the crash with Torch even when imported first.
+    if "torch" in sys.modules:
+        raise RuntimeError("run this LGB-only worker in a fresh process without Torch")
     import lightgbm as lgb
     return lgb
 
