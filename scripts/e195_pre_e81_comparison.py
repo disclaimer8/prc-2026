@@ -121,6 +121,9 @@ def seal(root):
 
 def aligned(path,ids,y=None,month=None):
     with np.load(path,allow_pickle=False) as zz:z={k:zz[k] for k in zz.files}
+    # Preserve the producer's summation layout for this exact provenance check.
+    # Advanced indexing below changes strides and NumPy's reduction algorithm.
+    if 'per_seed' in z and not np.array_equal(z['per_seed'].mean(axis=0),z['reg2']):raise ValueError('original seed mean mismatch '+str(path))
     src=z['mvt_id'];s=np.argsort(src);pos=np.searchsorted(src[s],ids)
     if len(src)!=len(ids) or len(np.unique(src))!=len(src) or np.any(pos>=len(src)) or not np.array_equal(src[s][pos],ids):raise ValueError('ID mismatch '+str(path))
     ix=s[pos]
@@ -257,7 +260,7 @@ def run(root,out,commit,threads):
         cat=aligned(root/'data/cat_extra175_20261006/merged'/(fold+'.npz'),ids,y,month)
         lgb=aligned(root/'data/lgb_fin1b_oof_20261005'/fold/'complete/prediction.npz',ids,y,month)
         for q,n in [(cat,15),(lgb,5)]:
-            if q['per_seed'].shape!=(n,len(ids)) or not np.array_equal(q['per_seed'].mean(axis=0),q['reg2']):raise ValueError('seed mean mismatch')
+            if q['per_seed'].shape!=(n,len(ids)):raise ValueError('seed count/shape mismatch')
         plain=aligned(root/'data/mlp_split_20261005/outputs'/fold/'prediction.npz',ids,y,month)['reg2']
         ple=aligned(root/'data/e190_numemb_20261005'/fold/'prediction.npz',ids,y,month)['member']
         anchors=[aligned(root/'data'/('cv_e130'+x)/(fold+'.npz'),ids)['reg2'] for x in ANCHORS]
@@ -306,6 +309,12 @@ def run(root,out,commit,threads):
 
 
 def selftest():
+    rng=np.random.default_rng(195)
+    seeds=rng.normal(size=(15,1000));mean=seeds.mean(axis=0);order=rng.permutation(1000)
+    rearranged=seeds[:,order]
+    assert np.array_equal(mean[order],seeds.mean(axis=0)[order])
+    assert not np.array_equal(mean[order],rearranged.mean(axis=0))
+    assert np.allclose(mean[order],rearranged.mean(axis=0),rtol=0,atol=1e-15)
     p=np.array([[.5,.5,0,0,0,0],[1.,0,0,0,0,0]])
     v=np.array([[100,200,np.nan,np.nan,np.nan,86500],[300,200,np.nan,np.nan,np.nan,86700.]])
     assert np.array_equal(mixture(p,v,np.array([np.nan,np.nan])),[150,300])
@@ -313,7 +322,7 @@ def selftest():
     z={'values':v,'proba':p};base,q=upstream(z,np.array([100.,300.]),np.array([500.,600.]),f,np.array([True,False]),np.array([False,False]),np.array([False,False]))
     assert np.array_equal(base,[100,370]) and q[0,0]==1
     assert np.array_equal(np.rint([.5,1.5,2.5]),pl.Series([.5,1.5,2.5]).round(0).to_numpy())
-    print('synthetic arithmetic selftest passed; no real predictions or scores')
+    print('synthetic arithmetic and C/F seed-reduction selftest passed; no real predictions or scores')
 
 
 def main():
