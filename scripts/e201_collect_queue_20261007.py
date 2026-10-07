@@ -69,6 +69,7 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument('--root', required=True, type=Path)
     p.add_argument('--state', required=True, type=Path)
+    p.add_argument('--home-memoryfix', action='store_true', help='Use explicitly registered Home memory-repair output; never mix old partial results.')
     a = p.parse_args()
     root, state = a.root.resolve(), a.state.resolve()
     bundle = root / 'data/e201_inputs_20261007'
@@ -79,13 +80,15 @@ def main():
     parts = state / 'parts'; parts.mkdir()
     start = time.time(); completed = {}
     save(state / 'started.json', dict(registration_commit=REG, input_manifest_sha256=MANIFEST,
-         queue_sha256=sha(__file__), started_unix=start, timeout_hours=48))
+         queue_sha256=sha(__file__), started_unix=start, timeout_hours=48, home_memoryfix=a.home_memoryfix))
     try:
         while len(completed) < 12:
             if time.time() - start > 48 * 3600:
                 raise TimeoutError('48h bounded collector expired; no retries')
             for node, (host, remote_root, donor, folds) in NODES.items():
                 base = (root if host is None else Path(remote_root)) / f'data/e201_{node}_20261007'
+                if node == 'home' and a.home_memoryfix:
+                    base = Path(str(base) + '_memoryfix')
                 failure = optional(host, base / 'failure.json')
                 if failure is not None:
                     raise RuntimeError(f'Node {node} failed: {failure}')
