@@ -1,0 +1,21 @@
+{
+  "all_rows_exact": true,
+  "both_receipts_exact": true,
+  "elapsed_seconds": 101.19195945799947,
+  "finished_utc": "2026-10-07T22:33:00.173529+00:00",
+  "fits_performed": 0,
+  "output_sha256": "90d3cd0b5a68cc8008f2142f1801857752574b525b2ff046ad6bf4089a70aee2",
+  "peak_rss_bytes": 8485355520,
+  "protected_exact": true,
+  "protected_rows": 42,
+  "receipt_link_exact": true,
+  "reference_sha256": "90d3cd0b5a68cc8008f2142f1801857752574b525b2ff046ad6bf4089a70aee2",
+  "registration": "70aff7199731c381945c45754ee70c7e3a964aa5",
+  "row_count": 344841,
+  "same_schema": true,
+  "schema": {
+    "MVT_ID_mvt": "Float64",
+    "TAXITIME_SEC_mvt": "Int32"
+  },
+  "unique_ids": 344841
+}

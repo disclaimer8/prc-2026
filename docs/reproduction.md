@@ -1,8 +1,66 @@
-# Reproducing the archived v12074 submission
+# Reproducing the archived best v12075 submission
 
-**Current best is v12075 (230.9387 s); this guide and its runner still reproduce
-the historical v12074 reference. Independent v12075 replay remains to be verified.**
-See the [new submission receipt](../analysis/e203_upload_20261007/RESULTS.md).
+**v12075 (230.9387 s) was independently reproduced on October 7 at 22:33:00 UTC.**
+All 344,841 predictions, schema, IDs and Parquet bytes matched exactly; all 42
+protected TabPFN donor values remained intact. The output SHA-256 is
+`90d3cd0b5a68cc8008f2142f1801857752574b525b2ff046ad6bf4089a70aee2`.
+The bounded run took 101.19 seconds and performed zero new model fits. Its
+sampled process-group RSS peak was 8,485,355,520 bytes (7.90 GiB).
+
+The current runner is `scripts/reproduce_v12075_v2.py`, registered with its
+launcher, helper, tests, protocol and inventory at
+`70aff7199731c381945c45754ee70c7e3a964aa5` (journal 372). The original E203
+scientific recipe remains registration `6e95e3a65936a3401e41499bb340f2d54a1a2121`.
+It recomputes the complete fixed chain from archived features, member predictions
+and saved models; this is not retraining every model from public raw data or a
+new independent nested-CV result. No upload or environment change occurs.
+
+Read-only verification of the 3,711 pinned dependencies:
+
+```bash
+.venv/bin/python scripts/reproduce_v12075_v2.py check
+```
+
+The exact one-command replay, run once in a fresh populated workspace with the
+existing qualified Python environment, is:
+
+```bash
+.venv/bin/python scripts/reproduce_v12075_v2_launch_20261007.py --registration 70aff7199731c381945c45754ee70c7e3a964aa5 --launch
+```
+
+The completed local output/state already exist and intentionally prevent a
+repeat launch. The output is
+`data/reproduced_v12075_v2/reproduced_v12075.parquet`; success requires both
+`data/reproduced_v12075_v2/complete.json` and
+`data/reproduce_v12075_v2_launch_20261007/complete.json`. All stage logs and the
+pre-reference assembly receipt are retained. The final reference is opened only
+after the generated output is sealed.
+
+The v2 helper projects 173 of 210 original columns, retaining exactly the 170
+saved-classifier features, skips encoding columns excluded by the fixed recipe,
+and obtains the same 11 categorical dictionaries without building an unused
+training Pandas matrix. Its complete initial mixture was independently checked
+against the original E203 intermediate: every array value, dtype, row order and
+NaN position, plus Parquet bytes, matched exactly before the tail was allowed to
+continue. Eleven cached E141/E64/LSZH models and five saved E188 models are reused.
+
+The launcher uses nice 10, at most six OpenMP threads, a four-hour deadline and
+a sampled 16 GiB combined-RSS guard with two-second polling. Disk admission is
+4 GiB, with a 2.5 GiB runtime floor. It never retries automatically. The first
+attempt under journal 368 exceeded the memory guard in the original initial
+blend and was stopped; its sources, logs and partial output remain preserved.
+The documented v2 run resolved that resource issue and passed the unchanged
+exact-output gate.
+
+See the [replay results and independent verification](../analysis/reproduce_v12075_20261007/RESULTS.md),
+[v2 protocol](../analysis/reproduce_v12075_20261007/PROTOCOL_V2.md),
+[pinned inventory](../analysis/reproduce_v12075_20261007/inventory_v2.json), and
+[submission receipt](../analysis/e203_upload_20261007/RESULTS.md).
+
+## Historical v12074 reference
+
+The remaining sections preserve the earlier v12074 reproduction and commands.
+They concern the historical control, not the current best v12075.
 
 The verified archived reference is `gentle-igloo_v12074.parquet`. Its
 SHA-256 is `e5c78ab061492b69fe72d4a46d2e286f7a2f6b3129ebf2ae4a34731bb662374b`.

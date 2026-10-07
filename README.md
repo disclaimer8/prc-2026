@@ -101,26 +101,26 @@ claim that a fresh clone contains those artifacts.
 | Reproduction level | Current evidence | Remaining requirement |
 |---|---|---|
 | Verify the submitted file | Local SHA, ID count and receipt agree; scoring response records 230.9387 s | Obtain the artifact and receipt through an appropriately licensed release |
-| Reassemble v12075 from saved inputs | Production recipe: `scripts/e203_trajectory_production.py`; completed candidate and control receipts | Extend and verify the replay entry point for v12075, then package its inputs and runtime records |
+| Reassemble v12075 from saved inputs | Independent replay on 7 October: all 344,841 predictions and Parquet bytes exact; zero new fits | Package the required inputs, frozen sources, Git objects and runtime records for another checkout |
 | Retrain the full recipe from raw sources | Component trainers, extractors and stage builders are present | A clean end-to-end run of the current recipe, complete dependency specification, data manifests and documented parity criteria |
 | Run on another period | `src/run_final_any_period.sh` implements an earlier v808-family recipe | Port and validate the current recipe; historic ranking donors cannot simply be reused on new IDs |
 
-The [archived v12074 runner](docs/reproduction.md) is implemented and its archived
-inputs have passed checksum verification. On October7 the completed replay reused
-eleven E203 control models and reproduced all344,841 predictions and the Parquet
-bytes of **v12074** exactly in approximately140.16s, with no additional fits.
-An independent replay of the new best v12075 has not yet been verified.
-Raw-data rebuilding remains a separate requirement. Start
-with the read-only archive check:
+The [current v12075 replay](docs/reproduction.md) completed on 7 October at
+22:33 UTC. It reproduced every prediction and the complete Parquet bytes,
+including all 42 protected donors, in 101.19 seconds with no new model fits.
+Its saved-model and input checks cover 3,711 dependencies. Peak combined RSS
+was 8.49 GB after removing unused data copies; the first attempt exceeded its
+memory limit and was preserved as a failed run. Raw-data rebuilding and a
+distributable artifact package remain separate requirements. Start with the
+read-only archive check:
 
 ```bash
-.venv/bin/python scripts/reproduce_best.py check
+.venv/bin/python scripts/reproduce_v12075_v2.py check
 ```
 
 The linked guide distinguishes saved-component replay from fresh model training.
 The older `run_final_any_period.sh` reproduces the v808 family, not the current best.
-E203's exact-v12074 control gate passed before the replacement candidate was built;
-this does not establish independent v12075 replay.
+The earlier v12074 replay also passed; its historical runner remains available.
 
 For the existing development environment, use `.venv/bin/python`. Do not recreate
 an environment underneath running jobs. `pyproject.toml` and `uv.lock` describe
