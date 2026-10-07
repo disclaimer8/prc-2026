@@ -97,6 +97,7 @@ def seal(root):
     for name in (R.SELF, R.SPEC, 'scripts/reproduce_best_queue_20261007.py',
                  RANK + '/complete.json', 'data/e203_candidate_20261007/manifest.json',
                  'data/e203_chain_20261007/control_verified.json',
+                 'data/e203_chain_20261007/submissions/gentle-igloo_v930115.parquet',
                  'scripts/e203_trajectory_production.py'):
         files[name] = R.sha(root / name)
     if files['data/e203_chain_20261007/control_verified.json'] != candidate['control_verified_sha256']:

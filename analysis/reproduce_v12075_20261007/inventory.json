@@ -3392,6 +3392,7 @@
     "data/e203_chain_20261007/models/e64/model_4.txt": "e112abefe2b87963a6a915e3b439a89d5740ebce5a12916b74a82b28e989a5ce",
     "data/e203_chain_20261007/models/lszh/complete.json": "501790aee4b84f5c164f298a68083186561e37346184f6cacf249a1c9403f084",
     "data/e203_chain_20261007/models/lszh/model_0.txt": "9292642642b3ff7089ce3f012653ffe862e46ac05d45d6c1cae91f49b43e7e72",
+    "data/e203_chain_20261007/submissions/gentle-igloo_v930115.parquet": "e5c78ab061492b69fe72d4a46d2e286f7a2f6b3129ebf2ae4a34731bb662374b",
     "data/e203_rank_20261007/bins.npz": "d8af585dfbf8ecaaf7a6fa04af998e7ba152d75b3ba59a391202e3ff79fb2732",
     "data/e203_rank_20261007/complete.json": "b28ca791cb0dbb64f5c8673e7bbedfa1e35d36ba39f1ea7c8d73efacc334e0ac",
     "data/e203_rank_20261007/model_0.pt": "822b9aab59f4ca90a77967e5e1bd67909e7880671959f1247d360ed86f0d0783",
