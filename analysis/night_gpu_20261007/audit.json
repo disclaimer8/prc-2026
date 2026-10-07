@@ -1,0 +1,10 @@
+{
+  "fits": 6,
+  "folds": 2,
+  "protocol": "E204-trajectory-multiscale-d1d8-fixed-ordered-control-gated6pair-v1",
+  "ranking_authorized": false,
+  "registration_commit": "05a1b2eb7adfa5bd1abc47bc03a94095e0a39d4e",
+  "result_sha256": "0a6275eef8649e67bcb0e5855aac328d8750945fa30ddc1af6d44dccf2821609",
+  "scientific_gate_pass": false,
+  "status": "PASS"
+}

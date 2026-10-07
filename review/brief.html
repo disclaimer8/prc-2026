@@ -430,13 +430,13 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 
     <header class="doc">
       <h1>Taxi-out, команда <span class="sign">gentle-igloo</span></h1>
-      <p class="lede"><strong>Состояние на 07.10.2026, 23:34 WEST (22:34 UTC).</strong> Best <strong>v12075 = 230.9387 с</strong>; доска <strong>14/237</strong> проверена в22:00UTC, новых подач нет,7октября <strong>4/5</strong>. E205 CPU завершён с отрицательным гейтом. E204 GPU заканчивает screen; первая пара хуже. Независимый replay v12075 завершён: все344841 прогнозов и байты совпали,0fit.</p>
+      <p class="lede"><strong>Состояние на 07.10.2026, 23:41 WEST (22:41 UTC).</strong> Best <strong>v12075 = 230.9387 с</strong>; доска <strong>14/237</strong> проверена в22:00UTC, новых подач нет,7октября <strong>4/5</strong>. E205 CPU и E204 GPU завершены с отрицательными гейтами. Новых очередей нет. Независимый replay v12075 завершён: все344841 прогнозов и байты совпали,0fit.</p>
     </header>
 
     <div class="strip" role="group" aria-label="Статус">
       <div class="hl"><div class="k">Лидерборд</div><div class="v">230,9387 (v12075)</div><div class="s">v12075 — лучший файл</div></div>
       <div><div class="k">Место</div><div class="v">14/237, проверено22:00UTC</div><div class="s"></div></div>
-      <div><div class="k">В очереди</div><div class="v">доска</div><div class="s">Итог E204; переносимый пакет артефактов</div></div>
+      <div><div class="k">В очереди</div><div class="v">доска</div><div class="s">Переносимый пакет артефактов и подготовка открытия</div></div>
       <div><div class="k">Дедлайн</div><div class="v">11.10</div><div class="s">23:59 CET, 5 сабмитов в день</div></div>
     </div>
 
@@ -454,11 +454,12 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 Ranking/подачи нет; эти машины свободны. <a href="analysis/night_cb_20261007/RESULTS.md">Полный результат</a>.
 ASUS независимо воспроизвёл привязку всех2429888ID и4CB-колонок; это проверка входа,
 не положительный результат модели. <a href="analysis/night_cb_asus_audit_20261007/RESULTS.md">ASUS</a>.</p>
-<p><strong>E204: более широкий масштаб траектории проверяется на Home GPU.</strong> Первый
-fold1+7/3seed завершён: body+0.0926415 с, decided+0.0962397 с против исходного
-ordered. Вторая пара завершает оставшиеся3fit исходного screen. По зарегистрированному
-гейту первая пара уже запрещает расширение. E206 current-chain/ranking только
-подготовлен и не запускался; окончательный screen-audit ещё ожидается.</p>
+<p><strong>E204 завершён:</strong>6fit/48epochs на Home GPU,24мин02с; аудит корректности PASS,
+научный гейт FAIL. Pair1+7 body+0.092642 с/decided+0.096240 с, pair4+10
+body−0.203661 с/decided−0.203193 с. Требовалось улучшение обеих пар. Средние
+−0.043281/−0.024573 с не отменяют это условие. Расширения на4пары, ranking и
+E206 не было. <a href="analysis/night_gpu_20261007/RESULTS.md">Результат</a>.
+<strong>Все назначенные расчёты завершены; GPU и CPU свободны.</strong></p>
 <p><strong>Воспроизведение v12075 завершено22:33UTC:</strong> все344841 прогнозов, схема/ID,
 42донора и Parquetbytes exact, SHA90d3cd0;101.19с,0 дополнительных fit.
 3711 зависимостей и точный premix проверены. Первая попытка остановлена при19.27GB

@@ -1,0 +1,18 @@
+{"cgroup": {"cpu_max": [200000, 100000], "memory_max": 12884901888, "path": "/user.slice/user-1000.slice/user@1000.service/app.slice/prc-e204-night-gpu-20261007.service", "swap_max": 0}, "event": "started", "registration_commit": "05a1b2eb7adfa5bd1abc47bc03a94095e0a39d4e", "time": "2026-10-07T22:16:03.347421+00:00"}
+{"event": "verifying_fold", "fold": 1, "time": "2026-10-07T22:16:03.353135+00:00"}
+{"event": "fit_started", "fold": 1, "seed": 0, "time": "2026-10-07T22:16:31.302369+00:00"}
+{"event": "fit_complete", "fold": 1, "seconds": 229.1183286110172, "seed": 0, "time": "2026-10-07T22:20:21.214304+00:00"}
+{"event": "fit_started", "fold": 1, "seed": 1, "time": "2026-10-07T22:20:21.219407+00:00"}
+{"event": "fit_complete", "fold": 1, "seconds": 228.67961482296232, "seed": 1, "time": "2026-10-07T22:24:10.026507+00:00"}
+{"event": "fit_started", "fold": 1, "seed": 2, "time": "2026-10-07T22:24:10.032428+00:00"}
+{"event": "fit_complete", "fold": 1, "seconds": 228.7477362289792, "seed": 2, "time": "2026-10-07T22:27:58.907052+00:00"}
+{"body_delta": 0.09264150072132793, "decided_delta": 0.0962397059689124, "event": "fold_complete", "fold": 1, "time": "2026-10-07T22:28:00.523777+00:00"}
+{"event": "verifying_fold", "fold": 4, "time": "2026-10-07T22:28:00.629371+00:00"}
+{"event": "fit_started", "fold": 4, "seed": 0, "time": "2026-10-07T22:28:29.627906+00:00"}
+{"event": "fit_complete", "fold": 4, "seconds": 226.7585465789889, "seed": 0, "time": "2026-10-07T22:32:16.496976+00:00"}
+{"event": "fit_started", "fold": 4, "seed": 1, "time": "2026-10-07T22:32:16.501934+00:00"}
+{"event": "fit_complete", "fold": 4, "seconds": 226.66741262801224, "seed": 1, "time": "2026-10-07T22:36:03.296818+00:00"}
+{"event": "fit_started", "fold": 4, "seed": 2, "time": "2026-10-07T22:36:03.301848+00:00"}
+{"event": "fit_complete", "fold": 4, "seconds": 226.6440635349718, "seed": 2, "time": "2026-10-07T22:39:50.085278+00:00"}
+{"body_delta": -0.20366062559207876, "decided_delta": -0.20319317706687912, "event": "fold_complete", "fold": 4, "time": "2026-10-07T22:39:51.759613+00:00"}
+{"event": "screen_fail", "folds": 2, "gate_pass": false, "time": "2026-10-07T22:39:51.938276+00:00"}

@@ -1,0 +1,76 @@
+2026-10-07T23:15:56.498402+01:00 a1-System-Product-Name systemd[2652]: Started prc-e204-night-gpu-20261007.service - [systemd-run] /home/a1/prc-2026/.venv-numemb/bin/python -u /home/a1/prc-2026/analysis/night_gpu_20261007/input/scripts/night_gpu_20261007.py queue --root /home/a1/prc-2026 --registration-commit 05a1b2eb7adfa5bd1abc47bc03a94095e0a39d4e.
+2026-10-07T23:16:01.119725+01:00 a1-System-Product-Name python[776077]: SYNTHETIC PASS 0.07426461449358612 seconds/batch 12751216640 bytes
+2026-10-07T23:16:03.353149+01:00 a1-System-Product-Name python[776180]: {"cgroup": {"cpu_max": [200000, 100000], "memory_max": 12884901888, "path": "/user.slice/user-1000.slice/user@1000.service/app.slice/prc-e204-night-gpu-20261007.service", "swap_max": 0}, "event": "started", "registration_commit": "05a1b2eb7adfa5bd1abc47bc03a94095e0a39d4e", "time": "2026-10-07T22:16:03.347421+00:00"}
+2026-10-07T23:16:03.358071+01:00 a1-System-Product-Name python[776180]: {"event": "verifying_fold", "fold": 1, "time": "2026-10-07T22:16:03.353135+00:00"}
+2026-10-07T23:16:29.649713+01:00 a1-System-Product-Name python[776180]: values table resident on GPU; CPU mmap pages released
+2026-10-07T23:16:31.062547+01:00 a1-System-Product-Name python[776180]: known table resident on GPU; CPU mmap pages released
+2026-10-07T23:16:31.299675+01:00 a1-System-Product-Name python[776180]: present table resident on GPU; CPU mmap pages released
+2026-10-07T23:16:31.307826+01:00 a1-System-Product-Name python[776180]: {"event": "fit_started", "fold": 1, "seed": 0, "time": "2026-10-07T22:16:31.302369+00:00"}
+2026-10-07T23:17:01.244226+01:00 a1-System-Product-Name python[776180]: multiscale seed0 epoch1/8 mse=0.546278
+2026-10-07T23:17:29.493548+01:00 a1-System-Product-Name python[776180]: multiscale seed0 epoch2/8 mse=0.373250
+2026-10-07T23:17:57.910919+01:00 a1-System-Product-Name python[776180]: multiscale seed0 epoch3/8 mse=0.326084
+2026-10-07T23:18:26.187632+01:00 a1-System-Product-Name python[776180]: multiscale seed0 epoch4/8 mse=0.294024
+2026-10-07T23:18:54.483898+01:00 a1-System-Product-Name python[776180]: multiscale seed0 epoch5/8 mse=0.263444
+2026-10-07T23:19:22.776620+01:00 a1-System-Product-Name python[776180]: multiscale seed0 epoch6/8 mse=0.239353
+2026-10-07T23:19:51.066850+01:00 a1-System-Product-Name python[776180]: multiscale seed0 epoch7/8 mse=0.222728
+2026-10-07T23:20:19.380669+01:00 a1-System-Product-Name python[776180]: multiscale seed0 epoch8/8 mse=0.214397
+2026-10-07T23:20:21.219415+01:00 a1-System-Product-Name python[776180]: {"event": "fit_complete", "fold": 1, "seconds": 229.1183286110172, "seed": 0, "time": "2026-10-07T22:20:21.214304+00:00"}
+2026-10-07T23:20:21.224421+01:00 a1-System-Product-Name python[776180]: {"event": "fit_started", "fold": 1, "seed": 1, "time": "2026-10-07T22:20:21.219407+00:00"}
+2026-10-07T23:20:49.642605+01:00 a1-System-Product-Name python[776180]: multiscale seed1 epoch1/8 mse=0.547383
+2026-10-07T23:21:18.021385+01:00 a1-System-Product-Name python[776180]: multiscale seed1 epoch2/8 mse=0.371702
+2026-10-07T23:21:46.383095+01:00 a1-System-Product-Name python[776180]: multiscale seed1 epoch3/8 mse=0.324433
+2026-10-07T23:22:14.745308+01:00 a1-System-Product-Name python[776180]: multiscale seed1 epoch4/8 mse=0.290756
+2026-10-07T23:22:43.102769+01:00 a1-System-Product-Name python[776180]: multiscale seed1 epoch5/8 mse=0.261651
+2026-10-07T23:23:11.459147+01:00 a1-System-Product-Name python[776180]: multiscale seed1 epoch6/8 mse=0.238042
+2026-10-07T23:23:39.825931+01:00 a1-System-Product-Name python[776180]: multiscale seed1 epoch7/8 mse=0.221512
+2026-10-07T23:24:08.192041+01:00 a1-System-Product-Name python[776180]: multiscale seed1 epoch8/8 mse=0.212847
+2026-10-07T23:24:10.032444+01:00 a1-System-Product-Name python[776180]: {"event": "fit_complete", "fold": 1, "seconds": 228.67961482296232, "seed": 1, "time": "2026-10-07T22:24:10.026507+00:00"}
+2026-10-07T23:24:10.037500+01:00 a1-System-Product-Name python[776180]: {"event": "fit_started", "fold": 1, "seed": 2, "time": "2026-10-07T22:24:10.032428+00:00"}
+2026-10-07T23:24:38.442112+01:00 a1-System-Product-Name python[776180]: multiscale seed2 epoch1/8 mse=0.546122
+2026-10-07T23:25:06.808924+01:00 a1-System-Product-Name python[776180]: multiscale seed2 epoch2/8 mse=0.373472
+2026-10-07T23:25:35.166584+01:00 a1-System-Product-Name python[776180]: multiscale seed2 epoch3/8 mse=0.323423
+2026-10-07T23:26:03.529744+01:00 a1-System-Product-Name python[776180]: multiscale seed2 epoch4/8 mse=0.291047
+2026-10-07T23:26:31.901678+01:00 a1-System-Product-Name python[776180]: multiscale seed2 epoch5/8 mse=0.261124
+2026-10-07T23:27:00.290178+01:00 a1-System-Product-Name python[776180]: multiscale seed2 epoch6/8 mse=0.237211
+2026-10-07T23:27:28.680015+01:00 a1-System-Product-Name python[776180]: multiscale seed2 epoch7/8 mse=0.220985
+2026-10-07T23:27:57.070654+01:00 a1-System-Product-Name python[776180]: multiscale seed2 epoch8/8 mse=0.213064
+2026-10-07T23:27:58.912057+01:00 a1-System-Product-Name python[776180]: {"event": "fit_complete", "fold": 1, "seconds": 228.7477362289792, "seed": 2, "time": "2026-10-07T22:27:58.907052+00:00"}
+2026-10-07T23:28:00.528820+01:00 a1-System-Product-Name python[776180]: {"body_delta": 0.09264150072132793, "decided_delta": 0.0962397059689124, "event": "fold_complete", "fold": 1, "time": "2026-10-07T22:28:00.523777+00:00"}
+2026-10-07T23:28:00.634825+01:00 a1-System-Product-Name python[776180]: {"event": "verifying_fold", "fold": 4, "time": "2026-10-07T22:28:00.629371+00:00"}
+2026-10-07T23:28:27.357265+01:00 a1-System-Product-Name python[776180]: values table resident on GPU; CPU mmap pages released
+2026-10-07T23:28:29.414787+01:00 a1-System-Product-Name python[776180]: known table resident on GPU; CPU mmap pages released
+2026-10-07T23:28:29.625141+01:00 a1-System-Product-Name python[776180]: present table resident on GPU; CPU mmap pages released
+2026-10-07T23:28:29.633050+01:00 a1-System-Product-Name python[776180]: {"event": "fit_started", "fold": 4, "seed": 0, "time": "2026-10-07T22:28:29.627906+00:00"}
+2026-10-07T23:28:57.941439+01:00 a1-System-Product-Name python[776180]: multiscale seed0 epoch1/8 mse=0.557016
+2026-10-07T23:29:26.022709+01:00 a1-System-Product-Name python[776180]: multiscale seed0 epoch2/8 mse=0.381597
+2026-10-07T23:29:54.131379+01:00 a1-System-Product-Name python[776180]: multiscale seed0 epoch3/8 mse=0.333482
+2026-10-07T23:30:22.219812+01:00 a1-System-Product-Name python[776180]: multiscale seed0 epoch4/8 mse=0.302498
+2026-10-07T23:30:50.294858+01:00 a1-System-Product-Name python[776180]: multiscale seed0 epoch5/8 mse=0.270477
+2026-10-07T23:31:18.391603+01:00 a1-System-Product-Name python[776180]: multiscale seed0 epoch6/8 mse=0.245021
+2026-10-07T23:31:46.481910+01:00 a1-System-Product-Name python[776180]: multiscale seed0 epoch7/8 mse=0.226409
+2026-10-07T23:32:14.573947+01:00 a1-System-Product-Name python[776180]: multiscale seed0 epoch8/8 mse=0.218013
+2026-10-07T23:32:16.501953+01:00 a1-System-Product-Name python[776180]: {"event": "fit_complete", "fold": 4, "seconds": 226.7585465789889, "seed": 0, "time": "2026-10-07T22:32:16.496976+00:00"}
+2026-10-07T23:32:16.506847+01:00 a1-System-Product-Name python[776180]: {"event": "fit_started", "fold": 4, "seed": 1, "time": "2026-10-07T22:32:16.501934+00:00"}
+2026-10-07T23:32:44.658033+01:00 a1-System-Product-Name python[776180]: multiscale seed1 epoch1/8 mse=0.560628
+2026-10-07T23:33:12.806209+01:00 a1-System-Product-Name python[776180]: multiscale seed1 epoch2/8 mse=0.382660
+2026-10-07T23:33:40.905483+01:00 a1-System-Product-Name python[776180]: multiscale seed1 epoch3/8 mse=0.333728
+2026-10-07T23:34:09.006565+01:00 a1-System-Product-Name python[776180]: multiscale seed1 epoch4/8 mse=0.297198
+2026-10-07T23:34:37.098955+01:00 a1-System-Product-Name python[776180]: multiscale seed1 epoch5/8 mse=0.265721
+2026-10-07T23:35:05.199722+01:00 a1-System-Product-Name python[776180]: multiscale seed1 epoch6/8 mse=0.239313
+2026-10-07T23:35:33.291489+01:00 a1-System-Product-Name python[776180]: multiscale seed1 epoch7/8 mse=0.221776
+2026-10-07T23:36:01.378856+01:00 a1-System-Product-Name python[776180]: multiscale seed1 epoch8/8 mse=0.213430
+2026-10-07T23:36:03.301865+01:00 a1-System-Product-Name python[776180]: {"event": "fit_complete", "fold": 4, "seconds": 226.66741262801224, "seed": 1, "time": "2026-10-07T22:36:03.296818+00:00"}
+2026-10-07T23:36:03.306829+01:00 a1-System-Product-Name python[776180]: {"event": "fit_started", "fold": 4, "seed": 2, "time": "2026-10-07T22:36:03.301848+00:00"}
+2026-10-07T23:36:31.443123+01:00 a1-System-Product-Name python[776180]: multiscale seed2 epoch1/8 mse=0.554374
+2026-10-07T23:36:59.548233+01:00 a1-System-Product-Name python[776180]: multiscale seed2 epoch2/8 mse=0.382216
+2026-10-07T23:37:27.647338+01:00 a1-System-Product-Name python[776180]: multiscale seed2 epoch3/8 mse=0.331922
+2026-10-07T23:37:55.749136+01:00 a1-System-Product-Name python[776180]: multiscale seed2 epoch4/8 mse=0.296454
+2026-10-07T23:38:23.839840+01:00 a1-System-Product-Name python[776180]: multiscale seed2 epoch5/8 mse=0.264712
+2026-10-07T23:38:51.935523+01:00 a1-System-Product-Name python[776180]: multiscale seed2 epoch6/8 mse=0.239575
+2026-10-07T23:39:20.023507+01:00 a1-System-Product-Name python[776180]: multiscale seed2 epoch7/8 mse=0.222158
+2026-10-07T23:39:48.152780+01:00 a1-System-Product-Name python[776180]: multiscale seed2 epoch8/8 mse=0.213467
+2026-10-07T23:39:50.090411+01:00 a1-System-Product-Name python[776180]: {"event": "fit_complete", "fold": 4, "seconds": 226.6440635349718, "seed": 2, "time": "2026-10-07T22:39:50.085278+00:00"}
+2026-10-07T23:39:51.764742+01:00 a1-System-Product-Name python[776180]: {"body_delta": -0.20366062559207876, "decided_delta": -0.20319317706687912, "event": "fold_complete", "fold": 4, "time": "2026-10-07T22:39:51.759613+00:00"}
+2026-10-07T23:39:51.943329+01:00 a1-System-Product-Name python[776180]: {"event": "screen_fail", "folds": 2, "gate_pass": false, "time": "2026-10-07T22:39:51.938276+00:00"}
+2026-10-07T23:39:58.895411+01:00 a1-System-Product-Name python[781058]: {"status": "PASS", "protocol": "E204-trajectory-multiscale-d1d8-fixed-ordered-control-gated6pair-v1", "registration_commit": "05a1b2eb7adfa5bd1abc47bc03a94095e0a39d4e", "result_sha256": "0a6275eef8649e67bcb0e5855aac328d8750945fa30ddc1af6d44dccf2821609", "folds": 2, "fits": 6, "scientific_gate_pass": false, "ranking_authorized": false}
+2026-10-07T23:39:58.943088+01:00 a1-System-Product-Name systemd[2652]: prc-e204-night-gpu-20261007.service: Consumed 47min 13.119s CPU time over 24min 2.444s wall clock time, 12G memory peak.

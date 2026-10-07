@@ -1,0 +1,30 @@
+{
+  "body": {
+    "candidate_rmse": 209.32842293496685,
+    "control_rmse": 209.3717038888173,
+    "delta_rmse": -0.04328095385045572,
+    "rows": 705162
+  },
+  "decided": {
+    "candidate_rmse": 242.1765904406097,
+    "control_rmse": 242.2011636877763,
+    "delta_rmse": -0.024573247166614465,
+    "rows": 705324
+  },
+  "epochs": 48,
+  "file_sha256": {
+    "audit.json": "15280bc4a5f66281a565a142d6f02439fd6836e749195f4e0babe2c6b66d9b0a",
+    "events.jsonl": "98cc92130fe75b629146c656c84a8bde928a6ec30c63a14de958e49fce607bee",
+    "fold_1_7_complete.json": "fe7434a0da6781d9073ae6895d988ed02a37327978257f136795d19be2cc5cdc",
+    "fold_4_10_complete.json": "875c2c57cfe41abf35797a95f478aea1c1d75a1dc296c8ebeaf6f89ba29b414a",
+    "input/manifest.json": "fcbdf1937de0686a5167f4232864f7b3dd6a16c79b040251c154351c7195e3b5",
+    "result.json": "0a6275eef8649e67bcb0e5855aac328d8750945fa30ddc1af6d44dccf2821609",
+    "terminal_state.txt": "9493173433b2e966be4eee1cfe611aae24f189faf169649b3521a09d290f9077",
+    "worker.log": "bf7aeb92ea59a77811ebe94cb4eb809e03019a6a25217a1b5651787341f97cb3"
+  },
+  "fits": 6,
+  "peak_rss_gib": 4.414520263671875,
+  "peak_vram_gib": 11.65622329711914,
+  "rows": 705381,
+  "training_seconds": 1366.6157024049317
+}

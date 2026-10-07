@@ -1,0 +1,109 @@
+{
+  "accepted_for_submission": false,
+  "files": {
+    "fold_1_7/bins.npz": "6a374143a2eda98a572dc26d3e21fae8a6fe31442a318e26280e73337e24eb3e",
+    "fold_1_7/complete.json": "fe7434a0da6781d9073ae6895d988ed02a37327978257f136795d19be2cc5cdc",
+    "fold_1_7/fit_0.json": "865a5e23196985b56aed5504ddc49dcb0b023d0be0fc2869ccb8708ee7e81568",
+    "fold_1_7/fit_1.json": "198b592358286257b58edd370569ba0bd71494ec39e5a852626754025ee6e0a8",
+    "fold_1_7/fit_2.json": "1cf42bb1ac98712a7c732d614099c8bca208b53b5f947c8b3549d29a33de64fd",
+    "fold_1_7/model_0.pt": "8f06fa5cfc5b202c7c2e99e8e954b746a71167af8f3509c60ae3c56e8493d716",
+    "fold_1_7/model_1.pt": "f0b003aca72e31c0ac30c79daafe8bc3f9ade9859ec3a295d7e07d17589b5832",
+    "fold_1_7/model_2.pt": "acd0a67e3f7828678d462a18d4bbd4f56214707cc8f71e588cc52247db45a6e5",
+    "fold_1_7/prediction.npz": "e4e4c6759daa1ac3e8e4afdbf72c2bec31bbcfc8967cbde9bcb0dd86db1012e5",
+    "fold_1_7/seed_0.npy": "3934fd57b414bf883b4b6899dab425103244e87edc423019d973555a5896de73",
+    "fold_1_7/seed_1.npy": "7886207a1ab40dedc6c8b0e3aac327a213b581d8997b809d57314b8ff4d54c29",
+    "fold_1_7/seed_2.npy": "9331f720f11e414cdf15b899ebcd39d4a8ec7d738d1702a327682004a4d9c675",
+    "fold_4_10/bins.npz": "6cf55eae110a39d37dc7e8be1b246ea755626fb825b979fcc38e7c45e7310156",
+    "fold_4_10/complete.json": "875c2c57cfe41abf35797a95f478aea1c1d75a1dc296c8ebeaf6f89ba29b414a",
+    "fold_4_10/fit_0.json": "6b0c1652aae8d3f0f77e50f9132704ad4fb8580f8e9bb6228c58eb78b3949231",
+    "fold_4_10/fit_1.json": "4327390e6d57f6d9c04775b7bcffc2c0760bc25a98c3e8352657f8dfb3f31ed8",
+    "fold_4_10/fit_2.json": "8bcf8884495e68b14821739eb239512c10131598e5788605ed634b1a4e7d7090",
+    "fold_4_10/model_0.pt": "faba937da88415c876a6d3e4ed06fc415b3426d1c24b4b16b407ab2c2cf12b52",
+    "fold_4_10/model_1.pt": "a4b1ae4f1fdc504d34044fd19a19b141b3e76edc729d4be35f4d75993e3ad2cd",
+    "fold_4_10/model_2.pt": "3cd9ca036d3241964f6c835151ef4266b3ac20f341b896350a51c231c424d701",
+    "fold_4_10/prediction.npz": "271cc01857d722a3fa7f56f825ae55c6cc9b4c8a0640e254ca29c948de644a3c",
+    "fold_4_10/seed_0.npy": "58ac4507edb086126f7b19360e236f944dd862d2aabefc3580c105c1f46f3717",
+    "fold_4_10/seed_1.npy": "2e696f05903657331ea961471cad8df329ddbe1797a64cc74633f9cb03f76231",
+    "fold_4_10/seed_2.npy": "1e671529dc9d09c140bee88b2177b0f3b9c3b0923d0abe7a2ba352ed7dbf95ab"
+  },
+  "gate_pass": false,
+  "input_spec_sha256": "0a2069717bb5a8a85414c36c03d6284539f6eaf8de4ec967253752e9763fd712",
+  "limitation": "Saved ordered LGB5/preADSB comparator. Two E204-selected pairs plus four confirmation pairs; original ordered model had already been selected on these six pairs. No current-chain or ranking claim.",
+  "phase": "screen",
+  "protocol": "E204-trajectory-multiscale-d1d8-fixed-ordered-control-gated6pair-v1",
+  "ranking_authorized": false,
+  "registration_commit": "05a1b2eb7adfa5bd1abc47bc03a94095e0a39d4e",
+  "reports": [
+    {
+      "comparator_sha256": "23cb9e1f09eeeea59802675d11d7b18c78f61511bec4a1eb42dbfbce750bdf5d",
+      "fold": 1,
+      "metrics": {
+        "airport_day_bootstrap_rmse_95": [
+          0.04010344869784604,
+          0.1343727755317829
+        ],
+        "all_sse": 19581053.327181727,
+        "body_candidate_sse": 18299045181.822464,
+        "body_control_sse": 18284341973.280018,
+        "body_rmse_delta": 0.09264150072132793,
+        "body_rows": 344270,
+        "body_sse": 14703208.542444922,
+        "decided_candidate_sse": 28676076207.659855,
+        "decided_control_sse": 28656951848.260864,
+        "decided_rmse_delta": 0.0962397059689124,
+        "decided_rows": 344374,
+        "decided_sse": 19124359.39899301,
+        "decided_trim20_sse": 18630568.430027306,
+        "decided_trim3_sse": 18062406.55932215,
+        "ltfm_nm_body_rows": 45886,
+        "ltfm_nm_body_sse": -2168720.7173229246,
+        "months": {
+          "1": 7208089.44864822,
+          "7": 12372963.878533505
+        },
+        "rmse_candidate": 326.4178102498157,
+        "rmse_control": 326.33071327903616,
+        "rows": 344419,
+        "trim20_sse": 19309475.47123915,
+        "trim3_sse": 18833110.29961863
+      },
+      "selection_group": "screen"
+    },
+    {
+      "comparator_sha256": "4822270afe6819ce6c1fc664d90b54675804f8c6450f34e305dadfb0c4a41d3d",
+      "fold": 4,
+      "metrics": {
+        "airport_day_bootstrap_rmse_95": [
+          -0.25370736699336616,
+          -0.14941161002178874
+        ],
+        "all_sse": -27522575.16886214,
+        "body_candidate_sse": 12600017394.289032,
+        "body_control_sse": 12627499365.8642,
+        "body_rmse_delta": -0.20366062559207876,
+        "body_rows": 360892,
+        "body_sse": -27481971.57516703,
+        "decided_candidate_sse": 12690824405.644714,
+        "decided_control_sse": 12718344049.192924,
+        "decided_rmse_delta": -0.20319317706687912,
+        "decided_rows": 360950,
+        "decided_sse": -27519643.5482118,
+        "decided_trim20_sse": -26713345.864099264,
+        "decided_trim3_sse": -27227914.93964842,
+        "ltfm_nm_body_rows": 45789,
+        "ltfm_nm_body_sse": -1875584.714490185,
+        "months": {
+          "10": -17163574.116703458,
+          "4": -10359001.05215869
+        },
+        "rmse_candidate": 189.46080221475626,
+        "rmse_control": 189.66191874585803,
+        "rows": 360962,
+        "trim20_sse": -26716277.484749645,
+        "trim3_sse": -27230846.56029877
+      },
+      "selection_group": "screen"
+    }
+  ],
+  "status": "screen_fail"
+}
