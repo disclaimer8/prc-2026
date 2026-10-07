@@ -38,6 +38,10 @@ commit должен попасть до11октября21:59UTC. Подгото�
   Сейчас это сборка из локального архива компонентов, **не полный raw-data
   rebuild из clean clone**. Нужны доступные acquisition/build instructions
   либо разрешённый к распространению архив с manifest/checksums.
+  [Проверка комплекта](analysis/reproduction_bundle_20261007/RESULTS.md): минимум
+  5.232GB до Git/runtime; на Home не хватает примерно2.729GB файлов. Дополнительно
+  нужны закреплённые исходники/spec и исторические Git objects. Неизменённый
+  Mac-launcher и runtime signatures пока не квалифицированы для Home/Linux.
 - [ ] Закрепить отдельно CPU replay runtime и GPU training runtime. `uv.lock`
   не описывает полностью квалифицированный ROCm/Torch стек E190/E202.
 - [ ] Для каждого фактически используемого внешнего входа: URL,период,

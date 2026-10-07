@@ -1,0 +1,310 @@
+{
+  "scope": "bounded gap report, no archive built, no fitting",
+  "registered_replay_commit": "70aff7199731c381945c45754ee70c7e3a964aa5",
+  "e188_registration": "d45cb738fb7671cf289ae8a400a30b5b46dfbb3d",
+  "inventory_sha256": "8159812f9d815493d61883cf1b22ee4d5a6dcc6414bcbd01ee28635b9f2a8f96",
+  "counts": {
+    "inventory": 3711,
+    "runner_additions": 7,
+    "comparisons": 3
+  },
+  "bytes": {
+    "inventory": 5187588486,
+    "runner_additions": 915007,
+    "comparisons": 43578334,
+    "total_before_git_runtime": 5232081827,
+    "missing_home_inventory": 2684872695
+  },
+  "required_git_objects": [
+    {
+      "commit": "70aff7199731c381945c45754ee70c7e3a964aa5",
+      "path": "scripts/reproduce_v12075_v2.py",
+      "blob_sha256": "a0fb85dcea7d53fa7f9fe3a81a2964185dab1f0fd9ed2e236f2a228a1faecebb",
+      "bytes": 17576,
+      "git_blob_oid": "b2cccf8f4473322172e5999a78267659be368e2a"
+    },
+    {
+      "commit": "70aff7199731c381945c45754ee70c7e3a964aa5",
+      "path": "scripts/reproduce_v12075_v2_launch_20261007.py",
+      "blob_sha256": "936de5697678dd3af1053328970e05d03607e112284e17f3769d5af4880f48d6",
+      "bytes": 8128,
+      "git_blob_oid": "f94ef673e04c9a5f53a7802d337bc791877720f5"
+    },
+    {
+      "commit": "70aff7199731c381945c45754ee70c7e3a964aa5",
+      "path": "scripts/reproduce_v12075_lowmem_blend.py",
+      "blob_sha256": "c30655b5eca6236928ab72fa58e5d404abdbf20b24cb5c80310c9fffdd72ec53",
+      "bytes": 6100,
+      "git_blob_oid": "2f6e3a44e291fa16bc3721bc73d30360b01870f8"
+    },
+    {
+      "commit": "70aff7199731c381945c45754ee70c7e3a964aa5",
+      "path": "analysis/reproduce_v12075_20261007/inventory_v2.json",
+      "blob_sha256": "8159812f9d815493d61883cf1b22ee4d5a6dcc6414bcbd01ee28635b9f2a8f96",
+      "bytes": 870807,
+      "git_blob_oid": "2a4aeabdcd35af0ad96948273e7f34058a2b01f5"
+    },
+    {
+      "commit": "70aff7199731c381945c45754ee70c7e3a964aa5",
+      "path": "analysis/reproduce_v12075_20261007/PROTOCOL_V2.md",
+      "blob_sha256": "1fa37fe8639489ff39a79e0ed777a690747d00fe713bafef83ac257e89980a86",
+      "bytes": 3541,
+      "git_blob_oid": "7f1dbdc589b9dfc0e043726843add4629e4c02c6"
+    },
+    {
+      "commit": "70aff7199731c381945c45754ee70c7e3a964aa5",
+      "path": "tests/test_reproduce_v12075.py",
+      "blob_sha256": "136ad6b5e1c03374a2d64f3accbffa2e7be3bdbb905469f485e379f1f7d7ea0e",
+      "bytes": 5126,
+      "git_blob_oid": "75993a26f16b311d7e837ba1b61683c463c1693f"
+    },
+    {
+      "commit": "70aff7199731c381945c45754ee70c7e3a964aa5",
+      "path": "tests/test_reproduce_v12075_v2.py",
+      "blob_sha256": "3afc60694f60ed76d33169fb6681620af9d5d46e5733e752baacdb464af2bc01",
+      "bytes": 3729,
+      "git_blob_oid": "ef9a646ed8be6fa31a22a619b1e4235289411aec"
+    },
+    {
+      "commit": "70aff7199731c381945c45754ee70c7e3a964aa5",
+      "path": "HYPOTHESES_LOG.md",
+      "blob_sha256": "fb50ddee7e25b276810c3d9a7689fe5a12cf13d0d2a6ca382ce972a363129efb",
+      "bytes": 528239,
+      "git_blob_oid": "1a60790841fc212d4e1a2259be05c1e033c53dcc"
+    },
+    {
+      "commit": "d45cb738fb7671cf289ae8a400a30b5b46dfbb3d",
+      "path": "scripts/e188_rank_20261006.py",
+      "blob_sha256": "5836e11f743b1d166b0360886f50113dd0a56f847aa1c9c271c3f4285e0b04f2",
+      "bytes": 15702,
+      "git_blob_oid": "1920f1d7dea932e9161d988a9394a293056b6889"
+    }
+  ],
+  "runtime": {
+    "cache_signature_required": {
+      "python": "3.12.14 (main, Sep  1 2026, 14:09:38) [Clang 22.1.3 ]",
+      "numpy": "2.5.3",
+      "polars": "1.44.2",
+      "lightgbm": "4.7.0"
+    },
+    "home_observed": {
+      "python": "3.12.15 (main, Oct  3 2026, 01:03:07) [Clang 22.1.3 ]",
+      "numpy": "2.5.3",
+      "polars": "1.44.2",
+      "lightgbm": "4.7.0",
+      "git_directory": false,
+      "caffeinate": null,
+      "memory_pressure": null,
+      "vm_stat": null
+    }
+  },
+  "missing_home_by_prefix": {
+    "data/adsblol": {
+      "files": 790,
+      "bytes": 72209414
+    },
+    "data/adsblol_kt1": {
+      "files": 852,
+      "bytes": 149699035
+    },
+    "data/adsblol_sw_kt1": {
+      "files": 426,
+      "bytes": 43427763
+    },
+    "data/cv_preds_e116prod": {
+      "files": 6,
+      "bytes": 158472356
+    },
+    "data/cv_preds_e150c_e64_keep": {
+      "files": 6,
+      "bytes": 41705380
+    },
+    "data/cv_preds_nomonth": {
+      "files": 6,
+      "bytes": 258554612
+    },
+    "data/e182_strict_20261005.json": {
+      "files": 1,
+      "bytes": 6457
+    },
+    "data/e188_rank_20261006_v2": {
+      "files": 6,
+      "bytes": 5978471
+    },
+    "data/e203_candidate_20261007": {
+      "files": 1,
+      "bytes": 4431
+    },
+    "data/e203_chain_20261007": {
+      "files": 16,
+      "bytes": 30841726
+    },
+    "data/opdi": {
+      "files": 44,
+      "bytes": 1532598644
+    },
+    "data/today_chain_20261006": {
+      "files": 208,
+      "bytes": 1473002
+    },
+    "docs/reproduction_manifest.json": {
+      "files": 1,
+      "bytes": 2674
+    },
+    "scripts/e188_rank_20261006.py": {
+      "files": 1,
+      "bytes": 15702
+    },
+    "scripts/e203_trajectory_production.py": {
+      "files": 1,
+      "bytes": 46490
+    },
+    "scripts/reproduce_best.py": {
+      "files": 1,
+      "bytes": 17649
+    },
+    "scripts/reproduce_best_queue_20261007.py": {
+      "files": 1,
+      "bytes": 12489
+    },
+    "submissions/cat_fin1b_seeds15.npz": {
+      "files": 1,
+      "bytes": 46899128
+    },
+    "submissions/clf_v870.txt": {
+      "files": 1,
+      "bytes": 13644691
+    },
+    "submissions/e130_aobtf_rank.npz": {
+      "files": 1,
+      "bytes": 19332415
+    },
+    "submissions/e130_eobtf_rank.npz": {
+      "files": 1,
+      "bytes": 19332415
+    },
+    "submissions/e130_mlpa_rank.npz": {
+      "files": 1,
+      "bytes": 5517960
+    },
+    "submissions/gentle-igloo_v1139.parquet": {
+      "files": 1,
+      "bytes": 1097180
+    },
+    "submissions/gentle-igloo_v12008.parquet": {
+      "files": 1,
+      "bytes": 1097067
+    },
+    "submissions/gentle-igloo_v12020.parquet": {
+      "files": 1,
+      "bytes": 1098132
+    },
+    "submissions/gentle-igloo_v12028.manifest.json": {
+      "files": 1,
+      "bytes": 448101
+    },
+    "submissions/gentle-igloo_v12028.parquet": {
+      "files": 1,
+      "bytes": 1097587
+    },
+    "submissions/gentle-igloo_v12040.parquet": {
+      "files": 1,
+      "bytes": 1097998
+    },
+    "submissions/gentle-igloo_v12041.parquet": {
+      "files": 1,
+      "bytes": 1097997
+    },
+    "submissions/gentle-igloo_v12042.parquet": {
+      "files": 1,
+      "bytes": 1095938
+    },
+    "submissions/gentle-igloo_v12043.parquet": {
+      "files": 1,
+      "bytes": 1097147
+    },
+    "submissions/gentle-igloo_v12044.parquet": {
+      "files": 1,
+      "bytes": 1097027
+    },
+    "submissions/gentle-igloo_v12045.parquet": {
+      "files": 1,
+      "bytes": 1096933
+    },
+    "submissions/gentle-igloo_v12046.parquet": {
+      "files": 1,
+      "bytes": 1097713
+    },
+    "submissions/gentle-igloo_v12047.parquet": {
+      "files": 1,
+      "bytes": 1097731
+    },
+    "submissions/gentle-igloo_v12048.manifest.json": {
+      "files": 1,
+      "bytes": 447626
+    },
+    "submissions/gentle-igloo_v12048.parquet": {
+      "files": 1,
+      "bytes": 1097721
+    },
+    "submissions/gentle-igloo_v12060.parquet": {
+      "files": 1,
+      "bytes": 1097770
+    },
+    "submissions/gentle-igloo_v12061.parquet": {
+      "files": 1,
+      "bytes": 1097673
+    },
+    "submissions/gentle-igloo_v12074.manifest.json": {
+      "files": 1,
+      "bytes": 1136
+    },
+    "submissions/gentle-igloo_v291.parquet": {
+      "files": 1,
+      "bytes": 1097175
+    },
+    "submissions/gentle-igloo_v361.parquet": {
+      "files": 1,
+      "bytes": 1096193
+    },
+    "submissions/gentle-igloo_v44.parquet": {
+      "files": 1,
+      "bytes": 1098635
+    },
+    "submissions/gentle-igloo_v60.parquet": {
+      "files": 1,
+      "bytes": 1099682
+    },
+    "submissions/gentle-igloo_v870.parquet": {
+      "files": 1,
+      "bytes": 1097779
+    },
+    "submissions/lgb_reg_seeds_v870.npz": {
+      "files": 1,
+      "bytes": 19311848
+    },
+    "submissions/parts_v12020.npz": {
+      "files": 1,
+      "bytes": 41382150
+    },
+    "submissions/parts_v12040.npz": {
+      "files": 1,
+      "bytes": 41382150
+    },
+    "submissions/parts_v12041.npz": {
+      "files": 1,
+      "bytes": 41382150
+    },
+    "submissions/reg_v870.txt": {
+      "files": 1,
+      "bytes": 118773552
+    }
+  },
+  "archive_built": false,
+  "docs_changed": false,
+  "runtime_changed": false,
+  "git_commit_trees": {
+    "70aff7199731c381945c45754ee70c7e3a964aa5": "2a8f59983636540f6c0c33bb61591f8cf423bdd1",
+    "d45cb738fb7671cf289ae8a400a30b5b46dfbb3d": "d0a8234b5eed40a731f3863a4e903a7c37bfad7d"
+  }
+}
