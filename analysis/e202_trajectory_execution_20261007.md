@@ -1,5 +1,16 @@
 # E202 execution status
 
+## Post-reboot update, 14:45UTC
+
+The Mac reboot around14:08UTC interrupted only its transfer controller; the original Home GPU unit remained alive. Registered post-reboot transport `5ef410c1974e5cb0f6e64e3e5bfdbf9a27254e38` started under day-controller `f9aa25cf58b8ba945ef4019a1f3b0d96e7525f58` at14:36UTC, PID33495. It verifies and reuses complete files, preserves incomplete files in a separate archive, and resumes missing transfers without restarting preparation or GPU fits.
+
+- Fold3 admitted14:41:31UTC; admission SHA `2ba5c1cba1f3ad9f199b90aef4210929a6413bf4d901409440998a09deb6b44f`.
+- Fold2 admitted14:42:33UTC; admission SHA `896fe0fdbe0defd1f614c4a6aae1f650687be5ce610e67f9eac17f2bd44fe93d`.
+- At14:45UTC, **actual GPU training is verified**: `START fold_2_8 flat`, seed0 epoch3/8, all three tables resident on GPU. Same original PID626873 / invocation30d9322da32d4cfdb55ef5c7c3d5ecbf. CPU memory8.8GB, active.
+- Folds5/6 are transferring concurrently. The original first-table wait deadline was met. No duplicated models or output replacement.
+
+Current status/log: `data/e202_postreboot_transport_20261007.{json,jsonl}` and `data/prc_day_recovery_20261007/e202_transport.log`. Old time estimates and statuses below are historical; completion is not yet claimed.
+
 Scientific registration350: `55fe9b68f7cc8405681f6c85d576979e067b55c3`.
 Input spec: `6d604eaaca830fa83c18ebb78986b028d338869123d5f8c10b2450dde1ec4309`.
 Unchanged24fit extension, flat/ordered, pairs2/3/5/6, three seeds, eight epochs.
