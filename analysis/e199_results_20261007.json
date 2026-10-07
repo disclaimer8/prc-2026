@@ -1,0 +1,168 @@
+{
+  "continuation_launched": false,
+  "controller_complete": {
+    "accepted_for_submission": false,
+    "controller_registration": "04a7f242963b597b7ba02aa912b8ad3b301d7349",
+    "finished": "2026-10-07T12:44:14.814638+00:00",
+    "protocol": "E199-durable-two-laptop-extraction-fixed-CPU-continuation-20261007-v1",
+    "six_pair_gate_pass": null,
+    "spatial_screen_pass": false,
+    "status": "screen_failed_no_extension",
+    "worker_registration": "f21fa8493dad3e7f539d23cb2751a3cc5be97131"
+  },
+  "controller_complete_sha256": "6662e237ddd2248b0ef1840c1fba4a8c2bd8a502859bd616ab607e17c81f8388",
+  "eligible_train": 1344102,
+  "evaluation": {
+    "accepted_for_submission": false,
+    "confirmation_folds": [
+      2,
+      3,
+      5,
+      6
+    ],
+    "groups": {
+      "selected_screen": {
+        "counts_vs_parent": {
+          "all_sse": 209181313.7116141,
+          "body_sse": 305885862.60209304,
+          "decided_sse": 209181313.7116141,
+          "rows": 705324,
+          "trim20_sse": 134278560.9619272,
+          "trim3_sse": 188472649.49885792
+        },
+        "spatial_vs_counts": {
+          "all_sse": 3635672.9205746055,
+          "body_sse": -936862.2545990348,
+          "decided_sse": 3635672.9205746055,
+          "rows": 705324,
+          "trim20_sse": 6074634.946810938,
+          "trim3_sse": 3629902.141785562
+        },
+        "spatial_vs_parent": {
+          "all_sse": 212816986.63218877,
+          "body_sse": 304949000.3474941,
+          "decided_sse": 212816986.63218877,
+          "rows": 705324,
+          "trim20_sse": 139580189.3553564,
+          "trim3_sse": 191878722.52163425
+        }
+      }
+    },
+    "input_manifest_sha256": "7d346da85d61f1e137c933549790cd8cceb33e3e2e79f9d3887d68e75e2b030c",
+    "limitation": "Retrospective residual screen on historical joint E195 upstream OOF, not nested CV or full chain. Own fold labels excluded from stage fitting but not guaranteed absent from other-fold parent construction. A PASS requires independent base-member confirmation before production.",
+    "protocol": "E199-other-ground-spatial-state-v-counts-retrospective-2pair-3seed-v1",
+    "registration_commit": "f21fa8493dad3e7f539d23cb2751a3cc5be97131",
+    "reports": [
+      {
+        "counts_vs_parent": {
+          "all_sse": 242915765.39681822,
+          "body_sse": 332032264.9321745,
+          "decided_sse": 242915765.39681822,
+          "delta_rmse": 1.2603073306301553,
+          "rows": 344374,
+          "trim20_sse": 147515592.68031394,
+          "trim3_sse": 214916008.7360326
+        },
+        "fold": 1,
+        "months": {
+          "1": {
+            "all_sse": -654941.8800945309,
+            "body_sse": -692795.0714706101,
+            "decided_sse": -654941.8800945309,
+            "delta_rmse": -0.006756763759085516,
+            "rows": 153700,
+            "trim20_sse": -371918.58413654566,
+            "trim3_sse": -713942.4713158756
+          },
+          "7": {
+            "all_sse": -3604344.4045404317,
+            "body_sse": -6493141.037858482,
+            "decided_sse": -3604344.4045404317,
+            "delta_rmse": -0.03798358149808223,
+            "rows": 190674,
+            "trim20_sse": 2483725.7452513874,
+            "trim3_sse": -1852747.181084901
+          }
+        },
+        "spatial_vs_counts": {
+          "all_sse": -4259286.28463496,
+          "body_sse": -7185936.109329093,
+          "decided_sse": -4259286.28463496,
+          "delta_rmse": -0.022049453193062618,
+          "rows": 344374,
+          "trim20_sse": 1748755.8024290204,
+          "trim3_sse": -2507689.0611794293
+        },
+        "spatial_vs_parent": {
+          "all_sse": 238656479.1121833,
+          "body_sse": 324846328.8228455,
+          "decided_sse": 238656479.1121833,
+          "delta_rmse": 1.2382578774370927,
+          "rows": 344374,
+          "trim20_sse": 148423128.65525472,
+          "trim3_sse": 213691798.27175385
+        }
+      },
+      {
+        "counts_vs_parent": {
+          "all_sse": -33734451.68520412,
+          "body_sse": -26146402.33008146,
+          "decided_sse": -33734451.68520412,
+          "delta_rmse": -0.2677013790342926,
+          "rows": 360950,
+          "trim20_sse": -13237031.71838674,
+          "trim3_sse": -26443359.23717469
+        },
+        "fold": 4,
+        "months": {
+          "10": {
+            "all_sse": 6371796.270856755,
+            "body_sse": 4725910.920377245,
+            "decided_sse": 6371796.270856755,
+            "delta_rmse": 0.09503078291112388,
+            "rows": 185669,
+            "trim20_sse": 2829876.953130074,
+            "trim3_sse": 4614428.268612184
+          },
+          "4": {
+            "all_sse": 1523162.934352812,
+            "body_sse": 1523162.9343528117,
+            "decided_sse": 1523162.934352812,
+            "delta_rmse": 0.02590125169481894,
+            "rows": 175281,
+            "trim20_sse": 865872.4457032438,
+            "trim3_sse": 1371628.613925662
+          }
+        },
+        "spatial_vs_counts": {
+          "all_sse": 7894959.205209565,
+          "body_sse": 6249073.854730058,
+          "decided_sse": 7894959.205209565,
+          "delta_rmse": 0.062687644001727,
+          "rows": 360950,
+          "trim20_sse": 4325879.144381918,
+          "trim3_sse": 6137591.202964991
+        },
+        "spatial_vs_parent": {
+          "all_sse": -25839492.479994547,
+          "body_sse": -19897328.4753514,
+          "decided_sse": -25839492.479994547,
+          "delta_rmse": -0.2050137350325656,
+          "rows": 360950,
+          "trim20_sse": -8842939.299898326,
+          "trim3_sse": -21813075.750119597
+        }
+      }
+    ],
+    "screen_folds": [
+      1,
+      4
+    ],
+    "six_pair_gate_pass": null,
+    "spatial_screen_pass": false
+  },
+  "evaluation_sha256": "bb166757be06bb9c75c83c0b8dcb7f607ec7edf798312d8a32ad16663755b261",
+  "fits": 12,
+  "source": "Registered durable controller verified source/output inventories before evaluation; its gate stopped without extension.",
+  "status": "REJECT_FIXED_SCREEN"
+}

@@ -1,0 +1,200 @@
+{
+  "accepted_for_submission": false,
+  "arms": [
+    {
+      "arm": "flat",
+      "fits": 3,
+      "fold": 1,
+      "parameters": 1904405,
+      "rows": 344419
+    },
+    {
+      "arm": "ordered",
+      "fits": 3,
+      "fold": 1,
+      "parameters": 1904405,
+      "rows": 344419
+    },
+    {
+      "arm": "flat",
+      "fits": 3,
+      "fold": 4,
+      "parameters": 1905173,
+      "rows": 360962
+    },
+    {
+      "arm": "ordered",
+      "fits": 3,
+      "fold": 4,
+      "parameters": 1905173,
+      "rows": 360962
+    }
+  ],
+  "artifact_hashes_verified": 32,
+  "checks": [
+    "registered immutable bundle and helpers verified in preceding audit invocation",
+    "original query spec and base/index hashes",
+    "all4 arm file inventories and model hashes",
+    "12fixed seed fits with8finite epoch losses, paired equalcapacity",
+    "unique complete heldout IDs/y/month",
+    "finite predictions and6regimeP",
+    "bitexact3seedmean and mixture reconstruction",
+    "all registered paired metrics including bootstrap recomputed exactly"
+  ],
+  "comparisons": [
+    {
+      "airport_day_bootstrap_rmse_95": [
+        -0.34101660167979586,
+        -0.18083635865692713
+      ],
+      "all_sse": -56116358.78879331,
+      "body_sse": -52264943.602282956,
+      "comparison": "ordered_vs_flat",
+      "decided_sse": -55228344.67106593,
+      "delta_rmse": -0.249544737332144,
+      "fold": 1,
+      "ltfm_nm_body_rows": 45886,
+      "ltfm_nm_body_sse": 199886.8601555539,
+      "months": {
+        "1": -23843075.00402759,
+        "7": -32273283.78476572
+      },
+      "rmse_candidate": 326.33071327903616,
+      "rmse_control": 326.5802580163683,
+      "rows": 344419,
+      "trim20_sse": -55808584.17122674,
+      "trim3_sse": -54922328.994654834
+    },
+    {
+      "airport_day_bootstrap_rmse_95": [
+        -5.8290799811279825,
+        -3.5245480324638323
+      ],
+      "all_sse": -1010761586.3849752,
+      "body_sse": -1005410794.2433906,
+      "comparison": "ordered_vs_ple",
+      "decided_sse": -1012606766.5380145,
+      "delta_rmse": -4.465931714614783,
+      "fold": 1,
+      "ltfm_nm_body_rows": 45886,
+      "ltfm_nm_body_sse": 2334389.0579596153,
+      "months": {
+        "1": -416205445.9624058,
+        "7": -594556140.4225693
+      },
+      "rmse_candidate": 326.33071327903616,
+      "rmse_control": 330.79664499365094,
+      "rows": 344419,
+      "trim20_sse": -1005337731.4616936,
+      "trim3_sse": -1010757683.421832
+    },
+    {
+      "airport_day_bootstrap_rmse_95": [
+        -5.510966155775119,
+        -3.3156554297037033
+      ],
+      "all_sse": -954645227.5961819,
+      "body_sse": -953145850.6411077,
+      "comparison": "flat_vs_ple",
+      "decided_sse": -957378421.8669486,
+      "delta_rmse": -4.216386977282639,
+      "fold": 1,
+      "ltfm_nm_body_rows": 45886,
+      "ltfm_nm_body_sse": 2134502.1978040617,
+      "months": {
+        "1": -392362370.9583782,
+        "7": -562282856.6378037
+      },
+      "rmse_candidate": 326.5802580163683,
+      "rmse_control": 330.79664499365094,
+      "rows": 344419,
+      "trim20_sse": -947407720.0473392,
+      "trim3_sse": -954533663.6551485
+    },
+    {
+      "airport_day_bootstrap_rmse_95": [
+        -0.18409823492020436,
+        -0.06248305926181958
+      ],
+      "all_sse": -17321471.919861376,
+      "body_sse": -18210533.701028094,
+      "comparison": "ordered_vs_flat",
+      "decided_sse": -17264588.23070677,
+      "delta_rmse": -0.12646443471430757,
+      "fold": 4,
+      "ltfm_nm_body_rows": 45789,
+      "ltfm_nm_body_sse": 2542622.9102795655,
+      "months": {
+        "10": -7996928.852714761,
+        "4": -9324543.067146614
+      },
+      "rmse_candidate": 189.66191874585803,
+      "rmse_control": 189.78838318057234,
+      "rows": 360962,
+      "trim20_sse": -17525487.69158268,
+      "trim3_sse": -17196095.923928022
+    },
+    {
+      "airport_day_bootstrap_rmse_95": [
+        -7.830072054965051,
+        -6.488964068034266
+      ],
+      "all_sse": -992248268.7477338,
+      "body_sse": -995549276.516185,
+      "comparison": "ordered_vs_ple",
+      "decided_sse": -991761622.8525943,
+      "delta_rmse": -7.113442879882172,
+      "fold": 4,
+      "ltfm_nm_body_rows": 45789,
+      "ltfm_nm_body_sse": 804360.7591011692,
+      "months": {
+        "10": -564613132.9307374,
+        "4": -427635135.81699646
+      },
+      "rmse_candidate": 189.66191874585803,
+      "rmse_control": 196.7753616257402,
+      "rows": 360962,
+      "trim20_sse": -983880472.2521924,
+      "trim3_sse": -991424150.5251647
+    },
+    {
+      "airport_day_bootstrap_rmse_95": [
+        -7.679843707939623,
+        -6.400366774785596
+      ],
+      "all_sse": -974926796.8278724,
+      "body_sse": -977338742.8151569,
+      "comparison": "flat_vs_ple",
+      "decided_sse": -974497034.6218876,
+      "delta_rmse": -6.986978445167864,
+      "fold": 4,
+      "ltfm_nm_body_rows": 45789,
+      "ltfm_nm_body_sse": -1738262.1511783958,
+      "months": {
+        "10": -556616204.0780226,
+        "4": -418310592.7498498
+      },
+      "rmse_candidate": 189.78838318057234,
+      "rmse_control": 196.7753616257402,
+      "rows": 360962,
+      "trim20_sse": -964479945.4380271,
+      "trim3_sse": -973284846.3586197
+    }
+  ],
+  "complete_sha256": "84842a0734975ae76bc27ebdf0fdc5841bc769a7dc8322255672d0c48c4f75db",
+  "context_capacity_screen_pass": true,
+  "evaluation_sha256": "e1b6903892865a948d896ecbaf895bca456ad7de2ea23427d13977bd81f3fb3e",
+  "fits": 12,
+  "input_spec_sha256": "93d90131cdfa32c04b8f8c3513f3e7f7cc19c9695d8f47d3fe98b4cc8c0a407d",
+  "limitation": "Two fixed pairs, LGB5/pre-ADSB screen. Flat vs saved PLE combines inputs and added capacity. All arms have ages; only local-order inductive bias is isolated.",
+  "local_order_screen_pass": true,
+  "protocol": "E197-own-previous-local-order-vs-flat-K64-2pair-3seed-8epoch-v1",
+  "registration_commit": "bfe793c62f7cecf633c7cc31c747f48eb0676f2d",
+  "remote_only_checks": [
+    "large prepared tables retained and verified by original Home evaluation; no Mac copy",
+    "support subgroup metrics copied from authenticated original evaluation, not locally recomputed"
+  ],
+  "status": "PASS",
+  "utc": "2026-10-07T13:04:50.265201+00:00",
+  "worker_sha256": "6be13d401dd2903c50c9584f5ca2d6ca084a1feb0eb1f67fcba0cd94850db54a"
+}
