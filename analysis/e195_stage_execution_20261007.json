@@ -1,0 +1,296 @@
+{
+  "comparison_performed": false,
+  "final_chain_complete": false,
+  "folds": [
+    {
+      "complete_receipt": "data/e195_stage_models_20261007/fold_1_7/complete.json",
+      "fold": 1,
+      "host": "mac",
+      "models": 16,
+      "receipt_sha256": "cd4aec06a0a0c06cf9f7b44b50d64f74f55ae84c4759dc45ddda02bce3cfa7d2",
+      "threads": 8,
+      "train_heldout_counts": [
+        {
+          "heldout_months": [
+            1,
+            7
+          ],
+          "heldout_rows": 185456,
+          "stage": "e141",
+          "train_rows": 1075143
+        },
+        {
+          "heldout_months": [
+            1,
+            7
+          ],
+          "heldout_rows": 64560,
+          "stage": "e64",
+          "train_rows": 254137
+        },
+        {
+          "heldout_months": [
+            1,
+            7
+          ],
+          "heldout_rows": 76886,
+          "stage": "e188",
+          "train_rows": 302138
+        },
+        {
+          "heldout_months": [
+            1,
+            7
+          ],
+          "heldout_rows": 15455,
+          "stage": "lszh",
+          "train_rows": 69303
+        }
+      ]
+    },
+    {
+      "complete_receipt": "data/e195_stage_models_20261007/fold_2_8/complete.json",
+      "fold": 2,
+      "host": "mac",
+      "models": 16,
+      "receipt_sha256": "12afc771c5da5592258e28fb3f2cf6e2c987b3a3f3d6caca341ca435a60845e5",
+      "threads": 8,
+      "train_heldout_counts": [
+        {
+          "heldout_months": [
+            2,
+            8
+          ],
+          "heldout_rows": 189540,
+          "stage": "e141",
+          "train_rows": 1071059
+        },
+        {
+          "heldout_months": [
+            2,
+            8
+          ],
+          "heldout_rows": 54934,
+          "stage": "e64",
+          "train_rows": 263763
+        },
+        {
+          "heldout_months": [
+            2,
+            8
+          ],
+          "heldout_rows": 66859,
+          "stage": "e188",
+          "train_rows": 312165
+        },
+        {
+          "heldout_months": [
+            2,
+            8
+          ],
+          "heldout_rows": 14138,
+          "stage": "lszh",
+          "train_rows": 70620
+        }
+      ]
+    },
+    {
+      "complete_receipt": "data/e195_stage_models_20261007/fold_3_9/complete.json",
+      "fold": 3,
+      "host": "home",
+      "models": 16,
+      "receipt_sha256": "b66ae8dbaa4477ab2e920d67aff291d1484d66c31c94d6886cfe309441a5618b",
+      "threads": 12,
+      "train_heldout_counts": [
+        {
+          "heldout_months": [
+            3,
+            9
+          ],
+          "heldout_rows": 210540,
+          "stage": "e141",
+          "train_rows": 1050059
+        },
+        {
+          "heldout_months": [
+            3,
+            9
+          ],
+          "heldout_rows": 56313,
+          "stage": "e64",
+          "train_rows": 262384
+        },
+        {
+          "heldout_months": [
+            3,
+            9
+          ],
+          "heldout_rows": 60466,
+          "stage": "e188",
+          "train_rows": 318558
+        },
+        {
+          "heldout_months": [
+            3,
+            9
+          ],
+          "heldout_rows": 16353,
+          "stage": "lszh",
+          "train_rows": 68405
+        }
+      ]
+    },
+    {
+      "complete_receipt": "data/e195_stage_models_20261007/fold_4_10/complete.json",
+      "fold": 4,
+      "host": "home",
+      "models": 16,
+      "receipt_sha256": "1c70aa125b9d55e7e481558f699c41af10bf29905d8a37ebf6cd67e53696cdc5",
+      "threads": 12,
+      "train_heldout_counts": [
+        {
+          "heldout_months": [
+            4,
+            10
+          ],
+          "heldout_rows": 222953,
+          "stage": "e141",
+          "train_rows": 1037646
+        },
+        {
+          "heldout_months": [
+            4,
+            10
+          ],
+          "heldout_rows": 51676,
+          "stage": "e64",
+          "train_rows": 267021
+        },
+        {
+          "heldout_months": [
+            4,
+            10
+          ],
+          "heldout_rows": 58407,
+          "stage": "e188",
+          "train_rows": 320617
+        },
+        {
+          "heldout_months": [
+            4,
+            10
+          ],
+          "heldout_rows": 13314,
+          "stage": "lszh",
+          "train_rows": 71444
+        }
+      ]
+    },
+    {
+      "complete_receipt": "data/e195_stage_models_20261007/fold_5_11/complete.json",
+      "fold": 5,
+      "host": "hetzner",
+      "models": 16,
+      "receipt_sha256": "f62aa5a39bc4bf4ab32ac39a7c8a9f790080d342ce5357b3d901f1169a795d45",
+      "threads": 6,
+      "train_heldout_counts": [
+        {
+          "heldout_months": [
+            5,
+            11
+          ],
+          "heldout_rows": 224048,
+          "stage": "e141",
+          "train_rows": 1036551
+        },
+        {
+          "heldout_months": [
+            5,
+            11
+          ],
+          "heldout_rows": 44740,
+          "stage": "e64",
+          "train_rows": 273957
+        },
+        {
+          "heldout_months": [
+            5,
+            11
+          ],
+          "heldout_rows": 52368,
+          "stage": "e188",
+          "train_rows": 326656
+        },
+        {
+          "heldout_months": [
+            5,
+            11
+          ],
+          "heldout_rows": 13741,
+          "stage": "lszh",
+          "train_rows": 71017
+        }
+      ]
+    },
+    {
+      "complete_receipt": "data/e195_stage_models_20261007/fold_6_12/complete.json",
+      "fold": 6,
+      "host": "hetzner",
+      "models": 16,
+      "receipt_sha256": "92b570a98fcd119034b171e05320c97d5ca871a82474262009f850349fc1d208",
+      "threads": 6,
+      "train_heldout_counts": [
+        {
+          "heldout_months": [
+            6,
+            12
+          ],
+          "heldout_rows": 228062,
+          "stage": "e141",
+          "train_rows": 1032537
+        },
+        {
+          "heldout_months": [
+            6,
+            12
+          ],
+          "heldout_rows": 46474,
+          "stage": "e64",
+          "train_rows": 272223
+        },
+        {
+          "heldout_months": [
+            6,
+            12
+          ],
+          "heldout_rows": 64038,
+          "stage": "e188",
+          "train_rows": 314986
+        },
+        {
+          "heldout_months": [
+            6,
+            12
+          ],
+          "heldout_rows": 11757,
+          "stage": "lszh",
+          "train_rows": 73001
+        }
+      ]
+    }
+  ],
+  "home_first_attempt": {
+    "cause": "systemd expanded $fold before bash loop executed",
+    "corrective_action": "literal commands for folds 3 and 4; immutable worker unchanged",
+    "error": "argument --fold: expected one argument",
+    "models_written": 0,
+    "result": "failed_before_fit",
+    "successful_main_pid": 585356,
+    "successful_unit": "prc-e195-stage-home-20261007-v2.service",
+    "unit": "prc-e195-stage-home-20261007.service"
+  },
+  "limitation": "Stage fits only; separate registered PRE-E81 comparison follows. Historical upstream is not fully nested.",
+  "observed_at_utc": "2026-10-07T09:01:27.196508+00:00",
+  "registration": "9078e3508e81bb7c1e6cee432226063b0067b44e",
+  "status": "all_96_stage_models_complete_and_sha_verified_on_mac"
+}

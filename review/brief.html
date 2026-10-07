@@ -304,7 +304,7 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
   <nav class="toc" aria-label="Содержание">
     <div class="toc-label">Содержание</div>
     <ol>
-      <li><a href="#sЧ">Читать первым (30 секунд)</a></li>
+      <li><a href="#sЧ">Читать первым</a></li>
       <li><a href="#s0">Уже проверено — не предлагать повторно (на 05.10)</a></li>
       <li><a href="#s1">Задача</a></li>
       <li><a href="#s2">Где мы сейчас</a></li>
@@ -430,26 +430,27 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 
     <header class="doc">
       <h1>Taxi-out, команда <span class="sign">gentle-igloo</span></h1>
-      <p class="lede">Бриф для внешнего ревью решения EUROCONTROL PRC Data Challenge 2026. <strong>Состояние на 07.10.2026, 07:44 WEST (06:44 UTC): подробный разбор шести уникальных гипотез готов; E192 завершён и не прошёл; Cat90 завершён на всех узлах, финальный merge готовится.</strong> Лучший подтверждённый v12073 =231,9810. Две подачи выполнены6октября; оставшиеся три полных файла передаются в квоту7октября. Исторические разделы сохраняют свои даты.</p>
+      <p class="lede"><strong>Состояние на07.10.2026,10:18WEST (09:18UTC).</strong> Три подачи обработаны, bestv12074=231,4438. E198 MDN прошла подтверждение24fit; E197 автоматически начала12sequencefit09:12UTC. E195 сравнение доE81 завершено. CPU-очереди E199/E200 готовятся; прежние короткие задачи наMac/ноутбуках уже завершены.</p>
     </header>
 
     <div class="strip" role="group" aria-label="Статус">
-      <div class="hl"><div class="k">Лидерборд</div><div class="v">231,9810</div><div class="s">v12073 — лучший файл</div></div>
-      <div><div class="k">Место</div><div class="v">Текущее не проверено</div><div class="s">13/230 было05.10; не выдавать за текущий ранг</div></div>
-      <div><div class="k">В очереди</div><div class="v">доска</div><div class="s">6октября2/5, 7октября3готовых файла12070/71/74 в процессе доставки; Cat90 remotecomplete, </div></div>
+      <div class="hl"><div class="k">Лидерборд</div><div class="v">231,4438 —v12074</div><div class="s">? — лучший файл</div></div>
+      <div><div class="k">Место</div><div class="v">14/233 на07:22UTC</div><div class="s"></div></div>
+      <div><div class="k">В очереди</div><div class="v">доска</div><div class="s">E197 траектории; E199 spatial state; E200 MDN полная сборка</div></div>
       <div><div class="k">Дедлайн</div><div class="v">11.10</div><div class="s">23:59 CET, 5 сабмитов в день</div></div>
     </div>
 
-    <section id="sЧ"><h2><span class="n">Ч</span>Читать первым (30 секунд)</h2>
+    <section id="sЧ"><h2><span class="n">Ч</span>Читать первым</h2>
 <ul>
-<li><strong>Подробный разбор идей пользователя:</strong> <a href="reports/Гипотезы%20PRC%20подробный%20разбор.md">Гипотезы PRC подробный разбор</a>. TGN/TGAT, PINN, мультимодальность, causal (пункты4/5повтор), diffusion, RL и digitaltwin. Для каждого сильная версия, доступные данные, отличия от закрытого, проверка и критерий остановки; обещанные проценты не используются. Журнал№326–331.</li>
-<li><strong>E192 реально завершён:</strong> старт01:28:13Z, финиш02:10:29Z,12fit за42мин16с. Простые фиксированные event-relations против тех же flat-events: graph−flat allRMSE−0,00404/+0,00404с, body−0,01096/+0,00496с на1+7/4+10; устойчивой пользы связей нет. Flatвход тоже не проходит все критерии1+7. Это двухпарныйLGB5/preADSBscreen, не полнаяцепочка и не тест всехTGN. Не масштабировать даннуюконфигурацию. <code>analysis/e192_event_results_20261007.json</code>, журнал№323/325.</li>
-<li><strong>Подачи:</strong> v12072=231,9884; v12073=231,9810, processed06.10~21:19Z. Все5полных кандидатов собраны по рецептам№321–322дооткликадоски.12070E190,12071его заранеефиксированнаяполовина,12074совместныйE190+E188 ещё доставляются. Новыйtransport№324/5ea69b7 наUTC7октября, общийledger/singlePUT/5slots; старыйbuildercd3598e неизменен. Не утверждатьPUTуспешным доledger/квитанции.</li>
-<li><strong>ПолныйCV:</strong> пользователь06.10 прямо разрешил подачи без ожиданияCat90; это неPASSполнойвалидации. Все344841ID/finite/42donors/неизменностьрецептов проверены. E1885seed иE1903seed ranking завершены.</li>
-<li><strong>Cat90 поliveSSH06:40Z:</strong> Home44/44,Hetzner20/20,Mac16/16,1717/7retained,1753/3; наузлахполныеmarkers, текущегоCPUобучениянет. Макранее независимо проверил75/90; новые15собираются дляregisteredoverlaymerge87+3 черезcat_extra175.py, нестарыйmerge. GPUпослеE192свободна. Не обещать, что все машины продолжают обучение.</li>
-<li><strong>Следующая новая линия по разбору:</strong> последовательности собственного/предыдущеговизита иисторияdepartureMETAR. Текущаяпогода уже15признакамивмодели; простое«добавитьMETAR»неявляетсяновымвходом. Physicsloss иconditionaldistribution имеютсмысл как отдельныеmatchedexperiments, не как гарантированныйскачок.</li>
-<li><strong>Операционныйсбой:</strong> read-onlySSHapproval остановилrootс01:27до06:40Z иcollectionjournalE192послефиниша. Сервисы продолжали и завершились самостоятельно. Не утверждать, что недоставленные3файла использовали6октябряслоты. Отчётготовбылраньше; его выдачанеправильносвязанаожиданиемопераций, теперьдоставлен пользователю.</li>
-<li><strong>ASUS176</strong> новыхзадачнеполучает по последнему приоритетупользователя; прежняяотложеннаяпроцедура отдельноописанавHANDOFF.</li>
+<li><strong>Подачи:</strong> v12070(E190)231,4449; v12071(фиксированная половина сv12061)231,6095; v12074(E190+E188)<strong>231,4438</strong>. Все344841пары обработаны. Новыйbest лучшеv12073на0,5372с; E188 поверхE190−0,0011с. <code>analysis/submission_results_20261007.json</code>/<code>.md</code>. Повторных PUT нет,42TabPFN сохранены.</li>
+<li><strong>E198 MDN подтверждение PASS:</strong>24 новыхfit на четырёх заранее выбранных оставшихся парах,08:59:11–09:11:42Z. На этих четырёх body−0,410251/decided−0,123667с противfreshmean; все6body−0,399541/decided−0,142199с. Гейт противmean иsavedPLE пройден:5/6 decided, pooledbody/trim3/trim20&lt;0. Пара5+11decided ухудшена. Две исходные пары участвовали в выборе модели, четыре новые показаны отдельно. Каждая новая all-RMSEbootstrapCI покрывает0. <code>analysis/e198_density_results_20261007.md/json</code>. ЭтоLGB5/preADSB, не fullchainCV или оценка доски.</li>
+<li><strong>E197 траектории реально обучаются:</strong> HomeGPU unit<code>prc-e197-trajectory-20261007.service</code>,PID591693; persistentqueue сама перешла отE198 кfit09:12:01Z, в09:18Z flatseed0epoch6/8.12fit,2×64точки своего/предыдущего визита; равноёмкие ordered(prev,self,next) иflat(self,mean,max), время в обоих. Prepared9,2GiB/fold уже наHome; laptop prep завершён за66/57с. <code>analysis/e197_trajectory_execution_20261007.md</code>. Нельзя называть ноутбуки нагруженными этим завершённым этапом. Качество неизвестно.</li>
+<li><strong>E195 доE81 завершён:</strong>96stagefits и115,81с apply,6пар/4arms;2084921оценённых ID,126TabPFN исключены, feasibilitychanges0. E190 decided−0,339646/body−0,366200с,6/6; E188−0,006994/−0,004913,3/6; joint−0,347029/−0,371560,6/6. <code>analysis/e195_pre_e81_results_20261007.md</code>. Нет exactv44/v60 donorOOF; historical upstreamOOF не полностьюnested, поэтому это ограниченная атрибуция, не полный productionCV.</li>
+<li><strong>E199/E200 — текущая подготовка:</strong> E199 проверяет новое пространственное состояние наземных бортов сверх закрытых counts/residuals/eventtokens, затем распределённаяCPUочередь. E200 фиксированно заменяетPLE наMDN в текущемjointконтроле, затем приPASS готовит ranking/fullpipeline; GPUстрого послеE197. До регистрации/проверки не считать эти задачи обучением. Пользователь требует автоматического продолжения полезных задач сегодня на всех доступных узлах.</li>
+<li><strong>E193 weatherhistory отрицательна:</strong>12fit, history−равноёмкийcurrent body+0,015381/+0,006401с, trim хуже. Продолжения нет. <code>analysis/e193_weather_results_20261007.md/json</code>. E19618fit выбралаMDN4, GaussianFAIL; MDN analyticmean, неdiffusion.</li>
+<li><strong>E194 raw и Cat90 полностью проверены:</strong>427дней/2429888DEP/104524037actualpoints; Cat6×15seed/2085047ID/exactmeans/runtime/SHA. Отчёты <code>analysis/e194_trajectory_execution_20261007.md</code>, <code>analysis/cat_completion_20261007.json</code>. Не повторять завершённые fits.</li>
+<li><strong>Подробный разбор каждой идеи:</strong> <a href="reports/Гипотезы%20PRC%20подробный%20разбор.md">Гипотезы PRC</a>. PINN/causal/RL новых собственных targetfits пока не получили. E192фиксированный eventgraph отрицателен; это не отрицание всех временных графов.</li>
+<li><strong>Нагрузка проверяется заново:</strong> завершённыйPID не считается работающим. Mac/ноутбуки/сервер свободны после коротких стадий, новая CPUлиния пока подготавливается. Точная история задержкиapproval и исправления HomeExecStart — вHANDOFF. ASUS новых задач не получает, среды под работой не менять.</li>
 </ul></section><section id="s0"><h2><span class="n">0</span>Уже проверено — не предлагать повторно (на 05.10)</h2>
 <blockquote>
 <p><strong>Ревьюверам: перед любым предложением сверьтесь с таблицей «Уже проверено» ниже, с журналом <code>HYPOTHESES_LOG.md</code> и с двумя правилами из разд. 21f и 21g.</strong> Всё из неё проверено прогонами кода; повторное предложение без новых данных или нового механизма не нужно. Если идея похожа на закрытую, укажите, чем она отличается.</p>

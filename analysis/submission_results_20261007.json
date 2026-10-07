@@ -1,0 +1,283 @@
+{
+  "all_three_uploaded_once": true,
+  "artifacts": {
+    "12070": {
+      "forecast": [
+        0.0,
+        -1.0,
+        1.0
+      ],
+      "processed": {
+        "filename": "gentle-igloo_v12070.parquet",
+        "processedAt": "2026-10-07T07:01:39.827567Z",
+        "score": 231.4449,
+        "submissionId": "a32e2205-f02e-4acb-838e-14034972c073",
+        "teamId": "3698249a-8007-4660-8d44-20363bf3f18a",
+        "teamName": "gentle-igloo",
+        "usedPairs": 344841
+      },
+      "receipt_sha256": "69f3b8a707a5fac79912c3768f97b122e89ad5373575b548a37a651f7ce680a0",
+      "recipe": "E190 full production chain, original MLP weight .25, half LSZH",
+      "sha256": "be753aeb9f752359faad3e403e63a3b7e57dbad1defd5a076cb8e7571b21575b"
+    },
+    "12071": {
+      "forecast": [
+        0.0,
+        -0.5,
+        0.5
+      ],
+      "processed": {
+        "filename": "gentle-igloo_v12071.parquet",
+        "processedAt": "2026-10-07T07:02:00.392881Z",
+        "score": 231.6095,
+        "submissionId": "5ba021e0-72af-4638-8c8b-586c635cddcb",
+        "teamId": "3698249a-8007-4660-8d44-20363bf3f18a",
+        "teamName": "gentle-igloo",
+        "usedPairs": 344841
+      },
+      "receipt_sha256": "2b9a0474020be541583aef430985704278b8fdb6bc1dce86e9c6ed2cd8a77db5",
+      "recipe": "rounded whole-file .5*v12061 + .5*v12070",
+      "sha256": "976b0b8617db6fd5dfeb63d42b87915356eec3f72e99972f81a6c4c9172d8a11"
+    },
+    "12074": {
+      "forecast": [
+        0.0,
+        -1.5,
+        1.5
+      ],
+      "processed": {
+        "filename": "gentle-igloo_v12074.parquet",
+        "processedAt": "2026-10-07T07:02:34.103922Z",
+        "score": 231.4438,
+        "submissionId": "d4ed274f-6430-4370-9600-4477d93d41d4",
+        "teamId": "3698249a-8007-4660-8d44-20363bf3f18a",
+        "teamName": "gentle-igloo",
+        "usedPairs": 344841
+      },
+      "receipt_sha256": "225ea29ed31ebaf50400126b1073432b444bf0b570771800fca599e6ba168afc",
+      "recipe": "E190 plus E188 at its own pre-E64 base, original full tail and half LSZH",
+      "sha256": "e5c78ab061492b69fe72d4a46d2e286f7a2f6b3129ebf2ae4a34731bb662374b"
+    }
+  },
+  "day": "2026-10-07",
+  "previous_oct6_versions_not_resubmitted": [
+    12072,
+    12073
+  ],
+  "protocol": "fixed-E190-E188-remaining-three-transport-20261007-v1",
+  "recipes_unchanged": true,
+  "registration_commit": "5ea69b7b4ace45abd3d62f2fa15e82e3db737f82",
+  "registration_proof_sha256": "013bdb0db5eca475f8a091a3988883caf773d81c8d6d9062d935c1d397e21ada",
+  "scientific_registration": "cd3598e15a25db9bd6a401d38b4ad9bee6c2e862",
+  "slots_remaining_if_no_other_uploads": 2,
+  "slots_used_by_this_transport": 3,
+  "snapshot": {
+    "collected_utc": "2026-10-07T07:07:53.637190+00:00",
+    "leaderboard_items": [
+      {
+        "filename": "gentle-igloo_v12074.parquet",
+        "processedAt": "2026-10-07T07:02:34.103922Z",
+        "score": 231.4438,
+        "submissionId": "d4ed274f-6430-4370-9600-4477d93d41d4",
+        "teamId": "3698249a-8007-4660-8d44-20363bf3f18a",
+        "teamName": "gentle-igloo",
+        "usedPairs": 344841
+      },
+      {
+        "filename": "gentle-igloo_v12070.parquet",
+        "processedAt": "2026-10-07T07:01:39.827567Z",
+        "score": 231.4449,
+        "submissionId": "a32e2205-f02e-4acb-838e-14034972c073",
+        "teamId": "3698249a-8007-4660-8d44-20363bf3f18a",
+        "teamName": "gentle-igloo",
+        "usedPairs": 344841
+      },
+      {
+        "filename": "gentle-igloo_v12071.parquet",
+        "processedAt": "2026-10-07T07:02:00.392881Z",
+        "score": 231.6095,
+        "submissionId": "5ba021e0-72af-4638-8c8b-586c635cddcb",
+        "teamId": "3698249a-8007-4660-8d44-20363bf3f18a",
+        "teamName": "gentle-igloo",
+        "usedPairs": 344841
+      },
+      {
+        "filename": "gentle-igloo_v12073.parquet",
+        "processedAt": "2026-10-06T21:19:15.525897Z",
+        "score": 231.981,
+        "submissionId": "5296f5e6-c977-4743-a84f-15192e1e0730",
+        "teamId": "3698249a-8007-4660-8d44-20363bf3f18a",
+        "teamName": "gentle-igloo",
+        "usedPairs": 344841
+      },
+      {
+        "filename": "gentle-igloo_v12061.parquet",
+        "processedAt": "2026-10-05T16:42:50.78501Z",
+        "score": 231.9882,
+        "submissionId": "a59ccd41-82c3-4130-bd81-11c278b4ddb6",
+        "teamId": "3698249a-8007-4660-8d44-20363bf3f18a",
+        "teamName": "gentle-igloo",
+        "usedPairs": 344841
+      },
+      {
+        "filename": "gentle-igloo_v12072.parquet",
+        "processedAt": "2026-10-06T21:18:46.381237Z",
+        "score": 231.9884,
+        "submissionId": "5d08b3c2-5cba-437f-95ce-91e66823f86e",
+        "teamId": "3698249a-8007-4660-8d44-20363bf3f18a",
+        "teamName": "gentle-igloo",
+        "usedPairs": 344841
+      }
+    ],
+    "ledger_path": "/root/prc-2026/data/submission_upload_ledger.jsonl",
+    "ledger_records": [
+      {
+        "at": "2026-10-05T06:56:28.014865+00:00",
+        "event": "intent",
+        "filename": "gentle-igloo_v12008.parquet",
+        "sha256": "bb7896d5b2698faf2de95cc0109604b34474bb36342e7f972e982bdd846dfb4a",
+        "used_before": 0
+      },
+      {
+        "at": "2026-10-05T06:56:28.014865+00:00",
+        "event": "uploaded",
+        "filename": "gentle-igloo_v12008.parquet",
+        "sha256": "bb7896d5b2698faf2de95cc0109604b34474bb36342e7f972e982bdd846dfb4a",
+        "used_before": 0
+      },
+      {
+        "at": "2026-10-05T10:11:19.508575+00:00",
+        "event": "intent",
+        "filename": "gentle-igloo_v12028.parquet",
+        "sha256": "bf621d9a36dcdbb83b38013625a863f8380ef15e3ee6b1d8093d02caab6f19b3",
+        "used_before": 1
+      },
+      {
+        "at": "2026-10-05T10:11:19.508575+00:00",
+        "event": "uploaded",
+        "filename": "gentle-igloo_v12028.parquet",
+        "sha256": "bf621d9a36dcdbb83b38013625a863f8380ef15e3ee6b1d8093d02caab6f19b3",
+        "used_before": 1
+      },
+      {
+        "at": "2026-10-05T10:11:51.639004+00:00",
+        "event": "intent",
+        "filename": "gentle-igloo_v12048.parquet",
+        "sha256": "0c72511bf5be05ecb9d68a72245e244feeb6088b92372732bb3aae0dc7dddbb1",
+        "used_before": 2
+      },
+      {
+        "at": "2026-10-05T10:11:51.639004+00:00",
+        "event": "uploaded",
+        "filename": "gentle-igloo_v12048.parquet",
+        "sha256": "0c72511bf5be05ecb9d68a72245e244feeb6088b92372732bb3aae0dc7dddbb1",
+        "used_before": 2
+      },
+      {
+        "at": "2026-10-05T16:41:51.055831+00:00",
+        "event": "intent",
+        "filename": "gentle-igloo_v12060.parquet",
+        "sha256": "ae7ce28cf0718bfd39e92d54315dc1bbf62610a30c46768d7fd395dfd1695268",
+        "used_before": 3
+      },
+      {
+        "at": "2026-10-05T16:41:51.055831+00:00",
+        "event": "uploaded",
+        "filename": "gentle-igloo_v12060.parquet",
+        "sha256": "ae7ce28cf0718bfd39e92d54315dc1bbf62610a30c46768d7fd395dfd1695268",
+        "used_before": 3
+      },
+      {
+        "at": "2026-10-05T16:42:17.186760+00:00",
+        "event": "intent",
+        "filename": "gentle-igloo_v12061.parquet",
+        "sha256": "8d3b589213240bd6960984d6b2a46c6716617262c635ac2dc02d35b50b876015",
+        "used_before": 4
+      },
+      {
+        "at": "2026-10-05T16:42:17.186760+00:00",
+        "event": "uploaded",
+        "filename": "gentle-igloo_v12061.parquet",
+        "sha256": "8d3b589213240bd6960984d6b2a46c6716617262c635ac2dc02d35b50b876015",
+        "used_before": 4
+      },
+      {
+        "at": "2026-10-06T21:18:10.739962+00:00",
+        "event": "intent",
+        "filename": "gentle-igloo_v12072.parquet",
+        "sha256": "4489d4ca8ba4f76c16597091f67dd3d7a1a9a8612802323f04de3ef80195ebda",
+        "used_before": 0
+      },
+      {
+        "at": "2026-10-06T21:18:10.739962+00:00",
+        "event": "uploaded",
+        "filename": "gentle-igloo_v12072.parquet",
+        "sha256": "4489d4ca8ba4f76c16597091f67dd3d7a1a9a8612802323f04de3ef80195ebda",
+        "used_before": 0
+      },
+      {
+        "at": "2026-10-06T21:18:40.108412+00:00",
+        "event": "intent",
+        "filename": "gentle-igloo_v12073.parquet",
+        "sha256": "f02a7e760e4d8cfd8b47345f1ce03ac73db4b0aa6bfdb5974e1a49f2af8cb415",
+        "used_before": 1
+      },
+      {
+        "at": "2026-10-06T21:18:40.108412+00:00",
+        "event": "uploaded",
+        "filename": "gentle-igloo_v12073.parquet",
+        "sha256": "f02a7e760e4d8cfd8b47345f1ce03ac73db4b0aa6bfdb5974e1a49f2af8cb415",
+        "used_before": 1
+      },
+      {
+        "at": "2026-10-07T07:01:04.818480+00:00",
+        "event": "intent",
+        "filename": "gentle-igloo_v12070.parquet",
+        "sha256": "be753aeb9f752359faad3e403e63a3b7e57dbad1defd5a076cb8e7571b21575b",
+        "used_before": 0
+      },
+      {
+        "at": "2026-10-07T07:01:04.818480+00:00",
+        "event": "uploaded",
+        "filename": "gentle-igloo_v12070.parquet",
+        "sha256": "be753aeb9f752359faad3e403e63a3b7e57dbad1defd5a076cb8e7571b21575b",
+        "used_before": 0
+      },
+      {
+        "at": "2026-10-07T07:01:23.379356+00:00",
+        "event": "intent",
+        "filename": "gentle-igloo_v12071.parquet",
+        "sha256": "976b0b8617db6fd5dfeb63d42b87915356eec3f72e99972f81a6c4c9172d8a11",
+        "used_before": 1
+      },
+      {
+        "at": "2026-10-07T07:01:23.379356+00:00",
+        "event": "uploaded",
+        "filename": "gentle-igloo_v12071.parquet",
+        "sha256": "976b0b8617db6fd5dfeb63d42b87915356eec3f72e99972f81a6c4c9172d8a11",
+        "used_before": 1
+      },
+      {
+        "at": "2026-10-07T07:01:53.141470+00:00",
+        "event": "intent",
+        "filename": "gentle-igloo_v12074.parquet",
+        "sha256": "e5c78ab061492b69fe72d4a46d2e286f7a2f6b3129ebf2ae4a34731bb662374b",
+        "used_before": 2
+      },
+      {
+        "at": "2026-10-07T07:01:53.141470+00:00",
+        "event": "uploaded",
+        "filename": "gentle-igloo_v12074.parquet",
+        "sha256": "e5c78ab061492b69fe72d4a46d2e286f7a2f6b3129ebf2ae4a34731bb662374b",
+        "used_before": 2
+      }
+    ],
+    "ledger_sha256": "6c8a99739d559b58a98d5631aa969439e861b87dfaa43feae5add2ed71d16f07"
+  },
+  "source_sha256": "1f029f911bb17c9530a929da1aad10607ee323eeb1aee16e75704a1cc8a5a1ab",
+  "upload_order": [
+    12070,
+    12071,
+    12074
+  ]
+}

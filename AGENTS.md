@@ -58,9 +58,17 @@
   Для аудита №289:6CPU/MemoryMax10G/swap0/nice10, один день за раз, только наблюдаемые ADS-B данные.
   Большие Cat/LGB задачи с других машин не дублировать: они требуют больше RAM и имеют собственные фиксированные очереди.
 
-## Актуальное дополнение 07.10 06:44Z
+## Актуальное дополнение 07.10 09:18Z
 
-Подробный разбор всех шести уникальных гипотез и digitaltwin: `reports/Гипотезы PRC подробный разбор.md`. E19212fit завершён, обаscreenFAIL, не масштабировать этуконфигурацию;№323/325. Bestподтверждённыйv12073=231.9810; v12072=231.9884, обе6октября. Полные12070/71/74собраны идоставляютсявUTC7октября по№324/5ea69b7, общийledger и`.venv-upload`. Frozenbuildercd3598eнеправить. Cat90наузлахзавершён44+20+16+7+3, independentmergeещёпроверитьвHANDOFF/analysis/cat_completion_20261007.json. Не считатьмашинызанятымипозавершённымservice. Журналдо№331; новыхsequence/weather/PINN/diffusionfitпоканет.
+Прямое указание пользователя: автоматическое продолжение полезных задач сегодня на всех узлах, без ожидания ручного подтверждения между этапами. Не дублировать завершённые расчёты и не считать готовые файлы активным fit.
+Bestv12074=231.4438; три processedподачи12070/71/74,3/5слотов. Ранг14/233 — снимок07:22Z.
+E19312fitFAIL; E19618fitMDN4PASS/GaussianFAIL; E19824fitconfirmationPASS, все6body−0.3995с,5/6decided. Это компонентный screen, неfullCV.
+E197 persistentqueue автоматически начала12sequencefit09:12:01Z после завершенияE198; HomeGPU .venv-numemb,2CPU/12GiB/swap0/nice10. Unit/PID/progress вHANDOFF.
+Cat90/E194raw/E19596stagefits+preE81comparison завершены. E195 E190decided−0.339646/body−0.366200,6/6; joint−0.347029/−0.371560. ExactE81 donorOOF отсутствуют, fullCV не заявлять.
+E199 spatial-state CPUлиния готовится prc_leader_repo_map, reviewer today_e188_rank,№344/345. E200 MDNfixedcurrent-chain/ranking готовится today_e190_rank,№346/347; GPU послеE197. До registeredfit не описывать эти узлы как обучающиеся.
+Mac/171/175/Hetz/HomeCPU короткие задачи завершили; следующее распределение ещё готовится. HomeCPU12CPU/16GiB; Hetz6physicalcores0,2,4,6,8,10/nice10/PASSIVE. Mac8threads, свободно≈8.5GiB: не приносить19GiB E197tables, они уже наHome.
+Frozenworker/protocol и существующие среды не менять во время fit. Journal343 закрываетE195; подробные результатыanalysis/*_20261007.
+Системныйapproval07:29–08:43Z задержал продолжение. Проверять конкретные units/logs, не общийps. SystemdExecStart раскрывает$variables: циклы вstandalonepayload, неembedded shellloop.
 
 ## Актуальное дополнение 06.10 12:03Z
 

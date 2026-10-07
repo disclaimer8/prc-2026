@@ -1,0 +1,15 @@
+{
+  "cause": "Advanced indexing changes per_seed strides; NumPy uses a different reduction path. Producer-layout mean remains exact.",
+  "comparison_metrics_computed": false,
+  "exit_code": 1,
+  "failure": "ValueError: seed mean mismatch",
+  "models_or_recipes_changed": false,
+  "observed_at_utc": "2026-10-07T09:03:37.739696+00:00",
+  "phase": "component alignment before first APPLY",
+  "real_stage_predictions_computed": false,
+  "registration": "9c07ba468f4a9f8e7c0e0e8eb9d4f5aebc23b74e",
+  "repair": "Exact original mean check before permutation; shape check after permutation; synthetic C/F layout regression test.",
+  "retained_partial_directories": [
+    "data/.e195_pre_e81_20261007.partial-4pfq8ihc"
+  ]
+}
