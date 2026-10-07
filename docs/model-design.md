@@ -1,11 +1,13 @@
-# Model design: v12074
+# Model design: v12075
 
-This document describes the submitted v12074 recipe, registered on 6 October and
-scored on 7 October 2026. The reference implementation is the `build_e190`,
-`build_joint` and `tails` sequence in
+This document describes v12075, scored at 230.9387 s RMSE on 7 October 2026.
+The E203 recipe was registered at `6e95e3a65936a3401e41499bb340f2d54a1a2121`.
+Its `branch` and `build` functions in
+[`scripts/e203_trajectory_production.py`](../scripts/e203_trajectory_production.py)
+replace the neural member of the v12074 control while retaining the fixed weights
+and complete tail. The historical control is defined by `build_e190`,
+`build_joint` and `tails` in
 [`scripts/today_submissions_20261006.py`](../scripts/today_submissions_20261006.py).
-The `branch` function in [`scripts/e203_trajectory_production.py`](../scripts/e203_trajectory_production.py)
-also expresses this control recipe before its experimental neural replacement.
 Neither file should be invoked casually: they require pinned local artifacts and
 some stages fit models.
 
@@ -88,13 +90,13 @@ The submitted regular candidate has these fixed weights:
 | Schedule-anchored LightGBM member | 0.10 |
 | EOBT-anchored LightGBM member | 0.10 |
 | AOBT-anchored LightGBM member | 0.10 |
-| E190 neural member, mean of three seeds | 0.25 |
+| E197/E203 ordered-trajectory neural member, mean of three seeds | 0.25 |
 
 The weights sum to one. They apply to the regular candidate, not directly to the
 final prediction after regime routing and corrections. The five additional tree
 members each use their saved five-seed ranking artifact.
 
-E190 uses the standard piecewise-linear embeddings implemented by
+The E190 backbone uses the standard piecewise-linear embeddings implemented by
 [`rtdl_num_embeddings`](https://github.com/yandex-research/rtdl-num-embeddings),
 with 48-bin training quantiles, 12 embedding dimensions and a width-512 network.
 The package is version 0.0.12, with its `version='B'`, `activation=False` preset.
@@ -103,14 +105,18 @@ eight epochs, AdamW, learning rate 0.002, weight decay 0.00001, OneCycleLR and
 seeds 0, 1 and 2. Numerical knots are learned from the fit data. See
 [`scripts/e190_rank_20261006.py`](../scripts/e190_rank_20261006.py) and
 [`scripts/e190_numeric_embeddings.py`](../scripts/e190_numeric_embeddings.py).
-E197 ordered-trajectory networks are a later experiment and are not in v12074.
+E197 extends that backbone with ordered observations from the current and previous
+aircraft visit: up to 64 actual observation tokens per stream, twelve channels
+with missingness masks, and message blocks using previous, current and next tokens.
+This adds trajectory information to the ordinary-duration member before the
+existing surface stages. It is not a graph of interacting flights.
+See [`scripts/e197_trajectory_encoder.py`](../scripts/e197_trajectory_encoder.py).
 
-The saved E190 production receipt records 1,737,813 parameters per seed,
-Python 3.12.15, PyTorch 2.13.0+rocm10.0.0 and an AMD Radeon RX 7900 XTX. Its
-reported 303.43 seconds cover numerical-bin construction, the three fits,
-ranking inference and output checks after prepared tensors were loaded.
-This is a component timing, not the duration of preprocessing or the full chain.
-Evidence: `data/e190_rank_20261006/complete/manifest.json`.
+The E203 ranking receipt records three seeds, eight epochs and 1,908,437 parameters
+per seed on the AMD Radeon RX 7900 XTX. Each fit took approximately 269 seconds;
+these are component timings, not end-to-end training times.
+Evidence: `data/e203_rank_20261007/complete.json`. The fixed 0.25 slot replaces E190;
+it does not add a second neural weight or tune weights against the ranking score.
 
 For rows where LOBT is missing outside LIRF, E185 further replaces 7/30 of the
 regular candidate with a movement-only predictor, then recomputes the mixture.
@@ -133,9 +139,9 @@ behaviour did not transfer reliably. Removing those features does not remove all
 possible sensitivity to changes in the receiver network.
 
 E188 replaces the E64-stage result for its natural LIRF/NM population, using
-separately registered models. It is applied at the E190 branch's own pre-E64
-prediction, rather than adding a correction computed against a different base.
-Its incremental evidence is small and mixed; see [validation](validation.md).
+separately registered models. It uses each branch's own pre-E64 prediction,
+including the ordered-trajectory branch. Its incremental evidence is small and
+mixed; see [validation](validation.md).
 
 E152 restores the pre-surface prediction when the maximum probability of the
 four planning-time classes is at least 0.95. This is a gate based on model
@@ -145,7 +151,7 @@ confidence, not proof that a row's true regime is known.
 
 LIRF without an NM match receives special treatment because few examples support
 very different possible recorded durations. The historical approach combines an
-empirical regime table with TabPFN predictions. In v12074, **42 predictions are
+empirical regime table with TabPFN predictions. In v12075, **42 predictions are
 copied from the fixed v361 donor**; their IDs are the difference between v361 and
 v291. The final protection stage restores them after intervening corrections.
 This preserves the submitted output across builds, but makes the donor artifacts
@@ -172,7 +178,7 @@ uncorrected file. The production sources are
 [`src/e159_fixed_lineage.json`](../src/e159_fixed_lineage.json).
 
 The broader OPDI ingestion/research pipeline is separate. Downloading additional
-OPDI tables does not imply that they entered v12074. The frozen LSZH input
+OPDI tables does not imply that they entered v12075. The frozen LSZH input
 inventory, including its source gaps, defines this submitted component.
 
 ## What this design does not establish

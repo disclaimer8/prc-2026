@@ -1,6 +1,6 @@
 # Data sources, licences and attribution
 
-This register describes the **v12074 submitted recipe**, with primary public
+This register describes the **v12075 submitted recipe**, with primary public
 source pages checked on **7 October 2026**. The code licence, a data licence and
 an organiser's permission to use data in this challenge are different things.
 We record them separately. Public downloadability alone is not an open licence.
@@ -10,7 +10,10 @@ requires documented, openly accessible/usable external data, openly available
 additional datasets, GPLv3 source code and sufficient reproduction documentation.
 The dataset-specific evidence below should be read alongside those conditions.
 
-## Sources in v12074
+## Sources in v12075
+
+The E203 replacement adds ordered current/previous-visit observations from the
+same adsb.lol archives. It introduces no additional external dataset or licence.
 
 | Source and primary page | Contribution to the submitted chain | Licence or terms evidence |
 |---|---|---|

@@ -1,6 +1,6 @@
 # Validation and evidence boundaries
 
-This record accompanies the [v12074 model description](model-design.md). Negative
+This record accompanies the [v12075 model description](model-design.md). Negative
 changes in RMSE mean improvement. Results below identify their population and
 pipeline boundary; a component result is not a full-chain result.
 
@@ -10,14 +10,22 @@ pipeline boundary; a component result is not a full-chain result.
 |---|---|---:|---|
 | v12070 | E190 in the existing complete chain | 231.4449 | 2026-10-07 07:01:39 |
 | v12071 | Fixed 50:50 whole-file blend of v12061 and v12070 | 231.6095 | 2026-10-07 07:02:00 |
-| **v12074** | **E190 + E188, complete chain** | **231.4438** | **2026-10-07 07:02:34** |
+| v12074 | E190 + E188, complete chain | 231.4438 | 2026-10-07 07:02:34 |
+| **v12075** | **E203 ordered-trajectory replacement, complete chain** | **230.9387** | **2026-10-07 21:53:59** |
 
-All three scored 344,841 rows. The original recipes were registered before these
+All four scored 344,841 rows. The original recipes were registered before these
 scores. The [delivery/result report](../analysis/submission_results_20261007.md)
 links the stored responses. v12074 has SHA256
 `e5c78ab061492b69fe72d4a46d2e286f7a2f6b3129ebf2ae4a34731bb662374b`.
 A local documentation check on 7 October confirmed this hash, 344,841 unique IDs
 and no null predictions against its saved manifest.
+
+v12075 improves on v12074 by **0.5051 s**. Its SHA256 is
+`90d3cd0b5a68cc8008f2142f1801857752574b525b2ff046ad6bf4089a70aee2`.
+All IDs, finite predictions and the 42 fixed tail rows passed the upload checks.
+The [E203 delivery report](../analysis/e203_upload_20261007/RESULTS.md) records the
+scoring response, prior forecast and exact registered recipe. The result is a
+ranking-set measurement, not an independent future-period estimate.
 
 The 0.0011-second difference between v12074 and v12070 is a property of these
 files on this ranking set. It is not evidence that E188 will improve another
@@ -101,11 +109,24 @@ full-v12074 estimate. The original v12074 manifest explicitly records
 | E198 → E200: density-model replacement | E200 improved body RMSE by 0.200152 s but worsened decided RMSE by 0.054472 s; only 3/6 pairs improved, below the required four | Rejected before ranking fit. The earlier component-level MDN success did not survive the current pre-E81 comparison. [Report](../analysis/e200_mdn_results_20261007.md) |
 | E197: ordered trajectories | Before the ADS-B stages, ordered-minus-PLE RMSE was −4.465932 / −7.113443 s; ordered-minus-equal-capacity-flat was only −0.249545 / −0.126464 s | Positive two-pair component screen. The large PLE difference includes changed inputs and capacity; it is not solely an ordering effect or a measured full-chain gain. [Report](../analysis/e197_verified_results_20261007.md) |
 
-E202 and E203 are the registered continuation of the trajectory investigation.
-Their existence or running state does not change the submitted v12074 recipe.
-A later result belongs in this document only after its population, stage boundary
-and completed artifacts are established. E197's 4.5/7.1-second improvements must
-not be advertised as the expected or achieved leaderboard improvement.
+E202 completed the four remaining month-pair comparisons (24 fits); both
+registered component gates passed. E203 then compared the ordered replacement
+against the E190+E188 control through E152, before E81 and the remaining tail:
+
+| Subset | Control RMSE | E203 RMSE | Change |
+|---|---:|---:|---:|
+| Body | 183.168965 | 182.554916 | −0.614049 |
+| Decided | 218.262731 | 217.716970 | −0.545761 |
+
+All six pairs improved and the three-/twenty-row trimming checks passed. The
+four confirmation pairs had body change −0.735814 s. This remains
+selection-informed validation using historical upstream predictions, with the
+same full-chain limitations as E195. The complete ranking candidate used the
+fixed three-seed member and unchanged downstream recipe; its control exactly
+matched v12074. [Completion evidence](../analysis/e203_reproduction_status_20261007.md).
+
+E197's 4.5/7.1-second component improvements are not the achieved leaderboard
+gain. The measured complete-file improvement is 0.5051 s, as recorded above.
 
 The full [experiment register](../HYPOTHESES_LOG.md) also preserves older rejected
 features and models. This summary is deliberately selective; it is not a claim

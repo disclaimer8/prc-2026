@@ -1,0 +1,42 @@
+{
+  "status": "PROCESSED",
+  "version": 12075,
+  "slots_used": 4,
+  "sha256": "90d3cd0b5a68cc8008f2142f1801857752574b525b2ff046ad6bf4089a70aee2",
+  "uploaded_at_utc": "2026-10-07T21:53:24.079489+00:00",
+  "registered_commit": "3bcb89d7c62fa86b233d24755006b14965a7a522",
+  "transport_source_sha256": "9b3316db481cb276a1b97b591f38a5bf206f56bd69f4480d818dce42ca14c642",
+  "spec_sha256": "2c80a944f36fb9c928dbe6e9cb03420b71d34d22070dd0872ddb4dd027d6c3c0",
+  "sealed_receipt_sha256": "3a8f4a1a1d3ff55a0e47626cba04616d37034ec8b78c39e8141c715d6ddf4143",
+  "network_put_attempts": 1,
+  "pre_network_failure": "Wrong initial interpreter .venv lacked minio and urllib3. No credential load, intent or PUT happened; corrected to existing .venv-upload.",
+  "runtime": {
+    "python": "3.14.4",
+    "minio": "7.2.20",
+    "urllib3": "2.8.0",
+    "polars": "1.44.2",
+    "numpy": "2.5.3"
+  },
+  "validation": {
+    "rows": 344841,
+    "protected_rows": 42,
+    "changed": 309036,
+    "rms_vs_v12074": 13.024069979583395
+  },
+  "tests": {
+    "guard_unittest": 11,
+    "negative_gate_cases": 5
+  },
+  "score_pending": false,
+  "score": 230.9387,
+  "used_pairs": 344841,
+  "processed_at_utc": "2026-10-07T21:53:59.722232Z",
+  "submission_id": "025020aa-aa58-4d1e-8d1c-3a2cea94a48c",
+  "delta_vs_v12074": -0.5051,
+  "leaderboard_snapshot": {
+    "observed_at_utc": "2026-10-07T22:00:22.599440+00:00",
+    "rank": 14,
+    "teams": 237,
+    "leader": 213.5212
+  }
+}

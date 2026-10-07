@@ -1,6 +1,10 @@
 # Reproducing the archived v12074 submission
 
-The current best archived submission is `gentle-igloo_v12074.parquet`. Its
+**Current best is v12075 (230.9387 s); this guide and its runner still reproduce
+the historical v12074 reference. Independent v12075 replay remains to be verified.**
+See the [new submission receipt](../analysis/e203_upload_20261007/RESULTS.md).
+
+The verified archived reference is `gentle-igloo_v12074.parquet`. Its
 SHA-256 is `e5c78ab061492b69fe72d4a46d2e286f7a2f6b3129ebf2ae4a34731bb662374b`.
 It contains 344,841 departure predictions for January and July 2026. The original
 assembly was registered at `cd3598e15a25db9bd6a401d38b4ad9bee6c2e862` and is preserved
@@ -32,7 +36,7 @@ Python3.12.14 (`Sep 1 2026, 14:09:38`, Clang22.1.3), NumPy2.5.3,
 Polars1.44.2, LightGBM4.7.0, scikit-learn1.9.1, pandas3.0.5,
 PyArrow25.0.1 and CatBoost1.2.10. These are installed metadata, not a claim of
 cross-platform equivalence. The archive and synthetic replay checks passed in
-this environment; the full v12074 capture/replay remains pending. No environment
+this environment; the full v12074 replay also passed as recorded above. No environment
 was changed for this verification.
 
 ```bash

@@ -2,9 +2,9 @@
 
 A model for the recorded taxi-out time of departures from ten European airports,
 developed for the [EUROCONTROL PRC Data Challenge 2026](https://prc-data-challenge-2026.netlify.app/).
-The best verified submission documented here is **v12074: 231.4438 seconds RMSE**
+The best verified submission documented here is **v12075: 230.9387 seconds RMSE**
 on **344,841 departures in January and July 2026**, processed on 7 October 2026.
-The [result record](analysis/submission_results_20261007.md) links the stored scoring responses.
+The [result record](analysis/e203_upload_20261007/RESULTS.md) links the stored scoring response.
 This is a result on the challenge ranking set, not an estimate for an unseen year.
 
 The code is licensed under [GNU GPLv3](LICENSE). Data and pretrained models retain
@@ -42,11 +42,11 @@ The submitted recipe retains an empirical/TabPFN tail treatment and freezes 42
 historical TabPFN predictions. Their exact values are part of the reproduction
 requirements; rerunning a stochastic model is not evidence of exact reproduction.
 
-The complete v12074 order is:
+The complete v12075 order is:
 
 1. **FIN1b features and regime mixture:** LightGBM classifier; regular candidate
    from CatBoost/LightGBM, five raw or timestamp-anchored tree members, and the
-   E190 piecewise-linear-embedding neural member at weight 0.25.
+   E197/E203 ordered-trajectory neural member at weight 0.25, replacing E190.
 2. **Restricted adjustments:** movement-only member for rows with missing LOBT outside
    LIRF (E185), NM matching-window rules (E167), and the 42 frozen tail predictions.
 3. **Surface corrections:** E141 and E64, with E188 replacing the applicable
@@ -67,11 +67,13 @@ an additional inner month split for round selection. We inspect paired squared-e
 changes, month consistency, the ordinary-duration population and the extreme tail.
 An artifact audit checks IDs, targets, months, finite predictions and provenance.
 
-**There is no complete, fully nested cross-validation result for the exact v12074
-chain.** The six-pair E195 analysis reaches E152, before E81 and the remaining
-tail; it also inherits historical upstream out-of-fold predictions. Its E190+E188
-change was −0.347029 s on the defined `decided` subset and −0.371560 s on the
-`body` subset. Those figures are not full-chain or all-row RMSE improvements.
+**There is no complete, fully nested cross-validation result for the exact v12075
+chain.** E203 improves the E190+E188 control by 0.545761 s on the defined
+`decided` subset and 0.614049 s on the `body` subset, with all six pairs improving.
+This comparison reaches E152, before E81 and the remaining tail, and inherits
+historical upstream out-of-fold predictions. It is selection-informed validation,
+not a full-chain or all-row RMSE estimate. The separate ranking improvement over
+v12074 is 0.5051 s.
 See [validation definitions, results and negative experiments](docs/validation.md).
 
 The small leaderboard difference between v12070 and v12074 is **0.0011 s**.
@@ -83,12 +85,13 @@ error floor.
 
 ## Reproduction status
 
-The submitted artifact is `submissions/gentle-igloo_v12074.parquet`:
+The submitted artifact is `submissions/gentle-igloo_v12075.parquet`:
 
 ```text
-SHA256 e5c78ab061492b69fe72d4a46d2e286f7a2f6b3129ebf2ae4a34731bb662374b
+SHA256 90d3cd0b5a68cc8008f2142f1801857752574b525b2ff046ad6bf4089a70aee2
 344841 unique MVT_ID_mvt values; output TAXITIME_SEC_mvt in seconds
-recipe registration cd3598e15a25db9bd6a401d38b4ad9bee6c2e862
+recipe registration 6e95e3a65936a3401e41499bb340f2d54a1a2121
+submission registration 3bcb89d7c62fa86b233d24755006b14965a7a522
 ```
 
 Large data, fitted models and submission files are excluded from Git. Paths in
@@ -97,16 +100,17 @@ claim that a fresh clone contains those artifacts.
 
 | Reproduction level | Current evidence | Remaining requirement |
 |---|---|---|
-| Verify the submitted file | Local SHA, ID count and receipt agree; scoring response records 231.4438 s | Obtain the artifact and receipt through an appropriately licensed release |
-| Reassemble v12074 from saved inputs | Original recipe: `scripts/today_submissions_20261006.py`; frozen source/input inventory in `data/today_chain_20261006/setup.json` | Package those exact inputs, historical donors, source snapshots and runtime records; validate the release entry point |
+| Verify the submitted file | Local SHA, ID count and receipt agree; scoring response records 230.9387 s | Obtain the artifact and receipt through an appropriately licensed release |
+| Reassemble v12075 from saved inputs | Production recipe: `scripts/e203_trajectory_production.py`; completed candidate and control receipts | Extend and verify the replay entry point for v12075, then package its inputs and runtime records |
 | Retrain the full recipe from raw sources | Component trainers, extractors and stage builders are present | A clean end-to-end run of the current recipe, complete dependency specification, data manifests and documented parity criteria |
 | Run on another period | `src/run_final_any_period.sh` implements an earlier v808-family recipe | Port and validate the current recipe; historic ranking donors cannot simply be reused on new IDs |
 
-The [current-recipe runner](docs/reproduction.md) is implemented and its archived
+The [archived v12074 runner](docs/reproduction.md) is implemented and its archived
 inputs have passed checksum verification. On October7 the completed replay reused
 eleven E203 control models and reproduced all344,841 predictions and the Parquet
-bytes exactly in approximately140.16s, with no additional fits. This verifies the
-archived-component recipe; raw-data rebuilding remains a separate requirement. Start
+bytes of **v12074** exactly in approximately140.16s, with no additional fits.
+An independent replay of the new best v12075 has not yet been verified.
+Raw-data rebuilding remains a separate requirement. Start
 with the read-only archive check:
 
 ```bash
@@ -114,13 +118,13 @@ with the read-only archive check:
 ```
 
 The linked guide distinguishes saved-component replay from fresh model training.
-The older `run_final_any_period.sh` must not be described as reproducing v12074.
-The E203 experimental controller contains an exact-v12074 comparison gate, but
-the presence of that gate alone is not proof that the comparison has passed.
+The older `run_final_any_period.sh` reproduces the v808 family, not the current best.
+E203's exact-v12074 control gate passed before the replacement candidate was built;
+this does not establish independent v12075 replay.
 
 For the existing development environment, use `.venv/bin/python`. Do not recreate
 an environment underneath running jobs. `pyproject.toml` and `uv.lock` describe
-the main Python stack; the E190 neural component additionally uses the recorded
+the main Python stack; the E197/E203 neural component additionally uses the recorded
 PyTorch/ROCm and numerical-embedding environment. A lockfile alone does not cover
 that separate runtime.
 
