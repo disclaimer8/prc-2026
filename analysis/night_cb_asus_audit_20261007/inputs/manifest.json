@@ -1,0 +1,1309 @@
+{
+  "spec": {
+    "coverage": [
+      {
+        "ADEP_mvt": "EDDF",
+        "cb": 74,
+        "cb_missed": 74,
+        "cb_unknown": 0,
+        "flights": 15667,
+        "month": 1,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "EDDF",
+        "cb": 118,
+        "cb_missed": 118,
+        "cb_unknown": 0,
+        "flights": 20650,
+        "month": 7,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "EDDM",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 10953,
+        "month": 1,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "EDDM",
+        "cb": 594,
+        "cb_missed": 524,
+        "cb_unknown": 0,
+        "flights": 15013,
+        "month": 7,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "EGLL",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 19283,
+        "month": 1,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "EGLL",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 20557,
+        "month": 7,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "EHAM",
+        "cb": 1698,
+        "cb_missed": 1698,
+        "cb_unknown": 0,
+        "flights": 16232,
+        "month": 1,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "EHAM",
+        "cb": 23,
+        "cb_missed": 23,
+        "cb_unknown": 0,
+        "flights": 21950,
+        "month": 7,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "LEBL",
+        "cb": 147,
+        "cb_missed": 145,
+        "cb_unknown": 0,
+        "flights": 12201,
+        "month": 1,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "LEBL",
+        "cb": 79,
+        "cb_missed": 40,
+        "cb_unknown": 0,
+        "flights": 17879,
+        "month": 7,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "LEMD",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 16802,
+        "month": 1,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "LEMD",
+        "cb": 295,
+        "cb_missed": 236,
+        "cb_unknown": 0,
+        "flights": 20152,
+        "month": 7,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "LFPG",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 18129,
+        "month": 1,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "LFPG",
+        "cb": 52,
+        "cb_missed": 45,
+        "cb_unknown": 0,
+        "flights": 21743,
+        "month": 7,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "LIRF",
+        "cb": 330,
+        "cb_missed": 223,
+        "cb_unknown": 0,
+        "flights": 11061,
+        "month": 1,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "LIRF",
+        "cb": 76,
+        "cb_missed": 65,
+        "cb_unknown": 0,
+        "flights": 15838,
+        "month": 7,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "LSZH",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 9995,
+        "month": 1,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "LSZH",
+        "cb": 678,
+        "cb_missed": 461,
+        "cb_unknown": 0,
+        "flights": 13155,
+        "month": 7,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "LTFM",
+        "cb": 638,
+        "cb_missed": 438,
+        "cb_unknown": 0,
+        "flights": 22396,
+        "month": 1,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "LTFM",
+        "cb": 809,
+        "cb_missed": 423,
+        "cb_unknown": 0,
+        "flights": 25185,
+        "month": 7,
+        "split": "rank"
+      },
+      {
+        "ADEP_mvt": "EDDF",
+        "cb": 58,
+        "cb_missed": 58,
+        "cb_unknown": 0,
+        "flights": 15496,
+        "month": 1,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDF",
+        "cb": 50,
+        "cb_missed": 50,
+        "cb_unknown": 0,
+        "flights": 15099,
+        "month": 2,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDF",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 17636,
+        "month": 3,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDF",
+        "cb": 122,
+        "cb_missed": 122,
+        "cb_unknown": 0,
+        "flights": 19583,
+        "month": 4,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDF",
+        "cb": 82,
+        "cb_missed": 58,
+        "cb_unknown": 0,
+        "flights": 21130,
+        "month": 5,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDF",
+        "cb": 370,
+        "cb_missed": 350,
+        "cb_unknown": 0,
+        "flights": 20706,
+        "month": 6,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDF",
+        "cb": 594,
+        "cb_missed": 594,
+        "cb_unknown": 0,
+        "flights": 21334,
+        "month": 7,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDF",
+        "cb": 499,
+        "cb_missed": 499,
+        "cb_unknown": 0,
+        "flights": 21468,
+        "month": 8,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDF",
+        "cb": 321,
+        "cb_missed": 321,
+        "cb_unknown": 0,
+        "flights": 21004,
+        "month": 9,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDF",
+        "cb": 414,
+        "cb_missed": 397,
+        "cb_unknown": 0,
+        "flights": 21239,
+        "month": 10,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDF",
+        "cb": 62,
+        "cb_missed": 62,
+        "cb_unknown": 0,
+        "flights": 18122,
+        "month": 11,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDF",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 17324,
+        "month": 12,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDM",
+        "cb": 33,
+        "cb_missed": 33,
+        "cb_unknown": 0,
+        "flights": 11266,
+        "month": 1,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDM",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 10381,
+        "month": 2,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDM",
+        "cb": 55,
+        "cb_missed": 55,
+        "cb_unknown": 0,
+        "flights": 12513,
+        "month": 3,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDM",
+        "cb": 88,
+        "cb_missed": 88,
+        "cb_unknown": 0,
+        "flights": 14326,
+        "month": 4,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDM",
+        "cb": 199,
+        "cb_missed": 199,
+        "cb_unknown": 0,
+        "flights": 15798,
+        "month": 5,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDM",
+        "cb": 465,
+        "cb_missed": 452,
+        "cb_unknown": 0,
+        "flights": 15661,
+        "month": 6,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDM",
+        "cb": 1158,
+        "cb_missed": 1152,
+        "cb_unknown": 0,
+        "flights": 15825,
+        "month": 7,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDM",
+        "cb": 396,
+        "cb_missed": 320,
+        "cb_unknown": 0,
+        "flights": 15562,
+        "month": 8,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDM",
+        "cb": 93,
+        "cb_missed": 87,
+        "cb_unknown": 0,
+        "flights": 15936,
+        "month": 9,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDM",
+        "cb": 35,
+        "cb_missed": 35,
+        "cb_unknown": 0,
+        "flights": 15469,
+        "month": 10,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDM",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 12562,
+        "month": 11,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EDDM",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 12035,
+        "month": 12,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EGLL",
+        "cb": 157,
+        "cb_missed": 140,
+        "cb_unknown": 0,
+        "flights": 19420,
+        "month": 1,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EGLL",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 17956,
+        "month": 2,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EGLL",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 19251,
+        "month": 3,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EGLL",
+        "cb": 17,
+        "cb_missed": 17,
+        "cb_unknown": 0,
+        "flights": 20229,
+        "month": 4,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EGLL",
+        "cb": 17,
+        "cb_missed": 17,
+        "cb_unknown": 0,
+        "flights": 20791,
+        "month": 5,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EGLL",
+        "cb": 34,
+        "cb_missed": 34,
+        "cb_unknown": 0,
+        "flights": 20063,
+        "month": 6,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EGLL",
+        "cb": 512,
+        "cb_missed": 500,
+        "cb_unknown": 0,
+        "flights": 20790,
+        "month": 7,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EGLL",
+        "cb": 251,
+        "cb_missed": 232,
+        "cb_unknown": 0,
+        "flights": 20828,
+        "month": 8,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EGLL",
+        "cb": 461,
+        "cb_missed": 443,
+        "cb_unknown": 0,
+        "flights": 20138,
+        "month": 9,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EGLL",
+        "cb": 56,
+        "cb_missed": 40,
+        "cb_unknown": 0,
+        "flights": 20657,
+        "month": 10,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EGLL",
+        "cb": 165,
+        "cb_missed": 165,
+        "cb_unknown": 0,
+        "flights": 19423,
+        "month": 11,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EGLL",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 20000,
+        "month": 12,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EHAM",
+        "cb": 2359,
+        "cb_missed": 2347,
+        "cb_unknown": 0,
+        "flights": 18460,
+        "month": 1,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EHAM",
+        "cb": 324,
+        "cb_missed": 324,
+        "cb_unknown": 0,
+        "flights": 17852,
+        "month": 2,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EHAM",
+        "cb": 422,
+        "cb_missed": 422,
+        "cb_unknown": 0,
+        "flights": 20224,
+        "month": 3,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EHAM",
+        "cb": 511,
+        "cb_missed": 511,
+        "cb_unknown": 0,
+        "flights": 20935,
+        "month": 4,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EHAM",
+        "cb": 560,
+        "cb_missed": 560,
+        "cb_unknown": 0,
+        "flights": 22173,
+        "month": 5,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EHAM",
+        "cb": 1001,
+        "cb_missed": 1001,
+        "cb_unknown": 0,
+        "flights": 21257,
+        "month": 6,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EHAM",
+        "cb": 2159,
+        "cb_missed": 2140,
+        "cb_unknown": 0,
+        "flights": 22489,
+        "month": 7,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EHAM",
+        "cb": 1672,
+        "cb_missed": 1605,
+        "cb_unknown": 0,
+        "flights": 22621,
+        "month": 8,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EHAM",
+        "cb": 3439,
+        "cb_missed": 3363,
+        "cb_unknown": 0,
+        "flights": 21466,
+        "month": 9,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EHAM",
+        "cb": 3348,
+        "cb_missed": 3347,
+        "cb_unknown": 0,
+        "flights": 21784,
+        "month": 10,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EHAM",
+        "cb": 2471,
+        "cb_missed": 2471,
+        "cb_unknown": 0,
+        "flights": 19232,
+        "month": 11,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "EHAM",
+        "cb": 246,
+        "cb_missed": 246,
+        "cb_unknown": 0,
+        "flights": 19458,
+        "month": 12,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEBL",
+        "cb": 9,
+        "cb_missed": 4,
+        "cb_unknown": 0,
+        "flights": 12234,
+        "month": 1,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEBL",
+        "cb": 6,
+        "cb_missed": 4,
+        "cb_unknown": 0,
+        "flights": 12169,
+        "month": 2,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEBL",
+        "cb": 332,
+        "cb_missed": 270,
+        "cb_unknown": 0,
+        "flights": 14147,
+        "month": 3,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEBL",
+        "cb": 130,
+        "cb_missed": 104,
+        "cb_unknown": 0,
+        "flights": 15374,
+        "month": 4,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEBL",
+        "cb": 693,
+        "cb_missed": 563,
+        "cb_unknown": 0,
+        "flights": 16507,
+        "month": 5,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEBL",
+        "cb": 106,
+        "cb_missed": 106,
+        "cb_unknown": 0,
+        "flights": 16315,
+        "month": 6,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEBL",
+        "cb": 666,
+        "cb_missed": 502,
+        "cb_unknown": 0,
+        "flights": 16752,
+        "month": 7,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEBL",
+        "cb": 562,
+        "cb_missed": 347,
+        "cb_unknown": 0,
+        "flights": 16596,
+        "month": 8,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEBL",
+        "cb": 471,
+        "cb_missed": 244,
+        "cb_unknown": 0,
+        "flights": 16144,
+        "month": 9,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEBL",
+        "cb": 1014,
+        "cb_missed": 780,
+        "cb_unknown": 0,
+        "flights": 16300,
+        "month": 10,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEBL",
+        "cb": 117,
+        "cb_missed": 78,
+        "cb_unknown": 0,
+        "flights": 13332,
+        "month": 11,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEBL",
+        "cb": 356,
+        "cb_missed": 178,
+        "cb_unknown": 0,
+        "flights": 13835,
+        "month": 12,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEMD",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 16510,
+        "month": 1,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEMD",
+        "cb": 21,
+        "cb_missed": 21,
+        "cb_unknown": 0,
+        "flights": 15390,
+        "month": 2,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEMD",
+        "cb": 446,
+        "cb_missed": 290,
+        "cb_unknown": 0,
+        "flights": 17546,
+        "month": 3,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEMD",
+        "cb": 429,
+        "cb_missed": 208,
+        "cb_unknown": 0,
+        "flights": 17348,
+        "month": 4,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEMD",
+        "cb": 1221,
+        "cb_missed": 852,
+        "cb_unknown": 0,
+        "flights": 18180,
+        "month": 5,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEMD",
+        "cb": 1088,
+        "cb_missed": 674,
+        "cb_unknown": 0,
+        "flights": 17992,
+        "month": 6,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEMD",
+        "cb": 402,
+        "cb_missed": 304,
+        "cb_unknown": 0,
+        "flights": 18818,
+        "month": 7,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEMD",
+        "cb": 458,
+        "cb_missed": 362,
+        "cb_unknown": 0,
+        "flights": 18491,
+        "month": 8,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEMD",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 17671,
+        "month": 9,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEMD",
+        "cb": 121,
+        "cb_missed": 121,
+        "cb_unknown": 0,
+        "flights": 18892,
+        "month": 10,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEMD",
+        "cb": 106,
+        "cb_missed": 79,
+        "cb_unknown": 0,
+        "flights": 17419,
+        "month": 11,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LEMD",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 17985,
+        "month": 12,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LFPG",
+        "cb": 173,
+        "cb_missed": 158,
+        "cb_unknown": 0,
+        "flights": 17900,
+        "month": 1,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LFPG",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 16806,
+        "month": 2,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LFPG",
+        "cb": 129,
+        "cb_missed": 129,
+        "cb_unknown": 0,
+        "flights": 19341,
+        "month": 3,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LFPG",
+        "cb": 123,
+        "cb_missed": 99,
+        "cb_unknown": 0,
+        "flights": 20002,
+        "month": 4,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LFPG",
+        "cb": 659,
+        "cb_missed": 501,
+        "cb_unknown": 0,
+        "flights": 20908,
+        "month": 5,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LFPG",
+        "cb": 614,
+        "cb_missed": 561,
+        "cb_unknown": 0,
+        "flights": 20887,
+        "month": 6,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LFPG",
+        "cb": 1928,
+        "cb_missed": 1809,
+        "cb_unknown": 0,
+        "flights": 21712,
+        "month": 7,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LFPG",
+        "cb": 836,
+        "cb_missed": 836,
+        "cb_unknown": 0,
+        "flights": 22081,
+        "month": 8,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LFPG",
+        "cb": 797,
+        "cb_missed": 797,
+        "cb_unknown": 0,
+        "flights": 20682,
+        "month": 9,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LFPG",
+        "cb": 362,
+        "cb_missed": 328,
+        "cb_unknown": 0,
+        "flights": 20809,
+        "month": 10,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LFPG",
+        "cb": 124,
+        "cb_missed": 124,
+        "cb_unknown": 0,
+        "flights": 18646,
+        "month": 11,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LFPG",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 19778,
+        "month": 12,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LIRF",
+        "cb": 36,
+        "cb_missed": 19,
+        "cb_unknown": 0,
+        "flights": 11317,
+        "month": 1,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LIRF",
+        "cb": 110,
+        "cb_missed": 27,
+        "cb_unknown": 0,
+        "flights": 10703,
+        "month": 2,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LIRF",
+        "cb": 19,
+        "cb_missed": 19,
+        "cb_unknown": 0,
+        "flights": 12544,
+        "month": 3,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LIRF",
+        "cb": 31,
+        "cb_missed": 31,
+        "cb_unknown": 0,
+        "flights": 14028,
+        "month": 4,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LIRF",
+        "cb": 110,
+        "cb_missed": 74,
+        "cb_unknown": 0,
+        "flights": 14541,
+        "month": 5,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LIRF",
+        "cb": 104,
+        "cb_missed": 61,
+        "cb_unknown": 0,
+        "flights": 14696,
+        "month": 6,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LIRF",
+        "cb": 240,
+        "cb_missed": 168,
+        "cb_unknown": 0,
+        "flights": 15211,
+        "month": 7,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LIRF",
+        "cb": 94,
+        "cb_missed": 63,
+        "cb_unknown": 0,
+        "flights": 15459,
+        "month": 8,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LIRF",
+        "cb": 59,
+        "cb_missed": 12,
+        "cb_unknown": 0,
+        "flights": 14667,
+        "month": 9,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LIRF",
+        "cb": 11,
+        "cb_missed": 11,
+        "cb_unknown": 0,
+        "flights": 14142,
+        "month": 10,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LIRF",
+        "cb": 118,
+        "cb_missed": 107,
+        "cb_unknown": 0,
+        "flights": 11328,
+        "month": 11,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LIRF",
+        "cb": 145,
+        "cb_missed": 70,
+        "cb_unknown": 0,
+        "flights": 12068,
+        "month": 12,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LSZH",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 9735,
+        "month": 1,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LSZH",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 9048,
+        "month": 2,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LSZH",
+        "cb": 70,
+        "cb_missed": 70,
+        "cb_unknown": 0,
+        "flights": 10449,
+        "month": 3,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LSZH",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 11162,
+        "month": 4,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LSZH",
+        "cb": 364,
+        "cb_missed": 171,
+        "cb_unknown": 0,
+        "flights": 12040,
+        "month": 5,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LSZH",
+        "cb": 466,
+        "cb_missed": 263,
+        "cb_unknown": 0,
+        "flights": 12083,
+        "month": 6,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LSZH",
+        "cb": 841,
+        "cb_missed": 612,
+        "cb_unknown": 0,
+        "flights": 12611,
+        "month": 7,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LSZH",
+        "cb": 371,
+        "cb_missed": 290,
+        "cb_unknown": 0,
+        "flights": 12636,
+        "month": 8,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LSZH",
+        "cb": 178,
+        "cb_missed": 102,
+        "cb_unknown": 0,
+        "flights": 12178,
+        "month": 9,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LSZH",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 12302,
+        "month": 10,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LSZH",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 10078,
+        "month": 11,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LSZH",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 10585,
+        "month": 12,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LTFM",
+        "cb": 57,
+        "cb_missed": 28,
+        "cb_unknown": 0,
+        "flights": 21368,
+        "month": 1,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LTFM",
+        "cb": 338,
+        "cb_missed": 227,
+        "cb_unknown": 0,
+        "flights": 18328,
+        "month": 2,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LTFM",
+        "cb": 112,
+        "cb_missed": 84,
+        "cb_unknown": 0,
+        "flights": 20798,
+        "month": 3,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LTFM",
+        "cb": 279,
+        "cb_missed": 228,
+        "cb_unknown": 0,
+        "flights": 22301,
+        "month": 4,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LTFM",
+        "cb": 269,
+        "cb_missed": 269,
+        "cb_unknown": 0,
+        "flights": 23134,
+        "month": 5,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LTFM",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 23482,
+        "month": 6,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LTFM",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 25171,
+        "month": 7,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LTFM",
+        "cb": 258,
+        "cb_missed": 131,
+        "cb_unknown": 0,
+        "flights": 25440,
+        "month": 8,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LTFM",
+        "cb": 0,
+        "cb_missed": 0,
+        "cb_unknown": 0,
+        "flights": 24064,
+        "month": 9,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LTFM",
+        "cb": 355,
+        "cb_missed": 231,
+        "cb_unknown": 0,
+        "flights": 24080,
+        "month": 10,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LTFM",
+        "cb": 171,
+        "cb_missed": 128,
+        "cb_unknown": 0,
+        "flights": 22190,
+        "month": 11,
+        "split": "train"
+      },
+      {
+        "ADEP_mvt": "LTFM",
+        "cb": 480,
+        "cb_missed": 368,
+        "cb_unknown": 0,
+        "flights": 22609,
+        "month": 12,
+        "split": "train"
+      }
+    ],
+    "expected_row_digest": "89c832f0446906fc03f7c06b715051145e3b1febf3294d7a92ae4a23380edcd4",
+    "files": {
+      "adsb_stage_audit_20261007.py": "b155e36409e08dd3921cc4098d91106cb375272102417b6d1b3c6d766a4726ce",
+      "expected.npz": "b3b45b37f8f2694148e7820d891d9dd61a593c7edd2c4e8477353012741abd5f",
+      "metar/EDDF.csv": "2011bef16061ab93297f4eacadfa0cec3dbd5689ac403459e366f06cfb5caf0f",
+      "metar/EDDM.csv": "22facf707ede728a1b6c5570efe2857cf680e4b540315ad8e419a14c3a0ceb43",
+      "metar/EGLL.csv": "18bb9848589fa33000147f3d08376547b689703e1010fb74e0cbf85d04d60968",
+      "metar/EHAM.csv": "014cb799d87fe395cd19d5b578f4696f1118625528a6b71e26ca788e44171f6a",
+      "metar/LEBL.csv": "60aadeaf148abf55eb1ea49fec4ed1159318919f324c714ceec53a507fdc9b74",
+      "metar/LEMD.csv": "09ff14b17ec40511f53b94d96281f71782f9691080f0dbbac269cb51ca5bf4a5",
+      "metar/LFPG.csv": "a33efb2b506f3d8b4594dea228456ca9fc069244930e2eec5ba6ba452ab58816",
+      "metar/LIRF.csv": "d7d114a069a76731ce93112a68e1118e4f3cb89739efdcf16a0fa27c00f2309d",
+      "metar/LSZH.csv": "2ae0b17853da0af3a3141828c714e98dd413084615fec0a350edc5843033bfc9",
+      "metar/LTFM.csv": "6fa7ba25bf793a87bc1e6cf437df5462ec040c1e3494ea81e9462b2d31e92dfa",
+      "night_cb_asus_audit_20261007.py": "fe5c5e423c693948a59f925c4986eeaa3c9fca0a7736bdcdb315172dd8487bb2",
+      "protocol.md": "446f0f4e64337c5ed6c1c05ad962e8ca6a921d80d61224ca2e26e4e0c7e14a2d",
+      "queries.parquet": "85de489e8d55fc4bbf1477b6c01c2cd587268a64f1e0eccd257e860a9f830a69",
+      "run_asus.ps1": "8124fa7cdfbd1b087d973393c84115bc174eac290b32e126b46e83d5a33e0ceb"
+    },
+    "no_fit": true,
+    "protocol": "E205-ASUS-independent-current-CB-join-metadata-audit-v1",
+    "query_columns": [
+      "MVT_ID_mvt",
+      "split",
+      "month",
+      "ADEP_mvt",
+      "AOBT_3_flt",
+      "MVT_TIME_UTC_mvt",
+      "wx_thunder",
+      "metar_age_min"
+    ],
+    "rows": 2429888,
+    "source_commit": "e22be494a7df45bb72c582f7ae787a73782bbf15",
+    "source_features_sha256": "f061a441f6c97c232d9a403d612471e45020eb4ad56f501c2acfd7220a7d3052",
+    "source_sha256": {
+      "analysis/night_cb_asus_audit_20261007/protocol.md": "446f0f4e64337c5ed6c1c05ad962e8ca6a921d80d61224ca2e26e4e0c7e14a2d",
+      "analysis/night_cb_asus_audit_20261007/run_asus.ps1": "8124fa7cdfbd1b087d973393c84115bc174eac290b32e126b46e83d5a33e0ceb",
+      "scripts/adsb_stage_audit_20261007.py": "b155e36409e08dd3921cc4098d91106cb375272102417b6d1b3c6d766a4726ce",
+      "scripts/night_cb_20261007.py": "7bbeac05f0f58baf4dee45443819328c6bedb6ed6ee18b19967c44d4fa6b84e5",
+      "scripts/night_cb_asus_audit_20261007.py": "fe5c5e423c693948a59f925c4986eeaa3c9fca0a7736bdcdb315172dd8487bb2"
+    },
+    "target_free": true
+  },
+  "spec_sha256": "369a87c7b7c6b66fe3aed60bdabd05883db8392a05b8ff164e4303bfd1c4aeec"
+}

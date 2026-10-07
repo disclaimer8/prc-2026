@@ -1,0 +1,12 @@
+{
+  "affinity": [
+    0,
+    2
+  ],
+  "memory_limit": 6442450944,
+  "pid": 7372,
+  "priority": 16384,
+  "protocol": "E205-ASUS-independent-current-CB-join-metadata-audit-v1",
+  "source_commit": "e22be494a7df45bb72c582f7ae787a73782bbf15",
+  "timeout_seconds": 300
+}
