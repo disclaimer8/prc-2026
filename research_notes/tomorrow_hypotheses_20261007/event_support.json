@@ -1,0 +1,166 @@
+{
+  "ranking_movements": 689534,
+  "by_phase": [
+    {
+      "PHASE_mvt": "DEP",
+      "len": 344841
+    },
+    {
+      "PHASE_mvt": "ARR",
+      "len": 344693
+    }
+  ],
+  "by_airport": [
+    {
+      "ap": "LEBL",
+      "movements": 60053,
+      "departures": 30080,
+      "no_context_within1h": 1,
+      "at_least64": 27607,
+      "n_context_p10_p50_p90": [
+        67.0,
+        111.0,
+        133.0
+      ],
+      "missing_aobt": 442,
+      "missing_runway": 0,
+      "missing_stand": 0
+    },
+    {
+      "ap": "LIRF",
+      "movements": 53738,
+      "departures": 26899,
+      "no_context_within1h": 0,
+      "at_least64": 24076,
+      "n_context_p10_p50_p90": [
+        63.0,
+        96.0,
+        125.0
+      ],
+      "missing_aobt": 383,
+      "missing_runway": 0,
+      "missing_stand": 0
+    },
+    {
+      "ap": "EDDM",
+      "movements": 51901,
+      "departures": 25966,
+      "no_context_within1h": 1,
+      "at_least64": 24290,
+      "n_context_p10_p50_p90": [
+        69.5,
+        102.0,
+        125.0
+      ],
+      "missing_aobt": 238,
+      "missing_runway": 0,
+      "missing_stand": 0
+    },
+    {
+      "ap": "EGLL",
+      "movements": 79677,
+      "departures": 39840,
+      "no_context_within1h": 1,
+      "at_least64": 39184,
+      "n_context_p10_p50_p90": [
+        124.0,
+        156.0,
+        166.0
+      ],
+      "missing_aobt": 248,
+      "missing_runway": 0,
+      "missing_stand": 2
+    },
+    {
+      "ap": "LEMD",
+      "movements": 74047,
+      "departures": 36954,
+      "no_context_within1h": 0,
+      "at_least64": 34739,
+      "n_context_p10_p50_p90": [
+        87.0,
+        133.0,
+        156.0
+      ],
+      "missing_aobt": 238,
+      "missing_runway": 0,
+      "missing_stand": 0
+    },
+    {
+      "ap": "EDDF",
+      "movements": 72570,
+      "departures": 36317,
+      "no_context_within1h": 1,
+      "at_least64": 35665,
+      "n_context_p10_p50_p90": [
+        98.0,
+        144.0,
+        173.0
+      ],
+      "missing_aobt": 421,
+      "missing_runway": 0,
+      "missing_stand": 0
+    },
+    {
+      "ap": "LSZH",
+      "movements": 46273,
+      "departures": 23150,
+      "no_context_within1h": 0,
+      "at_least64": 20898,
+      "n_context_p10_p50_p90": [
+        64.0,
+        92.0,
+        112.0
+      ],
+      "missing_aobt": 659,
+      "missing_runway": 0,
+      "missing_stand": 0
+    },
+    {
+      "ap": "LTFM",
+      "movements": 95345,
+      "departures": 47581,
+      "no_context_within1h": 0,
+      "at_least64": 46985,
+      "n_context_p10_p50_p90": [
+        86.0,
+        149.0,
+        184.0
+      ],
+      "missing_aobt": 721,
+      "missing_runway": 0,
+      "missing_stand": 0
+    },
+    {
+      "ap": "LFPG",
+      "movements": 79605,
+      "departures": 39872,
+      "no_context_within1h": 2,
+      "at_least64": 37333,
+      "n_context_p10_p50_p90": [
+        93.0,
+        143.0,
+        175.0
+      ],
+      "missing_aobt": 734,
+      "missing_runway": 0,
+      "missing_stand": 2
+    },
+    {
+      "ap": "EHAM",
+      "movements": 76325,
+      "departures": 38182,
+      "no_context_within1h": 0,
+      "at_least64": 36625,
+      "n_context_p10_p50_p90": [
+        100.0,
+        157.0,
+        182.0
+      ],
+      "missing_aobt": 1206,
+      "missing_runway": 0,
+      "missing_stand": 0
+    }
+  ],
+  "source_sha256": "9db75e3a56fa09b87aab72e191a53da3fe763d9887ad2b23aea9cde6a6325f86"
+}

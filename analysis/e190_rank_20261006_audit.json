@@ -1,0 +1,49 @@
+{
+  "authoritative_id_order_exact": true,
+  "finite": true,
+  "gpu_peak_bytes": 518034944,
+  "input_spec_sha256": "9c9e67f37c16db24d1e4a40245c28f56fdb206f8a5a85fca5ff47415cb2c9399",
+  "passed": true,
+  "peak_rss_gib": 4.098663330078125,
+  "prediction_sha256": "635fdb10c60e1a5f9ca9a44a3cd8a11cdeb4ff9d75db1c61297fd11169a49339",
+  "ranking_targets_all_null": true,
+  "reg_max": 8704.705388864168,
+  "reg_mean": 1025.275737044893,
+  "reg_min": -1300.339111328125,
+  "registration_commit": "f40a465633cc32bff959c598d27d59f9bdc11cc3",
+  "rows": 344841,
+  "runtime": {
+    "gpu_runtime": {
+      "device": "AMD Radeon RX 7900 XTX",
+      "hip": "7.15.26333",
+      "lightgbm": "4.7.0",
+      "numpy": "2.5.3",
+      "polars": "1.44.2",
+      "python": "3.12.15 (main, Oct  3 2026, 01:03:07) [Clang 22.1.3 ]",
+      "torch": "2.13.0+rocm10.0.0",
+      "total_memory": 25753026560
+    },
+    "source_sha256": "48dfc019d447e0cd225deb8b8145b3efa8b42cde9aa314772d6e234753e1cee1",
+    "version": "0.0.12"
+  },
+  "script_sha256": {
+    "cat_fin1b_oof.py": "67c2b8165b8b22e66d8df0e313f0fd7d41912bc234a7f72961359fc814ff774c",
+    "e190_numeric_embeddings.py": "5e0e214c7dd5446cde9756e93251435f6f44a9aa80fff15a0faa39563d84a65c",
+    "e190_rank_20261006.py": "49d7496a28ddd1f69881e929597f660066919260111e054e44b740ba154282d5",
+    "mlp_gpu_component_oof.py": "25734a17e21517383f4d4930178a7b45796852a1d1a686d13e78355b9bd7a455",
+    "mlp_lowmem_prepare.py": "41ea0bfa0e6d4d276db97f190088bb136b69744703714b778a0792deab216596"
+  },
+  "seconds": 303.4325116260152,
+  "seed_mean_exact": true,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "source_sha256": {
+    "e100_nn_partner.py": "181073a73f9421982c9ccdb81dd281d7881e24f7704b57c5eecac4d2eaaa059a",
+    "features.py": "58e6b783df2123adf261022733e4c602dfd22ff97d2e98e9e03e8c12486a17a2",
+    "target_encoding.py": "ac1b35fdd31139b531ca3760d9172f78112c77ed3ca3e72631100cd252b37d6c",
+    "train.py": "b47dfcaef892bc9dc7dc4a913c3f38c8c94540f4becb4c9bfb66a7fec5d3d706"
+  }
+}

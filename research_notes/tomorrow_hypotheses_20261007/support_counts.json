@@ -1,0 +1,91 @@
+{
+  "train": {
+    "n": 2085047,
+    "NM": 2062623,
+    "at_least_one_admissible_plan": 1472048,
+    "no_plan": 612999,
+    "match_plan_first_label_n": 140979,
+    "multiple_plan_matches": 103953,
+    "label_plan_y_le_3600": 139257,
+    "label_plan_y_le_7200": 140548,
+    "dayshift": 14,
+    "by_ap": [
+      {
+        "ap": "EDDF",
+        "n": 230141,
+        "planned": 0,
+        "multi": 0,
+        "planned_y_le3600": 0
+      },
+      {
+        "ap": "EDDM",
+        "n": 167334,
+        "planned": 13118,
+        "multi": 9768,
+        "planned_y_le3600": 13116
+      },
+      {
+        "ap": "EGLL",
+        "n": 239546,
+        "planned": 20321,
+        "multi": 13344,
+        "planned_y_le3600": 20280
+      },
+      {
+        "ap": "EHAM",
+        "n": 247951,
+        "planned": 0,
+        "multi": 0,
+        "planned_y_le3600": 0
+      },
+      {
+        "ap": "LEBL",
+        "n": 179705,
+        "planned": 16643,
+        "multi": 12388,
+        "planned_y_le3600": 16642
+      },
+      {
+        "ap": "LEMD",
+        "n": 212242,
+        "planned": 16326,
+        "multi": 11943,
+        "planned_y_le3600": 16326
+      },
+      {
+        "ap": "LFPG",
+        "n": 239552,
+        "planned": 16876,
+        "multi": 13091,
+        "planned_y_le3600": 16856
+      },
+      {
+        "ap": "LIRF",
+        "n": 160704,
+        "planned": 38786,
+        "multi": 28249,
+        "planned_y_le3600": 37153
+      },
+      {
+        "ap": "LSZH",
+        "n": 134907,
+        "planned": 0,
+        "multi": 0,
+        "planned_y_le3600": 0
+      },
+      {
+        "ap": "LTFM",
+        "n": 272965,
+        "planned": 18909,
+        "multi": 15170,
+        "planned_y_le3600": 18884
+      }
+    ]
+  },
+  "rank": {
+    "n": 344841,
+    "NM": 339558,
+    "at_least_one_admissible_plan": 247192,
+    "no_plan": 97649
+  }
+}
