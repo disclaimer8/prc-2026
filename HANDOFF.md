@@ -2,6 +2,14 @@
 
 Правила, машины, рецепты — в `AGENTS.md`. Здесь — позиция, что считается и что делать дальше.
 
+## Оперативное обновление 07.10 17:55Z — E203 готов, best воспроизведён
+
+- E20224remainingfitиобаgatePASS,16:19UTC; E203currentpreE81body−0.614049/decided−0.545761с,6/6/trimPASS. Этоselectioninformed/preE81, неfullnested/неboard.
+- E203fullcandidateготов16:45:17UTC, `data/e203_candidate_20261007/candidate.parquet`,SHA90d3cd0...,344841IDs/42protected проверены. **Пока неотправлен**; нуженотдельныйsinglePUTtransport/preflight+регистрацияпередподачей, прежниеOct6uploadwindowsнеиспользовать.
+- Bestv12074точно воспроизведён16:47:44UTC, все344841+bytes/SHAe5c78abсовпали;11моделейE203reuse,0новыхfit. QueuePID83363,E20351200,transport33495завершились. Теперьдокументыreproductionможнообновлять,историческоесодержимое№361сохраненовgit.
+- Сейчас активныхназначенныхPRCрасчётов наMac/Home/Hetz/171/175/ASUSнет. HomeGPU54%вразовомдатчике неотноситькPRC: PRCunitsуже завершены. Новогоопытавочерединет. E201неподниматьсамовольно.
+- Журнал№364–365; [результат](analysis/e203_reproduction_status_20261007.md). Историческиеожиданиянижеустарели.
+
 ## Оперативное обновление 07.10 15:47Z — ASUS отработал, очередь воспроизведения запущена
 
 - **ASUS снова в пуле и реально выполнил ADS-Baudit №360/f2fc896**: PythonPID15204,15:30:38–15:30:47UTC,9.364с,peak1.255GiB,2CPU/hard6GiB. PowerShell7; старыйrebootwatcher безпроцессов/триггеров. Terminal15:34:51: LastTaskResult0,0futuretriggers,0processes. Сейчас ASUS свободен, не утверждать, что он продолжает fit. СтаруюCatqualification не повторять.

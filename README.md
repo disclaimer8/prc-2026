@@ -103,10 +103,10 @@ claim that a fresh clone contains those artifacts.
 | Run on another period | `src/run_final_any_period.sh` implements an earlier v808-family recipe | Port and validate the current recipe; historic ranking donors cannot simply be reused on new IDs |
 
 The [current-recipe runner](docs/reproduction.md) is implemented and its archived
-inputs have passed checksum verification. An October7 background queue is now
-waiting for E203 to exit, so it can reuse the verified control models. Real
-capture/replay is pending; its exact-output result and measured runtime will be
-added after completion. Start
+inputs have passed checksum verification. On October7 the completed replay reused
+eleven E203 control models and reproduced all344,841 predictions and the Parquet
+bytes exactly in approximately140.16s, with no additional fits. This verifies the
+archived-component recipe; raw-data rebuilding remains a separate requirement. Start
 with the read-only archive check:
 
 ```bash

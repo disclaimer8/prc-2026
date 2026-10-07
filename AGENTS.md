@@ -20,7 +20,7 @@
 
 | Что | Где |
 |---|---|
-| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №363) | `HYPOTHESES_LOG.md` |
+| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №365) | `HYPOTHESES_LOG.md` |
 | Бриф для ревью: «Читать первым», раздел 0 (закрытое — не повторять), последние итоги — раздел 21cn | `REVIEW_BRIEF.md`; после правки — `.venv/bin/python review/build_brief.py` |
 | Обходы конкурентов и источников данных | `analysis/competitor_repos/_UPDATE_2026-10-04.md`, `analysis/data_sources_2026-10-04_{fable,sonnet}.md`, `SOURCES.md` |
 | Таблицы признаков (не в git) | `data/features_e106.parquet`, `data/features_e163.parquet`, **`data/features_fin1b.parquet`** (боевая) |
@@ -59,7 +59,11 @@
   Для аудита №289:6CPU/MemoryMax10G/swap0/nice10, один день за раз, только наблюдаемые ADS-B данные.
   Большие Cat/LGB задачи с других машин не дублировать: они требуют больше RAM и имеют собственные фиксированные очереди.
 
-## Актуальное дополнение 07.10 15:47Z
+## Актуальное дополнение 07.10 17:56Z
+
+E202/E203 завершены, гейты PASS; полный E203 candidate готов, пока не отправлен. Bestv12074 воспроизведён побайтно на всех344841строках,11моделейE203 использованы повторно. Mac/homeGPU очереди завершились; не называть их работающими. Сервер/ноуты/ASUS сейчас без назначенныхPRCjobs. Доска проверена18:56WEST:14/236,231.4438,3processedподачи сегодня. Следующий конкурсныйшаг — отдельный singlePUT preflight/registration E203. Детали и ограничения в верхнемHANDOFF/analysis/e203_reproduction_status_20261007.md. E201 отменён; не возобновлять ради занятости.
+
+## Историческое дополнение 07.10 15:47Z
 
 ASUS снова доступен; ADS-Baudit№360 завершён, отрицательныйвердикт№362. Сейчас0worker/0futuretrigger, не считатьобучающимся. PowerShell7/existing.venv-prc сохранены, oldCatqualificationнеповторять. E202 наHomeGPU:2из4remainingpairsготовы,третьяorderedобучается. E203PID51200 ждётфинальныхметрик. Bestreproductionqueue№361/c62911c,PID83363 запущена/waiting_for_e203;4registeredfiles scripts/reproduce_best*.py/docs/reproduction* не менять доexit. E201canceledпо№356,неоживлятьдлянагрузки. СвободныеCPU неозначаютновыйfit. Точныепути/результатывверхнемHANDOFF,docs/reproduction.md. Полныйreplayещёнеизмерен.
 

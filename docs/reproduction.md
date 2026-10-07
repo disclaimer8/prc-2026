@@ -18,9 +18,12 @@ and the final exact comparison only.
 The reproduction wrapper has been implemented. Archive verification passed for
 all 3,464 input files and 207 frozen sources. A synthetic 256-row, three-round
 LightGBM check proved exact save/load replay and rejection of changed labels.
-A real capture/replay run is pending review and scheduling; exact reproduction must not be claimed until its
-`complete.json` reports `exact_predictions: true`. Merely passing `check` proves
-archive integrity, not successful model reproduction.
+The real replay completed on October7 at16:47:44UTC using the eleven verified
+E203 control models. All344,841 predictions and the Parquet bytes match v12074
+exactly; output SHA equals the reference above. Replay took approximately140.16s
+and performed no additional model fits. The completed receipt is
+`data/reproduced_v12074/complete.json`. This proves archived-component reproduction,
+not a raw-data rebuild from a clean clone.
 
 Use the existing qualified Python environment, from the repository root:
 
