@@ -1,0 +1,30 @@
+{
+  "verified": true,
+  "files": 21,
+  "bytes": 12670391689,
+  "manifest_sha256": "8c2f17c3f095df7348bdeebd3e53ff1a0bde14de9bdfc571df09cc04000bf23c",
+  "verified_paths": [
+    "data/features_v7.parquet",
+    "data/features_x_e28.parquet",
+    "data/features_e84.parquet",
+    "data/features_v6.parquet",
+    "data/features_wx.parquet",
+    "data/features_final.parquet",
+    "data/features_v4.parquet",
+    "data/features_v5.parquet",
+    "data/features_e27.parquet",
+    "data/features_x.parquet",
+    "data/features_e82.parquet",
+    "data/features_v9.parquet",
+    "data/features_noaobt_e28.parquet",
+    "data/features_e32.parquet",
+    "data/features_e51.parquet",
+    "data/features_noaobt.parquet",
+    "data/features_e77.parquet",
+    "data/features_v8.parquet",
+    "data/features.parquet",
+    "data/features_e88.parquet",
+    "data/features_e28.parquet"
+  ],
+  "unix": 1791411457.9697406
+}

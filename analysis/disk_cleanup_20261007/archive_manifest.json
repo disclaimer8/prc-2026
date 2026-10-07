@@ -1,0 +1,175 @@
+{
+  "created_at_unix": 1791410931.3908532,
+  "archive_host": "home-pc-lan",
+  "archive_root": "/home/a1/prc-2026/data/mac_cold_archive_20261007",
+  "items": [
+    {
+      "path": "data/features_v7.parquet",
+      "bytes": 509272749,
+      "sha256": "28748d75eb2f308893051fe66776ab654fcad5a9bec8c29744eb4d8869abc6ca",
+      "mtime_ns": 1789315166923025189,
+      "inode": 104530398,
+      "links": 1
+    },
+    {
+      "path": "data/features_x_e28.parquet",
+      "bytes": 656398240,
+      "sha256": "a359c836a9bd5a21c4d5af3225dee5f7cb538cb4bb1a5e38701604275f205140",
+      "mtime_ns": 1789760489199301720,
+      "inode": 107356420,
+      "links": 1
+    },
+    {
+      "path": "data/features_e84.parquet",
+      "bytes": 1139039370,
+      "sha256": "eb1f66620282259997ec1585b1e0f195a8a17c6cd6c6328b80c579a0387d5d69",
+      "mtime_ns": 1789974391961074721,
+      "inode": 108408028,
+      "links": 1
+    },
+    {
+      "path": "data/features_v6.parquet",
+      "bytes": 510887834,
+      "sha256": "bafdede4ff339d82092ab7c383e8e932a02b79d1d364f404907d5f9c67d3a675",
+      "mtime_ns": 1789312590782909434,
+      "inode": 104507715,
+      "links": 1
+    },
+    {
+      "path": "data/features_wx.parquet",
+      "bytes": 256976133,
+      "sha256": "10dd9f776b69a22ea7af612b2999102b9bc69c47826119a3c4027de6d1da238e",
+      "mtime_ns": 1789297443138360035,
+      "inode": 103744219,
+      "links": 1
+    },
+    {
+      "path": "data/features_final.parquet",
+      "bytes": 525153675,
+      "sha256": "ba2a670c1cb58520c49e8c0b0dcca7049a5b19e640c61ddc854cf37a372232a4",
+      "mtime_ns": 1789413370532966318,
+      "inode": 104873722,
+      "links": 1
+    },
+    {
+      "path": "data/features_v4.parquet",
+      "bytes": 287395013,
+      "sha256": "a1b827d7f22e536d00b36cb94c610e3a19df251a64de4fb5ab0cfd47d004364c",
+      "mtime_ns": 1789302616319612273,
+      "inode": 104079890,
+      "links": 1
+    },
+    {
+      "path": "data/features_v5.parquet",
+      "bytes": 501746145,
+      "sha256": "c9e05d3c0c36bc4717299ab2c8c3332a3b6f51acbf23a9572e1705c149412337",
+      "mtime_ns": 1789308560750008061,
+      "inode": 104127438,
+      "links": 1
+    },
+    {
+      "path": "data/features_e27.parquet",
+      "bytes": 555903189,
+      "sha256": "651dc7d4105e2fed60485a68dd8b0336652b0acb4eb333eda523797523001750",
+      "mtime_ns": 1789488065508863392,
+      "inode": 105703923,
+      "links": 1
+    },
+    {
+      "path": "data/features_x.parquet",
+      "bytes": 536341023,
+      "sha256": "e822f31c99e4a6ed9b9bc0565aff994e20b8735ad92258cd609bf57b32f73b5a",
+      "mtime_ns": 1789760487304508382,
+      "inode": 107356415,
+      "links": 1
+    },
+    {
+      "path": "data/features_e82.parquet",
+      "bytes": 952485684,
+      "sha256": "323e9bb53299233fd878afefb3ab77fa79c0078834410a0ba85374dd47097180",
+      "mtime_ns": 1789919394818505620,
+      "inode": 107991122,
+      "links": 1
+    },
+    {
+      "path": "data/features_v9.parquet",
+      "bytes": 525154033,
+      "sha256": "1c61c542ef06b717533443c7a913ce5cc68562623244848b5c2a68c1ae92360c",
+      "mtime_ns": 1789406654389466337,
+      "inode": 104746988,
+      "links": 1
+    },
+    {
+      "path": "data/features_noaobt_e28.parquet",
+      "bytes": 616586429,
+      "sha256": "0805fb2e6810e1eaeb04a5229ac3d403b3bd493794add775f52f5f1d4542a470",
+      "mtime_ns": 1789748918412566150,
+      "inode": 107239269,
+      "links": 1
+    },
+    {
+      "path": "data/features_e32.parquet",
+      "bytes": 687849881,
+      "sha256": "52ed2ef70124a9ec3ef893f9543ac63a70165c588b6e6eb9a9f535b72a78cf8d",
+      "mtime_ns": 1789505531559807023,
+      "inode": 105753305,
+      "links": 2
+    },
+    {
+      "path": "data/features_e51.parquet",
+      "bytes": 663272392,
+      "sha256": "2da7a4ca7eb0803c8c97c189da466aa12ffdc6bddfe7dfc55d0ea5bc59cb3495",
+      "mtime_ns": 1789562287125960407,
+      "inode": 105884863,
+      "links": 1
+    },
+    {
+      "path": "data/features_noaobt.parquet",
+      "bytes": 495407499,
+      "sha256": "b632f826d6d41c6c1ac1e9b4057666ebf64bfd0fdda6cf658b60bd5772f4a9fd",
+      "mtime_ns": 1789748888786421399,
+      "inode": 107239171,
+      "links": 1
+    },
+    {
+      "path": "data/features_e77.parquet",
+      "bytes": 913672618,
+      "sha256": "fccf1abae38198c6f2c78b3677764eee1f603d27461f34fdbfc2accdebde97af",
+      "mtime_ns": 1789891806761763904,
+      "inode": 107829013,
+      "links": 1
+    },
+    {
+      "path": "data/features_v8.parquet",
+      "bytes": 519140503,
+      "sha256": "b6699672f5e9df6f500145a483cd540cab5ffaa0a64d6c5b3b3db6426fd468a6",
+      "mtime_ns": 1789318866789914263,
+      "inode": 104542149,
+      "links": 1
+    },
+    {
+      "path": "data/features.parquet",
+      "bytes": 249515914,
+      "sha256": "b93ceb6dd0c2f59734b25b8836125b2c16672f8c29db081e6ec4af2f3c1fcb36",
+      "mtime_ns": 1789296834360548981,
+      "inode": 103740304,
+      "links": 1
+    },
+    {
+      "path": "data/features_e88.parquet",
+      "bytes": 922982425,
+      "sha256": "5e43203483fdc81719e0a1c9934e16881f0505ac32b8571308bf41536bed9d49",
+      "mtime_ns": 1790026848821388536,
+      "inode": 108610712,
+      "links": 1
+    },
+    {
+      "path": "data/features_e28.parquet",
+      "bytes": 645210940,
+      "sha256": "8fdc5085cfd24df5c85023244e7aeab11f29c693240a5b0f5e64b374ce270c7e",
+      "mtime_ns": 1789493978837802281,
+      "inode": 105713461,
+      "links": 2
+    }
+  ]
+}

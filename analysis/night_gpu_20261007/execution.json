@@ -1,0 +1,23 @@
+{
+  "protocol": "E204-trajectory-multiscale-d1d8-fixed-ordered-control-gated6pair-v1",
+  "registration_commit": "05a1b2eb7adfa5bd1abc47bc03a94095e0a39d4e",
+  "input_spec_sha256": "0a2069717bb5a8a85414c36c03d6284539f6eaf8de4ec967253752e9763fd712",
+  "host": "home-pc-lan",
+  "unit": "prc-e204-night-gpu-20261007.service",
+  "invocation_id": "857a2b245c8546abb05022c57bcf57f2",
+  "controller_pid": 776047,
+  "worker_pid": 776180,
+  "snapshot_utc": "2026-10-07T22:17:01Z",
+  "status_at_snapshot": "active_training",
+  "first_fit_started_utc": "2026-10-07T22:16:31.302369Z",
+  "progress": {"fold": 1, "seed": 0, "epoch": 1, "epochs": 8, "training_mse": 0.546278},
+  "limits": {"cpu_quota_percent": 200, "memory_max_bytes": 12884901888, "memory_swap_max": 0, "torch_allocator_cap_bytes": 21474836480, "nice": 10, "restart": "no", "runtime_max_seconds": 21600, "linger": true},
+  "memory_events_at_snapshot": {"max": 3601, "oom": 0, "oom_kill": 0, "oom_group_kill": 0},
+  "synthetic": {"passed": true, "seconds_per_batch": 0.07426461449358612, "peak_gpu_bytes": 12751216640, "receipt": "analysis/night_gpu_20261007/smoke.json"},
+  "tests": {"mac_repository_suite": {"run": 352, "failed": 0, "skipped": 2}, "mac_targeted_after_packaging_fix": {"run": 7, "failed": 0, "skipped": 1}, "home_qualified_ple": {"run": 7, "failed": 0, "skipped": 0}},
+  "remote_output": "/home/a1/prc-2026/analysis/night_gpu_20261007/run",
+  "journal_command": "journalctl --user -u prc-e204-night-gpu-20261007.service --no-pager",
+  "continuation": "6 screen fits; only screen PASS opens 12 confirmation fits; always independent audit after scientific verdict; technical failure no automatic retry",
+  "ranking_authorized": false,
+  "accepted_for_submission": false
+}
