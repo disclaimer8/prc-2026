@@ -1,0 +1,246 @@
+{
+  "source_sha256": {
+    "data/metar/EDDF.csv": "2011bef16061ab93297f4eacadfa0cec3dbd5689ac403459e366f06cfb5caf0f",
+    "data/metar/EDDM.csv": "22facf707ede728a1b6c5570efe2857cf680e4b540315ad8e419a14c3a0ceb43",
+    "data/metar/EGLL.csv": "18bb9848589fa33000147f3d08376547b689703e1010fb74e0cbf85d04d60968",
+    "data/metar/EHAM.csv": "014cb799d87fe395cd19d5b578f4696f1118625528a6b71e26ca788e44171f6a",
+    "data/metar/LEBL.csv": "60aadeaf148abf55eb1ea49fec4ed1159318919f324c714ceec53a507fdc9b74",
+    "data/metar/LEMD.csv": "09ff14b17ec40511f53b94d96281f71782f9691080f0dbbac269cb51ca5bf4a5",
+    "data/metar/LFPG.csv": "a33efb2b506f3d8b4594dea228456ca9fc069244930e2eec5ba6ba452ab58816",
+    "data/metar/LIRF.csv": "d7d114a069a76731ce93112a68e1118e4f3cb89739efdcf16a0fa27c00f2309d",
+    "data/metar/LTFM.csv": "6fa7ba25bf793a87bc1e6cf437df5462ec040c1e3494ea81e9462b2d31e92dfa",
+    "data/metar/LSZH.csv": "2ae0b17853da0af3a3141828c714e98dd413084615fec0a350edc5843033bfc9"
+  },
+  "counts": [
+    {
+      "airport": "EDDF",
+      "period": "all_local",
+      "reports": 28076,
+      "cloud_cb": 261,
+      "cloud_cb_without_current_flag": 249
+    },
+    {
+      "airport": "EDDF",
+      "period": "training_2025",
+      "reports": 17517,
+      "cloud_cb": 161,
+      "cloud_cb_without_current_flag": 155
+    },
+    {
+      "airport": "EDDF",
+      "period": "ranking_jan_jul_2026",
+      "reports": 2976,
+      "cloud_cb": 11,
+      "cloud_cb_without_current_flag": 11
+    },
+    {
+      "airport": "EDDM",
+      "period": "all_local",
+      "reports": 28078,
+      "cloud_cb": 348,
+      "cloud_cb_without_current_flag": 328
+    },
+    {
+      "airport": "EDDM",
+      "period": "training_2025",
+      "reports": 17518,
+      "cloud_cb": 202,
+      "cloud_cb_without_current_flag": 192
+    },
+    {
+      "airport": "EDDM",
+      "period": "ranking_jan_jul_2026",
+      "reports": 2976,
+      "cloud_cb": 57,
+      "cloud_cb_without_current_flag": 50
+    },
+    {
+      "airport": "EGLL",
+      "period": "all_local",
+      "reports": 28070,
+      "cloud_cb": 125,
+      "cloud_cb_without_current_flag": 111
+    },
+    {
+      "airport": "EGLL",
+      "period": "training_2025",
+      "reports": 17517,
+      "cloud_cb": 88,
+      "cloud_cb_without_current_flag": 83
+    },
+    {
+      "airport": "EGLL",
+      "period": "ranking_jan_jul_2026",
+      "reports": 2975,
+      "cloud_cb": 0,
+      "cloud_cb_without_current_flag": 0
+    },
+    {
+      "airport": "EHAM",
+      "period": "all_local",
+      "reports": 27997,
+      "cloud_cb": 2017,
+      "cloud_cb_without_current_flag": 1959
+    },
+    {
+      "airport": "EHAM",
+      "period": "training_2025",
+      "reports": 17473,
+      "cloud_cb": 1276,
+      "cloud_cb_without_current_flag": 1258
+    },
+    {
+      "airport": "EHAM",
+      "period": "ranking_jan_jul_2026",
+      "reports": 2966,
+      "cloud_cb": 208,
+      "cloud_cb_without_current_flag": 208
+    },
+    {
+      "airport": "LEBL",
+      "period": "all_local",
+      "reports": 28400,
+      "cloud_cb": 673,
+      "cloud_cb_without_current_flag": 429
+    },
+    {
+      "airport": "LEBL",
+      "period": "training_2025",
+      "reports": 17775,
+      "cloud_cb": 544,
+      "cloud_cb_without_current_flag": 328
+    },
+    {
+      "airport": "LEBL",
+      "period": "ranking_jan_jul_2026",
+      "reports": 2993,
+      "cloud_cb": 45,
+      "cloud_cb_without_current_flag": 29
+    },
+    {
+      "airport": "LEMD",
+      "period": "all_local",
+      "reports": 28494,
+      "cloud_cb": 631,
+      "cloud_cb_without_current_flag": 371
+    },
+    {
+      "airport": "LEMD",
+      "period": "training_2025",
+      "reports": 17767,
+      "cloud_cb": 405,
+      "cloud_cb_without_current_flag": 243
+    },
+    {
+      "airport": "LEMD",
+      "period": "ranking_jan_jul_2026",
+      "reports": 3042,
+      "cloud_cb": 20,
+      "cloud_cb_without_current_flag": 16
+    },
+    {
+      "airport": "LFPG",
+      "period": "all_local",
+      "reports": 28090,
+      "cloud_cb": 623,
+      "cloud_cb_without_current_flag": 570
+    },
+    {
+      "airport": "LFPG",
+      "period": "training_2025",
+      "reports": 17537,
+      "cloud_cb": 341,
+      "cloud_cb_without_current_flag": 307
+    },
+    {
+      "airport": "LFPG",
+      "period": "ranking_jan_jul_2026",
+      "reports": 2974,
+      "cloud_cb": 13,
+      "cloud_cb_without_current_flag": 12
+    },
+    {
+      "airport": "LIRF",
+      "period": "all_local",
+      "reports": 27989,
+      "cloud_cb": 217,
+      "cloud_cb_without_current_flag": 123
+    },
+    {
+      "airport": "LIRF",
+      "period": "training_2025",
+      "reports": 17465,
+      "cloud_cb": 111,
+      "cloud_cb_without_current_flag": 61
+    },
+    {
+      "airport": "LIRF",
+      "period": "ranking_jan_jul_2026",
+      "reports": 2969,
+      "cloud_cb": 49,
+      "cloud_cb_without_current_flag": 32
+    },
+    {
+      "airport": "LTFM",
+      "period": "all_local",
+      "reports": 28043,
+      "cloud_cb": 287,
+      "cloud_cb_without_current_flag": 202
+    },
+    {
+      "airport": "LTFM",
+      "period": "training_2025",
+      "reports": 17514,
+      "cloud_cb": 147,
+      "cloud_cb_without_current_flag": 105
+    },
+    {
+      "airport": "LTFM",
+      "period": "ranking_jan_jul_2026",
+      "reports": 2970,
+      "cloud_cb": 84,
+      "cloud_cb_without_current_flag": 51
+    },
+    {
+      "airport": "LSZH",
+      "period": "all_local",
+      "reports": 28071,
+      "cloud_cb": 411,
+      "cloud_cb_without_current_flag": 266
+    },
+    {
+      "airport": "LSZH",
+      "period": "training_2025",
+      "reports": 17519,
+      "cloud_cb": 233,
+      "cloud_cb_without_current_flag": 148
+    },
+    {
+      "airport": "LSZH",
+      "period": "ranking_jan_jul_2026",
+      "reports": 2974,
+      "cloud_cb": 70,
+      "cloud_cb_without_current_flag": 43
+    }
+  ],
+  "totals": {
+    "all_local": {
+      "reports": 281308,
+      "cloud_cb": 5593,
+      "cloud_cb_without_current_flag": 4608
+    },
+    "training_2025": {
+      "reports": 175602,
+      "cloud_cb": 3508,
+      "cloud_cb_without_current_flag": 2880
+    },
+    "ranking_jan_jul_2026": {
+      "reports": 29815,
+      "cloud_cb": 557,
+      "cloud_cb_without_current_flag": 452
+    }
+  },
+  "cloud_regex": "\\b(?:FEW|SCT|BKN|OVC)\\d{3}CB\\b",
+  "current_regex": "TS|CB",
+  "meaning": "Raw METAR records, including source duplicates if present; not joined flights or measured model gain."
+}

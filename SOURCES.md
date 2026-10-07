@@ -1,230 +1,125 @@
-# Sources
+# Data sources, licences and attribution
 
-Everything this solution reads or was informed by, with its licence and what it was used for.
+This register describes the **v12074 submitted recipe**, with primary public
+source pages checked on **7 October 2026**. The code licence, a data licence and
+an organiser's permission to use data in this challenge are different things.
+We record them separately. Public downloadability alone is not an open licence.
 
-Two reasons this file exists. The prize conditions of the PRC Data Challenge 2026 (`eligibility.html`) require that
-any external dataset be open and documented, and this repository becomes public under GPLv3 on 9 October 2026 —
-so the licence column has to survive a reader who checks it. The second reason is the paper: every source that
-shaped a decision is listed here with the verdict it earned, including the ones that were measured and dropped,
-because a source that cost a day and produced nothing is worth recording exactly once.
+The [challenge eligibility page](https://prc-data-challenge-2026.netlify.app/eligibility.html)
+requires documented, openly accessible/usable external data, openly available
+additional datasets, GPLv3 source code and sufficient reproduction documentation.
+The dataset-specific evidence below should be read alongside those conditions.
 
-Last updated 20 September 2026.
+## Sources in v12074
 
----
-
-## 1. Data used in the submitted solution
-
-| Source | What it gives | Licence | Where it enters |
-|---|---|---|---|
-| **PRC Data Challenge 2026 datasets** — EUROCONTROL Performance Review Commission, supported by the OpenSky Network | 12 monthly parquet files of 2025 airport movements joined to Network Manager flight records (4.17 M movements, 2.09 M departures) plus `ranking.parquet` for January and July 2026 | Provided to participants under the challenge terms; not an external dataset | The whole pipeline. `src/features.py` |
-| **adsb.lol `globe_history`** — community ADS-B aggregator | Aircraft positions within 7 km of the aerodrome and below 2500 ft, ground and airborne, per day per airframe. Held locally as **364 days of 2025** and **62 days of 2026** (January and July in full) | **ODbL 1.0** | The second-stage corrections only, never the base model: `src/adsb_offblock_v2.py`, `adsb_offblock_v5.py`, `adsb_visit.py`, `e69_visit_merge.py`, consumed by stages E25, E30, E36, E64, E65 |
-| **OpenStreetMap**, via the Overpass API | Stand, gate, holding position, runway, taxiway, stopway and apron geometry for the 10 airports (11 extracts) | **ODbL 1.0**, © OpenStreetMap contributors | `src/geometry.py` (stand → runway distance, bearing offset, `geo_*` features), `src/taxi_route.py` (taxiway graph), and the stand anchor of every ADS-B stage |
-| **Iowa Environmental Mesonet ASOS archive** (Iowa State University) | Hourly-ish METAR observations for the 10 airports: temperature, dew point, wind, gust, visibility, ceiling, present weather | **Public domain** — "The materials found on this website are in the public domain and may be used freely by anyone for any lawful purpose." Attribution requested, not required | `src/features.py:load_metar` → 15 weather features in the base model (`wx_temp`, `wx_vis_mi`, `wx_ceiling_ft`, `wx_fog`, `wx_freezing`, `wx_snow`, `wx_icing`, `metar_age_min`, …) |
-
-Nothing else is read. In particular the solution uses no commercial feed, no subscription archive and no dataset
-whose terms restrict use to non-commercial research.
-
-**Attribution block for the submission and the paper:**
-
-> Data: EUROCONTROL Performance Review Commission Data Challenge 2026, supported by the OpenSky Network.
-> Ground and airborne ADS-B observations © adsb.lol contributors, ODbL 1.0.
-> Airport surface geometry © OpenStreetMap contributors, ODbL 1.0.
-> METAR observations from the Iowa Environmental Mesonet, Iowa State University (public domain).
-
----
-
-## 2. Data evaluated and not used
-
-The criterion is the organiser's own, given in the challenge Discord on 17 September 2026 in answer to a
-participant asking about data carrying a non-commercial clause: *"if their license applies as open data, ok"*.
-So what decides is the openness of the licence, not whether the source is documented.
-
-The hole being filled in every case below is the same: ground coverage at **LFPG, LIRF and LTFM for January and
-July 2026**. Measured coverage of the ranking set, share of departures with a usable ground segment:
-LFPG 0.210 / 0.251, LIRF 0.785 / 0.062, LTFM 0.000 / 0.003 (January / July), against 0.75–0.96 elsewhere.
-
-| Source | Why not | Checked |
+| Source and primary page | Contribution to the submitted chain | Licence or terms evidence |
 |---|---|---|
-| **OpenSky Network** (state vectors, Trino/MinIO) | Terms restrict use to non-commercial research — not an open licence. Participants also report Trino access is disallowed for the challenge | 16.09 |
-| **ADS-B Exchange** archive | Commercial subscription. Its free sample proves the observations exist — in the same fourteen instants of 01.07.2026 it shows 52 aircraft on the ground at LIRF, 36 at LTFM, 14 at LFPG, where we have 0 and 0 for whole days — but the archive itself is closed by the rules | 18.09 |
-| **Airplanes.Live** | **Two corrections, a day apart, in opposite directions — and the line ends closed.** On 17.09 we recorded that they keep no archive; that was wrong, and the correction stands: a public, unauthenticated historical archive does exist at `globe.airplanes.live/globe_history/YYYY/MM/DD/traces/<last 2 of hex>/trace_full_<hex>.json`, verified by direct fetch (HTTP 200; one 2026-07-01 trace carried 6465 points of which 825 were on the ground, with registration and ICAO type at the root), and retention reaches back past 2025-07-01, so both ranking months are inside it. On 19.09 we measured the archive itself rather than its existence, and **the hole we need it for is empty in it too**: at LIRF the share of airframes with any ground point runs 87.5 % on 15 January but 26.7 % on 8 July and 5.0 % on 20 July, and the share with 30 or more ground points falls from 47.5 % to **zero on both July days** (best airframe: 244 points in January, 20 and 3 in July), against a median of 369 ground points per airframe at a working airport. The diagnosis is physical, not archival: in July 96.7 % of airframes are tracked down to 500 ft or below with a median minimum altitude of 225–250 ft, and the track stops there — a clean altitude floor, not thinning, i.e. the messages were never received and a raw Beast feed would carry the same emptiness. No separate MLAT branch (`globe_history_mlat` → 404). Their January is richer than ours, but January is not the hole: our own LIRF coverage there is 0.785. **The licence question was therefore never reached** — it remains unanswered (the Terms of Use page renders an empty body), but answering it would buy nothing | 18.09, measured and closed 19.09 |
-| **adsb.fi**, **ADSBHub**, **Planespotters Radar** | Live state only, no archive | 16–18.09 |
-| **ADSBiq** (Sky Power Services) | A network that did not exist at our earlier sweep. Explicit **ODbL 1.0**, daily Parquet on GitHub Releases, no account — it passes the licence bar outright. Fails the other two: data begins 2026-06-28, so January is absent, and coverage at our airports measured effectively zero (LFPG 0 rows, LIRF 60 rows and no ground points, LTFM 0, on 2026-07-01) | 18.09 |
-| **juliangehring/adsb-core** (Hugging Face, тег CC0) | Найден 22.09: 105,8 млн точек в сутки, 01.01.2026–29.08.2026 плюс 2023–2025, есть `on_ground`. **Внутри радиуса 7 км оказался строгим подмножеством нашего архива:** 01.07.2026 LFPG наши 451 борта на земле против 418, новых **0**; LIRF 3 против 0; LTFM 35 против 1; EHAM 601 против 468. Первое сравнение показывало +128 бортов в LFPG — артефакт рамки: квадрат ±0,15° это ~16 км против наших 7 км, разница была подлетающими бортами. Плюс карточка датасета пуста: происхождение не задокументировано, а тег CC0 поверх данных, которые почти наверняка производны от ODbL-архива, сам по себе прав не даёт | 22.09 |
-| adsb.lol `mlatonly-0` release | The half of the adsb.lol archive we do not ingest. Scanned in full for 2026-07-01, 38 925 traces: **zero ground points at all three airports**. A cheap negative — no reason to ingest it. **Январь добран 22.09** (`v2026.01.15-planes-readsb-mlatonly-0`, весь день): 1 485 точек, 156 наземных, и все в EHAM 102 / EDDF 44 / EDDM 7 / LEMD 2 / LEBL 1; **в LFPG, LIRF и LTFM — ни одной точки вообще**. Механизм объясняет симметрию: MLAT считается по разнице времён у **четырёх и более** приёмников, слышащих один и тот же ответ Mode S, то есть требует больше приёмников, чем один ADS-B-приём. Где пусто по ADS-B на земле, там MLAT пуст тем более, и добавить его нечем: вопрос не в ветке архива, а в отсутствии приёмников вокруг Парижа, Рима и Стамбула | 18.09; январь добран 22.09 |
-| **OPDI v0.0.2** (EUROCONTROL PRU + OpenSky) | Downloadable without registration and carrying genuine surface events from Jan 2022 to Jul 2026. Fails on licence and on derivatives: the only binding text is EUROCONTROL's disclaimer — *"provided that EUROCONTROL is mentioned as the source and it is not used for commercial purposes … may not be modified without prior written permission"*. The MIT licence on the OPDI GitHub covers the pipeline code, not the data | 18.09 |
-| **hpradar** | Eight receivers around Haiphong, Vietnam — none of our airports — and no archive: `globe.hpradar.com/globe_history/…` returns the page shell, not a listing | 18.09 |
-| **Virtual Radar** | Software, not a network; the "regular data dump" listed on mode-s.org turns out to be SDM reference tables (routes, airlines, types), not trajectories | 18.09 |
-| **adsb-archive.com** | Dead domain; no trajectory dumps in the Internet Archive either | 18.09 |
-| **FlyItalyADSB** (regional network covering Rome) | Answered directly: *"we switched systems and no longer have July coverage"* — the central archive was lost in an infrastructure migration, which is exactly what the LIRF collapse from 0.785 in January to 0.062 in July measures. Individual feeders keeping local ring buffers have not been asked | 17–18.09 |
-| **EUROCONTROL ADRR** (Aviation Data Repository for Research) | Fails twice: coverage is 2015–2024 and only four months per year, so January and July 2026 are not in it at all; and access is via OneSky under Terms of Use signed per user, "open for all R&D use" — research-only, not an open licence | 18.09 |
-| **Open portals and public APIs of the three blind airports** (Groupe ADP, Aeroporti di Roma, iGA Istanbul) | Live flight status only; no historical per-flight export. Everything offering history for those airports (FlightLabs, FR24, FlightAware, FlightStats) is a commercial aggregator | 18.09 |
-| **Schiphol Flight API** | Does expose `actualOffBlockTime`, but only for EHAM, where ground coverage is already 0.93–0.96. No value against the hole | 18.09 |
-| **ERAU and ROSA P repositories** | Hold US documents and US airports; no per-flight data for the ten European airports | 16–18.09 |
+| [PRC Data Challenge 2026](https://prc-data-challenge-2026.netlify.app/) — EUROCONTROL PRC, supported by the OpenSky Network | 2025 training movements/NM records and January/July 2026 ranking data; ten airports | Participant-provided challenge data. Access is through the organiser's distribution. We do not assign these files the repository's GPL licence or claim an independently verified redistribution grant. |
+| adsb.lol [2025](https://github.com/adsblol/globe_history_2025) and [2026](https://github.com/adsblol/globe_history_2026) `globe_history` | Aircraft surface observations used for movement onset, stand/track geometry, visits and correction stages | The 2026 repository explicitly places the database under [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/). Credit adsb.lol and contributors; preserve applicable database attribution/share-alike obligations. Its separate CC0 file is not a reason to relabel the database CC0. |
+| [OpenStreetMap](https://www.openstreetmap.org/copyright), retrieved through Overpass | Stand, runway and taxiway geometry; distances, bearings, routing and ADS-B stand anchors | [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/), © OpenStreetMap contributors. The primary copyright page requires attribution and identification of the licence. |
+| [Iowa Environmental Mesonet ASOS/METAR archive](https://mesonet.agron.iastate.edu/request/download.phtml), Iowa State University | Temperature, wind, visibility, ceiling and weather indicators | The [IEM usage statement](https://mesonet.agron.iastate.edu/disclaimer.php) identifies its website materials as public domain and appreciates attribution. |
+| [EUROCONTROL Aviation Intelligence Portal](https://ansperformance.eu/data/) | Destination-airport daily arrival ATFM delay aggregates, joined by destination and UTC take-off date; E163 columns retained in FIN1b | The linked [portal disclaimer](https://ansperformance.eu/about/disclaimer/) allows copying with attribution for non-commercial purposes and requires written permission for modification. This is not evidence of a general open-data licence. Recorded organiser guidance permits use of published dashboard figures/aggregates in the challenge; scope is described below. |
+| [Open Performance Data Initiative v0.0.2](https://www.opdi.aero/data.html), EUROCONTROL PRU and OpenSky Network | Matched exit-parking and taxiway events for the **LSZH-only** final correction, blended at 50% | The data page links the EUROCONTROL portal disclaimer and does not identify a separate dataset licence in the material inspected. Challenge permission is recorded below. The MIT licence of the [OPDI processing software](https://github.com/euctrl-pru/OPDI) must not be attributed to its output datasets. |
 
-| **TartanAviation** (CMU AirLab) | Terminal-area ADS-B, 3.1 M images and 3 374 h of ATC speech — but at two regional airports near Pittsburgh (KAGC, KBTP), 2020-2023. Wrong airports, wrong years | 21.09 |
-| **Contrails.org API** (Breakthrough Energy, data by Spire) | A common ADS-B source for contrail research. Fails the licence bar in the same words as OpenSky and OPDI: "solely for research or other non-commercial purposes", "may not sublicense, provide or redistribute". Contrail work is cruise altitude; ground movements are not its subject | 21.09 |
-| **Zenodo / IEEE DataPort ADS-B anomaly sets** | What is actually published are derived aggregates **from OpenSky** (117 M aircraft-hour aggregates over 2025) and low-altitude surveillance sets: in-flight kinematics, not surface tracks, and they inherit OpenSky's licence | 21.09 |
-| **FlightAware FlightFeeder** | 43 000+ receivers feeding a commercial platform; the data is FlightAware's product, not an open dataset | 21.09 |
-| **Derad Network** | A DePIN marketplace by construction: miners supply, third parties buy. No published licence, no documented historical archive | 21.09 |
-| **Apify actors** for OpenSky / Planefinder / ADS-B Exchange | A way to obtain data whose terms we already rejected, not a way to acquire rights to it, and scraping breaches those terms besides | 21.09 |
-| **SkyLink API** | Commercial from $18.59/mo with a 365-day archive; resells the same feeder networks | 21.09 |
+Both adsb.lol year repositories explicitly identify the database as ODbL 1.0.
+The 7 October source check independently confirms the displayed adsb.lol, OSM,
+IEM and EUROCONTROL portal statements. It does not certify that all data and
+pretrained-model redistribution questions have been resolved.
 
-**Two different walls, and they must not be confused** (corrected 21.09; the earlier wording here said the
-constraint was reception everywhere, which is false for one source).
+## Challenge-specific clarifications
 
-*Reception* is the wall for the community archives. At adsb.lol and Airplanes.Live July at Rome is physically
-empty: 96.7 % of tracks stop at or below 500 ft with a median minimum altitude of 225-250 ft -- a clean
-altitude floor rather than thinning, so the messages were never received, and a raw feed would carry the same
-emptiness. Satellite-fed sources (Spire, and the resellers built on it) never see the surface at all.
+The user verified the organiser's Discord clarification that OPDI is permitted
+for this competition. The supplied local extract
+`analysis/review_fable_2026-10-07/discord_2026-09-26_10-05_extract.md`
+records these relevant statements:
 
-*Licence* is the wall for exactly one source that **does hold the data we need**: ADS-B Exchange. Its own free
-sample shows 52 aircraft on the ground at LIRF, 36 at LTFM and 14 at LFPG in the same fourteen instants of
-01.07.2026 where we have none -- its receivers heard what the others did not. Their terms, read 21.09:
-"Our data products are delivered as ongoing subscription services with **minimum annual commitments**";
-"ADS-B Exchange does **not offer one-time data extracts or project-based access**"; the free Community API is
-"for personal and **non-commercial** use" and carries live data, not the archive; and the academic-access
-thread on their own forum stands unanswered. Against the organiser's bar -- *"if their license applies as open
-data, ok"* -- that fails on every clause, and money does not fix it: `eligibility.html` requires an external
-dataset to be open and documented, so a subscription archive would make the solution non-compliant and
-irreproducible even if bought.
-
-So the only path left to July at Rome is a **feeder with local logs**, who can state terms we can publish --
-the person, not the platform. A drop point is ready (`adsbdrop` on our Hetzner box, key-only).
-
-### Открытая линия, заведённая 21.09: ACARS/VDL2 вместо ADS-B
-
-Все источники выше — один физический канал: транспондер 1090 МГц, услышанный чьим-то приёмником. Если под
-Фьюмичино в июле землю не слышали, ни один агрегатор ADS-B этого не восстановит. **ACARS — другой канал**
-(VDL Mode 2, 136 МГц, другие приёмники), и сообщение OOOI `Out` формирует сам борт в момент отхода от
-стоянки: это не реконструкция времени отхода из трека, а его прямое измерение — ровно та величина, которой
-нам не хватает и которая в `AOBT_3` дана лишь оценкой.
-
-Кандидат: **airframes.io** — сообщество-агрегатор ACARS / VDL2 / HFDL / SATCOM. Установлено 21.09: «billions
-of decoded ACARS and VDL messages», есть страница исторического поиска с фильтрами по номеру рейса, борту и
-метке, есть REST API по ключу, доступ ярусный — **фидерам бесплатно**, прочим по подписке.
-
-Проверять строго в этом порядке, каждый пункт закрывает линию, если ответ «нет»:
-
-1. **Содержание.** Есть ли в архиве OOOI по европейским перевозчикам в LIRF, LFPG и LTFM за январь и июль
-   2026. OOOI передают не все компании, многие — через SATCOM или в проприетарном формате, набор меток у
-   каждой свой. Без этого остальное неважно.
-2. **Лицензия.** В документации есть раздел «Data Licensing & Attribution», его текст не прочитан. Барьер
-   тот же: *«if their license applies as open data, ok»* плюс требование `eligibility.html` об открытости и
-   документированности.
-3. **Объём.** Годится ли доступ для выборки за два месяца по десяти аэропортам, или API ограничит частотой.
-
-**Закрыто 22.09 на пункте 2 (лицензия).** Страница `docs.airframes.io/api/licensing`: открытой лицензии нет
-(ни CC, ни ODbL); *«Bulk redistribution, resale, or commercial use beyond your access tier requires prior
-arrangement»*; атрибуция обязательна; сами условия помечены *«still being finalized»*. Лицензия
-`github.com/airframesio/data` («non-commercial allowed & encouraged», коммерческое — платно) относится
-к справочникам (аэропорты, борта, станции VDL), а не к архиву сообщений. Та же стена, что у ADS-B Exchange:
-наблюдение есть, открытости нет. Пункт 1 (есть ли OOOI в LIRF/LFPG/LTFM) не проверялся — без лицензии он не нужен.
-
-### Airplanes.Live отвечает: не «нет данных», а «не бесплатно» (22.09, Discord)
-
-Спросили в их `#questions` (аккаунт Disclaimer, 22.09 21:04), есть ли у кого локальные логи по FCO/IST за
-январь и июль 2026. Ответ от `aerspeed` (роль ADSB, то есть из команды сети), дословно:
-
-* *«We've been getting spamming by people demanding we license all our data for free and allow commercial use.
-  But they never want to cover the costs. One guy refused to even cover the egress costs to get him data.»*
-* *«they abusing the free sites to try to scramble and win $5000»*, *«but the competition requires the data
-  license allows anyone to profit commercially from it»*
-* *«OpenSky sucks up millions in EU tax dollars and produces very little, do they not have this?»*
-* про наш пост: *«this is a chatgpt translation .. pretty sure he emailed too»*
-
-**Три вывода.** (1) Барьер здесь не технический и не лицензионный по существу, а **денежный и репутационный**:
-данные у них есть, отдать готовы при возмещении затрат, но не под лицензией, разрешающей коммерческое
-использование всем. (2) **Мы не первые** — участники челленджа уже приходили с той же просьбой, канал выжжен.
-(3) Писать туда надо по-человечески и коротко: машинный текст опознают с первого взгляда.
-
-### Закрыто 22.09: радиообмен «диспетчер — пилот» (предложение Denys)
-
-Механизм безупречен: `push-back approved` по земле — это и есть момент отхода, произнесённый вслух, а не
-восстановленный. Но линия закрыта тремя независимыми стенами, каждой хватило бы отдельно.
-
-1. **Архива нет.** LiveATC хранит записи **30 суток**. Январь и июль 2026 стёрты задолго до нашего вопроса;
-   задним числом их никто не восстановит.
-2. **Наших аэропортов там нет.** Вещание запрещено законом и снято самим LiveATC в Германии (EDDF, EDDM),
-   Италии (LIRF), Испании (LEBL, LEMD), Великобритании (EGLL); все фиды Франции (LFPG) отключены с 14.10.2022
-   из-за спора с авиавластями. Доступны Нидерланды (EHAM) и Швейцария (LSZH) — ровно те два аэропорта, где
-   наземное покрытие ADS-B и так 0,94 и 0,93, то есть где момент отхода у нас уже есть.
-3. **Лицензия.** Условия LiveATC запрещают распространение их потоков и архивов; это не открытые данные.
-
-Открытые корпуса расшифровок ATC существуют (ATCO2, ATCOSIM, UWB-ATCC), но это другие аэропорты и другие годы:
-для наших строк они не дают ни одного наблюдения. Свой приёмник сейчас поставить тоже бессмысленно: январь и
-июль 2026 уже прошли, а ранжирование считается по ним.
-
-Тот же барьер, что у ADS-B Exchange и airframes.io: наблюдение физически существовало, но не сохранено в
-открытом виде за нужные месяцы.
-
-Отдельно отмечено, что **не** годится: A-CDM (закрыт по устройству), DDR2 с DPI (заявка и подписанное
-соглашение), A-SMGCS и наземный радар (нигде не публичны), API аэропортов (у EHAM есть `actualOffBlockTime`,
-но там покрытие и так 0,93–0,96), агрегаты AIU (проверены и отклонены), MLAT-ветка adsb.lol (ноль наземных
-точек).
-
-July at Rome closes for nobody — not adsb.lol, not Airplanes.Live, and FlyItalyADSB say the same about their
-own archive. So the open lead is not a dataset but a person: **which feeder covered Rome and when it went
-silent** (`info@flyitalyadsb.com`), because a local feeder may still hold its own ring buffer; and spotters
-running mobile receivers near Istanbul. A drop point for anything such a feeder might send is already up on
-our Hetzner box (`adsbdrop`, key-only).
-
----
-
-## 3. Literature
-
-The full survey is `analysis/literature_taxi_out_2026-09-14.md`: 30 works on taxi-out prediction with airports,
-data sources, methods, features and reported accuracy for each, plus the EUROCONTROL PRU indicator documentation
-(additional taxi-out and taxi-in, editions 00-04 and 01.00) and the OPDI paper. Reading it is what fixed the
-shape of the feature set, so it is not repeated here.
-
-### Read on 18 September 2026 (US DOT National Transportation Library, ROSA P)
-
-Each of these was read to the point where it could be accepted or closed, and every closure below is a
-measurement rather than an argument. The pattern they establish is worth more than any of them individually:
-the mechanisms they describe are correct and the model has already learned them.
-
-| Work | What it offered | Verdict |
+| Date, UTC | Recorded organiser guidance | Scope used here |
 |---|---|---|
-| Yin, Tian, Wang, Quadrifoglio. **Taxiway aircraft traffic analysis at George Bush Intercontinental Airport**, SWUTC/11/476660-00029-1, 2011. [dot/23699](https://rosap.ntl.bts.gov/view/dot/23699) | Applies Simaiakis's saturation method to IAH (capacity 50 departures/h, saturation at N = 43) and adds a mixed-integer programme for optimal taxi routing | Method already held from the primary source. Its one untried piece — counting the queue **per runway** rather than per airport — measures corr −0.008 against the residual, ceiling 0.03 s against a 0.3 s gate. The MIP half is prescriptive and does not transfer |
-| Yeh, Chandra. **Determining minimal display element requirements for surface map displays**, Volpe Center, 2003. [dot/9961](https://rosap.ntl.bts.gov/view/dot/9961) | 43 pilots rank 88 cockpit-chart elements by need per phase; hold short lines and ILS hold lines top the taxi-out list, i.e. where an aircraft must stop | Suggested crossing an active runway as a feature. Closed before building the route graph: the interaction it would encode (runway × hourly configuration) gives corr +0.76 and +0.558 s under a **random** split but corr −0.04 and −0.97 s under a **month** split. The lesson outlived the idea |
-| Simaiakis, Khadilkar, Balakrishnan, Reynolds, Hansman, Reilly, Urlass. **Demonstration of reduced airport congestion through pushback rate control**, ICAT-2011-2, 2011. [dot/66521](https://rosap.ntl.bts.gov/view/dot/66521) | The BOS field trial and the primary source of the saturation curve; the curve is built in jets only and parameterised by arrivals per 15 min and by the number of props — the **mix** of the queue, not only its size | The arrival side we already hold. The mix measures corr −0.001 and +0.007 on the two temporal halves, sign flipping, because `nb_ap_30_30_mean` already averages the neighbours' observed taxi proxy — the mix in the currency that matters |
-| Badrinath, Li, Balakrishnan. **Integrated surface–airspace model of airport departures**, J. Guidance, Control and Dynamics, 2019, CC BY 3.0. [dot/72571](https://rosap.ntl.bts.gov/view/dot/72571) | A queuing network whose stages are ramp, taxiway, runway **and the terminal airspace** — the departure fix and en-route traffic as their own bottleneck. The first proposal outside the surface-congestion class | Surface decomposition is our E66 (−0.15 s, 6 of 6 folds, short of the gate). Airspace competition measured on a temporal split at −0.005…+0.002 for four keys, including the sharp one (same destination airport). A true departure-fix feature would need the SID assignment, which the challenge data does not carry |
-| Balakrishnan, Deonandan, Simaiakis. **Opportunities for reducing surface emissions through airport surface movement optimization**, ICAT-2008-07, 2008. [dot/62143](https://rosap.ntl.bts.gov/view/dot/62143) | PARTNER Project 21. Its section 6 lists, after Idris et al., the five variables that determine taxi time: runway configuration, weather, downstream restrictions, gate location, and the length of the take-off queue the flight experiences | Closed by comparison rather than measurement: four of the five are in the feature set, and the fifth was measured at zero the same day. Their headline variable — take-offs between own pushback and own take-off — is literally `takeoffs_between_ob_mvt` (`src/features.py:109`). Note the inverted task: they must *predict* the queue because take-off time is unknown to them, while our ranking rows carry `MVT_TIME` |
-| Yeh, Jaworski, Thomas, Kendra, Hiltunen. **Examining the compellingness of electronic low visibility taxi charts**, 2018. [dot/50641](https://rosap.ntl.bts.gov/view/dot/50641) | Simulator study, 20 airline transport pilots, ownship position on iPad charts at 1200/600/300 RVR | Human factors; taxi times are simulator artefacts. Its premise, however, is real and was measured directly rather than waved at the precipitation pocket of 17.09, which does not cover visibility: the mean residual rises monotonically as visibility falls — +1.6 s above 6 miles, +3.3, +7.8, +13.6, and **+20.9 ± 8.7 s below 0.25 miles** (n = 4297), so the model does under-predict taxi in low visibility, in the direction the study implies. It is worth **0.0028 s** of leaderboard equivalent, because the whole sub-mile band is 20 976 of 2 085 047 rows. A real, signed, correctly directed effect that is three thousandths of a second wide |
-| Truitt, Muldoon. **Data Communications Segment 2 airport traffic control tower human-in-the-loop simulation**, FAA William J. Hughes Technical Center, 2010. [dot/71721](https://rosap.ntl.bts.gov/view/dot/71721) | High-fidelity simulation with 16 controllers of digital taxi (D-Taxi) clearances over data link at three equipage levels, measuring controller workload, communications and taxi conformance monitoring | Its abstract carries no numbers, but the body does, and they are testable: holding aircraft on the ramp **25 s longer** bought **94 s less taxi-out**, which the authors explain as a thinner taxiway system. Measured on our data inside bands of `taxiing_at_ob`, the association runs the **other way** and does so monotonically at every congestion level — median taxi-out 725 → 790 → 902 → 1030 s as pushback goes from ahead of plan to over 30 min late, and 961 → 1322 s in the busiest band. The reason is that their 25 s is an **imposed, uniform, exogenous** hold while our delay is **endogenous**: a flight 30 min late off block marks a disrupted rotation, a regulation or de-icing, and those lengthen the taxi themselves. Reading our observational slope as their intervention effect would invert the sign. The model has the observational part already: corr(residual, pushback delay) = −0.005 and −0.001 on the two halves |
-| **Statistical loads analysis of BE-1900D in commuter operation**, DOT/FAA/AR-08/50, 2008. [dot/57613](https://rosap.ntl.bts.gov/view/dot/57613) | A structural-loads study, but its section 4.4.1 gives phase-segmentation rules from recorded flight data over 9043 taxi-out and 7712 taxi-in cases: **taxi-out begins when heading changes by more than 20° in 5 s**, taxi-in ends when the GPS position is unchanged for 30 s, runway turnoff is a heading change above 13.5° | The rule is directly transferable in principle — our extractors decide movement by ground speed alone and never read the `track` column sitting in the same file, and ground speed is noisiest near zero. Measured head to head against known block times on 18 050 departures over 6 days: the heading rule is **worse on both counts** — available on 82.0 % of departures against 99.7 %, and median absolute error 346.7 s against 266.3 s on the rows where both fire. Their rule was built for an onboard recorder sampling a true heading at high rate; ours is a sparse ADS-B `track` field that low ground speed makes unreliable, so it does not carry over. (Both figures judge the bare first-sample rules against each other, not the production extractor, which adds segment analysis, stop detection and stand geometry) |
-| Yeh, Goh, Chase. **Capstone 3 electronic flight bag — airport moving map operational evaluation: human factors report**, Volpe Center, 2013. [dot/10008](https://rosap.ntl.bts.gov/view/dot/10008) | Survey-based evaluation across three airlines; its one quantitative theme is ownship position accuracy — 81 reported position errors out of 1662 responses (4.88 %), pilot-reported rather than measured | Nothing in it transfers, but its theme has a measurable analogue that was worth taking: at block time the aircraft is at its stand, so the distance from the ADS-B position at that instant to the OSM stand centroid bounds the combined error of position, centroid and stand assignment — exactly what the E36 stand-geometry features rest on. Measured on 8040 departures over 6 days: **median 28 m**, P25 15 m, P75 53 m, P90 102 m; within 50 m for 73.5 %, within 100 m for 89.7 %, within 200 m for 94.7 %. By airport the median runs EHAM 20 m, EDDM 21, LSZH 34, EDDF 38, EGLL 41, LIRF 43, LEBL 45, LEMD 46 (LFPG has 2 usable samples and no number). This also validates, after the fact, the 200 m threshold chosen by eye for the E69 merge rule |
-| Lee, Yan. **The impact of snowfall on airport operations and delays**, Washington State University, 2019. [dot/66881](https://rosap.ntl.bts.gov/view/dot/66881) | Estimates the causal effect of snowfall on delay with difference-in-difference-in-differences and nearest-neighbour matching, then costs a heated pavement system for Boston | Their identification strategy is not what we need, but their question is: does snow leave residual the model has not taken? Pooled, the answer looks emphatic — with snow **falling**, the mean residual is **+141.6 ± 15.2 s** over 7470 rows against +1.4 s elsewhere, about 18σ, worth 0.145 s if removed. It does not survive leave-one-out across the snow months: the whole effect is **February alone** (+290.9 s on 3811 rows) against January −27.4, March +14.2, November +8.1, December −42.5. Carrying the offset to a held-out month makes **every** month worse, −0.1415 s in total, and −0.2331 s with a per-airport offset. It is one disruption, not a property of snow |
-| **Flight loads analysis of business jets**, DOT/FAA/TC-16/10, 2016. [dot/57666](https://rosap.ntl.bts.gov/view/dot/57666) | Same family as the BE-1900D study and the same phase rule — "the taxi-out phase started when the heading angle changed by more than 20 degrees while on the ground" — plus taxi statistics for two business-jet types (255 and 405 taxi-out phases, 33.4 and 47.4 hours) | The rule is the one already measured and rejected. The population question it raises was worth taking: business aviation carries a residual of **−18.7 ± 1.6 s** over 44 498 rows, the model over-predicting their taxi, and unlike the snow bias this one **transfers** — leave-one-month-out returns +0.0146 s against an ideal +0.0151 s. Real, transferable and worth a fiftieth of the gate. The same pass turned up something larger and separate: rows whose market segment is null are rows with no Network Manager record (22 424 of 22 470), they are **1.08 % of rows and hold 57.1 % of the squared error**, and that error lives in about 2 200 of them — a tenth of the population. They are not the worst 1 % by error, which they overlap by only 10 % |
-| Truitt, Muldoon. **Comparing the Tower Operations Digital Data System to paper flight progress strips in zero-visibility operations**, FAA William J. Hughes Technical Center, 2009. [dot/71715](https://rosap.ntl.bts.gov/view/dot/71715) | The experiment the 2010 D-Taxi report cites for its exchange rate. Sixteen controllers, zero visibility, no out-the-window view, four conditions crossing electronic flight data with surface surveillance. Its own headline is separate: **with surface surveillance unavailable, ramp waiting ran about 80 s longer per aircraft**, F(1,7) = 54.77 | The exchange rate it supplies was already tested against our data under `dot/71721` and its sign inverts, for the reason given there. Its own finding does not apply: surface surveillance is present at all ten airports in the challenge set, so it is a constant, not a variable. The zero-visibility framing is covered by the visibility measurement under `dot/50641` — a real +20.9 s bias below a quarter mile, worth 0.0028 s |
-| Smith, Zhang. **Strategic decision support for airport capacity planning: discrete-event simulation in a staged queueing framework for airside operations**, 2018. [dot/36280](https://rosap.ntl.bts.gov/view/dot/36280) | A planning simulator rather than a predictor, but it models **pushback tractors as a constrained resource** and quantifies the pushback delay spent waiting for one — a resource none of our features touch, and one whose contention is local to an apron and a handler rather than airport-wide | Measured, because the class closure demands a number and this is the one axis of it not yet tried: departures pushing back in the same stand cluster (`stand_prefix`) within ±5 and ±10 min, and in the 10 min before. Correlation with the residual −0.009…−0.019 on the first half of the year and +0.002…−0.013 on the second. The most consistent of them, pushbacks in the cluster in the 10 minutes before, holds its sign at −0.019 and −0.013 — an order of magnitude below E65 (+0.151) and two below E25 (0.32–0.48). Fifth congestion variant, same answer |
-| Engine Icing Working Group. **Liquid water content for ground operations in icing below −18 °C**, 2015. [dot/57636](https://rosap.ntl.bts.gov/view/dot/57636) | Certification meteorology for engine icing during ground operations in the regime below −18 °C | Closed by a fact about the population rather than by a measurement of effect: **the coldest observation in the whole training set is −12.0 °C**. Rows at or below −10 °C number 71 of 2 084 979 (0.003 %), and below −15 °C there are none at all. The regime the report is about does not occur at these ten airports in this sample, so there is nothing to model. For the temperatures that do occur, icing carries +8.4 ± 1.9 s over 125 335 rows and freezing precipitation +10.8 ± 11.9 s over 3415 |
-| FAA. **Aviation Capacity Enhancement (ACE) Plan**, DOT/FAA/ASC-96-1, 1996. [dot/12657](https://rosap.ntl.bts.gov/view/dot/12657) | A programme review of FAA capacity projects: airport and airspace development, new procedures, emerging technology, US, 1996 | Nothing to model. Its documentary value is the measurement conventions behind the US datasets several works in our survey rely on: ATOMS records a delay only at **15 minutes or more** in taxi-out and does not count taxi-in at all, while ASQP records delays by phase from one minute up. That is worth knowing when reading the ASQP and ASPM studies in the survey, because it explains what their delay counts do and do not contain — not a source for the model, a footnote for the related-work section |
-| FAA Center of Excellence for Alternative Jet Fuels & Environment (ASCENT). **Annual technical report 2021, volume 1**, 2022. [dot/65765](https://rosap.ntl.bts.gov/view/dot/65765) | A compendium of project summaries. The one on surface operations rebuilds the AEDT aircraft performance model for taxi fuel burn from ICAO Databank indices, draws taxi-out distributions for 25 US airports from ASPM, and **clusters those airports into six groups with similar taxi characteristics** to test how far a surface model generalises | The fuel-burn half is not our target. The clustering half is the only transferable idea and it is closed by construction rather than by a run: a cluster label is a deterministic function of `ADEP_mvt`, which the model already holds as a categorical with out-of-fold target encoding, so with ten airports the grouping can only remove information, never add it. The finer direction was measured — E38, one model per airport, won 10.98 s of CV and lost 3.79 s on the leaderboard |
-| BTS. **Significant accomplishments, fiscal year 2008**, 2008. [dot/6318](https://rosap.ntl.bts.gov/view/dot/6318) | An agency report, but it documents the May 2008 final rule that added uniform reporting of **gate returns** — "instances in which a flight returns to the gate one or more times prior to take-off" — along with time away from the gate before a cancellation. We had never named that phenomenon | Worth taking, because it should land in the worst rows: taxi-out over 60 min is 4014 rows carrying 44.37 s of budget. Detected from the tracks as leaving the assigned stand by more than 500 m and coming back within 200 m before take-off: **208 of 36 814 departures (0.57 %)**, median taxi 1207 s against 849 s, and **four times more likely to exceed 60 minutes** (0.48 % against 0.12 %). But the residual bias is +29.2 ± 48.0 s — not significant — and removing it is worth 0.005 s. They also account for about one long-taxi row in fifty, so they are not what fills that pocket. The ADS-B stage already sees the stops |
-| Pankok, Bass, Smith. **A10 — human factors considerations of unmanned aircraft system procedures and control stations**, 2017. [dot/36786](https://rosap.ntl.bts.gov/view/dot/36786) | Minimum control-station standards for fixed-wing unmanned aircraft over 55 lb operated beyond visual line of sight | Not applicable by population: the challenge set is commercial movements at ten European hubs and contains no unmanned aircraft at all |
-| FAA / Volpe Center. **Airport Capacity Enhancement Plan**, first edition, 1986. [dot/9425](https://rosap.ntl.bts.gov/view/dot/9425) | The predecessor of the 1996 ACE plan: 53 FAA projects, problem definition, projected benefits | No model content, as with the 1996 edition, but one passage earns its place as a cautionary precedent. Before 1982 the NAPRS reporting system counted only delays of 30 minutes or more, and **weather was judged responsible for about 80 % of delays**. Lowering the threshold to 15 minutes in 1982 made reported delays "doubled or tripled" and moved the weather share to **60–70 %**. The same operations, cut differently, produced a different account of what causes delay — a published precedent for the point today's two collapses make (a random split against a monthly one; snow at 18σ pooled and nothing transferred) |
-| Volpe Center. **An analysis of runway incursion "hot spots" incidents**, volume 1, 2002. [dot/8743](https://rosap.ntl.bts.gov/view/dot/8743) | ASRS incursion reports from the 20 busiest US airports, January 2000 to June 2002, coded by hot-spot location, incursion type, operator and contributory human factors | Two closures at once, neither of them new work. The events are not applicable by population: runway incursions are a few hundred a year across an entire country and are neither labelled nor separable in the challenge set. The hot-spot idea — that a route passing a mandatory hold point costs time — is the hold-short proposal already measured under `dot/9961`, where the interaction it would encode gives corr −0.04 under a month split and a correction that is actively harmful at −0.97 s |
-| DOT Office of Aviation Consumer Protection. **Air Travel Consumer Report, August 2009**, 2009. [dot/76625](https://rosap.ntl.bts.gov/view/dot/76625) | A monthly consumer publication: on-time performance, mishandled baggage, oversales, complaints, and tables of flights held on the tarmac for 3 and 4 hours or more, by carrier | No model content — US carrier aggregates from 2009 — but one definitional caution worth carrying into the paper. Its own footnote says the tarmac figures "include the expected taxi-in and taxi-out times at origin and destination airports", so a US **tarmac delay is not a taxi-out**: it bundles both ends plus time held at the gate. Any comparison of our long-taxi population against published US tarmac counts would be comparing different quantities |
-| FAA. **AC 150/5360-13, planning and design guidelines for airport terminal facilities**, 1988. [dot/70709](https://rosap.ntl.bts.gov/view/dot/70709) | Design guidance for terminal buildings and their access facilities | Guidance, not data, and the one quantity it could have informed is already measured directly: standard gate spacing and taxilane separations would only bound how well a stand centroid can be placed, and we know that empirically — the ADS-B position at block time sits a median 28 m from the OSM stand centroid, P90 102 m (see `dot/10008`). A measured bound beats a design standard, and our airports are European anyway |
-| Cicero, Feiter, Mohammadi. **Statistical loads data for Cessna 172 aircraft using the Aircraft Cumulative Fatigue System**, 2001. [dot/5178](https://rosap.ntl.bts.gov/view/dot/5178) | A low-cost loads recorder fitted to seven Cessna 172s at Embry-Riddle; statistical summaries over 1168 hours of operational data | Third of the loads family and closed on population, like the icing report: the challenge set is commercial movements at ten European hubs, and single-engine training aircraft are not in it. Its phase segmentation is the same heading rule already measured and rejected under `dot/57613` |
-| Davis, Isaacson, Robinson, denBraven, Lee, Sanford. **Operational test results of the passive Final Approach Spacing Tool**, 1997. [dot/12581](https://rosap.ntl.bts.gov/view/dot/12581) | FAST tested with live traffic at DFW over twenty-five peak rushes: runway and sequence advisories for **arrival** controllers, reporting throughput up more than 13 % with no cost to workload or safety | An intervention on the arrival side, so it closes the same way the MIP, the pushback metering and D-Taxi did: it prescribes what a controller should do, while we reconstruct what happened, and no such tool sits in the 2025–26 European data. Its one mechanism that touches taxi-out — arrivals competing with departures for the runway — we hold directly as observed counts (`rwy_arr_before_5/10/30`, `rwy_arr_around_10`, `rwy_to_next_arr`, `arr_around_ob_*`), and the arrival parameterisation of the saturation curve was already measured under `dot/66521` |
-| Isaacson, Davis, Robinson. **Knowledge-based runway assignment for arrival aircraft in the terminal area**, 1997. [dot/12565](https://rosap.ntl.bts.gov/view/dot/12565) | The companion to `dot/12581`: the runway-assignment half of FAST, a hierarchical rule base weighing performance against controller workload, distilled from over 2000 hours of controller-in-the-loop simulation and tested at the DFW TRACON | Same closure as its companion, with one addition specific to it. Runway assignment is not a thing we predict: `RUNWAY_mvt` is filled for **every** ranking row, so the assignment is given to us as an observation, and the model already holds it as `ap_runway` and as the stand × runway pair on which the whole geometry rests. A rule base for choosing it answers a question our data has already answered |
-| Ball, Barnhart, Dresner et al. (NEXTOR and the Brattle Group). **Total delay impact study: a comprehensive assessment of the costs and impacts of flight delay in the United States**, 2010. [dot/6234](https://rosap.ntl.bts.gov/view/dot/6234) | The canonical US costing of delay: cost to airlines, to passengers, of lost demand, and the indirect effect on the economy, with passenger costs that count missed connections and cancellations rather than only flight-level delay | No model content and no feature. Its value is motivational — what a minute of delay is worth — and for a paper about ten European airports the right citation is EUROCONTROL's own standard inputs for cost-benefit analyses rather than a US figure from 2010. Recorded so the question is settled rather than revisited: we cite it, if at all, for framing, never for a number applied to our airports |
-| BTS. **Transportation Statistics Annual Report 2010**, 2010. [dot/6532](https://rosap.ntl.bts.gov/view/dot/6532) | The national statistics yearbook across every US mode — transit funding, household surveys, commodity flows, hazmat — with a chapter reviewing commercial aviation | Nothing for the model and nothing even for a footnote: a multi-modal yearbook whose aviation chapter is national aggregate. Third document of the reporting-and-accounting class after the ACE plans and the BTS accomplishments report, and the class has yet to yield anything beyond the two definitional cautions already recorded (the 15-minute NAPRS threshold and tarmac delay not being taxi-out) |
-| Five records checked and off topic, recorded so they are not checked twice | EUROCONTROL, **European Action Plan for the Prevention of Runway Incursions**, 2017 ([dot/36137](https://rosap.ntl.bts.gov/view/dot/36137)) — a safety policy plan, no data or model, and the hold-short geometry it governs was measured and closed under `dot/9961`. CAA, **Individual differences among flight instructors in making spot landings**, 1946 ([dot/81185](https://rosap.ntl.bts.gov/view/dot/81185)) — landing technique, eighty years old. FAA, **AC 150/5360-9, terminal facilities at nonhub locations**, 1980 ([dot/70720](https://rosap.ntl.bts.gov/view/dot/70720)) — design guidance for small airports, while ours are ten of Europe's largest. FAA, **Angle-of-attack systems for general aviation airplanes**, 2016 ([dot/57697](https://rosap.ntl.bts.gov/view/dot/57697)) — airborne instrumentation. Zhang, Liu, Yang, **Multi-scale and collaborative disaster evacuation planning**, 2021 ([dot/62609](https://rosap.ntl.bts.gov/view/dot/62609)) — ADS-B and weather in a reinforcement-learning evacuation planner, a different problem entirely | None of the five touches taxi-out prediction |
+| 2026-09-27 07:03 and 15:14 | Published dashboard figures may be cited; affirmative answer about January/July 2026 monthly airport taxi-out aggregates as model input | Evidence of challenge-specific permission for those figures/aggregates. It does not itself grant a blanket licence for every portal dataset. |
+| 2026-10-01 14:39 | Open-data rule applies to a flight's own post-pushback ADS-B trajectory | Supports the retrospective information boundary described in the model documentation. |
+| 2026-10-04 03:51 | OPDI accepted as open for the eligibility question | Challenge-specific acceptance, consistent with the user's confirmation. It is not a separately published general redistribution licence. |
 
-**Class closure recorded from this batch:** congestion features are exhausted for this model. Five independent
-proposals of that shape measured at approximately zero, on top of E51 (taxiway-graph route length, +0.01 s) and
-the rejected stand/runway graph GNN. A new proposal of this shape is worth a run only when it arrives with a
-number, never with a mechanism — the mechanisms are all correct and all already learned.
+These statements are cited from the **user-verified local extract**, read during
+this documentation pass. We did not independently authenticate the Discord
+messages here. The current recipe uses destination **daily ATFM aggregates**,
+not the monthly taxi-out averages named in the September question. Its input and
+the scope of the recorded permission are therefore both disclosed rather than
+silently equated.
 
----
+A reusable public data bundle must retain the applicable source terms and state
+any unresolved permission scope. The main source repository's GPLv3 licence
+covers our code; it does not erase the data restrictions above.
 
-## 4. Software
+## Acquisition, lineage and coverage
 
-Python 3.14 with polars, numpy, LightGBM, CatBoost, scikit-learn and TabPFN-2; `pyproject.toml` and `uv.lock`
-pin the versions. `pyModeS` is not a dependency but is noted here because its `PipeDecoder(surface_ref=…)`
-is the correct way to decode surface position messages should raw Beast dumps ever be obtained: surface CPR
-is ambiguous without a reference point, so a decoder without one silently discards type-code 5–8 messages.
+| Input | Code or artifact record | Reproduction detail |
+|---|---|---|
+| Challenge files | [`src/download.py`](src/download.py) | Organiser-issued access credentials are required; credentials are not part of the repository. |
+| METAR | `data/metar/<ICAO>.csv`; [`src/features.py`](src/features.py) | Preserve the station, date coverage and downloaded snapshot used in feature construction. |
+| OSM geometry | [`analysis/sources/scripts/osm_overpass_download.py`](analysis/sources/scripts/osm_overpass_download.py), [`src/geometry.py`](src/geometry.py) | Preserve the extract and retrieval date; a new live OSM query can produce different geometry. |
+| adsb.lol | [`src/adsb_offblock_v2.py`](src/adsb_offblock_v2.py), [`src/adsb_offblock_v5.py`](src/adsb_offblock_v5.py), [`src/adsb_visit.py`](src/adsb_visit.py), [`src/e69_visit_merge.py`](src/e69_visit_merge.py) | Freeze daily archive/release selection and extraction settings. Coverage is uneven; do not interpret missing reception as no movement. |
+| Destination ATFM | [`src/e163_build_features.py`](src/e163_build_features.py); `data/ext_pru/apt_dly_{2024,2025,2026}.csv` | Joins `ADES_mvt` and the UTC take-off date. Five `dst_*` columns are present in the submitted FIN1b schema. These are retrospective daily aggregates. |
+| OPDI in the submitted correction | [`src/e159_fixed_lineage.json`](src/e159_fixed_lineage.json), [`src/e159_opdi_stage_cv.py`](src/e159_opdi_stage_cv.py), [`src/e159b_apply.py`](src/e159b_apply.py) | The frozen `data/opdi/ev_*.parquet` inputs define v12074. Callsign/airport matching uses a nearby observed event anchor; the correction is applied only at LSZH. |
+| Expanded OPDI research ingestion | [`docs/opdi_full_ingestion.md`](docs/opdi_full_ingestion.md), [`scripts/opdi_full_ingest.py`](scripts/opdi_full_ingest.py) | Separate research data path. It records source URLs, versions, hashes and incomplete windows; its larger inventory is not automatically part of v12074. |
+
+The development directories `data/` and `submissions/` are excluded from Git.
+Listing a local path is not a statement that its contents ship with a fresh clone.
+The release must provide acquisition instructions and permitted artifacts with
+checksums. An unavailable source window must remain an explicit gap, not be
+silently represented as complete coverage.
+
+## Software and pretrained models
+
+Our source code is [GNU GPLv3](LICENSE). Third-party libraries retain their own
+licences. [`pyproject.toml`](pyproject.toml) and [`uv.lock`](uv.lock) describe the
+main Python dependency set (Python ≥3.12), including Polars, NumPy, LightGBM,
+CatBoost and scikit-learn. They do not fully specify the separate E190 GPU
+runtime. Its immutable receipts record PyTorch/ROCm and `rtdl_num_embeddings`
+versions; those must accompany a release environment specification.
+
+The numerical-embedding method is from Yury Gorishniy, Ivan Rubachev and Artem
+Babenko, *On Embeddings for Numerical Features in Tabular Deep Learning*, NeurIPS
+2022. We use their [MIT-licensed implementation](https://github.com/yandex-research/rtdl-num-embeddings)
+(`rtdl_num_embeddings` 0.0.12); the package's version-B preset is documented in its
+[usage guide](https://github.com/yandex-research/rtdl-num-embeddings/blob/main/package/README.md).
+The PLE method is prior work, not a new algorithm claimed by this solution.
+
+The historical LIRF tail used TabPFN pretrained models. Exact v12074 reproduction
+currently requires the saved donor predictions rather than fresh inference.
+Library licensing and pretrained-weight licensing must be identified separately
+if distributing weights or offering a from-scratch tail rebuild. No blanket
+GPL/ODbL claim is made for third-party weights.
+
+## Evaluated sources outside this recipe
+
+Research considered alternative ADS-B archives, additional OPDI features,
+reanalysis weather, ACARS, airport publications and other context. Their presence
+in scripts or survey notes does not establish use in the submitted model. In
+particular, the v12074 source inventory does not include commercial flight feeds,
+OpenSky Trino trajectory queries, Airplanes.Live, ADSB Exchange, ACARS archives
+or ERA5 variables. This is an inventory statement, not a current legal judgment
+on every source considered.
+
+The dated [source survey](analysis/sources/sources.csv),
+[4 October review](analysis/data_sources_2026-10-04_fable.md) and
+[experiment register](HYPOTHESES_LOG.md) retain research context and rejection
+reasons. Historical survey verdicts may be superseded: OPDI, previously listed as
+excluded in this document, is now used in the LSZH stage. The earlier detailed
+literature log is preserved in this file's Git history; its older claims were
+not revalidated as part of this source inventory update.
+
+## Attribution
+
+> Challenge movement and Network Manager data: EUROCONTROL Performance Review
+> Commission Data Challenge 2026, supported by the OpenSky Network.
+>
+> ADS-B observations: adsb.lol and its contributors, including the feeder networks
+> identified by its archive, under ODbL 1.0.
+>
+> Airport geometry: © OpenStreetMap contributors, under ODbL 1.0.
+>
+> METAR observations: Iowa Environmental Mesonet, Iowa State University.
+>
+> Airport ATFM aggregates: EUROCONTROL Performance Review Unit / Aviation
+> Intelligence Portal. OPDI events: EUROCONTROL PRU and the OpenSky Network,
+> Open Performance Data Initiative v0.0.2.

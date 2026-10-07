@@ -1,88 +1,150 @@
-# PRC Data Challenge 2026: taxi-out time (team gentle-igloo)
+# PRC Data Challenge 2026 — gentle-igloo
 
-Open solution for the [EUROCONTROL PRC Data Challenge 2026](https://prc-data-challenge-2026.netlify.app/):
-predict the taxi-out time (take-off minus off-block, seconds) of departures from ten European
-airports. Ranking metric: RMSE on January and July 2026.
+A model for the recorded taxi-out time of departures from ten European airports,
+developed for the [EUROCONTROL PRC Data Challenge 2026](https://prc-data-challenge-2026.netlify.app/).
+The best verified submission documented here is **v12074: 231.4438 seconds RMSE**
+on **344,841 departures in January and July 2026**, processed on 7 October 2026.
+The [result record](analysis/submission_results_20261007.md) links the stored scoring responses.
+This is a result on the challenge ranking set, not an estimate for an unseen year.
 
-Code licence: GNU GPL v3 (see `LICENSE`). External data keep their own licences (below).
+The code is licensed under [GNU GPLv3](LICENSE). Data and pretrained models retain
+their own terms; the [source register](SOURCES.md) distinguishes published licences
+from permissions recorded for this challenge.
 
-## Key observation
+## What the model estimates
 
-Most of the squared error comes from a few hundred departures whose recorded block time is not an
-actual off-block time. For long delays several airports report the **scheduled time** (or another
-planning time: IOBT, LOBT, EOBT), and a handful of records carry a block time dated one day early.
-For those rows the recorded taxi-out equals `MVT_TIME - <planning time>` to the second.
+The target is `TAXITIME_SEC_mvt`, the recorded interval between departure block time
+and take-off. Training uses 2025 departures at EDDF, EDDM, EGLL, EHAM, LEBL, LEMD,
+LFPG, LIRF, LTFM and LSZH. The FIN1b feature table contains 2,085,047 training
+departures. Departure block time and the target are absent from ranking inputs.
 
-The model therefore predicts a mixture:
+This is a **retrospective reconstruction task**. The model uses the known take-off
+time, planning and Network Manager timestamps, surrounding movements, and, where
+available, the flight's own surface trajectory. It is not validated as a forecast
+made before pushback. That information boundary is central to interpreting its result.
 
-* a multiclass LightGBM model estimates the probability of each regime
-  (`regular`, `sched`, `iobt`, `lobt`, `eobt`, `dayshift`);
-* regressors (LightGBM, CatBoost) predict ordinary taxi-out on regular-regime rows;
-* the prediction is `sum_k p_k * candidate_k`, which is the squared-error optimal point estimate.
+## Why a mixture, surface observations and a separate tail
 
-Validation on January and July 2025 (trained on the other 2025 months) shows the classifier is
-well calibrated (predicted probability matches the observed share in every bin).
+Recorded taxi-out is not described well by one ordinary-duration regressor. Some
+training labels closely match take-off minus a planning timestamp; a small number
+are consistent with a one-day displacement. The model treats these as competing
+recording regimes, with probabilities rather than a hard correction of the label.
+These are inferred statistical regimes, not independently verified causes of every record.
 
-## Features (`src/features.py`)
+The regular-duration candidate combines LightGBM, CatBoost and a neural network
+with numerical embeddings. ADS-B corrections then use observed motion and stand
+geometry to improve the estimate where surface observations exist. A gate preserves
+the earlier prediction when the classifier strongly favours a planning-time regime:
+physical movement need not explain a recorded planning-time label.
 
-Every feature is computable for the ranking set, where departure `BLOCK_TIME` and `TAXITIME` are
-blank; departure block times are never used as inputs.
+LIRF departures without a Network Manager match have a sparse, high-impact tail.
+The submitted recipe retains an empirical/TabPFN tail treatment and freezes 42
+historical TabPFN predictions. Their exact values are part of the reproduction
+requirements; rerunning a stochastic model is not evidence of exact reproduction.
 
-* Time differences between take-off and NM / airport planning times (AOBT_3, EOBT_1, LOBT, IOBT, schedule).
-* Airport congestion from the movement table: departures and arrivals in windows around take-off and
-  around the estimated off-block, aircraft taxiing at off-block, runway-level take-off counts, recent
-  arrival taxi-in times (arrival block times are available in the ranking set).
-* Runway configuration per airport-hour inferred from `RUNWAY_mvt` of all movements.
-* Aerodrome geometry from OpenStreetMap: stand position matched on the normalised stand reference,
-  straight distance and bearing offset to the departure runway start (`src/geometry.py`).
-* Weather from METAR (temperature, dew-point spread, wind, visibility, snow/freezing/icing flags).
-* Smoothed out-of-fold target encodings (stand x runway, runway x hour, stand, operator, type, destination)
-  (`src/target_encoding.py`).
+The complete v12074 order is:
 
-After the mixture is assembled, two more stages run: an empirical tail table with TabPFN-2 probabilities
-for LIRF departures without an NM record and a delay of 4 h or more (`src/lirf_table.py`,
-`src/lirf_tabpfn.py`), a logistic correction for the same rows below 4 h (`src/e14_apply.py`), and a
-LightGBM stage over the ADS-B surface features (`src/e36_adsb_stand_geometry.py`).
+1. **FIN1b features and regime mixture:** LightGBM classifier; regular candidate
+   from CatBoost/LightGBM, five raw or timestamp-anchored tree members, and the
+   E190 piecewise-linear-embedding neural member at weight 0.25.
+2. **Restricted adjustments:** movement-only member for rows with missing LOBT outside
+   LIRF (E185), NM matching-window rules (E167), and the 42 frozen tail predictions.
+3. **Surface corrections:** E141 and E64, with E188 replacing the applicable
+   LIRF/NM part of E64; all use the registered coverage and feature rules.
+4. **Final controls:** planning-regime gate E152, historical prediction blend E81,
+   LOBT edge adjustment/clipping, restoration of the 42 tail predictions, then
+   a 50% blend of the LSZH-only OPDI correction.
 
-## Reproduce
+The [model-design document](docs/model-design.md) gives the equations, weights,
+stage dependencies and reasons for these choices. Experiment names such as E190
+are stable identifiers in [HYPOTHESES_LOG.md](HYPOTHESES_LOG.md).
 
-```bash
-uv sync
-uv run python src/download.py                          # challenge data, needs PRC_ACCESS_KEY/PRC_SECRET_KEY in .env
-# METAR: see "External data" below, saved as data/metar/<ICAO>.csv
-# OSM extracts: analysis/sources/scripts/osm_overpass_download.py
-FEATURES_OUT=data/features_v4.parquet uv run python src/features.py
-FEATURES=data/features_v4.parquet uv run python src/train.py validate
-FEATURES=data/features_v4.parquet uv run python src/train.py submit <N>
+## Validation and limitations
+
+Our main cross-validation scheme holds out six pairs of 2025 months:
+January/July, February/August, through June/December. Selected base components use
+an additional inner month split for round selection. We inspect paired squared-error
+changes, month consistency, the ordinary-duration population and the extreme tail.
+An artifact audit checks IDs, targets, months, finite predictions and provenance.
+
+**There is no complete, fully nested cross-validation result for the exact v12074
+chain.** The six-pair E195 analysis reaches E152, before E81 and the remaining
+tail; it also inherits historical upstream out-of-fold predictions. Its E190+E188
+change was −0.347029 s on the defined `decided` subset and −0.371560 s on the
+`body` subset. Those figures are not full-chain or all-row RMSE improvements.
+See [validation definitions, results and negative experiments](docs/validation.md).
+
+The small leaderboard difference between v12070 and v12074 is **0.0011 s**.
+It does not establish a transferable benefit for E188. More broadly, repeated
+development against the same ranking period creates selection risk. Surface
+reception varies by airport and year, and a few extreme labels can dominate RMSE.
+We do not claim that a diagnostic residual decomposition proves an irreducible
+error floor.
+
+## Reproduction status
+
+The submitted artifact is `submissions/gentle-igloo_v12074.parquet`:
+
+```text
+SHA256 e5c78ab061492b69fe72d4a46d2e286f7a2f6b3129ebf2ae4a34731bb662374b
+344841 unique MVT_ID_mvt values; output TAXITIME_SEC_mvt in seconds
+recipe registration cd3598e15a25db9bd6a401d38b4ad9bee6c2e862
 ```
 
-## External data
+Large data, fitted models and submission files are excluded from Git. Paths in
+the following table describe the development artifact layout; they are not a
+claim that a fresh clone contains those artifacts.
 
-| Source | Use | Licence |
+| Reproduction level | Current evidence | Remaining requirement |
 |---|---|---|
-| [adsb.lol globe_history](https://github.com/adsblol/globe_history_2026) (feeds of adsb.lol, FlyItalyADSB and TheAirTraffic) | surface tracks: when the aircraft was seen standing, when it first moved, path and stops before take-off — a second-stage correction of the prediction | ODbL 1.0 |
-| Iowa Environmental Mesonet ASOS/METAR archive, Iowa State University | weather features | freely usable, attribution requested |
-| OpenStreetMap via Overpass API, © OpenStreetMap contributors | stand and runway geometry | ODbL 1.0 |
+| Verify the submitted file | Local SHA, ID count and receipt agree; scoring response records 231.4438 s | Obtain the artifact and receipt through an appropriately licensed release |
+| Reassemble v12074 from saved inputs | Original recipe: `scripts/today_submissions_20261006.py`; frozen source/input inventory in `data/today_chain_20261006/setup.json` | Package those exact inputs, historical donors, source snapshots and runtime records; validate the release entry point |
+| Retrain the full recipe from raw sources | Component trainers, extractors and stage builders are present | A clean end-to-end run of the current recipe, complete dependency specification, data manifests and documented parity criteria |
+| Run on another period | `src/run_final_any_period.sh` implements an earlier v808-family recipe | Port and validate the current recipe; historic ranking donors cannot simply be reused on new IDs |
 
-Surface coverage is uneven and decides how much the ADS-B stage can do: the aircraft is seen standing
-at its stand before push-back on 70% of departures at EDDM but on 0.0% at LTFM and 21-25% at LFPG,
-because no receiver near those aerodromes hears ground-level transmissions. The other two replicas of
-the same archive (`staging-0`, `mlatonly-0`) were checked and add nothing there (`src/e49_replica_probe.py`).
+The [current-recipe runner](docs/reproduction.md) is implemented and its archived
+inputs have passed checksum verification. Real capture/replay is pending; its
+exact-output result and measured runtime will be added after completion. Start
+with the read-only archive check:
 
-Exploratory probes that did not enter the model: ERA5 snow variables, OPDI stand events (no licence in
-the repository), ADSB IQ (no surface points at our aerodromes), OpenSky (terms of use are
-non-commercial research only, which is not an open licence).
+```bash
+.venv/bin/python scripts/reproduce_best.py check
+```
 
-## Analyses
+The linked guide distinguishes saved-component replay from fresh model training.
+The older `run_final_any_period.sh` must not be described as reproducing v12074.
+The E203 experimental controller contains an exact-v12074 comparison gate, but
+the presence of that gate alone is not proof that the comparison has passed.
 
-`analysis/traffic`, `analysis/ops` contain reproducible descriptive analyses of the challenge data
-(scripts with their outputs). `analysis/sources` documents the external-data survey.
+For the existing development environment, use `.venv/bin/python`. Do not recreate
+an environment underneath running jobs. `pyproject.toml` and `uv.lock` describe
+the main Python stack; the E190 neural component additionally uses the recorded
+PyTorch/ROCm and numerical-embedding environment. A lockfile alone does not cover
+that separate runtime.
 
-## Citation
+## Data and review guide
 
-Data: EUROCONTROL Performance Review Commission Data Challenge 2026, with the support of the
-OpenSky Network.
+The submitted chain reads challenge movements/NM records, adsb.lol trajectories,
+OpenStreetMap geometry, IEM METAR weather, EUROCONTROL destination ATFM aggregates,
+and OPDI events for the Zurich correction. [SOURCES.md](SOURCES.md) gives each
+source's role, primary URL, attribution and licensing evidence.
 
-## Sources
+Start with [model design](docs/model-design.md) and [validation](docs/validation.md).
+The [experiment register](HYPOTHESES_LOG.md) preserves tested and rejected ideas;
+dated reports under `analysis/` provide the associated evidence. Operational notes
+in `HANDOFF.md` and old runner comments contain historical states and should not
+override this version-specific recipe description.
 
-Every dataset this solution reads, with its licence, and every source that was evaluated and dropped: [SOURCES.md](SOURCES.md).
+The repository is being prepared for public release on **9 October 2026**. The
+team's final completion cutoff is **11 October 2026, 21:59 UTC**. In the organiser
+messages recorded in the user-verified 7 October Discord extract, model design
+and documentation contribute to prize review, the last pre-deadline repository
+commit is used, and no final round is planned. These are recorded organiser
+clarifications, not a guarantee of review eligibility or a statement of current rank.
+The public [eligibility page](https://prc-data-challenge-2026.netlify.app/eligibility.html)
+requires open code, documented external data and sufficient reproduction documentation.
+
+Data acknowledgement: EUROCONTROL Performance Review Commission Data Challenge
+2026, supported by the OpenSky Network; adsb.lol and its contributors;
+© OpenStreetMap contributors; Iowa Environmental Mesonet, Iowa State University;
+EUROCONTROL Performance Review Unit and the Open Performance Data Initiative.
