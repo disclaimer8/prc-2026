@@ -1,0 +1,31 @@
+{
+  "protocol": "E203-v12075-fixed-candidate-single-PUT-20261007-v1",
+  "version": 12075,
+  "day": "2026-10-07",
+  "reference": "submissions/gentle-igloo_v12074.parquet",
+  "forecast": {
+    "delta_rmse_point": -0.164,
+    "delta_rmse_expert_range": [
+      -1.0,
+      0.5
+    ],
+    "reference_rmse": 231.4438,
+    "basis": "pre-E81 decided delta -0.5457605 times historical neural transfer factor0.3; expert estimate, not measured full-chain or leaderboard gain"
+  },
+  "inputs": {
+    "data/e203_candidate_20261007/candidate.parquet": "90d3cd0b5a68cc8008f2142f1801857752574b525b2ff046ad6bf4089a70aee2",
+    "data/e203_candidate_20261007/manifest.json": "e84e4473d4e87c9d192d59a612cb7b32c34af00b3d18f1700ac7ca2992c344e2",
+    "data/e203_rank_inputs_20261007/gate_authorization.json": "800226908105b9a0844fe5b85d2e08b58cceb80f7208256e5c387b9dfa75138a",
+    "data/e202_independent_review_20261007/evaluation.json": "7eec54b9132eda2be140a3233014ef6fa64514ab479000ccac6a0731b0b21dd2",
+    "data/e203_chain_20261007/control_verified.json": "7ea54bb857b7ef9e1ebc4922c5d8d07937bc4efe3902d4e56c122a7c1e0e5ac0",
+    "submissions/gentle-igloo_v12074.parquet": "e5c78ab061492b69fe72d4a46d2e286f7a2f6b3129ebf2ae4a34731bb662374b",
+    "submissions/gentle-igloo_v291.parquet": "e98595f2483919199de1032de7d2f6249275f94154a145657702e6298cd5592b",
+    "submissions/gentle-igloo_v361.parquet": "1ccce805fa0877a8c6490c92cb441a5967e6aa5e5bc34eea330a8fc71a3c3291",
+    "data/prc-2026-datasets/submitting.parquet": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b"
+  },
+  "sources": {
+    "src/submission_guard.py": "e2815dbbc2e16edbbe6140de3fbbb6cd4fcd937c7277bcf508ce4837595d0c57",
+    "src/e185_submission.py": "b1031e156dcd5ab65f808def63664b71eadfa99574d92112cd18b80c9dfef46c",
+    "src/e185_single_put_upload.py": "d7cc42d6ff5a5b16a3eb8be5858308596feb3268d00b022cfae4d1339c8354a8"
+  }
+}
