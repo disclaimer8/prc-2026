@@ -1,0 +1,594 @@
+{
+  "control_exact_all_original_supported_rows": true,
+  "execution": {
+    "gate_sha256": "0a0f75e9b988ba8b3b6e64bb991829ff2865d7e0349a51a5de6ab9ef73e764b8",
+    "pid": 76260,
+    "protocol": "E200-MDN4-fixed-joint-preE81-gated-ranking-fulltail-20261007-v1",
+    "registration_commit": "9b635b701520e3ce444c5b69564bfd0050a51861",
+    "started": "2026-10-07T12:42:11.070419+00:00",
+    "status": "negative_gate_no_ranking",
+    "updated": "2026-10-07T12:44:05.974804+00:00"
+  },
+  "failed_leg": "decided pair count3/6<4/6",
+  "finite_nonnegative_integer_predictions": true,
+  "independent_fold_sse_trim_exact": true,
+  "merged_predictions_exact": true,
+  "metadata_exact": true,
+  "no_rank_pack_or_fit": true,
+  "registration_commit": "9b635b701520e3ce444c5b69564bfd0050a51861",
+  "result": {
+    "accepted_for_submission": false,
+    "all_six_selection_informed": true,
+    "control_exact": true,
+    "excluded": 126,
+    "files": {
+      "fold_1_7.parquet": "a5e1b2e4fad74d3216db2ec5179eddea536798cc176fd8fb5d8d4339c9ddf459",
+      "fold_2_8.parquet": "46be64180d1a21aeed2a71b906d1eb45d8fb15e946852355a1a688e9039948ef",
+      "fold_3_9.parquet": "7968b2fcc202dff2871976a2d8de5b5f4a25587309c4de769705b02c0fde5ff4",
+      "fold_4_10.parquet": "c7ca59f033dfe64faf283d2e621b17a93449bb717fb5ba6af069c5013bd7147d",
+      "fold_5_11.parquet": "ae9c78fe76684c963f7d66ccd3a5cbad21916a126393873acfd1e76a81dcce45",
+      "fold_6_12.parquet": "7c2e183dc55a6448361ba928925b59e594c7ef3822a95052feaf455ec06023f1",
+      "predictions.parquet": "3e0045cbcfcf5c3a8ba035274c42e14de314b9061c9b353c0fc67179e8f5f4ea"
+    },
+    "final_chain_complete": false,
+    "folds": [
+      {
+        "additional_excluded": 0,
+        "control_exact": true,
+        "excluded": 45,
+        "fold": 1,
+        "metrics": {
+          "body": {
+            "candidate_rmse": 211.0797806350461,
+            "candidate_sse": 15338659328.0,
+            "control_rmse": 211.15623729393906,
+            "control_sse": 15349773183.0,
+            "delta_rmse": -0.07645665889296538,
+            "delta_sse": -11113855.0,
+            "n": 344266,
+            "trim20_sse": -11212192.0,
+            "trim3_sse": -9497940.0
+          },
+          "decided": {
+            "candidate_rmse": 279.3936659032329,
+            "candidate_sse": 26882117015.0,
+            "control_rmse": 279.2157077646919,
+            "control_sse": 26847883111.0,
+            "delta_rmse": 0.17795813854098697,
+            "delta_sse": 34233904.0,
+            "n": 344374,
+            "trim20_sse": 1923175.0,
+            "trim3_sse": 25251426.0
+          },
+          "included": {
+            "candidate_rmse": 279.3936659032329,
+            "candidate_sse": 26882117015.0,
+            "control_rmse": 279.2157077646919,
+            "control_sse": 26847883111.0,
+            "delta_rmse": 0.17795813854098697,
+            "delta_sse": 34233904.0,
+            "n": 344374,
+            "trim20_sse": 1923175.0,
+            "trim3_sse": 25251426.0
+          }
+        },
+        "original_excluded": 45
+      },
+      {
+        "additional_excluded": 0,
+        "control_exact": true,
+        "excluded": 22,
+        "fold": 2,
+        "metrics": {
+          "body": {
+            "candidate_rmse": 197.4051122118533,
+            "candidate_sse": 13046396265.0,
+            "control_rmse": 198.08181378195383,
+            "control_sse": 13135995250.0,
+            "delta_rmse": -0.6767015701005334,
+            "delta_sse": -89598985.0,
+            "n": 334791,
+            "trim20_sse": -84882536.0,
+            "trim3_sse": -86706062.0
+          },
+          "decided": {
+            "candidate_rmse": 212.17480826079625,
+            "candidate_sse": 15076173024.0,
+            "control_rmse": 212.35845019816222,
+            "control_sse": 15102281833.0,
+            "delta_rmse": -0.18364193736596235,
+            "delta_sse": -26108809.0,
+            "n": 334891,
+            "trim20_sse": -69294027.0,
+            "trim3_sse": -47601741.0
+          },
+          "included": {
+            "candidate_rmse": 212.18536332311322,
+            "candidate_sse": 15077718073.0,
+            "control_rmse": 212.36899558509828,
+            "control_sse": 15103826882.0,
+            "delta_rmse": -0.18363226198505345,
+            "delta_sse": -26108809.0,
+            "n": 334892,
+            "trim20_sse": -69294027.0,
+            "trim3_sse": -47601741.0
+          }
+        },
+        "original_excluded": 22
+      },
+      {
+        "additional_excluded": 0,
+        "control_exact": true,
+        "excluded": 19,
+        "fold": 3,
+        "metrics": {
+          "body": {
+            "candidate_rmse": 173.40830816030078,
+            "candidate_sse": 10473985775.0,
+            "control_rmse": 173.32522384214664,
+            "control_sse": 10463951475.0,
+            "delta_rmse": 0.08308431815413542,
+            "delta_sse": 10034300.0,
+            "n": 348315,
+            "trim20_sse": -5687082.0,
+            "trim3_sse": 5752386.0
+          },
+          "decided": {
+            "candidate_rmse": 176.90423969915904,
+            "candidate_sse": 10902590430.0,
+            "control_rmse": 176.70254401336638,
+            "control_sse": 10877743633.0,
+            "delta_rmse": 0.2016956857926573,
+            "delta_sse": 24846797.0,
+            "n": 348380,
+            "trim20_sse": -1049498.0,
+            "trim3_sse": 16535659.0
+          },
+          "included": {
+            "candidate_rmse": 176.90423969915904,
+            "candidate_sse": 10902590430.0,
+            "control_rmse": 176.70254401336638,
+            "control_sse": 10877743633.0,
+            "delta_rmse": 0.2016956857926573,
+            "delta_sse": 24846797.0,
+            "n": 348380,
+            "trim20_sse": -1049498.0,
+            "trim3_sse": 16535659.0
+          }
+        },
+        "original_excluded": 19
+      },
+      {
+        "additional_excluded": 0,
+        "control_exact": true,
+        "excluded": 12,
+        "fold": 4,
+        "metrics": {
+          "body": {
+            "candidate_rmse": 171.76391744864517,
+            "candidate_sse": 10647281132.0,
+            "control_rmse": 172.05058421918113,
+            "control_sse": 10682850520.0,
+            "delta_rmse": -0.2866667705359589,
+            "delta_sse": -35569388.0,
+            "n": 360890,
+            "trim20_sse": -33854954.0,
+            "trim3_sse": -33832268.0
+          },
+          "decided": {
+            "candidate_rmse": 174.46476443581378,
+            "candidate_sse": 10986579507.0,
+            "control_rmse": 174.69436200507332,
+            "control_sse": 11015515456.0,
+            "delta_rmse": -0.2295975692595391,
+            "delta_sse": -28935949.0,
+            "n": 360950,
+            "trim20_sse": -33464646.0,
+            "trim3_sse": -32107510.0
+          },
+          "included": {
+            "candidate_rmse": 174.46476443581378,
+            "candidate_sse": 10986579507.0,
+            "control_rmse": 174.69436200507332,
+            "control_sse": 11015515456.0,
+            "delta_rmse": -0.2295975692595391,
+            "delta_sse": -28935949.0,
+            "n": 360950,
+            "trim20_sse": -33464646.0,
+            "trim3_sse": -32107510.0
+          }
+        },
+        "original_excluded": 12
+      },
+      {
+        "additional_excluded": 0,
+        "control_exact": true,
+        "excluded": 10,
+        "fold": 5,
+        "metrics": {
+          "body": {
+            "candidate_rmse": 162.5701401645814,
+            "candidate_sse": 9183355026.0,
+            "control_rmse": 162.69457701194622,
+            "control_sse": 9197418926.0,
+            "delta_rmse": -0.12443684736481941,
+            "delta_sse": -14063900.0,
+            "n": 347472,
+            "trim20_sse": -13896380.0,
+            "trim3_sse": -12551578.0
+          },
+          "decided": {
+            "candidate_rmse": 226.44872037519968,
+            "candidate_sse": 17820691175.0,
+            "control_rmse": 226.15185606843863,
+            "control_sse": 17773997518.0,
+            "delta_rmse": 0.29686430676105147,
+            "delta_sse": 46693657.0,
+            "n": 347524,
+            "trim20_sse": -9628698.0,
+            "trim3_sse": 18185589.0
+          },
+          "included": {
+            "candidate_rmse": 226.44872037519968,
+            "candidate_sse": 17820691175.0,
+            "control_rmse": 226.15185606843863,
+            "control_sse": 17773997518.0,
+            "delta_rmse": 0.29686430676105147,
+            "delta_sse": 46693657.0,
+            "n": 347524,
+            "trim20_sse": -9628698.0,
+            "trim3_sse": 18185589.0
+          }
+        },
+        "original_excluded": 10
+      },
+      {
+        "additional_excluded": 0,
+        "control_exact": true,
+        "excluded": 18,
+        "fold": 6,
+        "metrics": {
+          "body": {
+            "candidate_rmse": 178.3537292719993,
+            "candidate_sse": 11092610733.0,
+            "control_rmse": 178.45373470665763,
+            "control_sse": 11105053785.0,
+            "delta_rmse": -0.10000543465832834,
+            "delta_sse": -12443052.0,
+            "n": 348714,
+            "trim20_sse": -12832326.0,
+            "trim3_sse": -13795710.0
+          },
+          "decided": {
+            "candidate_rmse": 225.29345836496435,
+            "candidate_sse": 17704142020.0,
+            "control_rmse": 225.30075759314056,
+            "control_sse": 17705289223.0,
+            "delta_rmse": -0.007299228176208317,
+            "delta_sse": -1147203.0,
+            "n": 348801,
+            "trim20_sse": -13584631.0,
+            "trim3_sse": -9791153.0
+          },
+          "included": {
+            "candidate_rmse": 225.29345836496435,
+            "candidate_sse": 17704142020.0,
+            "control_rmse": 225.30075759314056,
+            "control_sse": 17705289223.0,
+            "delta_rmse": -0.007299228176208317,
+            "delta_sse": -1147203.0,
+            "n": 348801,
+            "trim20_sse": -13584631.0,
+            "trim3_sse": -9791153.0
+          }
+        },
+        "original_excluded": 18
+      }
+    ],
+    "gate_pass": false,
+    "gate_trim_population": "decided",
+    "included": 2084921,
+    "inventory_sha256": "8eeceec271a0ba76dc2a0a2282cf5ab04624375d052bf32d21d93ce55c8853b6",
+    "limitation": "Retrospective historical-upstream crossfit, not independently nested CV. Exact transforms conditional on saved FIN1b masked OOF probabilities; 126 TabPFN rows and union of changed-feasibility rows excluded. Ends at E152 before E81. No full-tail, LSZH or leaderboard claim. All six pairs are selection-informed after E196/E198.",
+    "metrics": {
+      "airport_EDDF": {
+        "candidate_rmse": 103.7749862016619,
+        "candidate_sse": 2478445449.0,
+        "control_rmse": 103.91069085755903,
+        "control_sse": 2484931723.0,
+        "delta_rmse": -0.1357046558971291,
+        "delta_sse": -6486274.0,
+        "n": 230141,
+        "trim20_sse": -7174332.0,
+        "trim3_sse": -6220597.0
+      },
+      "airport_EDDM": {
+        "candidate_rmse": 92.47061798203428,
+        "candidate_sse": 1430842109.0,
+        "control_rmse": 92.66114375186687,
+        "control_sse": 1436744376.0,
+        "delta_rmse": -0.19052576983258973,
+        "delta_sse": -5902267.0,
+        "n": 167334,
+        "trim20_sse": -9429923.0,
+        "trim3_sse": -7915656.0
+      },
+      "airport_EGLL": {
+        "candidate_rmse": 196.28686994456115,
+        "candidate_sse": 9229356520.0,
+        "control_rmse": 195.9734406602043,
+        "control_sse": 9199905329.0,
+        "delta_rmse": 0.31342928435685735,
+        "delta_sse": 29451191.0,
+        "n": 239546,
+        "trim20_sse": 12321140.0,
+        "trim3_sse": 22913862.0
+      },
+      "airport_EHAM": {
+        "candidate_rmse": 101.74880107694044,
+        "candidate_sse": 2566991705.0,
+        "control_rmse": 101.72318729575993,
+        "control_sse": 2565699462.0,
+        "delta_rmse": 0.025613781180510387,
+        "delta_sse": 1292243.0,
+        "n": 247951,
+        "trim20_sse": -1481693.0,
+        "trim3_sse": -444972.0
+      },
+      "airport_LEBL": {
+        "candidate_rmse": 148.86870138975138,
+        "candidate_sse": 3982602488.0,
+        "control_rmse": 148.99851448567992,
+        "control_sse": 3989551153.0,
+        "delta_rmse": -0.12981309592854018,
+        "delta_sse": -6948665.0,
+        "n": 179705,
+        "trim20_sse": -8072075.0,
+        "trim3_sse": -7819569.0
+      },
+      "airport_LEMD": {
+        "candidate_rmse": 138.0652216445779,
+        "candidate_sse": 4045758156.0,
+        "control_rmse": 138.30983955168853,
+        "control_sse": 4060107050.0,
+        "delta_rmse": -0.24461790711063713,
+        "delta_sse": -14348894.0,
+        "n": 212242,
+        "trim20_sse": -15139015.0,
+        "trim3_sse": -14562222.0
+      },
+      "airport_LFPG": {
+        "candidate_rmse": 298.77242294791273,
+        "candidate_sse": 21383599869.0,
+        "control_rmse": 298.93829073731706,
+        "control_sse": 21407349283.0,
+        "delta_rmse": -0.16586778940433078,
+        "delta_sse": -23749414.0,
+        "n": 239552,
+        "trim20_sse": -39447317.0,
+        "trim3_sse": -30620370.0
+      },
+      "airport_LIRF": {
+        "candidate_rmse": 437.36353752223823,
+        "candidate_sse": 30716462040.0,
+        "control_rmse": 436.3515249941496,
+        "control_sse": 30574477272.0,
+        "delta_rmse": 1.0120125280886327,
+        "delta_sse": 141984768.0,
+        "n": 160578,
+        "trim20_sse": 33304805.0,
+        "trim3_sse": 108002465.0
+      },
+      "airport_LSZH": {
+        "candidate_rmse": 263.72783068193456,
+        "candidate_sse": 9383101401.0,
+        "control_rmse": 263.78576784134333,
+        "control_sse": 9387224515.0,
+        "delta_rmse": -0.05793715940876609,
+        "delta_sse": -4123114.0,
+        "n": 134907,
+        "trim20_sse": -4610154.0,
+        "trim3_sse": -4556493.0
+      },
+      "airport_LTFM": {
+        "candidate_rmse": 227.7336474750618,
+        "candidate_sse": 14156678483.0,
+        "control_rmse": 228.22847581593314,
+        "control_sse": 14218265660.0,
+        "delta_rmse": -0.49482834087135075,
+        "delta_sse": -61587177.0,
+        "n": 272965,
+        "trim20_sse": -68329833.0,
+        "trim3_sse": -64814901.0
+      },
+      "body": {
+        "candidate_rmse": 182.9688129611991,
+        "candidate_sse": 69782288259.0,
+        "control_rmse": 183.16896475501184,
+        "control_sse": 69935043139.0,
+        "delta_rmse": -0.2001517938127506,
+        "delta_sse": -152754880.0,
+        "n": 2084448,
+        "trim20_sse": -153564132.0,
+        "trim3_sse": -151447922.0
+      },
+      "decided": {
+        "candidate_rmse": 218.3172027977866,
+        "candidate_sse": 99372293171.0,
+        "control_rmse": 218.26273066841605,
+        "control_sse": 99322710774.0,
+        "delta_rmse": 0.054472129370537914,
+        "delta_sse": 49582397.0,
+        "n": 2084920,
+        "trim20_sse": -53423822.0,
+        "trim3_sse": 16726005.0
+      },
+      "included": {
+        "candidate_rmse": 218.3188476419131,
+        "candidate_sse": 99373838220.0,
+        "control_rmse": 218.26437594917525,
+        "control_sse": 99324255823.0,
+        "delta_rmse": 0.0544716927378488,
+        "delta_sse": 49582397.0,
+        "n": 2084921,
+        "trim20_sse": -53423822.0,
+        "trim3_sse": 16726005.0
+      },
+      "month_1": {
+        "candidate_rmse": 315.18252945004264,
+        "candidate_sse": 15268562130.0,
+        "control_rmse": 315.21395819422156,
+        "control_sse": 15271607322.0,
+        "delta_rmse": -0.03142874417892472,
+        "delta_sse": -3045192.0,
+        "n": 153700,
+        "trim20_sse": -10412031.0,
+        "trim3_sse": -5817313.0
+      },
+      "month_10": {
+        "candidate_rmse": 180.86992701932448,
+        "candidate_sse": 6073962762.0,
+        "control_rmse": 180.93405801619895,
+        "control_sse": 6078270812.0,
+        "delta_rmse": -0.06413099687446788,
+        "delta_sse": -4308050.0,
+        "n": 185669,
+        "trim20_sse": -8065955.0,
+        "trim3_sse": -7785912.0
+      },
+      "month_11": {
+        "candidate_rmse": 160.57051249535834,
+        "candidate_sse": 4185284884.0,
+        "control_rmse": 160.51001212590086,
+        "control_sse": 4182131583.0,
+        "delta_rmse": 0.06050036945748616,
+        "delta_sse": 3153301.0,
+        "n": 162328,
+        "trim20_sse": -7312603.0,
+        "trim3_sse": -4877604.0
+      },
+      "month_12": {
+        "candidate_rmse": 169.0160961003024,
+        "candidate_sse": 4732630804.0,
+        "control_rmse": 169.09422928041587,
+        "control_sse": 4737007440.0,
+        "delta_rmse": -0.07813318011346837,
+        "delta_sse": -4376636.0,
+        "n": 165671,
+        "trim20_sse": -8304210.0,
+        "trim3_sse": -8310635.0
+      },
+      "month_2": {
+        "candidate_rmse": 220.40110221226323,
+        "candidate_sse": 6981775579.0,
+        "control_rmse": 221.0459616388231,
+        "control_sse": 7022690531.0,
+        "delta_rmse": -0.6448594265598615,
+        "delta_sse": -40914952.0,
+        "n": 143727,
+        "trim20_sse": -56417667.0,
+        "trim3_sse": -48694499.0
+      },
+      "month_3": {
+        "candidate_rmse": 162.91513715339576,
+        "candidate_sse": 4364590971.0,
+        "control_rmse": 162.70156828468558,
+        "control_sse": 4353155204.0,
+        "delta_rmse": 0.21356886871018332,
+        "delta_sse": 11435767.0,
+        "n": 164445,
+        "trim20_sse": -3278781.0,
+        "trim3_sse": 5744457.0
+      },
+      "month_4": {
+        "candidate_rmse": 167.41293911585316,
+        "candidate_sse": 4912616745.0,
+        "control_rmse": 167.8320512404159,
+        "control_sse": 4937244644.0,
+        "delta_rmse": -0.41911212456273006,
+        "delta_sse": -24627899.0,
+        "n": 175281,
+        "trim20_sse": -24701660.0,
+        "trim3_sse": -24964225.0
+      },
+      "month_5": {
+        "candidate_rmse": 271.3427613937416,
+        "candidate_sse": 13635406291.0,
+        "control_rmse": 270.9091913694806,
+        "control_sse": 13591865935.0,
+        "delta_rmse": 0.4335700242610301,
+        "delta_sse": 43540356.0,
+        "n": 185196,
+        "trim20_sse": -5042530.0,
+        "trim3_sse": 14535234.0
+      },
+      "month_6": {
+        "candidate_rmse": 266.1433015389948,
+        "candidate_sse": 12971511216.0,
+        "control_rmse": 266.11016949105533,
+        "control_sse": 12968281783.0,
+        "delta_rmse": 0.033132047939488984,
+        "delta_sse": 3229433.0,
+        "n": 183130,
+        "trim20_sse": -5338866.0,
+        "trim3_sse": -3480436.0
+      },
+      "month_7": {
+        "candidate_rmse": 246.79528010361693,
+        "candidate_sse": 11613554885.0,
+        "control_rmse": 246.39885971095234,
+        "control_sse": 11576275789.0,
+        "delta_rmse": 0.39642039266459506,
+        "delta_sse": 37279096.0,
+        "n": 190674,
+        "trim20_sse": 6487095.0,
+        "trim3_sse": 27681850.0
+      },
+      "month_8": {
+        "candidate_rmse": 205.79248753190137,
+        "candidate_sse": 8095942494.0,
+        "control_rmse": 205.6042211633972,
+        "control_sse": 8081136351.0,
+        "delta_rmse": 0.18826636850417344,
+        "delta_sse": 14806143.0,
+        "n": 191165,
+        "trim20_sse": -14389752.0,
+        "trim3_sse": -9491527.0
+      },
+      "month_9": {
+        "candidate_rmse": 188.5342474736034,
+        "candidate_sse": 6537999459.0,
+        "control_rmse": 188.34078337138527,
+        "control_sse": 6524588429.0,
+        "delta_rmse": 0.19346410221811539,
+        "delta_sse": 13411030.0,
+        "n": 183935,
+        "trim20_sse": -5174903.0,
+        "trim3_sse": 5364754.0
+      }
+    },
+    "protocol": "E200-MDN4-fixed-joint-preE81-gated-ranking-fulltail-20261007-v1",
+    "ranking_authorized_if_pass": true,
+    "registration_commit": "9b635b701520e3ce444c5b69564bfd0050a51861",
+    "rows": 2085047,
+    "seconds": 107.75354379200144,
+    "sum_fold_trims": {
+      "body": {
+        "trim20_sse": -162365470.0,
+        "trim3_sse": -150631172.0
+      },
+      "decided": {
+        "trim20_sse": -125098325.0,
+        "trim3_sse": -29527730.0
+      },
+      "included": {
+        "trim20_sse": -125098325.0,
+        "trim3_sse": -29527730.0
+      }
+    }
+  },
+  "result_sha256": "0a0f75e9b988ba8b3b6e64bb991829ff2865d7e0349a51a5de6ab9ef73e764b8",
+  "source_input_inventory_verified": true,
+  "unique_disjoint_ids": 2085047,
+  "verified_utc": "2026-10-07T12:47:25.819519+00:00"
+}
