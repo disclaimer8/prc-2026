@@ -1,0 +1,290 @@
+{
+  "label_free": true,
+  "offsets": [
+    600,
+    120
+  ],
+  "max_age": 60.0,
+  "stats": [
+    {
+      "day": "2025-01-15",
+      "airport": "EDDF",
+      "rows": 513,
+      "identity": 499,
+      "eligible": 496
+    },
+    {
+      "day": "2025-01-15",
+      "airport": "EDDM",
+      "rows": 361,
+      "identity": 344,
+      "eligible": 343
+    },
+    {
+      "day": "2025-01-15",
+      "airport": "EGLL",
+      "rows": 632,
+      "identity": 628,
+      "eligible": 621
+    },
+    {
+      "day": "2025-01-15",
+      "airport": "EHAM",
+      "rows": 512,
+      "identity": 501,
+      "eligible": 501
+    },
+    {
+      "day": "2025-01-15",
+      "airport": "LEBL",
+      "rows": 319,
+      "identity": 317,
+      "eligible": 311
+    },
+    {
+      "day": "2025-01-15",
+      "airport": "LEMD",
+      "rows": 495,
+      "identity": 378,
+      "eligible": 0
+    },
+    {
+      "day": "2025-01-15",
+      "airport": "LFPG",
+      "rows": 553,
+      "identity": 482,
+      "eligible": 0
+    },
+    {
+      "day": "2025-01-15",
+      "airport": "LIRF",
+      "rows": 328,
+      "identity": 298,
+      "eligible": 0
+    },
+    {
+      "day": "2025-01-15",
+      "airport": "LSZH",
+      "rows": 292,
+      "identity": 292,
+      "eligible": 287
+    },
+    {
+      "day": "2025-01-15",
+      "airport": "LTFM",
+      "rows": 671,
+      "identity": 0,
+      "eligible": 0
+    },
+    {
+      "day": "2025-07-15",
+      "airport": "EDDF",
+      "rows": 676,
+      "identity": 641,
+      "eligible": 641
+    },
+    {
+      "day": "2025-07-15",
+      "airport": "EDDM",
+      "rows": 519,
+      "identity": 510,
+      "eligible": 0
+    },
+    {
+      "day": "2025-07-15",
+      "airport": "EGLL",
+      "rows": 678,
+      "identity": 668,
+      "eligible": 363
+    },
+    {
+      "day": "2025-07-15",
+      "airport": "EHAM",
+      "rows": 716,
+      "identity": 682,
+      "eligible": 682
+    },
+    {
+      "day": "2025-07-15",
+      "airport": "LEBL",
+      "rows": 526,
+      "identity": 517,
+      "eligible": 510
+    },
+    {
+      "day": "2025-07-15",
+      "airport": "LEMD",
+      "rows": 614,
+      "identity": 497,
+      "eligible": 356
+    },
+    {
+      "day": "2025-07-15",
+      "airport": "LFPG",
+      "rows": 711,
+      "identity": 700,
+      "eligible": 22
+    },
+    {
+      "day": "2025-07-15",
+      "airport": "LIRF",
+      "rows": 473,
+      "identity": 465,
+      "eligible": 422
+    },
+    {
+      "day": "2025-07-15",
+      "airport": "LSZH",
+      "rows": 399,
+      "identity": 373,
+      "eligible": 370
+    },
+    {
+      "day": "2025-07-15",
+      "airport": "LTFM",
+      "rows": 808,
+      "identity": 0,
+      "eligible": 0
+    },
+    {
+      "day": "2026-01-15",
+      "airport": "EDDF",
+      "rows": 515,
+      "identity": 491,
+      "eligible": 478
+    },
+    {
+      "day": "2026-01-15",
+      "airport": "EDDM",
+      "rows": 355,
+      "identity": 343,
+      "eligible": 343
+    },
+    {
+      "day": "2026-01-15",
+      "airport": "EGLL",
+      "rows": 634,
+      "identity": 618,
+      "eligible": 618
+    },
+    {
+      "day": "2026-01-15",
+      "airport": "EHAM",
+      "rows": 594,
+      "identity": 570,
+      "eligible": 570
+    },
+    {
+      "day": "2026-01-15",
+      "airport": "LEBL",
+      "rows": 359,
+      "identity": 351,
+      "eligible": 344
+    },
+    {
+      "day": "2026-01-15",
+      "airport": "LEMD",
+      "rows": 530,
+      "identity": 516,
+      "eligible": 513
+    },
+    {
+      "day": "2026-01-15",
+      "airport": "LFPG",
+      "rows": 590,
+      "identity": 576,
+      "eligible": 246
+    },
+    {
+      "day": "2026-01-15",
+      "airport": "LIRF",
+      "rows": 345,
+      "identity": 339,
+      "eligible": 162
+    },
+    {
+      "day": "2026-01-15",
+      "airport": "LSZH",
+      "rows": 328,
+      "identity": 318,
+      "eligible": 315
+    },
+    {
+      "day": "2026-01-15",
+      "airport": "LTFM",
+      "rows": 751,
+      "identity": 2,
+      "eligible": 0
+    },
+    {
+      "day": "2026-07-15",
+      "airport": "EDDF",
+      "rows": 666,
+      "identity": 626,
+      "eligible": 536
+    },
+    {
+      "day": "2026-07-15",
+      "airport": "EDDM",
+      "rows": 498,
+      "identity": 470,
+      "eligible": 470
+    },
+    {
+      "day": "2026-07-15",
+      "airport": "EGLL",
+      "rows": 661,
+      "identity": 633,
+      "eligible": 633
+    },
+    {
+      "day": "2026-07-15",
+      "airport": "EHAM",
+      "rows": 703,
+      "identity": 671,
+      "eligible": 671
+    },
+    {
+      "day": "2026-07-15",
+      "airport": "LEBL",
+      "rows": 577,
+      "identity": 565,
+      "eligible": 562
+    },
+    {
+      "day": "2026-07-15",
+      "airport": "LEMD",
+      "rows": 639,
+      "identity": 615,
+      "eligible": 496
+    },
+    {
+      "day": "2026-07-15",
+      "airport": "LFPG",
+      "rows": 711,
+      "identity": 677,
+      "eligible": 319
+    },
+    {
+      "day": "2026-07-15",
+      "airport": "LIRF",
+      "rows": 495,
+      "identity": 427,
+      "eligible": 0
+    },
+    {
+      "day": "2026-07-15",
+      "airport": "LSZH",
+      "rows": 415,
+      "identity": 387,
+      "eligible": 384
+    },
+    {
+      "day": "2026-07-15",
+      "airport": "LTFM",
+      "rows": 815,
+      "identity": 15,
+      "eligible": 0
+    }
+  ]
+}
