@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-07T23:25:50.731543+00:00",
+  "status": "ready_for_independent_review_not_launched",
+  "files": {
+    "scripts/e207_full_token_sampler.py": "2c85fed68950bda537f130bfd7c4ed87aa4288d109ca5b85a2579c185e78d1d2",
+    "scripts/e207_full_token_queue_20261008.py": "0de8fc67b1eb7ce81436eac5633a0a8488bffec6d0c4d4290193231814476ef6",
+    "tests/test_e207_full_token_sampler.py": "5385c3483d61ef101d711219ef5b078a6ff6fb9b2622a9bf51a0ab4917c5cf06",
+    "analysis/e207_full_token_20261008/PROTOCOL.md": "a71fb27d11b41df29473939d6dafa7dd4e62fea3eb6f0ec7c0f490661c5bbb67",
+    "analysis/e207_full_token_20261008/metadata.json": "535f8ba342f944e08466a1d5e0faaa7ef6ba9eed2f8466455cb511780897b423"
+  },
+  "targeted_tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests -p test_e207_full_token_sampler.py",
+    "passed": 11,
+    "failed": 0
+  },
+  "adjacent_tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests -p test_night_gpu_20261007.py",
+    "passed": 6,
+    "skipped": 1,
+    "skip_reason": "qualified PLE package is on Home"
+  },
+  "compile_pass": true,
+  "gpu_smoke_executed": false,
+  "real_extraction_executed": false,
+  "target_fits_executed": 0,
+  "ranking_authorized": false,
+  "metadata_only": true
+}
