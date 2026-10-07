@@ -1,0 +1,125 @@
+{
+  "label_free": true,
+  "days": [
+    "2025-01-01",
+    "2025-07-01",
+    "2026-01-01",
+    "2026-07-01"
+  ],
+  "definition": "adjacent raw gs<=1 to gs>1, both finite; time gap in (0,30] seconds; not a physical offblock label",
+  "results": {
+    "2025-01-01": {
+      "own": {
+        "rows": 4788,
+        "present": 2307,
+        "compressed": 1123,
+        "raw_up_crossing_rows": 835,
+        "raw_crossing_pairs": 1595,
+        "old_both_endpoints_selected": 891,
+        "old_neither_endpoint_selected": 98,
+        "rows_with_unretained_crossing_pair": 473,
+        "old_selected_points": 81392,
+        "available_padding_slots": 24008,
+        "transition_endpoints_fillable_without_removal": 773
+      },
+      "previous": {
+        "rows": 4788,
+        "present": 2798,
+        "compressed": 558,
+        "raw_up_crossing_rows": 62,
+        "raw_crossing_pairs": 73,
+        "old_both_endpoints_selected": 35,
+        "old_neither_endpoint_selected": 5,
+        "rows_with_unretained_crossing_pair": 33,
+        "old_selected_points": 73277,
+        "available_padding_slots": 9371,
+        "transition_endpoints_fillable_without_removal": 39
+      }
+    },
+    "2025-07-01": {
+      "own": {
+        "rows": 6071,
+        "present": 3351,
+        "compressed": 1722,
+        "raw_up_crossing_rows": 1312,
+        "raw_crossing_pairs": 2547,
+        "old_both_endpoints_selected": 1419,
+        "old_neither_endpoint_selected": 131,
+        "rows_with_unretained_crossing_pair": 744,
+        "old_selected_points": 118492,
+        "available_padding_slots": 37649,
+        "transition_endpoints_fillable_without_removal": 1222
+      },
+      "previous": {
+        "rows": 6071,
+        "present": 4184,
+        "compressed": 2074,
+        "raw_up_crossing_rows": 227,
+        "raw_crossing_pairs": 286,
+        "old_both_endpoints_selected": 159,
+        "old_neither_endpoint_selected": 24,
+        "rows_with_unretained_crossing_pair": 95,
+        "old_selected_points": 124927,
+        "available_padding_slots": 45090,
+        "transition_endpoints_fillable_without_removal": 142
+      }
+    },
+    "2026-01-01": {
+      "own": {
+        "rows": 4970,
+        "present": 3510,
+        "compressed": 1828,
+        "raw_up_crossing_rows": 1342,
+        "raw_crossing_pairs": 2715,
+        "old_both_endpoints_selected": 1458,
+        "old_neither_endpoint_selected": 181,
+        "rows_with_unretained_crossing_pair": 783,
+        "old_selected_points": 117291,
+        "available_padding_slots": 41503,
+        "transition_endpoints_fillable_without_removal": 1407
+      },
+      "previous": {
+        "rows": 4970,
+        "present": 3392,
+        "compressed": 2549,
+        "raw_up_crossing_rows": 197,
+        "raw_crossing_pairs": 251,
+        "old_both_endpoints_selected": 151,
+        "old_neither_endpoint_selected": 15,
+        "rows_with_unretained_crossing_pair": 77,
+        "old_selected_points": 112159,
+        "available_padding_slots": 66168,
+        "transition_endpoints_fillable_without_removal": 110
+      }
+    },
+    "2026-07-01": {
+      "own": {
+        "rows": 6062,
+        "present": 3897,
+        "compressed": 1767,
+        "raw_up_crossing_rows": 1314,
+        "raw_crossing_pairs": 2373,
+        "old_both_endpoints_selected": 1259,
+        "old_neither_endpoint_selected": 151,
+        "rows_with_unretained_crossing_pair": 751,
+        "old_selected_points": 134146,
+        "available_padding_slots": 38422,
+        "transition_endpoints_fillable_without_removal": 1228
+      },
+      "previous": {
+        "rows": 6062,
+        "present": 3970,
+        "compressed": 2988,
+        "raw_up_crossing_rows": 320,
+        "raw_crossing_pairs": 393,
+        "old_both_endpoints_selected": 249,
+        "old_neither_endpoint_selected": 22,
+        "rows_with_unretained_crossing_pair": 110,
+        "old_selected_points": 122689,
+        "available_padding_slots": 79801,
+        "transition_endpoints_fillable_without_removal": 166
+      }
+    }
+  },
+  "seconds": 1.228410084000643
+}

@@ -1,0 +1,55 @@
+{
+  "started_utc": "2026-10-07T23:08:48.876359+00:00",
+  "finished_utc": "2026-10-07T23:10:06.473706+00:00",
+  "manifest": {
+    "20260115": {
+      "sha256": "3e732fec7b84bc385b3ee48d6022910b07db2c7dd69834c3b2e253c049e88b59",
+      "source": "https://github.com/adsblol/aircraft-data-links-2025/releases/tag/adsblol-adl-2026-01-15"
+    },
+    "20260715": {
+      "sha256": "68ed2f37b22e1af803af366449a46446fd082e5568a54651117c3db07a86e2db",
+      "source": "https://github.com/adsblol/aircraft-data-links-2026/releases/tag/adsblol-adl-2026-07-15"
+    }
+  },
+  "declared_bytes": 143913547,
+  "assets": 253,
+  "complete": true,
+  "days": {
+    "20260115": {
+      "assets": 52,
+      "errors": [],
+      "json_lines": 5554,
+      "malformed_json_lines": 0,
+      "payloads": 3232,
+      "all_A9": 0,
+      "any_atis_payloads": 0,
+      "hub_atis_payloads": 0,
+      "hub_atis_unique_texts": 0,
+      "airport_message_counts": {},
+      "hub_other_closure_payloads": 0
+    },
+    "20260715": {
+      "assets": 201,
+      "errors": [],
+      "json_lines": 1594372,
+      "malformed_json_lines": 0,
+      "payloads": 756272,
+      "all_A9": 3218,
+      "any_atis_payloads": 3420,
+      "hub_atis_payloads": 520,
+      "hub_atis_unique_texts": 310,
+      "airport_message_counts": {
+        "EGLL": 139,
+        "EHAM": 154,
+        "LFPG": 61,
+        "EDDF": 9,
+        "LEBL": 47,
+        "LSZH": 39,
+        "LIRF": 13,
+        "EDDM": 8,
+        "LEMD": 50
+      },
+      "hub_other_closure_payloads": 9
+    }
+  }
+}

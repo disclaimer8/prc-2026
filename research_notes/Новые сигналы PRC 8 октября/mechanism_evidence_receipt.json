@@ -1,0 +1,21 @@
+{
+  "hashes": {
+    "scripts/e194_trajectory_sequence.py": "c2cf0a747f25de4219680799e1dac0a162007258908306f9670e9c3474c2e0eb",
+    "scripts/e197_trajectory_encoder.py": "6be13d401dd2903c50c9584f5ca2d6ca084a1feb0eb1f67fcba0cd94850db54a",
+    "data/e194_sequence_20261007_s0/complete.json": "73020d1daf2fbfdae7eafe3f1a25b448e82d25e96aa6236b6da77c95ca626878",
+    "data/e194_sequence_20261007_s1/complete.json": "8714a13a45c8ae45049b1259ac5b919e1af80c06740e0195b98a739b4d26321e",
+    "research_notes/\u041d\u043e\u0432\u044b\u0435 \u0441\u0438\u0433\u043d\u0430\u043b\u044b PRC 8 \u043e\u043a\u0442\u044f\u0431\u0440\u044f/mechanism_sampler_inventory.py": "87dba68e1660760e4528d3202c442a87e2f90e5c682655b7ab1f224cf8fc6f67",
+    "research_notes/\u041d\u043e\u0432\u044b\u0435 \u0441\u0438\u0433\u043d\u0430\u043b\u044b PRC 8 \u043e\u043a\u0442\u044f\u0431\u0440\u044f/mechanism_transition_metadata.py": "e902877880babab2c14d50f5b769c5b35e32708f4bde5ed4a43b796712e0455c",
+    "research_notes/\u041d\u043e\u0432\u044b\u0435 \u0441\u0438\u0433\u043d\u0430\u043b\u044b PRC 8 \u043e\u043a\u0442\u044f\u0431\u0440\u044f/mechanism_sampler_inventory.json": "dc3407c6d0e57f8801db2104ab00dc680fa4167d5c5ccc73e0ac9cae150f2d05",
+    "research_notes/\u041d\u043e\u0432\u044b\u0435 \u0441\u0438\u0433\u043d\u0430\u043b\u044b PRC 8 \u043e\u043a\u0442\u044f\u0431\u0440\u044f/mechanism_transition_metadata.json": "312afbe445ab817ba08b2feee0c00020ba0f763775e504cd17997dd0b30840cb"
+  },
+  "arrival_metadata_only": {
+    "arrivals": 344693,
+    "block_available": 344693,
+    "callsign_available": 342141,
+    "stand_available": 344688
+  },
+  "ranking_file_sha256": "9db75e3a56fa09b87aab72e191a53da3fe763d9887ad2b23aea9cde6a6325f86",
+  "new_target_evaluation": false,
+  "full_e194_npz_rehash_this_audit": false
+}

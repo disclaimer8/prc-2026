@@ -1,0 +1,127 @@
+{
+  "completed_utc": "2026-10-07T23:12:59.417731+00:00",
+  "scope": "Read-only public GitHub source delta; no target fits, no leaderboard refresh",
+  "retrieval_note": "Individual receipt mtimes bound writes; completion is not each request exact time. All saved raw bodies were checked for a 404 prefix; none had one.",
+  "files": [
+    {
+      "file": "competitor_enio_branches.json",
+      "bytes": 209,
+      "sha256": "a0d5f78ef27bb67ed5f74e9c25659f7eae0a7ffad1844680bf8c62063cee01e2",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_enio_head.json",
+      "bytes": 4093,
+      "sha256": "21b1e0fb94834de136a750b4f6f3ea577b4e01e6209dd7f3bc36afe14bbe724e",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_joris.json",
+      "bytes": 55408,
+      "sha256": "a62823e83c848f12ba3e6a960e101a748652ce6be1d396821a736a70148fca7d",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_joris_build_final.py",
+      "bytes": 3768,
+      "sha256": "890d493ad046bb98ba4533acf178586e74e4428ea1c509394b916502ce1aa6b2",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_joris_correct.py",
+      "bytes": 4762,
+      "sha256": "d8c27c42b35807e1b593ba5eb22f615441dfc02540a0286b31ab9a84b49616f9",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_joris_delta.json",
+      "bytes": 178174,
+      "sha256": "dcf2d4f8fda12a6cb662579ae78bb80ba1d4402c5f73fdaf4c0b0e90cb66943f",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_joris_round8.py",
+      "bytes": 12990,
+      "sha256": "624743b944f5c7eaadf489ee530ef418785145b04d728fc94b5dc1f8dc5273cd",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_joris_train.py",
+      "bytes": 31736,
+      "sha256": "6a3ba6a5737110d162711d8b2177d96209adefe8a9ad0c178bc9ea3f32f0bf25",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_official.json",
+      "bytes": 17451,
+      "sha256": "0e0fb3725b10741f8722372f62babb50932b45720e496403d59d9f2e90d98310",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_ravindra.json",
+      "bytes": 44617,
+      "sha256": "0afd7f4a451eea9ca072ec0c9b64dbe4c0904a889bc61e8d9348021dd78331f4",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_ravindra_delta.json",
+      "bytes": 30261,
+      "sha256": "4bedeaf0aaf703725fcf0cf9eb48b99d6a9cd6e681cf6846c0ffc92fef0559ae",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_ravindra_summary.md",
+      "bytes": 10838,
+      "sha256": "1ac896463257a60df91211b9ce6c6b7cfc014097e8cf6e660907117ae2688e24",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_ravindra_weather.py",
+      "bytes": 6198,
+      "sha256": "590fd656adb7c917e2e3917975e2e26741570fa068fba4eb32d79c624c7d7ecb",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_search_prc.json",
+      "bytes": 34759,
+      "sha256": "e8f0ef625fc6f57a7e1addd1ccd4c0927579051d3d3acab5f0453c21c030db10",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_search_taxiout.json",
+      "bytes": 29259,
+      "sha256": "ba5304f8346fcfc706f5bde2d85f095f6027ffe60a7bbaa4bac52a3b410806f1",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_smart.json",
+      "bytes": 21436,
+      "sha256": "f9bf01f19809894edbbac52df02e661e4f2c8f8718935e5ea7ff239b65234883",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_smart_armc.py",
+      "bytes": 14434,
+      "sha256": "3dbaee8e581c6eeeb129ce99ac8345fde337490537cca20cd7d93fa847bda383",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_smart_build.py",
+      "bytes": 3402,
+      "sha256": "8bd48266d6f1fe3df480362e9c80f5963762f0d69a791c66ee10a2c4a7af62c0",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_smart_delta.json",
+      "bytes": 103753,
+      "sha256": "95b05a37e69369a74a86c0c74f68d03056c3257a90b0c52b9863d77a34e59b25",
+      "http_body_error": false
+    },
+    {
+      "file": "competitor_smart_progress.md",
+      "bytes": 268944,
+      "sha256": "2cf3c3724ce6d0a68eee2bebe31a0e58160ecb5bb2c918ce9cce7b6367a6ea2b",
+      "http_body_error": false
+    }
+  ]
+}

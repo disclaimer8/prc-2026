@@ -1,0 +1,2261 @@
+{
+  "label_free": true,
+  "source": "research_notes/\u041d\u043e\u0432\u044b\u0435 \u0441\u0438\u0433\u043d\u0430\u043b\u044b PRC 8 \u043e\u043a\u0442\u044f\u0431\u0440\u044f/mechanism_sampler_inventory.py",
+  "days": 427,
+  "groups": {
+    "2025": {
+      "departures": 2085047,
+      "streams": {
+        "own": {
+          "present": 1251417,
+          "raw_gt64": 666621,
+          "compressed_and_selected_lt64": 663305,
+          "raw_points": 101460762,
+          "selected_points": 45368652,
+          "span_sec_given_present": {
+            "p10": 135.62999987602234,
+            "p50": 586.420000076294,
+            "p90": 1170.5999999046326,
+            "p99": 4232.4907999706365
+          },
+          "selected_given_compressed": {
+            "p10": 31.0,
+            "p50": 42.0,
+            "p90": 54.0,
+            "p99": 62.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 9.0,
+            "p50": 38.0,
+            "p90": 55.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 16191,
+          "span_gt2h": 2340,
+          "span_gt4h": 236,
+          "raw_gt64_and_le8_tokens_last30min": 1930
+        },
+        "previous": {
+          "present": 1345381,
+          "raw_gt64": 709083,
+          "compressed_and_selected_lt64": 704168,
+          "raw_points": 116991569,
+          "selected_points": 43401623,
+          "span_sec_given_present": {
+            "p10": 55.980000019073486,
+            "p50": 329.0900001525879,
+            "p90": 735.1299998760223,
+            "p99": 1479.8039999485006
+          },
+          "selected_given_compressed": {
+            "p10": 21.0,
+            "p50": 41.0,
+            "p90": 57.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 3015,
+          "span_gt2h": 715,
+          "span_gt4h": 140,
+          "raw_gt64_and_le8_tokens_last30min": 709082
+        }
+      }
+    },
+    "2025-01": {
+      "departures": 153706,
+      "streams": {
+        "own": {
+          "present": 78917,
+          "raw_gt64": 39073,
+          "compressed_and_selected_lt64": 38918,
+          "raw_points": 5600718,
+          "selected_points": 2836133,
+          "span_sec_given_present": {
+            "p10": 147.40000009536743,
+            "p50": 567.5999999046326,
+            "p90": 1225.7939999580392,
+            "p99": 4507.1788000011375
+          },
+          "selected_given_compressed": {
+            "p10": 31.0,
+            "p50": 42.0,
+            "p90": 52.0,
+            "p99": 61.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 9.0,
+            "p50": 38.0,
+            "p90": 54.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 1248,
+          "span_gt2h": 149,
+          "span_gt4h": 24,
+          "raw_gt64_and_le8_tokens_last30min": 165
+        },
+        "previous": {
+          "present": 86509,
+          "raw_gt64": 22581,
+          "compressed_and_selected_lt64": 22517,
+          "raw_points": 3825815,
+          "selected_points": 2591293,
+          "span_sec_given_present": {
+            "p10": 20.32000012397766,
+            "p50": 318.02999997138977,
+            "p90": 745.2599999904633,
+            "p99": 1647.332000064848
+          },
+          "selected_given_compressed": {
+            "p10": 35.0,
+            "p50": 46.0,
+            "p90": 56.0,
+            "p99": 61.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 234,
+          "span_gt2h": 51,
+          "span_gt4h": 11,
+          "raw_gt64_and_le8_tokens_last30min": 22581
+        }
+      }
+    },
+    "2025-02": {
+      "departures": 143732,
+      "streams": {
+        "own": {
+          "present": 75186,
+          "raw_gt64": 40802,
+          "compressed_and_selected_lt64": 40691,
+          "raw_points": 5700755,
+          "selected_points": 2794087,
+          "span_sec_given_present": {
+            "p10": 178.64000010490417,
+            "p50": 594.789999961853,
+            "p90": 1178.7300000190735,
+            "p99": 4171.146000003809
+          },
+          "selected_given_compressed": {
+            "p10": 31.0,
+            "p50": 42.0,
+            "p90": 52.0,
+            "p99": 60.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 12.0,
+            "p50": 39.0,
+            "p90": 54.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 979,
+          "span_gt2h": 113,
+          "span_gt4h": 15,
+          "raw_gt64_and_le8_tokens_last30min": 112
+        },
+        "previous": {
+          "present": 81699,
+          "raw_gt64": 22229,
+          "compressed_and_selected_lt64": 22173,
+          "raw_points": 3796852,
+          "selected_points": 2597585,
+          "span_sec_given_present": {
+            "p10": 49.37000007629395,
+            "p50": 326.5,
+            "p90": 716.8959999084472,
+            "p99": 1548.7270000648593
+          },
+          "selected_given_compressed": {
+            "p10": 35.0,
+            "p50": 45.0,
+            "p90": 55.0,
+            "p99": 61.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 174,
+          "span_gt2h": 42,
+          "span_gt4h": 8,
+          "raw_gt64_and_le8_tokens_last30min": 22229
+        }
+      }
+    },
+    "2025-03": {
+      "departures": 164449,
+      "streams": {
+        "own": {
+          "present": 96062,
+          "raw_gt64": 54198,
+          "compressed_and_selected_lt64": 54042,
+          "raw_points": 7555152,
+          "selected_points": 3642934,
+          "span_sec_given_present": {
+            "p10": 184.4300000667572,
+            "p50": 602.1399999856949,
+            "p90": 1133.656000065804,
+            "p99": 4027.0190000748635
+          },
+          "selected_given_compressed": {
+            "p10": 31.0,
+            "p50": 42.0,
+            "p90": 52.0,
+            "p99": 60.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 14.0,
+            "p50": 40.0,
+            "p90": 54.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 1173,
+          "span_gt2h": 114,
+          "span_gt4h": 13,
+          "raw_gt64_and_le8_tokens_last30min": 124
+        },
+        "previous": {
+          "present": 100978,
+          "raw_gt64": 30510,
+          "compressed_and_selected_lt64": 30424,
+          "raw_points": 4995551,
+          "selected_points": 3317392,
+          "span_sec_given_present": {
+            "p10": 55.769999980926514,
+            "p50": 317.4800000190735,
+            "p90": 695.341999912262,
+            "p99": 1445.5151999855032
+          },
+          "selected_given_compressed": {
+            "p10": 35.0,
+            "p50": 46.0,
+            "p90": 56.0,
+            "p99": 61.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 207,
+          "span_gt2h": 50,
+          "span_gt4h": 16,
+          "raw_gt64_and_le8_tokens_last30min": 30509
+        }
+      }
+    },
+    "2025-04": {
+      "departures": 175288,
+      "streams": {
+        "own": {
+          "present": 99529,
+          "raw_gt64": 52114,
+          "compressed_and_selected_lt64": 51973,
+          "raw_points": 7426325,
+          "selected_points": 3685819,
+          "span_sec_given_present": {
+            "p10": 173.55599994659426,
+            "p50": 579.3700001239777,
+            "p90": 1086.2679999828338,
+            "p99": 3918.7880001163517
+          },
+          "selected_given_compressed": {
+            "p10": 31.0,
+            "p50": 42.0,
+            "p90": 52.0,
+            "p99": 60.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 13.0,
+            "p50": 39.0,
+            "p90": 54.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 1122,
+          "span_gt2h": 138,
+          "span_gt4h": 17,
+          "raw_gt64_and_le8_tokens_last30min": 121
+        },
+        "previous": {
+          "present": 105596,
+          "raw_gt64": 27122,
+          "compressed_and_selected_lt64": 27051,
+          "raw_points": 4767389,
+          "selected_points": 3393388,
+          "span_sec_given_present": {
+            "p10": 59.86500012874603,
+            "p50": 299.039999961853,
+            "p90": 657.4049999713898,
+            "p99": 1286.8739999055877
+          },
+          "selected_given_compressed": {
+            "p10": 34.0,
+            "p50": 45.0,
+            "p90": 55.0,
+            "p99": 61.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 178,
+          "span_gt2h": 38,
+          "span_gt4h": 7,
+          "raw_gt64_and_le8_tokens_last30min": 27122
+        }
+      }
+    },
+    "2025-05": {
+      "departures": 185202,
+      "streams": {
+        "own": {
+          "present": 109764,
+          "raw_gt64": 63806,
+          "compressed_and_selected_lt64": 63627,
+          "raw_points": 8879355,
+          "selected_points": 4247488,
+          "span_sec_given_present": {
+            "p10": 211.63300011157992,
+            "p50": 596.5049999952316,
+            "p90": 1126.7439999341964,
+            "p99": 4054.9643001222594
+          },
+          "selected_given_compressed": {
+            "p10": 31.0,
+            "p50": 41.0,
+            "p90": 52.0,
+            "p99": 60.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 17.0,
+            "p50": 40.0,
+            "p90": 54.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 1338,
+          "span_gt2h": 184,
+          "span_gt4h": 10,
+          "raw_gt64_and_le8_tokens_last30min": 137
+        },
+        "previous": {
+          "present": 115919,
+          "raw_gt64": 38737,
+          "compressed_and_selected_lt64": 38659,
+          "raw_points": 6203369,
+          "selected_points": 3990214,
+          "span_sec_given_present": {
+            "p10": 60.46000003814697,
+            "p50": 310.9800000190735,
+            "p90": 685.2919999599457,
+            "p99": 1331.507999906537
+          },
+          "selected_given_compressed": {
+            "p10": 32.0,
+            "p50": 45.0,
+            "p90": 55.0,
+            "p99": 61.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 203,
+          "span_gt2h": 50,
+          "span_gt4h": 20,
+          "raw_gt64_and_le8_tokens_last30min": 38737
+        }
+      }
+    },
+    "2025-06": {
+      "departures": 183142,
+      "streams": {
+        "own": {
+          "present": 113987,
+          "raw_gt64": 64822,
+          "compressed_and_selected_lt64": 64493,
+          "raw_points": 10181773,
+          "selected_points": 4262683,
+          "span_sec_given_present": {
+            "p10": 154.4020000934601,
+            "p50": 573.7699999809265,
+            "p90": 1148.1400001049042,
+            "p99": 4348.725600023269
+          },
+          "selected_given_compressed": {
+            "p10": 31.0,
+            "p50": 42.0,
+            "p90": 55.0,
+            "p99": 62.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 11.0,
+            "p50": 39.0,
+            "p90": 55.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 1531,
+          "span_gt2h": 236,
+          "span_gt4h": 28,
+          "raw_gt64_and_le8_tokens_last30min": 176
+        },
+        "previous": {
+          "present": 121881,
+          "raw_gt64": 78397,
+          "compressed_and_selected_lt64": 77971,
+          "raw_points": 13137880,
+          "selected_points": 4046226,
+          "span_sec_given_present": {
+            "p10": 57.25,
+            "p50": 330.39999985694885,
+            "p90": 740.9500000476837,
+            "p99": 1414.258000040053
+          },
+          "selected_given_compressed": {
+            "p10": 23.0,
+            "p50": 41.0,
+            "p90": 57.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 230,
+          "span_gt2h": 56,
+          "span_gt4h": 16,
+          "raw_gt64_and_le8_tokens_last30min": 78397
+        }
+      }
+    },
+    "2025-07": {
+      "departures": 190713,
+      "streams": {
+        "own": {
+          "present": 105152,
+          "raw_gt64": 48026,
+          "compressed_and_selected_lt64": 47641,
+          "raw_points": 8544132,
+          "selected_points": 3669878,
+          "span_sec_given_present": {
+            "p10": 63.470000028610265,
+            "p50": 537.914999961853,
+            "p90": 1153.5919999361045,
+            "p99": 4282.858200013638
+          },
+          "selected_given_compressed": {
+            "p10": 31.0,
+            "p50": 43.0,
+            "p90": 56.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 6.0,
+            "p50": 37.0,
+            "p90": 55.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 1343,
+          "span_gt2h": 261,
+          "span_gt4h": 27,
+          "raw_gt64_and_le8_tokens_last30min": 259
+        },
+        "previous": {
+          "present": 128433,
+          "raw_gt64": 71189,
+          "compressed_and_selected_lt64": 70545,
+          "raw_points": 11846593,
+          "selected_points": 3739152,
+          "span_sec_given_present": {
+            "p10": 42.9300000667572,
+            "p50": 264.3800001144409,
+            "p90": 710.4860000133515,
+            "p99": 1424.0460000419585
+          },
+          "selected_given_compressed": {
+            "p10": 19.0,
+            "p50": 39.0,
+            "p90": 59.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 277,
+          "span_gt2h": 69,
+          "span_gt4h": 12,
+          "raw_gt64_and_le8_tokens_last30min": 71189
+        }
+      }
+    },
+    "2025-08": {
+      "departures": 191182,
+      "streams": {
+        "own": {
+          "present": 113237,
+          "raw_gt64": 55340,
+          "compressed_and_selected_lt64": 54952,
+          "raw_points": 9436026,
+          "selected_points": 3943047,
+          "span_sec_given_present": {
+            "p10": 74.21600003242493,
+            "p50": 531.9800000190735,
+            "p90": 1146.8940001010897,
+            "p99": 4192.644800014496
+          },
+          "selected_given_compressed": {
+            "p10": 31.0,
+            "p50": 43.0,
+            "p90": 56.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 6.0,
+            "p50": 37.0,
+            "p90": 56.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 1454,
+          "span_gt2h": 227,
+          "span_gt4h": 20,
+          "raw_gt64_and_le8_tokens_last30min": 202
+        },
+        "previous": {
+          "present": 128258,
+          "raw_gt64": 80188,
+          "compressed_and_selected_lt64": 79425,
+          "raw_points": 12956467,
+          "selected_points": 3964546,
+          "span_sec_given_present": {
+            "p10": 52.07699999809266,
+            "p50": 299.0699999332428,
+            "p90": 699.420000076294,
+            "p99": 1440.0048000979398
+          },
+          "selected_given_compressed": {
+            "p10": 18.0,
+            "p50": 38.0,
+            "p90": 59.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 263,
+          "span_gt2h": 72,
+          "span_gt4h": 14,
+          "raw_gt64_and_le8_tokens_last30min": 80188
+        }
+      }
+    },
+    "2025-09": {
+      "departures": 183950,
+      "streams": {
+        "own": {
+          "present": 113543,
+          "raw_gt64": 58327,
+          "compressed_and_selected_lt64": 57992,
+          "raw_points": 8812115,
+          "selected_points": 3938753,
+          "span_sec_given_present": {
+            "p10": 64.93200006484986,
+            "p50": 579.4300000667572,
+            "p90": 1192.4020000457765,
+            "p99": 4217.852599940301
+          },
+          "selected_given_compressed": {
+            "p10": 28.0,
+            "p50": 40.0,
+            "p90": 54.0,
+            "p99": 62.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 6.0,
+            "p50": 37.0,
+            "p90": 55.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 1440,
+          "span_gt2h": 254,
+          "span_gt4h": 26,
+          "raw_gt64_and_le8_tokens_last30min": 183
+        },
+        "previous": {
+          "present": 126308,
+          "raw_gt64": 78506,
+          "compressed_and_selected_lt64": 77762,
+          "raw_points": 13067877,
+          "selected_points": 3911796,
+          "span_sec_given_present": {
+            "p10": 49.980000019073486,
+            "p50": 328.6599999666214,
+            "p90": 765.2629999876023,
+            "p99": 1494.6540998530363
+          },
+          "selected_given_compressed": {
+            "p10": 20.0,
+            "p50": 38.0,
+            "p90": 59.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 279,
+          "span_gt2h": 73,
+          "span_gt4h": 13,
+          "raw_gt64_and_le8_tokens_last30min": 78506
+        }
+      }
+    },
+    "2025-10": {
+      "departures": 185674,
+      "streams": {
+        "own": {
+          "present": 121935,
+          "raw_gt64": 65191,
+          "compressed_and_selected_lt64": 64844,
+          "raw_points": 9788866,
+          "selected_points": 4228634,
+          "span_sec_given_present": {
+            "p10": 103.00399999618531,
+            "p50": 585.289999961853,
+            "p90": 1169.966000032425,
+            "p99": 4281.495999994284
+          },
+          "selected_given_compressed": {
+            "p10": 30.0,
+            "p50": 41.0,
+            "p90": 53.0,
+            "p99": 62.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 7.0,
+            "p50": 37.0,
+            "p90": 54.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 1582,
+          "span_gt2h": 238,
+          "span_gt4h": 20,
+          "raw_gt64_and_le8_tokens_last30min": 158
+        },
+        "previous": {
+          "present": 128363,
+          "raw_gt64": 88832,
+          "compressed_and_selected_lt64": 88244,
+          "raw_points": 14576245,
+          "selected_points": 4177509,
+          "span_sec_given_present": {
+            "p10": 65.15999984741211,
+            "p50": 349.539999961853,
+            "p90": 747.426000070572,
+            "p99": 1516.9514000463487
+          },
+          "selected_given_compressed": {
+            "p10": 19.0,
+            "p50": 38.0,
+            "p90": 58.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 313,
+          "span_gt2h": 65,
+          "span_gt4h": 7,
+          "raw_gt64_and_le8_tokens_last30min": 88832
+        }
+      }
+    },
+    "2025-11": {
+      "departures": 162332,
+      "streams": {
+        "own": {
+          "present": 112573,
+          "raw_gt64": 60102,
+          "compressed_and_selected_lt64": 59774,
+          "raw_points": 9416530,
+          "selected_points": 4016707,
+          "span_sec_given_present": {
+            "p10": 136.21000003814697,
+            "p50": 622.8000001907349,
+            "p90": 1226.4279998302463,
+            "p99": 4261.9692000961295
+          },
+          "selected_given_compressed": {
+            "p10": 31.0,
+            "p50": 41.0,
+            "p90": 53.0,
+            "p99": 62.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 9.0,
+            "p50": 38.0,
+            "p90": 54.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 1439,
+          "span_gt2h": 201,
+          "span_gt4h": 21,
+          "raw_gt64_and_le8_tokens_last30min": 157
+        },
+        "previous": {
+          "present": 111096,
+          "raw_gt64": 85009,
+          "compressed_and_selected_lt64": 84287,
+          "raw_points": 13975765,
+          "selected_points": 3823049,
+          "span_sec_given_present": {
+            "p10": 70.99000000953674,
+            "p50": 402.1799998283386,
+            "p90": 812.0649999380112,
+            "p99": 1605.5190000176453
+          },
+          "selected_given_compressed": {
+            "p10": 19.0,
+            "p50": 40.0,
+            "p90": 58.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 314,
+          "span_gt2h": 67,
+          "span_gt4h": 7,
+          "raw_gt64_and_le8_tokens_last30min": 85009
+        }
+      }
+    },
+    "2025-12": {
+      "departures": 165677,
+      "streams": {
+        "own": {
+          "present": 111532,
+          "raw_gt64": 64820,
+          "compressed_and_selected_lt64": 64358,
+          "raw_points": 10119015,
+          "selected_points": 4102489,
+          "span_sec_given_present": {
+            "p10": 158.98200001716614,
+            "p50": 648.8849999904633,
+            "p90": 1271.8370001316073,
+            "p99": 4523.757400026325
+          },
+          "selected_given_compressed": {
+            "p10": 31.0,
+            "p50": 42.0,
+            "p90": 54.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 10.0,
+            "p50": 39.0,
+            "p90": 55.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 1542,
+          "span_gt2h": 225,
+          "span_gt4h": 15,
+          "raw_gt64_and_le8_tokens_last30min": 136
+        },
+        "previous": {
+          "present": 110341,
+          "raw_gt64": 85783,
+          "compressed_and_selected_lt64": 85110,
+          "raw_points": 13841766,
+          "selected_points": 3849473,
+          "span_sec_given_present": {
+            "p10": 74.87000012397766,
+            "p50": 391.789999961853,
+            "p90": 796.2699999809265,
+            "p99": 1630.7720000267047
+          },
+          "selected_given_compressed": {
+            "p10": 19.0,
+            "p50": 40.0,
+            "p90": 57.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 343,
+          "span_gt2h": 82,
+          "span_gt4h": 9,
+          "raw_gt64_and_le8_tokens_last30min": 85783
+        }
+      }
+    },
+    "2026": {
+      "departures": 344841,
+      "streams": {
+        "own": {
+          "present": 227697,
+          "raw_gt64": 119699,
+          "compressed_and_selected_lt64": 118881,
+          "raw_points": 20445273,
+          "selected_points": 8063762,
+          "span_sec_given_present": {
+            "p10": 95.45199990272526,
+            "p50": 654.539999961853,
+            "p90": 1387.094000005722,
+            "p99": 4374.746400032049
+          },
+          "selected_given_compressed": {
+            "p10": 31.0,
+            "p50": 43.0,
+            "p90": 56.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 7.0,
+            "p50": 38.0,
+            "p90": 55.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 3142,
+          "span_gt2h": 546,
+          "span_gt4h": 68,
+          "raw_gt64_and_le8_tokens_last30min": 397
+        },
+        "previous": {
+          "present": 232987,
+          "raw_gt64": 172406,
+          "compressed_and_selected_lt64": 171008,
+          "raw_points": 27350940,
+          "selected_points": 7690000,
+          "span_sec_given_present": {
+            "p10": 51.96000003814697,
+            "p50": 362.49000000953674,
+            "p90": 761.1900000572205,
+            "p99": 1831.6338000058952
+          },
+          "selected_given_compressed": {
+            "p10": 19.0,
+            "p50": 39.0,
+            "p90": 57.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 812,
+          "span_gt2h": 197,
+          "span_gt4h": 48,
+          "raw_gt64_and_le8_tokens_last30min": 172406
+        }
+      }
+    },
+    "2026-01": {
+      "departures": 152719,
+      "streams": {
+        "own": {
+          "present": 105052,
+          "raw_gt64": 55296,
+          "compressed_and_selected_lt64": 54938,
+          "raw_points": 9060212,
+          "selected_points": 3634249,
+          "span_sec_given_present": {
+            "p10": 103.9710000038147,
+            "p50": 624.4950000047684,
+            "p90": 1388.075999927522,
+            "p99": 4529.702700021278
+          },
+          "selected_given_compressed": {
+            "p10": 31.0,
+            "p50": 43.0,
+            "p90": 54.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 7.0,
+            "p50": 37.0,
+            "p90": 53.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 1623,
+          "span_gt2h": 248,
+          "span_gt4h": 35,
+          "raw_gt64_and_le8_tokens_last30min": 203
+        },
+        "previous": {
+          "present": 100834,
+          "raw_gt64": 75957,
+          "compressed_and_selected_lt64": 75153,
+          "raw_points": 12102532,
+          "selected_points": 3365437,
+          "span_sec_given_present": {
+            "p10": 72.36999988555908,
+            "p50": 386.50999999046326,
+            "p90": 798.8920000314711,
+            "p99": 1836.377900037765
+          },
+          "selected_given_compressed": {
+            "p10": 18.0,
+            "p50": 38.0,
+            "p90": 58.0,
+            "p99": 64.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 362,
+          "span_gt2h": 103,
+          "span_gt4h": 21,
+          "raw_gt64_and_le8_tokens_last30min": 75957
+        }
+      }
+    },
+    "2026-01/EDDF": {
+      "departures": 15667,
+      "streams": {
+        "own": {
+          "present": 13433,
+          "raw_gt64": 1236,
+          "compressed_and_selected_lt64": 1233,
+          "raw_points": 387249,
+          "selected_points": 308884,
+          "span_sec_given_present": {
+            "p10": 14.3699999332428,
+            "p50": 364.85000014305115,
+            "p90": 1055.9080000400543,
+            "p99": 2240.5496001052875
+          },
+          "selected_given_compressed": {
+            "p10": 24.0,
+            "p50": 37.0,
+            "p90": 47.0,
+            "p99": 56.65000000000009
+          },
+          "tokens_last30min_given_present": {
+            "p10": 5.0,
+            "p50": 20.0,
+            "p90": 44.0,
+            "p99": 61.0
+          },
+          "span_gt1h": 31,
+          "span_gt2h": 4,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 26
+        },
+        "previous": {
+          "present": 12155,
+          "raw_gt64": 10511,
+          "compressed_and_selected_lt64": 10510,
+          "raw_points": 1355973,
+          "selected_points": 330893,
+          "span_sec_given_present": {
+            "p10": 154.95000000000005,
+            "p50": 412.1599998474121,
+            "p90": 738.024000120163,
+            "p99": 1332.8596000051496
+          },
+          "selected_given_compressed": {
+            "p10": 18.0,
+            "p50": 27.0,
+            "p90": 35.0,
+            "p99": 46.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 10,
+          "span_gt2h": 1,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 10511
+        }
+      }
+    },
+    "2026-01/EDDM": {
+      "departures": 10953,
+      "streams": {
+        "own": {
+          "present": 10525,
+          "raw_gt64": 9419,
+          "compressed_and_selected_lt64": 9395,
+          "raw_points": 1355428,
+          "selected_points": 463752,
+          "span_sec_given_present": {
+            "p10": 459.87799997329716,
+            "p50": 866.0500001907349,
+            "p90": 1923.9299999713899,
+            "p99": 5072.126800012589
+          },
+          "selected_given_compressed": {
+            "p10": 34.0,
+            "p50": 44.0,
+            "p90": 53.0,
+            "p99": 61.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 31.0,
+            "p50": 43.0,
+            "p90": 53.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 266,
+          "span_gt2h": 22,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 16
+        },
+        "previous": {
+          "present": 8236,
+          "raw_gt64": 8033,
+          "compressed_and_selected_lt64": 8023,
+          "raw_points": 1413671,
+          "selected_points": 399942,
+          "span_sec_given_present": {
+            "p10": 272.0699999332428,
+            "p50": 403.4100000858307,
+            "p90": 624.6099998950958,
+            "p99": 1750.9190000295573
+          },
+          "selected_given_compressed": {
+            "p10": 40.0,
+            "p50": 50.0,
+            "p90": 58.0,
+            "p99": 62.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 19,
+          "span_gt2h": 2,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 8033
+        }
+      }
+    },
+    "2026-01/EGLL": {
+      "departures": 19283,
+      "streams": {
+        "own": {
+          "present": 16455,
+          "raw_gt64": 3004,
+          "compressed_and_selected_lt64": 3003,
+          "raw_points": 634477,
+          "selected_points": 468270,
+          "span_sec_given_present": {
+            "p10": 131.29800004959108,
+            "p50": 735.8599998950958,
+            "p90": 1392.7539999961853,
+            "p99": 2517.554799985876
+          },
+          "selected_given_compressed": {
+            "p10": 26.0,
+            "p50": 35.0,
+            "p90": 45.0,
+            "p99": 54.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 5.0,
+            "p50": 28.0,
+            "p90": 51.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 65,
+          "span_gt2h": 11,
+          "span_gt4h": 3,
+          "raw_gt64_and_le8_tokens_last30min": 29
+        },
+        "previous": {
+          "present": 16060,
+          "raw_gt64": 12989,
+          "compressed_and_selected_lt64": 12987,
+          "raw_points": 1563349,
+          "selected_points": 364944,
+          "span_sec_given_present": {
+            "p10": 80.82999992370605,
+            "p50": 436.18999993801117,
+            "p90": 855.2430000305176,
+            "p99": 2067.2006998872753
+          },
+          "selected_given_compressed": {
+            "p10": 13.0,
+            "p50": 21.0,
+            "p90": 40.0,
+            "p99": 51.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 30,
+          "span_gt2h": 8,
+          "span_gt4h": 3,
+          "raw_gt64_and_le8_tokens_last30min": 12989
+        }
+      }
+    },
+    "2026-01/EHAM": {
+      "departures": 16232,
+      "streams": {
+        "own": {
+          "present": 14995,
+          "raw_gt64": 14256,
+          "compressed_and_selected_lt64": 14103,
+          "raw_points": 2856337,
+          "selected_points": 716884,
+          "span_sec_given_present": {
+            "p10": 378.2340000152588,
+            "p50": 771.5599999427795,
+            "p90": 1833.4680000782018,
+            "p99": 5626.871600098601
+          },
+          "selected_given_compressed": {
+            "p10": 37.0,
+            "p50": 48.0,
+            "p90": 59.0,
+            "p99": 64.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 33.0,
+            "p50": 47.0,
+            "p90": 58.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 493,
+          "span_gt2h": 75,
+          "span_gt4h": 10,
+          "raw_gt64_and_le8_tokens_last30min": 41
+        },
+        "previous": {
+          "present": 12084,
+          "raw_gt64": 11847,
+          "compressed_and_selected_lt64": 11144,
+          "raw_points": 3137223,
+          "selected_points": 672365,
+          "span_sec_given_present": {
+            "p10": 338.04199995994566,
+            "p50": 675.5,
+            "p90": 1101.3240000963212,
+            "p99": 3270.931399946214
+          },
+          "selected_given_compressed": {
+            "p10": 47.0,
+            "p50": 59.0,
+            "p90": 63.0,
+            "p99": 64.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 104,
+          "span_gt2h": 26,
+          "span_gt4h": 6,
+          "raw_gt64_and_le8_tokens_last30min": 11847
+        }
+      }
+    },
+    "2026-01/LEBL": {
+      "departures": 12201,
+      "streams": {
+        "own": {
+          "present": 11707,
+          "raw_gt64": 6453,
+          "compressed_and_selected_lt64": 6449,
+          "raw_points": 934735,
+          "selected_points": 431214,
+          "span_sec_given_present": {
+            "p10": 149.75199990272523,
+            "p50": 653.4000000953674,
+            "p90": 1139.8100000381469,
+            "p99": 2840.607599911696
+          },
+          "selected_given_compressed": {
+            "p10": 28.0,
+            "p50": 38.0,
+            "p90": 48.0,
+            "p99": 55.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 19.0,
+            "p50": 37.0,
+            "p90": 52.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 83,
+          "span_gt2h": 6,
+          "span_gt4h": 1,
+          "raw_gt64_and_le8_tokens_last30min": 9
+        },
+        "previous": {
+          "present": 9267,
+          "raw_gt64": 8447,
+          "compressed_and_selected_lt64": 8446,
+          "raw_points": 1139450,
+          "selected_points": 351968,
+          "span_sec_given_present": {
+            "p10": 122.1760000705719,
+            "p50": 264.69999980926514,
+            "p90": 445.0059999942779,
+            "p99": 1053.3481999588043
+          },
+          "selected_given_compressed": {
+            "p10": 27.0,
+            "p50": 39.0,
+            "p90": 50.0,
+            "p99": 55.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 5,
+          "span_gt2h": 1,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 8447
+        }
+      }
+    },
+    "2026-01/LEMD": {
+      "departures": 16802,
+      "streams": {
+        "own": {
+          "present": 16109,
+          "raw_gt64": 12851,
+          "compressed_and_selected_lt64": 12835,
+          "raw_points": 1713626,
+          "selected_points": 687523,
+          "span_sec_given_present": {
+            "p10": 292.3379999160767,
+            "p50": 625.1599998474121,
+            "p90": 1227.25,
+            "p99": 2768.161199884415
+          },
+          "selected_given_compressed": {
+            "p10": 33.0,
+            "p50": 42.0,
+            "p90": 51.0,
+            "p99": 58.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 31.0,
+            "p50": 42.0,
+            "p90": 53.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 83,
+          "span_gt2h": 19,
+          "span_gt4h": 3,
+          "raw_gt64_and_le8_tokens_last30min": 14
+        },
+        "previous": {
+          "present": 12855,
+          "raw_gt64": 12088,
+          "compressed_and_selected_lt64": 12076,
+          "raw_points": 1871617,
+          "selected_points": 515587,
+          "span_sec_given_present": {
+            "p10": 196.31400003433228,
+            "p50": 456.5199999809265,
+            "p90": 875.0999999046326,
+            "p99": 1508.4805999612795
+          },
+          "selected_given_compressed": {
+            "p10": 29.0,
+            "p50": 40.0,
+            "p90": 52.0,
+            "p99": 59.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 18,
+          "span_gt2h": 6,
+          "span_gt4h": 1,
+          "raw_gt64_and_le8_tokens_last30min": 12088
+        }
+      }
+    },
+    "2026-01/LFPG": {
+      "departures": 18129,
+      "streams": {
+        "own": {
+          "present": 3499,
+          "raw_gt64": 2,
+          "compressed_and_selected_lt64": 2,
+          "raw_points": 15874,
+          "selected_points": 15759,
+          "span_sec_given_present": {
+            "p10": 0.0,
+            "p50": 21.320000171661377,
+            "p90": 558.3419999599471,
+            "p99": 1763.5584000253677
+          },
+          "selected_given_compressed": {
+            "p10": 22.9,
+            "p50": 26.5,
+            "p90": 30.1,
+            "p99": 30.91
+          },
+          "tokens_last30min_given_present": {
+            "p10": 1.0,
+            "p50": 3.0,
+            "p90": 9.0,
+            "p99": 23.0
+          },
+          "span_gt1h": 0,
+          "span_gt2h": 0,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 2
+        },
+        "previous": {
+          "present": 14082,
+          "raw_gt64": 2106,
+          "compressed_and_selected_lt64": 2106,
+          "raw_points": 308061,
+          "selected_points": 162398,
+          "span_sec_given_present": {
+            "p10": 12.119999885559082,
+            "p50": 89.58500003814697,
+            "p90": 480.533999967575,
+            "p99": 908.3961000990869
+          },
+          "selected_given_compressed": {
+            "p10": 12.0,
+            "p50": 20.0,
+            "p90": 31.0,
+            "p99": 36.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 0,
+          "span_gt2h": 0,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 2106
+        }
+      }
+    },
+    "2026-01/LIRF": {
+      "departures": 11061,
+      "streams": {
+        "own": {
+          "present": 8872,
+          "raw_gt64": 86,
+          "compressed_and_selected_lt64": 86,
+          "raw_points": 151742,
+          "selected_points": 145774,
+          "span_sec_given_present": {
+            "p10": 12.202999806404115,
+            "p50": 210.2300000190735,
+            "p90": 819.7709999799729,
+            "p99": 1593.16139992952
+          },
+          "selected_given_compressed": {
+            "p10": 21.0,
+            "p50": 33.5,
+            "p90": 51.5,
+            "p99": 59.30000000000001
+          },
+          "tokens_last30min_given_present": {
+            "p10": 3.0,
+            "p50": 13.0,
+            "p90": 33.0,
+            "p99": 55.0
+          },
+          "span_gt1h": 24,
+          "span_gt2h": 2,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 8
+        },
+        "previous": {
+          "present": 9104,
+          "raw_gt64": 3807,
+          "compressed_and_selected_lt64": 3807,
+          "raw_points": 538720,
+          "selected_points": 266431,
+          "span_sec_given_present": {
+            "p10": 58.7460000038147,
+            "p50": 387.2150000333786,
+            "p90": 605.4840001106264,
+            "p99": 984.0272999453538
+          },
+          "selected_given_compressed": {
+            "p10": 15.0,
+            "p50": 22.0,
+            "p90": 31.0,
+            "p99": 52.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 2,
+          "span_gt2h": 0,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 3807
+        }
+      }
+    },
+    "2026-01/LSZH": {
+      "departures": 9995,
+      "streams": {
+        "own": {
+          "present": 9415,
+          "raw_gt64": 7988,
+          "compressed_and_selected_lt64": 7831,
+          "raw_points": 1010320,
+          "selected_points": 395780,
+          "span_sec_given_present": {
+            "p10": 287.1620000839234,
+            "p50": 648.8899998664856,
+            "p90": 2003.0019999980927,
+            "p99": 7500.280799937255
+          },
+          "selected_given_compressed": {
+            "p10": 29.0,
+            "p50": 42.0,
+            "p90": 56.0,
+            "p99": 64.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 22.0,
+            "p50": 40.0,
+            "p90": 56.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 578,
+          "span_gt2h": 109,
+          "span_gt4h": 18,
+          "raw_gt64_and_le8_tokens_last30min": 57
+        },
+        "previous": {
+          "present": 6950,
+          "raw_gt64": 6129,
+          "compressed_and_selected_lt64": 6054,
+          "raw_points": 774175,
+          "selected_points": 300616,
+          "span_sec_given_present": {
+            "p10": 251.0979999065399,
+            "p50": 366.1049998998642,
+            "p90": 628.8599999427797,
+            "p99": 6726.822199804794
+          },
+          "selected_given_compressed": {
+            "p10": 33.0,
+            "p50": 43.0,
+            "p90": 53.0,
+            "p99": 64.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 174,
+          "span_gt2h": 59,
+          "span_gt4h": 11,
+          "raw_gt64_and_le8_tokens_last30min": 6129
+        }
+      }
+    },
+    "2026-01/LTFM": {
+      "departures": 22396,
+      "streams": {
+        "own": {
+          "present": 42,
+          "raw_gt64": 1,
+          "compressed_and_selected_lt64": 1,
+          "raw_points": 424,
+          "selected_points": 409,
+          "span_sec_given_present": {
+            "p10": 10.82400016784668,
+            "p50": 59.11500000953674,
+            "p90": 74.75299999713897,
+            "p99": 84.46080012321472
+          },
+          "selected_given_compressed": {
+            "p10": 53.0,
+            "p50": 53.0,
+            "p90": 53.0,
+            "p99": 53.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 0,
+          "span_gt2h": 0,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 1
+        },
+        "previous": {
+          "present": 41,
+          "raw_gt64": 0,
+          "compressed_and_selected_lt64": 0,
+          "raw_points": 293,
+          "selected_points": 293,
+          "span_sec_given_present": {
+            "p10": 2.2200000286102295,
+            "p50": 25.71999979019165,
+            "p90": 61.27999997138977,
+            "p99": 73.52199993133546
+          },
+          "selected_given_compressed": {},
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 0,
+          "span_gt2h": 0,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 0
+        }
+      }
+    },
+    "2026-07": {
+      "departures": 192122,
+      "streams": {
+        "own": {
+          "present": 122645,
+          "raw_gt64": 64403,
+          "compressed_and_selected_lt64": 63943,
+          "raw_points": 11385061,
+          "selected_points": 4429513,
+          "span_sec_given_present": {
+            "p10": 88.07999992370605,
+            "p50": 683.7599999904633,
+            "p90": 1386.5419999599458,
+            "p99": 4200.2560000896365
+          },
+          "selected_given_compressed": {
+            "p10": 31.0,
+            "p50": 44.0,
+            "p90": 56.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 7.0,
+            "p50": 39.0,
+            "p90": 56.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 1519,
+          "span_gt2h": 298,
+          "span_gt4h": 33,
+          "raw_gt64_and_le8_tokens_last30min": 194
+        },
+        "previous": {
+          "present": 132153,
+          "raw_gt64": 96449,
+          "compressed_and_selected_lt64": 95855,
+          "raw_points": 15248408,
+          "selected_points": 4324563,
+          "span_sec_given_present": {
+            "p10": 28.912000036239633,
+            "p50": 344.5,
+            "p90": 727.6300000667572,
+            "p99": 1825.8428000259385
+          },
+          "selected_given_compressed": {
+            "p10": 20.0,
+            "p50": 39.0,
+            "p90": 57.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 450,
+          "span_gt2h": 94,
+          "span_gt4h": 27,
+          "raw_gt64_and_le8_tokens_last30min": 96449
+        }
+      }
+    },
+    "2026-07/EDDF": {
+      "departures": 20650,
+      "streams": {
+        "own": {
+          "present": 16588,
+          "raw_gt64": 279,
+          "compressed_and_selected_lt64": 279,
+          "raw_points": 287565,
+          "selected_points": 272790,
+          "span_sec_given_present": {
+            "p10": 8.323999929428101,
+            "p50": 277.7649999856949,
+            "p90": 807.7100000381471,
+            "p99": 1390.204100105763
+          },
+          "selected_given_compressed": {
+            "p10": 23.0,
+            "p50": 32.0,
+            "p90": 42.20000000000002,
+            "p99": 56.43999999999994
+          },
+          "tokens_last30min_given_present": {
+            "p10": 3.0,
+            "p50": 12.0,
+            "p90": 36.0,
+            "p99": 57.0
+          },
+          "span_gt1h": 14,
+          "span_gt2h": 3,
+          "span_gt4h": 1,
+          "raw_gt64_and_le8_tokens_last30min": 10
+        },
+        "previous": {
+          "present": 16942,
+          "raw_gt64": 14077,
+          "compressed_and_selected_lt64": 14077,
+          "raw_points": 1687309,
+          "selected_points": 444191,
+          "span_sec_given_present": {
+            "p10": 124.29499995708466,
+            "p50": 365.93499994277954,
+            "p90": 647.6040001153946,
+            "p99": 1055.23770001173
+          },
+          "selected_given_compressed": {
+            "p10": 15.0,
+            "p50": 23.0,
+            "p90": 34.0,
+            "p99": 44.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 2,
+          "span_gt2h": 0,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 14077
+        }
+      }
+    },
+    "2026-07/EDDM": {
+      "departures": 15013,
+      "streams": {
+        "own": {
+          "present": 14337,
+          "raw_gt64": 11384,
+          "compressed_and_selected_lt64": 11356,
+          "raw_points": 1521915,
+          "selected_points": 630651,
+          "span_sec_given_present": {
+            "p10": 395.78000001907355,
+            "p50": 735.5299999713898,
+            "p90": 1197.7579998493193,
+            "p99": 4547.132000141142
+          },
+          "selected_given_compressed": {
+            "p10": 35.0,
+            "p50": 44.0,
+            "p90": 53.0,
+            "p99": 61.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 32.0,
+            "p50": 44.0,
+            "p90": 54.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 245,
+          "span_gt2h": 15,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 9
+        },
+        "previous": {
+          "present": 12112,
+          "raw_gt64": 11880,
+          "compressed_and_selected_lt64": 11862,
+          "raw_points": 2068267,
+          "selected_points": 581811,
+          "span_sec_given_present": {
+            "p10": 295.8009999513626,
+            "p50": 423.0700000524521,
+            "p90": 617.8829998731613,
+            "p99": 1521.201900100707
+          },
+          "selected_given_compressed": {
+            "p10": 39.0,
+            "p50": 49.0,
+            "p90": 57.0,
+            "p99": 61.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 20,
+          "span_gt2h": 5,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 11880
+        }
+      }
+    },
+    "2026-07/EGLL": {
+      "departures": 20557,
+      "streams": {
+        "own": {
+          "present": 19649,
+          "raw_gt64": 14250,
+          "compressed_and_selected_lt64": 14226,
+          "raw_points": 1942655,
+          "selected_points": 845956,
+          "span_sec_given_present": {
+            "p10": 670.1099998950958,
+            "p50": 1148.039999961853,
+            "p90": 1762.7179998874667,
+            "p99": 5215.756399917604
+          },
+          "selected_given_compressed": {
+            "p10": 33.0,
+            "p50": 42.0,
+            "p90": 52.0,
+            "p99": 60.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 30.0,
+            "p50": 42.0,
+            "p90": 55.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 365,
+          "span_gt2h": 77,
+          "span_gt4h": 19,
+          "raw_gt64_and_le8_tokens_last30min": 37
+        },
+        "previous": {
+          "present": 17134,
+          "raw_gt64": 16570,
+          "compressed_and_selected_lt64": 16532,
+          "raw_points": 2616823,
+          "selected_points": 664688,
+          "span_sec_given_present": {
+            "p10": 330.0659999370575,
+            "p50": 518.7500001192093,
+            "p90": 1158.8370000123982,
+            "p99": 4152.477800037852
+          },
+          "selected_given_compressed": {
+            "p10": 27.0,
+            "p50": 39.0,
+            "p90": 52.0,
+            "p99": 61.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 272,
+          "span_gt2h": 42,
+          "span_gt4h": 23,
+          "raw_gt64_and_le8_tokens_last30min": 16570
+        }
+      }
+    },
+    "2026-07/EHAM": {
+      "departures": 21950,
+      "streams": {
+        "own": {
+          "present": 20947,
+          "raw_gt64": 20233,
+          "compressed_and_selected_lt64": 19888,
+          "raw_points": 4317718,
+          "selected_points": 1019935,
+          "span_sec_given_present": {
+            "p10": 432.77800011634827,
+            "p50": 835.2199997901917,
+            "p90": 1457.6519999504092,
+            "p99": 5631.992599987994
+          },
+          "selected_given_compressed": {
+            "p10": 37.0,
+            "p50": 50.0,
+            "p90": 60.0,
+            "p99": 64.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 35.0,
+            "p50": 49.0,
+            "p90": 59.0,
+            "p99": 64.0
+          },
+          "span_gt1h": 443,
+          "span_gt2h": 121,
+          "span_gt4h": 10,
+          "raw_gt64_and_le8_tokens_last30min": 40
+        },
+        "previous": {
+          "present": 17708,
+          "raw_gt64": 17408,
+          "compressed_and_selected_lt64": 16897,
+          "raw_points": 3843683,
+          "selected_points": 926309,
+          "span_sec_given_present": {
+            "p10": 234.65000009536743,
+            "p50": 448.34500002861023,
+            "p90": 865.0050000667574,
+            "p99": 2241.168099954131
+          },
+          "selected_given_compressed": {
+            "p10": 41.0,
+            "p50": 55.0,
+            "p90": 62.0,
+            "p99": 64.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 83,
+          "span_gt2h": 31,
+          "span_gt4h": 4,
+          "raw_gt64_and_le8_tokens_last30min": 17408
+        }
+      }
+    },
+    "2026-07/LEBL": {
+      "departures": 17879,
+      "streams": {
+        "own": {
+          "present": 17274,
+          "raw_gt64": 11499,
+          "compressed_and_selected_lt64": 11446,
+          "raw_points": 1890386,
+          "selected_points": 695858,
+          "span_sec_given_present": {
+            "p10": 227.35299997329713,
+            "p50": 776.0650000572205,
+            "p90": 1373.1549999475483,
+            "p99": 4143.607600109589
+          },
+          "selected_given_compressed": {
+            "p10": 29.0,
+            "p50": 42.0,
+            "p90": 57.0,
+            "p99": 63.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 22.0,
+            "p50": 40.0,
+            "p90": 57.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 211,
+          "span_gt2h": 36,
+          "span_gt4h": 2,
+          "raw_gt64_and_le8_tokens_last30min": 16
+        },
+        "previous": {
+          "present": 14066,
+          "raw_gt64": 13545,
+          "compressed_and_selected_lt64": 13537,
+          "raw_points": 1941866,
+          "selected_points": 558923,
+          "span_sec_given_present": {
+            "p10": 140.7150000333786,
+            "p50": 297.1050000190735,
+            "p90": 480.7649999856949,
+            "p99": 1340.011499845982
+          },
+          "selected_given_compressed": {
+            "p10": 26.0,
+            "p50": 41.0,
+            "p90": 55.0,
+            "p99": 61.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 24,
+          "span_gt2h": 5,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 13545
+        }
+      }
+    },
+    "2026-07/LEMD": {
+      "departures": 20152,
+      "streams": {
+        "own": {
+          "present": 16479,
+          "raw_gt64": 4871,
+          "compressed_and_selected_lt64": 4867,
+          "raw_points": 787238,
+          "selected_points": 422369,
+          "span_sec_given_present": {
+            "p10": 5.137999916076662,
+            "p50": 430.44000005722046,
+            "p90": 1250.3139999866487,
+            "p99": 3228.739000000951
+          },
+          "selected_given_compressed": {
+            "p10": 21.0,
+            "p50": 30.0,
+            "p90": 43.0,
+            "p99": 58.30000000000018
+          },
+          "tokens_last30min_given_present": {
+            "p10": 3.0,
+            "p50": 24.0,
+            "p90": 50.0,
+            "p99": 63.0
+          },
+          "span_gt1h": 131,
+          "span_gt2h": 38,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 41
+        },
+        "previous": {
+          "present": 15497,
+          "raw_gt64": 10198,
+          "compressed_and_selected_lt64": 10181,
+          "raw_points": 1515155,
+          "selected_points": 442378,
+          "span_sec_given_present": {
+            "p10": 65.95599989891052,
+            "p50": 345.67000007629395,
+            "p90": 943.8919999599457,
+            "p99": 1651.9963999652755
+          },
+          "selected_given_compressed": {
+            "p10": 18.0,
+            "p50": 32.0,
+            "p90": 46.0,
+            "p99": 56.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 43,
+          "span_gt2h": 8,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 10198
+        }
+      }
+    },
+    "2026-07/LFPG": {
+      "departures": 21743,
+      "streams": {
+        "own": {
+          "present": 3443,
+          "raw_gt64": 7,
+          "compressed_and_selected_lt64": 7,
+          "raw_points": 17639,
+          "selected_points": 17189,
+          "span_sec_given_present": {
+            "p10": 0.0,
+            "p50": 36.34999990463257,
+            "p90": 476.117999982834,
+            "p99": 1105.5817998886087
+          },
+          "selected_given_compressed": {
+            "p10": 15.2,
+            "p50": 24.0,
+            "p90": 33.4,
+            "p99": 33.94
+          },
+          "tokens_last30min_given_present": {
+            "p10": 1.0,
+            "p50": 3.0,
+            "p90": 10.0,
+            "p99": 28.0
+          },
+          "span_gt1h": 3,
+          "span_gt2h": 0,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 5
+        },
+        "previous": {
+          "present": 17019,
+          "raw_gt64": 4163,
+          "compressed_and_selected_lt64": 4163,
+          "raw_points": 592530,
+          "selected_points": 290716,
+          "span_sec_given_present": {
+            "p10": 7.480000019073486,
+            "p50": 156.10000014305115,
+            "p90": 468.2780000209809,
+            "p99": 892.9373999738691
+          },
+          "selected_given_compressed": {
+            "p10": 13.0,
+            "p50": 21.0,
+            "p90": 33.0,
+            "p99": 38.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 1,
+          "span_gt2h": 1,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 4163
+        }
+      }
+    },
+    "2026-07/LIRF": {
+      "departures": 15838,
+      "streams": {
+        "own": {
+          "present": 1356,
+          "raw_gt64": 0,
+          "compressed_and_selected_lt64": 0,
+          "raw_points": 4984,
+          "selected_points": 4984,
+          "span_sec_given_present": {
+            "p10": 0.0,
+            "p50": 4.1849998235702515,
+            "p90": 14.240000009536743,
+            "p99": 316.3605000257508
+          },
+          "selected_given_compressed": {},
+          "tokens_last30min_given_present": {
+            "p10": 1.0,
+            "p50": 3.0,
+            "p90": 7.0,
+            "p99": 18.0
+          },
+          "span_gt1h": 0,
+          "span_gt2h": 0,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 0
+        },
+        "previous": {
+          "present": 11523,
+          "raw_gt64": 0,
+          "compressed_and_selected_lt64": 0,
+          "raw_points": 50588,
+          "selected_points": 50588,
+          "span_sec_given_present": {
+            "p10": 5.3500001430511475,
+            "p50": 13.940000057220459,
+            "p90": 43.5,
+            "p99": 86.16900007724766
+          },
+          "selected_given_compressed": {},
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 0,
+          "span_gt2h": 0,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 0
+        }
+      }
+    },
+    "2026-07/LSZH": {
+      "departures": 13155,
+      "streams": {
+        "own": {
+          "present": 12390,
+          "raw_gt64": 1874,
+          "compressed_and_selected_lt64": 1868,
+          "raw_points": 612266,
+          "selected_points": 517275,
+          "span_sec_given_present": {
+            "p10": 220.95500004291534,
+            "p50": 468.210000038147,
+            "p90": 904.3349999189377,
+            "p99": 2956.91340002537
+          },
+          "selected_given_compressed": {
+            "p10": 28.0,
+            "p50": 35.0,
+            "p90": 44.0,
+            "p99": 57.26999999999998
+          },
+          "tokens_last30min_given_present": {
+            "p10": 24.0,
+            "p50": 42.0,
+            "p90": 57.0,
+            "p99": 64.0
+          },
+          "span_gt1h": 107,
+          "span_gt2h": 8,
+          "span_gt4h": 1,
+          "raw_gt64_and_le8_tokens_last30min": 30
+        },
+        "previous": {
+          "present": 9684,
+          "raw_gt64": 8602,
+          "compressed_and_selected_lt64": 8600,
+          "raw_points": 926424,
+          "selected_points": 359448,
+          "span_sec_given_present": {
+            "p10": 214.59299998283387,
+            "p50": 326.72000002861023,
+            "p90": 480.1239998817444,
+            "p99": 1186.017199957371
+          },
+          "selected_given_compressed": {
+            "p10": 26.0,
+            "p50": 37.0,
+            "p90": 44.0,
+            "p99": 51.0
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 5,
+          "span_gt2h": 2,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 8602
+        }
+      }
+    },
+    "2026-07/LTFM": {
+      "departures": 25185,
+      "streams": {
+        "own": {
+          "present": 182,
+          "raw_gt64": 6,
+          "compressed_and_selected_lt64": 6,
+          "raw_points": 2695,
+          "selected_points": 2506,
+          "span_sec_given_present": {
+            "p10": 38.015999984741214,
+            "p50": 61.480000019073486,
+            "p90": 81.84299988746643,
+            "p99": 105.21360006809235
+          },
+          "selected_given_compressed": {
+            "p10": 47.0,
+            "p50": 50.0,
+            "p90": 55.5,
+            "p99": 56.85
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 10.569999999999993
+          },
+          "span_gt1h": 0,
+          "span_gt2h": 0,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 6
+        },
+        "previous": {
+          "present": 468,
+          "raw_gt64": 6,
+          "compressed_and_selected_lt64": 6,
+          "raw_points": 5763,
+          "selected_points": 5511,
+          "span_sec_given_present": {
+            "p10": 24.74700000286102,
+            "p50": 63.74999988079071,
+            "p90": 82.05999994277954,
+            "p99": 1191.7812999677637
+          },
+          "selected_given_compressed": {
+            "p10": 28.5,
+            "p50": 49.5,
+            "p90": 56.0,
+            "p99": 56.9
+          },
+          "tokens_last30min_given_present": {
+            "p10": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+          },
+          "span_gt1h": 0,
+          "span_gt2h": 0,
+          "span_gt4h": 0,
+          "raw_gt64_and_le8_tokens_last30min": 6
+        }
+      }
+    }
+  },
+  "seconds": 3.091656958000385
+}
