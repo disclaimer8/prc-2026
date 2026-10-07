@@ -19,7 +19,7 @@
 
 | Что | Где |
 |---|---|
-| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №317) | `HYPOTHESES_LOG.md` |
+| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №349) | `HYPOTHESES_LOG.md` |
 | Бриф для ревью: «Читать первым», раздел 0 (закрытое — не повторять), последние итоги — раздел 21cn | `REVIEW_BRIEF.md`; после правки — `.venv/bin/python review/build_brief.py` |
 | Обходы конкурентов и источников данных | `analysis/competitor_repos/_UPDATE_2026-10-04.md`, `analysis/data_sources_2026-10-04_{fable,sonnet}.md`, `SOURCES.md` |
 | Таблицы признаков (не в git) | `data/features_e106.parquet`, `data/features_e163.parquet`, **`data/features_fin1b.parquet`** (боевая) |
@@ -57,6 +57,12 @@
   те же семь версий научных пакетов, imports/pip check PASS. Включён Linger=yes; GitHub Actions runner сохранён.
   Для аудита №289:6CPU/MemoryMax10G/swap0/nice10, один день за раз, только наблюдаемые ADS-B данные.
   Большие Cat/LGB задачи с других машин не дублировать: они требуют больше RAM и имеют собственные фиксированные очереди.
+
+## Актуальное дополнение 07.10 13:10Z
+
+E19712fit independentlyverifiedPASS, №349/27e6f89; E20224remainingfits source/protocol/controller готовы, independentreview перед№350. E19912fitFAIL/E2006pairpreE81FAIL закрыты, ranking не запускать. Подачипрежние3/5,best231.4438. ВладелецE202today_e190_rank, E203currentchain готовитtoday_e188_rank.
+E201294basefits+до66stages зарегистрирован№346/d664e153; Mac77126/Home618590/Hetz3897923 реально обучаются.171/175 сначала2E202prepкаждый, затемdurablemarker запускаетихE201; передачитаблиц могутпродолжаться, путираздельны. Nodequeue noautoretry/48hbound, fullmodelsнаузлах, Macтолькомалыеpackets≈7GiBfree. HomeCPUсуществующая`.venv-cat-oof`, GPU`.venv-numemb`,175`.venv-cat-parity`,остальные`.venv`. Никакихenvupdates.
+CPU-onlyMac launch вобычнойпесочнице работает. ПрямойSSH/scpразрешён; локальноередиректированиевокругSSH мешаетраспознаваниюпрефикса. Требоватьэскалациютолькопослеactualsandboxdenial и сразу сообщатьблокировку; не называтьожиданиеработой. Прежнееожидание09:43–12:42UTC вызвалостойкуочередей. Полныепути/доказательствавHANDOFF.
 
 ## Актуальное дополнение 07.10 09:18Z
 
