@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "utc": "2026-10-07T15:34:23.821948+00:00",
+  "registration": "f2fc89603be4a1521860a98b2adb641d392a3e09",
+  "result_sha256": "752052de97612d4aa9f16339dbcdfc7cb74d41b0e1d91ffd96bd628788212f92",
+  "verification_source_sha256": "1096677e62fbea19baf7de2e6ff975331f47ab1673545f6111ea17eb0bf42002",
+  "artifact_hashes": {
+    "results/comparisons.json": "8ae938bbfd3ea745cdb1bf7307d3e9b8371c1d16de0e8a7121b4ad72e16e1234",
+    "results/invocation.json": "0e40e29982b3ba24f410d87ff59a0a97a918474d4e4478d40c9e06a6d01408d8",
+    "results/lag_tables.json": "7493447570443037b767e13a7225acf71ec1569931d494ec97ba773b786e4a9c",
+    "results/rows.parquet": "7939e957c582ea1e9cc761e02a8a463a377c7aa75817a177e2bb34a03bfe0ba7",
+    "results/support.json": "cec23ff100c0c5487618391a2b72f2fa0ba7fdcaf9374440e73973a1c194422f",
+    "portable_inputs/adsb_stage_audit_20261007.py": "b155e36409e08dd3921cc4098d91106cb375272102417b6d1b3c6d766a4726ce",
+    "portable_inputs/input_receipt.json": "ac5991a6a36997bfca7d260075ab7ce57fe653fc101390878736a86b128f3022",
+    "portable_inputs/protocol.md": "1ffdee2bc4eac052fd67d98a3f9932ef34e742a8f3c08bc48cdfa0a66fe4afed",
+    "portable_inputs/ranking.parquet": "5dea2e9af45bdea4c4441d23bd05c2f09a01dfc32319f764c9df3974f33bd66b",
+    "portable_inputs/training.parquet": "52e80b78ceb162723260fd4e612bd5fa220f60a6d1c2b77020ce09bf13a9d93d"
+  },
+  "unique_training_ids": 2085047,
+  "unique_ranking_ids": 344841,
+  "included": 2084921,
+  "excluded": 126,
+  "lag_lookup_rows_verified": 72,
+  "comparison_rows_verified": 1932,
+  "support_rows_verified": 348,
+  "checks": [
+    "Exact ID/y/month/airport/NM/control/mask equality",
+    "All output and compact input SHA256",
+    "Every training-half lookup median, count, fallback, disjoint heldout IDs, ID hash",
+    "Bit-exact observable predictions and untouched fallback",
+    "Every saved paired metric, trim, separately labelled oracle",
+    "Every coverage support cell and both diagnostic decisions"
+  ],
+  "scope": "Independent arithmetic verification only; no model fit or candidate"
+}

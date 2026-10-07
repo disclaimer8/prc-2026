@@ -2,6 +2,19 @@
 
 Правила, машины, рецепты — в `AGENTS.md`. Здесь — позиция, что считается и что делать дальше.
 
+## Оперативное обновление 07.10 15:47Z — ASUS отработал, очередь воспроизведения запущена
+
+- **ASUS снова в пуле и реально выполнил ADS-Baudit №360/f2fc896**: PythonPID15204,15:30:38–15:30:47UTC,9.364с,peak1.255GiB,2CPU/hard6GiB. PowerShell7; старыйrebootwatcher безпроцессов/триггеров. Terminal15:34:51: LastTaskResult0,0futuretriggers,0processes. Сейчас ASUS свободен, не утверждать, что он продолжает fit. СтаруюCatqualification не повторять.
+- **Результат №362**: fixedfirstmove+crosshalflag body+20.520237с/decided+18.266188; standwalk+23.597194/+21.040133. Обаhalf/trimхуже. Идеальныйy-awareselector лишь−0.689/−0.862body дляэтихготовыхproxy. НикакогообщегоотрицанияADS-B/TGN. Полныйаудит/1932comparisons PASS, [отчёт](analysis/adsb_stage_audit_20261007/RESULTS.md).
+- **E202 реальнообучается** наHomeGPU: fold2+8 и3+9 полностьюготовы(12fit), fold5+11 flatзакончен, orderedначался. Originalunit626873,24fitrecipeнеизменен. E203PID51200 ждётremaining24fit/independentproof; selected2pairCV иfullrankprep закончены. Полныйgate ещёнеизвестен. Mac E202transport33495 жив.
+- **Bestreproduction №361/c62911c96d8631b99e1a8443f7dd002d153578f0**: durablecaffeinatePID83363 реально стартовал, `data/reproduce_best_queue_20261007/events.jsonl` = waiting_for_e203. ТочныйE203terminal+exit→reuseverified11modelcache/replay; приscientificFAILбезcache→одинcapture11+replay; technicalfailure→blocked/noautoretry. Independentreview+actualorphan/SIGTERMsmokePASS. Собственные4registeredfiles не менять покаqueueактивна. Реальных11fit/replay ещёнет, exactv12074 пока незаявлять. [Receipt](analysis/reproduction_execution_20261007.json).
+- **Документызакоммичены9bddce9**: README/currentmodel/validation/SOURCES/openingchecklist, пятьавиационныхидей,CBmetadata иGramutility. CBпропусков2880train/452JanJul2026METAR, не число рейсов/не новыйqualityresult. ПоздниеOSMнаходкиисправляютслишкомширокоеноль. №363.
+- Бриф/HTML обновлены подE201canceled/E202→E203/ASUS/reproduction; текущаяшапка разрешаетраскрытие9октябряпо плану, но **публикации/отправкисообщенийнебыло**. Сменаvisibilityраскрываетвсюtrackedhistory. Cleanclone/rawretrain+distributionartifactarchive ещё не готовы; не называтьготовыми.
+- **E201 остаётсяотменённым** наMac/HomeCPU/Hetz/171;175recoveryотменён. Сохранённыемодели не удалять. LLMвыключены. СвободныеHetz/ноуты не называтьнагруженными, пустыхfitдлязанятостинезапускать.
+- Bestv12074=231.4438,3/5UTCслотов прежние. Новыхподачвэтойработенет. Следующийшаг — E202terminalproof→E203gate; приPASSполныйcandidate, затемрешениеподачи. Reproductionqueue самостоятельна от этойсессии.
+
+Ниже исторические снимки; верхнее обновление имеет приоритет.
+
 ## Оперативное обновление 07.10 15:10Z — E201 отменён, E203 запущен, ASUS возвращён
 
 - Пользователь передал `analysis/review_fable_2026-10-07/SYNTHESIS.md`: дизайн/документация важны для приза, скрытого финала по последним сообщениям нет. Root принимает приоритет воспроизводимости/документации; статистические «полы62%» и догадки о соперниках не принимаются как доказанные факты.

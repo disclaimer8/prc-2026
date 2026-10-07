@@ -1,0 +1,26 @@
+{
+  "observed_utc": "2026-10-07T15:47:07.498219+00:00",
+  "registration": "c62911c96d8631b99e1a8443f7dd002d153578f0",
+  "started": {
+    "deadline_hours": 18,
+    "dependency_pid": 51200,
+    "dependency_started": "2026-10-07T14:59:25.379082+00:00",
+    "pid": 83363,
+    "protocol": "v12074-archived-component-reproduction-v1",
+    "registration": "c62911c96d8631b99e1a8443f7dd002d153578f0",
+    "source_sha256": {
+      "docs/reproduction.md": "b8481ca4ae466ad0c381d3d06621e3a4022fea8f16be6f1956df663e2d35f739",
+      "docs/reproduction_manifest.json": "c2b498fb179d42d6603769d9a9928936395dd32b4405166425b2a78dd4fd3426",
+      "scripts/reproduce_best.py": "26fc70f86489c3ac480a674189525a5734691a4c5bae870a0a691581d0a3ee76",
+      "scripts/reproduce_best_queue_20261007.py": "ed952f60991b43ea63c72fd4ea47f7175a163f704247fe903319e591fdd27b96"
+    },
+    "unix": 1791387759.9129431
+  },
+  "status": "waiting_for_e203",
+  "pid_verified_alive": 83363,
+  "dependency_pid_verified_alive": 51200,
+  "transport_pid_verified_alive": 33495,
+  "real_capture_replay_performed": false,
+  "models_fitted_by_queue": 0,
+  "uploads": 0
+}

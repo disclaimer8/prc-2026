@@ -1,0 +1,3482 @@
+[
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 6,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 6
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 398,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 398
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 1853,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 1853
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 3574,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 3574
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 6,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 6
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 8249,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 8249
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 2,
+    "eligible_rows": 7,
+    "evaluation_rows": 67,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 67
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 2,
+    "eligible_rows": 11307,
+    "evaluation_rows": 175897,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 175897
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 3,
+    "eligible_rows": 13,
+    "evaluation_rows": 24,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 24
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 3,
+    "eligible_rows": 19806,
+    "evaluation_rows": 40067,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 40067
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 4,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 4
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 265,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 265
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 23,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 23
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 2548,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 2548
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 164,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 164
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 22451,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 22451
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 2,
+    "eligible_rows": 54,
+    "evaluation_rows": 337,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 337
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 2,
+    "eligible_rows": 12831,
+    "evaluation_rows": 70897,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 70897
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 3,
+    "eligible_rows": 234,
+    "evaluation_rows": 481,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 481
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 3,
+    "eligible_rows": 36940,
+    "evaluation_rows": 70164,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 70164
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 44,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 44
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 589,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 589
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 18,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 18
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 2525,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 2525
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 730,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 730
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 119365,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 119365
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 2,
+    "eligible_rows": 17,
+    "evaluation_rows": 535,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 535
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 2,
+    "eligible_rows": 5613,
+    "evaluation_rows": 94708,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 94708
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 3,
+    "eligible_rows": 28,
+    "evaluation_rows": 87,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 87
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 3,
+    "eligible_rows": 6183,
+    "evaluation_rows": 20945,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 20945
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 14,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 14
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 605,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 605
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 3940,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 3940
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 2699,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 2699
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 11,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 11
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 3035,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 3035
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 2,
+    "eligible_rows": 8,
+    "evaluation_rows": 82,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 82
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 2,
+    "eligible_rows": 16316,
+    "evaluation_rows": 131975,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 131975
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 3,
+    "eligible_rows": 20,
+    "evaluation_rows": 37,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 37
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 3,
+    "eligible_rows": 50403,
+    "evaluation_rows": 105553,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 105553
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 3,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 3
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 395,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 395
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 23,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 23
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 2451,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 2451
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 99,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 99
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 3660,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 3660
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 2,
+    "eligible_rows": 104,
+    "evaluation_rows": 1227,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 1227
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 2,
+    "eligible_rows": 11407,
+    "evaluation_rows": 129238,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 129238
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 3,
+    "eligible_rows": 255,
+    "evaluation_rows": 504,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 504
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 3,
+    "eligible_rows": 20924,
+    "evaluation_rows": 42105,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 42105
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 5,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 5
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 489,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 489
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 171,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 171
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 42114,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 42114
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 174,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 174
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 24262,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 24262
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 2,
+    "eligible_rows": 26,
+    "evaluation_rows": 442,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 442
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 2,
+    "eligible_rows": 3922,
+    "evaluation_rows": 113644,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 113644
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 3,
+    "eligible_rows": 67,
+    "evaluation_rows": 147,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 147
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 3,
+    "eligible_rows": 13907,
+    "evaluation_rows": 30794,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 30794
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 6,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 6
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 617,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 617
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 451,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 451
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 34557,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 34557
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 2696,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 2696
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 167679,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 167679
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 2,
+    "eligible_rows": 15,
+    "evaluation_rows": 584,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 584
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 2,
+    "eligible_rows": 524,
+    "evaluation_rows": 31935,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 31935
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 3,
+    "eligible_rows": 5,
+    "evaluation_rows": 28,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 28
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 3,
+    "eligible_rows": 145,
+    "evaluation_rows": 999,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 999
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 4,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 4
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 359,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 359
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 310,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 374
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 28634,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 28634
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 354,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 368
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 59679,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 59679
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 2,
+    "eligible_rows": 13,
+    "evaluation_rows": 587,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 626
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 2,
+    "eligible_rows": 2401,
+    "evaluation_rows": 61089,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 61089
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 3,
+    "eligible_rows": 17,
+    "evaluation_rows": 106,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 115
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 3,
+    "eligible_rows": 1901,
+    "evaluation_rows": 9456,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 9456
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 8,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 8
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 305,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 305
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 1170,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 1170
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 2674,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 2674
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 308,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 308
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 4638,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 4638
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 2,
+    "eligible_rows": 46,
+    "evaluation_rows": 565,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 565
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 2,
+    "eligible_rows": 5106,
+    "evaluation_rows": 83141,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 83141
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 3,
+    "eligible_rows": 168,
+    "evaluation_rows": 240,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 240
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 3,
+    "eligible_rows": 24217,
+    "evaluation_rows": 41858,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 41858
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 14,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 14
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 585,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 585
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 3605,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 3605
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 268444,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 268444
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 4,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 4
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 307,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 307
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 2,
+    "eligible_rows": 0,
+    "evaluation_rows": 6,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 6
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 410,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 410
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 1058,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 1058
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 2,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 2
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 7696,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 7696
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 2,
+    "eligible_rows": 0,
+    "evaluation_rows": 8,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 8
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 2,
+    "eligible_rows": 843,
+    "evaluation_rows": 25131,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 25131
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 3,
+    "eligible_rows": 0,
+    "evaluation_rows": 1,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 1
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 3,
+    "eligible_rows": 719,
+    "evaluation_rows": 2011,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 2011
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 8,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 8
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 678,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 678
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 2,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 2
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 293,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 293
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 2,
+    "eligible_rows": 12,
+    "evaluation_rows": 63,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 63
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 2,
+    "eligible_rows": 1917,
+    "evaluation_rows": 9079,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 9079
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 3,
+    "eligible_rows": 85,
+    "evaluation_rows": 165,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 165
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 3,
+    "eligible_rows": 8316,
+    "evaluation_rows": 15678,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 15678
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 5,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 5
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 1034,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 1034
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 35,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 35
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 2627,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 2627
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 2,
+    "eligible_rows": 9,
+    "evaluation_rows": 88,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 88
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 2,
+    "eligible_rows": 2681,
+    "evaluation_rows": 19438,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 19438
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 3,
+    "eligible_rows": 48,
+    "evaluation_rows": 120,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 120
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 3,
+    "eligible_rows": 6311,
+    "evaluation_rows": 16493,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 16493
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 1185,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 1185
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 706,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 706
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 246,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 246
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 2,
+    "eligible_rows": 1,
+    "evaluation_rows": 16,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 16
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 2,
+    "eligible_rows": 2574,
+    "evaluation_rows": 16743,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 16743
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 3,
+    "eligible_rows": 4,
+    "evaluation_rows": 5,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 5
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 3,
+    "eligible_rows": 9859,
+    "evaluation_rows": 19281,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 19281
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 6,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 6
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 767,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 767
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 3,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 3
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 666,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 666
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 2,
+    "eligible_rows": 23,
+    "evaluation_rows": 289,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 289
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 2,
+    "eligible_rows": 2070,
+    "evaluation_rows": 20579,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 20579
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 3,
+    "eligible_rows": 74,
+    "evaluation_rows": 143,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 143
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 3,
+    "eligible_rows": 4079,
+    "evaluation_rows": 7627,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 7627
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 7,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 7
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 1206,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 1206
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 37,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 37
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 5330,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 5330
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 2,
+    "eligible_rows": 12,
+    "evaluation_rows": 137,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 137
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 2,
+    "eligible_rows": 1091,
+    "evaluation_rows": 22827,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 22827
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 3,
+    "eligible_rows": 27,
+    "evaluation_rows": 55,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 55
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 3,
+    "eligible_rows": 3475,
+    "evaluation_rows": 7355,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 7355
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 56,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 56
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 1786,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 1786
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 503,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 503
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 28261,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 28261
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 2,
+    "eligible_rows": 5,
+    "evaluation_rows": 167,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 167
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 2,
+    "eligible_rows": 82,
+    "evaluation_rows": 8881,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 8881
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 3,
+    "eligible_rows": 2,
+    "evaluation_rows": 6,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 6
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 3,
+    "eligible_rows": 49,
+    "evaluation_rows": 212,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 212
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 119,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 119
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 2713,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 2713
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 193,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 193
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 14214,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 14214
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 2,
+    "eligible_rows": 3,
+    "evaluation_rows": 67,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 67
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 2,
+    "eligible_rows": 446,
+    "evaluation_rows": 8919,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 8919
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 3,
+    "eligible_rows": 1,
+    "evaluation_rows": 4,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 4
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 3,
+    "eligible_rows": 305,
+    "evaluation_rows": 670,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 670
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 385,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 385
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 693,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 693
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 66,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 66
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 381,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 381
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 2,
+    "eligible_rows": 7,
+    "evaluation_rows": 143,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 143
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 2,
+    "eligible_rows": 727,
+    "evaluation_rows": 14423,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 14423
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 3,
+    "eligible_rows": 22,
+    "evaluation_rows": 65,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 65
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 3,
+    "eligible_rows": 2500,
+    "evaluation_rows": 6994,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 6994
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 691,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 691
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 45054,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 45054
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 25,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 25
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 1731,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 1731
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 2,
+    "eligible_rows": 0,
+    "evaluation_rows": 3,
+    "field": "mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 3
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 2,
+    "eligible_rows": 0,
+    "evaluation_rows": 77,
+    "field": "mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 77
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 6,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 6
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 398,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 398
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 1853,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 1853
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 3574,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 3574
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 6,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 6
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 8249,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 8249
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 2,
+    "eligible_rows": 10,
+    "evaluation_rows": 67,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 67
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 2,
+    "eligible_rows": 20336,
+    "evaluation_rows": 175897,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 175897
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 3,
+    "eligible_rows": 13,
+    "evaluation_rows": 24,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 24
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 3,
+    "eligible_rows": 22943,
+    "evaluation_rows": 40067,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 40067
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 4,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 4
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 265,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 265
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 23,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 23
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 2548,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 2548
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 164,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 164
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 22451,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 22451
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 2,
+    "eligible_rows": 104,
+    "evaluation_rows": 337,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 337
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 2,
+    "eligible_rows": 21001,
+    "evaluation_rows": 70897,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 70897
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 3,
+    "eligible_rows": 304,
+    "evaluation_rows": 481,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 481
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 3,
+    "eligible_rows": 45403,
+    "evaluation_rows": 70164,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 70164
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 44,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 44
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 589,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 589
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 18,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 18
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 2525,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 2525
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 730,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 730
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 119365,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 119365
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 2,
+    "eligible_rows": 33,
+    "evaluation_rows": 535,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 535
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 2,
+    "eligible_rows": 8348,
+    "evaluation_rows": 94708,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 94708
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 3,
+    "eligible_rows": 36,
+    "evaluation_rows": 87,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 87
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 3,
+    "eligible_rows": 7829,
+    "evaluation_rows": 20945,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 20945
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 14,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 14
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 605,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 605
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 3940,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 3940
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 2699,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 2699
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 11,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 11
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 3035,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 3035
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 2,
+    "eligible_rows": 19,
+    "evaluation_rows": 82,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 82
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 2,
+    "eligible_rows": 30634,
+    "evaluation_rows": 131975,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 131975
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 3,
+    "eligible_rows": 21,
+    "evaluation_rows": 37,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 37
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 3,
+    "eligible_rows": 70085,
+    "evaluation_rows": 105553,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 105553
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 3,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 3
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 395,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 395
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 23,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 23
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 2451,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 2451
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 99,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 99
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 3660,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 3660
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 2,
+    "eligible_rows": 187,
+    "evaluation_rows": 1227,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 1227
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 2,
+    "eligible_rows": 19510,
+    "evaluation_rows": 129238,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 129238
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 3,
+    "eligible_rows": 314,
+    "evaluation_rows": 504,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 504
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 3,
+    "eligible_rows": 25137,
+    "evaluation_rows": 42105,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 42105
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 5,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 5
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 489,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 489
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 171,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 171
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 42114,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 42114
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 174,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 174
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 24262,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 24262
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 2,
+    "eligible_rows": 40,
+    "evaluation_rows": 442,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 442
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 2,
+    "eligible_rows": 6330,
+    "evaluation_rows": 113644,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 113644
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 3,
+    "eligible_rows": 74,
+    "evaluation_rows": 147,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 147
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 3,
+    "eligible_rows": 15743,
+    "evaluation_rows": 30794,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 30794
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 6,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 6
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 617,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 617
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 451,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 451
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 34557,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 34557
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 2696,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 2696
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 167679,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 167679
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 2,
+    "eligible_rows": 17,
+    "evaluation_rows": 584,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 584
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 2,
+    "eligible_rows": 574,
+    "evaluation_rows": 31935,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 31935
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 3,
+    "eligible_rows": 5,
+    "evaluation_rows": 28,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 28
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 3,
+    "eligible_rows": 150,
+    "evaluation_rows": 999,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 999
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 4,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 4
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 359,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 359
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 310,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 374
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 28634,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 28634
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 354,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 368
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 59679,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 59679
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 2,
+    "eligible_rows": 17,
+    "evaluation_rows": 587,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 626
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 2,
+    "eligible_rows": 3220,
+    "evaluation_rows": 61089,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 61089
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 3,
+    "eligible_rows": 17,
+    "evaluation_rows": 106,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 115
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 3,
+    "eligible_rows": 2052,
+    "evaluation_rows": 9456,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 9456
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 8,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 8
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 305,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 305
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 1170,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 1170
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 2674,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 2674
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 308,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 308
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 4638,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 4638
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 2,
+    "eligible_rows": 82,
+    "evaluation_rows": 565,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 565
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 2,
+    "eligible_rows": 7539,
+    "evaluation_rows": 83141,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 83141
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 3,
+    "eligible_rows": 174,
+    "evaluation_rows": 240,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 240
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 3,
+    "eligible_rows": 26442,
+    "evaluation_rows": 41858,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 41858
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 14,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 14
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": -1,
+    "eligible_rows": 0,
+    "evaluation_rows": 585,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 585
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 3605,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 3605
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 268444,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 268444
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 4,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "training",
+    "rows": 4
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 307,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 307
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 2,
+    "eligible_rows": 0,
+    "evaluation_rows": 6,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "training",
+    "rows": 6
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 410,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 410
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 1058,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 1058
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 2,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 2
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 7696,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 7696
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 2,
+    "eligible_rows": 0,
+    "evaluation_rows": 8,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 8
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 2,
+    "eligible_rows": 1217,
+    "evaluation_rows": 25131,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 25131
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 3,
+    "eligible_rows": 0,
+    "evaluation_rows": 1,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 1
+  },
+  {
+    "ADEP_mvt": "EDDF",
+    "coverage": 3,
+    "eligible_rows": 784,
+    "evaluation_rows": 2011,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 2011
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 8,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 8
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 678,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 678
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 2,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 2
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 293,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 293
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 2,
+    "eligible_rows": 25,
+    "evaluation_rows": 63,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 63
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 2,
+    "eligible_rows": 3243,
+    "evaluation_rows": 9079,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 9079
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 3,
+    "eligible_rows": 109,
+    "evaluation_rows": 165,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 165
+  },
+  {
+    "ADEP_mvt": "EDDM",
+    "coverage": 3,
+    "eligible_rows": 10523,
+    "evaluation_rows": 15678,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 15678
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 5,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 5
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 1034,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 1034
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 35,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 35
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 2627,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 2627
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 2,
+    "eligible_rows": 18,
+    "evaluation_rows": 88,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 88
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 2,
+    "eligible_rows": 4969,
+    "evaluation_rows": 19438,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 19438
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 3,
+    "eligible_rows": 70,
+    "evaluation_rows": 120,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 120
+  },
+  {
+    "ADEP_mvt": "EGLL",
+    "coverage": 3,
+    "eligible_rows": 9296,
+    "evaluation_rows": 16493,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 16493
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 1185,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 1185
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 706,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 706
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 246,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 246
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 2,
+    "eligible_rows": 6,
+    "evaluation_rows": 16,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 16
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 2,
+    "eligible_rows": 5406,
+    "evaluation_rows": 16743,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 16743
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 3,
+    "eligible_rows": 4,
+    "evaluation_rows": 5,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 5
+  },
+  {
+    "ADEP_mvt": "EHAM",
+    "coverage": 3,
+    "eligible_rows": 13864,
+    "evaluation_rows": 19281,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 19281
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 6,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 6
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 767,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 767
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 3,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 3
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 666,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 666
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 2,
+    "eligible_rows": 39,
+    "evaluation_rows": 289,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 289
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 2,
+    "eligible_rows": 3515,
+    "evaluation_rows": 20579,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 20579
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 3,
+    "eligible_rows": 87,
+    "evaluation_rows": 143,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 143
+  },
+  {
+    "ADEP_mvt": "LEBL",
+    "coverage": 3,
+    "eligible_rows": 4918,
+    "evaluation_rows": 7627,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 7627
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 7,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 7
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 1206,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 1206
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 37,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 37
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 5330,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 5330
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 2,
+    "eligible_rows": 20,
+    "evaluation_rows": 137,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 137
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 2,
+    "eligible_rows": 1788,
+    "evaluation_rows": 22827,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 22827
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 3,
+    "eligible_rows": 30,
+    "evaluation_rows": 55,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 55
+  },
+  {
+    "ADEP_mvt": "LEMD",
+    "coverage": 3,
+    "eligible_rows": 4043,
+    "evaluation_rows": 7355,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 7355
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 56,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 56
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 1786,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 1786
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 503,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 503
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 28261,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 28261
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 2,
+    "eligible_rows": 5,
+    "evaluation_rows": 167,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 167
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 2,
+    "eligible_rows": 90,
+    "evaluation_rows": 8881,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 8881
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 3,
+    "eligible_rows": 2,
+    "evaluation_rows": 6,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 6
+  },
+  {
+    "ADEP_mvt": "LFPG",
+    "coverage": 3,
+    "eligible_rows": 52,
+    "evaluation_rows": 212,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 212
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 119,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 119
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 2713,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 2713
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 193,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 193
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 14214,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 14214
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 2,
+    "eligible_rows": 3,
+    "evaluation_rows": 67,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 67
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 2,
+    "eligible_rows": 628,
+    "evaluation_rows": 8919,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 8919
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 3,
+    "eligible_rows": 1,
+    "evaluation_rows": 4,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 4
+  },
+  {
+    "ADEP_mvt": "LIRF",
+    "coverage": 3,
+    "eligible_rows": 323,
+    "evaluation_rows": 670,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 670
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 385,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 385
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 693,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 693
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 66,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 66
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 381,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 381
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 2,
+    "eligible_rows": 15,
+    "evaluation_rows": 143,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 143
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 2,
+    "eligible_rows": 1409,
+    "evaluation_rows": 14423,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 14423
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 3,
+    "eligible_rows": 25,
+    "evaluation_rows": 65,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 65
+  },
+  {
+    "ADEP_mvt": "LSZH",
+    "coverage": 3,
+    "eligible_rows": 3041,
+    "evaluation_rows": 6994,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 6994
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 691,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 691
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 0,
+    "eligible_rows": 0,
+    "evaluation_rows": 45054,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 45054
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 25,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 25
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 1,
+    "eligible_rows": 0,
+    "evaluation_rows": 1731,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 1731
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 2,
+    "eligible_rows": 0,
+    "evaluation_rows": 3,
+    "field": "sw_mvt_first_move",
+    "has_nm": false,
+    "population": "ranking",
+    "rows": 3
+  },
+  {
+    "ADEP_mvt": "LTFM",
+    "coverage": 2,
+    "eligible_rows": 0,
+    "evaluation_rows": 77,
+    "field": "sw_mvt_first_move",
+    "has_nm": true,
+    "population": "ranking",
+    "rows": 77
+  }
+]

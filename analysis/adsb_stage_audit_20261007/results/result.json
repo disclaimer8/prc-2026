@@ -1,0 +1,72 @@
+{
+  "accepted_for_submission": false,
+  "coverage_definition": {
+    "-1": "missing original feature",
+    "0": "no uniquely matched track",
+    "1": "track without accepted surface segment",
+    "2": "accepted surface segment; no qualifying final stop",
+    "3": "at least90s stationary interval before final movement; not guaranteed stand"
+  },
+  "decisions": {
+    "mvt_first_move": {
+      "observable_signal_for_separate_followup": false,
+      "rule": "Both cross-half body SSE deltas and pooled decided SSE delta negative; diagnostic only, never deploy"
+    },
+    "sw_mvt_first_move": {
+      "observable_signal_for_separate_followup": false,
+      "rule": "Both cross-half body SSE deltas and pooled decided SSE delta negative; diagnostic only, never deploy"
+    }
+  },
+  "excluded": 126,
+  "included": 2084921,
+  "input_manifest_sha256": "3bc8613751d0118e3bdf5bfed7326fc168bdabeef17a05c6a50b288cdf76794c",
+  "input_receipt_sha256": "ac5991a6a36997bfca7d260075ab7ce57fe653fc101390878736a86b128f3022",
+  "limitation": "Frozen E195joint afterE152 beforeE81/LOBT/finalTabPFN/LSZH; historical upstream not fullynested. No MLtraining or pipeline change.",
+  "models_fitted": 0,
+  "moment_definition": {
+    "mvt_first_move": "MVT minus first movement after initial stationary run (original1kt)",
+    "mvt_move": "MVT minus end of last qualifying stop; NOT firstmovement",
+    "sw_mvt_first_move": "MVT minus1kt stand-walk firstmovement"
+  },
+  "outputs": {
+    "comparisons.json": "8ae938bbfd3ea745cdb1bf7307d3e9b8371c1d16de0e8a7121b4ad72e16e1234",
+    "invocation.json": "0e40e29982b3ba24f410d87ff59a0a97a918474d4e4478d40c9e06a6d01408d8",
+    "lag_tables.json": "7493447570443037b767e13a7225acf71ec1569931d494ec97ba773b786e4a9c",
+    "rows.parquet": "7939e957c582ea1e9cc761e02a8a463a377c7aa75817a177e2bb34a03bfe0ba7",
+    "support.json": "cec23ff100c0c5487618391a2b72f2fa0ba7fdcaf9374440e73973a1c194422f"
+  },
+  "peak_rss_bytes": 1347321856,
+  "primary_field": "mvt_first_move",
+  "projections": [
+    {
+      "field": "mvt_first_move",
+      "interpretation": "Descriptive source-year cell reweighting, not a leaderboard RMSE or transfer forecast",
+      "matched_cell_rows": 344838,
+      "ranking_rows": 344841,
+      "support_weighted_2025_body_delta_mse": 14428.019677699966,
+      "unmatched_cell_rows": 3
+    },
+    {
+      "field": "sw_mvt_first_move",
+      "interpretation": "Descriptive source-year cell reweighting, not a leaderboard RMSE or transfer forecast",
+      "matched_cell_rows": 344838,
+      "ranking_rows": 344841,
+      "support_weighted_2025_body_delta_mse": 15899.390446328805,
+      "unmatched_cell_rows": 3
+    }
+  ],
+  "protocol": "ADSBAUDIT-E195joint-firstmove-crosshalf-lag-oracle-airportcoverage-v1",
+  "ranking_predictions_created": false,
+  "registration_commit": "f2fc89603be4a1521860a98b2adb641d392a3e09",
+  "resource": {
+    "affinity": [
+      0,
+      2
+    ],
+    "committed_memory_limit": 6442450944,
+    "priority": 16384
+  },
+  "rows": 2085047,
+  "secondary_field": "sw_mvt_first_move",
+  "timing": 9.36378780000041
+}

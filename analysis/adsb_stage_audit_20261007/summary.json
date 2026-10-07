@@ -1,0 +1,671 @@
+{
+  "status": "negative_diagnosis_verified",
+  "registration": "f2fc89603be4a1521860a98b2adb641d392a3e09",
+  "result_sha256": "752052de97612d4aa9f16339dbcdfc7cb74d41b0e1d91ffd96bd628788212f92",
+  "decisions": {
+    "mvt_first_move": {
+      "observable_signal_for_separate_followup": false,
+      "rule": "Both cross-half body SSE deltas and pooled decided SSE delta negative; diagnostic only, never deploy"
+    },
+    "sw_mvt_first_move": {
+      "observable_signal_for_separate_followup": false,
+      "rule": "Both cross-half body SSE deltas and pooled decided SSE delta negative; diagnostic only, never deploy"
+    }
+  },
+  "pooled": [
+    {
+      "arm": "zero_lag",
+      "delta_rmse": 22.15953174586778,
+      "delta_sse": 21191799179.198357,
+      "eligible_rows": 244950,
+      "field": "mvt_first_move",
+      "group": {},
+      "grouping": "all",
+      "mean_bias_control": -0.8453159616119748,
+      "mean_bias_proxy": -10.405537063509382,
+      "oracle_per_row_joint_or_fixed_proxy": {
+        "delta_sse": -500309904.1143968,
+        "label_leaking": true,
+        "proxy_chosen_rows": 73842,
+        "rmse": 217.7139681502003
+      },
+      "oracle_same_evaluation_cell_constant_lag": {
+        "delta_sse": 19545667791.442978,
+        "eligible_rows": 244950,
+        "family": "unclipped unit-slope movement duration minus one scalar fitted on this exact evaluated cell",
+        "label_leaking": true,
+        "lag_seconds": -81.97728409875094,
+        "rmse": 238.77628445664593
+      },
+      "population": "included",
+      "rmse_control": 218.26437594917525,
+      "rmse_proxy": 240.42390769504303,
+      "rows": 2084921,
+      "trim20_sse": 18017316982.659985,
+      "trim3_sse": 20005843863.29742
+    },
+    {
+      "arm": "cross_half_median_lag",
+      "delta_rmse": 18.26605232442614,
+      "delta_sse": 17320076088.190052,
+      "eligible_rows": 244950,
+      "field": "mvt_first_move",
+      "group": {},
+      "grouping": "all",
+      "mean_bias_control": -0.8453159616119748,
+      "mean_bias_proxy": -5.629574831740356,
+      "oracle_per_row_joint_or_fixed_proxy": {
+        "delta_sse": -541689497.5603567,
+        "label_leaking": true,
+        "proxy_chosen_rows": 114627,
+        "rmse": 217.66838274750637
+      },
+      "oracle_same_evaluation_cell_constant_lag": {
+        "delta_sse": 19545667791.442978,
+        "eligible_rows": 244950,
+        "family": "unclipped unit-slope movement duration minus one scalar fitted on this exact evaluated cell",
+        "label_leaking": true,
+        "lag_seconds": -81.97728409875094,
+        "rmse": 238.77628445664593
+      },
+      "population": "included",
+      "rmse_control": 218.26437594917525,
+      "rmse_proxy": 236.5304282736014,
+      "rows": 2084921,
+      "trim20_sse": 14119964253.562378,
+      "trim3_sse": 16109376783.484522
+    },
+    {
+      "arm": "zero_lag",
+      "delta_rmse": 24.9487487628748,
+      "delta_sse": 20348616982.179577,
+      "eligible_rows": 244933,
+      "field": "mvt_first_move",
+      "group": {},
+      "grouping": "all",
+      "mean_bias_control": -0.2311139447949769,
+      "mean_bias_proxy": -9.752208608700746,
+      "oracle_per_row_joint_or_fixed_proxy": {
+        "delta_sse": -488707759.71276,
+        "label_leaking": true,
+        "proxy_chosen_rows": 73840,
+        "rmse": 182.52784819632268
+      },
+      "oracle_same_evaluation_cell_constant_lag": {
+        "delta_sse": 18735830799.559967,
+        "eligible_rows": 244933,
+        "family": "unclipped unit-slope movement duration minus one scalar fitted on this exact evaluated cell",
+        "label_leaking": true,
+        "lag_seconds": -81.14555707066444,
+        "rmse": 206.25047705452906
+      },
+      "population": "body",
+      "rmse_control": 183.16896475501184,
+      "rmse_proxy": 208.11771351788664,
+      "rows": 2084448,
+      "trim20_sse": 17303025979.0675,
+      "trim3_sse": 19161516293.31313
+    },
+    {
+      "arm": "cross_half_median_lag",
+      "delta_rmse": 20.520236534801427,
+      "delta_sse": 16547225928.062515,
+      "eligible_rows": 244933,
+      "field": "mvt_first_move",
+      "group": {},
+      "grouping": "all",
+      "mean_bias_control": -0.2311139447949769,
+      "mean_bias_proxy": -4.977200480782924,
+      "oracle_per_row_joint_or_fixed_proxy": {
+        "delta_sse": -525414825.73267627,
+        "label_leaking": true,
+        "proxy_chosen_rows": 114625,
+        "rmse": 182.47960268898117
+      },
+      "oracle_same_evaluation_cell_constant_lag": {
+        "delta_sse": 18735830799.559967,
+        "eligible_rows": 244933,
+        "family": "unclipped unit-slope movement duration minus one scalar fitted on this exact evaluated cell",
+        "label_leaking": true,
+        "lag_seconds": -81.14555707066444,
+        "rmse": 206.25047705452906
+      },
+      "population": "body",
+      "rmse_control": 183.16896475501184,
+      "rmse_proxy": 203.68920128981327,
+      "rows": 2084448,
+      "trim20_sse": 13444554158.52849,
+      "trim3_sse": 15333515590.875677
+    },
+    {
+      "arm": "zero_lag",
+      "delta_rmse": 22.159693528797106,
+      "delta_sse": 21191799179.198357,
+      "eligible_rows": 244950,
+      "field": "mvt_first_move",
+      "group": {},
+      "grouping": "all",
+      "mean_bias_control": -0.8447201811100665,
+      "mean_bias_proxy": -10.40494586842135,
+      "oracle_per_row_joint_or_fixed_proxy": {
+        "delta_sse": -500309904.1143968,
+        "label_leaking": true,
+        "proxy_chosen_rows": 73842,
+        "rmse": 217.71231844560626
+      },
+      "oracle_same_evaluation_cell_constant_lag": {
+        "delta_sse": 19545667791.442978,
+        "eligible_rows": 244950,
+        "family": "unclipped unit-slope movement duration minus one scalar fitted on this exact evaluated cell",
+        "label_leaking": true,
+        "lag_seconds": -81.97728409875094,
+        "rmse": 238.77478992921297
+      },
+      "population": "decided",
+      "rmse_control": 218.26273066841605,
+      "rmse_proxy": 240.42242419721316,
+      "rows": 2084920,
+      "trim20_sse": 18017316982.65998,
+      "trim3_sse": 20005843863.29742
+    },
+    {
+      "arm": "cross_half_median_lag",
+      "delta_rmse": 18.266187804814308,
+      "delta_sse": 17320076088.190052,
+      "eligible_rows": 244950,
+      "field": "mvt_first_move",
+      "group": {},
+      "grouping": "all",
+      "mean_bias_control": -0.8447201811100665,
+      "mean_bias_proxy": -5.628981345935064,
+      "oracle_per_row_joint_or_fixed_proxy": {
+        "delta_sse": -541689497.5603567,
+        "label_leaking": true,
+        "proxy_chosen_rows": 114627,
+        "rmse": 217.66673267555203
+      },
+      "oracle_same_evaluation_cell_constant_lag": {
+        "delta_sse": 19545667791.442978,
+        "eligible_rows": 244950,
+        "family": "unclipped unit-slope movement duration minus one scalar fitted on this exact evaluated cell",
+        "label_leaking": true,
+        "lag_seconds": -81.97728409875094,
+        "rmse": 238.77478992921297
+      },
+      "population": "decided",
+      "rmse_control": 218.26273066841605,
+      "rmse_proxy": 236.52891847323036,
+      "rows": 2084920,
+      "trim20_sse": 14119964253.562378,
+      "trim3_sse": 16109376783.48452
+    },
+    {
+      "arm": "zero_lag",
+      "delta_rmse": 24.704282256363456,
+      "delta_sse": 23756488603.62601,
+      "eligible_rows": 334743,
+      "field": "sw_mvt_first_move",
+      "group": {},
+      "grouping": "all",
+      "mean_bias_control": -0.8453159616119748,
+      "mean_bias_proxy": -12.56388878041988,
+      "oracle_per_row_joint_or_fixed_proxy": {
+        "delta_sse": -638485580.8390701,
+        "label_leaking": true,
+        "proxy_chosen_rows": 103313,
+        "rmse": 217.5617110358127
+      },
+      "oracle_same_evaluation_cell_constant_lag": {
+        "delta_sse": 21956946986.04483,
+        "eligible_rows": 334743,
+        "family": "unclipped unit-slope movement duration minus one scalar fitted on this exact evaluated cell",
+        "label_leaking": true,
+        "lag_seconds": -73.32046244420883,
+        "rmse": 241.1859172131188
+      },
+      "population": "included",
+      "rmse_control": 218.26437594917525,
+      "rmse_proxy": 242.9686582055387,
+      "rows": 2084921,
+      "trim20_sse": 20479706006.846043,
+      "trim3_sse": 22570533287.725063
+    },
+    {
+      "arm": "cross_half_median_lag",
+      "delta_rmse": 21.039978546916956,
+      "delta_sse": 20072027076.09761,
+      "eligible_rows": 334743,
+      "field": "sw_mvt_first_move",
+      "group": {},
+      "grouping": "all",
+      "mean_bias_control": -0.8453159616119748,
+      "mean_bias_proxy": -7.181593832799559,
+      "oracle_per_row_joint_or_fixed_proxy": {
+        "delta_sse": -672580431.4521039,
+        "label_leaking": true,
+        "proxy_chosen_rows": 155533,
+        "rmse": 217.5241251973691
+      },
+      "oracle_same_evaluation_cell_constant_lag": {
+        "delta_sse": 21956946986.04483,
+        "eligible_rows": 334743,
+        "family": "unclipped unit-slope movement duration minus one scalar fitted on this exact evaluated cell",
+        "label_leaking": true,
+        "lag_seconds": -73.32046244420883,
+        "rmse": 241.1859172131188
+      },
+      "population": "included",
+      "rmse_control": 218.26437594917525,
+      "rmse_proxy": 239.3043544960922,
+      "rows": 2084921,
+      "trim20_sse": 16770210158.997643,
+      "trim3_sse": 18865493212.017582
+    },
+    {
+      "arm": "zero_lag",
+      "delta_rmse": 27.75442091485786,
+      "delta_sse": 22799285700.397064,
+      "eligible_rows": 334724,
+      "field": "sw_mvt_first_move",
+      "group": {},
+      "grouping": "all",
+      "mean_bias_control": -0.2311139447949769,
+      "mean_bias_proxy": -11.905575970214462,
+      "oracle_per_row_joint_or_fixed_proxy": {
+        "delta_sse": -626883436.4374332,
+        "label_leaking": true,
+        "proxy_chosen_rows": 103311,
+        "rmse": 182.34617218231472
+      },
+      "oracle_same_evaluation_cell_constant_lag": {
+        "delta_sse": 21031871721.53514,
+        "eligible_rows": 334724,
+        "family": "unclipped unit-slope movement duration minus one scalar fitted on this exact evaluated cell",
+        "label_leaking": true,
+        "lag_seconds": -72.66507337376942,
+        "rmse": 208.90373279504385
+      },
+      "population": "body",
+      "rmse_control": 183.16896475501184,
+      "rmse_proxy": 210.9233856698697,
+      "rows": 2084448,
+      "trim20_sse": 19626538011.297737,
+      "trim3_sse": 21612185011.530617
+    },
+    {
+      "arm": "cross_half_median_lag",
+      "delta_rmse": 23.59719360182737,
+      "delta_sse": 19179786866.0095,
+      "eligible_rows": 334724,
+      "field": "sw_mvt_first_move",
+      "group": {},
+      "grouping": "all",
+      "mean_bias_control": -0.2311139447949769,
+      "mean_bias_proxy": -6.523937404758856,
+      "oracle_per_row_joint_or_fixed_proxy": {
+        "delta_sse": -656416826.3665264,
+        "label_leaking": true,
+        "proxy_chosen_rows": 155531,
+        "rmse": 182.30731763443288
+      },
+      "oracle_same_evaluation_cell_constant_lag": {
+        "delta_sse": 21031871721.53514,
+        "eligible_rows": 334724,
+        "family": "unclipped unit-slope movement duration minus one scalar fitted on this exact evaluated cell",
+        "label_leaking": true,
+        "lag_seconds": -72.66507337376942,
+        "rmse": 208.90373279504385
+      },
+      "population": "body",
+      "rmse_control": 183.16896475501184,
+      "rmse_proxy": 206.7661583568392,
+      "rows": 2084448,
+      "trim20_sse": 15961439416.244396,
+      "trim3_sse": 17970359515.983685
+    },
+    {
+      "arm": "zero_lag",
+      "delta_rmse": 24.70446079107944,
+      "delta_sse": 23756488603.62601,
+      "eligible_rows": 334743,
+      "field": "sw_mvt_first_move",
+      "group": {},
+      "grouping": "all",
+      "mean_bias_control": -0.8447201811100665,
+      "mean_bias_proxy": -12.56329862055225,
+      "oracle_per_row_joint_or_fixed_proxy": {
+        "delta_sse": -638485580.8390701,
+        "label_leaking": true,
+        "proxy_chosen_rows": 103313,
+        "rmse": 217.56006010363643
+      },
+      "oracle_same_evaluation_cell_constant_lag": {
+        "delta_sse": 21956946986.04483,
+        "eligible_rows": 334743,
+        "family": "unclipped unit-slope movement duration minus one scalar fitted on this exact evaluated cell",
+        "label_leaking": true,
+        "lag_seconds": -73.32046244420883,
+        "rmse": 241.18443876723322
+      },
+      "population": "decided",
+      "rmse_control": 218.26273066841605,
+      "rmse_proxy": 242.9671914594955,
+      "rows": 2084920,
+      "trim20_sse": 20479706006.846046,
+      "trim3_sse": 22570533287.72507
+    },
+    {
+      "arm": "cross_half_median_lag",
+      "delta_rmse": 21.040132851222296,
+      "delta_sse": 20072027076.09761,
+      "eligible_rows": 334743,
+      "field": "sw_mvt_first_move",
+      "group": {},
+      "grouping": "all",
+      "mean_bias_control": -0.8447201811100665,
+      "mean_bias_proxy": -7.181001091396452,
+      "oracle_per_row_joint_or_fixed_proxy": {
+        "delta_sse": -672580431.4521039,
+        "label_leaking": true,
+        "proxy_chosen_rows": 155533,
+        "rmse": 217.5224739618981
+      },
+      "oracle_same_evaluation_cell_constant_lag": {
+        "delta_sse": 21956946986.04483,
+        "eligible_rows": 334743,
+        "family": "unclipped unit-slope movement duration minus one scalar fitted on this exact evaluated cell",
+        "label_leaking": true,
+        "lag_seconds": -73.32046244420883,
+        "rmse": 241.18443876723322
+      },
+      "population": "decided",
+      "rmse_control": 218.26273066841605,
+      "rmse_proxy": 239.30286351963835,
+      "rows": 2084920,
+      "trim20_sse": 16770210158.997646,
+      "trim3_sse": 18865493212.017574
+    }
+  ],
+  "body_halves": [
+    {
+      "arm": "cross_half_median_lag",
+      "delta_rmse": 17.957389123327374,
+      "delta_sse": 6711707738.589952,
+      "eligible_rows": 105177,
+      "field": "mvt_first_move",
+      "group": {
+        "half": 1
+      },
+      "grouping": "half",
+      "mean_bias_control": -3.698566268667703,
+      "mean_bias_proxy": -7.321890444600087,
+      "oracle_per_row_joint_or_fixed_proxy": {
+        "delta_sse": -206318141.09518933,
+        "label_leaking": true,
+        "proxy_chosen_rows": 50066,
+        "rmse": 176.33769236680658
+      },
+      "oracle_same_evaluation_cell_constant_lag": {
+        "delta_sse": 7474092683.120941,
+        "eligible_rows": 105177,
+        "family": "unclipped unit-slope movement duration minus one scalar fitted on this exact evaluated cell",
+        "label_leaking": true,
+        "lag_seconds": -74.31019956821649,
+        "rmse": 196.8122470712333
+      },
+      "population": "body",
+      "rmse_control": 176.91867187023266,
+      "rmse_proxy": 194.87606099356003,
+      "rows": 1005279,
+      "trim20_sse": 4568899027.898885,
+      "trim3_sse": 5499695172.939742
+    },
+    {
+      "arm": "cross_half_median_lag",
+      "delta_rmse": 22.76364292264398,
+      "delta_sse": 9835518189.472565,
+      "eligible_rows": 139756,
+      "field": "mvt_first_move",
+      "group": {
+        "half": 2
+      },
+      "grouping": "half",
+      "mean_bias_control": 2.998924172210284,
+      "mean_bias_proxy": -2.7930499148047008,
+      "oracle_per_row_joint_or_fixed_proxy": {
+        "delta_sse": -319096684.63748693,
+        "label_leaking": true,
+        "proxy_chosen_rows": 64559,
+        "rmse": 188.0205698136062
+      },
+      "oracle_same_evaluation_cell_constant_lag": {
+        "delta_sse": 11253125797.853424,
+        "eligible_rows": 139756,
+        "family": "unclipped unit-slope movement duration minus one scalar fitted on this exact evaluated cell",
+        "label_leaking": true,
+        "lag_seconds": -86.28968251812263,
+        "rmse": 214.65089436583068
+      },
+      "population": "body",
+      "rmse_control": 188.80524908288317,
+      "rmse_proxy": 211.56889200552715,
+      "rows": 1079169,
+      "trim20_sse": 8015844776.831775,
+      "trim3_sse": 9146164812.689217
+    },
+    {
+      "arm": "cross_half_median_lag",
+      "delta_rmse": 20.81694260857074,
+      "delta_sse": 7840328525.608608,
+      "eligible_rows": 142158,
+      "field": "sw_mvt_first_move",
+      "group": {
+        "half": 1
+      },
+      "grouping": "half",
+      "mean_bias_control": -3.698566268667703,
+      "mean_bias_proxy": -8.839288277610452,
+      "oracle_per_row_joint_or_fixed_proxy": {
+        "delta_sse": -254405097.51318803,
+        "label_leaking": true,
+        "proxy_chosen_rows": 66645,
+        "rmse": 176.20200711351993
+      },
+      "oracle_same_evaluation_cell_constant_lag": {
+        "delta_sse": 8435404055.33326,
+        "eligible_rows": 142158,
+        "family": "unclipped unit-slope movement duration minus one scalar fitted on this exact evaluated cell",
+        "label_leaking": true,
+        "lag_seconds": -68.0153481336938,
+        "rmse": 199.22681510203145
+      },
+      "population": "body",
+      "rmse_control": 176.91867187023266,
+      "rmse_proxy": 197.7356144788034,
+      "rows": 1005279,
+      "trim20_sse": 5672434784.8910475,
+      "trim3_sse": 6633933589.563268
+    },
+    {
+      "arm": "cross_half_median_lag",
+      "delta_rmse": 26.031911451102303,
+      "delta_sse": 11339458340.40089,
+      "eligible_rows": 192566,
+      "field": "sw_mvt_first_move",
+      "group": {
+        "half": 2
+      },
+      "grouping": "half",
+      "mean_bias_control": 2.998924172210284,
+      "mean_bias_proxy": -4.367117101257384,
+      "oracle_per_row_joint_or_fixed_proxy": {
+        "delta_sse": -402011728.85333836,
+        "label_leaking": true,
+        "proxy_chosen_rows": 88886,
+        "rmse": 187.81613979036098
+      },
+      "oracle_same_evaluation_cell_constant_lag": {
+        "delta_sse": 12591125306.457565,
+        "eligible_rows": 192566,
+        "family": "unclipped unit-slope movement duration minus one scalar fitted on this exact evaluated cell",
+        "label_leaking": true,
+        "lag_seconds": -76.09764008169641,
+        "rmse": 217.5197666323883
+      },
+      "population": "body",
+      "rmse_control": 188.80524908288317,
+      "rmse_proxy": 214.83716053398547,
+      "rows": 1079169,
+      "trim20_sse": 9376585671.304565,
+      "trim3_sse": 10651339920.66597
+    }
+  ],
+  "support_by_airport": [
+    {
+      "airport": "EDDF",
+      "training_rows": 230141,
+      "training_primary": 31133,
+      "training_secondary": 43302,
+      "ranking_rows": 36317,
+      "ranking_primary": 1562,
+      "ranking_secondary": 2001
+    },
+    {
+      "airport": "EDDM",
+      "training_rows": 167334,
+      "training_primary": 50059,
+      "training_secondary": 66812,
+      "ranking_rows": 25966,
+      "ranking_primary": 10330,
+      "ranking_secondary": 13900
+    },
+    {
+      "airport": "EGLL",
+      "training_rows": 239546,
+      "training_primary": 11841,
+      "training_secondary": 16246,
+      "ranking_rows": 39840,
+      "ranking_primary": 9049,
+      "ranking_secondary": 14353
+    },
+    {
+      "airport": "EHAM",
+      "training_rows": 247951,
+      "training_primary": 66747,
+      "training_secondary": 100759,
+      "ranking_rows": 38182,
+      "ranking_primary": 12438,
+      "ranking_secondary": 19280
+    },
+    {
+      "airport": "LEBL",
+      "training_rows": 179705,
+      "training_primary": 32690,
+      "training_secondary": 45148,
+      "ranking_rows": 30080,
+      "ranking_primary": 6246,
+      "ranking_secondary": 8559
+    },
+    {
+      "airport": "LEMD",
+      "training_rows": 212242,
+      "training_primary": 17922,
+      "training_secondary": 22187,
+      "ranking_rows": 36954,
+      "ranking_primary": 4605,
+      "ranking_secondary": 5881
+    },
+    {
+      "airport": "LFPG",
+      "training_rows": 239552,
+      "training_primary": 689,
+      "training_secondary": 746,
+      "ranking_rows": 39872,
+      "ranking_primary": 138,
+      "ranking_secondary": 149
+    },
+    {
+      "airport": "LIRF",
+      "training_rows": 160578,
+      "training_primary": 4332,
+      "training_secondary": 5306,
+      "ranking_rows": 26899,
+      "ranking_primary": 755,
+      "ranking_secondary": 955
+    },
+    {
+      "airport": "LSZH",
+      "training_rows": 134907,
+      "training_primary": 29537,
+      "training_secondary": 34237,
+      "ranking_rows": 23150,
+      "ranking_primary": 3256,
+      "ranking_secondary": 4490
+    },
+    {
+      "airport": "LTFM",
+      "training_rows": 272965,
+      "training_primary": 0,
+      "training_secondary": 0,
+      "ranking_rows": 47581,
+      "ranking_primary": 0,
+      "ranking_secondary": 0
+    }
+  ],
+  "projections": [
+    {
+      "field": "mvt_first_move",
+      "interpretation": "Descriptive source-year cell reweighting, not a leaderboard RMSE or transfer forecast",
+      "matched_cell_rows": 344838,
+      "ranking_rows": 344841,
+      "support_weighted_2025_body_delta_mse": 14428.019677699966,
+      "unmatched_cell_rows": 3
+    },
+    {
+      "field": "sw_mvt_first_move",
+      "interpretation": "Descriptive source-year cell reweighting, not a leaderboard RMSE or transfer forecast",
+      "matched_cell_rows": 344838,
+      "ranking_rows": 344841,
+      "support_weighted_2025_body_delta_mse": 15899.390446328805,
+      "unmatched_cell_rows": 3
+    }
+  ],
+  "terminal": {
+    "State": "Ready",
+    "NextRunTime": "",
+    "Processes": [],
+    "Triggers": 0,
+    "Task": "PRC-ADS-B-Stage-Audit-20261007",
+    "LastTaskResult": 0,
+    "UTC": "2026-10-07T15:34:51.9491401Z",
+    "LastRunTime": "10/07/2026 16:30:33",
+    "Completion": {
+      "UTC": "2026-10-07T15:30:47.9362043Z",
+      "ExitCode": 0,
+      "ResultSHA": "752052de97612d4aa9f16339dbcdfc7cb74d41b0e1d91ffd96bd628788212f92"
+    }
+  },
+  "verification": {
+    "status": "PASS",
+    "utc": "2026-10-07T15:34:23.821948+00:00",
+    "registration": "f2fc89603be4a1521860a98b2adb641d392a3e09",
+    "result_sha256": "752052de97612d4aa9f16339dbcdfc7cb74d41b0e1d91ffd96bd628788212f92",
+    "verification_source_sha256": "1096677e62fbea19baf7de2e6ff975331f47ab1673545f6111ea17eb0bf42002",
+    "unique_training_ids": 2085047,
+    "unique_ranking_ids": 344841,
+    "included": 2084921,
+    "excluded": 126,
+    "lag_lookup_rows_verified": 72,
+    "comparison_rows_verified": 1932,
+    "support_rows_verified": 348,
+    "checks": [
+      "Exact ID/y/month/airport/NM/control/mask equality",
+      "All output and compact input SHA256",
+      "Every training-half lookup median, count, fallback, disjoint heldout IDs, ID hash",
+      "Bit-exact observable predictions and untouched fallback",
+      "Every saved paired metric, trim, separately labelled oracle",
+      "Every coverage support cell and both diagnostic decisions"
+    ],
+    "scope": "Independent arithmetic verification only; no model fit or candidate"
+  }
+}
