@@ -13,7 +13,7 @@ commit должен попасть до **14 октября 10:00 UTC** (про�
 ## ПРОДЛЕНИЕ 08.10.2026 (письмо Enrico командам 11:5xZ + сайт)
 
 - Сайт: «The competition runs from 1 September 2026 up until 14 October 2026 12:00:00 CET… Deadline is extended till 2026-10-14T12:00 CET (2026-10-14T10:00Z)». Письмо: финальная фаза на 4 месяца, ранжирование по янв/июл, фев/июн и всем четырём + ревью кода и документации; «we have extended the deadline to noon 14th Oct CET, or 2026-10-14T10:00Z».
-- **План открытия репо (решение Claude по поручению Denys «как лучше»): 14.10 ≈ 07:00–08:00Z**, после загрузки финального файла (цель — 13.10 вечер), чтобы до финала никто не видел код; 2–3 часа запаса до 10:00Z на сбои GitHub. В тот же час — письмо организаторам и сообщение в Discord. Последний коммит и документация — до открытия.
+- ~~План открытия 14.10 ≈ 07–08Z~~ — **заменён ответом организатора 08.10 (получен ≈ 15:49Z):** "please make the repo public soon after the deadline (BUT we will check code till last commit before the deadline): send the link to challenge AT opensky-network DOT org". **Новый план:** весь код и документация — последним коммитом **до 14.10 10:00Z** (проверяется он); финальный файл загружен до этого; **открыть репозиторий вскоре после 10:00Z** (цель 10:05–10:30Z) и сразу отправить ссылку на challenge@opensky-network.org (письмо — только по «да» Denys). До дедлайна репозиторий остаётся приватным.
 - Обычные подачи янв/июл, по сайту, теперь тоже до 14.10 10:00Z; финальный файл грузить **после** последней обычной подачи (ловушка транспорта, `docs/final-submission-runbook.md` §3).
 
 ## Решения и проверки 08.10.2026 (Denys: «делай как лучше, пока не открываем»)
@@ -48,7 +48,8 @@ commit должен попасть до **14 октября 10:00 UTC** (про�
 3. Проверить анонимно: README, LICENSE определяется как GPL-3.0, ссылки и картинки открываются.
 4. В тот же день: письмо на challenge@opensky-network.org (черновик ниже) и сообщение в Discord
    от Denys; сохранить подтверждение.
-5. Последний коммит до **14.10 10:00Z** (продление 08.10; организатор берёт последний коммит до дедлайна).
+0. **Порядок по ответу организатора 08.10:** последний коммит до **14.10 10:00Z** → после 10:00Z шаги 2–4 (открыть, проверить анонимно, письмо со ссылкой). Шаг 1 выполнить до 10:00Z.
+5. Последний коммит до **14.10 10:00Z** (организатор проверяет последний коммит до дедлайна; открыть — вскоре после него).
 
 ## Что уже подготовлено
 
@@ -118,12 +119,13 @@ commit должен попасть до **14 октября 10:00 UTC** (про�
 
 Черновик уведомления, **использовать после фактического открытия и проверки**:
 
-> Hello, we are team gentle-igloo. Our PRC Data Challenge 2026 repository is now
-> public: https://github.com/disclaimer8/prc-2026. It includes the model design,
-> external-data inventory, validation limitations and reproduction instructions.
-> Please confirm receipt and let us know whether any additional registration step
-> is needed for the prize review. Could you also clarify how many of the top-ranked
-> teams will be included in the model-design and documentation review?
+> Hello, this is team gentle-igloo (PRC Data Challenge 2026). As requested, our
+> repository is now public: https://github.com/disclaimer8/prc-2026
+> The last commit before the 2026-10-14T10:00Z deadline is <COMMIT SHA, UTC TIME>.
+> It contains the code, the model design and validation documentation, the list of
+> external data with licences, and the reproduction instructions; the final
+> submission is described in docs/final-submission.md.
+> Kind regards, Denys Kolomiiets (team gentle-igloo)
 
 До проверки воспроизведения не писать в уведомлении «fully reproducible from a
 clean clone». Открытие, сообщение и подтверждение получения — отдельные факты.
