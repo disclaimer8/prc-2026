@@ -1,0 +1,107 @@
+18:49:41 phase 1: premix basis
+18:49:41 fold_1_7 rows 344419 premix rmse(all) 327.53 bucket counts [232503, 88954, 17854, 5108]
+18:49:42 fold_2_8 rows 334914 premix rmse(all) 237.22 bucket counts [237361, 81915, 12676, 2962]
+18:49:43 fold_3_9 rows 348399 premix rmse(all) 213.29 bucket counts [246978, 85504, 12806, 3111]
+18:49:44 fold_4_10 rows 360962 premix rmse(all) 190.73 bucket counts [263458, 83485, 11536, 2483]
+18:49:44 fold_5_11 rows 347534 premix rmse(all) 249.26 bucket counts [257881, 77023, 10306, 2324]
+18:49:45 fold_6_12 rows 348819 premix rmse(all) 269.28 bucket counts [245049, 86084, 13951, 3735]
+18:49:45 phase 1 done: 48 thetas
+18:50:09 CONTROL OK fold_1_7 ordered reproduced on all 344419 rows, max abs diff 0, 22.1 s
+18:50:30 fold_1_7 decided lopo pair1 rms(chain delta) 55.87 s rms(premix dm) 52.37 s clipped 304808 p0 floored 150 20.8 s
+18:50:50 fold_1_7 decided half half rms(chain delta) 73.67 s rms(premix dm) 71.60 s clipped 249654 p0 floored 158 20.7 s
+18:50:50 fold_1_7 decided expanding m7 rms(chain delta) 73.67 s rms(premix dm) 71.60 s clipped 249654 p0 floored 158 0.0 s
+18:51:11 fold_1_7 serviced lopo pair1 rms(chain delta) 25.51 s rms(premix dm) 26.80 s clipped 278432 p0 floored 0 20.3 s
+18:51:31 fold_1_7 serviced half half rms(chain delta) 22.11 s rms(premix dm) 23.68 s clipped 96146 p0 floored 0 20.3 s
+18:51:31 fold_1_7 serviced expanding m7 rms(chain delta) 22.11 s rms(premix dm) 23.68 s clipped 96146 p0 floored 0 0.0 s
+18:51:31 fold_1_7 all lopo pair1 rms(chain delta) 55.87 s rms(premix dm) 52.37 s clipped 304808 p0 floored 150 0.0 s
+18:51:31 fold_1_7 all half half rms(chain delta) 73.67 s rms(premix dm) 71.60 s clipped 249654 p0 floored 158 0.0 s
+18:51:31 fold_1_7 all expanding m7 rms(chain delta) 73.67 s rms(premix dm) 71.60 s clipped 249654 p0 floored 158 0.0 s
+18:51:32 COMPLETE fold_1_7 replays 9 total 82 s
+18:51:53 CONTROL OK fold_2_8 ordered reproduced on all 334914 rows, max abs diff 0, 20.0 s
+18:52:17 fold_2_8 decided lopo pair2 rms(chain delta) 38.83 s rms(premix dm) 38.33 s clipped 297005 p0 floored 124 23.6 s
+18:52:41 fold_2_8 decided half half rms(chain delta) 50.30 s rms(premix dm) 48.93 s clipped 244466 p0 floored 128 23.8 s
+18:52:41 fold_2_8 decided expanding m8 rms(chain delta) 50.30 s rms(premix dm) 48.93 s clipped 244466 p0 floored 128 0.0 s
+18:53:05 fold_2_8 serviced lopo pair2 rms(chain delta) 20.69 s rms(premix dm) 19.41 s clipped 274854 p0 floored 0 24.8 s
+18:53:32 fold_2_8 serviced half half rms(chain delta) 17.50 s rms(premix dm) 15.59 s clipped 98768 p0 floored 0 26.1 s
+18:53:32 fold_2_8 serviced expanding m8 rms(chain delta) 17.50 s rms(premix dm) 15.59 s clipped 98768 p0 floored 0 0.0 s
+18:53:32 fold_2_8 all lopo pair2 rms(chain delta) 38.83 s rms(premix dm) 38.33 s clipped 297005 p0 floored 124 0.0 s
+18:53:32 fold_2_8 all half half rms(chain delta) 50.30 s rms(premix dm) 48.93 s clipped 244466 p0 floored 128 0.0 s
+18:53:32 fold_2_8 all expanding m8 rms(chain delta) 50.30 s rms(premix dm) 48.93 s clipped 244466 p0 floored 128 0.0 s
+18:53:33 COMPLETE fold_2_8 replays 9 total 98 s
+18:54:05 CONTROL OK fold_3_9 ordered reproduced on all 348399 rows, max abs diff 0, 31.3 s
+18:54:34 fold_3_9 decided lopo pair3 rms(chain delta) 34.13 s rms(premix dm) 33.22 s clipped 309426 p0 floored 112 28.8 s
+18:55:03 fold_3_9 decided half half rms(chain delta) 45.08 s rms(premix dm) 43.46 s clipped 255563 p0 floored 118 29.4 s
+18:55:03 fold_3_9 decided expanding m9 rms(chain delta) 45.08 s rms(premix dm) 43.46 s clipped 255563 p0 floored 118 0.0 s
+18:55:35 fold_3_9 serviced lopo pair3 rms(chain delta) 17.89 s rms(premix dm) 17.01 s clipped 286735 p0 floored 0 31.6 s
+18:56:03 fold_3_9 serviced half half rms(chain delta) 15.96 s rms(premix dm) 14.53 s clipped 104680 p0 floored 0 28.4 s
+18:56:03 fold_3_9 serviced expanding m9 rms(chain delta) 15.96 s rms(premix dm) 14.53 s clipped 104680 p0 floored 0 0.0 s
+18:56:03 fold_3_9 all lopo pair3 rms(chain delta) 34.13 s rms(premix dm) 33.22 s clipped 309426 p0 floored 112 0.0 s
+18:56:03 fold_3_9 all half half rms(chain delta) 45.08 s rms(premix dm) 43.46 s clipped 255563 p0 floored 118 0.0 s
+18:56:03 fold_3_9 all expanding m9 rms(chain delta) 45.08 s rms(premix dm) 43.46 s clipped 255563 p0 floored 118 0.0 s
+18:56:05 COMPLETE fold_3_9 replays 9 total 118 s
+18:56:35 CONTROL OK fold_4_10 ordered reproduced on all 360962 rows, max abs diff 0, 29.3 s
+18:57:03 fold_4_10 decided lopo pair4 rms(chain delta) 39.51 s rms(premix dm) 28.12 s clipped 321328 p0 floored 106 28.3 s
+18:57:32 fold_4_10 decided half half rms(chain delta) 42.99 s rms(premix dm) 33.95 s clipped 265883 p0 floored 106 29.1 s
+18:58:02 fold_4_10 decided expanding m4 rms(chain delta) 0.00 s rms(premix dm) 0.00 s clipped 0 p0 floored 0 29.4 s
+18:58:02 fold_4_10 decided expanding m10 rms(chain delta) 42.99 s rms(premix dm) 33.95 s clipped 265883 p0 floored 106 0.0 s
+18:58:30 fold_4_10 serviced lopo pair4 rms(chain delta) 15.98 s rms(premix dm) 16.25 s clipped 299398 p0 floored 0 28.6 s
+18:59:00 fold_4_10 serviced half half rms(chain delta) 14.25 s rms(premix dm) 14.12 s clipped 111730 p0 floored 0 29.6 s
+18:59:00 fold_4_10 serviced expanding m4 rms(chain delta) 0.00 s rms(premix dm) 0.00 s clipped 0 p0 floored 0 0.0 s
+18:59:00 fold_4_10 serviced expanding m10 rms(chain delta) 14.25 s rms(premix dm) 14.12 s clipped 111730 p0 floored 0 0.0 s
+18:59:00 fold_4_10 all lopo pair4 rms(chain delta) 39.51 s rms(premix dm) 28.12 s clipped 321328 p0 floored 106 0.0 s
+18:59:00 fold_4_10 all half half rms(chain delta) 42.99 s rms(premix dm) 33.95 s clipped 265883 p0 floored 106 0.0 s
+18:59:00 fold_4_10 all expanding m4 rms(chain delta) 0.00 s rms(premix dm) 0.00 s clipped 0 p0 floored 0 0.0 s
+18:59:00 fold_4_10 all expanding m10 rms(chain delta) 42.99 s rms(premix dm) 33.95 s clipped 265883 p0 floored 106 0.0 s
+18:59:02 COMPLETE fold_4_10 replays 12 total 145 s
+18:59:32 CONTROL OK fold_5_11 ordered reproduced on all 347534 rows, max abs diff 0, 29.2 s
+19:00:01 fold_5_11 decided lopo pair5 rms(chain delta) 37.97 s rms(premix dm) 25.67 s clipped 310838 p0 floored 87 29.5 s
+19:00:31 fold_5_11 decided half half rms(chain delta) 42.74 s rms(premix dm) 21.77 s clipped 256616 p0 floored 92 29.4 s
+19:01:00 fold_5_11 decided expanding m5 rms(chain delta) 0.00 s rms(premix dm) 0.00 s clipped 0 p0 floored 0 29.4 s
+19:01:00 fold_5_11 decided expanding m11 rms(chain delta) 42.74 s rms(premix dm) 21.77 s clipped 256616 p0 floored 92 0.0 s
+19:01:31 fold_5_11 serviced lopo pair5 rms(chain delta) 14.89 s rms(premix dm) 14.76 s clipped 290129 p0 floored 0 31.1 s
+19:02:00 fold_5_11 serviced half half rms(chain delta) 10.93 s rms(premix dm) 10.10 s clipped 108044 p0 floored 0 29.0 s
+19:02:00 fold_5_11 serviced expanding m5 rms(chain delta) 0.00 s rms(premix dm) 0.00 s clipped 0 p0 floored 0 0.0 s
+19:02:00 fold_5_11 serviced expanding m11 rms(chain delta) 10.93 s rms(premix dm) 10.10 s clipped 108044 p0 floored 0 0.0 s
+19:02:00 fold_5_11 all lopo pair5 rms(chain delta) 37.97 s rms(premix dm) 25.67 s clipped 310838 p0 floored 87 0.0 s
+19:02:00 fold_5_11 all half half rms(chain delta) 42.74 s rms(premix dm) 21.77 s clipped 256616 p0 floored 92 0.0 s
+19:02:00 fold_5_11 all expanding m5 rms(chain delta) 0.00 s rms(premix dm) 0.00 s clipped 0 p0 floored 0 0.0 s
+19:02:00 fold_5_11 all expanding m11 rms(chain delta) 42.74 s rms(premix dm) 21.77 s clipped 256616 p0 floored 92 0.0 s
+19:02:02 COMPLETE fold_5_11 replays 12 total 148 s
+19:02:31 CONTROL OK fold_6_12 ordered reproduced on all 348819 rows, max abs diff 0, 28.8 s
+19:03:02 fold_6_12 decided lopo pair6 rms(chain delta) 0.00 s rms(premix dm) 0.00 s clipped 0 p0 floored 0 30.7 s
+19:03:35 fold_6_12 decided half half rms(chain delta) 47.16 s rms(premix dm) 20.74 s clipped 254903 p0 floored 136 32.8 s
+19:03:35 fold_6_12 decided expanding m6 rms(chain delta) 0.00 s rms(premix dm) 0.00 s clipped 0 p0 floored 0 0.0 s
+19:03:35 fold_6_12 decided expanding m12 rms(chain delta) 47.16 s rms(premix dm) 20.74 s clipped 254903 p0 floored 136 0.0 s
+19:03:35 fold_6_12 serviced lopo pair6 rms(chain delta) 0.00 s rms(premix dm) 0.00 s clipped 0 p0 floored 0 0.0 s
+19:04:05 fold_6_12 serviced half half rms(chain delta) 11.80 s rms(premix dm) 10.84 s clipped 102623 p0 floored 0 30.5 s
+19:04:05 fold_6_12 serviced expanding m6 rms(chain delta) 0.00 s rms(premix dm) 0.00 s clipped 0 p0 floored 0 0.0 s
+19:04:05 fold_6_12 serviced expanding m12 rms(chain delta) 11.80 s rms(premix dm) 10.84 s clipped 102623 p0 floored 0 0.0 s
+19:04:05 fold_6_12 all lopo pair6 rms(chain delta) 0.00 s rms(premix dm) 0.00 s clipped 0 p0 floored 0 0.0 s
+19:04:06 fold_6_12 all half half rms(chain delta) 47.16 s rms(premix dm) 20.74 s clipped 254903 p0 floored 136 0.0 s
+19:04:06 fold_6_12 all expanding m6 rms(chain delta) 0.00 s rms(premix dm) 0.00 s clipped 0 p0 floored 0 0.0 s
+19:04:06 fold_6_12 all expanding m12 rms(chain delta) 47.16 s rms(premix dm) 20.74 s clipped 254903 p0 floored 136 0.0 s
+19:04:07 COMPLETE fold_6_12 replays 12 total 94 s
+19:04:07 ALL REQUESTED FOLDS COMPLETE
+Traceback (most recent call last):
+  File "/Users/denyskolomiiets/prc-2026/scripts/e214_gate_calibration_20261008.py", line 467, in <module>
+    main()
+  File "/Users/denyskolomiiets/prc-2026/scripts/e214_gate_calibration_20261008.py", line 463, in main
+    else: evaluate_with_premix(a.root.resolve())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/denyskolomiiets/prc-2026/scripts/e214_gate_calibration_20261008.py", line 426, in evaluate_with_premix
+    th = np.array(thetas[key]); dm = F['dm'][j]
+                  ~~~~~~^^^^^
+KeyError: np.str_('decided|lopo|pair1')
+decided LOPO decided +3.8456 s (0/6) body +5.1439 included +3.8439 trim20 1.371e+09 | half +7.9330 (0/6) | expanding +4.9090 (0/9) | gate False
+    lopo premix actual +2.5941 linear +3.0246 chain +3.8456 pass-through(sse) 1.398
+    half premix actual +5.5854 linear +6.9364 chain +7.9330 pass-through(sse) 1.324
+    expanding premix actual +3.4846 linear +4.3331 chain +4.9090 pass-through(sse) 1.324
+serviced LOPO decided +0.8236 s (1/6) body +1.5407 included +0.8222 trim20 3.381e+08 | half +0.7238 (2/6) | expanding +0.4444 (2/9) | gate False
+    lopo premix actual +0.3287 linear +0.3291 chain +0.8236 pass-through(sse) 2.359
+    half premix actual +0.0537 linear +0.0538 chain +0.7238 pass-through(sse) 12.489
+    expanding premix actual +0.0334 linear +0.0334 chain +0.4444 pass-through(sse) 12.489
+all LOPO decided +3.8456 s (0/6) body +5.1439 included +3.8439 trim20 1.371e+09 | half +7.9330 (0/6) | expanding +4.9090 (0/9) | gate False
+    lopo premix actual +2.5941 linear +3.0246 chain +3.8456 pass-through(sse) 1.398
+    half premix actual +5.5854 linear +6.9364 chain +7.9330 pass-through(sse) 1.324
+    expanding premix actual +3.4846 linear +4.3331 chain +4.9090 pass-through(sse) 1.324
+WROTE /Users/denyskolomiiets/prc-2026/analysis/e214_gate_calibration_20261008/result.json verdict {'primary': 'decided', 'gate_pass': False, 'secondary_gate_pass': {'serviced': False, 'all': False}}

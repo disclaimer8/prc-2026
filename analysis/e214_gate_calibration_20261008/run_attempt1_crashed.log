@@ -1,0 +1,60 @@
+18:36:48 phase 1: premix basis
+18:36:48 fold_1_7 rows 344419 premix rmse(all) 327.53 bucket counts [232503, 88954, 17854, 5108]
+18:36:49 fold_2_8 rows 334914 premix rmse(all) 237.22 bucket counts [237361, 81915, 12676, 2962]
+18:36:50 fold_3_9 rows 348399 premix rmse(all) 213.29 bucket counts [246978, 85504, 12806, 3111]
+18:36:51 fold_4_10 rows 360962 premix rmse(all) 190.73 bucket counts [263458, 83485, 11536, 2483]
+18:36:51 fold_5_11 rows 347534 premix rmse(all) 249.26 bucket counts [257881, 77023, 10306, 2324]
+18:36:52 fold_6_12 rows 348819 premix rmse(all) 269.28 bucket counts [245049, 86084, 13951, 3735]
+18:36:52 phase 1 done: 48 thetas
+18:37:16 CONTROL OK fold_1_7 ordered reproduced on all 344419 rows, max abs diff 0, 22.7 s
+18:37:37 fold_1_7 decided lopo pair1 rms(chain delta) 55.87 s rms(premix dm) 52.37 s clipped 304808 20.6 s
+18:37:58 fold_1_7 decided half half rms(chain delta) 73.67 s rms(premix dm) 71.60 s clipped 249654 21.1 s
+18:38:19 fold_1_7 decided expanding m7 rms(chain delta) 73.67 s rms(premix dm) 71.60 s clipped 249654 20.9 s
+18:38:39 fold_1_7 serviced lopo pair1 rms(chain delta) 25.51 s rms(premix dm) 26.80 s clipped 278432 20.5 s
+18:39:00 fold_1_7 serviced half half rms(chain delta) 22.11 s rms(premix dm) 23.68 s clipped 96146 21.0 s
+18:39:20 fold_1_7 serviced expanding m7 rms(chain delta) 22.11 s rms(premix dm) 23.68 s clipped 96146 20.0 s
+18:39:40 fold_1_7 all lopo pair1 rms(chain delta) 55.87 s rms(premix dm) 52.37 s clipped 304808 20.0 s
+18:40:01 fold_1_7 all half half rms(chain delta) 73.67 s rms(premix dm) 71.60 s clipped 249654 20.3 s
+18:40:21 fold_1_7 all expanding m7 rms(chain delta) 73.67 s rms(premix dm) 71.60 s clipped 249654 20.0 s
+18:40:22 COMPLETE fold_1_7 replays 9 total 184 s
+18:40:43 CONTROL OK fold_2_8 ordered reproduced on all 334914 rows, max abs diff 0, 20.0 s
+18:41:03 fold_2_8 decided lopo pair2 rms(chain delta) 38.83 s rms(premix dm) 38.33 s clipped 297005 19.9 s
+18:41:23 fold_2_8 decided half half rms(chain delta) 50.30 s rms(premix dm) 48.93 s clipped 244466 20.5 s
+18:41:43 fold_2_8 decided expanding m8 rms(chain delta) 50.30 s rms(premix dm) 48.93 s clipped 244466 20.0 s
+18:42:03 fold_2_8 serviced lopo pair2 rms(chain delta) 20.69 s rms(premix dm) 19.41 s clipped 274854 19.7 s
+18:42:23 fold_2_8 serviced half half rms(chain delta) 17.50 s rms(premix dm) 15.59 s clipped 98768 20.0 s
+18:42:43 fold_2_8 serviced expanding m8 rms(chain delta) 17.50 s rms(premix dm) 15.59 s clipped 98768 20.2 s
+18:43:03 fold_2_8 all lopo pair2 rms(chain delta) 38.83 s rms(premix dm) 38.33 s clipped 297005 20.2 s
+18:43:24 fold_2_8 all half half rms(chain delta) 50.30 s rms(premix dm) 48.93 s clipped 244466 20.3 s
+18:43:44 fold_2_8 all expanding m8 rms(chain delta) 50.30 s rms(premix dm) 48.93 s clipped 244466 20.1 s
+18:43:45 COMPLETE fold_2_8 replays 9 total 181 s
+18:44:08 CONTROL OK fold_3_9 ordered reproduced on all 348399 rows, max abs diff 0, 22.4 s
+18:44:35 fold_3_9 decided lopo pair3 rms(chain delta) 34.13 s rms(premix dm) 33.22 s clipped 309426 26.3 s
+18:44:57 fold_3_9 decided half half rms(chain delta) 45.08 s rms(premix dm) 43.46 s clipped 255563 22.8 s
+18:45:20 fold_3_9 decided expanding m9 rms(chain delta) 45.08 s rms(premix dm) 43.46 s clipped 255563 22.4 s
+18:45:42 fold_3_9 serviced lopo pair3 rms(chain delta) 17.89 s rms(premix dm) 17.01 s clipped 286735 22.4 s
+18:46:05 fold_3_9 serviced half half rms(chain delta) 15.96 s rms(premix dm) 14.53 s clipped 104680 22.3 s
+18:46:27 fold_3_9 serviced expanding m9 rms(chain delta) 15.96 s rms(premix dm) 14.53 s clipped 104680 22.6 s
+18:46:49 fold_3_9 all lopo pair3 rms(chain delta) 34.13 s rms(premix dm) 33.22 s clipped 309426 22.2 s
+18:47:11 fold_3_9 all half half rms(chain delta) 45.08 s rms(premix dm) 43.46 s clipped 255563 21.9 s
+18:47:33 fold_3_9 all expanding m9 rms(chain delta) 45.08 s rms(premix dm) 43.46 s clipped 255563 22.0 s
+18:47:35 COMPLETE fold_3_9 replays 9 total 205 s
+18:47:59 CONTROL OK fold_4_10 ordered reproduced on all 360962 rows, max abs diff 0, 22.9 s
+/Users/denyskolomiiets/prc-2026/scripts/e214_gate_calibration_20261008.py:228: RuntimeWarning: invalid value encountered in divide
+  p = np.where(np.isnan(v), 0, p); p /= p.sum(axis=1, keepdims=True)
+Traceback (most recent call last):
+  File "/Users/denyskolomiiets/prc-2026/scripts/e214_gate_calibration_20261008.py", line 458, in <module>
+    main()
+  File "/Users/denyskolomiiets/prc-2026/scripts/e214_gate_calibration_20261008.py", line 453, in main
+    if a.action == 'compute': compute(a.root.resolve(), a.threads, [int(x) for x in a.folds.split(',')])
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/denyskolomiiets/prc-2026/scripts/e214_gate_calibration_20261008.py", line 303, in compute
+    aug, clipped = chain(root, spec, F, ra, rb, dp, threads)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/denyskolomiiets/prc-2026/scripts/e214_gate_calibration_20261008.py", line 235, in chain
+    _, aug = A.stage_predictions(root, F['name'], F['d'], base, p, spec, threads)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/denyskolomiiets/prc-2026/scripts/e195_pre_e81_comparison.py", line 208, in stage_predictions
+    if not np.array_equal(ordinary[~target],augmented[~target]):raise ValueError('E188 population escaped')
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: E188 population escaped
