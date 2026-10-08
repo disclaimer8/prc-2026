@@ -1,0 +1,26 @@
+{
+  "external_metadata": "10 hubs x58 Feb/Jun days x2weather sources; ATFM0 missingdays",
+  "files": {
+    "analysis/final_feature_workspace_20261008/PROTOCOL.md": "25323d69615df342b45a50c8e9f7dbc2dd6cd2929e867f2d61be36cb9a2ccec9",
+    "analysis/final_feature_workspace_20261008/external_availability.json": "bae0395d96c48a2e544e6a78da06e569a4c1d881a6c4395b46c1691ad3e121c6",
+    "analysis/final_feature_workspace_20261008/source_contract.json": "0e0b16de32c76529f490afd59da601cc51e15d14d305e860347442f9261082da",
+    "scripts/final_feature_workspace_20261008.py": "33479b6d8e8e9648b0c5c6410cba157f940ce6ca0389cd031f8164326f56b1be",
+    "tests/test_final_feature_workspace_20261008.py": "c14ac43f56d4b33efbee027772340d80a37523cb63f4f0837dbfee5a5bf67feb"
+  },
+  "fits": 0,
+  "memory_limitation": "Mac seal uses phase high-water RSS checks, not kernel memory cap; Home build24GiB only after E207",
+  "raw_transfers": 0,
+  "real_seal_stage_build": false,
+  "review_fixes": [
+    "Exact four outputs and rederived completion identity",
+    "Preregistration journal protocol before real metadata"
+  ],
+  "status": "FROZEN_FOR_INDEPENDENT_REVIEW_NOT_REGISTERED",
+  "tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests -p test_final_feature_workspace_20261008.py",
+    "failed": 0,
+    "passed": 12,
+    "scope": "synthetic; real subprocess dependency tests use temporary synthetic producers"
+  },
+  "utc": "2026-10-08T11:34:12.315948+00:00"
+}
