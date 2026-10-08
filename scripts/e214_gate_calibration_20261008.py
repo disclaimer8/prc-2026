@@ -211,11 +211,16 @@ def upstream_calibrated(z, r, motion, f, ia, ib, excluded, dp):
     p = z['proba'].astype(float).copy()
     if not np.isfinite(p).all() or (p < 0).any() or not np.allclose(p.sum(axis=1), 1, atol=2e-7): raise ValueError('invalid cached probabilities')
     p = np.where(np.isnan(v), 0, p); p = p / p.sum(axis=1, keepdims=True)
-    clipped = 0
+    clipped = 0; floored = 0
     if dp is not None:
         q = p + dp
         clipped = int(np.any((q < 0) | (q > 1), axis=1).sum())
-        q = np.clip(q, 0.0, 1.0); q = np.where(np.isnan(v), 0, q); q = q / q.sum(axis=1, keepdims=True)
+        q = np.clip(q, 0.0, 1.0); q = np.where(np.isnan(v), 0, q)
+        # Technical repair (journal №422): the classifier never outputs p0 == 0, and the E167 rule a below zeroes the
+        # schedule/day-shift classes, so a row whose regular probability was clipped to 0 would become empty (NaN).
+        # Floor the regular probability at 1e-9 before renormalising; the number of floored rows is reported.
+        floored = int((q[:, 0] < 1e-9).sum()); q[:, 0] = np.maximum(q[:, 0], 1e-9)
+        q = q / q.sum(axis=1, keepdims=True)
         if not np.isfinite(q).all(): raise ValueError('calibrated probabilities not finite')
         p = q
     base = np.rint(A.mixture(p, v, lobt))
@@ -227,7 +232,7 @@ def upstream_calibrated(z, r, motion, f, ia, ib, excluded, dp):
     rest = np.clip(1 - p[ib, 1], 1e-9, None); p[ib] *= ((1 - .9) / rest)[:, None]; p[ib, 1] = .9
     p = np.where(np.isnan(v), 0, p); p /= p.sum(axis=1, keepdims=True)
     changed = ia | ib; base[changed] = np.rint(A.mixture(p, v, lobt)[changed])
-    return base, p, clipped
+    return base, p, (clipped, floored)
 
 
 def chain(root, spec, F, ra, rb, dp, threads):
@@ -294,28 +299,32 @@ def compute(root, threads, folds):
         maxdiff = int(np.abs(ctrl - F['ordered']).max())
         if maxdiff != 0: raise ValueError(f'CONTROL FAILED {name}: max abs diff {maxdiff}')
         log('CONTROL OK', name, 'ordered reproduced on all', len(ctrl), 'rows, max abs diff 0, %.1f s' % (time.monotonic() - t0))
-        keys = []; deltas = []; dm_premix = []; clip_counts = []; secs = []
+        keys = []; deltas = []; dm_premix = []; clip_counts = []; floor_counts = []; secs = []; cache = {}; reused = []
         for pop in POPS:
             for leg, key, train, ev in legs_for_fold(fold):
                 th = thetas[(pop, key)]
                 dp = delta_p(th, F, P)
                 t0 = time.monotonic()
-                aug, clipped = chain(root, spec, F, ra, rb, dp, threads)
+                sig = th.tobytes()
+                if sig in cache:  # identical theta (e.g. `all` == `decided` up to one row) -> identical replay, reused verbatim
+                    aug, (clipped, floored) = cache[sig]; reused.append(f'{pop}|{leg}|{key}')
+                else:
+                    aug, (clipped, floored) = chain(root, spec, F, ra, rb, dp, threads); cache[sig] = (aug, (clipped, floored))
                 secs.append(time.monotonic() - t0)
                 dd = aug - F['ordered']
                 if np.abs(dd).max() >= 2 ** 31: raise ValueError('delta overflow')
-                # actual premix change (clipped simplex), unclipped by LOBT: the quantity theta was fitted on
-                q = np.clip(P['p'] + dp, 0, 1) * P['feas']; q = q / q.sum(1, keepdims=True)
+                # actual premix change (clipped simplex, same floor), unclipped by LOBT: the quantity theta was fitted on
+                q = np.clip(P['p'] + dp, 0, 1) * P['feas']; q[:, 0] = np.maximum(q[:, 0], 1e-9); q = q / q.sum(1, keepdims=True)
                 dm = np.sum(q * P['v'], axis=1) - P['m']
-                keys.append(f'{pop}|{leg}|{key}'); deltas.append(dd.astype(np.int32)); dm_premix.append(dm.astype(np.float32)); clip_counts.append(clipped)
+                keys.append(f'{pop}|{leg}|{key}'); deltas.append(dd.astype(np.int32)); dm_premix.append(dm.astype(np.float32)); clip_counts.append(clipped); floor_counts.append(floored)
                 ev_rows = np.isin(F['month'], ev) & ~F['excluded']
                 log(name, pop, leg, key, 'rms(chain delta) %.2f s' % float(np.sqrt(np.mean(dd[ev_rows].astype(float) ** 2))),
-                    'rms(premix dm) %.2f s' % float(np.sqrt(np.mean(dm[ev_rows] ** 2))), 'clipped', clipped, '%.1f s' % secs[-1])
+                    'rms(premix dm) %.2f s' % float(np.sqrt(np.mean(dm[ev_rows] ** 2))), 'clipped', clipped, 'p0 floored', floored, '%.1f s' % secs[-1])
         tmp = fd / '.replays.partial.npz'
         np.savez_compressed(tmp, mvt_id=F['ids'], month=F['month'], keys=np.array(keys), delta=np.stack(deltas), dm_premix=np.stack(dm_premix),
-                            clipped=np.array(clip_counts), excluded=F['excluded'], control_max_abs_diff=np.array(maxdiff))
+                            clipped=np.array(clip_counts), floored=np.array(floor_counts), excluded=F['excluded'], control_max_abs_diff=np.array(maxdiff))
         tmp.rename(fd / 'replays.npz')
-        A.save(fd / 'replays.json', dict(protocol=PROTOCOL, fold=fold, keys=keys, seconds=secs, threads=threads, control_max_abs_diff=maxdiff,
+        A.save(fd / 'replays.json', dict(protocol=PROTOCOL, fold=fold, keys=keys, seconds=secs, threads=threads, control_max_abs_diff=maxdiff, reused_identical_theta=reused,
                                          chain_sha256=A.sha(root / CHAIN), self_sha256=A.sha(Path(__file__))))
         log('COMPLETE', name, 'replays', len(keys), 'total %.0f s' % sum(secs))
         del F
@@ -342,11 +351,11 @@ def evaluate(root):
         ok = old['evaluation_mask'].to_numpy(); ap = old['ADEP_mvt'].to_numpy(); nm = old['has_nm'].to_numpy(); D = old['D'].to_numpy(); mo = old['month'].to_numpy()
         with np.load(root / OUT / name / 'replays.npz') as z:
             if not np.array_equal(z['mvt_id'], ids) or not np.array_equal(z['excluded'], ~ok) or int(z['control_max_abs_diff']) != 0: raise ValueError('replay alignment ' + name)
-            keys = list(z['keys']); delta = z['delta'].astype(np.float64); dm = z['dm_premix'].astype(np.float64); clipped = z['clipped']
+            keys = list(z['keys']); delta = z['delta'].astype(np.float64); dm = z['dm_premix'].astype(np.float64); clipped = z['clipped']; floored = z['floored']
         tail = (ap == 'LIRF') & ~nm
         masks = dict(included=ok, decided=ok & ~(tail & (D >= 14400)), body=ok & (y <= 7200))
         se0 = (ordered - y) ** 2
-        folds[fold] = dict(name=name, y=y, mo=mo, masks=masks, se0=se0, keys=keys, delta=delta, dm=dm, clipped=clipped, ordered=ordered)
+        folds[fold] = dict(name=name, y=y, mo=mo, masks=masks, se0=se0, keys=keys, delta=delta, dm=dm, clipped=clipped, floored=floored, ordered=ordered)
     res = dict(protocol=PROTOCOL, primary_population=PRIMARY, lambda_ridge=LAMBDA, columns=COLS, control_exact=True,
                populations={f['name']: {k: int(v.sum()) for k, v in f['masks'].items()} for f in folds.values()}, legs={})
     for pop in POPS:
@@ -357,7 +366,7 @@ def evaluate(root):
         for fold in FOLDS:
             F = folds[fold]; key = f'{pop}|lopo|pair{fold}'; j = F['keys'].index(key)
             pred = F['ordered'] + F['delta'][j]; d = (pred - F['y']) ** 2 - F['se0']
-            u = dict(fold=fold, w_key=key, clipped_rows=int(F['clipped'][j]))
+            u = dict(fold=fold, w_key=key, clipped_rows=int(F['clipped'][j]), p0_floored_rows=int(F['floored'][j]))
             for m in ('decided', 'body', 'included'):
                 mk = F['masks'][m]; s0 = float(F['se0'][mk].sum()); ds = float(d[mk].sum()); n = int(mk.sum())
                 u[m] = dict(n=n, dsse=ds, drmse=drmse(s0, ds, n)); pooled[m] += ds; base[m] += s0; nn[m] += n
@@ -376,7 +385,7 @@ def evaluate(root):
             for mo in months:
                 fold = (mo - 1) % 6 + 1; F = folds[fold]; key = f'{pop}|{leg}|' + ('half' if leg == 'half' else f'm{mo}'); j = F['keys'].index(key)
                 pred = F['ordered'] + F['delta'][j]; d = (pred - F['y']) ** 2 - F['se0']; inm = F['mo'] == mo
-                u = dict(month=mo, w_key=key, clipped_rows=int(F['clipped'][j]))
+                u = dict(month=mo, w_key=key, clipped_rows=int(F['clipped'][j]), p0_floored_rows=int(F['floored'][j]))
                 for m in ('decided', 'body', 'included'):
                     mk = F['masks'][m] & inm; s0 = float(F['se0'][mk].sum()); ds = float(d[mk].sum()); n = int(mk.sum())
                     u[m] = dict(n=n, dsse=ds, drmse=drmse(s0, ds, n)); pooled[m] += ds; base[m] += s0; nn[m] += n
