@@ -299,6 +299,9 @@ def admit(root, contract_path):
             raise ValueError('frozen source not pinned to the archived closure: ' + name)
     if not c['opdi']['files'] or any(k not in c['files'] for k in c['opdi']['files']):
         raise ValueError('OPDI event inventory not pinned')
+    opdi_bases = [Path(k).name for k in c['opdi']['files']]
+    if len(set(opdi_bases)) != len(opdi_bases) or not all(b.startswith('ev_') and b.endswith('.parquet') for b in opdi_bases):
+        raise ValueError('OPDI event files must be unique ev_*.parquet basenames (they share <work>/data/opdi)')
     return c, dict(members=members, template_rows=int(template.height), rank_ids_sha256=ids_sha(rank_ids))
 
 
@@ -913,6 +916,23 @@ def pin(root, names):
     return {n: sha(Path(root) / n) for n in names}
 
 
+def opdi_inventory(root, extra_dir=None):
+    """OPDI event files the LSZH stage reads: `data/opdi/ev_*.parquet` plus, when given, an extended set
+    (journal 398: Feb/Jun 2026 LSZH extracts). All are linked into `<work>/data/opdi/` by basename, which the frozen
+    `e159_opdi_stage_cv.opdi_wide` globs as `ev_*.parquet`; basenames must therefore be unique and start with `ev_`."""
+    root = Path(root).resolve()
+    names = sorted(str(p.relative_to(root)) for p in (root / 'data/opdi').glob('ev_*.parquet'))
+    if extra_dir:
+        extra = sorted(str(p.relative_to(root)) for p in (root / extra_dir).glob('ev_*.parquet'))
+        if not extra:
+            raise ValueError('extended OPDI set has no ev_*.parquet: ' + str(extra_dir))
+        names += extra
+    bases = [Path(n).name for n in names]
+    if len(set(bases)) != len(bases):
+        raise ValueError('OPDI event basenames collide: ' + str(sorted(b for b in set(bases) if bases.count(b) > 1)))
+    return names
+
+
 def archive_inputs(root, patterns):
     setup = read(Path(root) / ARCHIVE / 'setup.json')
     return [n for n in setup['inputs'] if any(re.fullmatch(p, n) for p in patterns)]
@@ -928,7 +948,7 @@ def make_contract(root, mode, out, **kw):
     names += [f'{E188_MODELS}/{n}' for n in read(root / E188_MODELS / 'fit_manifest.json')['model_sha256']]
     for stage, (_, calls, _) in CACHED.items():
         names += [f'{STAGE_CACHE}/{stage}/complete.json'] + [f'{STAGE_CACHE}/{stage}/model_{i}.txt' for i in range(calls)]
-    opdi = sorted(str(p.relative_to(root)) for p in (root / 'data/opdi').glob('ev_*.parquet'))
+    opdi = opdi_inventory(root, kw.get('opdi_extra'))   # default: the 44 held files only; --opdi-extra adds a pinned extended set
     names += opdi
     if mode == 'janjul':
         inputs = dict(features_fin1b='data/features_fin1b.parquet', features_e106='data/features_e106.parquet', features_e113='data/features_e113.parquet',
@@ -976,7 +996,9 @@ def make_contract(root, mode, out, **kw):
     feat = pl.read_parquet(root / inputs['features_fin1b'], columns=[ID, 'split']).filter(pl.col('split') == 'rank')
     contract = dict(protocol=PROTOCOL, mode=mode, rows=rows, train_rows=2085047, inputs=inputs, members=members,
                     rank_ids_sha256=ids_sha(feat[ID].to_numpy()), derivatives=dict(**deriv, ranking_sha256=files[inputs['ranking']]),
-                    opdi=dict(files={n: files[n] for n in opdi}), tabpfn=dict(checkpoint=TABPFN_CKPT, sha256=TABPFN_SHA),
+                    opdi=dict(files={n: files[n] for n in opdi}, extra_dir=kw.get('opdi_extra'),
+                              extra_files=[n for n in opdi if not n.startswith('data/opdi/')]),
+                    tabpfn=dict(checkpoint=TABPFN_CKPT, sha256=TABPFN_SHA),
                     files=files, output_name=output_name, created_unix=time.time())
     save(out, contract)
     print('CONTRACT', out, len(files), 'pinned files', flush=True)
@@ -999,12 +1021,13 @@ def main():
     p.add_argument('--nn-complete')
     p.add_argument('--derivatives-work', help='output root of scripts/final_adsb_derivatives_20261008.py')
     p.add_argument('--output-name')
+    p.add_argument('--opdi-extra', help='directory (relative to root) with an extended OPDI event set, e.g. data/opdi_final_20261008 (journal 398)')
     a = p.parse_args()
     if a.action == 'plan':
         print(json.dumps(check_plan(stage_plan()), indent=1))
     elif a.action == 'make-contract':
         make_contract(a.root, a.mode, a.out, **{k: v for k, v in vars(a).items() if v is not None and k in
-                      ('feature_work', 'tabular_root', 'nn_prediction', 'nn_complete', 'derivatives_work', 'output_name')})
+                      ('feature_work', 'tabular_root', 'nn_prediction', 'nn_complete', 'derivatives_work', 'output_name', 'opdi_extra')})
     elif a.action == 'prepare':
         prepare(a.root, a.contract, a.work)
     elif a.action == 'assemble':

@@ -1,0 +1,488 @@
+{
+ "protocol": "opdi-final-febjun2026-lszh-e159b-extract-20261008-v1",
+ "base_url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002",
+ "airports": [
+  "EDDF",
+  "EDDM",
+  "EGLL",
+  "EHAM",
+  "LEBL",
+  "LEMD",
+  "LFPG",
+  "LIRF",
+  "LSZH",
+  "LTFM"
+ ],
+ "keep_columns": [
+  "flight_id",
+  "icao24",
+  "flt_id",
+  "adep",
+  "ades",
+  "type",
+  "t",
+  "longitude",
+  "latitude",
+  "altitude",
+  "source",
+  "version"
+ ],
+ "e159b_types": [
+  "exit-parking_position",
+  "entry-taxiway",
+  "take-off",
+  "first_seen",
+  "first-xing-fl50"
+ ],
+ "polars": "1.44.2",
+ "python": "3.12.14 (main, Sep 29 2026, 14:59:39) [Clang 22.1.3 ]",
+ "threads": "2",
+ "flight_lists": {
+  "202501": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202501.parquet",
+   "bytes": 33922640,
+   "sha256": "ea1a74434f8da4a842404e39ae75431e2a046d6cc3fbc46aaf4f293ae435a5de",
+   "remote_content_length": 33922640,
+   "rows": 1036088
+  },
+  "202502": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202502.parquet",
+   "bytes": 34986635,
+   "sha256": "32443853de81cb7eb0874d97ee8d86c84bbb0a964a2622b06c701317d44588b2",
+   "remote_content_length": 34986635,
+   "rows": 1066341
+  },
+  "202503": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202503.parquet",
+   "bytes": 41047071,
+   "sha256": "e631049e8fb544133b145877c36674436efdb6c337893a1a36dd5e5c5e2f8597",
+   "remote_content_length": 41047071,
+   "rows": 1236032
+  },
+  "202504": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202504.parquet",
+   "bytes": 44902849,
+   "sha256": "d271a4d640da1b213f7a7b8aa5ab0205366b1d13504966d4757722f32b717f91",
+   "remote_content_length": 44902849,
+   "rows": 1351975
+  },
+  "202505": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202505.parquet",
+   "bytes": 50438523,
+   "sha256": "a9b744da426195038b8e9537003492759daa1dadeafc7022006a79d88be56cc6",
+   "remote_content_length": 50438523,
+   "rows": 1518167
+  },
+  "202506": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202506.parquet",
+   "bytes": 52433299,
+   "sha256": "49e5131d698190e7fdb69f1293adf055935583faae1f7e1c9da2ed049007d863",
+   "remote_content_length": 52433299,
+   "rows": 1574471
+  },
+  "202507": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202507.parquet",
+   "bytes": 55250945,
+   "sha256": "d41ca50bfdeb1d86b57c7a4e2bad72f54f1980be521d8a97bc8af8a958a6bdd1",
+   "remote_content_length": 55250945,
+   "rows": 1662355
+  },
+  "202508": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202508.parquet",
+   "bytes": 52244227,
+   "sha256": "523e7d53970f01362a6d18203b84bf999f3684acc8108338cc411bfa175d4e81",
+   "remote_content_length": 52244227,
+   "rows": 1573717
+  },
+  "202509": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202509.parquet",
+   "bytes": 43996580,
+   "sha256": "e6a2b680410fdc6f202e8d825c6382e8755ce12fc0df2b6e4ce78669e4f3a3b8",
+   "remote_content_length": 43996580,
+   "rows": 1536783
+  },
+  "202510": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202510.parquet",
+   "bytes": 40259705,
+   "sha256": "1b0c30ff62d285548d50afb51c9114f77ed45595bfdd13a675a3e4b397af3435",
+   "remote_content_length": 40259705,
+   "rows": 1408966
+  },
+  "202511": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202511.parquet",
+   "bytes": 31946123,
+   "sha256": "7d3d468302f492de62e82780195d084f175095d39eaf163de5fe83c1c6029fba",
+   "remote_content_length": 31946123,
+   "rows": 1134715
+  },
+  "202512": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202512.parquet",
+   "bytes": 34529216,
+   "sha256": "be9be06daa058aef5d8de1bb7f5753616b9bfc4f16fbbe10309526d5eab2e7fb",
+   "remote_content_length": 34529216,
+   "rows": 1167483
+  },
+  "202601": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202601.parquet",
+   "bytes": 20263227,
+   "sha256": "536fc4c262a61d774ac764bc84d3cb12e1648e7d67c5a3aa2e3e15bb65f8f63a",
+   "remote_content_length": 20263227,
+   "rows": 709137
+  },
+  "202607": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202607.parquet",
+   "bytes": 53159289,
+   "sha256": "5b38d9bcb6bf2a4535cda7233304ed186f42b839b54e687ccb75263edc013cd6",
+   "remote_content_length": 53159289,
+   "rows": 1746344
+  },
+  "202602": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202602.parquet",
+   "bytes": 30221764,
+   "sha256": "4e8534f75b2584b49ea5757a1cc4c16c6ef46d4a3269527babf75d8c731f2e2b",
+   "remote_content_length": 30221764,
+   "rows": 1049317
+  },
+  "202603": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202603.parquet",
+   "bytes": 36132775,
+   "sha256": "3c227add92bfda6a9afd89eadbc2b2425241f0c67d8ff41418cb2c85a0c5b92e",
+   "remote_content_length": 36132775,
+   "rows": 1224728
+  },
+  "202605": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202605.parquet",
+   "bytes": 42518659,
+   "sha256": "aacff2864f65d9f4fa89820aee77a9362ca5426ed9c6a1132b79833c328630cf",
+   "remote_content_length": 42518659,
+   "rows": 1432875
+  },
+  "202606": {
+   "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_list/flight_list_202606.parquet",
+   "bytes": 47270320,
+   "sha256": "b835a16dd9a60b4cc49a6a764245246fe14f33a7c6c553f03b93623df2d195ff",
+   "remote_content_length": 47270320,
+   "rows": 1558373
+  }
+ },
+ "windows": {
+  "20260130_20260209": {
+   "raw": {
+    "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_events/flight_events_20260130_20260209.parquet",
+    "bytes": 289164026,
+    "sha256": "cdbcdccdff6818fa0a02af8763a12dbad7908441deaac8209047ec6708bfb0a4",
+    "remote_content_length": 289164026
+   },
+   "flight_lists": [
+    "202501",
+    "202502",
+    "202503",
+    "202504",
+    "202505",
+    "202506",
+    "202507",
+    "202508",
+    "202509",
+    "202510",
+    "202511",
+    "202512",
+    "202601",
+    "202607",
+    "202602",
+    "202603",
+    "202605",
+    "202606"
+   ],
+   "raw_types": [
+    "entry-apron",
+    "entry-deicing_pad",
+    "entry-hangar",
+    "entry-parking_position",
+    "entry-runway",
+    "entry-taxiway",
+    "entry-threshold",
+    "exit-apron",
+    "exit-deicing_pad",
+    "exit-hangar",
+    "exit-parking_position",
+    "exit-runway",
+    "exit-taxiway",
+    "exit-threshold",
+    "first-xing-fl100",
+    "first-xing-fl245",
+    "first-xing-fl50",
+    "first-xing-fl70",
+    "first_seen",
+    "landing",
+    "last-xing-fl100",
+    "last-xing-fl245",
+    "last-xing-fl50",
+    "last-xing-fl70",
+    "last_seen",
+    "level-end",
+    "level-start",
+    "take-off",
+    "top-of-climb",
+    "top-of-descent"
+   ],
+   "raw_rows": 8186193,
+   "full": {
+    "bytes": 28203898,
+    "sha256": "5b022fb676ae610d33ab31fc1ec75b93333e457023344cb28723865ad5ae379e",
+    "content_sha256": "679c11a6d75787112cdbbbefceae133d59cf8e781ef18f6c21227bbcad31f68e",
+    "rows": 1236149,
+    "flights": 47727,
+    "t_min": "2026-01-30 00:00:35+00:00",
+    "t_max": "2026-02-09 03:18:40+00:00",
+    "rows_by_adep": {
+     "EDDF": 135121,
+     "EDDM": 91388,
+     "EGLL": 151515,
+     "EHAM": 152918,
+     "LEBL": 122321,
+     "LEMD": 93219,
+     "LFPG": 142174,
+     "LIRF": 92559,
+     "LSZH": 150007,
+     "LTFM": 104927
+    },
+    "rows_by_type": {
+     "entry-apron": 3003,
+     "entry-deicing_pad": 6,
+     "entry-hangar": 47,
+     "entry-parking_position": 7094,
+     "entry-runway": 41396,
+     "entry-taxiway": 38266,
+     "entry-threshold": 712,
+     "exit-apron": 3001,
+     "exit-deicing_pad": 6,
+     "exit-hangar": 47,
+     "exit-parking_position": 7073,
+     "exit-runway": 41948,
+     "exit-taxiway": 36925,
+     "exit-threshold": 712,
+     "first-xing-fl100": 45350,
+     "first-xing-fl245": 41933,
+     "first-xing-fl50": 45638,
+     "first-xing-fl70": 45395,
+     "first_seen": 47727,
+     "landing": 1489,
+     "last-xing-fl100": 45350,
+     "last-xing-fl245": 41933,
+     "last-xing-fl50": 45638,
+     "last-xing-fl70": 45395,
+     "last_seen": 47727,
+     "level-end": 236739,
+     "level-start": 283791,
+     "take-off": 1549,
+     "top-of-climb": 40161,
+     "top-of-descent": 40098
+    },
+    "lszh_exit_parking_by_day": {
+     "2026-01-30": 534,
+     "2026-01-31": 424,
+     "2026-02-01": 532,
+     "2026-02-02": 532,
+     "2026-02-03": 399,
+     "2026-02-04": 522,
+     "2026-02-05": 318,
+     "2026-02-06": 509,
+     "2026-02-07": 498,
+     "2026-02-08": 512
+    }
+   },
+   "lszh": {
+    "bytes": 566785,
+    "sha256": "d513ea8241305d0f88e1ec97dd0e8df872b5317d76c44f5b88df7d6d979ba549",
+    "content_sha256": "fb2b6f4302c848acf1970987ecdecd4e150a2891c2b223edae0d7b037d9ca43c",
+    "rows": 33384,
+    "flights": 3157,
+    "t_min": "2026-01-30 05:02:15+00:00",
+    "t_max": "2026-02-08 22:45:55+00:00",
+    "rows_by_adep": {
+     "LSZH": 33384
+    },
+    "rows_by_type": {
+     "entry-taxiway": 22275,
+     "exit-parking_position": 4780,
+     "first-xing-fl50": 3103,
+     "first_seen": 3157,
+     "take-off": 69
+    },
+    "lszh_exit_parking_by_day": {
+     "2026-01-30": 534,
+     "2026-01-31": 424,
+     "2026-02-01": 532,
+     "2026-02-02": 532,
+     "2026-02-03": 399,
+     "2026-02-04": 522,
+     "2026-02-05": 318,
+     "2026-02-06": 509,
+     "2026-02-07": 498,
+     "2026-02-08": 512
+    }
+   }
+  },
+  "20260629_20260709": {
+   "raw": {
+    "url": "https://www.eurocontrol.int/performance/data/download/OPDI/v002/flight_events/flight_events_20260629_20260709.parquet",
+    "bytes": 506140562,
+    "sha256": "96c700d04dae3a41a1b76954560c974e15b439217ed7fa93a6b030f1250f926e",
+    "remote_content_length": 506140562
+   },
+   "flight_lists": [
+    "202501",
+    "202502",
+    "202503",
+    "202504",
+    "202505",
+    "202506",
+    "202507",
+    "202508",
+    "202509",
+    "202510",
+    "202511",
+    "202512",
+    "202601",
+    "202607",
+    "202602",
+    "202603",
+    "202605",
+    "202606"
+   ],
+   "raw_types": [
+    "entry-apron",
+    "entry-deicing_pad",
+    "entry-hangar",
+    "entry-parking_position",
+    "entry-runway",
+    "entry-taxiway",
+    "entry-threshold",
+    "exit-apron",
+    "exit-deicing_pad",
+    "exit-hangar",
+    "exit-parking_position",
+    "exit-runway",
+    "exit-taxiway",
+    "exit-threshold",
+    "first-xing-fl100",
+    "first-xing-fl245",
+    "first-xing-fl50",
+    "first-xing-fl70",
+    "first_seen",
+    "landing",
+    "last-xing-fl100",
+    "last-xing-fl245",
+    "last-xing-fl50",
+    "last-xing-fl70",
+    "last_seen",
+    "level-end",
+    "level-start",
+    "take-off",
+    "top-of-climb",
+    "top-of-descent"
+   ],
+   "raw_rows": 14899719,
+   "full": {
+    "bytes": 37108686,
+    "sha256": "5549fc47a6699a0ada7131258f94adc71b7413c00aff7496dafeaea551601724",
+    "content_sha256": "48ea6bc0426aedbdb7d00a3d5b23ad20f3b7fcb89d2b7ca8934ad67d3006f598",
+    "rows": 1589269,
+    "flights": 60065,
+    "t_min": "2026-06-28 23:48:20+00:00",
+    "t_max": "2026-07-09 03:14:15+00:00",
+    "rows_by_adep": {
+     "EDDF": 185076,
+     "EDDM": 138721,
+     "EGLL": 170790,
+     "EHAM": 186317,
+     "LEBL": 168147,
+     "LEMD": 164452,
+     "LFPG": 154461,
+     "LIRF": 116350,
+     "LSZH": 217717,
+     "LTFM": 87238
+    },
+    "rows_by_type": {
+     "entry-apron": 5117,
+     "entry-deicing_pad": 3,
+     "entry-hangar": 41,
+     "entry-parking_position": 12336,
+     "entry-runway": 62244,
+     "entry-taxiway": 58602,
+     "entry-threshold": 775,
+     "exit-apron": 5100,
+     "exit-deicing_pad": 3,
+     "exit-hangar": 41,
+     "exit-parking_position": 12200,
+     "exit-runway": 62908,
+     "exit-taxiway": 56087,
+     "exit-threshold": 775,
+     "first-xing-fl100": 56402,
+     "first-xing-fl245": 51691,
+     "first-xing-fl50": 56767,
+     "first-xing-fl70": 56503,
+     "first_seen": 60065,
+     "landing": 2277,
+     "last-xing-fl100": 56402,
+     "last-xing-fl245": 51691,
+     "last-xing-fl50": 56767,
+     "last-xing-fl70": 56503,
+     "last_seen": 60065,
+     "level-end": 288295,
+     "level-start": 352056,
+     "take-off": 5189,
+     "top-of-climb": 51233,
+     "top-of-descent": 51131
+    },
+    "lszh_exit_parking_by_day": {
+     "2026-06-29": 755,
+     "2026-06-30": 649,
+     "2026-07-01": 645,
+     "2026-07-02": 840,
+     "2026-07-03": 854,
+     "2026-07-04": 672,
+     "2026-07-05": 655,
+     "2026-07-06": 644,
+     "2026-07-07": 587,
+     "2026-07-08": 669
+    }
+   },
+   "lszh": {
+    "bytes": 807194,
+    "sha256": "913fb54f85f640f745fd77e2109c7e58b7feb4fe9e10c0363c33e156113bd8e0",
+    "content_sha256": "a2e76a65b9982e767068f07067e8ca6abb2846efc3ad6693ffdde573dae991c4",
+    "rows": 47445,
+    "flights": 4260,
+    "t_min": "2026-06-29 00:08:35+00:00",
+    "t_max": "2026-07-08 22:56:10+00:00",
+    "rows_by_adep": {
+     "LSZH": 47445
+    },
+    "rows_by_type": {
+     "entry-taxiway": 31987,
+     "exit-parking_position": 6970,
+     "first-xing-fl50": 4139,
+     "first_seen": 4260,
+     "take-off": 89
+    },
+    "lszh_exit_parking_by_day": {
+     "2026-06-29": 755,
+     "2026-06-30": 649,
+     "2026-07-01": 645,
+     "2026-07-02": 840,
+     "2026-07-03": 854,
+     "2026-07-04": 672,
+     "2026-07-05": 655,
+     "2026-07-06": 644,
+     "2026-07-07": 587,
+     "2026-07-08": 669
+    }
+   }
+  }
+ },
+ "control": null,
+ "started_unix": 1791469257.8790967,
+ "finished_unix": 1791469341.5236158,
+ "complete": true
+}

@@ -1,0 +1,52 @@
+[2026-10-08 14:13:55Z] got flight_list_202501.parquet 33922640 bytes in 3 s
+[2026-10-08 14:14:00Z] got flight_list_202502.parquet 34986635 bytes in 5 s
+[2026-10-08 14:14:02Z] got flight_list_202503.parquet 41047071 bytes in 1 s
+[2026-10-08 14:14:03Z] got flight_list_202504.parquet 44902849 bytes in 1 s
+[2026-10-08 14:14:04Z] got flight_list_202505.parquet 50438523 bytes in 1 s
+[2026-10-08 14:14:06Z] got flight_list_202506.parquet 52433299 bytes in 2 s
+[2026-10-08 14:14:08Z] got flight_list_202507.parquet 55250945 bytes in 1 s
+[2026-10-08 14:14:09Z] got flight_list_202508.parquet 52244227 bytes in 1 s
+[2026-10-08 14:14:11Z] got flight_list_202509.parquet 43996580 bytes in 1 s
+[2026-10-08 14:14:12Z] got flight_list_202510.parquet 40259705 bytes in 1 s
+[2026-10-08 14:14:13Z] got flight_list_202511.parquet 31946123 bytes in 1 s
+[2026-10-08 14:14:14Z] got flight_list_202512.parquet 34529216 bytes in 1 s
+[2026-10-08 14:14:15Z] got flight_list_202601.parquet 20263227 bytes in 1 s
+[2026-10-08 14:14:17Z] got flight_list_202607.parquet 53159289 bytes in 2 s
+[2026-10-08 14:14:18Z] got flight_list_202602.parquet 30221764 bytes in 1 s
+[2026-10-08 14:14:19Z] got flight_list_202603.parquet 36132775 bytes in 1 s
+[2026-10-08 14:14:21Z] got flight_list_202605.parquet 42518659 bytes in 1 s
+[2026-10-08 14:14:22Z] got flight_list_202606.parquet 47270320 bytes in 1 s
+[2026-10-08 14:14:32Z] flight index (all 18 lists): 2871081 departures of our airports
+[2026-10-08 14:14:40Z] got flight_events_20260209_20260219.parquet 325936444 bytes in 8 s
+[2026-10-08 14:17:03Z] have flight_list_202501.parquet
+[2026-10-08 14:17:03Z] have flight_list_202502.parquet
+[2026-10-08 14:17:03Z] have flight_list_202503.parquet
+[2026-10-08 14:17:04Z] have flight_list_202504.parquet
+[2026-10-08 14:17:04Z] have flight_list_202505.parquet
+[2026-10-08 14:17:04Z] have flight_list_202506.parquet
+[2026-10-08 14:17:04Z] have flight_list_202507.parquet
+[2026-10-08 14:17:04Z] have flight_list_202508.parquet
+[2026-10-08 14:17:04Z] have flight_list_202509.parquet
+[2026-10-08 14:17:05Z] have flight_list_202510.parquet
+[2026-10-08 14:17:05Z] have flight_list_202511.parquet
+[2026-10-08 14:17:05Z] have flight_list_202512.parquet
+[2026-10-08 14:17:05Z] have flight_list_202601.parquet
+[2026-10-08 14:17:05Z] have flight_list_202607.parquet
+[2026-10-08 14:17:05Z] have flight_list_202602.parquet
+[2026-10-08 14:17:05Z] have flight_list_202603.parquet
+[2026-10-08 14:17:05Z] have flight_list_202605.parquet
+[2026-10-08 14:17:06Z] have flight_list_202606.parquet
+[2026-10-08 14:17:15Z] flight index (all 18 lists): 2871081 departures of our airports
+[2026-10-08 14:17:15Z] have flight_events_20260209_20260219.parquet
+[2026-10-08 14:17:24Z] 20260209_20260219: raw 9173753 rows -> full 1369877 rows (49074 flights) -> LSZH/E159b 35001 rows
+[2026-10-08 14:17:32Z] got flight_events_20260219_20260301.parquet 344885749 bytes in 9 s
+[2026-10-08 14:17:41Z] 20260219_20260301: raw 9529356 rows -> full 1371077 rows (51352 flights) -> LSZH/E159b 38855 rows
+[2026-10-08 14:17:52Z] got flight_events_20260530_20260609.parquet 456969628 bytes in 11 s
+[2026-10-08 14:18:01Z] 20260530_20260609: raw 13191492 rows -> full 1562768 rows (59699 flights) -> LSZH/E159b 42849 rows
+[2026-10-08 14:18:12Z] got flight_events_20260609_20260619.parquet 458792778 bytes in 11 s
+[2026-10-08 14:18:22Z] 20260609_20260619: raw 13082972 rows -> full 1473702 rows (56239 flights) -> LSZH/E159b 45619 rows
+[2026-10-08 14:18:34Z] got flight_events_20260619_20260629.parquet 507922844 bytes in 12 s
+[2026-10-08 14:18:44Z] 20260619_20260629: raw 14312202 rows -> full 1604726 rows (60736 flights) -> LSZH/E159b 48887 rows
+[2026-10-08 14:18:50Z] got flight_events_20260130_20260209.parquet 289164026 bytes in 6 s
+[2026-10-08 14:19:06Z] control 20260130_20260209: 14 lists 245434 rows sha c04d61e9b73c (match False, content match True); 18 lists 1236149 rows (+990715)
+[2026-10-08 14:19:06Z] COMPLETE

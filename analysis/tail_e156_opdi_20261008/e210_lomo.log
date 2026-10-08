@@ -1,0 +1,25 @@
+features data/features_e106.parquet; OOF rows 2085047 from data/cv_preds_e116prod; threads 4; checkpoint data/tabpfn_v2_checkpoint/tabpfn-v2-classifier-finetuned-zk73skhh.ckpt
+LIRF no-NM rows 1487 tail rows 126 prefix codes 56 classes [720, 12, 755]
+batch equivalence (query alone vs stacked block, month 1 seed 0): max |dp| = 0.00e+00
+month  1: n=  6 A0 4.002e+08 A1 4.161e+08 B1 4.140e+08 C1 4.148e+08 C2 4.124e+08  (179.4 s)
+month  2: n=  5 A0 1.534e+07 A1 9.442e+06 B1 9.424e+06 C1 9.269e+06 C2 9.300e+06  (170.0 s)
+month  3: n=  4 A0 4.291e+08 A1 3.914e+08 B1 3.901e+08 C1 3.918e+08 C2 3.904e+08  (162.0 s)
+month  4: n=  7 A0 1.124e+08 A1 1.380e+08 B1 1.462e+08 C1 1.359e+08 C2 1.442e+08  (167.7 s)
+month  5: n=  6 A0 5.763e+06 A1 1.776e+06 B1 1.763e+06 C1 1.558e+06 C2 1.591e+06  (180.4 s)
+month  6: n= 12 A0 5.321e+08 A1 4.936e+08 B1 4.984e+08 C1 4.942e+08 C2 4.993e+08  (175.3 s)
+month  7: n= 39 A0 1.015e+09 A1 1.010e+09 B1 1.006e+09 C1 1.009e+09 C2 1.006e+09  (190.6 s)
+month  8: n= 17 A0 7.959e+08 A1 8.098e+08 B1 8.003e+08 C1 8.059e+08 C2 7.979e+08  (158.4 s)
+month  9: n= 15 A0 1.334e+09 A1 1.210e+09 B1 1.224e+09 C1 1.213e+09 C2 1.228e+09  (148.8 s)
+month 10: n=  5 A0 6.182e+07 A1 6.518e+07 B1 6.204e+07 C1 6.612e+07 C2 6.292e+07  (135.4 s)
+month 11: n=  4 A0 3.337e+08 A1 2.445e+08 B1 2.452e+08 C1 2.472e+08 C2 2.473e+08  (149.5 s)
+month 12: n=  6 A0 4.254e+07 A1 3.242e+07 B1 2.924e+07 C1 3.252e+07 C2 2.935e+07  (154.5 s)
+[control] A0 5.0773e+09 (E156 log 5.077e9), A1 4.8220e+09 (E156 log 4.822e9), A1 vs A0 -5.0 %
+[B1 vs A1] total +0.11%, month 2 -0.19%, month 6 +0.97%, worst month 4 +5.89% (X=10%), without top-3 -0.16%, months better 8/12 -> REJECT
+[C1 vs A1] total +0.00%, month 2 -1.84%, month 6 +0.14%, worst month 10 +1.44% (X=10%), without top-3 -0.04%, months better 6/12 -> REJECT
+[C2 vs A1] total +0.13%, month 2 -1.51%, month 6 +1.16%, worst month 4 +4.46% (X=10%), without top-3 -0.17%, months better 8/12 -> REJECT
+[re-draw A0] RMS prediction change 76.5 s (max 534), SSE mean over 3 draws 5.0671e+09 (-0.20% vs clean)
+[re-draw A1] RMS prediction change 65.9 s (max 378), SSE mean over 3 draws 4.8082e+09 (-0.29% vs clean)
+[re-draw B1] RMS prediction change 60.4 s (max 431), SSE mean over 3 draws 4.8156e+09 (-0.24% vs clean)
+[re-draw C1] RMS prediction change 27.3 s (max 158), SSE mean over 3 draws 4.8198e+09 (-0.05% vs clean)
+[re-draw C2] RMS prediction change 25.4 s (max 180), SSE mean over 3 draws 4.8267e+09 (-0.03% vs clean)
+DONE analysis/tail_e156_opdi_20261008/e210_lomo.json

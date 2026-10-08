@@ -331,6 +331,32 @@ class ServedPredicate(unittest.TestCase):
             self.assertEqual(bins, ['4-8h', '8-12h', '12-30h'])
 
 
+class OpdiInventory(unittest.TestCase):
+    def test_extended_set_is_pinned_by_unique_basename_and_default_is_unchanged(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'data/opdi').mkdir(parents=True)
+            (root / 'data/opdi_final').mkdir()
+            for n in ('data/opdi/ev_20260130_20260209.parquet', 'data/opdi/ev_20260629_20260709.parquet', 'data/opdi/flight_list_202601.parquet',
+                      'data/opdi_final/ev_lszh_20260209_20260219.parquet', 'data/opdi_final/ev_lszh_20260130_20260209.parquet', 'data/opdi_final/manifest.json'):
+                (root / n).write_bytes(b'x')
+            # default: only the held files, flight lists are not event files
+            self.assertEqual(A.opdi_inventory(root), ['data/opdi/ev_20260130_20260209.parquet', 'data/opdi/ev_20260629_20260709.parquet'])
+            # extended: the two directories together, same window under a different basename is allowed (opdi_wide takes min t per flight/type)
+            names = A.opdi_inventory(root, 'data/opdi_final')
+            self.assertEqual(names[2:], ['data/opdi_final/ev_lszh_20260130_20260209.parquet', 'data/opdi_final/ev_lszh_20260209_20260219.parquet'])
+            self.assertEqual(len({Path(n).name for n in names}), 4)
+            # an extended file whose basename shadows a held file would be a silent replacement in <work>/data/opdi: refused
+            (root / 'data/opdi_final/ev_20260130_20260209.parquet').write_bytes(b'y')
+            with self.assertRaises(ValueError):
+                A.opdi_inventory(root, 'data/opdi_final')
+            (root / 'data/opdi_final/ev_20260130_20260209.parquet').unlink()
+            # an empty extended directory is a configuration error, not "no extra files"
+            (root / 'data/opdi_empty').mkdir()
+            with self.assertRaises(ValueError):
+                A.opdi_inventory(root, 'data/opdi_empty')
+
+
 class FrozenStageIdentity(unittest.TestCase):
     """Unchanged E185/E167 sources on synthetic rows: only their declared subsets move."""
 
