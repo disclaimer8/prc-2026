@@ -1,0 +1,47 @@
+{
+  "utc": "2026-10-08T10:47:40.329160+00:00",
+  "status": "refrozen_for_independent_delta_review_not_launched",
+  "protocol": "E208-CC0-DATIS-fixed16days-label-free-60min-v1",
+  "files": {
+    "scripts/e208_datis_coverage.py": "2759d327e63b2085e857ab6d9a6d3da2dae86f48e74c7d64a066edb43c3ab2c8",
+    "tests/test_e208_datis_coverage.py": "d02db06584dc626da1193883d39b2c6b033e30d0b7035afc830462268e113443",
+    "analysis/e208_datis_20261008/PROTOCOL.md": "959b62897c4823ed3d1c649fde1f7ac0df9e9903d96d441bfb9161c078464427",
+    "analysis/e208_datis_20261008/inventory.json": "4fde6d144587c29c213f99cb009fc09b8fa6b92fc894d748190f84543acf12fa",
+    "analysis/e208_datis_20261008/existing_receipts_parser_check.json": "5112995b7ffe4f38c0c7bf48c40146d6c5d794cde612aab517a575bfef02c33d",
+    "analysis/e208_datis_20261008/SOURCE_INVENTORY.md": "aa2670f6cbc5417fdfdb3c01ee0ea1101226a384a52f6ff26c361a3fffacb96c"
+  },
+  "tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests -p test_e208_datis_coverage.py",
+    "passed": 17,
+    "failed": 0,
+    "actual_zstd_stream_synthetic_payload": true,
+    "memory_limit_regression_fixed": "-M128MB",
+    "scheduled_operational_regression": "AT/BTN/BETWEEN closure and timed conditions: 6 failing subcases reproduced, then 17 tests PASS"
+  },
+  "source_inventory": {
+    "requested_days": 16,
+    "listed_days": 12,
+    "assets": 1800,
+    "declared_bytes": 766417808,
+    "reused_assets": 253,
+    "reused_bytes": 143913547,
+    "new_declared_bytes": 622504261,
+    "unavailable_days": [
+      "2025-01-01",
+      "2025-01-08",
+      "2025-01-15",
+      "2025-01-22"
+    ]
+  },
+  "dependencies_hetz": {
+    "zstd": "/usr/bin/zstd",
+    "pyarrow": true,
+    "polars": true,
+    "environment_changes": false
+  },
+  "actual_archive_scan": false,
+  "canonical_metadata_pack": false,
+  "target_reads": 0,
+  "fits": 0,
+  "review_fix": "Bounded scheduled-time grammar suppresses all current closure and condition states; limitations explicit in protocol."
+}

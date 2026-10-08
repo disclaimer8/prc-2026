@@ -1,0 +1,20 @@
+{
+  "accepted_by_airport": {
+    "EGLL": 15,
+    "EHAM": 37,
+    "LEBL": 1,
+    "LFPG": 4,
+    "LSZH": 1
+  },
+  "accepted_operational_messages": 4,
+  "actual_bulk_extraction": false,
+  "parse_counts": {
+    "accepted": 58,
+    "assembly_not_complete": 408,
+    "not_a9": 54
+  },
+  "reused_assets": 253,
+  "reused_compressed_bytes": 143913547,
+  "scope": "existing complete Jan15/Jul15 2026 receipts only; no new archive reads, no flight metadata/targets",
+  "source_events_sha256": "00973244bef9bf003361059784d3c1af88856e6e47effa3909b4420b53922a8d"
+}
