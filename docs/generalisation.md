@@ -140,6 +140,47 @@ LIRF had 0.3–1.2 % own-track coverage in January–April and 80–94 % in June
 LEMD 0–2 % in January–February, 76–98 % in March–June and September–December and
 30–34 % in July–August.
 
+## Is the neural weight tuned to January/July?
+
+The final recipe and the best submission v12077 give the ordered-trajectory neural
+member weight 0.35 in the regular candidate instead of the 0.25 of v12075
+([model design](model-design.md#recording-regime-mixture)). The weight was chosen
+on all twelve months of 2025, not on the leaderboard months: E212 recomputed the
+exact out-of-fold chain up to E81 at weights 0.05–0.60 (step 0.05) with the
+ten-seed member, and the table below gives the change of `decided`-row RMSE against
+0.25 for each month of 2025 (source: `analysis/e212_nn_weight_10seed_20261008/per_month.json`,
+[E212 report §6](../analysis/e212_nn_weight_10seed_20261008.md); journal 407a, 410, 425).
+
+| Month | Best weight on the grid | ΔRMSE at 0.35 (s) | at 0.40 | at 0.45 | at 0.50 |
+|---|---:|---:|---:|---:|---:|
+| **Jan** | 0.40 | −0.117 | −0.141 | −0.117 | −0.077 |
+| **Feb** | 0.60 | −0.675 | −0.957 | −1.172 | −1.344 |
+| Mar | 0.55 | −0.449 | −0.595 | −0.717 | −0.793 |
+| Apr | 0.35 | −0.108 | −0.104 | −0.057 | +0.016 |
+| May | 0.45 | −0.198 | −0.249 | −0.266 | −0.265 |
+| **Jun** | 0.40 | −0.140 | −0.160 | −0.140 | −0.093 |
+| **Jul** | 0.35 | −0.107 | −0.104 | −0.049 | +0.051 |
+| Aug | 0.30 | −0.024 | +0.016 | +0.114 | +0.238 |
+| Sep | 0.35 | −0.108 | −0.100 | −0.037 | +0.063 |
+| Oct | 0.35 | −0.121 | −0.116 | −0.051 | +0.059 |
+| Nov | 0.35 | −0.123 | −0.123 | −0.072 | +0.033 |
+| Dec | 0.50 | −0.349 | −0.441 | −0.472 | −0.474 |
+| Months better than 0.25 | | **12 of 12** | 11 of 12 | 9 of 12 | 7 of 12 |
+
+Bold rows are the four months of the 2026 final. The optimum by month ranges from
+0.30 to 0.60: February, March and December, the months with reception gaps where
+the neural member is relatively stronger than the trees, pull it up; summer pulls
+it to 0.30–0.35. The registered leave-one-pair-out rule chose 0.40 (pooled
+−0.228 s, better in all six pairs), but 0.40 is worse than 0.25 in August, and a
+weight chosen on January–June (0.50) is worse than 0.25 on July–December
+(+0.017 s). The weight 0.35 is the only grid value that improves on 0.25 in every
+month of 2025, with the ten-seed member and with the three-seed member, and it is
+not the January/July optimum (January prefers 0.40). It was fixed on this evidence
+before the upload of v12077, which then measured −0.3371 s on January/July 2026
+against the same file at 0.25 (v12076). The 2025 gain in the final's months is
+−0.117 s (January), −0.675 s (February), −0.140 s (June) and −0.107 s (July); as
+with the rest of this page these are 2025 numbers, not a measurement of 2026.
+
 ## Reading across to 2026
 
 This section is an explanation, not a measurement. The
@@ -168,7 +209,8 @@ the 2026 final rows with 2025:
 - The predictions are selection-informed out-of-fold estimates of the chain before
   E81, with upstream stages not fully nested through the chain; the limitations in
   [validation](validation.md#evidence-for-the-current-members) apply unchanged.
-  The E203 member of v12075 is not in these predictions.
+  The E203 member of v12075 is not in these predictions; the neural-weight table
+  above comes from a separate recompute of the E203 chain (E212) on the same folds.
 - The 126 excluded TabPFN rows hold 111 of the 122 labels above four hours in 2025;
   their treatment is a separate fixed step and is not measured here.
 - Day-level bootstrap intervals capture within-month day-to-day variation only;

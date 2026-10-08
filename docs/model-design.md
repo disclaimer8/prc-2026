@@ -1,6 +1,13 @@
-# Model design: v12075
+# Model design: v12075 and v12077
 
-This document describes v12075, scored at 230.9387 s RMSE on 7 October 2026.
+This document describes v12075, scored at 230.9387 s RMSE on 7 October 2026, and
+the two zero-fit changes that made v12077, the best submission (230.4812 s,
+8 October 2026): the neural member as the mean of ten seeds instead of three
+(v12076, 230.8183 s) and the regular-candidate weights of E212 (neural member
+0.35 instead of 0.25, the five anchored members scaled by 0.65/0.75). Everything
+else in v12077 is byte-identical to the v12075 build
+([v12077 record](../analysis/v12077_upload_20261008/RESULTS.md)); the final
+recipe uses the v12077 weights ([final submission](final-submission.md)).
 The E203 recipe (production run of the ordered-trajectory neural member) was
 registered at `6e95e3a65936a3401e41499bb340f2d54a1a2121`.
 Its `branch` and `build` functions in
@@ -188,19 +195,39 @@ provide different residual errors.
 
 The submitted regular candidate has these fixed weights:
 
-| Component | Weight within the regular candidate |
-|---|---:|
-| Residual-model blend `0.65 * CatBoost15 + 0.35 * LightGBM5` | 19/60 |
-| Raw-target LightGBM member | 1/30 |
-| LOBT-anchored LightGBM member | 0.10 |
-| Schedule-anchored LightGBM member | 0.10 |
-| EOBT-anchored LightGBM member | 0.10 |
-| AOBT-anchored LightGBM member | 0.10 |
-| E197/E203 ordered-trajectory neural member, mean of three seeds | 0.25 |
+| Component | v12075 | v12077 and the final (`WEIGHTS['final']`) |
+|---|---:|---:|
+| Residual-model blend `0.65 * CatBoost15 + 0.35 * LightGBM5` | 19/60 | 0.27444 (the remainder) |
+| Raw-target LightGBM member | 1/30 | 0.028888888888888857 |
+| LOBT-anchored LightGBM member | 0.10 | 0.08666666666666667 |
+| Schedule-anchored LightGBM member | 0.10 | 0.08666666666666667 |
+| EOBT-anchored LightGBM member | 0.10 | 0.08666666666666667 |
+| AOBT-anchored LightGBM member | 0.10 | 0.08666666666666667 |
+| E197/E203 ordered-trajectory neural member | 0.25, mean of three seeds | 0.35, mean of ten seeds |
 
-The weights sum to one. They apply to the regular candidate, not directly to the
-final prediction after regime routing and corrections. The five additional tree
-members each use their saved five-seed ranking artifact.
+The weights sum to one in both columns. They apply to the regular candidate, not
+directly to the final prediction after regime routing and corrections. The five
+additional tree members each use their saved five-seed ranking artifact. The
+v12077 column is the v12075 column with the neural weight raised to 0.35 and every
+other member scaled by 0.65/0.75, so the members keep their proportions to each
+other (`scripts/final_tail_assembly_20261008.py`, journal 425;
+[`scripts/v12077_nn035_build_20261008.py`](../scripts/v12077_nn035_build_20261008.py)).
+
+The 0.25 of v12075 was inherited from the MLP member E181a and had not been
+chosen at the level of the full chain. E212 (journal 407a, 410) recomputed the
+exact 2025 out-of-fold chain up to E81 at weights 0.05–0.60 with the three-seed
+and a ten-seed member, taking the weight from the other members in proportion;
+at 0.25 the recompute reproduces the production column byte for byte. Pooled over
+the six month pairs the optimum is 0.40 for both members (`decided` RMSE 217.723 s
+at 0.25, 217.535 s at 0.35, 217.496 s at 0.40 with ten seeds), but 0.40 is worse
+than 0.25 in August and a weight chosen on January–June does not hold on
+July–December; 0.35 is the only grid value below 0.25 in all twelve months, at
+three and at ten seeds, and was fixed before the upload (journal 425;
+[E212 report](../analysis/e212_nn_weight_10seed_20261008.md);
+[generalisation](generalisation.md#is-the-neural-weight-tuned-to-januaryjuly)).
+On the January/July board the ten seeds gave −0.1204 s (v12076) and the weight
+−0.3371 s (v12077); the ten seeds alone are neutral in cross-validation (+0.0065 s
+at the old weight), so the gain is the weight's.
 
 The E190 backbone (the earlier neural member) uses the standard piecewise-linear
 embeddings implemented by
@@ -222,8 +249,16 @@ See [`scripts/e197_trajectory_encoder.py`](../scripts/e197_trajectory_encoder.py
 The E203 ranking receipt records three seeds, eight epochs and 1,908,437 parameters
 per seed on the AMD Radeon RX 7900 XTX. Each fit took approximately 269 seconds;
 these are component timings, not end-to-end training times.
-Evidence: `data/e203_rank_20261007/complete.json`. The fixed 0.25 slot replaces E190;
-it does not add a second neural weight or tune weights against the ranking score.
+Evidence: `data/e203_rank_20261007/complete.json`. For v12076 and v12077, seeds
+3–9 were fitted on the same frozen ranking pack with the same `S.fit` call
+(`scripts/e203_rank_seeds3to9_20261008.py`, about 225 s per seed; receipt
+`data/e203_rank_seeds3to9_20261008/models/complete.json`): the PLE bins equal the
+archived `bins.npz`, the archived three-seed mean and the archived `model_0.pt`
+output are reproduced exactly, and every new checkpoint reproduces its own seed
+array. The ten-seed mean differs from the three-seed mean by RMS 25.38 s on the
+ranking rows (pairwise seed RMS 71.8–79.6 s). The neural slot replaces E190; it
+does not add a second neural weight, and its weight was not tuned against the
+ranking score (the 0.35 of v12077 comes from 2025 out-of-fold data, above).
 
 For rows where LOBT is missing outside LIRF, E185 further replaces 7/30 of the
 regular candidate with a movement-only predictor, then recomputes the mixture.

@@ -107,3 +107,6 @@ processed_at_utc,file,rmse_s,best_so_far_s
 2026-10-07T07:02:00Z,gentle-igloo_v12071.parquet,231.6095,231.4449
 2026-10-07T07:02:34Z,gentle-igloo_v12074.parquet,231.4438,231.4438
 2026-10-07T21:53:59Z,gentle-igloo_v12075.parquet,230.9387,230.9387
+2026-10-08T13:20:58Z,gentle-igloo_v12090.parquet,232.1933,230.9387
+2026-10-08T20:05:56Z,gentle-igloo_v12076.parquet,230.8183,230.8183
+2026-10-08T20:14:08Z,gentle-igloo_v12077.parquet,230.4812,230.4812

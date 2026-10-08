@@ -52,7 +52,7 @@ log entry 389).
 |---|---|---|
 | Feature table | FIN1b built on 2025 + the January/July ranking file | FIN1b rebuilt on 2025 + the four-month `final_ranking.parquet`: 2,755,837 rows = 2,085,047 training + 670,790 final (log 385) |
 | Base classifier and regressor, CatBoost 15 seeds, LightGBM 5 seeds, five anchored members, movement-only member | Fitted on the January/July view | Refitted with the same rounds, seeds and weights on the new view: 52 fits (log 388). Fitted models are saved this time |
-| Neural member (ordered trajectories, E203), weight 0.25 | Mean of 3 seeds | Mean of **10 seeds** (0–9), same recipe and 8 epochs; the 3-seed mean is kept for comparison only (log 394, 400) |
+| Neural member (ordered trajectories, E203) | Weight 0.25, mean of 3 seeds | Weight **0.35**, mean of **10 seeds** (0–9), same recipe and 8 epochs; the 3-seed mean is kept for comparison only (log 394, 400). The five anchored members are scaled by 0.65/0.75 (raw 0.028889, LOBT/schedule/EOBT/AOBT 0.086667 each) and the tree pair keeps the remainder 0.27444 (`WEIGHTS['final']`, log 425; section 2.3) |
 | Whole-file blend with v44 and v60 (E81, weights 0.1214 / 0.0270) | Present | **Absent.** The donors are archived January/July leaderboard files; nothing equivalent exists for February and June |
 | LIRF tail without NM record | 42 predictions frozen from v361 (a single TabPFN draw) and protected | **Fresh 10-seed TabPFN-2 ensemble (E156, airline prefix and local date) on every row of the tail segment in all four months**; every served row is protected from later stages |
 | Surface stages E141, E64, E188; gate E152; LOBT lift and clip; LSZH OPDI stage at 50 % | Present | Present and unchanged (cached models replayed only on an exact training signature) |
@@ -66,7 +66,7 @@ From the literal `stage_plan()` of the assembly adapter
 
 | # | Stage | What it does in the final |
 |---|---|---|
-| 0 | premix | Raw regime probabilities recomputed from the saved classifier; regular candidate = 19/60 × (0.65 CatBoost15 + 0.35 LightGBM5) + 1/30 raw-target member + 0.10 each of the LOBT-, schedule-, EOBT- and AOBT-anchored members + 0.25 neural member; probability-weighted mixture over regime candidates |
+| 0 | premix | Raw regime probabilities recomputed from the saved classifier; regular candidate = 0.27444 × (0.65 CatBoost15 + 0.35 LightGBM5) + 0.028889 raw-target member + 0.086667 each of the LOBT-, schedule-, EOBT- and AOBT-anchored members + 0.35 neural member (`WEIGHTS['final']`; the canary used the v12075 weights 19/60, 1/30, 0.10 and 0.25, `WEIGHTS['janjul']`); probability-weighted mixture over regime candidates |
 | 1 | E185 | Movement-only member at 0.35 × 2/3 on rows with no LOBT outside LIRF |
 | 2 | E167 | NM matching-window rules against the arrivals of the final file |
 | 3 | E156 | TabPFN-2 classifier, `TABPFN_EXTRA=pfx`, seeds 0–9, CPU, pinned checkpoint (SHA `cf8c519c…`), offline; served-ID manifest written |
@@ -101,9 +101,45 @@ the AMD Radeon RX 7900 XTX, each checkpoint replayed exactly (log 393, 400). On 
 with a mean shift of −0.28 s; the pairwise RMS between single seeds is 70.6 s
 (0.20–0.24 in units of the residual scale)
 ([statistics](../analysis/final_ordered_trajectory_20261008/execution_10seed/statistics.json)).
-This is a variance reduction with no added capacity; the member weight stays 0.25.
-The decision to use the 10-seed mean was written before the extra seeds were
-trained (log 394).
+This is a variance reduction with no added capacity. The decision to use the
+10-seed mean was written before the extra seeds were trained (log 394).
+
+**The member's weight is 0.35, not the 0.25 of v12075.** The 0.25 had been
+inherited from the earlier MLP member and never chosen at the level of the full
+chain. E212 (log 407a, 410) recomputed the exact 2025 out-of-fold chain up to E81
+at twelve weights (0.05–0.60 in steps of 0.05) with the three-seed and a ten-seed
+member, taking the weight from the other members in proportion (`regular(w) =
+((1 − w)/0.75) × [tree pair and anchors at the v12075 weights] + w × NN`; at
+w = 0.25 this reproduces the production column byte for byte on all 2,085,047
+rows). Results on the `decided` rows, pooled over the six month pairs
+([E212 report](../analysis/e212_nn_weight_10seed_20261008.md)):
+
+| | 0.25 (v12075) | 0.35 (final) | 0.40 | 0.45 |
+|---|---:|---:|---:|---:|
+| RMSE, 3 seeds (s) | 217.717 | 217.549 | 217.523 | 217.546 |
+| RMSE, 10 seeds (s) | 217.723 | 217.535 | 217.496 | 217.504 |
+| Months of 2025 better than 0.25 (10 seeds) | — | 12 of 12 | 11 of 12 | 9 of 12 |
+
+The registered leave-one-pair-out rule selected 0.40 in all six pairs (−0.228 s
+pooled against 0.25, 6 of 6 pairs, gate passed). Two checks outside the gate
+argued for less: 0.40 is worse than 0.25 in August (+0.016 s), and a weight chosen
+on January–June (0.50) is worse than 0.25 on July–December (+0.017 s); the
+per-month optimum ranges from 0.30 to 0.60. The coordinator therefore fixed 0.35,
+the only grid value with lower squared error than 0.25 in every month of 2025 at
+three and at ten seeds (log 425; the per-month table is in
+[generalisation](generalisation.md#is-the-neural-weight-tuned-to-januaryjuly)).
+The ten seeds alone, at the old weight, change nothing in cross-validation
+(+0.0065 s); the gain comes from the weight.
+
+Both changes were then scored on the January/July board on the v12075 chain, with
+E81 and the frozen rows kept, as two single-change uploads with forecasts written
+beforehand (log 416, 417, 426, 427): v12076 (ten-seed mean at 0.25) 230.8183 s,
+−0.1204 s against v12075 (forecast −0.03, corridor [230.74; 230.99], inside);
+v12077 (weight 0.35, anchors scaled) 230.4812 s, −0.3371 s against v12076
+(forecast −0.08 from the January + July 2025 estimate of −0.11 s times a 0.7
+transfer, corridor [230.62; 230.87]; the result was 0.14 s below the corridor on
+the favourable side). The canary v12090 in section 4 ran with the v12075 members
+and weights, before either change.
 
 ### 2.4 The ±12 s shifts
 
@@ -140,14 +176,21 @@ added; the input is used as published.
 ## 4. Measured cost on January/July
 
 The uniform recipe was run on the v12075-era January/July artifacts (old members,
-E81 removed, fresh E156) and uploaded once as a technical canary, `v12090`
+the three-seed neural member at weight 0.25, E81 removed, fresh E156) and uploaded
+once as a technical canary, `v12090`
 ([canary report](../analysis/v12090_upload_20261008/RESULTS.md), log 390–391):
 
 | | RMSE on January/July 2026 (s) |
 |---|---:|
-| v12075 (best, with E81 and frozen rows) | 230.9387 |
+| v12075 (best at the time, with E81 and frozen rows) | 230.9387 |
 | v12090 (same chain, no E81, fresh E156 on the 42 rows) | **232.1933** |
 | Difference | +1.2546 |
+
+Later the same day the two member changes of the final recipe were scored on the
+v12075 chain with E81 and the frozen rows still in place (section 2.3): v12076
+(ten seeds) 230.8183 s and v12077 (weight 0.35) 230.4812 s, −0.4575 s together.
+No file combining both the removals of the canary and the new members has been
+scored on the board; the January/July check in section 7, item 4, is that file.
 
 The forecast written before the upload was 231.6 s with a corridor of
 [231.1; 232.3] s; the result is inside the corridor near its upper edge. The
@@ -265,7 +308,10 @@ Unmeasured until the final run: wall-clock of the four-month assembly on the Mac
    January/July rows of the assembled four-month file uploaded as a regular
    submission. Forecast written in advance: 232.2 s, corridor [231.8; 232.7] s;
    a result outside the corridor stops the process and triggers a stage-by-stage
-   comparison with v12090 (`analysis/win_program_20261008.md` §1, item 2).
+   comparison with v12090 (`analysis/win_program_20261008.md` §1, item 2). That
+   forecast predates the ten-seed member and the 0.35 weight (v12076, v12077:
+   −0.4575 s together on the v12075 chain, section 2.3) and has to be
+   re-registered with them before that upload.
    Result: `[[to be filled after the final assembly]]`.
 5. **Determinism**: `assemble --repeat-e156` must reproduce all ten TabPFN
    probability arrays bitwise; cached-model replay reports `fits_performed = 0`
@@ -287,7 +333,7 @@ Unmeasured until the final run: wall-clock of the four-month assembly on the Mac
 |---|---|
 | No OPDI event for an LSZH row (all of February and June if the extraction fails) | Row unchanged by stage 10; the 50 % blend then returns the stage-9 value. The stage is applied identically in all months; its coverage per month is reported |
 | Defective archive day (2026-06-11) | Processed as produced; stages inert where no track exists; no interpolation |
-| Coverage collapse (EDDF Feb, LIRF Jun/Jul) | Stages E141/E64/E188 inert by their masks (verified: 0 rows changed outside the masks); the neural member stays at weight 0.25 because the protection rule failed its gate (section 5) |
+| Coverage collapse (EDDF Feb, LIRF Jun/Jul) | Stages E141/E64/E188 inert by their masks (verified: 0 rows changed outside the masks); the neural member keeps its full weight (0.35) on every row because the protection rule failed its gate (section 5; the gate was evaluated at 0.25) |
 | Cached stage model does not match its training signature | Run stops; explicit `--refit e141 e64 lszh` with fresh signatures recorded, no silent fit |
 | Partial seed set in any member family | Refused by the contract (`members` must cover every ID exactly once) |
 | Pipeline not assembled by 11 October 12:00 UTC | Pre-registered backup: `src/run_final_any_period.sh` with `E81=drop TABPFN_SEEDS=0..9` (the older v808 line, 233.5877 s on the board, period-independent) (`analysis/win_program_20261008.md` §2; [strategy §1](../analysis/final_strategy_20261008.md)) |
@@ -324,8 +370,10 @@ Unmeasured until the final run: wall-clock of the four-month assembly on the Mac
   before any cross-validation (log 405b–407b).
 - **E188** stays although its measured contribution is small (CV −0.007 s, 3/6;
   board −0.0011 s): removing it would be a design change ([validation](validation.md)).
-- No weights, seeds or rows are chosen on the public board for the final; the
-  Jan/Jul slot in section 7 is a check, not a selection.
+- No weights, seeds or rows are chosen on the public board for the final: the
+  ten-seed mean was decided before the seeds were trained and the 0.35 weight on
+  2025 out-of-fold data before v12077 was built (section 2.3); the two uploads of
+  8 October and the Jan/Jul slot in section 7 are checks, not selections.
 
 ## 10. Results
 

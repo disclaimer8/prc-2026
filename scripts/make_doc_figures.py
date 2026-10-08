@@ -272,11 +272,12 @@ MILESTONES = {  # version -> short label (sources: HYPOTHESES_LOG.md, docs/model
     27: "own-aircraft ADS-B surface stage (E25)",
     316: "airline prefix in TabPFN tail",
     12075: "ordered-trajectory member (E203)",
+    12077: "neural member: ten seeds, weight 0.35 (E212)",
 }
 # text position (days after 13 Sep 00:00 UTC, RMSE) and panel for each label
 LABEL_POS = {2: (2.2, 420, "top", "left"), 8: (2.6, 285.6, "bot", "left"), 13: (4.3, 275.6, "bot", "left"),
-             27: (8.6, 259.5, "bot", "left"), 316: (12.6, 247.0, "bot", "left"),
-             12075: (24.7, 240.5, "bot", "right")}
+             27: (8.6, 259.5, "bot", "left"), 316: (12.6, 252.0, "bot", "left"),
+             12075: (25.95, 259.5, "bot", "right"), 12077: (25.95, 246.0, "bot", "right")}
 
 
 def fig1(lb_path: Path, out: Path) -> None:
@@ -308,7 +309,7 @@ def fig1(lb_path: Path, out: Path) -> None:
     days = lambda t: (np.asarray(t, dtype="datetime64[s]") - t0) / np.timedelta64(1, "D")  # noqa: E731
     x_all, y_all = days(lb["t"].dt.replace_time_zone(None).to_numpy()), lb["rmse_s"].to_numpy()
     y_best = lb["best"].to_numpy()
-    x_end = days(np.datetime64("2026-10-08T06:00"))
+    x_end = days(np.datetime64("2026-10-09T00:00"))
 
     fig = plt.figure(figsize=(9, 5.6), dpi=DPI)
     gs = fig.add_gridspec(2, 1, height_ratios=[1, 2.6], hspace=0.07, left=0.085, right=0.975, top=0.835, bottom=0.1)

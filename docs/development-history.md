@@ -1,6 +1,6 @@
 # Development history
 
-This page shows how the model went from 501.23 s to 230.94 s RMSE, which design decisions
+This page shows how the model went from 501.23 s to 230.48 s RMSE, which design decisions
 moved the leaderboard score, and how far cross-validation could be trusted along the way.
 The [model design](model-design.md) describes the final chain; [validation](validation.md)
 gives the evidence for its current members; the [glossary](glossary.md) names every
@@ -13,7 +13,7 @@ experiment ID.
   scored single-change control.
 - Evidence: **B §x** is a section of [REVIEW_BRIEF.md][B], the working brief (Russian; §2–§7
   cover 13–17 September, the dated §21 sections run to 4 October). **L №n** is an entry of
-  [HYPOTHESES_LOG.md][L], the experiment register (Russian; starts on 23 September). All 108
+  [HYPOTHESES_LOG.md][L], the experiment register (Russian; starts on 23 September). All 111
   scores are in [`tables/leaderboard_gentle-igloo.csv`](tables/leaderboard_gentle-igloo.csv).
 - *CV* is the six month-pair folds of 2025 (see [validation](validation.md)). Most CV
   numbers in the brief are on a "leaderboard-equivalent" scale: the paired change in squared
@@ -22,9 +22,9 @@ experiment ID.
 
 ## 1. Score progression
 
-108 uploads between 13 September and 7 October 2026 produced 61 new best scores. The 30
-steps with a gain of about 0.3 s or more account for 267.5 s of the total 270.3 s; the other
-30 add 2.8 s together. Step 27 (−0.299 s) is in the first table because it is a separate
+111 uploads between 13 September and 8 October 2026 produced 63 new best scores. The 31
+steps with a gain of about 0.3 s or more account for 267.9 s of the total 270.7 s; the other
+31 add 2.9 s together. Step 27 (−0.299 s) is in the first table because it is a separate
 design decision; step 13 is measured against v28, the best file before it.
 
 ### Steps of 0.3 s or more
@@ -62,6 +62,7 @@ design decision; step 13 is measured against v28, the best file before it.
 | 47 | 10-02 00:13 | v899 | 233.04 | −0.40 | MLP member (category embeddings, residual to the proxy) at weight 0.25 next to five anchored members. −0.78 vs v859, the same file without the MLP; CV −0.62 | E176 | B §0, §21cn; L №224, №241 |
 | 59 | 10-07 07:01 | v12070 | 231.44 | −0.54 | Neural member rebuilt with piecewise-linear numerical embeddings (three seeds), replacing the MLP at weight 0.25; −0.54 vs v12061, the same chain with the old MLP. Uploaded before a full-chain CV at the owner's request; forecast 0 (range ±1). The later retrospective comparison gave −0.34 on the `decided` rows, 6 of 6 pairs | E190 | L №299, №306, №318, №321; [validation](validation.md); [results](../analysis/submission_results_20261007.md) |
 | 61 | 10-07 21:53 | v12075 | 230.94 | −0.51 | Ordered-trajectory neural member: the network also reads up to 64 ADS-B observations of the current and of the previous visit of the aircraft, in time order. It replaces E190 at weight 0.25. Pre-E81 comparison −0.55 on `decided`, 6 of 6 pairs; forecast −0.16 | E197, E202, E203 | L №367; [validation](validation.md); [upload record](../analysis/e203_upload_20261007/RESULTS.md) |
+| 63 | 10-08 20:14 | v12077 | 230.48 | −0.34 | Weight of the neural member in the regular candidate 0.25 → 0.35, the five anchored members scaled by 0.65/0.75, the tree pair keeps the remainder; nothing else changed against v12076 (zero fits). The weight was chosen before the upload on 2025 out-of-fold predictions of the exact chain (E212): the registered leave-one-pair-out rule picked 0.40 (−0.228 s pooled on `decided`, 6 of 6 pairs), but 0.40 was worse than 0.25 in August and a January–June choice did not hold on July–December, so the coordinator took 0.35, the only grid value below 0.25 in all twelve months at three and at ten seeds. January + July 2025 estimate −0.11 s; forecast −0.08 with corridor [230.62; 230.87]; the result fell 0.14 s below the corridor on the favourable side | E212 | L №407a, №410, №425, №426, №427; [E212 report](../analysis/e212_nn_weight_10seed_20261008.md); [upload record](../analysis/v12077_upload_20261008/RESULTS.md) |
 
 ### Smaller steps
 
@@ -97,6 +98,8 @@ design decision; step 13 is measured against v28, the best file before it.
 | 57 | 10-05 16:42 | v12061 | 231.99 | −0.11 | 50:50 blend of v12048 and v12060 (half the LSZH correction), fixed before either was scored | E159 | L №285, №288 |
 | 58 | 10-06 21:19 | v12073 | 231.98 | −0.01 | 50:50 blend of v12061 with v12072 (previous-visit stage retrained for LIRF rows with NM) | E188 | L №321, №324 |
 | 60 | 10-07 07:02 | v12074 | 231.44 | −0.00 | E190 and E188 in one chain | E190, E188 | [results](../analysis/submission_results_20261007.md) |
+| — | 10-08 13:20 | v12090 | 232.19 | (+1.25) | Technical canary of the final recipe on January/July: E81 removed and the 42 frozen tail rows replaced by a fresh ten-seed TabPFN-2 ensemble, old members and weights (three-seed neural member at 0.25). Forecast 231.6, corridor [231.1; 232.3]; not a candidate for best | — | L №389–391; [canary record](../analysis/v12090_upload_20261008/RESULTS.md) |
+| 62 | 10-08 20:05 | v12076 | 230.82 | −0.12 | Neural member as the mean of ten seeds instead of three, the only change against v12075 (zero-fit replay). Seeds 3–9 were fitted on the frozen E203 ranking pack (the final-view seeds cannot be applied to the January/July queries); every checkpoint replayed exactly. On 2025 out-of-fold data the ten-seed mean at the same weight was neutral (+0.0065 s on `decided`); forecast −0.03 with corridor [230.74; 230.99] | E203 | L №410, №416, №417; [upload record](../analysis/v12076_upload_20261008/RESULTS.md) |
 
 ## 2. Phases
 
@@ -220,15 +223,22 @@ to 2/3 and the MLP kept at full weight after comparing complete files on the boa
 №245). Two external-data stages transferred weakly: OPDI at LSZH gave −0.13 against a
 leave-one-month-out forecast of −1.2; at EDDF it gave +1.13 and was dropped (L №215).
 
-### 2.7 Final members and the ordered-trajectory network (5–7 Oct; v12008–v12075; 232.6 → 230.9; 11 uploads)
+### 2.7 Final members and the ordered-trajectory network (5–8 Oct; v12008–v12077; 232.6 → 230.5; 14 uploads, one of them the final-recipe canary)
 
 **Observed.** The neural member saw only tabular features. The ADS-B track entered the model
-only through hand-made stage features.
+only through hand-made stage features. Its weight, 0.25, had been inherited from the MLP
+member E181a and was never chosen at the level of the full chain.
 
 **Response.** A movement-only member for rows without LOBT outside LIRF (E185, −0.26),
 anchored members on FIN1b (E182, −0.12), the LSZH OPDI correction at half weight (−0.25 in
 two steps), numerical embeddings in the neural member (E190, −0.54), and the
-ordered-trajectory member (E203, −0.51).
+ordered-trajectory member (E203, −0.51). On 8 October the member was averaged over ten
+seeds (v12076, −0.12) and its weight raised to 0.35 with the anchors scaled by 0.65/0.75
+(v12077, −0.34). The weight came from E212, an exact recompute of the 2025 out-of-fold chain
+at twelve grid values with the three-seed and the ten-seed member: the pooled optimum was
+0.40 for both members, 0.35 was the only value below 0.25 in every month, and the ten seeds
+alone changed nothing at the old weight (+0.0065 s). Both uploads were forecast before
+upload; v12077 came out 0.26 s better than its central forecast.
 
 **Cost.** GPU training (AMD RX 7900 XTX, about 269 s per seed fit;
 [model design](model-design.md)). E190 was uploaded before a full-chain CV (L №321), and
@@ -253,6 +263,8 @@ example B §21ah; L №138, №166). The table compares CV and board effects of 
 | Airline prefix E106 (v195 vs v155) | recording rule | −0.58 | −1.28 | B §21bg–§21bh, §21bq |
 | Classifier cost weights E89 (v115 vs v97) | loss weighting | −1.02, but +11.27 on y ≤ 7,200 | −1.18 | B §21ag, §21ai |
 | Ordered trajectories E203 (v12075 vs v12074) | neural member | −0.55 (before E81) | −0.51 | [validation](validation.md) |
+| Neural member: ten seeds instead of three (v12076 vs v12075) | seed averaging, no new capacity | +0.0065 (decided, pooled 2025, before E81) | −0.12 | L №410, №417 |
+| Neural weight 0.25 → 0.35, anchors × 0.65/0.75, E212 (v12077 vs v12076) | mixture weight, no new capacity | −0.19 (ten-seed member, decided, pooled 2025: 217.723 → 217.535); about −0.11 on January + July 2025 | −0.34 | L №410, №425, №427; [E212 report §4](../analysis/e212_nn_weight_10seed_20261008.md) |
 | `month` removed, E24 (v22 vs v18) | capacity removed | −2.18 | −0.87 | B §7 |
 | Target encodings removed, E99 (v155 vs v115) | capacity removed | +0.94, 0 of 6 folds better | −0.17 | B §21ba, §21be |
 | Per-airport models E38 (v43 vs v30) | learned capacity | −10.98 | +3.79 | B §7 |
@@ -337,13 +349,15 @@ holds on the ranking rows only and says nothing about another period.
 
 ## 5. A note on the late phase
 
-After 26 September progress was slow. From v316 (236.32 s, 26 September) to v12075 (230.94
-s, 7 October) the best score improved by 5.38 s over 54 further uploads. On 26 September the
-team was 8th of 192 and 3.14 s behind third place (B §21ca). On 8 October it was 14th of
-237, and third place was 215.62 s, 15.32 s ahead ([team-best
-snapshot](tables/leaderboard_team_best_20261008.csv)). Leading teams improved much more in the
-same period. Late gains came from members, seeds and small stage changes worth 0.01–1.0 s
-each. No submission was tuned row by row against the leaderboard. Blend weights were fixed
+After 26 September progress was slow. From v316 (236.32 s, 26 September) to v12077 (230.48
+s, 8 October) the best score improved by 5.84 s over 57 further uploads. On 26 September the
+team was 8th of 192 and 3.14 s behind third place (B §21ca). On 8 October in the morning it
+was 14th of 237, and third place was 215.62 s, 15.32 s ahead ([team-best
+snapshot](tables/leaderboard_team_best_20261008.csv)); at 20:15 UTC, after v12077, it was
+16th of 239 with third place at 213.5212 s, 16.96 s ahead
+([upload record](../analysis/v12077_upload_20261008/RESULTS.md)). Leading teams improved
+much more in the same period. Late gains came from members, seeds and small stage changes
+worth 0.01–1.0 s each. No submission was tuned row by row against the leaderboard. Blend weights were fixed
 from cross-validation; weights that would have been optimal on the board (−1.004 s for E76)
 were rejected (B §21q), and the working rule was not to probe the ranking labels (B §21bw; L
 №262). The board was still used to choose between complete, pre-built variants, for example
@@ -372,6 +386,15 @@ and no blend weight was optimised on the board.
 Items 1 and 2 depend on files that exist only for January and July 2026 and cannot be carried to
 a new period. How the final submission on the four-month dataset treats them is described in the
 final-submission documentation.
+
+The two changes of 8 October (v12076, v12077) add no item to this table. The ten-seed mean
+was decided before the extra seeds were trained (L №394, №416), and the weight 0.35 was
+chosen on 2025 out-of-fold predictions and written into the final assembler
+(`WEIGHTS['final']`, L №425) before v12077 was built; the grid, the selection rule and the
+forecast were registered in advance (L №407a, №426). The uploads confirmed the choice on the
+board; they did not make it. The one weight decision that departed from the registered rule
+(0.35 instead of the rule's 0.40) was taken on 2025 months, not on the ranking months, and
+in the direction of the smaller change.
 
 [B]: ../REVIEW_BRIEF.md
 [L]: ../HYPOTHESES_LOG.md
