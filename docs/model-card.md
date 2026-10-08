@@ -9,11 +9,11 @@ copied from the page it cites; nothing here is new measurement. Written 8 Octobe
 
 | | |
 |---|---|
-| Name | gentle-igloo taxi-out chain, version v12075 (leaderboard) / `gentle-igloo_final.parquet` recipe (blind final) |
+| Name | gentle-igloo taxi-out chain, version v12077 (leaderboard; the v12075 chain with the neural member as a ten-seed mean at weight 0.35) / `gentle-igloo_final.parquet` recipe (blind final) |
 | Developer | Team gentle-igloo: one developer, Denys Kolomiiets, with AI coding assistants ([README](../README.md#team)) |
-| Date | Developed 13 September – 8 October 2026; v12075 scored 7 October 2026 |
+| Date | Developed 13 September – 8 October 2026; v12075 scored 7 October 2026, v12077 scored 8 October 2026 |
 | Task | Predict `TAXITIME_SEC_mvt`, the recorded taxi-out time of a departure at ten European airports (EDDF, EDDM, EGLL, EHAM, LEBL, LEMD, LFPG, LIRF, LSZH, LTFM), for the EUROCONTROL PRC Data Challenge 2026; metric RMSE in seconds |
-| Type | Probability mixture over six recording regimes (LightGBM multiclass classifier) whose "regular" candidate is a blend of gradient-boosted residual models (CatBoost 15 seeds, LightGBM 5 seeds), five anchored LightGBM members and an ordered-trajectory neural network; followed by LightGBM surface-correction stages on the aircraft's own ADS-B track, a TabPFN-2 classifier for a sparse Rome tail, a confidence gate, LOBT-window clipping and an OPDI correction at Zurich ([model design](model-design.md)) |
+| Type | Probability mixture over six recording regimes (LightGBM multiclass classifier) whose "regular" candidate is a blend of gradient-boosted residual models (CatBoost 15 seeds, LightGBM 5 seeds), five anchored LightGBM members and an ordered-trajectory neural network (mean of ten seeds at weight 0.35 in v12077 and the final; three seeds at 0.25 in v12075); followed by LightGBM surface-correction stages on the aircraft's own ADS-B track, a TabPFN-2 classifier for a sparse Rome tail, a confidence gate, LOBT-window clipping and an OPDI correction at Zurich ([model design](model-design.md)) |
 | Size | Tree models: classifier 1,080 trees, regressor 2,319 trees, 170 input columns; neural member 1,908,437 parameters per seed, 189 tabular columns + 2 streams × 64 tokens × 12 channels ([model design](model-design.md)) |
 | Licence | Code GNU GPLv3 ([LICENSE](../LICENSE)); data and pretrained weights keep their own terms ([SOURCES.md](../SOURCES.md)) |
 | Where documented | [README](../README.md), [model design](model-design.md), [validation](validation.md), [development history](development-history.md), [negative results](negative-results.md), [glossary](glossary.md) |
@@ -129,14 +129,20 @@ Source: [validation](validation.md#2025-out-of-fold-rmse-by-airport). The
 E203 replacement improved the same comparison by −0.614 s (body) and −0.546 s
 (decided), 6 of 6 pairs.
 
-**Public leaderboard (January + July 2026, 344,841 rows).** Best file v12075:
-230.9387 s, processed 7 October 2026; 16th of 238 teams on 8 October 2026 at
-13:47 UTC (public leaderboard).
+**Public leaderboard (January + July 2026, 344,841 rows).** Best file v12077:
+230.4812 s, processed 8 October 2026; 16th of 239 teams on 8 October 2026 at
+20:15 UTC (public leaderboard). It is the v12075 chain (230.9387 s, 7 October)
+with the neural member averaged over ten seeds (v12076, −0.1204 s) and its weight
+raised from 0.25 to 0.35 with the anchored members scaled by 0.65/0.75 (v12077,
+−0.3371 s); the weight was chosen on 2025 out-of-fold data before the upload,
+where 0.35 is lower than 0.25 in all twelve months
+([final submission §2.3](final-submission.md#23-the-ten-seed-neural-member)).
 The leaderboard was used to choose between complete pre-built variants during
 development, so this score carries selection effects; the eight such decisions are
 listed in the [leaderboard use disclosure](development-history.md#6-leaderboard-use-disclosure).
 The uniform final recipe (no E81, fresh tail ensemble) scored 232.1933 s on the
-same rows as a canary ([final submission §4](final-submission.md#4-measured-cost-on-januaryjuly)).
+same rows as a canary run with the v12075 members and weights
+([final submission §4](final-submission.md#4-measured-cost-on-januaryjuly)).
 
 **Generalisation across months (2025 out-of-fold).** February + June: 247.3 s all
 rows, 196.3 s on labels ≤ 7,200 s; January + July: 279.2 s and 211.2 s. The gain
@@ -195,7 +201,7 @@ Result: `[[to be filled after the final assembly]]` ([final submission §10](fin
   exceed four hours and hold 52.4 % of the label's squared deviation from its mean
   ([data insights](data-insights.md#data-caveats)). Small changes in how such rows
   are hedged move the score by more than most design changes.
-- **Selection effects.** 109 leaderboard uploads informed development; blend
+- **Selection effects.** 111 leaderboard uploads informed development; blend
   weights were never fitted to the board, but eight design choices were kept or
   dropped on a board result ([disclosure](development-history.md#6-leaderboard-use-disclosure)).
   Out-of-fold errors are optimistic for the same reason.

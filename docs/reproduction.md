@@ -1,10 +1,14 @@
-# Reproducing the v12075 submission
+# Reproducing the v12075 and v12077 submissions
 
-v12075 is the team's best submission: 230.9387 s RMSE on the ranking period
-(January and July 2026), scored on 7 October 2026
-([scoring receipt](../analysis/e203_upload_20261007/RESULTS.md)). This guide
-covers [verifying the file](#1-verify-the-submitted-file),
-[replaying it from archived components](#2-replay-v12075-from-archived-components),
+v12077 is the team's best submission: 230.4812 s RMSE on the ranking period
+(January and July 2026), scored on 8 October 2026
+([scoring receipt](../analysis/v12077_upload_20261008/RESULTS.md)). It is a
+zero-fit rebuild of v12075 (230.9387 s, 7 October 2026,
+[scoring receipt](../analysis/e203_upload_20261007/RESULTS.md)) with the neural
+member averaged over ten seeds and its weight raised to 0.35. This guide covers
+[verifying the files](#1-verify-the-submitted-file),
+[replaying v12075 from archived components](#2-replay-v12075-from-archived-components),
+[rebuilding v12076 and v12077 on the same path](#2b-rebuild-v12076-and-v12077-from-the-same-components),
 [retraining from raw data](#3-retrain-from-raw-data) and the
 [software environment](#4-environment).
 
@@ -23,11 +27,21 @@ location for them exists yet.
 | Schema | `MVT_ID_mvt: Float64`, `TAXITIME_SEC_mvt: Int32` |
 | Score | 230.9387 s RMSE, submission ID `025020aa-aa58-4d1e-8d1c-3a2cea94a48c` |
 
+The two files built from it on 8 October 2026 have the same schema and ID set:
+
+| File | SHA-256 | Score, submission ID |
+|---|---|---|
+| `submissions/gentle-igloo_v12076.parquet` | `c22de523cd392fb035f9223c1ac2222173de0967ef5a8909ee9641876828e1b0` | 230.8183 s, `5be7ef97-8244-4f9a-94cb-5027f50c20d6` |
+| `submissions/gentle-igloo_v12077.parquet` | `f06c66bfa3388b17f5b6ba2362fa45a7da1be8fd5ae2d37de47cfe0e6bf2ba44` | 230.4812 s, `ecc78bca-21ed-4ce4-89ff-5b9765d3f74c` |
+
 Sources: [scoring receipt](../analysis/e203_upload_20261007/RESULTS.md),
-[replay results](../analysis/reproduce_v12075_20261007/RESULTS.md). Check the
+[replay results](../analysis/reproduce_v12075_20261007/RESULTS.md),
+[v12076 record](../analysis/v12076_upload_20261008/RESULTS.md),
+[v12077 record](../analysis/v12077_upload_20261008/RESULTS.md). Check the
 hash with `shasum -a 256 submissions/gentle-igloo_v12075.parquet` (Linux:
 `sha256sum`), or run the script below, which also compares the schema and IDs
-with the organiser's template `submitting.parquet`:
+with the organiser's template `submitting.parquet` (for v12077 substitute its
+path and hash):
 
 ```python
 import hashlib
@@ -156,6 +170,61 @@ keep their partial files.
 
 The earlier v12074 replay and this replay's operational limits are kept in
 [analysis/reproduce_v12074_20261007/HISTORY.md](../analysis/reproduce_v12074_20261007/HISTORY.md).
+
+## 2b. Rebuild v12076 and v12077 from the same components
+
+Both files were produced on 8 October 2026 by the v12075 replay path of section 2
+(`reproduce_v12075_v2.py` imported as a library, the same archived features,
+member predictions, saved models and frozen sources), each with exactly one input
+or constant changed and no model fitted. Each builder compares its output with
+its parent only after the output is sealed, and never uploads.
+
+**The ten-seed neural member.** The seeds 0–9 fitted for the final file (section
+6 of [final submission](final-submission.md)) are fits on the four-month feature
+view and cannot be applied to the January/July queries of E203. Seeds 3–9 for
+the ranking file were therefore fitted on the frozen E203 ranking pack
+(`data/e203_rank_inputs_20261007`, `data/e203_rank_prepared_20261007`) with the
+unchanged `S.fit(arm='ordered', seed)` on the Home GPU
+(`scripts/e203_rank_seeds3to9_20261008.py`, launcher
+`scripts/e203_rank_seeds3to9_run_20261008.sh`; 7 fits of about 225 s). Controls,
+all exact: pack and archived-output hashes, PLE bins equal to the archived
+`bins.npz`, the archived three-seed mean equal to `prediction.npz`, the archived
+`model_0.pt` reproducing `seed_0.npy` through the same inference path, and every
+new checkpoint reproducing its seed array. Output
+`data/e203_rank_seeds3to9_20261008/models/prediction_10seed.npz` (float32 mean of
+ten seeds, same IDs, order and dtype as the archived member) with the receipt
+`models/complete.json` (SHA-256 `e5910d44…`), which both builders require.
+
+**v12076** (`scripts/v12076_nn10seed_build_20261008.py`): the replay with
+`data/e203_rank_20261007/prediction.npz` replaced by `prediction_10seed.npz`;
+weights, E81 donors, the 42 TabPFN rows and the cached stage models unchanged.
+Output `data/v12076_nn10seed_20261008/`, candidate
+`submissions/gentle-igloo_v12076.parquet` (SHA `c22de523…`), build report
+`submissions/gentle-igloo_v12076.manifest.json`; 1 min 57 s on the Mac, 0 fits;
+premix `mvt_id` and `proba` equal to the archived v12075 parts; 250,190 rows
+differ from v12075, RMS 4.849 s, largest 909 s.
+
+**v12077** (`scripts/v12077_nn035_build_20261008.py`): the v12076 build with the
+regular-candidate weights set to `WEIGHTS['final']` of
+`scripts/final_tail_assembly_20261008.py` (raw `0.028888888888888857`, the four
+anchors `0.08666666666666667` each, neural member `0.35`, tree pair the
+remainder). Output `data/v12077_nn035_20261008/`, candidate
+`submissions/gentle-igloo_v12077.parquet` (SHA `f06c66bf…`), build report
+`submissions/gentle-igloo_v12077.manifest.json`; 1 min 38 s, 0 fits; 286,560
+rows differ from v12076, RMS 7.422 s, largest 909 s; RMS 8.682 s against v12075.
+
+```bash
+.venv/bin/python scripts/v12076_nn10seed_build_20261008.py check
+.venv/bin/python scripts/v12076_nn10seed_build_20261008.py build
+.venv/bin/python scripts/v12077_nn035_build_20261008.py check
+.venv/bin/python scripts/v12077_nn035_build_20261008.py build
+```
+
+`check` verifies every pinned input (the section 2 archive, the ten-seed member
+and its receipt, and for v12077 the v12076 candidate and its report) without
+writing; `build` refuses to run if the output directory or the candidate exists.
+Records: [v12076](../analysis/v12076_upload_20261008/RESULTS.md),
+[v12077](../analysis/v12077_upload_20261008/RESULTS.md); journal 416, 417, 426, 427.
 
 ## 3. Retrain from raw data
 

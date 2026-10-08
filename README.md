@@ -6,11 +6,18 @@ We predict the **recorded taxi-out time** of departures at ten European airports
 The models are trained on all 2025 departures (2,085,047 rows) and scored on
 344,841 departures from January and July 2026.
 
-**Best submission: `gentle-igloo_v12075.parquet`, RMSE 230.9387 s** (scored
-7 October 2026). This is our best of 109 submissions; on 8 October 2026 at
-13:47 UTC it ranked 16th of 238 teams. Our first submission scored 501.23 s.
-The blind final on four months (January, February, June and July 2026) is a
-separate single file built by one uniform recipe; see
+**Best submission: `gentle-igloo_v12077.parquet`, RMSE 230.4812 s** (scored
+8 October 2026). This is our best of 111 submissions; on 8 October 2026 at
+20:15 UTC it ranked 16th of 239 teams. Our first submission scored 501.23 s.
+v12077 is the v12075 chain (230.9387 s, 7 October) with two changes: the neural
+member is the mean of ten seeds instead of three (seeds 3–9 trained on the same frozen
+inputs; no other model was refitted), and its weight
+in the regular candidate rises from 0.25 to 0.35, the five anchored members
+scaled by 0.65/0.75. The weight was chosen on 2025 out-of-fold data before the
+upload (lower than 0.25 in all twelve months); the board confirmed it with
+−0.4575 s against v12075 in two steps (v12076 −0.1204 s for the seeds, v12077
+−0.3371 s for the weight). The blind final on four months (January, February,
+June and July 2026) is a separate single file built by one uniform recipe; see
 [final submission](docs/final-submission.md).
 
 Code: [GNU GPLv3](LICENSE). Data keep their own terms, summarised below and in
@@ -118,8 +125,9 @@ flowchart LR
    learn the residual to a calibrated NM proxy (take-off minus `AOBT_3`, else LOBT,
    else EOBT). Five more LightGBM members add diversity: one learns the raw target,
    four learn it relative to the LOBT, schedule, EOBT and `AOBT_3` anchors. A neural
-   network (weight 0.25) extends a numerical-embedding MLP with the ordered ADS-B
-   observations of the current and previous visit of the same aircraft.
+   network extends a numerical-embedding MLP with the ordered ADS-B observations
+   of the current and previous visit of the same aircraft; in v12077 and the final
+   recipe it is the mean of ten seeds at weight 0.35 (three seeds at 0.25 in v12075).
 3. **Surface stages.** Where the flight's own ground track exists, gradient-boosted
    stages correct the estimate using movement onset, stops, stand distances and
    the previous visit of the aircraft. A gate leaves the prediction unchanged when
@@ -164,15 +172,21 @@ leaderboard-specific parts removed: the whole-file blend with two archived
 January/July submissions (E81) and the 42 frozen TabPFN tail rows, replaced by a
 fresh ten-seed TabPFN-2 ensemble on every row of the Rome tail. The neural member
 is the mean of ten seeds instead of three (a variance reduction with no new
-capacity; the two means differ by RMS 24.0 s on the final rows). Run as a canary on
-January/July with the old members, the uniform recipe scored 232.1933 s against
-230.9387 s for v12075; that cost is accepted so that one procedure covers all
-months. Recipe, receipts, validation and fallbacks: [final submission](docs/final-submission.md);
-a standard [model card](docs/model-card.md) states intended use and limitations.
+capacity; the two means differ by RMS 24.0 s on the final rows) and enters at
+weight 0.35 instead of 0.25, with the five anchored members scaled by 0.65/0.75
+(`WEIGHTS['final']`, journal 425). The weight was chosen on 2025 out-of-fold
+predictions of the exact chain: 0.35 is the only grid value with lower squared
+error than 0.25 in all twelve months, at three and at ten seeds. Both changes were
+then scored on the leaderboard as v12076 and v12077 (−0.4575 s together against
+v12075). Run as a canary on January/July with the old members and the old weights,
+the uniform recipe scored 232.1933 s against 230.9387 s for v12075; that cost is
+accepted so that one procedure covers all months. Recipe, receipts, validation and
+fallbacks: [final submission](docs/final-submission.md); a standard
+[model card](docs/model-card.md) states intended use and limitations.
 
 ## What moved the score
 
-108 uploads between 13 September and 7 October produced 61 new best scores.
+111 uploads between 13 September and 8 October produced 63 new best scores.
 The table groups them into the seven phases described in the
 [development history](docs/development-history.md), which lists every step with
 its evidence.
@@ -185,7 +199,7 @@ its evidence.
 | 4. Filed-time neighbours and blends | 20–23 Sep | 247.8 → 242.3 | Neighbour features on filed times (−2.4); blends with two earlier complete pipelines (−0.8, −0.7); cost-weighted regime classifier (−0.5) |
 | 5. Removing 2025-specific capacity | 24–27 Sep | 242.3 → 235.5 | Airline prefix for rows without NM (−0.4); stand identity and residual encodings removed (−0.7); airline prefix in the TabPFN tail (−3.6); CatBoost seed averaging (−0.8) |
 | 6. Stage refinements and members | 28 Sep – 4 Oct | 235.5 → 232.6 | Members anchored to LOBT, schedule and raw target (−1.0); MLP member (−0.4); final feature table, planning-regime gate and several smaller steps |
-| 7. Neural members with trajectories | 5–7 Oct | 232.6 → 230.9 | Piecewise-linear numerical embeddings (−0.54); ordered ADS-B observations of the current and previous visit (−0.51) |
+| 7. Neural members with trajectories | 5–8 Oct | 232.6 → 230.5 | Piecewise-linear numerical embeddings (−0.54); ordered ADS-B observations of the current and previous visit (−0.51); the neural member as a mean of ten seeds (−0.12) and its weight raised from 0.25 to 0.35 (−0.34) |
 
 Each gain is against the previous best file; where an upload bundled changes, the
 development history gives the single-change control.
@@ -219,8 +233,9 @@ not establish.
 
 | Level | Status | Entry point |
 |---|---|---|
-| Verify the submitted file | SHA-256 `90d3cd0b…aee2`, 344,841 unique IDs | [docs/reproduction.md](docs/reproduction.md) |
+| Verify the submitted files | v12077: SHA-256 `f06c66bf…ba44`; v12075: `90d3cd0b…aee2`; 344,841 unique IDs each | [docs/reproduction.md](docs/reproduction.md) |
 | Rebuild v12075 from archived features, member predictions and saved models | Done independently on 7 October 2026: all predictions and Parquet bytes identical, no model refits, 101 s | `scripts/reproduce_v12075_v2.py` |
+| Rebuild v12077 from the same archived components plus the ten-seed neural member | Done on 8 October 2026 on the same replay path: v12076 (ten-seed member, 1 min 57 s) then v12077 (E212 weights, 1 min 38 s), no model refits; the seven extra seeds were fitted on the frozen E203 pack with every checkpoint replayed exactly | `scripts/v12076_nn10seed_build_20261008.py`, `scripts/v12077_nn035_build_20261008.py` |
 | Retrain everything from raw data | Trainers, extractors and stage builders are in `src/` and `scripts/`, listed in order in the reproduction guide; a clean end-to-end run of the current recipe has not been completed | [docs/reproduction.md](docs/reproduction.md) |
 | Apply to a new period | Not one command. The four-month final is built by dated scripts (feature workspace, 52 tabular fits with saved models, 10-seed neural member, daily ADS-B products, tail assembly, validator), each registered with receipts; the period-specific donor rows and blend are not used | [docs/final-submission.md](docs/final-submission.md) |
 
@@ -257,7 +272,8 @@ upload and validation helpers in about 5 s without any data (2 skipped).
 | `src/e159b_apply.py` | LSZH OPDI correction (E159b) |
 | `scripts/export_feature_importance.py` | Feature importance of the saved classifier and regressor |
 | `scripts/today_submissions_20261006.py` | Stage order of the submitted chain |
-| `scripts/reproduce_v12075_v2.py` | Exact rebuild of the best submission |
+| `scripts/reproduce_v12075_v2.py` | Exact rebuild of v12075 from archived components |
+| `scripts/e203_rank_seeds3to9_20261008.py`, `scripts/v12076_nn10seed_build_20261008.py`, `scripts/v12077_nn035_build_20261008.py` | Seeds 3–9 of the neural member on the frozen E203 pack; zero-fit builds of v12076 and of the best submission v12077 |
 | `src/strict_oof_gate.py` | Integrity checks for out-of-fold artifacts |
 | `scripts/make_doc_figures.py` | Figures in `docs/figures/` |
 | `analysis/` | Dated experiment reports and evidence (mostly Russian) |
@@ -271,7 +287,7 @@ for traceability; their IDs match the register.
 - The model reconstructs a **recorded** off-block time after the fact. It uses
   the take-off time and the flight's own post-pushback track, so it is not a
   pre-departure forecast.
-- Ranking months were also used for development decisions through 108
+- Ranking months were also used for development decisions through 111
   leaderboard submissions, so the leaderboard score carries selection effects.
   No submission was tuned row by row against the leaderboard.
 - Results depend on ADS-B ground coverage, which differs by airport and year.
