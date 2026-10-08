@@ -1,0 +1,62 @@
+--- scripts/e207_full_token_queue_v2_20261008.py (namespaces normalized)
++++ scripts/e207_full_token_queue_v3_20261008.py
+@@ -25,7 +25,16 @@
+ GPU='prc-e207-v3-trajectory-20261008.service'
+ 
+ 
+-def active(s):return s.get('ActiveState') in ('active','activating','deactivating','reloading') or int(s.get('MainPID','0'))>0
++def active(s):
++    if s.get('ActiveState')=='active' and s.get('SubState')=='exited' and int(s.get('MainPID','0'))==0:return False
++    return s.get('ActiveState') in ('active','activating','deactivating','reloading') or int(s.get('MainPID','0'))>0
++
++
++def unit_finished(s,initial):
++    if s.get('InvocationID')!=initial['InvocationID']:raise ValueError('owned unit invocation changed')
++    if active(s):return False
++    if s.get('Result')!='success' or s.get('ExecMainStatus')!='0':raise ValueError('unit failed: '+repr(s))
++    return True
+ 
+ 
+ def raise_stop(signum,frame):
+@@ -90,7 +99,7 @@
+         finally:
+             with lock:transports.discard(process)
+     def remote(host,args,timeout=60):return call(['ssh','-o','BatchMode=yes','-o','ConnectTimeout=10',host,shlex.join(args)],timeout,True).stdout
+-    def live(host,unit):return dict(x.split('=',1) for x in remote(host,['systemctl','--user','show',unit,'-p','ActiveState','-p','MainPID','-p','InvocationID','-p','Result','-p','ExecMainStatus']).splitlines() if '=' in x)
++    def live(host,unit):return dict(x.split('=',1) for x in remote(host,['systemctl','--user','show',unit,'-p','ActiveState','-p','SubState','-p','MainPID','-p','InvocationID','-p','Result','-p','ExecMainStatus']).splitlines() if '=' in x)
+     def worker(env,action,*args):return [f'{REMOTE}/{env}/bin/python','-u',f'{REMOTE}/{W.INPUT}/scripts/{Path(W.SELF).name}',action,'--root',REMOTE,'--registration-commit',reg,*args]
+     def launch(host,unit,cpu,mem,command):
+         before=live(host,unit)
+@@ -100,7 +109,7 @@
+         remote(host,['systemd-run','--user','--unit='+unit,'--working-directory='+REMOTE,
+             '--description='+owner_token,
+             '--property=CPUQuota='+str(cpu)+'%','--property=MemoryMax='+mem,'--property=MemorySwapMax=0',
+-            '--property=Nice=10','--property=KillMode=control-group','--property=TimeoutStopSec=30',
++            '--property=Nice=10','--property=KillMode=control-group','--property=TimeoutStopSec=30','--property=RemainAfterExit=yes',
+             '--property=RuntimeMaxSec='+str(max(1,int(deadline-time.monotonic()))),
+             '--property=StandardOutput=append:'+log,'--property=StandardError=inherit',*command])
+         s=live(host,unit)
+@@ -111,9 +120,7 @@
+     def wait_unit(host,unit,initial):
+         while True:
+             s=live(host,unit)
+-            if s.get('InvocationID')!=initial['InvocationID']:raise ValueError('owned unit invocation changed')
+-            if not active(s):
+-                if s.get('Result')!='success' or s.get('ExecMainStatus')!='0':raise ValueError('unit failed: '+repr(s))
++            if unit_finished(s,initial):
+                 record('exited',host=host,unit=unit,properties=s);return
+             record('progress',host=host,unit=unit,MainPID=s['MainPID'])
+             time.sleep(min(30,max(0,deadline-time.monotonic())))
+@@ -196,7 +203,11 @@
+                     name=f'fold_{fold}_{fold+6}';folder=f'{REMOTE}/{W.PREPARED}/{name}'
+                     while not file_ready(host,folder+'/complete.json'):
+                         s=live(host,unit)
+-                        if not active(s) or s.get('InvocationID')!=initial['InvocationID']:raise ValueError('prep stopped before fold publication')
++                        if unit_finished(s,initial):
++                            # Publication can finish between the first file
++                            # check and the retained terminal state query.
++                            if file_ready(host,folder+'/complete.json'):break
++                            raise ValueError('prep stopped before fold publication')
+                         time.sleep(10)
+                     record('streaming',fold=fold,node=node)
+                     copy(host+':'+folder,HOME+':'+REMOTE+'/'+W.INCOMING+'/',True)

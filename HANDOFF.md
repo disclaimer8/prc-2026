@@ -2,13 +2,27 @@
 
 Правила, машины, рецепты — в `AGENTS.md`. Здесь — позиция, что считается и что делать дальше.
 
+## Оперативное обновление 08.10.2026 02:30:30 UTC — E207 v2 технически остановлен
+
+- **V2 controller38371 завершён**, оба raw-unit inactive/dead/MainPID0. 171 сохранил183day receipts и shard`complete.json`;175 —145day receipts без shard complete. **Всего328 сохранённых дней,0 prep/target-fit/ranking.** [Полная квитанцияv2](analysis/e207_full_token_v2_20261008/STATUS.md).
+- После завершения171 systemd GC очистил InvocationID; `wait_unit` ошибочно завершил очередь с `owned unit invocation changed`. Owned175 cleanup02:28:24.955675UTC, terminal`failed_no_retry`02:28:53.186665UTC. Это технический lifecycle-сбой, не scientific FAIL. Operational snapshot дополнен terminal-событием.
+- Данные/partials и frozen v2 source/protocol сохранены. Author готовит отдельнуюv3 с bounded real-systemd smoke; **№379 пока не зарегистрирован**, новый запуск не выполнен. Не возобновлятьv2 и не переиспользовать его каталоги без отдельного протокола.
+- Best230.9387 прежний;14/237 — снимок07.10 22:00UTC,4/5слотов были7октябряUTC; live-квота8октября не проверена. E201 отменён, LLMoff. Ниже текущая история запускаv2 и неизменённый блок документации Claude.
+
+## Исторический снимок 08.10.2026 02:26:18 UTC — E207 v2 реально обрабатывает дни
+
+- **E207 v2 запущен02:24:15.531271UTC**, controller PID38371, №378/commit`ea16e05330d3fe4fb5573dc17938002f14645876`. [Статус E207 v2](analysis/e207_full_token_v2_20261008/STATUS.md). Source/protocol после регистрации не менялись.
+- На02:26:18UTC сохранены **71 дневной receipt на171 и54 на175 —125/365 дней**. Оба raw-unit active;171 PID365405/Invocation`a5e6e4a3afa347dbb3440143ba5e54d5`,175 PID168255/`e92ac9eae23f4f979182c7ce98ea2601`. Это подтверждённый extraction-progress, не только CPU/liveness. MemoryPeak3.017/2.467GB.
+- **0 target-fit, нового RMSE нет.** Далее автоматически обмен shard→prep/admission→synthetic GPU smoke→6пар/18fit. Около2ч — оценка workflow, hard6ч; ranking требует отдельного current-chain протокола, автоматической подачи нет. Не дублировать запущенную очередь.
+- V1 остановлен технически с0day/0fit и сохранён. Best230.9387 прежний;14/237 — снимок07.10 22:00UTC,4/5слотов были7октябряUTC. Live-квота8октября не проверена. E201 отменён, LLMoff. Ниже сохранены история запуска/остановкиv1 и независимые изменения документации к призу.
+
 ## Документация к ревью приза — 08.10.2026 00:55Z (сессия Claude, коммиты a95ed2b, 92c7278, merge 84ddbaa)
 
 - README и `docs/` переписаны под ревьюеров приза (английский): README с таблицей открытости данных, `docs/development-history.md`, `docs/data-insights.md` + `docs/figures/` (`scripts/make_doc_figures.py`), `docs/negative-results.md`, `docs/glossary.md`, `docs/organiser-clarifications.md` (дословные цитаты организатора с UTC), переписанный `docs/reproduction.md` (история v12074 → `analysis/reproduce_v12074_20261007/HISTORY.md`), `requirements-gpu.txt`, `CITATION.cff`, метаданные `pyproject.toml`. Прошло ревью Fable в роли проверяющего PRU: `analysis/review_fable_2026-10-07/`.
 - При новом best обновлять числа в README (результат, таблица фаз), `docs/development-history.md` (шаг), `docs/tables/leaderboard_gentle-igloo.csv`, график 1 (`scripts/make_doc_figures.py`). Структуру не откатывать; правки — по месту.
 - Открыто для Denys до 09.10: раздел Team в README (имя, фраза про AI-ассистентов, нужны ли affiliation/контакт), что делать с внутренними файлами (AGENTS/HANDOFF/hz_queue/outreach/review/research_notes/reports, LAN-IP в tracked-файлах) при открытии.
 
-## Оперативное обновление 08.10.2026 00:08:36 UTC — первый E207 технически остановлен
+## Исторический снимок 08.10.2026 00:08:36 UTC — первый E207 технически остановлен
 
 - **E207 №377 остановлен до завершения первого дня и до fit.** Root обнаружил повторную распаковку NPZ в per-flight `validate_arrays(NpzFile)` и отправил SIGTERM controller87152. Это техническая проблема выполнения, не научный FAIL F-only. [Полная квитанция старого запуска](analysis/e207_full_token_20261008/STATUS.md).
 - Cleanup остановил owned175 Invocation`070a9f744fd24d6db4e05d5b7ce13a32` в00:07:42.600974UTC и171 Invocation`69d7d4c5f736471ba82c4c5fca6324bb` в00:07:43.351569UTC; `failed_no_retry` записан00:07:51.862671UTC. Проверка00:08:36UTC: оба unit inactive/dead/MainPID0, controller отсутствует. **0 completed day receipts на обоих shard,0 prep/target-fit/ranking.**

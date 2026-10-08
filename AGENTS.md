@@ -20,7 +20,7 @@
 
 | Что | Где |
 |---|---|
-| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №377) | `HYPOTHESES_LOG.md` |
+| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №378) | `HYPOTHESES_LOG.md` |
 | Бриф для ревью: «Читать первым», раздел 0 (закрытое — не повторять), последние итоги — раздел 21cn | `REVIEW_BRIEF.md`; после правки — `.venv/bin/python review/build_brief.py` |
 | Обходы конкурентов и источников данных | `analysis/competitor_repos/_UPDATE_2026-10-04.md`, `analysis/data_sources_2026-10-04_{fable,sonnet}.md`, `SOURCES.md` |
 | Таблицы признаков (не в git) | `data/features_e106.parquet`, `data/features_e163.parquet`, **`data/features_fin1b.parquet`** (боевая) |
@@ -59,7 +59,34 @@
   Для аудита №289:6CPU/MemoryMax10G/swap0/nice10, один день за раз, только наблюдаемые ADS-B данные.
   Большие Cat/LGB задачи с других машин не дублировать: они требуют больше RAM и имеют собственные фиксированные очереди.
 
-## Актуальное дополнение 08.10.2026 00:08:36 UTC
+## Актуальное дополнение 08.10.2026 02:30:30 UTC
+
+E207 v2 технически остановлен: после успешного завершения171 systemd GC очистил
+InvocationID; controller38371 завершился с `owned unit invocation changed`.
+Cleanup17502:28:24.955675UTC, terminal02:28:53.186665UTC. Проверка02:30:30UTC:
+оба raw-unit inactive/dead/MainPID0, controller отсутствует. Сохранены183day receipts
+и shard complete на171;145day receipts без shard complete на175. **0 prep/target-fit/ranking**.
+[Квитанция](analysis/e207_full_token_v2_20261008/STATUS.md). Данные/frozen source сохранены.
+Author готовит отдельнуюv3 lifecycle-поправку с bounded real-systemd smoke;
+№379 ещё не зарегистрирован. Старуюv2 не возобновлять. Научного результата/RMSE нет.
+Best230.9387 прежний;14/237 — снимок07.10 22:00UTC,8Oct live-квота не проверена.
+E201 отменён, LLMoff. Ниже историческое состояние работающегоv2.
+
+## Историческое дополнение 08.10.2026 02:26:18 UTC
+
+E207 v2 **реально работает**: controller PID38371, старт02:24:15.531271UTC,
+№378/commit`ea16e05330d3fe4fb5573dc17938002f14645876`. [Статус E207 v2](analysis/e207_full_token_v2_20261008/STATUS.md).
+Extraction сохранил71/54 дневных receipt на171/175, всего125/365; raw-unit active,
+PID365405/168255, точные InvocationID и память в STATUS. Это подтверждённые дни,
+**0 target-fit**; prep/GPU smoke ещё не подтверждены стартовавшими. Очередь сама
+продолжит подготовку/admission/synthetic smoke→6пар/18fit, hard6ч; около2ч — оценка.
+Ranking требует отдельного current-chain протокола, автоматической подачи нет.
+V1 технически остановлен и сохранён; не переиспользовать его каталоги и не дублироватьv2.
+Frozen source/protocol/journal не менять. Best230.9387 прежний;14/237 — снимок07.10
+22:00UTC,4/5слотов были7октябряUTC; live-квота8октября не проверена. E201 отменён,
+LLMoff. Следующие блоки — история, в том числе состояние до запускаv2.
+
+## Историческое дополнение 08.10.2026 00:08:36 UTC
 
 Первый E207 №377 **технически остановлен до первого completed day и до target-fit**:
 root обнаружил repeated NPZ decompression в `validate_arrays(NpzFile)` и послал

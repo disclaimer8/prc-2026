@@ -1,0 +1,37 @@
+{
+  "utc": "2026-10-08T03:42:34.212927+00:00",
+  "status": "ready_for_independent_review_not_launched",
+  "parent_registration": "ea16e05330d3fe4fb5573dc17938002f14645876",
+  "files": {
+    "scripts/e207_full_token_sampler_v3.py": "68ea0d07d61a9a5d998c89d0db2c40175e4a19bf9061a68e5436e16610d36cc9",
+    "scripts/e207_full_token_queue_v3_20261008.py": "894f77530de3e159a7c7513f470387cfc2afed11b36bafcd09f986b14ba9a8f4",
+    "tests/test_e207_full_token_sampler_v3.py": "7f7cf0287f4fd929a8d382ad013734bc610e427ee13e004ef4501178881f9d1a",
+    "analysis/e207_full_token_v3_20261008/PROTOCOL.md": "5243a217ef1002193fe4e291ee923fea645fc874544199209a68d9e1b6115baa",
+    "analysis/e207_full_token_v3_20261008/scoped_diff.txt": "7d9a81ef7a5eb16a42e17a5677187dc3d10cc708a6b9ceaa6dbb1470724e5f1c",
+    "analysis/e207_full_token_v3_20261008/lifecycle_smoke.py": "0d6d006859d9eb714c65e13a913b0c216fb1dc2c31a089a239ef9426a85af894",
+    "analysis/e207_full_token_v3_20261008/lifecycle_smoke.json": "ae83e794c5000c89eab850a33f0b160818966b340bc612936bc6cd3d80d61a97"
+  },
+  "scientific_worker_namespace_only": true,
+  "tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests -p test_e207_full_token_sampler_v3.py",
+    "passed": 13,
+    "failed": 0,
+    "lifecycle_red_before_fix": true
+  },
+  "real_lifecycle_smoke": {
+    "passed": true,
+    "cases": 6,
+    "hosts": 3,
+    "exit_codes": [
+      0,
+      7
+    ],
+    "all_owned_test_units_cleaned": true,
+    "utc": "2026-10-08T03:41:07.849750+00:00"
+  },
+  "real_extraction": false,
+  "normalization": false,
+  "target_fits": 0,
+  "gpu_smoke_executed": false,
+  "production_retained_exited_records_may_remain": true
+}

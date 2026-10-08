@@ -1,0 +1,273 @@
+{
+  "passed": true,
+  "queue_sha256": "894f77530de3e159a7c7513f470387cfc2afed11b36bafcd09f986b14ba9a8f4",
+  "reports": [
+    [
+      {
+        "after_cleanup": {
+          "ActiveState": "inactive",
+          "Description": "prc-e207-v3-lifecycle-b243b36fee9d46fbae7831a56f83ec71.service",
+          "ExecMainStatus": "0",
+          "InvocationID": "",
+          "MainPID": "0",
+          "Result": "success",
+          "SubState": "dead"
+        },
+        "exit_code": 0,
+        "host": "a1@192.168.1.171",
+        "initial": {
+          "ActiveState": "active",
+          "Description": "E207-v3-lifecycle-b243b36fee9d46fbae7831a56f83ec71",
+          "ExecMainStatus": "0",
+          "InvocationID": "d13c08d1e1cc42d8bef36d2331ff3f05",
+          "MainPID": "371647",
+          "Result": "success",
+          "SubState": "running"
+        },
+        "owner": "E207-v3-lifecycle-b243b36fee9d46fbae7831a56f83ec71",
+        "recognized": "terminal_success",
+        "retained_after_second_query": {
+          "ActiveState": "active",
+          "Description": "E207-v3-lifecycle-b243b36fee9d46fbae7831a56f83ec71",
+          "ExecMainStatus": "0",
+          "InvocationID": "d13c08d1e1cc42d8bef36d2331ff3f05",
+          "MainPID": "0",
+          "Result": "success",
+          "SubState": "exited"
+        },
+        "terminal": {
+          "ActiveState": "active",
+          "Description": "E207-v3-lifecycle-b243b36fee9d46fbae7831a56f83ec71",
+          "ExecMainStatus": "0",
+          "InvocationID": "d13c08d1e1cc42d8bef36d2331ff3f05",
+          "MainPID": "0",
+          "Result": "success",
+          "SubState": "exited"
+        },
+        "unit": "prc-e207-v3-lifecycle-b243b36fee9d46fbae7831a56f83ec71.service"
+      },
+      {
+        "after_cleanup": {
+          "ActiveState": "inactive",
+          "Description": "prc-e207-v3-lifecycle-cfb7c2d98ac3466da334c6994758e144.service",
+          "ExecMainStatus": "0",
+          "InvocationID": "",
+          "MainPID": "0",
+          "Result": "success",
+          "SubState": "dead"
+        },
+        "exit_code": 7,
+        "host": "a1@192.168.1.171",
+        "initial": {
+          "ActiveState": "active",
+          "Description": "E207-v3-lifecycle-cfb7c2d98ac3466da334c6994758e144",
+          "ExecMainStatus": "0",
+          "InvocationID": "c868ddddc5464deaac1975c40f6c61df",
+          "MainPID": "372443",
+          "Result": "success",
+          "SubState": "running"
+        },
+        "owner": "E207-v3-lifecycle-cfb7c2d98ac3466da334c6994758e144",
+        "recognized": "terminal_failure_rejected",
+        "retained_after_second_query": {
+          "ActiveState": "failed",
+          "Description": "E207-v3-lifecycle-cfb7c2d98ac3466da334c6994758e144",
+          "ExecMainStatus": "7",
+          "InvocationID": "c868ddddc5464deaac1975c40f6c61df",
+          "MainPID": "0",
+          "Result": "exit-code",
+          "SubState": "failed"
+        },
+        "terminal": {
+          "ActiveState": "failed",
+          "Description": "E207-v3-lifecycle-cfb7c2d98ac3466da334c6994758e144",
+          "ExecMainStatus": "7",
+          "InvocationID": "c868ddddc5464deaac1975c40f6c61df",
+          "MainPID": "0",
+          "Result": "exit-code",
+          "SubState": "failed"
+        },
+        "unit": "prc-e207-v3-lifecycle-cfb7c2d98ac3466da334c6994758e144.service"
+      }
+    ],
+    [
+      {
+        "after_cleanup": {
+          "ActiveState": "inactive",
+          "Description": "prc-e207-v3-lifecycle-a874c5cdc7154ed2a9041a0f9be2be3e.service",
+          "ExecMainStatus": "0",
+          "InvocationID": "",
+          "MainPID": "0",
+          "Result": "success",
+          "SubState": "dead"
+        },
+        "exit_code": 0,
+        "host": "a1@192.168.1.175",
+        "initial": {
+          "ActiveState": "active",
+          "Description": "E207-v3-lifecycle-a874c5cdc7154ed2a9041a0f9be2be3e",
+          "ExecMainStatus": "0",
+          "InvocationID": "cb685a39b4a947528bf1029a447e6a24",
+          "MainPID": "174180",
+          "Result": "success",
+          "SubState": "running"
+        },
+        "owner": "E207-v3-lifecycle-a874c5cdc7154ed2a9041a0f9be2be3e",
+        "recognized": "terminal_success",
+        "retained_after_second_query": {
+          "ActiveState": "active",
+          "Description": "E207-v3-lifecycle-a874c5cdc7154ed2a9041a0f9be2be3e",
+          "ExecMainStatus": "0",
+          "InvocationID": "cb685a39b4a947528bf1029a447e6a24",
+          "MainPID": "0",
+          "Result": "success",
+          "SubState": "exited"
+        },
+        "terminal": {
+          "ActiveState": "active",
+          "Description": "E207-v3-lifecycle-a874c5cdc7154ed2a9041a0f9be2be3e",
+          "ExecMainStatus": "0",
+          "InvocationID": "cb685a39b4a947528bf1029a447e6a24",
+          "MainPID": "0",
+          "Result": "success",
+          "SubState": "exited"
+        },
+        "unit": "prc-e207-v3-lifecycle-a874c5cdc7154ed2a9041a0f9be2be3e.service"
+      },
+      {
+        "after_cleanup": {
+          "ActiveState": "inactive",
+          "Description": "prc-e207-v3-lifecycle-9bed69c5ee76455d84d1a5f1ad88c84c.service",
+          "ExecMainStatus": "0",
+          "InvocationID": "",
+          "MainPID": "0",
+          "Result": "success",
+          "SubState": "dead"
+        },
+        "exit_code": 7,
+        "host": "a1@192.168.1.175",
+        "initial": {
+          "ActiveState": "active",
+          "Description": "E207-v3-lifecycle-9bed69c5ee76455d84d1a5f1ad88c84c",
+          "ExecMainStatus": "0",
+          "InvocationID": "f85b560fd5d243f6b952cacce0401b6f",
+          "MainPID": "174621",
+          "Result": "success",
+          "SubState": "running"
+        },
+        "owner": "E207-v3-lifecycle-9bed69c5ee76455d84d1a5f1ad88c84c",
+        "recognized": "terminal_failure_rejected",
+        "retained_after_second_query": {
+          "ActiveState": "failed",
+          "Description": "E207-v3-lifecycle-9bed69c5ee76455d84d1a5f1ad88c84c",
+          "ExecMainStatus": "7",
+          "InvocationID": "f85b560fd5d243f6b952cacce0401b6f",
+          "MainPID": "0",
+          "Result": "exit-code",
+          "SubState": "failed"
+        },
+        "terminal": {
+          "ActiveState": "failed",
+          "Description": "E207-v3-lifecycle-9bed69c5ee76455d84d1a5f1ad88c84c",
+          "ExecMainStatus": "7",
+          "InvocationID": "f85b560fd5d243f6b952cacce0401b6f",
+          "MainPID": "0",
+          "Result": "exit-code",
+          "SubState": "failed"
+        },
+        "unit": "prc-e207-v3-lifecycle-9bed69c5ee76455d84d1a5f1ad88c84c.service"
+      }
+    ],
+    [
+      {
+        "after_cleanup": {
+          "ActiveState": "inactive",
+          "Description": "prc-e207-v3-lifecycle-514367181d9449ce938b192a3dd412e5.service",
+          "ExecMainStatus": "0",
+          "InvocationID": "",
+          "MainPID": "0",
+          "Result": "success",
+          "SubState": "dead"
+        },
+        "exit_code": 0,
+        "host": "home-pc-lan",
+        "initial": {
+          "ActiveState": "active",
+          "Description": "E207-v3-lifecycle-514367181d9449ce938b192a3dd412e5",
+          "ExecMainStatus": "0",
+          "InvocationID": "41277306ef62480a9662dad461c21f74",
+          "MainPID": "826127",
+          "Result": "success",
+          "SubState": "running"
+        },
+        "owner": "E207-v3-lifecycle-514367181d9449ce938b192a3dd412e5",
+        "recognized": "terminal_success",
+        "retained_after_second_query": {
+          "ActiveState": "active",
+          "Description": "E207-v3-lifecycle-514367181d9449ce938b192a3dd412e5",
+          "ExecMainStatus": "0",
+          "InvocationID": "41277306ef62480a9662dad461c21f74",
+          "MainPID": "0",
+          "Result": "success",
+          "SubState": "exited"
+        },
+        "terminal": {
+          "ActiveState": "active",
+          "Description": "E207-v3-lifecycle-514367181d9449ce938b192a3dd412e5",
+          "ExecMainStatus": "0",
+          "InvocationID": "41277306ef62480a9662dad461c21f74",
+          "MainPID": "0",
+          "Result": "success",
+          "SubState": "exited"
+        },
+        "unit": "prc-e207-v3-lifecycle-514367181d9449ce938b192a3dd412e5.service"
+      },
+      {
+        "after_cleanup": {
+          "ActiveState": "inactive",
+          "Description": "prc-e207-v3-lifecycle-0f70bcf9734d43a192dc5226ad7dee9f.service",
+          "ExecMainStatus": "0",
+          "InvocationID": "",
+          "MainPID": "0",
+          "Result": "success",
+          "SubState": "dead"
+        },
+        "exit_code": 7,
+        "host": "home-pc-lan",
+        "initial": {
+          "ActiveState": "active",
+          "Description": "E207-v3-lifecycle-0f70bcf9734d43a192dc5226ad7dee9f",
+          "ExecMainStatus": "0",
+          "InvocationID": "5d07d65d82e54e88b484884b03688a9c",
+          "MainPID": "827055",
+          "Result": "success",
+          "SubState": "running"
+        },
+        "owner": "E207-v3-lifecycle-0f70bcf9734d43a192dc5226ad7dee9f",
+        "recognized": "terminal_failure_rejected",
+        "retained_after_second_query": {
+          "ActiveState": "failed",
+          "Description": "E207-v3-lifecycle-0f70bcf9734d43a192dc5226ad7dee9f",
+          "ExecMainStatus": "7",
+          "InvocationID": "5d07d65d82e54e88b484884b03688a9c",
+          "MainPID": "0",
+          "Result": "exit-code",
+          "SubState": "failed"
+        },
+        "terminal": {
+          "ActiveState": "failed",
+          "Description": "E207-v3-lifecycle-0f70bcf9734d43a192dc5226ad7dee9f",
+          "ExecMainStatus": "7",
+          "InvocationID": "5d07d65d82e54e88b484884b03688a9c",
+          "MainPID": "0",
+          "Result": "exit-code",
+          "SubState": "failed"
+        },
+        "unit": "prc-e207-v3-lifecycle-0f70bcf9734d43a192dc5226ad7dee9f.service"
+      }
+    ]
+  ],
+  "synthetic_only": true,
+  "target_fits": 0,
+  "utc": "2026-10-08T03:41:07.849750+00:00"
+}
