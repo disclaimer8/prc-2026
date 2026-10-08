@@ -55,8 +55,8 @@ not permitted), 🟡 in progress. "❌ → ✅" marks a rejection that was later
 reversed by a different test (see lesson 11).
 
 **References.** "Log N" is entry N of [`HYPOTHESES_LOG.md`](../HYPOTHESES_LOG.md).
-That file has 376 entries numbered 1–377 (No. 135 is unused) and runs from
-23 September to 7 October 2026 (UTC). "Brief §X" is a section of
+That file has entries numbered 1–401 (No. 135 is unused; Nos. 387 and 397 each
+hold two entries) and runs from 23 September to 8 October 2026 (UTC). "Brief §X" is a section of
 [`REVIEW_BRIEF.md`](../REVIEW_BRIEF.md). The brief holds the experiments from
 before the log started (E1 to about E99) and, in §0, the registry of closed
 ideas. "Val." is [validation.md](validation.md). Both registers are in Russian;
@@ -80,7 +80,7 @@ were later reversed (lesson 11).
 | Other OPDI events (exit-apron etc.) combined as a stage (E168) | LOMO on LSZH 2025 | −0.4 % on tail rows | ❌ | Brief §0; Log 198 |
 | Daily ATFM slot adherence from ansperformance.eu (H11) | Probe, half-year swap | Partial correlations ≤ 0.023; stage changes sign between half-years (+0.054 / −0.159) | ❌ | Brief §0; Log 167 |
 | Calibration to EUROCONTROL PRU published taxi-out (airport × month, E145; runway × month) | 6-fold CV, then LB | Airport × month: CV −0.045 s (6/6), LB +0.114 s. Runway × month: CV +1.53 s, 0/6 | ❌ | Log 112, 114, 123 |
-| Stand coordinates from X-Plane Gateway `apt.dat` (used by a top-3 team) | Stand-match coverage against OSM | OSM already matches the stand exactly for 96–99 % of departures (EDDM 59 % exact + 30 % by prefix, LEBL 90 %); ceiling below 0.1 s | ⛔ | Log 27 |
+| Stand coordinates from X-Plane Gateway `apt.dat` (used by the team then in third place) | Stand-match coverage against OSM | OSM already matches the stand exactly for 96–99 % of departures (EDDM 59 % exact + 30 % by prefix, LEBL 90 %); ceiling below 0.1 s | ⛔ | Log 27 |
 | Closed or commercial sources: FR24, FlightAware, airport A-CDM, DDR2/DPI, paid NOTAM, Navigraph | Licence and terms review; organiser guidance | Commercial, access by agreement, or game-only use. Organiser: "if their license applies as open data, ok". DPI would carry TOBT/TSAT | ⛔ | Brief §0; Log 28, 30 |
 
 ### Features
@@ -96,7 +96,7 @@ were later reversed (lesson 11).
 | Reference taxi time P10/P50 by stand × runway (E9); mean residual corrections by airport, runway, stand, type, hour (E7) | 6-fold CV | E9: required ≥ 0.5 s gain on NM rows in 0/6 folds (−0.12 to +0.29 s), mean full RMSE +0.68 s. E7: +0.03…+0.36 s | ❌ | Brief §7 |
 | Route length on the OSM taxiway graph (E51) | 6-fold CV, twice | Old base: +0.01 s, 3/6. Re-test on the production feature set (U3): −0.165 s, 5/6 | ❌ → ✅ in final table | Brief §0; Log 139 |
 | Queue at the gate: neighbours' push-back delay, overdue EOBT, mean lateness (E127, E137, E184) | 6-fold CV (E184 against the final feature table) | E137: decided +0.137 s, 2/6. E184 on the final table: decided −0.215059 s (5/6), trimmed +0.162186 s | ❌ family closed | Brief §0; Log 93, 280; [E184](../analysis/e184_verdict_2026-10-05.md) |
-| Record order: MVT_ID / FLIGHT_ID deviation from neighbours (E27; rolling-median form E132) | 6-fold CV | E27: +4.37 s (fold 1+7 RMSE 391 → 413). E132: +0.025 s after E14, 3/6 | ❌ | Brief §0; Log 77 |
+| Record order: MVT_ID / FLIGHT_ID deviation from neighbours (E27; rolling-median form E132, the construction in team merry-quicksand's public code) | 6-fold CV | E27: +4.37 s (fold 1+7 RMSE 391 → 413). E132: +0.025 s after E14, 3/6 | ❌ | Brief §0; Log 77 |
 | Traffic counts inside the flight's own taxi interval [AOBT, ATOT] (E151; Yuan 2024, Wu 2026) | 6-fold CV, then LB | Production CV +0.034 s; LB +0.041 s. Against an older control it had shown −0.334 s (5/6) | ❌ | Brief §0; Log 138, 166 |
 | ADS-B state of neighbouring aircraft for flights without own track (E183) | Probe on rows without track coverage | Screen +0.002 s (3/6). Oracle −3.8 s not reachable without labels: untracked rows and tracked neighbours are at different airports | ❌ | Log 253; [probe](../analysis/e183_probe_2026-10-04.md) |
 | Spatial concentration of other ground aircraft instead of counts (E199) | 2 pairs × 3 seeds | ΔRMSE spatial − counts −0.022049 / +0.062688 s; registered requirements not all met | ❌ | Val.; [report](../analysis/e199_results_20261007.md) |
@@ -152,6 +152,7 @@ regimes, and the prediction is the probability mixture.
 | Soft attenuation of the correction by regime uncertainty instead of the hard gate E152 (E179) | 6-fold CV | Decided −0.002 s, 3/6 | ❌ | Brief §0; Log 237 |
 | Replace the learned stage by a fixed physical estimate: take-off minus first movement (or stand-walk), lag fitted on the other half-year | Registered audit against the current chain | ΔRMSE body +20.520 s, decided +18.266 s; stand-walk +23.597 / +21.040 s. A perfect per-row selector would gain at most −0.689 / −0.862 s | ❌ | Log 362; [audit](../analysis/adsb_stage_audit_20261007/RESULTS.md) |
 | Second, wider trajectory scale in the sequence encoder (E204) | 2 pairs, 6 fits; both pairs must improve | ΔRMSE pair 1+7 body +0.092642, decided +0.096240 s; pair 4+10 −0.203661 / −0.203193 s | ❌ | Val.; [report](../analysis/night_gpu_20261007/RESULTS.md) |
+| Full-token trajectory encoding: fill all 64 token slots per stream with real raw observations of the day while keeping the original token indices, instead of the sparser ordered sampling of E203 (E207 v3) | 6 pairs × 3 seeds × 8 epochs (18 fits) against the saved ordered member, before the ADS-B stages; gate ≥ 4/6 decided and pooled body/decided/trimmed < 0 | 4/6 decided pairs better, but pooled ΔRMSE body +0.007327 s, decided +0.015615 s; trim3 and trim20 worse. Two earlier runs (v1, v2) were stopped for technical reasons before any fit | ❌ | Log 377–379, 386; [evaluation](../analysis/claude_transfer_20261008/e207_evaluation.json); [protocol](../analysis/e207_full_token_v3_20261008/PROTOCOL.md) |
 
 ### Model families and blend members
 
@@ -160,9 +161,9 @@ regimes, and the prediction is the probability mixture.
 | XGBoost as an additional regressor | NNLS blend weights | Weight 0 on both halves of the sample | ❌ | Brief §5 |
 | Separate models per airport (E38) | 6-fold CV, then LB | CV −10.98 s (6/6), but body +0.05 s; LB +3.79 s | ❌ | Brief §7 |
 | Learned features built from 2025 aggregates: ADS-B features inside the base model (E32), regime rates by group (E50) | 6-fold CV, then LB | E32: decided −1.41 s (6/6), LB +0.33 s. E50: decided −2.79 s, strict −0.79 s, LB +5.78 s | ❌ | Brief §7 |
-| Regressor trained only on rows it serves (a competitor's −5.99 s step, E73) | CV, LB with a written forecast | CV −0.01 s; LB +0.010 s (forecast range −0.3…+0.2) | ❌ | Brief §0 (§21o) |
-| Strong LightGBM regularisation: `min_data_in_leaf` 500, `min_gain_to_split` 0.35 (E155) | 6-fold CV against production predictions | +0.733 s, 0/6 | ❌ | Log 146 |
-| Out-of-fold Huber corrector on confident regular rows (E154) | 6-fold CV against production predictions | +0.513 s, 0/6 | ❌ | Log 142 |
+| Regressor trained only on rows it serves (team kind-mango's −5.99 s step, re-implemented from its public description, E73) | CV, LB with a written forecast | CV −0.01 s; LB +0.010 s (forecast range −0.3…+0.2) | ❌ | Brief §0 (§21o) |
+| Strong LightGBM regularisation: `min_data_in_leaf` 500, `min_gain_to_split` 0.35 (E155; the setting of team kind-mango's v76) | 6-fold CV against production predictions | +0.733 s, 0/6 | ❌ | Log 146 |
+| Out-of-fold Huber corrector on confident regular rows (E154; the construction described by team smart-jigsaw) | 6-fold CV against production predictions | +0.513 s, 0/6 | ❌ | Log 142 |
 | Extra members that differ only in hyperparameters or loss (E174), or that drop whole feature families (E180) | Member weight grid on out-of-fold predictions | E174: +0.014 (2/6) and +0.046 (0/6). E180: weight 0 in 5/6, +0.014 | ❌ | Log 221, 240 |
 | k-nearest-neighbour member, K = 50 (E178) | Member weight grid | Weight 0 in all folds; standalone RMSE 227–260 s vs LightGBM 186–212 s; correlation 0.90–0.91 | ❌ | Log 239 |
 | More MLP members: 3 seeds (E101); second MLP without 2025 encodings (E176c); wider and longer (E181b) | Member weight grid | E101: −0.646 vs −0.657 with one seed. E176c: +0.034 (2/6), correlation with first MLP 0.982–0.986. E181b: +0.129, trimmed +0.109 | ❌ | Brief §0; Log 230, 246 |
@@ -174,12 +175,15 @@ regimes, and the prediction is the probability mixture.
 
 | Idea | How tested | Measured effect | Verdict | Reference |
 |---|---|---|---|---|
-| Clip predictions to airport × runway × stand group bounds (2024-edition protocol, E45) | 6-fold CV | +65 s on all rows; +1.6 s even on confident regular rows, worse in 6/6 | ❌ | Brief §0 |
+| Clip predictions to airport × runway × stand group bounds (team gentle_wreath's protocol from the 2024 edition, E45) | 6-fold CV | +65 s on all rows; +1.6 s even on confident regular rows, worse in 6/6 | ❌ | Brief §0 |
 | Isotonic proxy calibration instead of one multiplier (E55) | 6-fold CV | Proxy RMSE 378 → 346, final +0.46 s, 1/6 | ❌ | Brief §0 |
 | Clip regressor target at 3,600 s instead of 7,200 s (E56) | 6-fold CV | +1.33 s, worse in 6/6 | ❌ | Brief §0 |
 | Intercept in the proxy calibration (E57); refit the ADS-B stage on the base it corrects (E59) | 6-fold CV | +0.10 s (4/6); +0.14 s (0/6) | ❌ (E59 later reversed as E169) | Brief §0 (§21f) |
-| Prediction floor (MVT − AOBT_3) − 3,600 s (a competitor's idea, E124) | 6-fold CV | +0.19 s, worse in 6/6; the truth violates the floor in 1.2 % of eligible rows | ❌ | Brief §0; Log 61 |
-| Tail blending: member weight by base-prediction bin, or fixed "physics" weights (E160) | 6-fold CV | Bins vs one weight: +0.029 s, worse in 5/6. Fixed weights: +11.30 s, 0/6 | ❌ | Log 176 |
+| Prediction floor (MVT − AOBT_3) − 3,600 s (idea from team likable-river, E124) | 6-fold CV | +0.19 s, worse in 6/6; the truth violates the floor in 1.2 % of eligible rows | ❌ | Brief §0; Log 61 |
+| Floor for departures without an NM record at the live level of their neighbours: 0.95 × median (take-off − `AOBT_3`) of NM departures at the same airport within ±30 min, where that level exceeds 1,500 s, outside LIRF (E209; from the public repositories of team gentle-octopus, `joris-decombe/taxiout` v10, and team smart-jigsaw, PROGRESS §121) | Label-free audit of the 2026 final file, then 2025 out-of-fold on the current chain before E81 (E195 control, primary) and on the FIN1b base (secondary); factor, window and threshold copied, not tuned; gate ≥ 4/6, pooled < 0, trim20 < 0 | E195 control: 1/6, pooled ΔRMSE +0.0183 s, trim20 worse. FIN1b base: 2/6, −0.0250 s, trim20 worse. There is no under-prediction to fix: on the 1,047 rows in scope the median of label / level is 1.004 and of prediction / level 1.02; the truth lies below the floor in 41.9 % of them. Fold 6+12 (June) worse on both controls | ❌ | Log 395, 396; [report](../analysis/nonm_disruption_floor_20261008.md) |
+| Level correction by our own chain's residuals at neighbouring departures: exponential time decay (α = 0.72 per 10 min) within ±60 min, centred by airport × UTC day, per-airport coefficients fitted on the training months (E211; method of a CityLearn 2023 forecasting solution and team smart-jigsaw's public notes) | 6-fold month-pair CV against the production out-of-fold chain, plus forward-in-time legs | Month pairs: decided −0.102 s (5/6), trimmed −0.087 s; the gain is LTFM in February 2025. Forward in time: half-year +0.099 s, expanding window +0.079 s (2/9 months lower), one-month gap +0.159 s (0/9) | ❌ not used: the final applies 2025 coefficients forward | Log 399; [report](../analysis/neighbour_residual_level_20261008.md) |
+| Protect the neural member at ADS-B coverage collapse: weight 0 on rows with no trajectory tokens and no previous-visit record | 6-fold CV on the rows the rule touches | 417,194 rows: RMSE 269.83 → 271.87 s (+2.03 s), 0/6; without tokens the member still beats no member in every fold | ❌ | Log 397, 401; [audit](../analysis/coverage_collapse_audit_20261008.md) |
+| Tail blending: member weight by base-prediction bin, or fixed "physics" weights (E160; the former as described by team strong-crane) | 6-fold CV | Bins vs one weight: +0.029 s, worse in 5/6. Fixed weights: +11.30 s, 0/6 | ❌ | Log 176 |
 | Greedy NNLS blend over a pool of saved out-of-fold files | Out-of-fold check | −15.1 s was an artefact: weight 0.80 went to a file made before the early-stopping leak was fixed | ❌ | Log 191 |
 | Blend weights chosen on decided-body SSE instead of all-row SSE (E187) | 6-fold CV, 1,593-point grid | Decided −0.004902 s; 3/6 lower, 3/6 identical (≥ 4 required) | ❌ | Log 257; [report](../analysis/e187_verdict_2026-10-04.md) |
 
