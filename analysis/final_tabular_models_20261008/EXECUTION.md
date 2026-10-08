@@ -47,9 +47,11 @@ First Cat A launch (`prc-final-tab-cat-a-20261008`, c015d99d, 12:53:52Z) and Cat
 `PYTHONUNBUFFERED=1`; their empty `cat/seed_0` and `cat/seed_8` directories were
 removed (no model/state/prediction file existed). Recorded in `cat_a.log`.
 
-Not yet assigned (10 fits): `motion:0–4`, `aobt:0–4` — to be started on prc-cloud
-when a Cat shard finishes (same unit spelling, `--kind motion`/`aobt`, 8 threads,
-MemoryMax=24G is enough for LGB: measured 19.4 GiB), or on hetzner as queue 3.
+The last 10 fits are chained on prc-cloud (13:16Z): `prc-final-tab-motion-cloud-20261008`
+(motion:0–4, starts when `cat-b2` exits) and `prc-final-tab-aobt-cloud-20261008`
+(aobt:0–4, starts when `cat-a2` exits); 8 threads, MemoryMax=24G, RuntimeMaxSec=57600,
+logs `/root/prc-final-logs/motion_cloud.log`, `aobt_cloud.log`. All 52 fits are
+therefore assigned: cloud 15 Cat + 10 LGB, hetzner 26 LGB (base counts as one).
 
 ## Monitoring
 
