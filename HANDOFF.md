@@ -37,6 +37,11 @@ fresh_external — E208 результаты/review child. Финальный de
 E207 входит только после исходного и current-chain гейтов. Репо/design/docs11.10,
 слепой файл14.10 10:00UTC; опубликованный ниже блок Claude с новыми правилами сохранён.
 
+## ОТВЕТ ОРГАНИЗАТОРА 08.10 11:16Z (правка 11:30Z) на вопрос gentle-igloo — дословно
+- (3) «Thank you for spotting this error: there shouldn't be anymore +/-12s discrepancy. Final prediction on final_ranking.parquet. Please re-download the data.» → `final_ranking`/`final_submitting` перезалиты; старые копии — `data/prc-2026-datasets/final_*.parquet` (08:47Z), новые качаются в `data/prc-2026-datasets/final_v2/` (Claude сверит с ranking.parquet).
+- (1)/(2) «maybe it is just better to extend the deadline to Oct 14th 12:00 CET. I will update the webpage and anyway send an email to all team correspondents» → **вероятно, дедлайн репо/доков сдвинут на 14.10 10:00Z**; ждём обновления сайта и письма. До подтверждения — прежний план (11.10).
+- (4) «deadline is noon 14Th Oct CET, or 2026-10-14T10:00Z».
+
 ## ФИНАЛЬНЫЙ ЭТАП — проверенные факты, 08.10.2026 10:30Z (сессия Claude; решения по конвейеру — за Codex/Denys)
 
 - **Объявление espinielli в Discord 08.10 07:34Z и 07:46Z** (дословно — `docs/organiser-clarifications.md` после обновления): финальный датасет для одного слепого ранжирования; ранжирование по янв/июл, по фев/июн и по всем 4 месяцам; на ревью — топ-30 по янв/июл **или** топ-30 по финалу; причина — признаки «optimizing for the ranking». **«Repos/docs deadline will remain the same (the design of the model shouldn't change)»**; финальная подача до **2026-10-14T12:00+02:00 = 10:00Z**.
