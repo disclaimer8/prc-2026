@@ -2,6 +2,41 @@
 
 Правила, машины, рецепты — в `AGENTS.md`. Здесь — позиция, что считается и что делать дальше.
 
+## Оперативное обновление Codex —08.10.2026 11:10UTC
+
+E207 v3 зарегистрирован №379, commit `f43405e7c6836230862837b66fad081ae4d69777`.
+Фактический старт controller55670 —08.10 10:06:07.756092UTC. Все365 дней и6 fold
+таблиц готовы. Materialized spec `56e1417bb71aa917847a7536ffbf8f0a9110c768a66bbaa6bf32e851fbffc4ca`.
+Synthetic full-shape GPU smoke PASS (flat/ordered, peak13.02/12.75GB);
+[квитанция](analysis/e207_full_token_v3_20261008/smoke_snapshot.json).
+Fold1 завершён к11:01:50UTC: **3/18 fit завершены**. На11:10UTC идёт второй фолд
+(seed1 epoch4/8); это обучение, не оценка качества. Folds1/2/3 допущены,
+fold4/5 ещё передаются. GPU-unit PID870055, Invocation`4ccf79f86a144e4d9aaedd1ef0f169bd`,
+active/running. Не менять frozen source/protocol и не дублировать очередь.
+После всех6пар/18fit нужен отдельно зарегистрированный current-chain CV; нового RMSE нет.
+Best230.9387;15/237 — полная доска08.10 10:31:23UTC, authenticated квота08.10 не проверена.
+E208 №380 реально обрабатывает фиксированный16-дневный label-free пилот наHetzner.
+Пакет saved-components v12075 №381 зарегистрирован, **не запущен и отложен** ради
+единого финального конвейера. E201 отменён; ARR-пилот остановлен до extraction; LLMoff.
+
+**Ближайшая работа:** единый finalWORK и сохранение всех моделей/преобразований;
+fresh2025+final feature view (E165/E157 зависят от union train+ranking),55productionfits
+по уже выбранным параметрам плюс10TabPFN calls;16cachedstage-моделей повторно
+используются только при совпадении training signatures. Это план, ни один final-fit
+ещё не запущен. [Точный состав/ресурсы](analysis/final_pipeline_readiness_20261008.md).
+
+175 параллельно скачивает58rawADS-B дней февраля/июня в `/home/a1/claude_adsb_2026/`;
+это задача Claude, не дублировать. На11:02UTC журнал подтверждал9дней; ETA не является
+завершением. Авто-review ранее отказал Claude в transfer final_ranking на175; не обходить
+отказ альтернативным транспортом. Производные строить в отдельном разрешённом WORK.
+
+Текущие владельцы: root — train/save adapter, внешние входы и регистрация;
+fresh_mechanisms — final feature/workspace adapter; fresh_competitors — E207 CV-only
+child (№382 зарезервирован после review), затем final neural adapter;
+fresh_external — E208 результаты/review child. Финальный default пока E203ordered,
+E207 входит только после исходного и current-chain гейтов. Репо/design/docs11.10,
+слепой файл14.10 10:00UTC; опубликованный ниже блок Claude с новыми правилами сохранён.
+
 ## ФИНАЛЬНЫЙ ЭТАП — проверенные факты, 08.10.2026 10:30Z (сессия Claude; решения по конвейеру — за Codex/Denys)
 
 - **Объявление espinielli в Discord 08.10 07:34Z и 07:46Z** (дословно — `docs/organiser-clarifications.md` после обновления): финальный датасет для одного слепого ранжирования; ранжирование по янв/июл, по фев/июн и по всем 4 месяцам; на ревью — топ-30 по янв/июл **или** топ-30 по финалу; причина — признаки «optimizing for the ranking». **«Repos/docs deadline will remain the same (the design of the model shouldn't change)»**; финальная подача до **2026-10-14T12:00+02:00 = 10:00Z**.
@@ -17,7 +52,7 @@
 - **ADS-B фев/июн 2026 предзагружен (Claude, ноутбук 175):** `/home/a1/claude_adsb_2026/` — те же `scripts/get_adsb_day.sh` + `src/adsb_extract.py` (md5 = мак), выход `data/adsblol/surface_<day>.parquet`, 58 дней, старт 10:42Z, P=4, ETA ≈ 12:35Z; прогресс `logs/progress.tsv`, проверка: 58 файлов и `grep -c FAIL` = 0, манифест `bash manifest.sh` → `MANIFEST.sha256`. Производные (offblock/visit/head) не строились — им нужен `ranking.parquet`. Для финала: прилинковать surface-файлы в `$WORK/data/adsblol/`, `adsb_day` пропустит скачивание. Отчёт `analysis/final_period_transfer_20261008.md`: февраль — самый «лёгкий» месяц (no-NM 0,91 %, хвост LIRF 64 строки), июнь ближе к июлю; главный риск — покрытие ADS-B по новым месяцам (EDDF 01.02 просел), нужна таблица покрытия до E70/E64; в Feb-2025 режим «расписание» в хвосте LIRF был 78 % против 33–49 % в другие месяцы.
 - Claude параллельно (без правки конвейера, отчёты в `analysis/final_*_20261008.md`): чувствительность к шуму ±12 с, перенос на фев/июн (покрытие ADS-B), валидатор финального файла, риск-аудит ревью.
 
-## Оперативное обновление 08.10.2026 10:28 UTC — E207 v3: подготовка завершена, передача на Home
+## Исторический снимок 08.10.2026 10:28 UTC — E207 v3: подготовка завершена, передача на Home
 
 E207 v3 зарегистрирован №379, commit `f43405e7c6836230862837b66fad081ae4d69777`.
 Фактический старт controller55670 —08.10 10:06:07.756092UTC; ожидание разрешения

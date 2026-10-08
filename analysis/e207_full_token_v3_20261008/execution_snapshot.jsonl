@@ -26,3 +26,18 @@
 {"utc": "2026-10-08T10:18:42.951483+00:00", "event": "started", "host": "home-pc-lan", "unit": "prc-e207-v3-trajectory-20261008.service", "properties": {"ActiveState": "active", "SubState": "running", "InvocationID": "4ccf79f86a144e4d9aaedd1ef0f169bd", "MainPID": "870055", "Result": "success", "ExecMainStatus": "0"}, "log": "/home/a1/prc-2026/data/prc-e207-v3-trajectory-20261008.log"}
 {"utc": "2026-10-08T10:19:57.046865+00:00", "event": "streaming", "fold": 3, "node": 175}
 {"utc": "2026-10-08T10:19:59.891859+00:00", "event": "streaming", "fold": 1, "node": 171}
+{"utc": "2026-10-08T10:49:35.064237+00:00", "event": "started", "host": "home-pc-lan", "unit": "prc-e207-v3-admit-f1-20261008.service", "properties": {"ActiveState": "active", "SubState": "running", "InvocationID": "526fd93ca3184833a284de3865763960", "MainPID": "883405", "Result": "success", "ExecMainStatus": "0"}, "log": "/home/a1/prc-2026/data/prc-e207-v3-admit-f1-20261008.log"}
+{"utc": "2026-10-08T10:49:35.421361+00:00", "event": "progress", "host": "home-pc-lan", "unit": "prc-e207-v3-admit-f1-20261008.service", "MainPID": "883405"}
+{"utc": "2026-10-08T10:50:05.894482+00:00", "event": "exited", "host": "home-pc-lan", "unit": "prc-e207-v3-admit-f1-20261008.service", "properties": {"ActiveState": "active", "SubState": "exited", "InvocationID": "526fd93ca3184833a284de3865763960", "MainPID": "0", "Result": "success", "ExecMainStatus": "0"}}
+{"utc": "2026-10-08T10:50:06.219541+00:00", "event": "admitted", "fold": 1}
+{"utc": "2026-10-08T10:50:07.099267+00:00", "event": "streaming", "fold": 2, "node": 171}
+{"utc": "2026-10-08T10:50:07.175496+00:00", "event": "started", "host": "home-pc-lan", "unit": "prc-e207-v3-admit-f3-20261008.service", "properties": {"ActiveState": "active", "SubState": "running", "InvocationID": "c59abf0add2649fab442a0925a6ee625", "MainPID": "883996", "Result": "success", "ExecMainStatus": "0"}, "log": "/home/a1/prc-2026/data/prc-e207-v3-admit-f3-20261008.log"}
+{"utc": "2026-10-08T10:50:07.528906+00:00", "event": "progress", "host": "home-pc-lan", "unit": "prc-e207-v3-admit-f3-20261008.service", "MainPID": "883996"}
+{"utc": "2026-10-08T10:50:37.980500+00:00", "event": "exited", "host": "home-pc-lan", "unit": "prc-e207-v3-admit-f3-20261008.service", "properties": {"ActiveState": "active", "SubState": "exited", "InvocationID": "c59abf0add2649fab442a0925a6ee625", "MainPID": "0", "Result": "success", "ExecMainStatus": "0"}}
+{"utc": "2026-10-08T10:50:38.389647+00:00", "event": "admitted", "fold": 3}
+{"utc": "2026-10-08T10:50:39.266202+00:00", "event": "streaming", "fold": 4, "node": 175}
+{"utc": "2026-10-08T10:59:41.592775+00:00", "event": "started", "host": "home-pc-lan", "unit": "prc-e207-v3-admit-f2-20261008.service", "properties": {"ActiveState": "active", "SubState": "running", "InvocationID": "5da4103b6aef4780b680d2ce6d956611", "MainPID": "885731", "Result": "success", "ExecMainStatus": "0"}, "log": "/home/a1/prc-2026/data/prc-e207-v3-admit-f2-20261008.log"}
+{"utc": "2026-10-08T10:59:42.034534+00:00", "event": "progress", "host": "home-pc-lan", "unit": "prc-e207-v3-admit-f2-20261008.service", "MainPID": "885731"}
+{"utc": "2026-10-08T11:00:12.443632+00:00", "event": "exited", "host": "home-pc-lan", "unit": "prc-e207-v3-admit-f2-20261008.service", "properties": {"ActiveState": "active", "SubState": "exited", "InvocationID": "5da4103b6aef4780b680d2ce6d956611", "MainPID": "0", "Result": "success", "ExecMainStatus": "0"}}
+{"utc": "2026-10-08T11:00:12.783210+00:00", "event": "admitted", "fold": 2}
+{"utc": "2026-10-08T11:00:13.634571+00:00", "event": "streaming", "fold": 5, "node": 171}
