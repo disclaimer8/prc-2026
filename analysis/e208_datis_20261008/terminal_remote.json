@@ -1,0 +1,61 @@
+{
+  "checked_utc": "2026-10-08T11:17:33.540174+00:00",
+  "host": "hetzner",
+  "unit": "prc-e208-datis-20261008.service",
+  "systemctl": {
+    "ActiveState": "active",
+    "SubState": "exited",
+    "InvocationID": "354a9511fcf24baca2d2a8595f13b3d5",
+    "RuntimeMaxUSec": "45min",
+    "MainPID": "0",
+    "Result": "success",
+    "ExecMainStartTimestamp": "Thu 2026-10-08 12:51:03 CEST",
+    "ExecMainExitTimestamp": "Thu 2026-10-08 12:54:31 CEST",
+    "ExecMainStatus": "0",
+    "MemoryCurrent": "[not set]",
+    "MemoryPeak": "158752768",
+    "CPUUsageNSec": "127370379000",
+    "CPUQuotaPerSecUSec": "4s",
+    "MemoryMax": "4294967296",
+    "MemorySwapMax": "0",
+    "Nice": "10"
+  },
+  "files": {
+    "analysis/e208_datis_20261008/execution/complete.json": {
+      "bytes": 145,
+      "sha256": "6400970d96e74fc70e9184d3299033de3d7575529832e75cd9e3947a1fca5a09"
+    },
+    "analysis/e208_datis_20261008/execution/assets.jsonl": {
+      "bytes": 1024004,
+      "sha256": "87873aab0f7cbde8e16dea5d7433bc905f5498b82904440da6cff48997b00dcd"
+    },
+    "analysis/e208_datis_20261008/execution/summary.json": {
+      "bytes": 58420,
+      "sha256": "ff093f4fb369d8dfe7b46c0fcda056edbad0495ba33da98df19f627372f3ece5"
+    },
+    "analysis/e208_datis_20261008/worker.log": {
+      "bytes": 113733,
+      "sha256": "6b5434372588f995cb8851bde4544b08fc10ce21eb0c53955e3684d576c97d5a"
+    },
+    "analysis/e208_datis_20261008/inputs/manifest.json": {
+      "bytes": 3547,
+      "sha256": "b5c7d7a27e3920df90406f9bdf774f485570426a9e2f31ce2eb169c6c8577fe1"
+    },
+    "scripts/e208_datis_coverage.py": {
+      "bytes": 27196,
+      "sha256": "2759d327e63b2085e857ab6d9a6d3da2dae86f48e74c7d64a066edb43c3ab2c8"
+    },
+    "tests/test_e208_datis_coverage.py": {
+      "bytes": 9127,
+      "sha256": "d02db06584dc626da1193883d39b2c6b033e30d0b7035afc830462268e113443"
+    },
+    "analysis/e208_datis_20261008/PROTOCOL.md": {
+      "bytes": 12150,
+      "sha256": "959b62897c4823ed3d1c649fde1f7ac0df9e9903d96d441bfb9161c078464427"
+    },
+    "analysis/e208_datis_20261008/inventory.json": {
+      "bytes": 879922,
+      "sha256": "4fde6d144587c29c213f99cb009fc09b8fa6b92fc894d748190f84543acf12fa"
+    }
+  }
+}

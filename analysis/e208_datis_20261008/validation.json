@@ -1,0 +1,424 @@
+{
+  "accepted_complete_messages": 216,
+  "all_A9_messages": 19316,
+  "all_coverage_rows_exact_replay": true,
+  "asset_status_counts": {
+    "ok": 1800
+  },
+  "assets": 1800,
+  "by_airport": {
+    "EDDF": {
+      "ARR_no_prior_atis": 9299,
+      "DEP_no_prior_atis": 9299,
+      "covered_any_role_unique_flights": 0,
+      "covered_operational_unique_flights": 0,
+      "flights": 9299,
+      "midnight_left_censored_flights": 0,
+      "no_fresh_atis_unique_flights": 9299
+    },
+    "EDDM": {
+      "ARR_no_prior_atis": 6722,
+      "DEP_no_prior_atis": 6722,
+      "covered_any_role_unique_flights": 0,
+      "covered_operational_unique_flights": 0,
+      "flights": 6722,
+      "midnight_left_censored_flights": 0,
+      "no_fresh_atis_unique_flights": 6722
+    },
+    "EGLL": {
+      "ARR_covered": 1781,
+      "ARR_expired": 6123,
+      "ARR_no_prior_atis": 2508,
+      "ARR_operational": 295,
+      "DEP_no_prior_atis": 10412,
+      "covered_any_role_unique_flights": 1781,
+      "covered_operational_unique_flights": 295,
+      "flights": 10412,
+      "midnight_left_censored_flights": 0,
+      "no_fresh_atis_unique_flights": 8631
+    },
+    "EHAM": {
+      "ARR_covered": 317,
+      "ARR_expired": 4844,
+      "ARR_no_prior_atis": 5231,
+      "ARR_operational": 0,
+      "DEP_covered": 823,
+      "DEP_expired": 583,
+      "DEP_no_prior_atis": 8986,
+      "DEP_operational": 0,
+      "covered_any_role_unique_flights": 961,
+      "covered_operational_unique_flights": 0,
+      "flights": 10392,
+      "midnight_left_censored_flights": 1,
+      "no_fresh_atis_unique_flights": 9431
+    },
+    "LEBL": {
+      "ARR_covered": 110,
+      "ARR_expired": 2125,
+      "ARR_no_prior_atis": 5309,
+      "ARR_operational": 0,
+      "DEP_covered": 71,
+      "DEP_expired": 4325,
+      "DEP_no_prior_atis": 3148,
+      "DEP_operational": 0,
+      "covered_any_role_unique_flights": 181,
+      "covered_operational_unique_flights": 0,
+      "flights": 7544,
+      "midnight_left_censored_flights": 28,
+      "no_fresh_atis_unique_flights": 7363
+    },
+    "LEMD": {
+      "ARR_covered": 39,
+      "ARR_expired": 5694,
+      "ARR_no_prior_atis": 3501,
+      "ARR_operational": 39,
+      "DEP_no_prior_atis": 9234,
+      "covered_any_role_unique_flights": 39,
+      "covered_operational_unique_flights": 39,
+      "flights": 9234,
+      "midnight_left_censored_flights": 44,
+      "no_fresh_atis_unique_flights": 9195
+    },
+    "LFPG": {
+      "ARR_covered": 681,
+      "ARR_expired": 7360,
+      "ARR_no_prior_atis": 2298,
+      "ARR_operational": 539,
+      "DEP_no_prior_atis": 10339,
+      "covered_any_role_unique_flights": 681,
+      "covered_operational_unique_flights": 539,
+      "flights": 10339,
+      "midnight_left_censored_flights": 30,
+      "no_fresh_atis_unique_flights": 9658
+    },
+    "LIRF": {
+      "ARR_no_prior_atis": 6712,
+      "DEP_no_prior_atis": 6712,
+      "covered_any_role_unique_flights": 0,
+      "covered_operational_unique_flights": 0,
+      "flights": 6712,
+      "midnight_left_censored_flights": 2,
+      "no_fresh_atis_unique_flights": 6712
+    },
+    "LSZH": {
+      "ARR_covered": 65,
+      "ARR_expired": 3680,
+      "ARR_no_prior_atis": 2074,
+      "ARR_operational": 0,
+      "DEP_no_prior_atis": 5819,
+      "covered_any_role_unique_flights": 65,
+      "covered_operational_unique_flights": 0,
+      "flights": 5819,
+      "midnight_left_censored_flights": 0,
+      "no_fresh_atis_unique_flights": 5754
+    },
+    "LTFM": {
+      "ARR_no_prior_atis": 11969,
+      "DEP_no_prior_atis": 11969,
+      "covered_any_role_unique_flights": 0,
+      "covered_operational_unique_flights": 0,
+      "flights": 11969,
+      "midnight_left_censored_flights": 123,
+      "no_fresh_atis_unique_flights": 11969
+    }
+  },
+  "by_period": {
+    "2025-01": {
+      "ARR_no_prior_atis": 19206,
+      "DEP_no_prior_atis": 19206,
+      "covered_any_role_unique_flights": 0,
+      "covered_operational_unique_flights": 0,
+      "flights": 19206,
+      "midnight_left_censored_flights": 49,
+      "no_fresh_atis_unique_flights": 19206
+    },
+    "2025-07": {
+      "ARR_covered": 824,
+      "ARR_expired": 6434,
+      "ARR_no_prior_atis": 17181,
+      "ARR_operational": 187,
+      "DEP_covered": 71,
+      "DEP_expired": 397,
+      "DEP_no_prior_atis": 23971,
+      "DEP_operational": 0,
+      "covered_any_role_unique_flights": 895,
+      "covered_operational_unique_flights": 187,
+      "flights": 24439,
+      "midnight_left_censored_flights": 46,
+      "no_fresh_atis_unique_flights": 23544
+    },
+    "2026-01": {
+      "ARR_covered": 397,
+      "ARR_expired": 10332,
+      "ARR_no_prior_atis": 9362,
+      "ARR_operational": 244,
+      "DEP_expired": 1612,
+      "DEP_no_prior_atis": 18479,
+      "covered_any_role_unique_flights": 397,
+      "covered_operational_unique_flights": 244,
+      "flights": 20091,
+      "midnight_left_censored_flights": 82,
+      "no_fresh_atis_unique_flights": 19694
+    },
+    "2026-07": {
+      "ARR_covered": 1772,
+      "ARR_expired": 13060,
+      "ARR_no_prior_atis": 9874,
+      "ARR_operational": 442,
+      "DEP_covered": 823,
+      "DEP_expired": 2899,
+      "DEP_no_prior_atis": 20984,
+      "DEP_operational": 0,
+      "covered_any_role_unique_flights": 2416,
+      "covered_operational_unique_flights": 442,
+      "flights": 24706,
+      "midnight_left_censored_flights": 51,
+      "no_fresh_atis_unique_flights": 22290
+    }
+  },
+  "checked_utc": "2026-10-08T11:18:51.119579+00:00",
+  "covered_role_queries_checked": 3887,
+  "fits": 0,
+  "future_or_expired_join_violations": 0,
+  "input_sha_checks": {
+    "departures.parquet": true,
+    "inventory.json": true,
+    "reuse.json": true
+  },
+  "metadata_source": "original ranking.parquet Jan/Jul2026 plus training2025; not final_ranking",
+  "new_network_bytes": 622504261,
+  "operational_objects_unique_bulletin_counts": {
+    "EGLL": {
+      "condition:09L:5/5/5": 4,
+      "condition:27L:5/5/5": 3,
+      "condition:27L:6/6/6": 2,
+      "condition:27R:5/5/5": 2,
+      "condition:27R:6/6/6": 2,
+      "exit:A10W": 7,
+      "exit:A12": 7
+    },
+    "LEMD": {
+      "taxiway:A24": 1,
+      "taxiway:AZ3": 1,
+      "taxiway:BY12": 1
+    },
+    "LFPG": {
+      "condition:08L:6/6/6": 6,
+      "condition:08R:6/6/6": 6,
+      "condition:09L:6/6/6": 6,
+      "condition:09R:6/6/6": 6,
+      "condition:26L:5/5/5": 1,
+      "condition:26L:6/6/6": 13,
+      "condition:26R:5/5/5": 1,
+      "condition:26R:6/6/5": 1,
+      "condition:26R:6/6/6": 11,
+      "condition:27L:5/5/5": 1,
+      "condition:27L:6/6/6": 12,
+      "condition:27R:5/5/5": 1,
+      "condition:27R:6/6/6": 13,
+      "exit:W4": 2,
+      "exit:W5": 2,
+      "exit:Y1": 1,
+      "runway:26R": 1,
+      "taxiway:T12": 1
+    }
+  },
+  "parse_counts": {
+    "accepted": 216,
+    "assembly_not_complete": 2082,
+    "not_a9": 244,
+    "unrecognised_header_or_role": 30
+  },
+  "projected_columns": [
+    "id",
+    "airport",
+    "mvt"
+  ],
+  "remote_file_sha_checks": {
+    "analysis/e208_datis_20261008/PROTOCOL.md": true,
+    "analysis/e208_datis_20261008/execution/assets.jsonl": true,
+    "analysis/e208_datis_20261008/execution/complete.json": true,
+    "analysis/e208_datis_20261008/execution/summary.json": true,
+    "analysis/e208_datis_20261008/inputs/manifest.json": true,
+    "analysis/e208_datis_20261008/inventory.json": true,
+    "analysis/e208_datis_20261008/worker.log": true,
+    "scripts/e208_datis_coverage.py": true,
+    "tests/test_e208_datis_coverage.py": true
+  },
+  "reused_assets": 253,
+  "source_days": [
+    {
+      "accepted_complete_messages": 0,
+      "assets": 0,
+      "complete": false,
+      "day": "2025-01-01",
+      "inventory_status": "inventory_unavailable",
+      "raw_candidate_messages": 0,
+      "status_counts": {}
+    },
+    {
+      "accepted_complete_messages": 10,
+      "assets": 137,
+      "complete": true,
+      "day": "2025-07-01",
+      "inventory_status": "listed",
+      "raw_candidate_messages": 50,
+      "status_counts": {
+        "ok": 137
+      }
+    },
+    {
+      "accepted_complete_messages": 16,
+      "assets": 114,
+      "complete": true,
+      "day": "2026-01-01",
+      "inventory_status": "listed",
+      "raw_candidate_messages": 211,
+      "status_counts": {
+        "ok": 114
+      }
+    },
+    {
+      "accepted_complete_messages": 21,
+      "assets": 206,
+      "complete": true,
+      "day": "2026-07-01",
+      "inventory_status": "listed",
+      "raw_candidate_messages": 511,
+      "status_counts": {
+        "ok": 206
+      }
+    },
+    {
+      "accepted_complete_messages": 0,
+      "assets": 0,
+      "complete": false,
+      "day": "2025-01-08",
+      "inventory_status": "inventory_unavailable",
+      "raw_candidate_messages": 0,
+      "status_counts": {}
+    },
+    {
+      "accepted_complete_messages": 8,
+      "assets": 183,
+      "complete": true,
+      "day": "2025-07-08",
+      "inventory_status": "listed",
+      "raw_candidate_messages": 43,
+      "status_counts": {
+        "ok": 183
+      }
+    },
+    {
+      "accepted_complete_messages": 0,
+      "assets": 58,
+      "complete": true,
+      "day": "2026-01-08",
+      "inventory_status": "listed",
+      "raw_candidate_messages": 0,
+      "status_counts": {
+        "ok": 58
+      }
+    },
+    {
+      "accepted_complete_messages": 15,
+      "assets": 202,
+      "complete": true,
+      "day": "2026-07-08",
+      "inventory_status": "listed",
+      "raw_candidate_messages": 467,
+      "status_counts": {
+        "ok": 202
+      }
+    },
+    {
+      "accepted_complete_messages": 0,
+      "assets": 0,
+      "complete": false,
+      "day": "2025-01-15",
+      "inventory_status": "inventory_unavailable",
+      "raw_candidate_messages": 0,
+      "status_counts": {}
+    },
+    {
+      "accepted_complete_messages": 13,
+      "assets": 153,
+      "complete": true,
+      "day": "2025-07-15",
+      "inventory_status": "listed",
+      "raw_candidate_messages": 63,
+      "status_counts": {
+        "ok": 153
+      }
+    },
+    {
+      "accepted_complete_messages": 0,
+      "assets": 52,
+      "complete": true,
+      "day": "2026-01-15",
+      "inventory_status": "listed",
+      "raw_candidate_messages": 0,
+      "status_counts": {
+        "ok": 52
+      }
+    },
+    {
+      "accepted_complete_messages": 58,
+      "assets": 201,
+      "complete": true,
+      "day": "2026-07-15",
+      "inventory_status": "listed",
+      "raw_candidate_messages": 520,
+      "status_counts": {
+        "ok": 201
+      }
+    },
+    {
+      "accepted_complete_messages": 0,
+      "assets": 0,
+      "complete": false,
+      "day": "2025-01-22",
+      "inventory_status": "inventory_unavailable",
+      "raw_candidate_messages": 0,
+      "status_counts": {}
+    },
+    {
+      "accepted_complete_messages": 12,
+      "assets": 184,
+      "complete": true,
+      "day": "2025-07-22",
+      "inventory_status": "listed",
+      "raw_candidate_messages": 94,
+      "status_counts": {
+        "ok": 184
+      }
+    },
+    {
+      "accepted_complete_messages": 5,
+      "assets": 94,
+      "complete": true,
+      "day": "2026-01-22",
+      "inventory_status": "listed",
+      "raw_candidate_messages": 37,
+      "status_counts": {
+        "ok": 94
+      }
+    },
+    {
+      "accepted_complete_messages": 58,
+      "assets": 216,
+      "complete": true,
+      "day": "2026-07-22",
+      "inventory_status": "listed",
+      "raw_candidate_messages": 576,
+      "status_counts": {
+        "ok": 216
+      }
+    }
+  ],
+  "summary_sha_matches_complete": true,
+  "target_candidate_messages": 2572,
+  "target_values_read": 0,
+  "unique_bulletins": 184,
+  "unique_flight_ids": 88442
+}
