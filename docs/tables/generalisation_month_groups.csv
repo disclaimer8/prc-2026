@@ -1,0 +1,4 @@
+group,months,rows,rows_body,days,rmse_all_pred,rmse_body_pred,rmse_all_base_median,rmse_body_base_median,rmse_all_base_proxy,rmse_body_base_proxy,rmse_all_base_proxy_adj,rmse_body_base_proxy_adj,ci_all_lo,ci_all_hi,ci_body_lo,ci_body_hi,labels_gt_4h,sse_share_top10_rows,diff_vs_janjul_all,diff_vs_janjul_body
+Jan+Jul (leaderboard months),Jan+Jul,344374,344266,62,279.216,211.156,498.407,421.075,481.753,427.488,469.097,413.220,215.854,357.704,198.898,223.365,4,0.414,0.000,0.000
+Feb+Jun (new final months),Feb+Jun,326857,326761,58,247.308,196.298,515.296,413.476,501.568,397.057,490.521,383.021,194.944,319.380,181.346,211.916,3,0.332,-31.908,-14.859
+other eight months,Mar+Apr+May+Aug+Sep+Oct+Nov+Dec,1413690,1413421,245,192.682,172.369,390.357,363.431,403.152,377.419,386.307,359.379,174.707,220.651,169.480,175.361,4,0.180,-86.533,-38.787
