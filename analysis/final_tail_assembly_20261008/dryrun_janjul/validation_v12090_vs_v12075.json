@@ -1,0 +1,674 @@
+{
+ "passed": true,
+ "generated_utc": "2026-10-08T12:57:56+00:00",
+ "checks": [
+  {
+   "name": "file",
+   "level": "INFO",
+   "ok": null,
+   "detail": "/tmp/ftv/gentle-igloo_final.parquet (1,096,989 bytes, mtime 2026-10-08T12:57:56+00:00)"
+  },
+  {
+   "name": "sha256",
+   "level": "INFO",
+   "ok": null,
+   "detail": "180a185e232bfb5c13fe4f2dd518558f30005fc716024b2c77498665e9ed5fe3",
+   "sha256": "180a185e232bfb5c13fe4f2dd518558f30005fc716024b2c77498665e9ed5fe3"
+  },
+  {
+   "name": "file name",
+   "level": "HARD",
+   "ok": true,
+   "detail": "'gentle-igloo_final.parquet'"
+  },
+  {
+   "name": "template",
+   "level": "INFO",
+   "ok": null,
+   "detail": "data/prc-2026-datasets/submitting.parquet: 344,841 rows, MVT_ID_mvt=Float64, TAXITIME_SEC_mvt=Int32"
+  },
+  {
+   "name": "columns",
+   "level": "HARD",
+   "ok": true,
+   "detail": "['MVT_ID_mvt', 'TAXITIME_SEC_mvt']"
+  },
+  {
+   "name": "dtypes",
+   "level": "HARD",
+   "ok": true,
+   "detail": "MVT_ID_mvt=Float64; TAXITIME_SEC_mvt=Int32"
+  },
+  {
+   "name": "row count",
+   "level": "HARD",
+   "ok": true,
+   "detail": "344,841"
+  },
+  {
+   "name": "ID null/NaN",
+   "level": "HARD",
+   "ok": true,
+   "detail": "null=0, NaN=0"
+  },
+  {
+   "name": "ID integrality",
+   "level": "INFO",
+   "ok": null,
+   "detail": "0 non-integer Float64 IDs (template has 0)"
+  },
+  {
+   "name": "ID duplicates",
+   "level": "HARD",
+   "ok": true,
+   "detail": "0 duplicated IDs"
+  },
+  {
+   "name": "ID set equality",
+   "level": "HARD",
+   "ok": true,
+   "detail": "identical to template"
+  },
+  {
+   "name": "no null/NaN/inf",
+   "level": "HARD",
+   "ok": true,
+   "detail": "null=0, NaN=0, inf=0"
+  },
+  {
+   "name": "value range",
+   "level": "HARD",
+   "ok": true,
+   "detail": "min=0 max=110987 negative=0 >172800=0"
+  },
+  {
+   "name": "integer seconds",
+   "level": "HARD",
+   "ok": true,
+   "detail": "all integer"
+  },
+  {
+   "name": "value summary",
+   "level": "INFO",
+   "ok": null,
+   "detail": "n=344,841 mean=1038.1 p1=361 median=953 p95=1773 p99=2668 zeros=25 >7200s=99"
+  },
+  {
+   "name": "final_ranking",
+   "level": "INFO",
+   "ok": null,
+   "detail": "data/prc-2026-datasets/ranking.parquet: 344,841 DEP rows"
+  },
+  {
+   "name": "join with final_ranking (DEP)",
+   "level": "INFO",
+   "ok": null,
+   "detail": "344,841 of 344,841 rows matched; unmatched=0"
+  },
+  {
+   "name": "per month x airport distribution",
+   "level": "INFO",
+   "ok": null,
+   "detail": "2026-01: n=152,719 mean=1086 median=972; 2026-07: n=192,122 mean=1000 median=940",
+   "lines": [
+    "month   apt         n    mean  median     p95     max",
+    "2026-01 EDDF   15,667    1026     888    2227    5825",
+    "2026-01 EDDM   10,953    1014     850    2009    4726",
+    "2026-01 EGLL   19,283    1333    1272    2012    7078",
+    "2026-01 EHAM   16,232     992     783    2530   10272",
+    "2026-01 LEBL   12,201     895     835    1373    3456",
+    "2026-01 LEMD   16,802    1024     977    1593    5327",
+    "2026-01 LFPG   18,129    1079     927    2188    6699",
+    "2026-01 LIRF   11,061    1104     971    1658   59428",
+    "2026-01 LSZH    9,995     902     764    1887    5546",
+    "2026-01 LTFM   22,396    1246    1122    2213    6389",
+    "2026-07 EDDF   20,650     859     854    1271    2725",
+    "2026-07 EDDM   15,013     782     753    1160    4943",
+    "2026-07 EGLL   20,557    1358    1323    1941    7704",
+    "2026-07 EHAM   21,950     841     815    1367    4410",
+    "2026-07 LEBL   17,879     991     946    1530    3935",
+    "2026-07 LEMD   20,152    1026    1001    1501    3533",
+    "2026-07 LFPG   21,743     976     932    1464   10222",
+    "2026-07 LIRF   15,838    1324    1110    2200  110987",
+    "2026-07 LSZH   13,155     753     724    1197    4528",
+    "2026-07 LTFM   25,185    1026     973    1579    3557"
+   ],
+   "table": [
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "EDDF",
+     "n": 15667,
+     "median": 888.0,
+     "p95": 2227.0,
+     "max": 5825.0,
+     "mean": 1026.4089487457713
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "EDDM",
+     "n": 10953,
+     "median": 850.0,
+     "p95": 2009.0,
+     "max": 4726.0,
+     "mean": 1013.560668310052
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "EGLL",
+     "n": 19283,
+     "median": 1272.0,
+     "p95": 2012.0,
+     "max": 7078.0,
+     "mean": 1333.4107244723332
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "EHAM",
+     "n": 16232,
+     "median": 783.0,
+     "p95": 2530.0,
+     "max": 10272.0,
+     "mean": 992.4213898472153
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "LEBL",
+     "n": 12201,
+     "median": 835.0,
+     "p95": 1373.0,
+     "max": 3456.0,
+     "mean": 894.8079665601181
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "LEMD",
+     "n": 16802,
+     "median": 977.0,
+     "p95": 1593.0,
+     "max": 5327.0,
+     "mean": 1024.077907391977
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "LFPG",
+     "n": 18129,
+     "median": 927.0,
+     "p95": 2188.0,
+     "max": 6699.0,
+     "mean": 1079.2916321915163
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "LIRF",
+     "n": 11061,
+     "median": 971.0,
+     "p95": 1658.0,
+     "max": 59428.0,
+     "mean": 1103.851821715939
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "LSZH",
+     "n": 9995,
+     "median": 764.0,
+     "p95": 1887.0,
+     "max": 5546.0,
+     "mean": 901.7334667333666
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "LTFM",
+     "n": 22396,
+     "median": 1122.0,
+     "p95": 2213.0,
+     "max": 6389.0,
+     "mean": 1245.767235220575
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "EDDF",
+     "n": 20650,
+     "median": 854.0,
+     "p95": 1271.0,
+     "max": 2725.0,
+     "mean": 859.3772881355932
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "EDDM",
+     "n": 15013,
+     "median": 753.0,
+     "p95": 1160.0,
+     "max": 4943.0,
+     "mean": 781.9092120162526
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "EGLL",
+     "n": 20557,
+     "median": 1323.0,
+     "p95": 1941.0,
+     "max": 7704.0,
+     "mean": 1358.3579316048063
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "EHAM",
+     "n": 21950,
+     "median": 815.0,
+     "p95": 1367.0,
+     "max": 4410.0,
+     "mean": 840.7374943052391
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "LEBL",
+     "n": 17879,
+     "median": 946.0,
+     "p95": 1530.0,
+     "max": 3935.0,
+     "mean": 990.5806812461547
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "LEMD",
+     "n": 20152,
+     "median": 1001.0,
+     "p95": 1501.0,
+     "max": 3533.0,
+     "mean": 1026.3929138547041
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "LFPG",
+     "n": 21743,
+     "median": 932.0,
+     "p95": 1464.0,
+     "max": 10222.0,
+     "mean": 975.9465575127628
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "LIRF",
+     "n": 15838,
+     "median": 1110.5,
+     "p95": 2200.0,
+     "max": 110987.0,
+     "mean": 1323.6352443490339
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "LSZH",
+     "n": 13155,
+     "median": 724.0,
+     "p95": 1197.0,
+     "max": 4528.0,
+     "mean": 752.7576586849107
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "LTFM",
+     "n": 25185,
+     "median": 973.0,
+     "p95": 1579.0,
+     "max": 3557.0,
+     "mean": 1025.5889219773676
+    }
+   ]
+  },
+  {
+   "name": "fallback regime share (pred == take-off - X within +-15s)",
+   "level": "INFO",
+   "ok": null,
+   "detail": "2026-01: SCHED 2.43%, IOBT 2.96%, LOBT 2.95%, EOBT 3.61%, AOBT 5.68%; 2026-07: SCHED 2.39%, IOBT 2.89%, LOBT 2.88%, EOBT 3.38%, AOBT 5.99%",
+   "lines": [
+    "month   apt         n  =SCHED   =IOBT   =LOBT   =EOBT   =AOBT    ~SCHED   ~IOBT   ~LOBT   ~EOBT   ~AOBT",
+    "       (=X: share of rows with |pred - (take-off - X)| <= 15 s; ~X: share with X null)",
+    "2026-01 EDDF   15,667   2.14%   2.50%   2.50%   2.66%   5.25%     0.00%   1.35%   1.35%   1.35%   1.35%",
+    "2026-01 EDDM   10,953   2.73%   3.26%   3.26%   3.80%   5.77%     0.00%   1.09%   1.09%   1.09%   1.09%",
+    "2026-01 EGLL   19,283   2.25%   2.57%   2.57%   3.62%   5.06%     0.00%   0.58%   0.58%   0.58%   0.58%",
+    "2026-01 EHAM   16,232   1.90%   2.33%   2.33%   2.43%   6.23%     0.00%   4.96%   4.96%   4.96%   4.96%",
+    "2026-01 LEBL   12,201   2.52%   2.91%   2.89%   4.29%   8.13%     0.00%   0.63%   0.63%   0.63%   0.63%",
+    "2026-01 LEMD   16,802   1.95%   2.80%   2.79%   3.43%   7.20%     0.00%   0.37%   0.37%   0.37%   0.37%",
+    "2026-01 LFPG   18,129   2.35%   3.14%   3.14%   3.78%   7.34%     0.00%   1.79%   1.79%   1.79%   1.79%",
+    "2026-01 LIRF   11,061   4.48%   5.07%   5.06%   7.59%   5.82%     0.00%   0.97%   0.97%   0.97%   0.97%",
+    "2026-01 LSZH    9,995   1.63%   1.92%   1.92%   2.16%   5.50%     0.00%   3.00%   3.00%   3.00%   3.00%",
+    "2026-01 LTFM   22,396   2.74%   3.34%   3.33%   3.33%   2.25%     0.00%   1.49%   1.49%   1.49%   1.49%",
+    "2026-07 EDDF   20,650   1.81%   2.24%   2.21%   2.40%   6.20%     0.00%   1.01%   1.01%   1.01%   1.01%",
+    "2026-07 EDDM   15,013   2.43%   3.04%   3.03%   3.57%   7.39%     0.00%   0.79%   0.79%   0.79%   0.79%",
+    "2026-07 EGLL   20,557   2.38%   2.77%   2.77%   2.74%   5.35%     0.00%   0.66%   0.66%   0.66%   0.66%",
+    "2026-07 EHAM   21,950   1.91%   2.31%   2.31%   2.43%   5.91%     0.00%   1.83%   1.83%   1.83%   1.83%",
+    "2026-07 LEBL   17,879   2.07%   2.62%   2.62%   3.17%   6.28%     0.00%   2.04%   2.04%   2.04%   2.04%",
+    "2026-07 LEMD   20,152   2.02%   2.59%   2.55%   2.81%   8.30%     0.00%   0.87%   0.87%   0.87%   0.87%",
+    "2026-07 LFPG   21,743   2.28%   3.13%   3.13%   5.41%   7.82%     0.00%   1.88%   1.88%   1.88%   1.88%",
+    "2026-07 LIRF   15,838   3.81%   4.26%   4.26%   5.23%   4.53%     0.00%   1.74%   1.74%   1.74%   1.74%",
+    "2026-07 LSZH   13,155   1.13%   1.44%   1.44%   1.49%   6.38%     0.00%   2.73%   2.73%   2.73%   2.73%",
+    "2026-07 LTFM   25,185   3.65%   4.09%   4.06%   4.06%   2.70%     0.00%   1.54%   1.54%   1.54%   1.54%"
+   ],
+   "table": [
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "EDDF",
+     "n": 15667,
+     "eq_SCHED_TIME_UTC_mvt": 0.021446352205272228,
+     "eq_IOBT_flt": 0.025020744239484267,
+     "eq_LOBT_flt": 0.02495691581030191,
+     "eq_EOBT_1_flt": 0.026552626539860853,
+     "eq_AOBT_3_flt": 0.05253079721708049,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.013531626986659858,
+     "null_LOBT_flt": 0.013531626986659858,
+     "null_EOBT_1_flt": 0.013531626986659858,
+     "null_AOBT_3_flt": 0.013531626986659858
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "EDDM",
+     "n": 10953,
+     "eq_SCHED_TIME_UTC_mvt": 0.02729845704373231,
+     "eq_IOBT_flt": 0.032593809915091754,
+     "eq_LOBT_flt": 0.032593809915091754,
+     "eq_EOBT_1_flt": 0.037980461973888435,
+     "eq_AOBT_3_flt": 0.0577010864603305,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.010864603305030585,
+     "null_LOBT_flt": 0.010864603305030585,
+     "null_EOBT_1_flt": 0.010864603305030585,
+     "null_AOBT_3_flt": 0.010864603305030585
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "EGLL",
+     "n": 19283,
+     "eq_SCHED_TIME_UTC_mvt": 0.02250687133744749,
+     "eq_IOBT_flt": 0.02567027952082145,
+     "eq_LOBT_flt": 0.025722138671368563,
+     "eq_EOBT_1_flt": 0.0361976870818856,
+     "eq_AOBT_3_flt": 0.05056267178343619,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.005808224861276772,
+     "null_LOBT_flt": 0.005808224861276772,
+     "null_EOBT_1_flt": 0.005808224861276772,
+     "null_AOBT_3_flt": 0.005808224861276772
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "EHAM",
+     "n": 16232,
+     "eq_SCHED_TIME_UTC_mvt": 0.019036471168063084,
+     "eq_IOBT_flt": 0.023287333661902415,
+     "eq_LOBT_flt": 0.023287333661902415,
+     "eq_EOBT_1_flt": 0.024273040906850667,
+     "eq_AOBT_3_flt": 0.062345983242976834,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.049593395761458846,
+     "null_LOBT_flt": 0.049593395761458846,
+     "null_EOBT_1_flt": 0.049593395761458846,
+     "null_AOBT_3_flt": 0.049593395761458846
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "LEBL",
+     "n": 12201,
+     "eq_SCHED_TIME_UTC_mvt": 0.025161871977706744,
+     "eq_IOBT_flt": 0.02909597573969347,
+     "eq_LOBT_flt": 0.028932054749610688,
+     "eq_EOBT_1_flt": 0.042865338906646996,
+     "eq_AOBT_3_flt": 0.08130481108105893,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.006310958118187034,
+     "null_LOBT_flt": 0.006310958118187034,
+     "null_EOBT_1_flt": 0.006310958118187034,
+     "null_AOBT_3_flt": 0.006310958118187034
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "LEMD",
+     "n": 16802,
+     "eq_SCHED_TIME_UTC_mvt": 0.01952148553743602,
+     "eq_IOBT_flt": 0.02803237709796453,
+     "eq_LOBT_flt": 0.027913343649565527,
+     "eq_EOBT_1_flt": 0.034341149863111535,
+     "eq_AOBT_3_flt": 0.07201523628139507,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.0037495536245685038,
+     "null_LOBT_flt": 0.0037495536245685038,
+     "null_EOBT_1_flt": 0.0037495536245685038,
+     "null_AOBT_3_flt": 0.0037495536245685038
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "LFPG",
+     "n": 18129,
+     "eq_SCHED_TIME_UTC_mvt": 0.02349826245242429,
+     "eq_IOBT_flt": 0.031441337084229685,
+     "eq_LOBT_flt": 0.031441337084229685,
+     "eq_EOBT_1_flt": 0.03778476474157427,
+     "eq_AOBT_3_flt": 0.07341828010370126,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.017927078162060787,
+     "null_LOBT_flt": 0.017927078162060787,
+     "null_EOBT_1_flt": 0.017927078162060787,
+     "null_AOBT_3_flt": 0.017927078162060787
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "LIRF",
+     "n": 11061,
+     "eq_SCHED_TIME_UTC_mvt": 0.04484223849561522,
+     "eq_IOBT_flt": 0.050718741524274476,
+     "eq_LOBT_flt": 0.05062833378537203,
+     "eq_EOBT_1_flt": 0.07594250067805804,
+     "eq_AOBT_3_flt": 0.058222583853177835,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.009673628062562155,
+     "null_LOBT_flt": 0.009673628062562155,
+     "null_EOBT_1_flt": 0.009673628062562155,
+     "null_AOBT_3_flt": 0.009673628062562155
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "LSZH",
+     "n": 9995,
+     "eq_SCHED_TIME_UTC_mvt": 0.01630815407703852,
+     "eq_IOBT_flt": 0.0192096048024012,
+     "eq_LOBT_flt": 0.0192096048024012,
+     "eq_EOBT_1_flt": 0.02161080540270135,
+     "eq_AOBT_3_flt": 0.05502751375687844,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.030015007503751877,
+     "null_LOBT_flt": 0.030015007503751877,
+     "null_EOBT_1_flt": 0.030015007503751877,
+     "null_AOBT_3_flt": 0.030015007503751877
+    },
+    {
+     "month": "2026-01",
+     "ADEP_mvt": "LTFM",
+     "n": 22396,
+     "eq_SCHED_TIME_UTC_mvt": 0.027415609930344705,
+     "eq_IOBT_flt": 0.0334434720485801,
+     "eq_LOBT_flt": 0.03330951955706376,
+     "eq_EOBT_1_flt": 0.03330951955706376,
+     "eq_AOBT_3_flt": 0.022548669405250937,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.014868726558313984,
+     "null_LOBT_flt": 0.014868726558313984,
+     "null_EOBT_1_flt": 0.014868726558313984,
+     "null_AOBT_3_flt": 0.014868726558313984
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "EDDF",
+     "n": 20650,
+     "eq_SCHED_TIME_UTC_mvt": 0.018062953995157387,
+     "eq_IOBT_flt": 0.022372881355932205,
+     "eq_LOBT_flt": 0.022130750605326877,
+     "eq_EOBT_1_flt": 0.024019370460048425,
+     "eq_AOBT_3_flt": 0.06198547215496368,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.010121065375302664,
+     "null_LOBT_flt": 0.010121065375302664,
+     "null_EOBT_1_flt": 0.010121065375302664,
+     "null_AOBT_3_flt": 0.010121065375302664
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "EDDM",
+     "n": 15013,
+     "eq_SCHED_TIME_UTC_mvt": 0.024312262705655098,
+     "eq_IOBT_flt": 0.030373676147338973,
+     "eq_LOBT_flt": 0.03030706720841937,
+     "eq_EOBT_1_flt": 0.03570239126090721,
+     "eq_AOBT_3_flt": 0.07393592220075934,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.007926463731432758,
+     "null_LOBT_flt": 0.007926463731432758,
+     "null_EOBT_1_flt": 0.007926463731432758,
+     "null_AOBT_3_flt": 0.007926463731432758
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "EGLL",
+     "n": 20557,
+     "eq_SCHED_TIME_UTC_mvt": 0.023836162864231163,
+     "eq_IOBT_flt": 0.027727781291044414,
+     "eq_LOBT_flt": 0.027679136060709247,
+     "eq_EOBT_1_flt": 0.02743590990903342,
+     "eq_AOBT_3_flt": 0.053461108138347035,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.006615751325582527,
+     "null_LOBT_flt": 0.006615751325582527,
+     "null_EOBT_1_flt": 0.006615751325582527,
+     "null_AOBT_3_flt": 0.006615751325582527
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "EHAM",
+     "n": 21950,
+     "eq_SCHED_TIME_UTC_mvt": 0.01908883826879271,
+     "eq_IOBT_flt": 0.023097949886104783,
+     "eq_LOBT_flt": 0.023097949886104783,
+     "eq_EOBT_1_flt": 0.024328018223234625,
+     "eq_AOBT_3_flt": 0.05908883826879271,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.01826879271070615,
+     "null_LOBT_flt": 0.01826879271070615,
+     "null_EOBT_1_flt": 0.01826879271070615,
+     "null_AOBT_3_flt": 0.01826879271070615
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "LEBL",
+     "n": 17879,
+     "eq_SCHED_TIME_UTC_mvt": 0.02069466972425751,
+     "eq_IOBT_flt": 0.026231892163991275,
+     "eq_LOBT_flt": 0.026175960624195985,
+     "eq_EOBT_1_flt": 0.03165725152413446,
+     "eq_AOBT_3_flt": 0.06275518765031601,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.020415012025281055,
+     "null_LOBT_flt": 0.020415012025281055,
+     "null_EOBT_1_flt": 0.020415012025281055,
+     "null_AOBT_3_flt": 0.020415012025281055
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "LEMD",
+     "n": 20152,
+     "eq_SCHED_TIME_UTC_mvt": 0.02019650655021834,
+     "eq_IOBT_flt": 0.025853513298928148,
+     "eq_LOBT_flt": 0.025456530369194125,
+     "eq_EOBT_1_flt": 0.028136165144898768,
+     "eq_AOBT_3_flt": 0.08296943231441048,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.00868400158793172,
+     "null_LOBT_flt": 0.00868400158793172,
+     "null_EOBT_1_flt": 0.00868400158793172,
+     "null_AOBT_3_flt": 0.00868400158793172
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "LFPG",
+     "n": 21743,
+     "eq_SCHED_TIME_UTC_mvt": 0.022765947661316285,
+     "eq_IOBT_flt": 0.03127443315089914,
+     "eq_LOBT_flt": 0.03127443315089914,
+     "eq_EOBT_1_flt": 0.05413236443912983,
+     "eq_AOBT_3_flt": 0.07823207469070506,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.01881065170399669,
+     "null_LOBT_flt": 0.01881065170399669,
+     "null_EOBT_1_flt": 0.01881065170399669,
+     "null_AOBT_3_flt": 0.01881065170399669
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "LIRF",
+     "n": 15838,
+     "eq_SCHED_TIME_UTC_mvt": 0.038136128299027655,
+     "eq_IOBT_flt": 0.0426190175527213,
+     "eq_LOBT_flt": 0.0426190175527213,
+     "eq_EOBT_1_flt": 0.0522793281980048,
+     "eq_AOBT_3_flt": 0.04533400681904281,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.017426442732668267,
+     "null_LOBT_flt": 0.017426442732668267,
+     "null_EOBT_1_flt": 0.017426442732668267,
+     "null_AOBT_3_flt": 0.017426442732668267
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "LSZH",
+     "n": 13155,
+     "eq_SCHED_TIME_UTC_mvt": 0.011250475104522996,
+     "eq_IOBT_flt": 0.01444317749904979,
+     "eq_LOBT_flt": 0.01444317749904979,
+     "eq_EOBT_1_flt": 0.014899277841125047,
+     "eq_AOBT_3_flt": 0.06377803116685671,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.027290003800836182,
+     "null_LOBT_flt": 0.027290003800836182,
+     "null_EOBT_1_flt": 0.027290003800836182,
+     "null_AOBT_3_flt": 0.027290003800836182
+    },
+    {
+     "month": "2026-07",
+     "ADEP_mvt": "LTFM",
+     "n": 25185,
+     "eq_SCHED_TIME_UTC_mvt": 0.03645026801667659,
+     "eq_IOBT_flt": 0.04089735953940838,
+     "eq_LOBT_flt": 0.04057971014492753,
+     "eq_EOBT_1_flt": 0.04057971014492753,
+     "eq_AOBT_3_flt": 0.026960492356561446,
+     "null_SCHED_TIME_UTC_mvt": 0.0,
+     "null_IOBT_flt": 0.015405995632320826,
+     "null_LOBT_flt": 0.015405995632320826,
+     "null_EOBT_1_flt": 0.015405995632320826,
+     "null_AOBT_3_flt": 0.015405995632320826
+    }
+   ]
+  },
+  {
+   "name": "reference overlap",
+   "level": "INFO",
+   "ok": null,
+   "detail": "gentle-igloo_v12075.parquet: 344,841 of 344,841 reference IDs overlap (2026-01: 152,719, 2026-07: 192,122); changed=313,616 (90.95%) RMS diff=18.209 s max |diff|=2058 s",
+   "overlap": 344841,
+   "reference_rows": 344841,
+   "changed": 313616,
+   "rms_diff": 18.208699347925087,
+   "max_abs_diff": 2058.0
+  },
+  {
+   "name": "Gram-identity RMSE range on the overlap",
+   "level": "INFO",
+   "ok": null,
+   "detail": "[212.7300, 249.1474] s; uncorrelated-change estimate 231.6554 s (assumes: reference scored 230.9387 s on exactly these 344,841 rows; labels unchanged between ranking.parquet and final_ranking.parquet; bounds are the triangle inequality, the point estimate assumes the change is uncorrelated with the residual)",
+   "lower": 212.73000065207492,
+   "upper": 249.1473993479251,
+   "uncorrelated": 231.65543354221833,
+   "reference_rmse": 230.9387,
+   "full_overlap": true
+  }
+ ]
+}

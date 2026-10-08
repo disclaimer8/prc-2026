@@ -1,0 +1,15 @@
+{
+ "changed_rows": 4768,
+ "evidence": {
+  "seconds": 1.028311014175415
+ },
+ "input_sha256": "bbe8b4db2fcb55615cec6987121dfe789b7fab43a9355176bf43367e455a76b8",
+ "input_version": 970100,
+ "max_abs_change": 459.0,
+ "output_sha256": "f244343ee1d1833dae2d00f3435040d261a596638eb39cd462f3972a8cf7de3a",
+ "output_version": 970101,
+ "rms_change": 6.409505169642301,
+ "rows": 344841,
+ "stage": "e185",
+ "unix": 1791464120.35016
+}

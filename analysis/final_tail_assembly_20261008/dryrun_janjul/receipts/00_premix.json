@@ -1,0 +1,32 @@
+{
+ "categorical": [
+  "ADEP_mvt",
+  "AIRCRAFT_TYPE_mvt",
+  "RUNWAY_mvt",
+  "MARKET_SEGMENT_flt",
+  "FLIGHT_TYPE_flt",
+  "WK_TBL_CAT_flt",
+  "AIRCRAFT_OPERATOR_flt",
+  "stand_prefix",
+  "ap_runway",
+  "ades_region",
+  "airline_prefix"
+ ],
+ "classifier_columns": 170,
+ "classifier_sha256": "0580cc698a02e036d5e03e8dfe56cb15a8260c6e803939104daacf00c33d27ec",
+ "member_order": [
+  "submissions/e130_rawf_rank.npz",
+  "submissions/e130_lobtf_rank.npz",
+  "submissions/e130_schedf_rank.npz",
+  "submissions/e130_eobtf_rank.npz",
+  "submissions/e130_aobtf_rank.npz",
+  "submissions/nn_rank.npz"
+ ],
+ "output_sha256": "bbe8b4db2fcb55615cec6987121dfe789b7fab43a9355176bf43367e455a76b8",
+ "parts_sha256": "bd9f7ce4b799620127b6f9847b07a17c3dffc405354814a19be9a90522c32a3c",
+ "proba_masked_from_raw_classifier": true,
+ "raw_proba_sha256": "7e29a42dd4da412b4b8898d5d4f14e49671b731b9d61cb261abbd8be3d68b564",
+ "rows": 344841,
+ "stage": "premix",
+ "unix": 1791464119.2596538
+}

@@ -1,0 +1,41 @@
+{
+ "accepted_for_submission": false,
+ "donor_rows_copied": 0,
+ "e81_applied": false,
+ "fits_performed": 0,
+ "output": "/Users/denyskolomiiets/prc-2026/data/final_tail_dryrun_janjul_20261008/work/gentle-igloo_v12090.parquet",
+ "output_sha256": "180a185e232bfb5c13fe4f2dd518558f30005fc716024b2c77498665e9ed5fe3",
+ "protocol": "final-uniform-tail-E156fresh-noE81-fourmonths-20261008-v1",
+ "receipts": {
+  "receipts/00_premix.json": "28275c87b31f028be02426c91bccea74d1492a8bbc8c8ea1c2692dd8c734eb34",
+  "receipts/01_e185.json": "58d6d8ad4c201aefe62e525cf1369507279c44707a35994f56cf7ec77b5fb266",
+  "receipts/02_e167.json": "5af58f0bf4ee40fb2d65c771bfe63968a8d183b4dffa364ac23b25e133fb10bc",
+  "receipts/03_e156.json": "c830a3f791738e424ea2eb5695459520048cf75a32486fd0d0b8400b6e4053a8",
+  "receipts/04_e141.json": "356220dd8fbf6777d9a546e5f8aab7fc9eb07773cc805008b969f3978d5d656d",
+  "receipts/05_e64.json": "bc43a9263b02106e0e791bebd141f0a9d1614ff1499c6e034431d946f9bb27f3",
+  "receipts/06_e188.json": "f2f2e410df1277f1f4b79a86c4ed52523bce3a7d2fe401c930ca6ff64ac44d19",
+  "receipts/07_e152.json": "066fab143246c447e3d15aa3371e53e36891d911f8f9521728bf06608144588f",
+  "receipts/08_lobt.json": "d7a98f8ada3f1c91dab241dbf611ebf5e76745918156c59028cc14bd1e788027",
+  "receipts/09_protect.json": "b25347655e5a1de3ad35e3c71dc42de3c845ba735cc44a3f52bbbf01a590da1c",
+  "receipts/10_lszh.json": "c12b09b0177a917b290f46360e8648a24f6c52dbbbe9f3f2702994103c44f70e",
+  "receipts/11_half.json": "1ddc39ee7d146d08c10e3fb766ca01d9cf9af422a06ab11ae3fb19966b99e7b0"
+ },
+ "rows": 344841,
+ "seconds": 140.93374395370483,
+ "served_e156_ids_sha256": "86f7300263362c128ab226be7be660454e72fe8c89685d71015e306793ec2125",
+ "stages": [
+  "e185",
+  "e167",
+  "e156",
+  "e141",
+  "e64",
+  "e188",
+  "e152",
+  "lobt",
+  "protect",
+  "lszh",
+  "half"
+ ],
+ "unix": 1791464252.22093,
+ "uploaded": false
+}

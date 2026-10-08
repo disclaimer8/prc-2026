@@ -1,0 +1,447 @@
+{
+ "adapter_sha256": "9ff246b8b22b9610404d99703ce392f907bd09416f9283822ebf72889f303c0f",
+ "base_version": 970100,
+ "contract": "/Users/denyskolomiiets/prc-2026/data/final_tail_dryrun_janjul_20261008/contract.json",
+ "contract_sha256": "acff8a558917fea09cc93f2598a556ae42843545e9640a57859fc979c178802b",
+ "created_unix": 1791464105.039098,
+ "evidence": {
+  "members": {
+   "aobt": {
+    "fields": [
+     "mvt_id",
+     "reg",
+     "per_seed",
+     "complete",
+     "status",
+     "expected_seeds",
+     "completed_seeds",
+     "expected_rows",
+     "features_path",
+     "features_sha256",
+     "mode",
+     "rounds",
+     "provenance_json"
+    ],
+    "path": "/Users/denyskolomiiets/prc-2026/submissions/e130_aobtf_rank.npz",
+    "rows": 344841,
+    "seeds": 5,
+    "sha256": "49127c5ab07d349f5a4e2eed05558f3d6013078b307d8476cb8af02f7bc7d357"
+   },
+   "cat": {
+    "fields": [
+     "mvt_id",
+     "reg",
+     "per_seed"
+    ],
+    "path": "/Users/denyskolomiiets/prc-2026/submissions/cat_fin1b_seeds15.npz",
+    "rows": 344841,
+    "seeds": 15,
+    "sha256": "ed525302b6e77ac186c37da34cbf3d643923e92652d7750712b6c38ff13fc1a3"
+   },
+   "eobt": {
+    "fields": [
+     "mvt_id",
+     "reg",
+     "per_seed",
+     "complete",
+     "status",
+     "expected_seeds",
+     "completed_seeds",
+     "expected_rows",
+     "features_path",
+     "features_sha256",
+     "mode",
+     "rounds",
+     "provenance_json"
+    ],
+    "path": "/Users/denyskolomiiets/prc-2026/submissions/e130_eobtf_rank.npz",
+    "rows": 344841,
+    "seeds": 5,
+    "sha256": "fe332f826a178252cebf58ef382e3ac48ef4519cdacfc45fffb5543e947ea297"
+   },
+   "lgb": {
+    "fields": [
+     "mvt_id",
+     "reg",
+     "per_seed"
+    ],
+    "path": "/Users/denyskolomiiets/prc-2026/submissions/lgb_reg_seeds_v870.npz",
+    "rows": 344841,
+    "seeds": 5,
+    "sha256": "01b1d9937a7753050fb91e4e15b4d25a9e33b39e30866725ef26e00838f83bbe"
+   },
+   "lobt": {
+    "fields": [
+     "mvt_id",
+     "reg",
+     "per_seed",
+     "complete",
+     "status",
+     "expected_seeds",
+     "completed_seeds",
+     "expected_rows",
+     "features_path",
+     "features_sha256",
+     "mode",
+     "rounds",
+     "provenance_json"
+    ],
+    "path": "/Users/denyskolomiiets/prc-2026/submissions/e130_lobtf_rank.npz",
+    "rows": 344841,
+    "seeds": 5,
+    "sha256": "ca69ce68c4c0341ed0cc3042a785d111eed469adcf709b7c468177a63cb79793"
+   },
+   "motion": {
+    "fields": [
+     "mvt_id",
+     "reg",
+     "per_seed"
+    ],
+    "path": "/Users/denyskolomiiets/prc-2026/data/e185_motion_rank.npz",
+    "rows": 344841,
+    "seeds": 5,
+    "sha256": "ed13473f97202fd21589257f5cb98c81c5ddbdf4c1fc68380eac544ed36d3cd2"
+   },
+   "nn": {
+    "complete_sha256": "b28ca791cb0dbb64f5c8673e7bbedfa1e35d36ba39f1ea7c8d73efacc334e0ac",
+    "fields": [
+     "mvt_id",
+     "reg",
+     "reg2"
+    ],
+    "path": "/Users/denyskolomiiets/prc-2026/data/e203_rank_20261007/prediction.npz",
+    "rows": 344841,
+    "sha256": "bbec0cfc5022efb10c9ad91b64239b560cc97f45ec1d26f0ae6b2ad7e6eb4845"
+   },
+   "raw": {
+    "fields": [
+     "mvt_id",
+     "reg",
+     "per_seed",
+     "complete",
+     "status",
+     "expected_seeds",
+     "completed_seeds",
+     "expected_rows",
+     "features_path",
+     "features_sha256",
+     "mode",
+     "rounds",
+     "provenance_json"
+    ],
+    "path": "/Users/denyskolomiiets/prc-2026/submissions/e130_rawf_rank.npz",
+    "rows": 344841,
+    "seeds": 5,
+    "sha256": "d732c6181a89e1c1e51a25dc17c844e90d0747284613d31b52819f5fca0ce4b8"
+   },
+   "sched": {
+    "fields": [
+     "mvt_id",
+     "reg",
+     "per_seed",
+     "complete",
+     "status",
+     "expected_seeds",
+     "completed_seeds",
+     "expected_rows",
+     "features_path",
+     "features_sha256",
+     "mode",
+     "rounds",
+     "provenance_json"
+    ],
+    "path": "/Users/denyskolomiiets/prc-2026/submissions/e130_schedf_rank.npz",
+    "rows": 344841,
+    "seeds": 5,
+    "sha256": "381fb1af548d4c39cbf565790b9515dcfb109e04fda21f4860880e2a741b3f4f"
+   }
+  },
+  "rank_ids_sha256": "eeb5d783e5f45515bf3c1127146e70324df08c7b1e2631d31ed9581da130d043",
+  "template_rows": 344841
+ },
+ "mode": "janjul",
+ "numpy": "2.5.3",
+ "output_name": "gentle-igloo_v12090.parquet",
+ "plan": [
+  {
+   "kind": "native",
+   "name": "premix",
+   "out": 970100,
+   "weights": {
+    "cat": 0.65,
+    "members": "submissions/e130_rawf_rank.npz:0.0333333333333333,submissions/e130_lobtf_rank.npz:.10,submissions/e130_schedf_rank.npz:.10,submissions/e130_eobtf_rank.npz:.10,submissions/e130_aobtf_rank.npz:.10,submissions/nn_rank.npz:0.25"
+   }
+  },
+  {
+   "args": [
+    "e185_apply.py",
+    970100,
+    970101
+   ],
+   "env": {
+    "E185_RANK": "data/e185_motion_rank.npz",
+    "E185_W": "0.2333333333333333"
+   },
+   "kind": "script",
+   "name": "e185"
+  },
+  {
+   "args": [
+    "e167_nm_window_rule.py",
+    970101,
+    970102
+   ],
+   "env": {},
+   "kind": "script",
+   "name": "e167"
+  },
+  {
+   "args": [
+    "lirf_tabpfn.py",
+    970102,
+    970103
+   ],
+   "env": {
+    "PFX_FEATURES": "data/features_e113.parquet",
+    "TABPFN_ALLOW_CPU_LARGE_DATASET": "1",
+    "TABPFN_EXTRA": "pfx",
+    "TABPFN_SEEDS": "0,1,2,3,4,5,6,7,8,9"
+   },
+   "kind": "tabpfn",
+   "name": "e156"
+  },
+  {
+   "args": [
+    "e141_apply.py",
+    970103,
+    970104
+   ],
+   "cache": "e141",
+   "env": {
+    "ADSB_DIR": "data/adsblol_kt1",
+    "DROP_FEATS": "n_pts,sf_n_seg,vi_n_pts,vi_prev_pts,vi_alt_first,vm_n_pts,vm_prev_pts",
+    "E36_BASE_DIR": "data/cv_preds_e116prod",
+    "PARTS": "submissions/parts_v970102.npz",
+    "STAGE_KEEP_ALL": "1",
+    "STAGE_SEEDS": "42,1,2,3,4",
+    "WALK_DIR": "data/adsblol_sw_kt1"
+   },
+   "kind": "cached",
+   "name": "e141"
+  },
+  {
+   "args": [
+    "e64_apply.py",
+    970104,
+    970105
+   ],
+   "cache": "e64",
+   "env": {
+    "ADSB_DIR": "data/adsblol_kt1",
+    "DROP_FEATS": "vi_n_pts,vi_prev_pts,vi_alt_first",
+    "E64_KEEP_ALL": "1",
+    "PARTS": "submissions/parts_v970102.npz",
+    "STAGE_SEEDS": "42,1,2,3,4"
+   },
+   "kind": "cached",
+   "name": "e64"
+  },
+  {
+   "kind": "e188",
+   "name": "e188",
+   "out": 970106,
+   "parts": 970102,
+   "post": 970105,
+   "pre": 970104
+  },
+  {
+   "args": [
+    "e152_stage_gate.py",
+    970103,
+    970106,
+    970102,
+    970110
+   ],
+   "env": {
+    "E152_GATE": "0.95"
+   },
+   "kind": "script",
+   "name": "e152"
+  },
+  {
+   "args": [
+    "lobt_edge_lift.py",
+    970110,
+    970112
+   ],
+   "env": {
+    "LOBT_CLIP": "1"
+   },
+   "kind": "script",
+   "name": "lobt"
+  },
+  {
+   "final": 970112,
+   "kind": "native",
+   "name": "protect",
+   "out": 970113,
+   "tab": 970103
+  },
+  {
+   "args": [
+    "e159b_apply.py",
+    970113,
+    970114
+   ],
+   "cache": "lszh",
+   "env": {
+    "E159_APS": "LSZH",
+    "E159_BASE": "data/cv_preds_e150c_e64_keep",
+    "E159_MONTHS": "all",
+    "E159_SHIFT": "0"
+   },
+   "kind": "cached",
+   "name": "lszh"
+  },
+  {
+   "args": [
+    "blend_submissions.py",
+    970115
+   ],
+   "env": {
+    "BLEND_BASE": "970113",
+    "BLEND_PARTS": "970114:0.5"
+   },
+   "kind": "script",
+   "name": "half"
+  }
+ ],
+ "polars": "1.44.2",
+ "protocol": "final-uniform-tail-E156fresh-noE81-fourmonths-20261008-v1",
+ "python": "3.12.14 (main, Sep  1 2026, 14:09:38) [Clang 22.1.3 ]",
+ "rows": 344841,
+ "sources": {
+  "adsb_offblock_v2.py": {
+   "after": "c843aae5e7643c78d5968ae530af8022e45a6164efe8e6c26f7ffb6f61b2500b",
+   "before": "c843aae5e7643c78d5968ae530af8022e45a6164efe8e6c26f7ffb6f61b2500b",
+   "transformed": false
+  },
+  "adsb_offblock_v3.py": {
+   "after": "269b60dcc7671e027acdec00080d25fa9ff0b46fb0743dc74cfc96ad6af8acbf",
+   "before": "269b60dcc7671e027acdec00080d25fa9ff0b46fb0743dc74cfc96ad6af8acbf",
+   "transformed": false
+  },
+  "adsb_visit.py": {
+   "after": "3921f23cc8956faf36fe3caf80843fa68f78a885274f78d5a1b68c1035f7e1a3",
+   "before": "3921f23cc8956faf36fe3caf80843fa68f78a885274f78d5a1b68c1035f7e1a3",
+   "transformed": false
+  },
+  "blend_submissions.py": {
+   "after": "ca7bfe4f716b924113c5e0dc680e9daf2a0cf6f0f8dd4b11d0c314f99944675a",
+   "before": "ca7bfe4f716b924113c5e0dc680e9daf2a0cf6f0f8dd4b11d0c314f99944675a",
+   "transformed": false
+  },
+  "e134_head_features.py": {
+   "after": "1854878f6dcbb87e7f5b82ac3a956c26a8f15d8949400e4ec19a2053a33a201f",
+   "before": "1854878f6dcbb87e7f5b82ac3a956c26a8f15d8949400e4ec19a2053a33a201f",
+   "transformed": false
+  },
+  "e141_apply.py": {
+   "after": "1b5871e2291ec1cf82a99e6a2304e758c1182aacc0b917ff7aece2f5e3f823d1",
+   "before": "1b5871e2291ec1cf82a99e6a2304e758c1182aacc0b917ff7aece2f5e3f823d1",
+   "transformed": false
+  },
+  "e152_stage_gate.py": {
+   "after": "396ae026843d2399cdc81fa0d91b268ec4ed15d618248ba11eea7d318fe6b2bd",
+   "before": "396ae026843d2399cdc81fa0d91b268ec4ed15d618248ba11eea7d318fe6b2bd",
+   "transformed": false
+  },
+  "e159_opdi_stage_cv.py": {
+   "after": "6919aae6e7b1642d80b1470ec31a09f5a6edf8c922d0cb308af543b54146c348",
+   "before": "6919aae6e7b1642d80b1470ec31a09f5a6edf8c922d0cb308af543b54146c348",
+   "transformed": false
+  },
+  "e159b_apply.py": {
+   "after": "f07db6fc8219ba1742501b8a736e92e3bb52d79d64702f87401d3ee69e08879d",
+   "before": "f07db6fc8219ba1742501b8a736e92e3bb52d79d64702f87401d3ee69e08879d",
+   "transformed": true
+  },
+  "e167_nm_window_rule.py": {
+   "after": "472ace8bcdd2a8f8215ef8a63f794d70bfbd9948d02ff80f2eba39ad9a613c08",
+   "before": "472ace8bcdd2a8f8215ef8a63f794d70bfbd9948d02ff80f2eba39ad9a613c08",
+   "transformed": false
+  },
+  "e185_apply.py": {
+   "after": "f25ee5174e29cf04010222a98fd1e1fcd392aca9e85374d93d8b799165e101fd",
+   "before": "f25ee5174e29cf04010222a98fd1e1fcd392aca9e85374d93d8b799165e101fd",
+   "transformed": false
+  },
+  "e188_apply_dynamic.py": {
+   "after": "68df80898dadcebd9ffc8947efff8824700e6af88d5454a43e7b1ce8f9e9e36c",
+   "before": "5836e11f743b1d166b0360886f50113dd0a56f847aa1c9c271c3f4285e0b04f2",
+   "original": "scripts/e188_rank_20261006.py",
+   "transformed": true
+  },
+  "e36_adsb_stand_geometry.py": {
+   "after": "51a1d4544b3539d95dca1354db06833598d288f930e3fc10cdd82c5eec9c7edb",
+   "before": "51a1d4544b3539d95dca1354db06833598d288f930e3fc10cdd82c5eec9c7edb",
+   "transformed": false
+  },
+  "e64_apply.py": {
+   "after": "c8a76a0168bdca7b703317bc82a3618f29eb447a320431ca24523787a9fcca0e",
+   "before": "c8a76a0168bdca7b703317bc82a3618f29eb447a320431ca24523787a9fcca0e",
+   "transformed": false
+  },
+  "e64_visit_stage.py": {
+   "after": "c1a1186df3e23b7d343fb4564e28b5fc802098607ee54d25f5849dbc92bcb225",
+   "before": "c1a1186df3e23b7d343fb4564e28b5fc802098607ee54d25f5849dbc92bcb225",
+   "transformed": false
+  },
+  "e69_visit_merge.py": {
+   "after": "63d6ad4326041cc4f4672815ed2bd5e9777557b258734787ed7f8a14fab2ee6e",
+   "before": "63d6ad4326041cc4f4672815ed2bd5e9777557b258734787ed7f8a14fab2ee6e",
+   "transformed": false
+  },
+  "features.py": {
+   "after": "58e6b783df2123adf261022733e4c602dfd22ff97d2e98e9e03e8c12486a17a2",
+   "before": "58e6b783df2123adf261022733e4c602dfd22ff97d2e98e9e03e8c12486a17a2",
+   "transformed": false
+  },
+  "fold_metrics.py": {
+   "after": "3efdf4824bd0604d17c10094b556b4b6cadc9e309cf8156e32ad4c10aeaf45e1",
+   "before": "3efdf4824bd0604d17c10094b556b4b6cadc9e309cf8156e32ad4c10aeaf45e1",
+   "transformed": false
+  },
+  "geometry.py": {
+   "after": "45b7ae51c9874772ecf69e176d18dcff44910af8daf40030426c8dbbc5ef3006",
+   "before": "45b7ae51c9874772ecf69e176d18dcff44910af8daf40030426c8dbbc5ef3006",
+   "transformed": false
+  },
+  "lirf_table.py": {
+   "after": "faf26c32061b378e5e788d557d67c804be4904b248b2810f086a297f6c8ab14b",
+   "before": "faf26c32061b378e5e788d557d67c804be4904b248b2810f086a297f6c8ab14b",
+   "transformed": false
+  },
+  "lirf_tabpfn.py": {
+   "after": "3a7494c5902c8db790fa45989f9dd729a859f147d1ec3c51bff1d5ce02faab3f",
+   "before": "3a7494c5902c8db790fa45989f9dd729a859f147d1ec3c51bff1d5ce02faab3f",
+   "transformed": false
+  },
+  "lobt_edge_lift.py": {
+   "after": "b6d74a6d83e0c1d5c997955237c464d0d3214cf25e9163fd2a8da9d710950c6a",
+   "before": "b6d74a6d83e0c1d5c997955237c464d0d3214cf25e9163fd2a8da9d710950c6a",
+   "transformed": false
+  },
+  "target_encoding.py": {
+   "after": "ac1b35fdd31139b531ca3760d9172f78112c77ed3ca3e72631100cd252b37d6c",
+   "before": "ac1b35fdd31139b531ca3760d9172f78112c77ed3ca3e72631100cd252b37d6c",
+   "transformed": false
+  },
+  "train.py": {
+   "after": "6946491503909c766b9fffb8ebecfeae8f2eb9767b853ccb47edeb80c05f0a23",
+   "before": "6946491503909c766b9fffb8ebecfeae8f2eb9767b853ccb47edeb80c05f0a23",
+   "transformed": false
+  }
+ },
+ "tabpfn_checkpoint": "/Users/denyskolomiiets/prc-2026/data/tabpfn_v2_checkpoint/tabpfn-v2-classifier-finetuned-zk73skhh.ckpt"
+}

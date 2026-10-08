@@ -1,0 +1,61 @@
+{
+ "changed_rows": 42,
+ "evidence": {
+  "determinism": {
+   "bitwise_identical": true,
+   "max_abs_proba_diff_per_seed": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "rounded_rows_differing": 0,
+   "rounded_values_identical": true,
+   "second_run_seconds": 45.224833965301514
+  },
+  "n_estimators": "auto",
+  "per_seed_proba": [
+   "e66703483fd02ace887d3484b7ac6232ddecbfee9e0a37af7e7e7a5edd0990c7",
+   "e54cb7fd9d624f537f13a9d5e82efc8908656a88bb0e9e193251735da4d5c511",
+   "c6b5e32a64524558a503b0087c43faeb69cdafb51bdc507d870b730406b1bdff",
+   "bf77c27c2dab19140bca0812b58d855545f148d58f94d4d4c0b49360d8fb992d",
+   "f6c0820abfc6ec86be24011187f33d6a2f0da8b0f8c859cfdef1698f376c3340",
+   "e26d8f71c95af6e9638cc89322b55d02851d7519917e2750473605e62bdb17da",
+   "5784c01d2a995947f67dbe9dfc73034539e2e81e20d3e3817239fa04726e856b",
+   "ee20c38256d037fb0539b5370474802f63103e98676f94c9db6fadb3a743549a",
+   "6e821f97ff98d5607d333d7e13651c134e32a6e0de9b404197d3c29038175408",
+   "b40edd353914808eeeed435a26701abb2dffe89033c8f2887b2b1ff2e77552ba"
+  ],
+  "seconds": 90.96476483345032,
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "served_ids_sha256": "86f7300263362c128ab226be7be660454e72fe8c89685d71015e306793ec2125",
+  "served_rows": 42,
+  "unchanged_rounded_rows": 0
+ },
+ "input_sha256": "65a2d14e863411f991ecee13f01ce92c17b6ea6347f5db4f2218d863182b46a5",
+ "input_version": 970102,
+ "max_abs_change": 34026.0,
+ "output_sha256": "affe12e3f16d1e1865900665ba265d0a9ae99ae3514aa3e640d5b0ba63a6b504",
+ "output_version": 970103,
+ "rms_change": 88.04041814426866,
+ "rows": 344841,
+ "stage": "e156",
+ "unix": 1791464212.4153512
+}
