@@ -1,0 +1,20 @@
+{
+  "active_source_pins": 16,
+  "actual_current_chain_comparison": false,
+  "actual_parent_audit": false,
+  "actual_parent_errors_read": false,
+  "files": {
+    "analysis/e207_current_chain_20261008/PROTOCOL.md": "21b8b2b9615c359e34d922b286d63bf2ecd39d72621f31938c8edd234b602024",
+    "analysis/e207_current_chain_20261008/inventory.json": "41b9a0158b7220a28f127ee49ad52b7bcdb7c1cb36650110b38168e16c4e3e03",
+    "scripts/e207_current_chain_20261008.py": "2eaff5d0640a6d9d7f10d01208239bd692b95b0f1081e6e6edd42386ec9770f7",
+    "tests/test_e207_current_chain_20261008.py": "31aaf9eca88f728bc3daa30966f3d8c810c5f8d2944fd17d8ebc0d3339af3fde"
+  },
+  "fits": 0,
+  "journal_commit_created": false,
+  "metadata_only_seal_inputs": 169,
+  "passed": 11,
+  "ranking": false,
+  "status": "READY_FROZEN_for_independent_review_not_registered_not_executed",
+  "synthetic_tests": 11,
+  "utc": "2026-10-08T11:07:16.662084+00:00"
+}
