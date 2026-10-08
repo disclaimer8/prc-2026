@@ -268,12 +268,16 @@ def compute(root, threads, folds):
         S = premix_state(F); D, e = basis(F, S); masks = populations(F)
         st = month_stats(D, e, F['month'], masks)
         for name in POPS:
-            stats[name].update(st[name])
+            for mo in (fold, fold + 6):  # only this fold's months (the other ten entries of st are empty)
+                stats[name][mo] = st[name][mo]
         premix[fold] = dict(p=S['p'], p0=S['p0'], feas=S['feas'], b=S['b'], v=S['v'], m=S['m'], D=D, e=e,
                             lirf=F['lirf'], nm_missing=F['nm_missing'], ids=F['ids'])
         log(F['name'], 'rows', len(F['ids']), 'premix rmse(all) %.2f' % np.sqrt(np.mean(e ** 2)),
             'bucket counts', [int((S['b'] == j).sum()) for j in range(4)])
         del F
+    for name in POPS:
+        if sorted(stats[name]) != MONTHS or any(stats[name][mo]['n'] <= 0 for mo in MONTHS): raise ValueError('monthly statistics incomplete: ' + name)
+    log('monthly n (decided):', {mo: stats['decided'][mo]['n'] for mo in MONTHS})
     thetas = {}
     for name in POPS:
         for fold in FOLDS:
@@ -423,7 +427,7 @@ def evaluate_with_premix(root):
                 elif leg == 'half': ev = F['mo'] >= 7
                 else: ev = F['mo'] == int(key.rsplit('m', 1)[1])
                 mk = F['masks']['decided'] & ev
-                th = np.array(thetas[key]); dm = F['dm'][j]
+                th = np.array(thetas[pop + '|' + key.split('|')[2]]); dm = F['dm'][j]
                 m1 = S['m'] + dm
                 pre_act = float(((F['y'] - m1) ** 2 - e ** 2)[mk].sum())
                 Dm = D[mk]; em = e[mk]
