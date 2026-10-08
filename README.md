@@ -7,8 +7,11 @@ The models are trained on all 2025 departures (2,085,047 rows) and scored on
 344,841 departures from January and July 2026.
 
 **Best submission: `gentle-igloo_v12075.parquet`, RMSE 230.9387 s** (scored
-7 October 2026). This is our best of 108 submissions; on 8 October 2026 it
-ranked 14th of 237 teams. Our first submission scored 501.23 s.
+7 October 2026). This is our best of 109 submissions; on 8 October 2026 at
+13:47 UTC it ranked 16th of 238 teams. Our first submission scored 501.23 s.
+The blind final on four months (January, February, June and July 2026) is a
+separate single file built by one uniform recipe; see
+[final submission](docs/final-submission.md).
 
 Code: [GNU GPLv3](LICENSE). Data keep their own terms, summarised below and in
 [SOURCES.md](SOURCES.md).
@@ -23,7 +26,7 @@ Code: [GNU GPLv3](LICENSE). Data keep their own terms, summarised below and in
 | Iowa Environmental Mesonet METAR archive | Public domain (IEM statement) | Open |
 | ansperformance.eu daily arrival ATFM delay by airport | Portal terms: free with attribution, non-commercial | Accepted as open data for the challenge by the organiser on 17 Sep 2026 |
 | OPDI v0.0.2 events (LSZH correction only) | No separate dataset licence published | Accepted as open by the organiser on 4 Oct 2026 |
-| TabPFN-2 classifier weights | [Prior Labs License 1.1](https://github.com/PriorLabs/TabPFN/blob/main/LICENSE) (Apache 2.0 plus an attribution clause) | Used for 42 tail predictions; weights are not redistributed. Built with PriorLabs-TabPFN |
+| TabPFN-2 classifier weights | [Prior Labs License 1.1](https://github.com/PriorLabs/TabPFN/blob/main/LICENSE) (Apache 2.0 plus an attribution clause) | Used for 42 tail predictions in v12075 and for every row of the Rome tail in the final file; weights are not redistributed. Built with PriorLabs-TabPFN |
 
 The organiser's statements are quoted with dates in
 [organiser clarifications](docs/organiser-clarifications.md). If either
@@ -44,13 +47,15 @@ LSZH correction (−0.25 s over two steps); the rest of the chain does not use t
 | [Uncertainty](docs/uncertainty.md) | A calibrated predictive distribution per flight from the regime mixture |
 | [Data quality for PRU](docs/data-quality-regimes.md) | The regime classifier as a detector of block times copied from planning timestamps, and its effect on the PRU taxi-out indicator |
 | [PRU view](docs/pru-view.md) | Predictions expressed as unimpeded reference plus additional taxi-out time |
-| [Final submission](docs/final-submission-runbook.md) | How the single four-month final file is validated and uploaded |
+| [Final submission](docs/final-submission.md) | The blind four-month final: rules, the uniform recipe, why it differs from v12075 and what that costs, ADS-B coverage of the new months, pipeline scripts and receipts, validation |
+| [Model card](docs/model-card.md) | Intended use, inputs, training data, evaluation, limitations, data and licence considerations, maintenance |
+| [Final submission runbook](docs/final-submission-runbook.md) | How the single four-month final file is validated and uploaded |
 | [Paper draft](paper/README.md) | Draft article for the Journal of Open Aviation Science |
 | [Reproduction](docs/reproduction.md) | How to verify and rebuild the submission; what is and is not yet portable |
 | [Glossary](docs/glossary.md) | Plain-language names for experiment IDs such as E25 or E141 |
 | [Sources and licences](SOURCES.md) | External data, licences, organiser clarifications |
 | [Organiser clarifications](docs/organiser-clarifications.md) | Dated organiser statements on data use and evaluation |
-| [Experiment register](HYPOTHESES_LOG.md) | 376 numbered entries from 23 September with method, result and verdict (in Russian); earlier experiments are in `REVIEW_BRIEF.md` |
+| [Experiment register](HYPOTHESES_LOG.md) | Entries numbered 1–400 from 23 September to 8 October with method, result and verdict (in Russian); earlier experiments are in `REVIEW_BRIEF.md` |
 
 ## The problem as the data presents it
 
@@ -149,6 +154,22 @@ plain-language name.
 - **Calibrated uncertainty.** Central 50/80/90% intervals from the regime mixture cover
   51.0/80.1/89.7% of 2025 out-of-fold departures. See [uncertainty](docs/uncertainty.md).
 
+## Final blind ranking
+
+The organiser announced on 8 October 2026 a single blind final on January, February,
+June and July 2026 (670,790 departures), ranked on the initial two months, the new
+two months and all four ([organiser clarifications](docs/organiser-clarifications.md)).
+Our final file is built by the v12075 chain run once over all four months, with two
+leaderboard-specific parts removed: the whole-file blend with two archived
+January/July submissions (E81) and the 42 frozen TabPFN tail rows, replaced by a
+fresh ten-seed TabPFN-2 ensemble on every row of the Rome tail. The neural member
+is the mean of ten seeds instead of three (a variance reduction with no new
+capacity; the two means differ by RMS 24.0 s on the final rows). Run as a canary on
+January/July with the old members, the uniform recipe scored 232.1933 s against
+230.9387 s for v12075; that cost is accepted so that one procedure covers all
+months. Recipe, receipts, validation and fallbacks: [final submission](docs/final-submission.md);
+a standard [model card](docs/model-card.md) states intended use and limitations.
+
 ## What moved the score
 
 108 uploads between 13 September and 7 October produced 61 new best scores.
@@ -180,7 +201,7 @@ development history gives the single-change control.
   (for example: lower paired squared error in at least 4 of 6 folds, and not driven
   by a few rows). From 20 September most uploads also carried a leaderboard
   forecast written before the upload.
-- **Every idea is logged**, including the rejected ones: 376 numbered entries in
+- **Every idea is logged**, including the rejected ones: entries 1–400 in
   [HYPOTHESES_LOG.md](HYPOTHESES_LOG.md) since 23 September, earlier ones in
   `REVIEW_BRIEF.md`; the most informative rejections are
   summarised in English in [negative results](docs/negative-results.md).
@@ -201,7 +222,7 @@ not establish.
 | Verify the submitted file | SHA-256 `90d3cd0b…aee2`, 344,841 unique IDs | [docs/reproduction.md](docs/reproduction.md) |
 | Rebuild v12075 from archived features, member predictions and saved models | Done independently on 7 October 2026: all predictions and Parquet bytes identical, no model refits, 101 s | `scripts/reproduce_v12075_v2.py` |
 | Retrain everything from raw data | Trainers, extractors and stage builders are in `src/` and `scripts/`, listed in order in the reproduction guide; a clean end-to-end run of the current recipe has not been completed | [docs/reproduction.md](docs/reproduction.md) |
-| Apply to a new period | Not available as one command: the 42 frozen tail predictions and the two archived blend donors are specific to the ranking period | [docs/reproduction.md](docs/reproduction.md) |
+| Apply to a new period | Not one command. The four-month final is built by dated scripts (feature workspace, 52 tabular fits with saved models, 10-seed neural member, daily ADS-B products, tail assembly, validator), each registered with receipts; the period-specific donor rows and blend are not used | [docs/final-submission.md](docs/final-submission.md) |
 
 Large data, fitted models and submission files are not in Git. The archive
 needed for the exact rebuild is about 5.2 GB (5,187,588,486 bytes); its 3,711
