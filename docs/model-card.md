@@ -182,7 +182,7 @@ Result: `[[to be filled after the final assembly]]` ([final submission §10](fin
   neural member sees empty trajectory tokens in combinations absent from training
   (LIRF in summer without tokens). An audit on 2025 out-of-fold data found the
   member without tokens still better than no member in every fold, so it is kept;
-  the lost coverage is estimated to cost about +0.18 s on the final
+  a scenario estimate (not a measurement) puts the cost of the lost coverage at about +0.18 s on the final
   ([coverage audit](../analysis/coverage_collapse_audit_20261008.md)). Lower coverage
   goes with higher error (correlation −0.45 over the twelve 2025 months, descriptive).
 - **Extreme labels dominate RMSE.** In January and July 2025, 45 of 344,419 labels

@@ -151,9 +151,10 @@ E81 removed, fresh E156) and uploaded once as a technical canary, `v12090`
 
 The forecast written before the upload was 231.6 s with a corridor of
 [231.1; 232.3] s; the result is inside the corridor near its upper edge. The
-historical price of E81 alone (about 0.66 s) explains roughly half of the change;
-the remainder is the fresh ensemble against the frozen donors on the 42 rows (RMS
-713.5 s between them) and/or a stronger E81 effect on this chain. Against v12075
+canary removed E81 and replaced the 42 donor rows at the same time, so the +1.2546 s
+does not identify either effect alone. If E81 kept its historical price (about 0.66 s),
+the fresh ensemble against the frozen donors on the 42 rows (RMS 713.5 s between them)
+would account for the rest; this split is an inference, not a measurement. Against v12075
 the file changed 313,616 of 344,841 rows with RMS 18.209 s. The canary is a
 technical check of the code path on real labels, not a candidate for best; no
 further probing uploads were made. The two Jan/Jul labels do not transfer
@@ -205,9 +206,10 @@ was pre-registered with a 2025 out-of-fold gate (log 397). It failed in 0 of 6 f
 on the 417,194 out-of-fold rows it would touch, RMSE rose from 269.83 s to 271.87 s
 (+2.03 s). The neural member without trajectory tokens still beats no neural member in
 every fold and in the collapsed months, so the rule is not applied (log 401;
-[coverage audit](../analysis/coverage_collapse_audit_20261008.md)). The audit estimates
-the cost of the lost coverage at about +0.18 s (range +0.1 to +0.3 s) on the final; it is
-a cost of missing data that no rule recovers.
+[coverage audit](../analysis/coverage_collapse_audit_20261008.md)). The audit's scenario estimate
+of the cost of the lost coverage is about +0.18 s (range +0.1 to +0.3 s) on the final: it
+transfers 2025 premix penalties to the 2026 masks and is not a measured full-chain loss.
+No rule recovers it.
 
 ## 6. Pipeline: scripts, inputs and receipts
 
