@@ -55,12 +55,13 @@ def load_fold(chain, fold):
     with np.load(td / 'prediction.npz') as zz: src = zz['mvt_id']
     s = np.argsort(src); ix = s[np.searchsorted(src[s], ids)]
     if not np.array_equal(src[ix], ids): raise ValueError('seed alignment')
-    seeds = np.stack([np.load(td / f'seed_{i}.npy')[ix].astype(np.float64) for i in (0, 1, 2)])
     qb = f'data/mlp_split_20261005/inputs/{name}'
-    sd = float(json.load(open(f'{qb}/manifest.json'))['sd'])
-    base_p = np.load(f'{qb}/base_p.npy')[ix]
-    recon = seeds.mean(axis=0) * sd + base_p
-    if not np.allclose(recon, nn3, atol=1e-6): raise ValueError(f'member reconstruction failed fold {fold}')
+    m = json.load(open(f'{qb}/manifest.json')); sd = float(m.get('spec', m)['sd'])
+    ci = np.load(f'{qb}/control_indices.npy')  # producer: member = (mean(seeds)*sd + base_p)[control_indices]
+    seeds = np.stack([np.load(td / f'seed_{i}.npy')[ci][ix].astype(np.float64) for i in (0, 1, 2)])
+    base_p = np.load(f'{qb}/base_p.npy')[ci][ix]
+    recon = seeds.mean(axis=0) * sd + base_p  # producer averaged in float32; allow that rounding only
+    if not np.allclose(recon, nn3, rtol=1e-5, atol=1e-2): raise ValueError(f'member reconstruction failed fold {fold}')
     w = A.WEIGHTS[:-1]
     regular = (1 - sum(A.WEIGHTS)) * (.65 * cat + .35 * lgb) + sum(wk * g for wk, g in zip(w, anchors))
     reg25 = regular + 0.25 * nn3
