@@ -305,7 +305,7 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
     <div class="toc-label">Содержание</div>
     <ol>
       <li><a href="#sЧ">Читать первым</a></li>
-      <li><a href="#s0">Уже проверено — не предлагать повторно (на 05.10)</a></li>
+      <li><a href="#s0">Уже проверено — не предлагать повторно (на 08.10)</a></li>
       <li><a href="#s1">Задача</a></li>
       <li><a href="#s2">Где мы сейчас</a></li>
       <li><a href="#s3">Что известно о данных</a></li>
@@ -430,17 +430,27 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 
     <header class="doc">
       <h1>Taxi-out, команда <span class="sign">gentle-igloo</span></h1>
-      <p class="lede"><strong>Состояние на 08.10.2026 12:19UTC.</strong> Управление передано Claude. Mac: finalfeatures PASS,0finalfits. E20718/18fit завершены, исходный гейт FAIL. E208завершён. Журналдо№386. <a href="CLAUDE_TAKEOVER_20261008.md">Полная передача</a>.</p>
+      <p class="lede"><strong>Состояние на 08.10.2026 14:30Z (владелец — Claude, Codex остановлен).</strong> Финальный конвейер собирается; NN-член готов, 7 ADS-B продуктов готовы, 52 табличных fit идут (≈00:30Z 09.10), сборщик хвоста готов; канарейка единого рецепта v12090 = 232,1933. Журнал до №398.</p>
     </header>
 
     <div class="strip" role="group" aria-label="Статус">
       <div class="hl"><div class="k">Лидерборд</div><div class="v">230,9387 (v12075)</div><div class="s">v12075 — лучший файл</div></div>
-      <div><div class="k">Место</div><div class="v">15/237,08.10 10:31:23UTC</div><div class="s"></div></div>
-      <div><div class="k">В очереди</div><div class="v">доска</div><div class="s">Передано Claude; featurebuild PASS; E207FAIL; finalfits0</div></div>
+      <div><div class="k">Место</div><div class="v">16/238</div><div class="s">08.10 13:47Z</div></div>
+      <div><div class="k">В очереди</div><div class="v">доска</div><div class="s">Финальный конвейер + программа улучшений</div></div>
       <div><div class="k">Дедлайн</div><div class="v">11.10</div><div class="s">23:59 CET, 5 сабмитов в день</div></div>
     </div>
 
     <section id="sЧ"><h2><span class="n">Ч</span>Читать первым</h2>
+<h4>08.10, 14:30Z — финал и программа улучшений (Claude)</h4>
+<ul>
+<li><strong>Правила финала</strong> (Discord 08.10 07:34/07:46Z, письмо команде, сайт): слепой финал на янв+фев+июн+июл 2026; ранжирование по янв/июл, фев/июн и всем четырём; на ревью топ-30 по любому; дедлайн всего, включая репо/доки, 14.10 10:00Z. ±12 с в <code>final_ranking</code> — намеренная «randomness» организатора; финал считать только по <code>final_ranking.parquet</code> (SHA 4b0692a7, загрузка 11:04Z). Цитаты — <code>docs/organiser-clarifications.md</code>.</li>
+<li><strong>Рецепт финала (единый, без подгонки под доску):</strong> v12075 без E81 (доноры v44/v60) и без 42 замороженных строк TabPFN; свежий ансамбль E156 на всём хвосте LIRF без NM. <strong>Канарейка v12090 (тот же код на янв/июл) = 232,1933</strong>, +1,25 к v12075 — измеренная цена честного рецепта (№390/391).</li>
+<li><strong>Готово:</strong> NN-член E203 3×8 с точным replay (№393); +7 сидов идут (№394, 10-сидовое среднее — снижение шума: два 3-сидовых ансамбля расходятся на RMS 47 с); 7 суточных ADS-B продуктов на 120 дней (№392; коллапсы покрытия: EDDF фев 32 %, LIRF июн 0,7 % / июл 6,2 %; 11.06 усечён в архиве adsb.lol); сборщик хвоста + валидатор + runbook (№389).</li>
+<li><strong>Идёт:</strong> 52 табличных fit на prc-cloud (ARM, побитный паритет с маком) и hetzner (№388), ≈00:30Z 09.10; аудит коллапса покрытия и правило защиты NN (№397a); E210 — ширина/маргинализация E156 на фев/июн (№397b); OPDI фев/июн для LSZH (№398); поправка уровня по остаткам соседей (метод Motoki/smart-jigsaw).</li>
+<li><strong>Закрыто сегодня:</strong> E207 v3 (полнотокенная траектория) — гейт FAIL; <strong>E209 пол по уровню соседей для строк без NM — 1/6, +0,018 с ❌</strong> (модель не занижает такие строки: y/L 1,004, pred/L 1,02).</li>
+<li><strong>Для ревью (в master):</strong> README «Beyond the leaderboard»; <code>docs/generalisation.md</code> (OOF 2025: фев+июн 247,3 против янв+июл 279,2; лучше прокси во всех 120 аэропорто-месяцах), <code>docs/uncertainty.md</code> (интервалы 50/80/90 % покрывают 51,0/80,1/89,7 %), <code>docs/data-quality-regimes.md</code> + <code>docs/pru-view.md</code> (эмуляция индикатора PRU: MAE 3,3 с, corr 0,999; копии плановых времён завышают индикатор LIRF ≈ на 42 с/рейс), <code>paper/</code> (черновик JOAS), раздел раскрытия использования доски (<code>docs/development-history.md</code> §6).</li>
+<li><strong>Конкуренты (08.10):</strong> у 15 команд выше нас публичного кода нет; youthful-giraffe (Kaggle GM, 1-е место NASA Airport Throughput 2025) — главный риск в слепом финале. Отчёты: <code>analysis/competitor_repos/_UPDATE_2026-10-08.md</code>, <code>_TEAMS_ABOVE_US_2026-10-08.md</code>.</li>
+</ul>
 <h4>Текущие результаты и задачи</h4>
 <p><strong>Передача всех задач:</strong> <a href="CLAUDE_TAKEOVER_20261008.md">CLAUDE_TAKEOVER_20261008.md</a>. Дальнейший владелец — Claude, Codexagents остановлены.</p>
 <p><strong>E207 v3 завершён:</strong>18/18fit;4/6decidedпар лучше, но pooledbody+0.007327с/decided+0.015615с и trim3/20 хуже. Исходный гейт FAIL; это component/preADS-B оценка. Current-chain child№383не запускался. Original E203unfilled остаётся finaldefault. <a href="analysis/claude_transfer_20261008/e207_evaluation.json">Первичный результат</a>.</p>
@@ -499,7 +509,7 @@ RSS; новый вариант убрал неиспользуемые копи�
 <li><strong>E194 raw и Cat90 полностью проверены:</strong>427дней/2429888DEP/104524037actualpoints; Cat6×15seed/2085047ID/exactmeans/runtime/SHA. Отчёты <code>analysis/e194_trajectory_execution_20261007.md</code>, <code>analysis/cat_completion_20261007.json</code>. Не повторять завершённые fits.</li>
 <li><strong>Подробный разбор каждой идеи:</strong> <a href="reports/Гипотезы%20PRC%20подробный%20разбор.md">Гипотезы PRC</a>. PINN/causal/RL новых собственных targetfits пока не получили. E192фиксированный eventgraph отрицателен; это не отрицание всех временных графов.</li>
 <li><strong>Нагрузка проверяется заново:</strong> завершённыйPID не считается работающим. Mac/ноутбуки/сервер свободны после коротких стадий, новая CPUлиния пока подготавливается. Точная история задержкиapproval и исправления HomeExecStart — вHANDOFF. ASUS новых задач не получает, среды под работой не менять.</li>
-</ul></section><section id="s0"><h2><span class="n">0</span>Уже проверено — не предлагать повторно (на 05.10)</h2>
+</ul></section><section id="s0"><h2><span class="n">0</span>Уже проверено — не предлагать повторно (на 08.10)</h2>
 <blockquote>
 <p><strong>Ревьюверам: перед любым предложением сверьтесь с таблицей «Уже проверено» ниже, с журналом <code>HYPOTHESES_LOG.md</code> и с двумя правилами из разд. 21f и 21g.</strong> Всё из неё проверено прогонами кода; повторное предложение без новых данных или нового механизма не нужно. Если идея похожа на закрытую, укажите, чем она отличается.</p>
 </blockquote>
@@ -514,6 +524,27 @@ RSS; новый вариант убрал неиспользуемые копи�
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>Строки без NM</td>
+<td>Пол по живому уровню соседей (медиана MVT−AOBT_3 NM-вылетов ±30 мин &gt; 1500 с; pred ≥ 0,95·L), идея gentle-octopus/smart-jigsaw</td>
+<td>E209, 08.10</td>
+<td>отклонено: 1/6 фолдов, ΔRMSE +0,018 с, trim20 хуже; занижения нет (y/L 1,004, pred/L 1,02)</td>
+<td>№395–396, <code>analysis/nonm_disruption_floor_20261008.md</code></td>
+</tr>
+<tr>
+<td>Траектории</td>
+<td>Полнотокенная траектория (все точки дня) вместо E203 ordered</td>
+<td>E207 v3, 08.10</td>
+<td>отклонено: 4/6 decided, но pooled body +0,007 / decided +0,016, trim хуже</td>
+<td>№379–386</td>
+</tr>
+<tr>
+<td>Финал</td>
+<td>Копировать v12075 (с E81 и 42 замороженными строками) в янв/июл часть финала</td>
+<td>решение 08.10</td>
+<td>не делать: доноры есть только для янв/июл, это ровно «optimizing for the ranking»; цена честного рецепта на янв/июл измерена канарейкой (+1,25 с)</td>
+<td>№390–391</td>
+</tr>
 <tr>
 <td>Очередь у гейта</td>
 <td>Задержка выталкивания соседей, просроченный EOBT и среднее опоздание отхода</td>
