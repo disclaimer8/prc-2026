@@ -185,6 +185,12 @@ Result: `[[to be filled after the final assembly]]` ([final submission §10](fin
   a scenario estimate (not a measurement) puts the cost of the lost coverage at about +0.18 s on the final
   ([coverage audit](../analysis/coverage_collapse_audit_20261008.md)). Lower coverage
   goes with higher error (correlation −0.45 over the twelve 2025 months, descriptive).
+- **Known infrastructure change in the final period.** Schiphol announced maintenance of
+  taxiways A and B from 9 March to 12 April and from 4 May to 26 June 2026, with fewer
+  aircraft taxiing at the same time. 20,753 of the 23,812 EHAM departures of June 2026 in the
+  final file fall in that window. The model has no input describing it: the announcement
+  carries no open licence, so under the organiser's rule it cannot be a model input, and 2025
+  holds no comparable episode to learn from ([checks](../analysis/breakthrough_review_checks_20261008.md)).
 - **Extreme labels dominate RMSE.** In January and July 2025, 45 of 344,419 labels
   exceed four hours and hold 52.4 % of the label's squared deviation from its mean
   ([data insights](data-insights.md#data-caveats)). Small changes in how such rows

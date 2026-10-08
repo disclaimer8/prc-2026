@@ -188,6 +188,11 @@ Other shifts: LTFM has no ground reception in any month (0.0–0.3 %, as in 2025
 LFPG 15–31 %; LEMD January/February 96–97 % against 0–2 % in 2025 (reception
 appeared at Madrid); EGLL June/July 93–96 % against 34–36 %.
 
+**EHAM taxiway works in June 2026.** Schiphol's announced maintenance of taxiways A and B
+(4 May – 26 June 2026) covers 20,753 of the 23,812 EHAM final departures in June. The model has
+no input for it (the announcement has no open licence and 2025 has no comparable episode), so
+EHAM June is a known risk rather than a modelled effect.
+
 **2026-06-11 is defective in the archive.** The day's surface file holds 91,473
 points against a median of 1.24 million; LIRF, LEBL, LEMD and LTFM are absent. Both
 replicas (`staging-0`, 42,736 traces; `prod-0`, 81,883 points) are truncated at the
