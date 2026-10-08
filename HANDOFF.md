@@ -2,18 +2,20 @@
 
 Правила, машины, рецепты — в `AGENTS.md`. Здесь — позиция, что считается и что делать дальше.
 
-## ТЕКУЩЕЕ СОСТОЯНИЕ — 08.10.2026 13:30Z (владелец: Claude; Codex остановлен)
+## ТЕКУЩЕЕ СОСТОЯНИЕ — 08.10.2026 16:00Z (владелец: Claude; Codex остановлен)
 
 | Блок | Статус | Где / как проверить | ETA |
 |---|---|---|---|
-| Табличные 52 fit (№388, регистрация 42a6f28) | идут; base готов 13:12Z | prc-cloud: `systemctl list-units 'prc-final-tab-*'`, логи `/root/prc-final-logs/`; hetzner: `/srv/prc-final-20261008`, `/srv/prc-final-logs/lgb_hz*.log`; сид готов ⇔ `models/final_tabular/<kind>/seed_<s>/complete.json` | все ≈ 00:30Z 09.10 |
-| NN E203 (№387, вердикт №393) | **готово** 13:41Z: 3×8, exact replay; `prediction.npz` SHA 6d50f9cb (670 790 ID) | `analysis/final_ordered_trajectory_20261008/execution/` (чекпоинты на Home `/home/a1/prc-nnfinal-20261008/out/models/`) | — |
-| 7 суточных ADS-B продуктов (№387/№392, 637ca02) | **готово** 120/120 | `data/final_adsb_derivatives_20261008/complete.json`, `analysis/final_adsb_derivatives_20261008/RESULTS.md` (коллапсы: EDDF фев, LIRF июн/июл; 11.06 усечён в архиве) | — |
-| Сборщик хвоста (№389, 9bd1f2e) | **готов**, ждёт входы; канарейка v12090 = **232,1933** (№390/391, +1,25 к v12075: цена единого рецепта без E81 и 42 замороженных строк) | `scripts/final_tail_assembly_20261008.py`, команды в `analysis/final_tail_assembly_20261008/PROTOCOL.md` | сборка после merge табличных |
-| Валидатор/загрузка финала | готовы | `scripts/validate_final_submission.py`, `docs/final-submission-runbook.md`; финал грузить новой обёрткой после последней обычной подачи | загрузка ≤ 13.10 вечер |
-| Документация для ревью | в master | README, `docs/*`, `paper/` (JOAS draft, 22 плейсхолдера) | заполнить после финала |
+| Табличные 52 fit (№388; узлы — №413) | идут. prc-cloud: CatBoost 2 очереди (a2: сиды 0–7, b2: 8–14), ≈ 2 ч/сид. hetzner: hz (base, lgb, raw, lobt) → hz2 (sched, eobt) → **hz3 (aobt, motion; перенесены с облака №413)** | prc-cloud `systemctl list-units 'prc-final-tab-*'`, `/root/prc-final-logs/cat_{a,b}.log`; hetzner `/srv/prc-final-logs/lgb_hz{,2,3}.log`; наблюдатель `scratchpad/watch_tab.sh` | всё ≈ 05Z 09.10 (ограничивает CatBoost) |
+| Слияние семейств | **lgb слит на маке** (проверка пути): `models/final_tabular/lgb/merged/` (5×670 790); base скопирован. Остальные: rsync seed-каталогов на мак → `final_tabular_models_20261008.py merge --root . --receipt analysis/final_tabular_models_20261008/receipt_42a6f28.json --kind K` | `models/final_tabular/` (в .gitignore) | по готовности |
+| NN E203 | **10 сидов готовы** (№400): `analysis/final_ordered_trajectory_20261008/execution_10seed/prediction_10seed.npz` + `complete.json`; сборщик принимает 10 сидов через `nn_seeds` (№412) | | готово |
+| E212: вес NN при 10 сидах (№407a) | Home GPU `prc-e212-seeds3to9-20261008` (42 fold-фита) → пересчёт цепочки на маке, вердикт №410. Аналитика ≈ 0,30–0,35 вместо 0,25 — **не решение**; вес меняется только по гейту | `analysis/e212_nn_weight_10seed_20261008*` | ≈ 18–19Z |
+| OPDI фев/июн | **готово**, включается в контракт (№404/405): `--opdi-extra data/opdi_final_20261008` | | готово |
+| Сборка финала | после слияния: `make-contract --mode final --feature-work data/final_feature_work_mac_20261008 --tabular-root models/final_tabular --nn-prediction …/execution_10seed/prediction_10seed.npz --nn-complete …/execution_10seed/complete.json --derivatives-work data/final_adsb_derivatives_20261008 --opdi-extra data/opdi_final_20261008 --out data/final_tail_20261009/contract.json` → `prepare` → `assemble --repeat-e156` → валидатор | `scripts/final_tail_assembly_20261008.py` | 09.10 утро |
+| Загрузка | обёртка control (янв/июл-строки финала как обычная подача, прогноз до загрузки) + final (один PUT, после последней обычной) — пишется (№414) | `scripts/final_transport_20261009.py` | control 09.10; final ≤ 13.10 20Z, с «да» Denys |
+| Диск мака | 55 ГБ свободно; 27 законченных каталогов `data/` → внешний PRCEXT (симлинки; диск держать подключённым) | `analysis/disk_relocation_20261008/` | — |
 
-Дальше: merge табличных семейств (seed-каталоги hetzner → через Мак → один root; `merge` без resource_guard) → `make-contract/prepare/assemble` хвоста → валидатор → один PUT `gentle-igloo_final.parquet` → открыть репо 14.10 ≈07–08Z + письмо/Discord. Ловушка агентов: `pgrep -f` ловит собственный ssh-шелл — ожидать по PID/unit, не по `pgrep -f`.
+Закрыто 08.10 (журнал): E207 v3, E209, E210, E211 (вперёд по времени хуже), защита NN при коллапсе покрытия (0/6), E213 (прилёты), «борт по стоянке», связка хвоста через прилёт. Номера журнала раздаёт координатор (дубли 397–407 разведены суффиксами).
 
 ## Передача управления Claude — 08.10.2026 12:19UTC
 
