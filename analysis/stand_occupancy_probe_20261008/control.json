@@ -1,0 +1,506 @@
+{
+ "2026-02-05 EGLL": {
+  "n_cov3": 107,
+  "cov3_with_stand": 106,
+  "cov3_own_within40": 14,
+  "cov3_own_within150": 67,
+  "cov3_any_dwell40": 17,
+  "pool": 46,
+  "pool_stand": 44,
+  "pool_any_pt150_win": 34,
+  "pool_any_stationary150_win": 25,
+  "pool_any_pt40_win": 15,
+  "own_dist_q50_q90": [
+   68.9,
+   1571.2
+  ],
+  "own_found_stationary": 101
+ },
+ "2026-02-05 LEMD": {
+  "n_cov3": 149,
+  "cov3_with_stand": 147,
+  "cov3_own_within40": 11,
+  "cov3_own_within150": 46,
+  "cov3_any_dwell40": 11,
+  "pool": 25,
+  "pool_stand": 24,
+  "pool_any_pt150_win": 10,
+  "pool_any_stationary150_win": 4,
+  "pool_any_pt40_win": 2,
+  "own_dist_q50_q90": [
+   892.8,
+   3052.2
+  ],
+  "own_found_stationary": 145
+ },
+ "2026-02-05 LEBL": {
+  "n_cov3": 97,
+  "cov3_with_stand": 87,
+  "cov3_own_within40": 47,
+  "cov3_own_within150": 59,
+  "cov3_any_dwell40": 49,
+  "pool": 6,
+  "pool_stand": 5,
+  "pool_any_pt150_win": 3,
+  "pool_any_stationary150_win": 2,
+  "pool_any_pt40_win": 1,
+  "own_dist_q50_q90": [
+   34.2,
+   1958.4
+  ],
+  "own_found_stationary": 87
+ },
+ "2026-02-05 LSZH": {
+  "n_cov3": 135,
+  "cov3_with_stand": 128,
+  "cov3_own_within40": 62,
+  "cov3_own_within150": 99,
+  "cov3_any_dwell40": 70,
+  "pool": 18,
+  "pool_stand": 15,
+  "pool_any_pt150_win": 13,
+  "pool_any_stationary150_win": 11,
+  "pool_any_pt40_win": 7,
+  "own_dist_q50_q90": [
+   40.8,
+   943.8
+  ],
+  "own_found_stationary": 128
+ },
+ "2026-02-05 EDDM": {
+  "n_cov3": 215,
+  "cov3_with_stand": 195,
+  "cov3_own_within40": 122,
+  "cov3_own_within150": 182,
+  "cov3_any_dwell40": 126,
+  "pool": 14,
+  "pool_stand": 12,
+  "pool_any_pt150_win": 12,
+  "pool_any_stationary150_win": 11,
+  "pool_any_pt40_win": 6,
+  "own_dist_q50_q90": [
+   23.1,
+   106.9
+  ],
+  "own_found_stationary": 195
+ },
+ "2026-06-10 EGLL": {
+  "n_cov3": 387,
+  "cov3_with_stand": 384,
+  "cov3_own_within40": 101,
+  "cov3_own_within150": 346,
+  "cov3_any_dwell40": 115,
+  "pool": 33,
+  "pool_stand": 32,
+  "pool_any_pt150_win": 31,
+  "pool_any_stationary150_win": 26,
+  "pool_any_pt40_win": 11,
+  "own_dist_q50_q90": [
+   54.4,
+   144.1
+  ],
+  "own_found_stationary": 384
+ },
+ "2026-06-10 LEMD": {
+  "n_cov3": 97,
+  "cov3_with_stand": 95,
+  "cov3_own_within40": 43,
+  "cov3_own_within150": 75,
+  "cov3_any_dwell40": 46,
+  "pool": 88,
+  "pool_stand": 87,
+  "pool_any_pt150_win": 30,
+  "pool_any_stationary150_win": 14,
+  "pool_any_pt40_win": 8,
+  "own_dist_q50_q90": [
+   45.3,
+   2806.6
+  ],
+  "own_found_stationary": 95
+ },
+ "2026-06-10 LEBL": {
+  "n_cov3": 101,
+  "cov3_with_stand": 96,
+  "cov3_own_within40": 45,
+  "cov3_own_within150": 66,
+  "cov3_any_dwell40": 49,
+  "pool": 28,
+  "pool_stand": 25,
+  "pool_any_pt150_win": 12,
+  "pool_any_stationary150_win": 7,
+  "pool_any_pt40_win": 4,
+  "own_dist_q50_q90": [
+   54.7,
+   1591.2
+  ],
+  "own_found_stationary": 96
+ },
+ "2026-06-10 LSZH": {
+  "n_cov3": 25,
+  "cov3_with_stand": 18,
+  "cov3_own_within40": 5,
+  "cov3_own_within150": 14,
+  "cov3_any_dwell40": 6,
+  "pool": 237,
+  "pool_stand": 229,
+  "pool_any_pt150_win": 26,
+  "pool_any_stationary150_win": 21,
+  "pool_any_pt40_win": 10,
+  "own_dist_q50_q90": [
+   67.8,
+   887.9
+  ],
+  "own_found_stationary": 18
+ },
+ "2026-06-10 EDDM": {
+  "n_cov3": 231,
+  "cov3_with_stand": 188,
+  "cov3_own_within40": 99,
+  "cov3_own_within150": 159,
+  "cov3_any_dwell40": 103,
+  "pool": 14,
+  "pool_stand": 10,
+  "pool_any_pt150_win": 10,
+  "pool_any_stationary150_win": 9,
+  "pool_any_pt40_win": 6,
+  "own_dist_q50_q90": [
+   29.7,
+   234.7
+  ],
+  "own_found_stationary": 188
+ },
+ "2026-07-02 EGLL": {
+  "n_cov3": 348,
+  "cov3_with_stand": 346,
+  "cov3_own_within40": 100,
+  "cov3_own_within150": 314,
+  "cov3_any_dwell40": 108,
+  "pool": 32,
+  "pool_stand": 32,
+  "pool_any_pt150_win": 32,
+  "pool_any_stationary150_win": 28,
+  "pool_any_pt40_win": 19,
+  "own_dist_q50_q90": [
+   53.7,
+   134.1
+  ],
+  "own_found_stationary": 345
+ },
+ "2026-07-02 LEMD": {
+  "n_cov3": 113,
+  "cov3_with_stand": 110,
+  "cov3_own_within40": 45,
+  "cov3_own_within150": 93,
+  "cov3_any_dwell40": 48,
+  "pool": 144,
+  "pool_stand": 140,
+  "pool_any_pt150_win": 39,
+  "pool_any_stationary150_win": 18,
+  "pool_any_pt40_win": 9,
+  "own_dist_q50_q90": [
+   46.0,
+   1109.8
+  ],
+  "own_found_stationary": 110
+ },
+ "2026-07-02 LEBL": {
+  "n_cov3": 163,
+  "cov3_with_stand": 155,
+  "cov3_own_within40": 71,
+  "cov3_own_within150": 103,
+  "cov3_any_dwell40": 74,
+  "pool": 33,
+  "pool_stand": 27,
+  "pool_any_pt150_win": 18,
+  "pool_any_stationary150_win": 16,
+  "pool_any_pt40_win": 2,
+  "own_dist_q50_q90": [
+   48.0,
+   1676.2
+  ],
+  "own_found_stationary": 155
+ },
+ "2026-07-02 LSZH": {
+  "n_cov3": 76,
+  "cov3_with_stand": 68,
+  "cov3_own_within40": 18,
+  "cov3_own_within150": 47,
+  "cov3_any_dwell40": 18,
+  "pool": 15,
+  "pool_stand": 9,
+  "pool_any_pt150_win": 7,
+  "pool_any_stationary150_win": 4,
+  "pool_any_pt40_win": 2,
+  "own_dist_q50_q90": [
+   62.7,
+   1070.0
+  ],
+  "own_found_stationary": 68
+ },
+ "2026-07-02 EDDM": {
+  "n_cov3": 293,
+  "cov3_with_stand": 244,
+  "cov3_own_within40": 130,
+  "cov3_own_within150": 219,
+  "cov3_any_dwell40": 134,
+  "pool": 7,
+  "pool_stand": 7,
+  "pool_any_pt150_win": 7,
+  "pool_any_stationary150_win": 6,
+  "pool_any_pt40_win": 4,
+  "own_dist_q50_q90": [
+   28.1,
+   156.9
+  ],
+  "own_found_stationary": 244
+ },
+ "2025-02-06 EGLL": {
+  "n_cov3": 180,
+  "cov3_with_stand": 175,
+  "cov3_own_within40": 33,
+  "cov3_own_within150": 136,
+  "cov3_any_dwell40": 42,
+  "pool": 145,
+  "pool_stand": 145,
+  "pool_any_pt150_win": 95,
+  "pool_any_stationary150_win": 66,
+  "pool_any_pt40_win": 44,
+  "own_dist_q50_q90": [
+   56.2,
+   808.3
+  ],
+  "own_found_stationary": 173
+ },
+ "2025-02-06 LEMD": {
+  "n_cov3": 0,
+  "cov3_with_stand": 0,
+  "cov3_own_within40": 0,
+  "cov3_own_within150": 0,
+  "cov3_any_dwell40": 0,
+  "pool": 528,
+  "pool_stand": 526,
+  "pool_any_pt150_win": 0,
+  "pool_any_stationary150_win": 0,
+  "pool_any_pt40_win": 0,
+  "own_dist_q50_q90": null,
+  "own_found_stationary": 0
+ },
+ "2025-02-06 LEBL": {
+  "n_cov3": 73,
+  "cov3_with_stand": 72,
+  "cov3_own_within40": 28,
+  "cov3_own_within150": 46,
+  "cov3_any_dwell40": 29,
+  "pool": 1,
+  "pool_stand": 1,
+  "pool_any_pt150_win": 1,
+  "pool_any_stationary150_win": 0,
+  "pool_any_pt40_win": 0,
+  "own_dist_q50_q90": [
+   94.8,
+   2091.0
+  ],
+  "own_found_stationary": 72
+ },
+ "2025-02-06 LSZH": {
+  "n_cov3": 117,
+  "cov3_with_stand": 109,
+  "cov3_own_within40": 57,
+  "cov3_own_within150": 89,
+  "cov3_any_dwell40": 60,
+  "pool": 9,
+  "pool_stand": 8,
+  "pool_any_pt150_win": 8,
+  "pool_any_stationary150_win": 7,
+  "pool_any_pt40_win": 3,
+  "own_dist_q50_q90": [
+   39.1,
+   703.2
+  ],
+  "own_found_stationary": 109
+ },
+ "2025-02-06 EDDM": {
+  "n_cov3": 223,
+  "cov3_with_stand": 201,
+  "cov3_own_within40": 120,
+  "cov3_own_within150": 175,
+  "cov3_any_dwell40": 126,
+  "pool": 8,
+  "pool_stand": 8,
+  "pool_any_pt150_win": 8,
+  "pool_any_stationary150_win": 7,
+  "pool_any_pt40_win": 5,
+  "own_dist_q50_q90": [
+   23.9,
+   1423.7
+  ],
+  "own_found_stationary": 201
+ },
+ "2025-06-11 EGLL": {
+  "n_cov3": 5,
+  "cov3_with_stand": 5,
+  "cov3_own_within40": 0,
+  "cov3_own_within150": 3,
+  "cov3_any_dwell40": 1,
+  "pool": 563,
+  "pool_stand": 554,
+  "pool_any_pt150_win": 137,
+  "pool_any_stationary150_win": 66,
+  "pool_any_pt40_win": 28,
+  "own_dist_q50_q90": [
+   71.5,
+   693.3
+  ],
+  "own_found_stationary": 4
+ },
+ "2025-06-11 LEMD": {
+  "n_cov3": 164,
+  "cov3_with_stand": 163,
+  "cov3_own_within40": 33,
+  "cov3_own_within150": 99,
+  "cov3_any_dwell40": 33,
+  "pool": 38,
+  "pool_stand": 36,
+  "pool_any_pt150_win": 25,
+  "pool_any_stationary150_win": 9,
+  "pool_any_pt40_win": 2,
+  "own_dist_q50_q90": [
+   64.6,
+   2753.1
+  ],
+  "own_found_stationary": 162
+ },
+ "2025-06-11 LEBL": {
+  "n_cov3": 322,
+  "cov3_with_stand": 282,
+  "cov3_own_within40": 127,
+  "cov3_own_within150": 196,
+  "cov3_any_dwell40": 139,
+  "pool": 11,
+  "pool_stand": 10,
+  "pool_any_pt150_win": 8,
+  "pool_any_stationary150_win": 7,
+  "pool_any_pt40_win": 6,
+  "own_dist_q50_q90": [
+   54.3,
+   1771.1
+  ],
+  "own_found_stationary": 282
+ },
+ "2025-06-11 LSZH": {
+  "n_cov3": 127,
+  "cov3_with_stand": 121,
+  "cov3_own_within40": 67,
+  "cov3_own_within150": 90,
+  "cov3_any_dwell40": 70,
+  "pool": 33,
+  "pool_stand": 30,
+  "pool_any_pt150_win": 19,
+  "pool_any_stationary150_win": 7,
+  "pool_any_pt40_win": 3,
+  "own_dist_q50_q90": [
+   36.8,
+   1120.4
+  ],
+  "own_found_stationary": 120
+ },
+ "2025-06-11 EDDM": {
+  "n_cov3": 249,
+  "cov3_with_stand": 215,
+  "cov3_own_within40": 128,
+  "cov3_own_within150": 197,
+  "cov3_any_dwell40": 135,
+  "pool": 12,
+  "pool_stand": 9,
+  "pool_any_pt150_win": 9,
+  "pool_any_stationary150_win": 8,
+  "pool_any_pt40_win": 6,
+  "own_dist_q50_q90": [
+   24.6,
+   121.1
+  ],
+  "own_found_stationary": 215
+ },
+ "2025-07-03 EGLL": {
+  "n_cov3": 12,
+  "cov3_with_stand": 11,
+  "cov3_own_within40": 2,
+  "cov3_own_within150": 4,
+  "cov3_any_dwell40": 2,
+  "pool": 435,
+  "pool_stand": 425,
+  "pool_any_pt150_win": 121,
+  "pool_any_stationary150_win": 52,
+  "pool_any_pt40_win": 16,
+  "own_dist_q50_q90": [
+   61.9,
+   2501.0
+  ],
+  "own_found_stationary": 7
+ },
+ "2025-07-03 LEMD": {
+  "n_cov3": 30,
+  "cov3_with_stand": 30,
+  "cov3_own_within40": 17,
+  "cov3_own_within150": 30,
+  "cov3_any_dwell40": 17,
+  "pool": 372,
+  "pool_stand": 362,
+  "pool_any_pt150_win": 52,
+  "pool_any_stationary150_win": 16,
+  "pool_any_pt40_win": 17,
+  "own_dist_q50_q90": [
+   33.7,
+   67.8
+  ],
+  "own_found_stationary": 30
+ },
+ "2025-07-03 LEBL": {
+  "n_cov3": 96,
+  "cov3_with_stand": 87,
+  "cov3_own_within40": 46,
+  "cov3_own_within150": 67,
+  "cov3_any_dwell40": 48,
+  "pool": 52,
+  "pool_stand": 45,
+  "pool_any_pt150_win": 36,
+  "pool_any_stationary150_win": 26,
+  "pool_any_pt40_win": 7,
+  "own_dist_q50_q90": [
+   36.7,
+   1679.5
+  ],
+  "own_found_stationary": 87
+ },
+ "2025-07-03 LSZH": {
+  "n_cov3": 117,
+  "cov3_with_stand": 112,
+  "cov3_own_within40": 53,
+  "cov3_own_within150": 73,
+  "cov3_any_dwell40": 55,
+  "pool": 45,
+  "pool_stand": 41,
+  "pool_any_pt150_win": 28,
+  "pool_any_stationary150_win": 14,
+  "pool_any_pt40_win": 9,
+  "own_dist_q50_q90": [
+   42.8,
+   936.6
+  ],
+  "own_found_stationary": 110
+ },
+ "2025-07-03 EDDM": {
+  "n_cov3": 0,
+  "cov3_with_stand": 0,
+  "cov3_own_within40": 0,
+  "cov3_own_within150": 0,
+  "cov3_any_dwell40": 0,
+  "pool": 470,
+  "pool_stand": 400,
+  "pool_any_pt150_win": 1,
+  "pool_any_stationary150_win": 0,
+  "pool_any_pt40_win": 0,
+  "own_dist_q50_q90": null,
+  "own_found_stationary": 0
+ }
+}

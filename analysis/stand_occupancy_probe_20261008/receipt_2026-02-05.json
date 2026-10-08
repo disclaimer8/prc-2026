@@ -1,0 +1,23 @@
+{
+ "day": "2026-02-05",
+ "departures_at_airports": 2261,
+ "pool": 109,
+ "seconds": 0.3,
+ "surface_points": 542661,
+ "per_airport_dep": {
+  "ADEP_mvt": [
+   "EDDM",
+   "EGLL",
+   "LEBL",
+   "LEMD",
+   "LSZH"
+  ],
+  "len": [
+   366,
+   632,
+   428,
+   521,
+   314
+  ]
+ }
+}

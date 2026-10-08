@@ -1,0 +1,346 @@
+{
+ "R40_preregistered": {
+  "per_airport_month": [
+   {
+    "month": "2025-02",
+    "airport": "EGLL",
+    "pool_no_nm": 1,
+    "accepted": 0,
+    "sse_chain_pool": 5329.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": 0.0
+   },
+   {
+    "month": "2025-02",
+    "airport": "LEMD",
+    "pool_no_nm": 1,
+    "accepted": 0,
+    "sse_chain_pool": 30625.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": 0.0
+   },
+   {
+    "month": "2025-06",
+    "airport": "EGLL",
+    "pool_no_nm": 1,
+    "accepted": 0,
+    "sse_chain_pool": 582169.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": 0.0
+   },
+   {
+    "month": "2025-06",
+    "airport": "LSZH",
+    "pool_no_nm": 4,
+    "accepted": 0,
+    "sse_chain_pool": 244516.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": 0.0
+   },
+   {
+    "month": "2025-07",
+    "airport": "EDDM",
+    "pool_no_nm": 14,
+    "accepted": 0,
+    "sse_chain_pool": 205087.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": 0.0
+   },
+   {
+    "month": "2025-07",
+    "airport": "EGLL",
+    "pool_no_nm": 4,
+    "accepted": 0,
+    "sse_chain_pool": 105411.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": 0.0
+   },
+   {
+    "month": "2025-07",
+    "airport": "LEBL",
+    "pool_no_nm": 3,
+    "accepted": 0,
+    "sse_chain_pool": 331526.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": 0.0
+   },
+   {
+    "month": "2025-07",
+    "airport": "LEMD",
+    "pool_no_nm": 42,
+    "accepted": 2,
+    "sse_chain_pool": 2598405.0,
+    "sse_chain_acc": 19720.0,
+    "sse_cand_acc": 12623.510500704766,
+    "share_sse": 0.007589271110546662
+   },
+   {
+    "month": "2025-07",
+    "airport": "LSZH",
+    "pool_no_nm": 17,
+    "accepted": 0,
+    "sse_chain_pool": 792294.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": 0.0
+   },
+   {
+    "month": "2026-02",
+    "airport": "EGLL",
+    "pool_no_nm": 1,
+    "accepted": 0,
+    "sse_chain_pool": 0.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": NaN
+   },
+   {
+    "month": "2026-02",
+    "airport": "LEMD",
+    "pool_no_nm": 1,
+    "accepted": 0,
+    "sse_chain_pool": 0.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": NaN
+   },
+   {
+    "month": "2026-02",
+    "airport": "LSZH",
+    "pool_no_nm": 6,
+    "accepted": 0,
+    "sse_chain_pool": 0.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": NaN
+   },
+   {
+    "month": "2026-06",
+    "airport": "LEBL",
+    "pool_no_nm": 2,
+    "accepted": 0,
+    "sse_chain_pool": 0.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": NaN
+   },
+   {
+    "month": "2026-06",
+    "airport": "LSZH",
+    "pool_no_nm": 6,
+    "accepted": 0,
+    "sse_chain_pool": 0.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": NaN
+   },
+   {
+    "month": "2026-07",
+    "airport": "LSZH",
+    "pool_no_nm": 6,
+    "accepted": 0,
+    "sse_chain_pool": 0.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": NaN
+   }
+  ],
+  "totals": [
+   {
+    "year": 2025,
+    "pool_no_nm": 87,
+    "accepted": 2,
+    "sse_chain_pool": 4895362.0,
+    "sse_chain_acc": 19720.0,
+    "sse_cand_acc": 12623.510500704766
+   },
+   {
+    "year": 2026,
+    "pool_no_nm": 22,
+    "accepted": 0,
+    "sse_chain_pool": 0.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0
+   }
+  ]
+ },
+ "R150_posthoc": {
+  "per_airport_month": [
+   {
+    "month": "2025-02",
+    "airport": "EGLL",
+    "pool_no_nm": 1,
+    "accepted": 0,
+    "sse_chain_pool": 5329.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": 0.0
+   },
+   {
+    "month": "2025-02",
+    "airport": "LEMD",
+    "pool_no_nm": 1,
+    "accepted": 0,
+    "sse_chain_pool": 30625.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": 0.0
+   },
+   {
+    "month": "2025-06",
+    "airport": "EGLL",
+    "pool_no_nm": 1,
+    "accepted": 0,
+    "sse_chain_pool": 582169.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": 0.0
+   },
+   {
+    "month": "2025-06",
+    "airport": "LSZH",
+    "pool_no_nm": 4,
+    "accepted": 0,
+    "sse_chain_pool": 244516.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": 0.0
+   },
+   {
+    "month": "2025-07",
+    "airport": "EDDM",
+    "pool_no_nm": 14,
+    "accepted": 0,
+    "sse_chain_pool": 205087.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": 0.0
+   },
+   {
+    "month": "2025-07",
+    "airport": "EGLL",
+    "pool_no_nm": 4,
+    "accepted": 0,
+    "sse_chain_pool": 105411.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": 0.0
+   },
+   {
+    "month": "2025-07",
+    "airport": "LEBL",
+    "pool_no_nm": 3,
+    "accepted": 0,
+    "sse_chain_pool": 331526.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": 0.0
+   },
+   {
+    "month": "2025-07",
+    "airport": "LEMD",
+    "pool_no_nm": 42,
+    "accepted": 1,
+    "sse_chain_pool": 2598405.0,
+    "sse_chain_acc": 1764.0,
+    "sse_cand_acc": 4157.670402459717,
+    "share_sse": 0.0006788780040063039
+   },
+   {
+    "month": "2025-07",
+    "airport": "LSZH",
+    "pool_no_nm": 17,
+    "accepted": 0,
+    "sse_chain_pool": 792294.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": 0.0
+   },
+   {
+    "month": "2026-02",
+    "airport": "EGLL",
+    "pool_no_nm": 1,
+    "accepted": 0,
+    "sse_chain_pool": 0.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": NaN
+   },
+   {
+    "month": "2026-02",
+    "airport": "LEMD",
+    "pool_no_nm": 1,
+    "accepted": 0,
+    "sse_chain_pool": 0.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": NaN
+   },
+   {
+    "month": "2026-02",
+    "airport": "LSZH",
+    "pool_no_nm": 6,
+    "accepted": 0,
+    "sse_chain_pool": 0.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": NaN
+   },
+   {
+    "month": "2026-06",
+    "airport": "LEBL",
+    "pool_no_nm": 2,
+    "accepted": 0,
+    "sse_chain_pool": 0.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": NaN
+   },
+   {
+    "month": "2026-06",
+    "airport": "LSZH",
+    "pool_no_nm": 6,
+    "accepted": 0,
+    "sse_chain_pool": 0.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": NaN
+   },
+   {
+    "month": "2026-07",
+    "airport": "LSZH",
+    "pool_no_nm": 6,
+    "accepted": 0,
+    "sse_chain_pool": 0.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0,
+    "share_sse": NaN
+   }
+  ],
+  "totals": [
+   {
+    "year": 2025,
+    "pool_no_nm": 87,
+    "accepted": 1,
+    "sse_chain_pool": 4895362.0,
+    "sse_chain_acc": 1764.0,
+    "sse_cand_acc": 4157.670402459717
+   },
+   {
+    "year": 2026,
+    "pool_no_nm": 22,
+    "accepted": 0,
+    "sse_chain_pool": 0.0,
+    "sse_chain_acc": 0.0,
+    "sse_cand_acc": 0.0
+   }
+  ]
+ }
+}
