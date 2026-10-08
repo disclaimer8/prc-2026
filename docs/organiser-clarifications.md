@@ -42,6 +42,8 @@ Questions are paraphrased, and other participants are not named.
 | 2026-10-08 11:16 | (answer to our questions) "(3), Thank you for spotting this error: there shouldn't be anymore +/-12s discrepancy. Final prediction on final_ranking.parquet. Please re-download the data. ... (1)/(2) maybe it is just better to extend the deadline to Oct 14th 12:00 CET. I will update the webpage and anyway send an email to all team correspondents (4) Gee, I got it wrong! deadline is noon 14Th Oct CET, or 2026-10-14T10:00Z" |
 | 2026-10-08 11:55 | (after we reported that the re-uploaded file still differs by up to ±12 s) "yeah, sorry, that is the "randomness" I had to introduce...just use the final_ranking.parquet / final_submission.parquet for the final phase" |
 
+| 2026-10-08 (e-mail to team correspondents) | "The final phase will ask to predict 4 months of taxi-out, the two initial months (Jan and July 2026) plus two additional one (Feb and Jun 2026). ... We will be able to rank per Jan/Jul, Feb/Jun and the four months combined Jan/Feb/Jun/Jul which together with the review of the code and documentation would provide (we hope) enough evidence to select the best teams. Given the introduction of this final phase, we have extended the deadline to noon 14th Oct CET, or 2026-10-14T10:00Z" |
+
 The 3 October statement "no final round" was superseded by the 8 October announcement above.
 The final submission is computed only from `final_ranking.parquet` as published on 8 October
 2026 at 11:04 UTC (SHA-256 `4b0692a7…bc69f`); its timestamps carry deliberate random shifts of up
