@@ -2,6 +2,16 @@
 
 Правила, машины, рецепты — в `AGENTS.md`. Здесь — позиция, что считается и что делать дальше.
 
+## ФИНАЛЬНЫЙ ЭТАП — проверенные факты, 08.10.2026 10:30Z (сессия Claude; решения по конвейеру — за Codex/Denys)
+
+- **Объявление espinielli в Discord 08.10 07:34Z и 07:46Z** (дословно — `docs/organiser-clarifications.md` после обновления): финальный датасет для одного слепого ранжирования; ранжирование по янв/июл, по фев/июн и по всем 4 месяцам; на ревью — топ-30 по янв/июл **или** топ-30 по финалу; причина — признаки «optimizing for the ranking». **«Repos/docs deadline will remain the same (the design of the model shouldn't change)»**; финальная подача до **2026-10-14T12:00+02:00 = 10:00Z**.
+- Сайт (eligibility/ranking/data, 08.10): одна подача `gentle-igloo_final.parquet`; условие приза «Final single submission is uploaded by 2026-10-14T12:00 CET».
+- Бакет `prc-2026-datasets` (08:47–08:48Z): `final_ranking.parquet` (1 341 197 строк, 30 колонок, схема = ranking) и `final_submitting.parquet` (670 790 строк, MVT_ID_mvt Float64 + TAXITIME_SEC_mvt Int32). Скачаны в `data/prc-2026-datasets/`. **Месяцы: 2026-01, 02, 06, 07**; DEP 152 719 / 144 158 / 181 791 / 192 122. Все 344 841 DEP-ID янв/июл совпадают со старым ranking.
+- **Шум во входах:** в строках янв/июл у ~92 % движений `MVT_TIME_UTC_mvt` сдвинут на целое число секунд в [−12, +12] (DEP и ARR); у ARR так же `BLOCK_TIME_UTC_mvt` и `TAXITIME_SEC_mvt` (до ±24 с), причём taxi-in не равен MVT−BLOCK после сдвига (сдвиги независимы). Обучающие файлы 2025 не менялись (даты 13.08).
+- adsb.lol `globe_history_2026`: релизы за февраль и июнь 2026 есть (prod ≈ 3 ГБ/сутки, 58 суток).
+- На маке свободно ~13 ГБ диска (10:30Z).
+- Claude параллельно (без правки конвейера, отчёты в `analysis/final_*_20261008.md`): чувствительность к шуму ±12 с, перенос на фев/июн (покрытие ADS-B), валидатор финального файла, риск-аудит ревью.
+
 ## Оперативное обновление 08.10.2026 02:30:30 UTC — E207 v2 технически остановлен
 
 - **V2 controller38371 завершён**, оба raw-unit inactive/dead/MainPID0. 171 сохранил183day receipts и shard`complete.json`;175 —145day receipts без shard complete. **Всего328 сохранённых дней,0 prep/target-fit/ranking.** [Полная квитанцияv2](analysis/e207_full_token_v2_20261008/STATUS.md).
