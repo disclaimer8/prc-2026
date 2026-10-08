@@ -1,0 +1,14 @@
+18:21:40 B: reading E208 bulletins
+18:21:40 B: {'closure_bulletins_unique': 13, 'events_total': 7, 'events_2025_training_days': 4, 'hubs_2025': ['LEMD', 'LFPG']} 118
+18:21:40 C: EHAM counts in final_ranking
+18:21:41 C: {'final_ranking_rows': 1341197, 'eham_rows': 86958, 'eham_by_month': {'2026-01': 18741, '2026-02': 19423, '2026-06': 23812, '2026-07': 24982}, 'eham_june_until_26_inclusive': 20753}
+18:21:41 A: loading OOF
+18:21:41 A: rows 2085047
+18:21:41 A: identity check {'max_abs': 12539.875133534066, 'rms': 15.983236168616168, 'rows_over_1s': 455, 'p_row_sum_max_dev': 4.710727807832882e-08, 'p_on_infeasible_max': 0.0, 'regular_always_feasible': True}
+18:21:41 A: mask=all lambda=main in-sample -4.0330 s, LOPO +4.4790 s (3/6), half-year fwd +6.4046 s (1/6), expanding +1.3546 s (3/9), gap -3.5494 s (4/9)
+18:21:41 A: mask=all lambda=zero in-sample -4.0368 s, LOPO +11.8469 s (2/6), half-year fwd +19.1114 s (1/6), expanding +9.5906 s (3/9), gap -3.9812 s (4/9)
+18:21:41 A: mask=all lambda=x100 in-sample -2.9554 s, LOPO -1.7329 s (4/6), half-year fwd +2.4665 s (2/6), expanding -0.6162 s (3/9), gap -0.6450 s (4/9)
+18:21:41 A: mask=body_y<=7200 lambda=main in-sample -3.5141 s, LOPO -2.7842 s (6/6), half-year fwd -2.9899 s (6/6), expanding -2.6587 s (8/9), gap -3.6425 s (8/9)
+18:21:41 A: mask=serviced lambda=main in-sample -0.3956 s, LOPO -0.3397 s (6/6), half-year fwd -0.4753 s (6/6), expanding -0.3548 s (9/9), gap -0.3298 s (8/9)
+18:21:42 A: clipped sensitivity {'half_year_forward': {'n': 1079528, 'drmse_linear': 6.404562726635191, 'drmse_clipped': -1.2743437653406318, 'rows_clipped': 1039305, 'dp_row_sum_max': 5.785402827163458e-08}, 'in_sample': {'n': 2085047, 'drmse_linear': -4.032962962995214, 'drmse_clipped': -2.903726821844657, 'rows_clipped': 29643, 'dp_row_sum_max': 2.603380936259318e-08}}
+18:21:42 written /Users/denyskolomiiets/prc-2026/analysis/breakthrough_review_checks_20261008/result.json

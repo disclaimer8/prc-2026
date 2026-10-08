@@ -1,0 +1,20 @@
+identity-failure rows 455 nm_missing share 0.321 LIRF 0.022 median |pred-raw| 55.4 pred-raw>0 share 0.93
+ bucket of bad rows [ 12  97 126 220]  y of bad rows median 955.0  |e| median 71.0
+half-year fwd serviced: with bad rows -0.4753, excluding bad rows (fit and eval) -0.1923
+clipped offset-preserving, serviced half-year fwd: {'n': 1078571, 'lin': -0.47533076275053077, 'clipped': -0.2659630940561044, 'rows_clipped': 0, 'p0_new_min': 0.0008554669623628715, 'p0_new_max': 0.999998810699816}
+clipped offset-preserving, serviced in-sample: {'n': 2083560, 'lin': -0.3956390240955727, 'clipped': -0.194222163728341, 'rows_clipped': 0, 'p0_new_min': 0.0011077012781604352, 'p0_new_max': 0.9999985933335775}
+month 7 expanding: dRMSE -1.021, LIRF share of dSSE 54%, bucket3 share 86%
+month 10 expanding: dRMSE -0.681, LIRF share of dSSE 69%, bucket3 share 69%
+serviced half-year dSSE -2.142e+08 over 1078571 rows; per-row -198.60 s^2; E211 convention (per 344841 rows, R=252.43): -0.3934 s
+LOPO serviced per pair: [([1, 7], -0.625), ([2, 8], -0.384), ([3, 9], -0.084), ([4, 10], -0.424), ([5, 11], -0.168), ([6, 12], -0.286)]
+LOPO theta bucket>=3600 col: [-0.537 -0.604 -0.793 -0.644 -0.628 -0.638]  h_IOBT: [-0.786 -0.585 -0.95  -0.797 -0.82  -0.8  ]
+--- B events
+EGLL 2026-01-01 ['exit:A10W:closed', 'exit:A12:closed'] 05:31 11:50 sup 11:50 bulletins 7
+LEMD 2025-07-15 ['taxiway:A24:closed', 'taxiway:AZ3:closed', 'taxiway:BY12:closed'] 10:30 11:30 sup 11:30 bulletins 1
+LFPG 2026-07-22 ['exit:W4:closed', 'exit:W5:closed'] 06:55 07:55 sup 07:55 bulletins 1
+LFPG 2026-07-22 ['exit:W4:closed', 'exit:W5:closed'] 14:34 15:34 sup 15:34 bulletins 1
+LFPG 2025-07-15 ['exit:Y1:closed'] 03:56 04:56 sup 04:56 bulletins 1
+LFPG 2025-07-01 ['runway:26R:closed'] 03:52 04:52 sup 04:52 bulletins 1
+LFPG 2025-07-22 ['taxiway:T12:closed'] 07:06 08:06 sup 08:06 bulletins 1
+{"per_event": [{"airport": "LEMD", "objects": ["taxiway:A24:closed", "taxiway:AZ3:closed", "taxiway:BY12:closed"], "start": "2025-07-15T10:30:00+00:00", "end": "2025-07-15T11:30:00+00:00", "end_superseded": "2025-07-15T11:30:00+00:00", "exposed_departures": 47, "exposed_departures_superseded": 47}, {"airport": "LFPG", "objects": ["exit:Y1:closed"], "start": "2025-07-15T03:56:00+00:00", "end": "2025-07-15T04:56:00+00:00", "end_superseded": "2025-07-15T04:56:00+00:00", "exposed_departures": 12, "exposed_departures_superseded": 12}, {"airport": "LFPG", "objects": ["runway:26R:closed"], "start": "2025-07-01T03:52:00+00:00", "end": "2025-07-01T04:52:00+00:00", "end_superseded": "2025-07-01T04:52:00+00:00", "exposed_departures": 12, "exposed_departures_superseded": 12}, {"airport": "LFPG", "objects": ["taxiway:T12:closed"], "start": "2025-07-22T07:06:00+00:00", "end": "2025-07-22T08:06:00+00:00", "end_superseded": "2025-07-22T08:06:00+00:00", "exposed_departures": 47, "exposed_departures_superseded": 47}], "unique_departures_raw": 118, "unique_departures_superseded": 118, "training_departures_2025": 2085047, "departures_on_the_four_july_days": 48925}
+{'EGLL': {'2026-01-01': 1}, 'LEMD': {'2025-07-15': 1}, 'LFPG': {'2026-07-22': 2, '2025-07-15': 1, '2025-07-01': 1, '2025-07-22': 1}}

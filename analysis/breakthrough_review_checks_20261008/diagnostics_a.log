@@ -1,0 +1,50 @@
+rows: all 2085047 serviced 2083560 tail LIRF&noNM 1487 tail share of SSE 24.6%
+identity: rows>1s 455 their LIRF share 0.02197802197802198
+serviced half-year theta: {'g*bucket<600': np.float64(0.2084), 'g*bucket600-1800': np.float64(0.068), 'g*bucket1800-3600': np.float64(-0.0701), 'g*bucket>=3600': np.float64(-0.5354), 'g*nm_missing': np.float64(-0.2088), 'g*LIRF': np.float64(-0.0373), 'h_schedule': np.float64(0.1055), 'h_IOBT': np.float64(-0.7552), 'h_LOBT': np.float64(-0.0052), 'h_EOBT': np.float64(0.1781), 'h_dayshift': np.float64(-0.3475)}
+half-year fwd serviced dRMSE -0.4753 dSSE -2.142e+08
+ col g*bucket<600       theta  +0.2084  -2*th*c -2.552e+07  th^2*Q_jj +8.079e+06  rms(D_j) 13.1  rms(dm_j)=2.74
+ col g*bucket600-1800   theta  +0.0680  -2*th*c +3.514e+05  th^2*Q_jj +8.983e+05  rms(D_j) 13.4  rms(dm_j)=0.91
+ col g*bucket1800-3600  theta  -0.0701  -2*th*c -1.046e+07  th^2*Q_jj +1.139e+06  rms(D_j) 14.7  rms(dm_j)=1.03
+ col g*bucket>=3600     theta  -0.5354  -2*th*c -2.823e+08  th^2*Q_jj +1.131e+08  rms(D_j) 19.1  rms(dm_j)=10.24
+ col g*nm_missing       theta  -0.2088  -2*th*c +3.465e+05  th^2*Q_jj +1.592e+05  rms(D_j) 1.8  rms(dm_j)=0.38
+ col g*LIRF             theta  -0.0373  -2*th*c -1.487e+07  th^2*Q_jj +1.003e+06  rms(D_j) 25.9  rms(dm_j)=0.96
+ col h_schedule         theta  +0.1055  -2*th*c -3.110e+07  th^2*Q_jj +7.455e+06  rms(D_j) 24.9  rms(dm_j)=2.63
+ col h_IOBT             theta  -0.7552  -2*th*c -3.376e+07  th^2*Q_jj +1.758e+07  rms(D_j) 5.3  rms(dm_j)=4.04
+ col h_LOBT             theta  -0.0052  -2*th*c -1.588e+03  th^2*Q_jj +3.795e+00  rms(D_j) 0.4  rms(dm_j)=0.00
+ col h_EOBT             theta  +0.1781  -2*th*c +1.017e+05  th^2*Q_jj +7.779e+05  rms(D_j) 4.8  rms(dm_j)=0.85
+ col h_dayshift         theta  -0.3475  -2*th*c -1.383e+06  th^2*Q_jj +2.030e+05  rms(D_j) 1.2  rms(dm_j)=0.43
+ cross terms total +3.399e+07
+rms(dm) on eval 13.08 s mean dm -0.56 mean e -3.19
+ single g*bucket<600       theta  +0.1704 dRMSE -0.0343
+ single g*bucket600-1800   theta  -0.0083 dRMSE -0.0001
+ single g*bucket1800-3600  theta  -0.1924 dRMSE -0.0446
+ single g*bucket>=3600     theta  -0.5538 dRMSE -0.3793
+ single g*nm_missing       theta  -0.2931 dRMSE +0.0018
+ single g*LIRF             theta  -0.1640 dRMSE -0.1019
+ single h_schedule         theta  +0.1158 dRMSE -0.0557
+ single h_IOBT             theta  -0.8192 dRMSE -0.0353
+ single h_LOBT             theta  -0.0074 dRMSE -0.0000
+ single h_EOBT             theta  +0.1030 dRMSE +0.0007
+ single h_dayshift         theta  -0.1316 dRMSE -0.0011
+per-airport dRMSE on Jul-Dec (serviced, theta from Jan-Jun):
+  EDDF n= 120491 rmse0 163.15 dRMSE -0.0439 dSSE share +0.8%
+  EDDM n=  87389 rmse0 166.08 dRMSE -0.1099 dSSE share +1.5%
+  EGLL n= 121836 rmse0 226.02 dRMSE -0.5880 dSSE share +15.1%
+  EHAM n= 127050 rmse0 151.98 dRMSE -0.8351 dSSE share +15.0%
+  LEBL n=  92959 rmse0 212.25 dRMSE -0.0740 dSSE share +1.4%
+  LEMD n= 109276 rmse0 174.50 dRMSE -0.0198 dSSE share +0.4%
+  LFPG n= 123708 rmse0 229.90 dRMSE -0.4261 dSSE share +11.3%
+  LIRF n=  81918 rmse0 352.43 dRMSE -1.9222 dSSE share +51.7%
+  LSZH n=  70390 rmse0 160.05 dRMSE -0.0037 dSSE share +0.0%
+  LTFM n= 143554 rmse0 210.63 dRMSE -0.1012 dSSE share +2.9%
+  NM missing n=12660 dRMSE +0.1778 share -0.9%
+  NM present n=1065911 dRMSE -0.4949 share +100.9%
+  bucket 0 n=730029 dRMSE -0.0307 share +3.4%
+  bucket 1 n=287383 dRMSE -0.1027 share +6.8%
+  bucket 2 n=49360 dRMSE -0.6288 share +11.0%
+  bucket 3 n=11799 dRMSE -13.5528 share +78.8%
+body&serviced half-year fwd dRMSE -0.1359 theta fit on serviced applied to body&serviced -0.1562
+clipped actual (serviced, half-year fwd): {'n': 1078571, 'drmse_linear': -0.47533076275053077, 'drmse_clipped': 0.8455245667321662, 'rows_clipped': 0, 'dp_row_sum_max': 2.2174097688338074e-08}
+expanding 4:-0.071 5:-0.126 6:-0.153 7:-1.021 8:-0.299 9:-0.236 10:-0.681 11:-0.194 12:-0.299
+gap 4:+0.036 5:-0.110 6:-0.121 7:-0.955 8:-0.296 9:-0.238 10:-0.678 11:-0.192 12:-0.299
+rows with max planned p>=0.95 among eval serviced: 788, their rms dm 9.96
