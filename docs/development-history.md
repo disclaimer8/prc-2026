@@ -351,5 +351,27 @@ the TabPFN tail variant kept in v316 and the 2/3 scaling of LightGBM member weig
 §21bv; L №241, №245). The final score therefore includes selection effects on the January
 and July 2026 rows.
 
+## 6. Leaderboard use disclosure
+
+The ranking months were used to choose between complete, pre-built variants. The table lists
+every design choice in the v12075 chain that was decided, or kept, because of a leaderboard
+result rather than cross-validation. Nothing in the chain was fitted to individual ranking rows,
+and no blend weight was optimised on the board.
+
+| # | Choice in v12075 | How it was chosen | Evidence |
+|---:|---|---|---|
+| 1 | 42 LIRF tail predictions frozen from v361 and protected from later stages | The airline-prefix TabPFN variant failed its leave-one-month-out rule (6 of 12 months) but gained −3.60 s on the board; its single TabPFN draw was then kept, and a seed ensemble was rejected on the board (+0.86 s) | B §21bv; L №118, №133 |
+| 2 | Whole-file blend with v44 and v60 (E81) | Weights from cross-validation (NNLS on 2025 OOF), not from the board; keeping the blend was confirmed by a board comparison (+0.69 s without it and the LOBT lift) | B §21q, §21v, §21cj |
+| 3 | LightGBM anchored members at 2/3 of their CV weights; neural member at full weight | Two board comparisons of complete files (×1 worse by 0.18 s; ×2/3 for the MLP worse by 0.10 s) | L №241, №245 |
+| 4 | Movement-only member (E185) at 0.35 × 2/3 | CV weight scaled by the same 2/3 rule | L №262 |
+| 5 | Removal of `month`, 2025 target encodings, stand identity, runway configuration and the E14 rule | Each removal was tested with one upload and a forecast written beforehand, because CV on 2025 cannot see the 2025→2026 shift; four other removals made the board worse and were not kept | L №41, №141, №166; B §21ba, §21bq, §21bs |
+| 6 | Cost-weighted regime classifier (E89) | Failed the y ≤ 7,200 s leg of its gate, uploaded as a test with a forecast, kept after −1.18 s | B §21ag–§21ai |
+| 7 | LSZH OPDI correction at 50 % | Weight fixed before scoring as a cautious transfer; the same correction at EDDF was rejected on the board (+1.13 s) | L №215, №285 |
+| 8 | Uploads without a full-chain CV (E190 and five fixed files on 6 October; E203 after a pre-E81 comparison) | Owner's decision; the best of the scored files became the current chain | L №318, №321, №366 |
+
+Items 1 and 2 depend on files that exist only for January and July 2026 and cannot be carried to
+a new period. How the final submission on the four-month dataset treats them is described in the
+final-submission documentation.
+
 [B]: ../REVIEW_BRIEF.md
 [L]: ../HYPOTHESES_LOG.md

@@ -36,6 +36,10 @@ Questions are paraphrased, and other participants are not named.
 | 2026-10-01 14:43 | "Just a reminder for all: we will use the latest commit before the deadline for your repo. So prepare in time: if you document after the deadline, sorry it doesn't count." |
 | 2026-10-02 15:21 | "but a big part of the final ranking will go to the model design and documentation...ranking is just a part of it." |
 | 2026-10-03 13:55 | "The rules are as I stated: no final round, review (AI and human!) of the top ranked submissions to assign prizes." |
+| 2026-10-08 07:34 | "So time for a change: I am going to upload a final dataset for a single blind ranking. It will have two additional months. The idea is to allow us to rank against predictions for the following combinations: initial two months, final two months, combined four months. We aim to start reviewing the submissions (repo, docs, rank) which ranked 1 to 30 on the two initial months BUT we will consider any submission with the final that will then rank in the first 30 positions. The reason I am pushing a final dataset this late is that the signs of "optimizing for the ranking" are too strong and diverging from the goal of defining an open model for the good of aviation in general. We will use human and AI-supported review for code and docs (probably in adversarial mode for AI" |
+| 2026-10-08 07:46 | "Repos/docs deadline will remain the same (the design of the model shouldn't change) The deadline for the final single submission will be 2026-10-14T12:00+02:00 (noon CET on 14th Oct)" |
+
+The 3 October statement "no final round" was superseded by the 8 October announcement above.
 
 The full channel history is public to members of the OpenSky Community Discord
 server. The team's local exports used to compile this page are not part of the
