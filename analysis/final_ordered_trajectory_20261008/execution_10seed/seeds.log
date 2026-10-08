@@ -1,0 +1,63 @@
+ordered seed3 epoch1/8 mse=0.541954
+ordered seed3 epoch2/8 mse=0.374159
+ordered seed3 epoch3/8 mse=0.326833
+ordered seed3 epoch4/8 mse=0.286436
+ordered seed3 epoch5/8 mse=0.259494
+ordered seed3 epoch6/8 mse=0.236713
+ordered seed3 epoch7/8 mse=0.220044
+ordered seed3 epoch8/8 mse=0.212013
+{"seed": 3, "checkpoint_replay_exact": true, "seconds": 270.7309342409717}
+ordered seed4 epoch1/8 mse=0.540096
+ordered seed4 epoch2/8 mse=0.375748
+ordered seed4 epoch3/8 mse=0.327483
+ordered seed4 epoch4/8 mse=0.292103
+ordered seed4 epoch5/8 mse=0.260926
+ordered seed4 epoch6/8 mse=0.237091
+ordered seed4 epoch7/8 mse=0.220121
+ordered seed4 epoch8/8 mse=0.211631
+{"seed": 4, "checkpoint_replay_exact": true, "seconds": 270.0064945240156}
+ordered seed5 epoch1/8 mse=0.542039
+ordered seed5 epoch2/8 mse=0.378250
+ordered seed5 epoch3/8 mse=0.324086
+ordered seed5 epoch4/8 mse=0.286971
+ordered seed5 epoch5/8 mse=0.260385
+ordered seed5 epoch6/8 mse=0.236048
+ordered seed5 epoch7/8 mse=0.220254
+ordered seed5 epoch8/8 mse=0.211783
+{"seed": 5, "checkpoint_replay_exact": true, "seconds": 270.555148704967}
+ordered seed6 epoch1/8 mse=0.541568
+ordered seed6 epoch2/8 mse=0.376558
+ordered seed6 epoch3/8 mse=0.323157
+ordered seed6 epoch4/8 mse=0.286738
+ordered seed6 epoch5/8 mse=0.258452
+ordered seed6 epoch6/8 mse=0.236583
+ordered seed6 epoch7/8 mse=0.218917
+ordered seed6 epoch8/8 mse=0.210674
+{"seed": 6, "checkpoint_replay_exact": true, "seconds": 270.6620112300152}
+ordered seed7 epoch1/8 mse=0.632221
+ordered seed7 epoch2/8 mse=0.400712
+ordered seed7 epoch3/8 mse=0.350966
+ordered seed7 epoch4/8 mse=0.315715
+ordered seed7 epoch5/8 mse=0.284293
+ordered seed7 epoch6/8 mse=0.262577
+ordered seed7 epoch7/8 mse=0.246615
+ordered seed7 epoch8/8 mse=0.239157
+{"seed": 7, "checkpoint_replay_exact": true, "seconds": 270.6535549039836}
+ordered seed8 epoch1/8 mse=0.545422
+ordered seed8 epoch2/8 mse=0.377278
+ordered seed8 epoch3/8 mse=0.327932
+ordered seed8 epoch4/8 mse=0.290539
+ordered seed8 epoch5/8 mse=0.261085
+ordered seed8 epoch6/8 mse=0.237317
+ordered seed8 epoch7/8 mse=0.220729
+ordered seed8 epoch8/8 mse=0.212239
+{"seed": 8, "checkpoint_replay_exact": true, "seconds": 269.96896179998294}
+ordered seed9 epoch1/8 mse=0.540215
+ordered seed9 epoch2/8 mse=0.376310
+ordered seed9 epoch3/8 mse=0.326222
+ordered seed9 epoch4/8 mse=0.288425
+ordered seed9 epoch5/8 mse=0.258474
+ordered seed9 epoch6/8 mse=0.235653
+ordered seed9 epoch7/8 mse=0.219709
+ordered seed9 epoch8/8 mse=0.211088
+{"seed": 9, "checkpoint_replay_exact": true, "seconds": 269.99525768501917}

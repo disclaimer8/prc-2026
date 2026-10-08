@@ -1,0 +1,4 @@
+{"time":"2026-10-08T13:56:53Z","event":"driver_start","pid":957627,"registration":"3e3b545bfccce3f0e27bb46e7aa0e7247c6031cf","unit":"prc-nnfinal-seeds-20261008","cpu":"200%","mem":"12G","runtime_max":14400}
+{"time":"2026-10-08T14:29:19Z","stage":"seeds","event":"exit","rc":0}
+{"time":"2026-10-08T14:29:19Z","stage":"seeds","event":"complete","sha256":"2afb7ff986b89d0b294fcd94eaed6479176a13619e7d59966f5f3c3ed4b51cf9"}
+{"time":"2026-10-08T14:29:19Z","event":"driver_complete"}

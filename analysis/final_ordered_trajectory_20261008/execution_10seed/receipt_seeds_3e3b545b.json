@@ -1,0 +1,66 @@
+{
+  "all_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "config": {
+    "arms": [
+      "ordered"
+    ],
+    "batch": 4096,
+    "bins": 48,
+    "channels": 12,
+    "d_embedding": 12,
+    "epochs": 8,
+    "final_rows": 670790,
+    "folds": [],
+    "full_2025": true,
+    "lr": 0.002,
+    "masks_dtype": "uint8",
+    "message_blocks": 2,
+    "normalization": "ordinary-fit-only-mean-std-channels0to5-clip8",
+    "pct_start": 0.1,
+    "ple_version": "B",
+    "prep_workers": 1,
+    "sampler": "original-E194-unfilled",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "streams": 2,
+    "token_width": 64,
+    "tokens": 64,
+    "train_rows": 2085047,
+    "values_dtype": "float16",
+    "weight_decay": 1e-05,
+    "width": 512
+  },
+  "epochs": 8,
+  "parent_protocol": "final-original-ordered-E203-fresh2025-three-seed-eight-epoch-v1",
+  "parent_receipt_sha256": "6b36784eb309d6962ab5a3bacad94cef0fe2c6f41cf56487ba338d437090d912",
+  "parent_registration_commit": "b9e37f30d432dbb10060064b75f0ff6e375c17ce",
+  "protocol": "final-original-ordered-E203-fresh2025-extra-seeds-3to9-eight-epoch-v1",
+  "registration_commit": "3e3b545bfccce3f0e27bb46e7aa0e7247c6031cf",
+  "seeds": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "source_sha256": {
+    "scripts/final_ordered_trajectory_seeds_20261008.py": "7fd9be8ac237adf07b03793aff14c473ba9d3ded94c49e25fc2f93783f433700",
+    "tests/test_final_ordered_trajectory_seeds_20261008.py": "86b2ec8baefc85fef539cb0ce6dcdd854a2c4e027231aa4aaf31314646355e45"
+  }
+}
