@@ -430,42 +430,22 @@ footer.doc { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13
 
     <header class="doc">
       <h1>Taxi-out, команда <span class="sign">gentle-igloo</span></h1>
-      <p class="lede"><strong>Состояние на 08.10.2026 11:10UTC (12:10WEST).</strong> Best <strong>v12075=230.9387с</strong>, <strong>15/237</strong> по полной доске10:31:23UTC. E207: первый фолд готов, второй учится; E208 label-free scan работает. Журнал до№381. Нового RMSE/подач нет. Live-квота08.10 не проверена.</p>
+      <p class="lede"><strong>Состояние на 08.10.2026 12:19UTC.</strong> Управление передано Claude. Mac: finalfeatures PASS,0finalfits. E20718/18fit завершены, исходный гейт FAIL. E208завершён. Журналдо№386. <a href="CLAUDE_TAKEOVER_20261008.md">Полная передача</a>.</p>
     </header>
 
     <div class="strip" role="group" aria-label="Статус">
       <div class="hl"><div class="k">Лидерборд</div><div class="v">230,9387 (v12075)</div><div class="s">v12075 — лучший файл</div></div>
       <div><div class="k">Место</div><div class="v">15/237,08.10 10:31:23UTC</div><div class="s"></div></div>
-      <div><div class="k">В очереди</div><div class="v">доска</div><div class="s">E2073/18fit завершены; E208scan; единый финальный конвейер в разработке</div></div>
+      <div><div class="k">В очереди</div><div class="v">доска</div><div class="s">Передано Claude; featurebuild PASS; E207FAIL; finalfits0</div></div>
       <div><div class="k">Дедлайн</div><div class="v">11.10</div><div class="s">23:59 CET, 5 сабмитов в день</div></div>
     </div>
 
     <section id="sЧ"><h2><span class="n">Ч</span>Читать первым</h2>
 <h4>Текущие результаты и задачи</h4>
-<p><strong>Новые сигналы исследованы, №376 — запись о завершении, не пререгистрация fit.</strong>
-<a href="reports/Новые сигналы PRC 8 октября.md">Новые сигналы PRC 8 октября</a> отделяет измеренное покрытие от будущей проверки качества.
-Metadata427 дней E194: собственный ranking-поток raw&gt;64 у119699, недозаполнен
-у118881; предыдущий —172406/171008. Это пересекающиеся потоки, не число исправленных
-прогнозов. <strong>E207 F-only сохраняет прежние raw-индексы и заполняет свободные слоты:</strong>
-№379/commit<code>f43405e7c6836230862837b66fad081ae4d69777</code> зарегистрировал v3 с теми же6парами/18fit.
-После13 regression tests и6 реальных systemd smoke-cases controller55670 стартовал
-<strong>10:06:07UTC</strong>. Все365 дней и6таблиц готовы. Full-shape GPU smoke PASS.
-Folds1/3 допущены10:50UTC, fold2 —11:00UTC. К11:01:50UTC завершёнfold1 —3/18fit;
-на11:10UTC второйфолд seed1epoch4/8. Остальные таблицы передаются. Trainingloss не
-является выигрышем RMSE; после6пар нужен отдельный current-E203-chain гейт.
-<a href="analysis/e207_full_token_v3_20261008/STATUS.md">Точная квитанцияv3</a>.
-V1/v2 технически остановлены до target-fit, их данные/исходники сохранены:
-<a href="analysis/e207_full_token_v2_20261008/STATUS.md">историяv2</a>, <a href="analysis/e207_full_token_20261008/STATUS.md">историяv1</a>.
-Нового RMSE нет; ожидание разрешения до10:06UTC не входит во время расчёта.</p>
-<p><strong>D-ATIS даёт наблюдавшиеся операционные ограничения.</strong> Полный CC0-скан15 января
-и15 июля2026:253assets/143913547байт/77.6с/0ошибок. Июль —466сообщений,
-268текстовых вариантов,8хабов; январские сутки —0 распознанных этим parser ATIS
-наших10хабов, не отсутствие за весь январь. Подтверждены закрытия LFPG08R/08L
-и LEMDEA5; свежесть/покрытие ranking-рейсов не измерены, Airframes не подтверждён
-как открытый источник. ARR344693 с предоставленным BLOCK — резерв отдельной
-обучающей задачи после проверки треков. Новые коммиты конкурентов найдены,
-но smart-jigsaw Arm C/v42 по проверенному PROGRESS не загружен и LB-выигрыш
-ему не приписывается. <strong>Нового RMSE и новых подач в этом исследовании нет.</strong> E208 №380/48b2d81c реально обрабатывает фиксированный label-free pilot16дат наHetzner:12доступны,4дняJan2025 отсутствуют вrelease. Результата покрытия пока нет. Fresh finalpipeline — главный следующий этап; portable replay№381 зарегистрирован, но отложен и не запускался. <a href="analysis/final_pipeline_readiness_20261008.md">План финала</a>.</p>
+<p><strong>Передача всех задач:</strong> <a href="CLAUDE_TAKEOVER_20261008.md">CLAUDE_TAKEOVER_20261008.md</a>. Дальнейший владелец — Claude, Codexagents остановлены.</p>
+<p><strong>E207 v3 завершён:</strong>18/18fit;4/6decidedпар лучше, но pooledbody+0.007327с/decided+0.015615с и trim3/20 хуже. Исходный гейт FAIL; это component/preADS-B оценка. Current-chain child№383не запускался. Original E203unfilled остаётся finaldefault. <a href="analysis/claude_transfer_20261008/e207_evaluation.json">Первичный результат</a>.</p>
+<p><strong>Mac finalfeatures готовы:</strong>11стадий,64.89с,peak12.53GiB;2755837rows, из них670790final. Использованы последние окончательные файлы11:04Z. WORK <code>data/final_feature_work_mac_20261008</code>;4outputSHA повторно проверены. Финальных моделей ещё0. Tabular/NN source+tests independentREADY, actualfitcontracts/registration ещё нет; tail/dailyderivative adapters не реализованы. <a href="analysis/claude_transfer_20261008/state.json">Квитанция</a>.</p>
+<p><strong>E208 завершён:</strong>1800assets,12/16дней,4Jan2025source404.88442uniqueDEP,3708freshATIS,873operationalARRcontext; включая нормальныеcondition666.0fit/0RMSE, расширение отложено. <a href="analysis/e208_datis_20261008/RESULTS.md">Результат</a>. Новыеисточники и отрицательные результаты: <a href="reports/Новые сигналы PRC 8 октября.md">исследование8октября</a>. Portable replay№381 зарегистрирован, но не запускался.</p>
 <p><strong>E203 подан:</strong> v12075 получил <strong>230.9387 с</strong>, на <strong>0.5051 с лучше</strong> v12074.
 Обработка21:53:59UTC, все344841 пары; один PUT,42 донора сохранены.
 <a href="analysis/e203_upload_20261007/RESULTS.md">Результат и первичный ответ доски</a>.
@@ -475,7 +455,7 @@ V1/v2 технически остановлены до target-fit, их данн
 <p><strong>E205: новые CB-флаги не улучшили выбранную полную поправку.</strong> Все12fit на
 сервере/171/175 завершены. Сверх прежней погоды CB даёт decided−0.009903 с,
 но против текущей модели decided+0.087097 с,3/6 улучшенных пар и оба trim хуже.
-Ranking/подачи E205 нет; текущая очередь E207 v3 описана выше. <a href="analysis/night_cb_20261007/RESULTS.md">Полный результат</a>.
+Ranking/подачи E205 нет; итог E207 v3 описан выше. <a href="analysis/night_cb_20261007/RESULTS.md">Полный результат</a>.
 ASUS независимо воспроизвёл привязку всех2429888ID и4CB-колонок; это проверка входа,
 не положительный результат модели. <a href="analysis/night_cb_asus_audit_20261007/RESULTS.md">ASUS</a>.</p>
 <p><strong>E204 завершён:</strong>6fit/48epochs на Home GPU,24мин02с; аудит корректности PASS,
@@ -483,7 +463,7 @@ ASUS независимо воспроизвёл привязку всех242988
 body−0.203661 с/decided−0.203193 с. Требовалось улучшение обеих пар. Средние
 −0.043281/−0.024573 с не отменяют это условие. Расширения на4пары, ranking и
 E206 не было. <a href="analysis/night_gpu_20261007/RESULTS.md">Результат</a>.
-<strong>E204/E205 завершены FAIL; E207 v3 обучается, научного результата ещё нет.</strong></p>
+<strong>E204/E205/E207 завершены FAIL; новых Codexочередей нет.</strong></p>
 <p><strong>Воспроизведение v12075 завершено22:33UTC:</strong> все344841 прогнозов, схема/ID,
 42донора и Parquetbytes exact, SHA90d3cd0;101.19с,0 дополнительных fit.
 3711 зависимостей и точный premix проверены. Первая попытка остановлена при19.27GB

@@ -1,0 +1,37 @@
+{
+  "actual_final_inference": false,
+  "actual_gpu_smoke": false,
+  "actual_preparation": false,
+  "actual_raw_encoding": false,
+  "actual_target_fits": 0,
+  "base_head": "a725798a070896f2e1ec156e2d32b4f601c8a6ac",
+  "created_utc": "2026-10-08T11:46:43.657837+00:00",
+  "files": {
+    "analysis/final_ordered_trajectory_20261008/PROTOCOL.md": "3ab97f043d61356929310970b76ad1dd4e3efe770c0d89db184f91fe0e942456",
+    "scripts/final_ordered_trajectory_20261008.py": "510f3d7c03455da75681e6b3cb5e1aa81dba787a7a5211ff0a957c7ddc3355f2",
+    "tests/test_final_ordered_trajectory_20261008.py": "23a7b863de591e4f57ff2f7fb3deeba4b4a7f26e1a5daee9c80da4aa97825011"
+  },
+  "finalized_utc": "2026-10-08T11:52:08.787307+00:00",
+  "helper_snapshot": {
+    "scripts/cat_fin1b_oof.py": "67c2b8165b8b22e66d8df0e313f0fd7d41912bc234a7f72961359fc814ff774c",
+    "scripts/e190_numeric_embeddings.py": "5e0e214c7dd5446cde9756e93251435f6f44a9aa80fff15a0faa39563d84a65c",
+    "scripts/e192_event_context.py": "427b3ab0e063f421f8cc3b150c06a4030d5870d0417e63d0b868a36ba4d0dff5",
+    "scripts/e194_trajectory_sequence.py": "c2cf0a747f25de4219680799e1dac0a162007258908306f9670e9c3474c2e0eb",
+    "scripts/e197_trajectory_encoder.py": "6be13d401dd2903c50c9584f5ca2d6ca084a1feb0eb1f67fcba0cd94850db54a",
+    "scripts/final_tabular_models_20261008.py": "ba9a5e3aef9ef93b6d692806cba844c8fb0c1d075a6346245ac60c9ddf1bea37",
+    "scripts/mlp_gpu_component_oof.py": "25734a17e21517383f4d4930178a7b45796852a1d1a686d13e78355b9bd7a455",
+    "scripts/mlp_lowmem_prepare.py": "41ea0bfa0e6d4d276db97f190088bb136b69744703714b778a0792deab216596",
+    "src/e100_nn_partner.py": "181073a73f9421982c9ccdb81dd281d7881e24f7704b57c5eecac4d2eaaa059a",
+    "src/features.py": "58e6b783df2123adf261022733e4c602dfd22ff97d2e98e9e03e8c12486a17a2",
+    "src/target_encoding.py": "ac1b35fdd31139b531ca3760d9172f78112c77ed3ca3e72631100cd252b37d6c",
+    "src/train.py": "b47dfcaef892bc9dc7dc4a913c3f38c8c94540f4becb4c9bfb66a7fec5d3d706"
+  },
+  "independent_review": "READY: 0 open findings; REVIEW_FINDINGS.md; final shared helper pin confirmed unchanged",
+  "preregistered": false,
+  "protocol": "final-original-ordered-E203-fresh2025-three-seed-eight-epoch-v1",
+  "self_review_delta": "explicit post-encoding train/final row-order guard before reusing regime labels",
+  "shared_proxy_final_freeze_pending": false,
+  "shared_proxy_review": "root confirmed final reviewed SHA; 9 tests + 18 merge proofs, independent READY",
+  "syntax": "ast.parse PASS",
+  "targeted_tests": "13/13 PASS"
+}

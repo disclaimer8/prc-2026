@@ -1,3 +1,9 @@
+# Итог E207 v3 — передача08.10.2026
+
+18/18fit завершены, terminal12:00:56UTC; ownedGPUunit exit0/MainPID0. **Исходный научный гейт FAIL**:4/6decidedwins, pooledbody+0.007327с/decided+0.015615с, trim3/20 хуже. Current-chain№383не запускался. Первичныеevaluation/complete/events скопированы в `../claude_transfer_20261008/`; полная передача — `../../CLAUDE_TAKEOVER_20261008.md`. Удалённые modelbytes при передаче повторно не аудировались; это оценка компонента, не fullchain.
+
+## Исторический статус
+
 # E207 v3: оперативный статус
 
 Проверено08.10.2026 11:10UTC. Это snapshot; события — `execution/events.jsonl`.

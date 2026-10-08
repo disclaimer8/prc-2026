@@ -1,0 +1,8 @@
+{
+  "feature_complete_sha256": "8494279d18351ba56706999985d171ba705ca9753b7a86724e8a47c1d5b57ea8",
+  "peak_group_rss_bytes": 13457489920,
+  "protocol": "final-feature-Mac12threads-24GiB-4GiBdisk-2h-v1",
+  "registration_commit": "c0230421b7d60589fd9b358d707ad638f6e5785b",
+  "seconds": 64.89008716600074,
+  "status": "PASS"
+}

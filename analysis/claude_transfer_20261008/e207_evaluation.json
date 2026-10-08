@@ -1,0 +1,766 @@
+{
+  "accepted_for_submission": false,
+  "decided_pairs_improved": 4,
+  "limitation": "Historical selected upstream; LGB5/preADSB component only. Current E203 chain and ranking forbidden without separate protocol.",
+  "pooled": {
+    "body_sse": 6141594.274025252,
+    "decided_sse": 15023261.377291517,
+    "decided_trim20_sse": 9187708.14623627,
+    "decided_trim3_sse": 12930014.653849363
+  },
+  "protocol": "E207-full-K64-retain-original-raw-index-fill-sixpair-3seed8epoch-v3",
+  "registration_commit": "f43405e7c6836230862837b66fad081ae4d69777",
+  "reports": [
+    {
+      "diagnostics": {
+        "airport_EDDF": {
+          "all_sse": -1356345.2245134753,
+          "body_sse": -1356345.2245134753,
+          "decided_sse": -1356345.2245134753,
+          "rows": 36830
+        },
+        "airport_EDDM": {
+          "all_sse": -640575.6779616214,
+          "body_sse": -640575.6779616214,
+          "decided_sse": -640575.6779616214,
+          "rows": 27091
+        },
+        "airport_EGLL": {
+          "all_sse": -36390.298856878886,
+          "body_sse": 925210.2921575271,
+          "decided_sse": -36390.298856878886,
+          "rows": 40210
+        },
+        "airport_EHAM": {
+          "all_sse": -5086829.181982493,
+          "body_sse": -5096994.436215138,
+          "decided_sse": -5086829.181982493,
+          "rows": 40949
+        },
+        "airport_LEBL": {
+          "all_sse": -2525003.825010406,
+          "body_sse": -2525003.825010406,
+          "decided_sse": -2525003.825010406,
+          "rows": 28986
+        },
+        "airport_LEMD": {
+          "all_sse": -2520550.2085475796,
+          "body_sse": -2520550.2085475796,
+          "decided_sse": -2520550.2085475796,
+          "rows": 35328
+        },
+        "airport_LFPG": {
+          "all_sse": -2280058.0765256514,
+          "body_sse": -1693538.824968935,
+          "decided_sse": -2280058.0765256514,
+          "rows": 39612
+        },
+        "airport_LIRF": {
+          "all_sse": 599994.9935877974,
+          "body_sse": 1192821.5807430488,
+          "decided_sse": 437066.9129559131,
+          "rows": 26528
+        },
+        "airport_LSZH": {
+          "all_sse": -4179455.922819837,
+          "body_sse": -4685451.291686721,
+          "decided_sse": -4179455.922819837,
+          "rows": 22346
+        },
+        "airport_LTFM": {
+          "all_sse": -627789.4074135091,
+          "body_sse": -535324.9406263866,
+          "decided_sse": -627789.4074135091,
+          "rows": 46539
+        },
+        "month_1": {
+          "all_sse": -9030418.713306682,
+          "body_sse": -8255294.436392633,
+          "decided_sse": -9038993.613508554,
+          "rows": 153706
+        },
+        "month_7": {
+          "all_sse": -9622584.116736975,
+          "body_sse": -8680458.120237054,
+          "decided_sse": -9776937.297166985,
+          "rows": 190713
+        },
+        "no_points": {
+          "all_sse": -3211818.5462462814,
+          "body_sse": -2315464.756172099,
+          "decided_sse": -3502703.446850442,
+          "rows": 95127
+        },
+        "own": {
+          "all_sse": -14983478.71161496,
+          "body_sse": -14331651.43936897,
+          "decided_sse": -14855521.891642682,
+          "rows": 184069
+        },
+        "previous_only": {
+          "all_sse": -457705.57218241435,
+          "body_sse": -288636.36108861584,
+          "decided_sse": -457705.57218241435,
+          "rows": 65223
+        }
+      },
+      "fold": 1,
+      "metrics": {
+        "airport_day_bootstrap_rmse_95": [
+          -0.12625240864221468,
+          -0.04937943417909736
+        ],
+        "all_sse": -18653002.830043655,
+        "body_candidate_sse": 18267406220.72339,
+        "body_control_sse": 18284341973.280018,
+        "body_rmse_delta": -0.10675441552879761,
+        "body_rows": 344270,
+        "body_sse": -16935752.556629688,
+        "decided_candidate_sse": 28638135917.350185,
+        "decided_control_sse": 28656951848.260864,
+        "decided_rmse_delta": -0.09471894359603539,
+        "decided_rows": 344374,
+        "decided_sse": -18815930.91067554,
+        "decided_trim20_sse": -17920351.389330417,
+        "decided_trim3_sse": -18524844.6591641,
+        "ltfm_nm_body_rows": 45886,
+        "ltfm_nm_body_sse": -330040.21788913856,
+        "months": {
+          "1": -9030418.713306682,
+          "7": -9622584.116736975
+        },
+        "rmse_candidate": 326.2477226730104,
+        "rmse_control": 326.33071327903616,
+        "rows": 344419,
+        "trim20_sse": -17473979.989034325,
+        "trim3_sse": -18167340.104359478
+      }
+    },
+    {
+      "diagnostics": {
+        "airport_EDDF": {
+          "all_sse": 729385.7397038761,
+          "body_sse": 729385.7397038761,
+          "decided_sse": 729385.7397038761,
+          "rows": 36567
+        },
+        "airport_EDDM": {
+          "all_sse": -704535.8322147211,
+          "body_sse": -704535.8322147211,
+          "decided_sse": -704535.8322147211,
+          "rows": 25943
+        },
+        "airport_EGLL": {
+          "all_sse": -2055201.271720128,
+          "body_sse": -2795618.2135786437,
+          "decided_sse": -2055201.271720128,
+          "rows": 38784
+        },
+        "airport_EHAM": {
+          "all_sse": -2875400.8766759196,
+          "body_sse": -2875400.8766759196,
+          "decided_sse": -2875400.8766759196,
+          "rows": 40473
+        },
+        "airport_LEBL": {
+          "all_sse": -528929.0029544748,
+          "body_sse": -528929.0029544748,
+          "decided_sse": -528929.0029544748,
+          "rows": 28765
+        },
+        "airport_LEMD": {
+          "all_sse": -2458130.1174945473,
+          "body_sse": -2458130.1174945473,
+          "decided_sse": -2458130.1174945473,
+          "rows": 33881
+        },
+        "airport_LFPG": {
+          "all_sse": -1591312.8268803298,
+          "body_sse": -1196001.6561813592,
+          "decided_sse": -1591312.8268803298,
+          "rows": 38887
+        },
+        "airport_LIRF": {
+          "all_sse": -35185.369525427,
+          "body_sse": 1558950.2405581125,
+          "decided_sse": 551645.3445028542,
+          "rows": 26162
+        },
+        "airport_LSZH": {
+          "all_sse": -3465973.0018426455,
+          "body_sse": -3089746.641984132,
+          "decided_sse": -3465973.0018426455,
+          "rows": 21684
+        },
+        "airport_LTFM": {
+          "all_sse": 20826484.12833354,
+          "body_sse": 11282591.050571421,
+          "decided_sse": 20826484.12833354,
+          "rows": 43768
+        },
+        "month_2": {
+          "all_sse": 14779483.56588878,
+          "body_sse": 4855703.675057453,
+          "decided_sse": 14830192.341541883,
+          "rows": 143732
+        },
+        "month_8": {
+          "all_sse": -6938281.997159554,
+          "body_sse": -4933138.985307837,
+          "decided_sse": -6402160.058784376,
+          "rows": 191182
+        },
+        "no_points": {
+          "all_sse": 19993828.74325941,
+          "body_sse": 10510437.621774694,
+          "decided_sse": 20684680.18947463,
+          "rows": 90939
+        },
+        "own": {
+          "all_sse": -12243821.556366697,
+          "body_sse": -11132616.44100605,
+          "decided_sse": -12330025.545758363,
+          "rows": 188423
+        },
+        "previous_only": {
+          "all_sse": 91194.38183650933,
+          "body_sse": 544743.5089809702,
+          "decided_sse": 73377.6390412423,
+          "rows": 55552
+        }
+      },
+      "fold": 2,
+      "metrics": {
+        "airport_day_bootstrap_rmse_95": [
+          -0.07868138981611139,
+          0.20782439339312897
+        ],
+        "all_sse": 7841201.568729225,
+        "body_candidate_sse": 15063089917.60017,
+        "body_control_sse": 15063167352.91042,
+        "body_rmse_delta": -0.0005452085044055366,
+        "body_rows": 334794,
+        "body_sse": -77435.3102503852,
+        "decided_candidate_sse": 16699692401.042603,
+        "decided_control_sse": 16691264368.759842,
+        "decided_rmse_delta": 0.05635663141563896,
+        "decided_rows": 334891,
+        "decided_sse": 8428032.282757508,
+        "decided_trim20_sse": 2160848.3540653884,
+        "decided_trim3_sse": 6237312.822337598,
+        "ltfm_nm_body_rows": 43088,
+        "ltfm_nm_body_sse": 3548877.9335867474,
+        "months": {
+          "2": 14779483.56588878,
+          "8": -6938281.997159554
+        },
+        "rmse_candidate": 237.47655732151966,
+        "rmse_control": 237.4272576917819,
+        "rows": 334914,
+        "trim20_sse": 1734863.7819886208,
+        "trim3_sse": 5650482.108309269
+      }
+    },
+    {
+      "diagnostics": {
+        "airport_EDDF": {
+          "all_sse": -985906.1581421208,
+          "body_sse": -985906.1581421208,
+          "decided_sse": -985906.1581421208,
+          "rows": 38640
+        },
+        "airport_EDDM": {
+          "all_sse": 27926.434888333315,
+          "body_sse": 27926.434888333315,
+          "decided_sse": 27926.434888333315,
+          "rows": 28449
+        },
+        "airport_EGLL": {
+          "all_sse": -1952569.0043612763,
+          "body_sse": -1954878.3821286692,
+          "decided_sse": -1952569.0043612763,
+          "rows": 39389
+        },
+        "airport_EHAM": {
+          "all_sse": -2950974.970153607,
+          "body_sse": -2950974.970153607,
+          "decided_sse": -2950974.970153607,
+          "rows": 41690
+        },
+        "airport_LEBL": {
+          "all_sse": -1477333.009209884,
+          "body_sse": -1477333.009209884,
+          "decided_sse": -1477333.009209884,
+          "rows": 30291
+        },
+        "airport_LEMD": {
+          "all_sse": -2647979.814959485,
+          "body_sse": -2647979.814959485,
+          "decided_sse": -2647979.814959485,
+          "rows": 35217
+        },
+        "airport_LFPG": {
+          "all_sse": -1567458.5079122433,
+          "body_sse": -2183376.5562620005,
+          "decided_sse": -1567458.5079122433,
+          "rows": 40023
+        },
+        "airport_LIRF": {
+          "all_sse": -873485.1399789676,
+          "body_sse": 379960.82080553356,
+          "decided_sse": -1169949.8790228427,
+          "rows": 27211
+        },
+        "airport_LSZH": {
+          "all_sse": -1934060.5940953922,
+          "body_sse": -1934060.5940953922,
+          "decided_sse": -1934060.5940953922,
+          "rows": 22627
+        },
+        "airport_LTFM": {
+          "all_sse": 1219468.3189960998,
+          "body_sse": 1219468.3189960998,
+          "decided_sse": 1219468.3189960998,
+          "rows": 44862
+        },
+        "month_3": {
+          "all_sse": -6354974.786149556,
+          "body_sse": -7164313.67459796,
+          "decided_sse": -6755603.965147659,
+          "rows": 164449
+        },
+        "month_9": {
+          "all_sse": -6787397.658778988,
+          "body_sse": -5342840.235663231,
+          "decided_sse": -6683233.21882476,
+          "rows": 183950
+        },
+        "no_points": {
+          "all_sse": 954278.6833672922,
+          "body_sse": 422365.73878937034,
+          "decided_sse": 743574.1777893882,
+          "rows": 82405
+        },
+        "own": {
+          "all_sse": -11749553.02008329,
+          "body_sse": -11385329.830263823,
+          "decided_sse": -11803411.656074833,
+          "rows": 209605
+        },
+        "previous_only": {
+          "all_sse": -2347098.108212545,
+          "body_sse": -1544189.8187867391,
+          "decided_sse": -2378999.705686971,
+          "rows": 56389
+        }
+      },
+      "fold": 3,
+      "metrics": {
+        "airport_day_bootstrap_rmse_95": [
+          -0.1356225669407479,
+          -0.04507061028187991
+        ],
+        "all_sse": -13142372.444928544,
+        "body_candidate_sse": 12623214107.72757,
+        "body_control_sse": 12635721261.637833,
+        "body_rmse_delta": -0.09428617764694991,
+        "body_rows": 348318,
+        "body_sse": -12507153.910261191,
+        "decided_candidate_sse": 12641351790.421085,
+        "decided_control_sse": 12654790627.605059,
+        "decided_rmse_delta": -0.10122620459330278,
+        "decided_rows": 348380,
+        "decided_sse": -13438837.183972418,
+        "decided_trim20_sse": -12665466.251645952,
+        "decided_trim3_sse": -12867208.906055212,
+        "ltfm_nm_body_rows": 44349,
+        "ltfm_nm_body_sse": 1281732.8027817465,
+        "months": {
+          "3": -6354974.786149556,
+          "9": -6787397.658778988
+        },
+        "rmse_candidate": 210.971970141806,
+        "rmse_control": 211.06135215414488,
+        "rows": 348399,
+        "trim20_sse": -12596032.476828218,
+        "trim3_sse": -12570744.16701135
+      }
+    },
+    {
+      "diagnostics": {
+        "airport_EDDF": {
+          "all_sse": 10683076.626317602,
+          "body_sse": 10683076.626317602,
+          "decided_sse": 10683076.626317602,
+          "rows": 40822
+        },
+        "airport_EDDM": {
+          "all_sse": 5179638.273508252,
+          "body_sse": 5179638.273508252,
+          "decided_sse": 5179638.273508252,
+          "rows": 29795
+        },
+        "airport_EGLL": {
+          "all_sse": 6122528.680444423,
+          "body_sse": 6181325.961491901,
+          "decided_sse": 6122528.680444423,
+          "rows": 40886
+        },
+        "airport_EHAM": {
+          "all_sse": 7290264.955533782,
+          "body_sse": 7290264.955533782,
+          "decided_sse": 7290264.955533782,
+          "rows": 42719
+        },
+        "airport_LEBL": {
+          "all_sse": 7452944.468978899,
+          "body_sse": 7452944.468978899,
+          "decided_sse": 7452944.468978899,
+          "rows": 31674
+        },
+        "airport_LEMD": {
+          "all_sse": 7749134.936121851,
+          "body_sse": 7749134.936121851,
+          "decided_sse": 7749134.936121851,
+          "rows": 36240
+        },
+        "airport_LFPG": {
+          "all_sse": 7574247.636547208,
+          "body_sse": 7013213.865395315,
+          "decided_sse": 7574247.636547208,
+          "rows": 40811
+        },
+        "airport_LIRF": {
+          "all_sse": 6529894.740604224,
+          "body_sse": 6401554.37239636,
+          "decided_sse": 6269134.07170821,
+          "rows": 28170
+        },
+        "airport_LSZH": {
+          "all_sse": 3754333.9313985147,
+          "body_sse": 3754333.9313985147,
+          "decided_sse": 3754333.9313985147,
+          "rows": 23464
+        },
+        "airport_LTFM": {
+          "all_sse": 4485464.993196557,
+          "body_sse": 4485464.993196557,
+          "decided_sse": 4485464.993196557,
+          "rows": 46381
+        },
+        "month_10": {
+          "all_sse": 35454303.141056225,
+          "body_sse": 34037021.805377394,
+          "decided_sse": 35222080.39173911,
+          "rows": 185674
+        },
+        "month_4": {
+          "all_sse": 31367226.10159509,
+          "body_sse": 32153930.57896164,
+          "decided_sse": 31338688.18201619,
+          "rows": 175288
+        },
+        "no_points": {
+          "all_sse": 11814029.20574971,
+          "body_sse": 12606198.532508846,
+          "decided_sse": 11784981.953734573,
+          "rows": 87033
+        },
+        "own": {
+          "all_sse": 51123354.77756275,
+          "body_sse": 50196756.34097873,
+          "decided_sse": 50891641.36068188,
+          "rows": 221464
+        },
+        "previous_only": {
+          "all_sse": 3884145.2593388446,
+          "body_sse": 3387997.5108514596,
+          "decided_sse": 3884145.2593388446,
+          "rows": 52465
+        }
+      },
+      "fold": 4,
+      "metrics": {
+        "airport_day_bootstrap_rmse_95": [
+          0.4109276981317578,
+          0.5625944983026023
+        ],
+        "all_sse": 66821529.24265131,
+        "body_candidate_sse": 12693690318.248537,
+        "body_control_sse": 12627499365.8642,
+        "body_rmse_delta": 0.48961343039192684,
+        "body_rows": 360892,
+        "body_sse": 66190952.384339035,
+        "decided_candidate_sse": 12784904817.76668,
+        "decided_control_sse": 12718344049.192924,
+        "decided_rmse_delta": 0.490549031397876,
+        "decided_rows": 360950,
+        "decided_sse": 66560768.573755294,
+        "decided_trim20_sse": 65249005.9324975,
+        "decided_trim3_sse": 65648051.84257579,
+        "ltfm_nm_body_rows": 45789,
+        "ltfm_nm_body_sse": 3913928.0852737683,
+        "months": {
+          "10": 35454303.141056225,
+          "4": 31367226.10159509
+        },
+        "rmse_candidate": 190.1493205293807,
+        "rmse_control": 189.66191874585803,
+        "rows": 360962,
+        "trim20_sse": 65505244.254599065,
+        "trim3_sse": 65908812.51147178
+      }
+    },
+    {
+      "diagnostics": {
+        "airport_EDDF": {
+          "all_sse": -944318.3735813602,
+          "body_sse": -944318.3735813602,
+          "decided_sse": -944318.3735813602,
+          "rows": 39252
+        },
+        "airport_EDDM": {
+          "all_sse": -273533.3560108573,
+          "body_sse": -273533.3560108573,
+          "decided_sse": -273533.3560108573,
+          "rows": 28360
+        },
+        "airport_EGLL": {
+          "all_sse": -3008323.9240069836,
+          "body_sse": -3311204.4376144903,
+          "decided_sse": -3008323.9240069836,
+          "rows": 40214
+        },
+        "airport_EHAM": {
+          "all_sse": -4267730.554802321,
+          "body_sse": -4267730.554802321,
+          "decided_sse": -4267730.554802321,
+          "rows": 41405
+        },
+        "airport_LEBL": {
+          "all_sse": -1505013.1004106167,
+          "body_sse": -1505013.1004106167,
+          "decided_sse": -1505013.1004106167,
+          "rows": 29839
+        },
+        "airport_LEMD": {
+          "all_sse": -853232.4819626308,
+          "body_sse": -853232.4819626308,
+          "decided_sse": -853232.4819626308,
+          "rows": 35599
+        },
+        "airport_LFPG": {
+          "all_sse": -923677.2703515916,
+          "body_sse": -690844.9648611979,
+          "decided_sse": -923677.2703515916,
+          "rows": 39554
+        },
+        "airport_LIRF": {
+          "all_sse": 399289.82267595315,
+          "body_sse": -1820130.2656202978,
+          "decided_sse": 373307.5049336706,
+          "rows": 25869
+        },
+        "airport_LSZH": {
+          "all_sse": -4016405.0938911447,
+          "body_sse": -4111171.55193615,
+          "decided_sse": -4016405.0938911447,
+          "rows": 22118
+        },
+        "airport_LTFM": {
+          "all_sse": 1429754.7941292985,
+          "body_sse": 1060747.1447139955,
+          "decided_sse": 1429754.7941292985,
+          "rows": 45324
+        },
+        "month_11": {
+          "all_sse": -9303634.38046802,
+          "body_sse": -9247246.388907649,
+          "decided_sse": -9328813.343069253,
+          "rows": 162332
+        },
+        "month_5": {
+          "all_sse": -4659555.157744234,
+          "body_sse": -7469185.553178281,
+          "decided_sse": -4660358.512885283,
+          "rows": 185202
+        },
+        "no_points": {
+          "all_sse": 2660489.547825367,
+          "body_sse": -290186.4611639784,
+          "decided_sse": 2646121.75609872,
+          "rows": 79742
+        },
+        "own": {
+          "all_sse": -15973775.135496069,
+          "body_sse": -16049153.269904518,
+          "decided_sse": -15985389.661511704,
+          "rows": 222337
+        },
+        "previous_only": {
+          "all_sse": -649903.9505415533,
+          "body_sse": -377092.21101742925,
+          "decided_sse": -649903.9505415533,
+          "rows": 45455
+        }
+      },
+      "fold": 5,
+      "metrics": {
+        "airport_day_bootstrap_rmse_95": [
+          -0.1490857516425656,
+          -0.03632735775324606
+        ],
+        "all_sse": -13963189.538212255,
+        "body_candidate_sse": 11138301469.192406,
+        "body_control_sse": 11155017901.134491,
+        "body_rmse_delta": -0.13430164783727605,
+        "body_rows": 347472,
+        "body_sse": -16716431.94208593,
+        "decided_candidate_sse": 19773364211.765812,
+        "decided_control_sse": 19787353383.62177,
+        "decided_rmse_delta": -0.08436310058482377,
+        "decided_rows": 347524,
+        "decided_sse": -13989171.855954535,
+        "decided_trim20_sse": -15729540.273758084,
+        "decided_trim3_sse": -15011853.084361523,
+        "ltfm_nm_body_rows": 44749,
+        "ltfm_nm_body_sse": 992134.0798527831,
+        "months": {
+          "11": -9303634.38046802,
+          "5": -4659555.157744234
+        },
+        "rmse_candidate": 249.19015832319545,
+        "rmse_control": 249.27076225354014,
+        "rows": 347534,
+        "trim20_sse": -15703557.956015825,
+        "trim3_sse": -14985870.766619265
+      }
+    },
+    {
+      "diagnostics": {
+        "airport_EDDF": {
+          "all_sse": -907881.0375519122,
+          "body_sse": -907881.0375519122,
+          "decided_sse": -907881.0375519122,
+          "rows": 38030
+        },
+        "airport_EDDM": {
+          "all_sse": -473173.38849432464,
+          "body_sse": -473173.38849432464,
+          "decided_sse": -473173.38849432464,
+          "rows": 27696
+        },
+        "airport_EGLL": {
+          "all_sse": -1848025.3427378896,
+          "body_sse": -2370810.6948015913,
+          "decided_sse": -1848025.3427378896,
+          "rows": 40063
+        },
+        "airport_EHAM": {
+          "all_sse": -2606582.4988894933,
+          "body_sse": -2606582.4988894933,
+          "decided_sse": -2606582.4988894933,
+          "rows": 40715
+        },
+        "airport_LEBL": {
+          "all_sse": -1412680.1005197025,
+          "body_sse": -1412680.1005197025,
+          "decided_sse": -1412680.1005197025,
+          "rows": 30150
+        },
+        "airport_LEMD": {
+          "all_sse": -1133772.181201125,
+          "body_sse": -1133772.181201125,
+          "decided_sse": -1133772.181201125,
+          "rows": 35977
+        },
+        "airport_LFPG": {
+          "all_sse": -1021869.6485801277,
+          "body_sse": -787938.5987880662,
+          "decided_sse": -1021869.6485801277,
+          "rows": 40665
+        },
+        "airport_LIRF": {
+          "all_sse": -5608146.261865424,
+          "body_sse": -2092830.8590368736,
+          "decided_sse": -2290700.2988407174,
+          "rows": 26764
+        },
+        "airport_LSZH": {
+          "all_sse": -2928218.32711356,
+          "body_sse": -2928218.32711356,
+          "decided_sse": -2928218.32711356,
+          "rows": 22668
+        },
+        "airport_LTFM": {
+          "all_sse": 901303.29531006,
+          "body_sse": 901303.29531006,
+          "decided_sse": 901303.29531006,
+          "rows": 46091
+        },
+        "month_12": {
+          "all_sse": -8723034.993945431,
+          "body_sse": -7828606.828256668,
+          "decided_sse": -8735652.631595682,
+          "rows": 165677
+        },
+        "month_6": {
+          "all_sse": -8316010.497698069,
+          "body_sse": -5983977.562829921,
+          "decided_sse": -4985946.897023108,
+          "rows": 183142
+        },
+        "no_points": {
+          "all_sse": -2402031.560163812,
+          "body_sse": 256866.10862487322,
+          "decided_sse": -203046.79759828353,
+          "rows": 75410
+        },
+        "own": {
+          "all_sse": -13526014.95768479,
+          "body_sse": -13334437.505896,
+          "decided_sse": -12416215.491856929,
+          "rows": 225519
+        },
+        "previous_only": {
+          "all_sse": -1110998.9737948973,
+          "body_sse": -735012.9938154621,
+          "decided_sse": -1102337.2391635783,
+          "rows": 47890
+        }
+      },
+      "fold": 6,
+      "metrics": {
+        "airport_day_bootstrap_rmse_95": [
+          -0.14360265001439743,
+          -0.045860039833056025
+        ],
+        "all_sse": -17039045.4916435,
+        "body_candidate_sse": 14473726860.742737,
+        "body_control_sse": 14487539445.133825,
+        "body_rmse_delta": -0.09718844320781272,
+        "body_rows": 348717,
+        "body_sse": -13812584.39108659,
+        "decided_candidate_sse": 20462020981.926643,
+        "decided_control_sse": 20475742581.455265,
+        "decided_rmse_delta": -0.08119678450430001,
+        "decided_rows": 348801,
+        "decided_sse": -13721599.52861879,
+        "decided_trim20_sse": -11906788.225592166,
+        "decided_trim3_sse": -12551443.361483186,
+        "ltfm_nm_body_rows": 45479,
+        "ltfm_nm_body_sse": 727102.3624270443,
+        "months": {
+          "12": -8723034.993945431,
+          "6": -8316010.497698069
+        },
+        "rmse_candidate": 268.73734342270296,
+        "rmse_control": 268.8282119932549,
+        "rows": 348819,
+        "trim20_sse": -12270066.68279484,
+        "trim3_sse": -13778983.065753728
+      }
+    }
+  ],
+  "six_pair_gate_pass": false
+}

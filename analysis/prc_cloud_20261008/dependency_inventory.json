@@ -1,0 +1,103 @@
+{
+  "created_utc": "2026-10-08T11:42:41.305589+00:00",
+  "environment_changes": 0,
+  "feature_helper_sha256": "33479b6d8e8e9648b0c5c6410cba157f940ce6ca0389cd031f8164326f56b1be",
+  "fits": 0,
+  "producer_imports": {
+    "src/build_final_table.py": [
+      "os",
+      "polars",
+      "sys"
+    ],
+    "src/e113_prefix_lookup.py": [
+      "csv",
+      "polars",
+      "re"
+    ],
+    "src/e157_wake_features.py": [
+      "glob",
+      "numpy",
+      "os",
+      "polars"
+    ],
+    "src/e163_build_features.py": [
+      "glob",
+      "os",
+      "polars"
+    ],
+    "src/e165_build_features.py": [
+      "glob",
+      "os",
+      "polars"
+    ],
+    "src/e185_motion_features.py": [
+      "features",
+      "numpy",
+      "os",
+      "polars",
+      "sys",
+      "time"
+    ],
+    "src/e28_forward_neighbours.py": [
+      "features",
+      "glob",
+      "numpy",
+      "os",
+      "polars",
+      "sys"
+    ],
+    "src/e51_add_route_features.py": [
+      "geometry",
+      "os",
+      "polars",
+      "sys"
+    ],
+    "src/e77_filed_twins.py": [
+      "features",
+      "numpy",
+      "os",
+      "polars",
+      "sys"
+    ],
+    "src/features.py": [
+      "__future__",
+      "geometry",
+      "numpy",
+      "os",
+      "polars"
+    ],
+    "src/geometry.py": [
+      "__future__",
+      "json",
+      "math",
+      "numpy",
+      "pathlib",
+      "polars",
+      "re"
+    ]
+  },
+  "producer_sha256": {
+    "src/build_final_table.py": "33cab49c6b8f5c4c02765e1a36688f531ed4f5fcdbf4254d81a51e1ab890c655",
+    "src/e113_prefix_lookup.py": "0ccd6e3828245e8862ade04af45c5db03d30e96b633c26aa160d797f06619e2c",
+    "src/e157_wake_features.py": "c81cae25967fc7c46a5c4213ed214a50e2d31bfd0c5ceb369877ae1ebf121b36",
+    "src/e163_build_features.py": "97e8dd1c6f684086c0579aec30554650a8becddf7b4808cba1643f5d60ce3c6e",
+    "src/e165_build_features.py": "2649bb869207110946dbb55d2c021c0138ffcfa90ccd9d1c6ca8445d66d1fbf0",
+    "src/e185_motion_features.py": "cb41f961512ac9bb8242d8234c408cbccecbda33b7f350e4b0749dbfafeb89d0",
+    "src/e28_forward_neighbours.py": "6c68fe2f191f49709a325acd8f3463753ce2af3ee5a52c4d6b7ca4fa306af21b",
+    "src/e51_add_route_features.py": "c9971013fec1a81aea13b56b182b43aaf5403ec5d953df8564ddf629c1dd717e",
+    "src/e77_filed_twins.py": "331f453f9a7cf02ddf84a1cd1b940719136500255808684ccea34b494a23532f",
+    "src/features.py": "58e6b783df2123adf261022733e4c602dfd22ff97d2e98e9e03e8c12486a17a2",
+    "src/geometry.py": "45b7ae51c9874772ecf69e176d18dcff44910af8daf40030426c8dbbc5ef3006"
+  },
+  "reference_mac_runtime": {
+    "numpy": "2.5.3",
+    "polars": "1.44.2",
+    "python": "3.12.14"
+  },
+  "remote_commands_performed_by_this_agent": 0,
+  "source": "local AST only, not cloud runtime qualification",
+  "third_party_packages": [
+    "numpy",
+    "polars"
+  ]
+}

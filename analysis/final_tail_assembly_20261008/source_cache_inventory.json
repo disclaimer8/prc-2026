@@ -1,0 +1,317 @@
+{
+  "cache": {
+    "e141": {
+      "calls": 5,
+      "first_signature": {
+        "categorical": [
+          0
+        ],
+        "data": {
+          "dtype": "float64",
+          "sha256": "2665bd0bf6ebff2d46309025e101e173c45cc5d31243fd6a390f0c0af2983ca5",
+          "shape": [
+            1260599,
+            66
+          ]
+        },
+        "dataset_feature_names": "auto",
+        "feature_names": [
+          "ap",
+          "coverage",
+          "D",
+          "p_nonreg",
+          "base",
+          "has_nm",
+          "stat_total",
+          "n_stops",
+          "mvt_first",
+          "mvt_first_move",
+          "mvt_move",
+          "mvt_to",
+          "aobt_first",
+          "aobt_first_move",
+          "aobt_move",
+          "lobt_first_move",
+          "base_vs_first_move",
+          "base_vs_first",
+          "sf_path_km",
+          "sf_straight_km",
+          "sf_move_time",
+          "sf_longest_stop",
+          "sf_last_stop",
+          "sf_mean_speed",
+          "sf_to_gap",
+          "gs_stand_known",
+          "gs_d_first",
+          "gs_d_firstmove",
+          "gs_d_lastmove",
+          "gs_d_lastmove_rwy",
+          "gs_dwell_stand",
+          "gs_seen_at_stand",
+          "gs_mvt_leave",
+          "gs_aobt_leave",
+          "vi_first_seen",
+          "vi_turnaround",
+          "vi_gap",
+          "vi_gs_first",
+          "vi_has_prev",
+          "sw_mvt_first",
+          "sw_mvt_first_move",
+          "sw_coverage",
+          "sw_extra_s",
+          "sw_recovered",
+          "gs_d_first_rwy",
+          "gs_frac_done",
+          "gs_d_stand_rwy",
+          "vm_pv_d_start",
+          "vm_pv_d_end",
+          "vm_pv_d_min",
+          "vm_pv_corr",
+          "vm_dv_d_first",
+          "vm_merged",
+          "vm_first_seen",
+          "vm_turnaround",
+          "vm_gap",
+          "hd_gs0",
+          "hd_gs_mean5",
+          "hd_moving0",
+          "hd_accel30",
+          "hd_frac_mov60",
+          "hd_t_first_stop",
+          "hd_turn5",
+          "hd_path_frac",
+          "e141_d_missed",
+          "e141_t_rough"
+        ],
+        "label": {
+          "dtype": "float64",
+          "sha256": "33a7fa268a208b2adfe954a9c73532608e27f2979ef33060ea2763125ee64bf0",
+          "shape": [
+            1260599
+          ]
+        },
+        "lightgbm": "4.7.0",
+        "numpy": "2.5.3",
+        "params": {
+          "bagging_fraction": 0.8,
+          "bagging_freq": 1,
+          "deterministic": true,
+          "feature_fraction": 0.9,
+          "force_row_wise": true,
+          "lambda_l2": 10.0,
+          "learning_rate": 0.03,
+          "min_data_in_leaf": 200,
+          "num_leaves": 63,
+          "num_threads": 6,
+          "objective": "regression",
+          "seed": 42,
+          "verbose": -1
+        },
+        "polars": "1.44.2",
+        "python": "3.12.14 (main, Sep  1 2026, 14:09:38) [Clang 22.1.3 ]",
+        "rounds": 800,
+        "weight": null
+      },
+      "models_verified": {
+        "model_0.txt": "6062b15da118a29f75e55e6c96e646537356fdaf7c4c0ebf3cfdac37e319d9be",
+        "model_1.txt": "5860c2e78fbe20f1c94e88f3abd4eb12477b7e7f20fd0c31a100195cdd5584f1",
+        "model_2.txt": "3bdc23bfb802be3d48d0962f7116380ceb7bba484c647f6f6c0774dc109ff1ec",
+        "model_3.txt": "7f386ab248862370403343f6532daf832c6d7c917c9f0d24057b9636cb70e63f",
+        "model_4.txt": "70f5b0750c3b24355b1bd9cbac1f405d188f33be05a5712c5883199e594d37bd"
+      },
+      "receipt": "data/e203_chain_20261007/models/e141/complete.json",
+      "receipt_sha256": "b6eee0bd505a77b6824872e799f337fe0907a0bb9f6e4bc59e9fceefcb4f4944",
+      "source_sha256": "1b5871e2291ec1cf82a99e6a2304e758c1182aacc0b917ff7aece2f5e3f823d1"
+    },
+    "e188": {
+      "input_count": 368,
+      "missing_local_inputs": [],
+      "models_verified": {
+        "seed1.txt": "6f88cc73fcc9d0c208e31044ef114aa2cda61cf884d6b00501ff55369d80ec3d",
+        "seed2.txt": "faf18fbf4f468dc001713e68e4803bcad167224db6f1301bc4e45a422f875040",
+        "seed3.txt": "aaf4ea61dab91bd72b6883adbaf4cb0ee1f8ecd1383c3bf1c70ee4f459b04a4a",
+        "seed4.txt": "8b42b9ddff55eebb7c57ed5ba665ffe13b5f10bd10d376a69ba439d167115e85",
+        "seed42.txt": "ecf1160f9fea50c36d38f27e7da4f69c69bc2db47d5cf5ea419edf66dc026986"
+      },
+      "natural_rows": 318697,
+      "receipt": "data/e188_rank_20261006_v2/fit_manifest.json",
+      "receipt_sha256": "1d91f2d3d49d50c2a02f615729fd49c5a18ed3212534858fa217274faf181434",
+      "rounds": 400,
+      "source_sha256": {
+        "scripts/e188_rank_20261006.py": "5836e11f743b1d166b0360886f50113dd0a56f847aa1c9c271c3f4285e0b04f2"
+      },
+      "synthetic_rows": 60327
+    },
+    "e64": {
+      "calls": 5,
+      "first_signature": {
+        "categorical": [
+          0
+        ],
+        "data": {
+          "dtype": "float64",
+          "sha256": "310ceacf88269985e2c60c63dd3e593b111b808633532b21dd16a24897f76bb0",
+          "shape": [
+            318697,
+            11
+          ]
+        },
+        "dataset_feature_names": "auto",
+        "feature_names": [
+          "ap",
+          "coverage",
+          "D",
+          "p_nonreg",
+          "base",
+          "has_nm",
+          "vi_first_seen",
+          "vi_turnaround",
+          "vi_gap",
+          "vi_gs_first",
+          "vi_has_prev"
+        ],
+        "label": {
+          "dtype": "float64",
+          "sha256": "4f555aede20ff5abe77625d17bbc7c367e8aa9a7015f232af36053d39e7680fe",
+          "shape": [
+            318697
+          ]
+        },
+        "lightgbm": "4.7.0",
+        "numpy": "2.5.3",
+        "params": {
+          "bagging_fraction": 0.8,
+          "bagging_freq": 1,
+          "deterministic": true,
+          "feature_fraction": 0.9,
+          "force_row_wise": true,
+          "lambda_l2": 10.0,
+          "learning_rate": 0.03,
+          "min_data_in_leaf": 200,
+          "num_leaves": 31,
+          "num_threads": 6,
+          "objective": "regression",
+          "seed": 42,
+          "verbose": -1
+        },
+        "polars": "1.44.2",
+        "python": "3.12.14 (main, Sep  1 2026, 14:09:38) [Clang 22.1.3 ]",
+        "rounds": 400,
+        "weight": null
+      },
+      "models_verified": {
+        "model_0.txt": "184c4948d2a34dd5109ff5e23b9ce66aca7264fcd4a9a4469cfcbb3eeacb7965",
+        "model_1.txt": "8c0bb578149f1a5c19c2dba3ec99e3e66038876c6fb331ba404ce4842af7491a",
+        "model_2.txt": "c4a576165fe45d231e819e4bd165b35e6b989a5e6e4faf443c9d62b0b4d7ae9b",
+        "model_3.txt": "d47ce1e147a6f115be73d8fdeaf3baf825d79bc9f40c614985deced5262c46db",
+        "model_4.txt": "e112abefe2b87963a6a915e3b439a89d5740ebce5a12916b74a82b28e989a5ce"
+      },
+      "receipt": "data/e203_chain_20261007/models/e64/complete.json",
+      "receipt_sha256": "b0e4ea0547d11a0d98f058c445cdc9de8f518e427b72ba0f08545b8962b15697",
+      "source_sha256": "c8a76a0168bdca7b703317bc82a3618f29eb447a320431ca24523787a9fcca0e"
+    },
+    "lszh": {
+      "calls": 1,
+      "first_signature": {
+        "categorical": "auto",
+        "data": {
+          "dtype": "float64",
+          "sha256": "8f8036319aeed0413a421081629f29f7517f895c63967114c54eb1955fa9396c",
+          "shape": [
+            84758,
+            4
+          ]
+        },
+        "dataset_feature_names": "auto",
+        "feature_names": [
+          "d_opdi",
+          "t_opdi",
+          "pred",
+          "twy_s"
+        ],
+        "label": {
+          "dtype": "float64",
+          "sha256": "fb837f6a923ea9b96a58686f03e34076299225f48d88cb34ab5948760227c0f3",
+          "shape": [
+            84758
+          ]
+        },
+        "lightgbm": "4.7.0",
+        "numpy": "2.5.3",
+        "params": {
+          "bagging_fraction": 0.8,
+          "bagging_freq": 1,
+          "deterministic": true,
+          "feature_fraction": 1.0,
+          "lambda_l2": 10.0,
+          "learning_rate": 0.05,
+          "min_data_in_leaf": 100,
+          "num_leaves": 15,
+          "num_threads": 4,
+          "objective": "regression",
+          "seed": 42,
+          "verbose": -1
+        },
+        "polars": "1.44.2",
+        "python": "3.12.14 (main, Sep  1 2026, 14:09:38) [Clang 22.1.3 ]",
+        "rounds": 300,
+        "weight": null
+      },
+      "models_verified": {
+        "model_0.txt": "9292642642b3ff7089ce3f012653ffe862e46ac05d45d6c1cae91f49b43e7e72"
+      },
+      "receipt": "data/e203_chain_20261007/models/lszh/complete.json",
+      "receipt_sha256": "501790aee4b84f5c164f298a68083186561e37346184f6cacf249a1c9403f084",
+      "source_sha256": "f07db6fc8219ba1742501b8a736e92e3bb52d79d64702f87401d3ee69e08879d"
+    }
+  },
+  "existing_2025": {
+    "adsblol/head_": {
+      "admission": "reuse exact historical captured inventory; no new historical completion",
+      "bytes": 33004914,
+      "files": 364,
+      "missing_calendar_day": "2025-12-31"
+    },
+    "adsblol/visit_": {
+      "admission": "reuse exact historical captured inventory; no new historical completion",
+      "bytes": 33520988,
+      "files": 364,
+      "missing_calendar_day": "2025-12-31"
+    },
+    "adsblol/visit_m_": {
+      "admission": "reuse exact historical captured inventory; no new historical completion",
+      "bytes": 83400973,
+      "files": 364,
+      "missing_calendar_day": "2025-12-31"
+    },
+    "adsblol_kt1/offblock2_": {
+      "admission": "reuse exact historical captured inventory; no new historical completion",
+      "bytes": 32393238,
+      "files": 364,
+      "missing_calendar_day": "2025-12-31"
+    },
+    "adsblol_kt1/offblock3_": {
+      "admission": "reuse exact historical captured inventory; no new historical completion",
+      "bytes": 52772093,
+      "files": 364,
+      "missing_calendar_day": "2025-12-31"
+    },
+    "adsblol_kt1/offblock5_": {
+      "admission": "reuse exact historical captured inventory; no new historical completion",
+      "bytes": 74288908,
+      "files": 364,
+      "missing_calendar_day": "2025-12-31"
+    },
+    "adsblol_sw_kt1/offblock2_": {
+      "admission": "reuse exact historical captured inventory; no new historical completion",
+      "bytes": 36762824,
+      "files": 364,
+      "missing_calendar_day": "2025-12-31"
+    }
+  },
+  "fits": 0,
+  "model_exec": 0,
+  "scope": "metadata/source only; no target arrays/model execution",
+  "target_eval": 0,
+  "utc": "2026-10-08T12:03:48.296555+00:00"
+}
