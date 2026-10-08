@@ -1,0 +1,60 @@
+{
+  "status": "PROCESSED",
+  "version": 12090,
+  "filename": "gentle-igloo_v12090.parquet",
+  "purpose": "canary: Jan/Jul dry-run candidate of the final tail assembly adapter (no E81, fresh 10-seed E156, 0 fits), uploaded unchanged to measure the new final-pipeline code path on real Jan/Jul labels",
+  "sha256": "180a185e232bfb5c13fe4f2dd518558f30005fc716024b2c77498665e9ed5fe3",
+  "size_bytes": 1096989,
+  "source_path": "data/final_tail_dryrun_janjul_20261008/work/gentle-igloo_v12090.parquet",
+  "scientific_registration": "9bd1f2e0d50381348eebffcf4de1ca068075077f",
+  "scientific_protocol": "final-uniform-tail-E156fresh-noE81-fourmonths-20261008-v1",
+  "transport_protocol": "canary-v12090-uniform-tail-noE81-freshE156-janjul-single-PUT-20261008-v1",
+  "transport_registration": "2cc86beaee483b7359eb3a2b10bc78682009d694",
+  "transport_journal_entry": 390,
+  "transport_source": "scripts/submission_transport_20261008.py",
+  "transport_source_sha256": "79808a22e127d21709b50ab50576e023057afef61bae766e775e8fc1b26790f0",
+  "registration_proof_sha256": "b1f177df84243b8427b3ee26a1d4910bc29797e3d9d0da64c186e7fb10c4de06",
+  "host": "hetzner:/root/prc-2026",
+  "interpreter": ".venv-upload/bin/python",
+  "runtime": {"python": "3.14.4", "minio": "7.2.20", "urllib3": "2.8.0", "polars": "1.44.2", "numpy": "2.5.3"},
+  "network_put_attempts": 1,
+  "put_started_utc": "2026-10-08T13:19:45.528991+00:00",
+  "put_finished_utc": "2026-10-08T13:20:11.512472+00:00",
+  "ledger": {
+    "path": "/root/prc-2026/data/submission_upload_ledger.jsonl",
+    "at": "2026-10-08T13:20:11.094253+00:00",
+    "events": ["intent", "uploaded"],
+    "used_before": 0,
+    "slots_used_after": 1
+  },
+  "preflight": {
+    "rows": 344841,
+    "served_e156_rows_preserved": 42,
+    "changed_vs_v12075": 313616,
+    "rms_vs_v12075": 18.208699347925087,
+    "max_abs_diff_vs_v12075": 2058.0,
+    "negative_scenarios_stopped_on_mac": 4
+  },
+  "forecast_preregistered": {
+    "reference": 230.9387,
+    "central": 231.6,
+    "corridor": [231.1, 232.3],
+    "gram_range": [212.73, 249.1474],
+    "uncorrelated": 231.6554
+  },
+  "score": 232.1933,
+  "used_pairs": 344841,
+  "processed_at_utc": "2026-10-08T13:20:58.405033Z",
+  "submission_id": "0f63954a-f553-484a-941e-36003323f9a1",
+  "delta_vs_v12075": 1.2546,
+  "delta_vs_v12061": 0.2051,
+  "forecast_corridor_hit": true,
+  "gram_range_hit": true,
+  "leaderboard_snapshot": {
+    "observed_at_utc": "2026-10-08T13:21:25.772864+00:00",
+    "teams": 237,
+    "team_best_rank": 15,
+    "team_best": 230.9387,
+    "leader": ["charming-eel", 213.2541]
+  }
+}

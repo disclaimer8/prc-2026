@@ -1,0 +1,19 @@
+{
+  "item": {
+    "filename": "gentle-igloo_v12090.parquet",
+    "processedAt": "2026-10-08T13:20:58.405033Z",
+    "score": 232.1933,
+    "submissionId": "0f63954a-f553-484a-941e-36003323f9a1",
+    "teamId": "3698249a-8007-4660-8d44-20363bf3f18a",
+    "teamName": "gentle-igloo",
+    "usedPairs": 344841
+  },
+  "leader": [
+    "charming-eel",
+    213.2541
+  ],
+  "observed_at_utc": "2026-10-08T13:21:25.772864+00:00",
+  "team_best": 230.9387,
+  "team_rank": 15,
+  "teams": 237
+}
