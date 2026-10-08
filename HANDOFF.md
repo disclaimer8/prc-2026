@@ -7,7 +7,7 @@
 | Блок | Статус | Где / как проверить | ETA |
 |---|---|---|---|
 | Табличные 52 fit (№388, регистрация 42a6f28) | идут; base готов 13:12Z | prc-cloud: `systemctl list-units 'prc-final-tab-*'`, логи `/root/prc-final-logs/`; hetzner: `/srv/prc-final-20261008`, `/srv/prc-final-logs/lgb_hz*.log`; сид готов ⇔ `models/final_tabular/<kind>/seed_<s>/complete.json` | все ≈ 00:30Z 09.10 |
-| NN E203 (№387, b9e37f30) | raw+queries готовы, идёт context→smoke→3×8→replay | Home `/home/a1/prc-nnfinal-20261008/logs/timeline.jsonl`, `logs/run.log` | ≈ 14:45Z 08.10 |
+| NN E203 (№387, вердикт №393) | **готово** 13:41Z: 3×8, exact replay; `prediction.npz` SHA 6d50f9cb (670 790 ID) | `analysis/final_ordered_trajectory_20261008/execution/` (чекпоинты на Home `/home/a1/prc-nnfinal-20261008/out/models/`) | — |
 | 7 суточных ADS-B продуктов (№387/№392, 637ca02) | **готово** 120/120 | `data/final_adsb_derivatives_20261008/complete.json`, `analysis/final_adsb_derivatives_20261008/RESULTS.md` (коллапсы: EDDF фев, LIRF июн/июл; 11.06 усечён в архиве) | — |
 | Сборщик хвоста (№389, 9bd1f2e) | **готов**, ждёт входы; канарейка v12090 = **232,1933** (№390/391, +1,25 к v12075: цена единого рецепта без E81 и 42 замороженных строк) | `scripts/final_tail_assembly_20261008.py`, команды в `analysis/final_tail_assembly_20261008/PROTOCOL.md` | сборка после merge табличных |
 | Валидатор/загрузка финала | готовы | `scripts/validate_final_submission.py`, `docs/final-submission-runbook.md`; финал грузить новой обёрткой после последней обычной подачи | загрузка ≤ 13.10 вечер |
