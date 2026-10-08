@@ -1,0 +1,12 @@
+{
+  "commit": "42a6f28aa02a59bfa24b720c10230cdd4bcac7ac",
+  "contract": "analysis/final_tabular_models_20261008/CONTRACT.json",
+  "created_utc": 1791463954.6784582,
+  "files": {
+    "analysis/final_tabular_models_20261008/CONTRACT.json": "4b9dfddccdd145911ed2c6f6e1dd65ee93c82fd978d6e8a75525ab8184e87a4e",
+    "analysis/final_tabular_models_20261008/PROTOCOL.md": "053c1bb34f593c16f39e9b338e3fb01f6efed104df0dcf7a461f186ff88c2504",
+    "scripts/final_tabular_models_20261008.py": "b35a1903534e60c60c35e277dab9851cc940cf961427adff02521cb21ce36c69",
+    "tests/test_final_tabular_models_20261008.py": "6db52177dcf95681c49bd439d6f16f74974b47b9ef92fedecb34fc40b7e4ada8"
+  },
+  "protocol": "final-four-month-tabular-fixed-recipe-save-models-v1"
+}
