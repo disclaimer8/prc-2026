@@ -1,0 +1,49 @@
+values table resident on GPU; CPU mmap pages released
+known table resident on GPU; CPU mmap pages released
+present table resident on GPU; CPU mmap pages released
+fold_6_12 seed 0 replay max|diff| vs saved 0.0 exact True
+fold_6_12 seed 1 replay max|diff| vs saved 0.0 exact True
+fold_6_12 seed 2 replay max|diff| vs saved 0.0 exact True
+fold_6_12 member replay max|diff| 0.0 rows 348819
+fold_6_12 done in 17.4 s
+values table resident on GPU; CPU mmap pages released
+known table resident on GPU; CPU mmap pages released
+present table resident on GPU; CPU mmap pages released
+fold_1_7 seed 0 replay max|diff| vs saved 0.0 exact True
+fold_1_7 seed 1 replay max|diff| vs saved 0.0 exact True
+fold_1_7 seed 2 replay max|diff| vs saved 0.0 exact True
+fold_1_7 member replay max|diff| 0.0 rows 344419
+fold_1_7 done in 31.0 s
+values table resident on GPU; CPU mmap pages released
+known table resident on GPU; CPU mmap pages released
+present table resident on GPU; CPU mmap pages released
+fold_2_8 seed 0 replay max|diff| vs saved 0.0 exact True
+fold_2_8 seed 1 replay max|diff| vs saved 0.0 exact True
+fold_2_8 seed 2 replay max|diff| vs saved 0.0 exact True
+fold_2_8 member replay max|diff| 0.0 rows 334914
+fold_2_8 done in 18.4 s
+values table resident on GPU; CPU mmap pages released
+known table resident on GPU; CPU mmap pages released
+present table resident on GPU; CPU mmap pages released
+fold_3_9 seed 0 replay max|diff| vs saved 0.0 exact True
+fold_3_9 seed 1 replay max|diff| vs saved 0.0 exact True
+fold_3_9 seed 2 replay max|diff| vs saved 0.0 exact True
+fold_3_9 member replay max|diff| 0.0 rows 348399
+fold_3_9 done in 16.4 s
+values table resident on GPU; CPU mmap pages released
+known table resident on GPU; CPU mmap pages released
+present table resident on GPU; CPU mmap pages released
+fold_4_10 seed 0 replay max|diff| vs saved 0.0 exact True
+fold_4_10 seed 1 replay max|diff| vs saved 0.0 exact True
+fold_4_10 seed 2 replay max|diff| vs saved 0.0 exact True
+fold_4_10 member replay max|diff| 0.0 rows 360962
+fold_4_10 done in 19.6 s
+values table resident on GPU; CPU mmap pages released
+known table resident on GPU; CPU mmap pages released
+present table resident on GPU; CPU mmap pages released
+fold_5_11 seed 0 replay max|diff| vs saved 0.0 exact True
+fold_5_11 seed 1 replay max|diff| vs saved 0.0 exact True
+fold_5_11 seed 2 replay max|diff| vs saved 0.0 exact True
+fold_5_11 member replay max|diff| 0.0 rows 347534
+fold_5_11 done in 16.9 s
+ALL DONE
