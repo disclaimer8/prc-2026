@@ -303,9 +303,18 @@ Unmeasured until the final run: wall-clock of the four-month assembly on the Mac
   [report](../analysis/neighbour_residual_level_20261008.md)).
 - **Neural-member protection at coverage collapse**: failed its gate, 0 of 6 folds
   (section 5).
-- **E210** (20 TabPFN seeds or dithering marginalisation on the tail): pre-registered
-  on 8 October with a 2025 gate; default off; enters only on a passed gate and a
-  coordinator decision. Result: `[[to be filled after the final assembly]]`.
+- **E210** (20 TabPFN seeds, or averaging the tail ensemble over ±6 s shifts of the
+  inputs): leave-one-month-out on the 2025 tail, all three variants failed the gate
+  registered before the run (squared error +0.005 % to +0.13 % against 10 seeds, June
+  worse in every variant); stage 3 stays at 10 seeds (log 397b, 403).
+- **Arrival-based day state** (E213): the share of arrivals whose on-block equals the
+  schedule, and the day's NM-versus-APDF clock offset from arrivals, add nothing beyond
+  what the regime classifier and the chain already use (partial correlations ≤ 0.013
+  at LIRF, LFPG, LTFM and EGLL), so no rule was built (log 407c, 411).
+- **Aircraft identified by stand occupancy** for departures without an own track: on
+  three 2025 days 2 departures without an NM record received a candidate, and 0 on
+  three 2026 days; ground reception at the stands is missing, so the idea was closed
+  before any cross-validation (log 405b–407b).
 - **E188** stays although its measured contribution is small (CV −0.007 s, 3/6;
   board −0.0011 s): removing it would be a design change ([validation](validation.md)).
 - No weights, seeds or rows are chosen on the public board for the final; the
