@@ -281,6 +281,7 @@ def prepare(root,contract,kind,T):
     fit,pred=validate_rows(df,contract['train_rows'],contract['rank_rows'])
     for split,frame in [('train',fit),('rank',pred)]:
         if ids_sha(frame[ID].to_numpy())!=contract[split+'_ids_sha256']:raise ValueError('ordered '+split+' IDs changed')
+    del df;gc.collect()  # memory hygiene only: the full frame is not used again (19.4 GiB transient peak measured without it)
     if kind=='motion':
         os.environ['E185_MOTION']=str(relative_file(root,contract['motion']))
         import e185_motion_view as M
@@ -302,6 +303,7 @@ def prepare(root,contract,kind,T):
     cat_cols=[c for c in T.CATEGORICAL if c in cols]
     ordinary=fit.filter(pl.Series(lab==0))
     cats=categories(ordinary if kind=='lgb' else fit,cat_cols)
+    del fit,lab;gc.collect()  # memory hygiene only: ordinary/pred carry everything the fit needs
     state=dict(columns=cols,categories=cats,categorical_columns=cat_cols,proxy=None)
     if kind in ('cat','lgb','base'):
         state['proxy']=fit_proxy(ordinary)

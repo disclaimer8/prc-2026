@@ -48,6 +48,18 @@ class Contracts(unittest.TestCase):
             self.assertEqual(X.memory_limit(kind), 32*1024**3)
         with self.assertRaises(KeyError): X.MEMORY_LIMIT_GIB['raw']
 
+    def test_prepare_releases_full_frame_before_encodings_and_training_frame_before_matrices(self):
+        # Portability: with df/fit retained, prepare() peaked at 19.4-20.1 GiB (prc-cloud/hetzner probes 08.10.2026),
+        # above the 12-14 GiB hosts. The release points must stay between the last use and the next allocation.
+        import inspect
+        src=inspect.getsource(X.prepare)
+        self.assertLess(src.index("ordered '+split+' IDs changed"), src.index('del df'))
+        self.assertLess(src.index('del df'), src.index('T.add_encodings'))
+        self.assertLess(src.index('cats=categories('), src.index('del fit,lab'))
+        self.assertLess(src.index('del fit,lab'), src.index('fit_proxy(ordinary)'))
+        self.assertNotIn('fit[', src[src.index('del fit,lab'):])
+        self.assertNotIn('df[', src[src.index('del df'):])
+
     def test_dynamic_population_rejects_final_targets_and_duplicate_ids(self):
         d=pl.DataFrame({'MVT_ID_mvt':[1.,2.,3.,4.], 'split':['train','train','rank','rank'],
                         'TAXITIME_SEC_mvt':[10.,20.,None,None]})
