@@ -1,0 +1,16 @@
+--- scripts/e207_full_token_sampler.py (namespace normalized)
++++ scripts/e207_full_token_sampler_v2.py
+@@ -199,8 +199,11 @@
+     points=R.pl.read_parquet(root/record['surface']) if record['surface'] else None
+     deps=R.pl.read_parquet(root/record['dep'],columns=R.DEP_COLS)
+     new,stats=encode_day(points,deps,day)
+-    with np.load(root/record['old'],allow_pickle=False) as old:
+-        added=validate_arrays(old,new);stats['original_selected_points']=int(old['present'].sum())
++    # NpzFile is a lazy archive: repeated indexing decompresses whole members.
++    # Materialize each member exactly once before row-wise invariant checks.
++    with np.load(root/record['old'],allow_pickle=False) as archive:
++        old={key:archive[key] for key in archive.files}
++    added=validate_arrays(old,new);stats['original_selected_points']=int(old['present'].sum())
+     stats.update(added_points=int(added.sum()),
+         added_duplicate_timestamp=int((added&(new['values'][...,11]==1)).sum()),
+         added_stale=int((added&(new['known'][...,9]==1)&(new['values'][...,9]==1)).sum()),

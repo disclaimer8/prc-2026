@@ -1,0 +1,53 @@
+{"utc": "2026-10-08T00:02:05.287063+00:00", "event": "controller_started", "pid": 87152, "registration_commit": "741045e9fe10c17f68a7ce6bed4216e6160ee7b1"}
+{"utc": "2026-10-08T00:02:06.156703+00:00", "event": "idle_and_disk_checked", "host": "home-pc-lan", "free_bytes": 711576444928}
+{"utc": "2026-10-08T00:02:07.117053+00:00", "event": "idle_and_disk_checked", "host": "a1@192.168.1.171", "free_bytes": 162340503552}
+{"utc": "2026-10-08T00:02:08.204136+00:00", "event": "idle_and_disk_checked", "host": "a1@192.168.1.175", "free_bytes": 415114645504}
+PACKED fa19112c8cdeb217bd40269f04a9cd5866eeebd61cc3ec9bcdb5379940e87e68
+{"utc": "2026-10-08T00:02:46.649495+00:00", "event": "started", "host": "a1@192.168.1.171", "unit": "prc-e207-raw-171-20261008.service", "properties": {"ActiveState": "active", "InvocationID": "69d7d4c5f736471ba82c4c5fca6324bb", "MainPID": "352872", "Result": "success", "ExecMainStatus": "0"}, "log": "/home/a1/prc-2026/data/prc-e207-raw-171-20261008.log"}
+{"utc": "2026-10-08T00:02:47.870662+00:00", "event": "started", "host": "a1@192.168.1.175", "unit": "prc-e207-raw-175-20261008.service", "properties": {"ActiveState": "active", "InvocationID": "070a9f744fd24d6db4e05d5b7ce13a32", "MainPID": "157961", "Result": "success", "ExecMainStatus": "0"}, "log": "/home/a1/prc-2026/data/prc-e207-raw-175-20261008.log"}
+{"utc": "2026-10-08T00:02:48.139982+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-raw-175-20261008.service", "MainPID": "157961"}
+{"utc": "2026-10-08T00:02:48.273916+00:00", "event": "progress", "host": "a1@192.168.1.171", "unit": "prc-e207-raw-171-20261008.service", "MainPID": "352872"}
+{"utc": "2026-10-08T00:03:18.409160+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-raw-175-20261008.service", "MainPID": "157961"}
+{"utc": "2026-10-08T00:03:18.627481+00:00", "event": "progress", "host": "a1@192.168.1.171", "unit": "prc-e207-raw-171-20261008.service", "MainPID": "352872"}
+{"utc": "2026-10-08T00:03:48.716972+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-raw-175-20261008.service", "MainPID": "157961"}
+{"utc": "2026-10-08T00:03:49.037488+00:00", "event": "progress", "host": "a1@192.168.1.171", "unit": "prc-e207-raw-171-20261008.service", "MainPID": "352872"}
+{"utc": "2026-10-08T00:04:19.030675+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-raw-175-20261008.service", "MainPID": "157961"}
+{"utc": "2026-10-08T00:04:19.462827+00:00", "event": "progress", "host": "a1@192.168.1.171", "unit": "prc-e207-raw-171-20261008.service", "MainPID": "352872"}
+{"utc": "2026-10-08T00:04:49.342170+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-raw-175-20261008.service", "MainPID": "157961"}
+{"utc": "2026-10-08T00:04:49.894098+00:00", "event": "progress", "host": "a1@192.168.1.171", "unit": "prc-e207-raw-171-20261008.service", "MainPID": "352872"}
+{"utc": "2026-10-08T00:05:19.647406+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-raw-175-20261008.service", "MainPID": "157961"}
+{"utc": "2026-10-08T00:05:20.293039+00:00", "event": "progress", "host": "a1@192.168.1.171", "unit": "prc-e207-raw-171-20261008.service", "MainPID": "352872"}
+{"utc": "2026-10-08T00:05:49.958181+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-raw-175-20261008.service", "MainPID": "157961"}
+{"utc": "2026-10-08T00:05:50.668187+00:00", "event": "progress", "host": "a1@192.168.1.171", "unit": "prc-e207-raw-171-20261008.service", "MainPID": "352872"}
+{"utc": "2026-10-08T00:06:20.269885+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-raw-175-20261008.service", "MainPID": "157961"}
+{"utc": "2026-10-08T00:06:20.992557+00:00", "event": "progress", "host": "a1@192.168.1.171", "unit": "prc-e207-raw-171-20261008.service", "MainPID": "352872"}
+{"utc": "2026-10-08T00:06:50.596355+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-raw-175-20261008.service", "MainPID": "157961"}
+{"utc": "2026-10-08T00:06:51.445097+00:00", "event": "progress", "host": "a1@192.168.1.171", "unit": "prc-e207-raw-171-20261008.service", "MainPID": "352872"}
+{"utc": "2026-10-08T00:07:20.915170+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-raw-175-20261008.service", "MainPID": "157961"}
+{"utc": "2026-10-08T00:07:21.849946+00:00", "event": "progress", "host": "a1@192.168.1.171", "unit": "prc-e207-raw-171-20261008.service", "MainPID": "352872"}
+{"utc": "2026-10-08T00:07:42.600974+00:00", "event": "stopped_owned_invocation", "host": "a1@192.168.1.175", "unit": "prc-e207-raw-175-20261008.service", "invocation": "070a9f744fd24d6db4e05d5b7ce13a32"}
+{"utc": "2026-10-08T00:07:43.351569+00:00", "event": "stopped_owned_invocation", "host": "a1@192.168.1.171", "unit": "prc-e207-raw-171-20261008.service", "invocation": "69d7d4c5f736471ba82c4c5fca6324bb"}
+{"utc": "2026-10-08T00:07:51.862671+00:00", "event": "failed_no_retry", "error": "InterruptedError('E207 controller received signal 15')"}
+Traceback (most recent call last):
+  File "/Users/denyskolomiiets/prc-2026/scripts/e207_full_token_queue_20261008.py", line 224, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/denyskolomiiets/prc-2026/scripts/e207_full_token_queue_20261008.py", line 171, in main
+    with ThreadPoolExecutor(max_workers=2) as pool:list(pool.map(lambda node:safe_task(lambda n:wait_unit(NODES[n][0],*rawunits[n]),node),NODES))
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/denyskolomiiets/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/python3.12/concurrent/futures/_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/denyskolomiiets/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/python3.12/concurrent/futures/_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/denyskolomiiets/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/python3.12/concurrent/futures/_base.py", line 451, in result
+    self._condition.wait(timeout)
+  File "/Users/denyskolomiiets/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/python3.12/threading.py", line 355, in wait
+    waiter.acquire()
+  File "/Users/denyskolomiiets/prc-2026/scripts/e207_full_token_queue_20261008.py", line 42, in handler
+    cleanup();raise_stop(signum,frame)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/denyskolomiiets/prc-2026/scripts/e207_full_token_queue_20261008.py", line 32, in raise_stop
+    raise InterruptedError('E207 controller received signal '+str(signum))
+InterruptedError: E207 controller received signal 15

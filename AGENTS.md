@@ -20,7 +20,7 @@
 
 | Что | Где |
 |---|---|
-| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №376) | `HYPOTHESES_LOG.md` |
+| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №377) | `HYPOTHESES_LOG.md` |
 | Бриф для ревью: «Читать первым», раздел 0 (закрытое — не повторять), последние итоги — раздел 21cn | `REVIEW_BRIEF.md`; после правки — `.venv/bin/python review/build_brief.py` |
 | Обходы конкурентов и источников данных | `analysis/competitor_repos/_UPDATE_2026-10-04.md`, `analysis/data_sources_2026-10-04_{fable,sonnet}.md`, `SOURCES.md` |
 | Таблицы признаков (не в git) | `data/features_e106.parquet`, `data/features_e163.parquet`, **`data/features_fin1b.parquet`** (боевая) |
@@ -59,7 +59,35 @@
   Для аудита №289:6CPU/MemoryMax10G/swap0/nice10, один день за раз, только наблюдаемые ADS-B данные.
   Большие Cat/LGB задачи с других машин не дублировать: они требуют больше RAM и имеют собственные фиксированные очереди.
 
-## Актуальное дополнение 07.10.2026 23:23:12 UTC
+## Актуальное дополнение 08.10.2026 00:08:36 UTC
+
+Первый E207 №377 **технически остановлен до первого completed day и до target-fit**:
+root обнаружил repeated NPZ decompression в `validate_arrays(NpzFile)` и послал
+SIGTERM controller87152. Cleanup остановил точные171/175 invocations; terminal
+`failed_no_retry`00:07:51.862671UTC. Проверка00:08:36UTC: оба raw-unit inactive/dead,
+MainPID0, controller отсутствует; completed-day receipts0 на обоих shard.
+[Полная квитанция](analysis/e207_full_token_20261008/STATUS.md). Это не scientific FAIL F-only.
+Frozen source/protocol/metadata и partials сохраняются. Author готовит отдельнуюv2;
+№378 зарезервирован root после review, ещё не добавлен. Старый запуск не возобновлять.
+**0 prep/target-fit/ranking; текущего обучения нет.** Best230.9387 прежний; доска14/237
+от07.10 22:00UTC,4/5слотов были7октябряUTC; live-квота8октября не проверена.
+E201 отменён, LLMoff. Ниже исторические состояния работающего E207.
+
+## Историческое дополнение 08.10.2026 00:05:31 UTC
+
+E207 реально запущен: №377/commit`741045e9fe10c17f68a7ce6bed4216e6160ee7b1`,
+controller PID87152/caffeinate, старт00:02:05UTC. [Текущий статус E207](analysis/e207_full_token_20261008/STATUS.md).
+Extraction-unit171/175 active, PID352872/157961; старты00:02:46/47UTC проверены
+по events/systemctl. На00:05:10UTC worker-логи пусты: первый обработанный день
+не подтверждён. CPU работает: по3 child-worker≈100% на узел, cgroup CPU растёт. **0 target-fit, prep/GPU smoke ещё не подтверждены стартовавшими.**
+Очередь сама продолжает6пар/18fit после extraction/prep/admission/synthetic smoke;
+около2ч — оценка, hard6ч. Не изменять frozen source/protocol и не дублировать запуск.
+Ranking требует отдельной регистрации current-chain, автоматической подачи нет.
+Bestv12075=230.9387 прежний;14/237 — снимок07.10 22:00UTC,4/5слотов были7октябряUTC.
+Теперь8октябряUTC, live-квота нового дня не проверена. E204/E205 завершены FAIL,
+но E207 — действующая очередь. E201 отменён, LLMoff. Следующие блоки — история.
+
+## Историческое дополнение 07.10.2026 23:23:12 UTC
 
 Исследование новых сигналов и metadata завершены, журнал №376: [Новые сигналы PRC 8 октября](<reports/Новые сигналы PRC 8 октября.md>).
 Это не научная пререгистрация и не новый RMSE. E194427 дней подтверждает недозаполнение

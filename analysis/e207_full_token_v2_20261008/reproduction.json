@@ -1,0 +1,70 @@
+{
+  "synthetic_only": true,
+  "target_fit": false,
+  "original_worker_sha256": "2c85fed68950bda537f130bfd7c4ed87aa4288d109ca5b85a2579c185e78d1d2",
+  "npz_reads_before": [
+    {
+      "rows": 1,
+      "reads": {
+        "ids": 1,
+        "raw_ranges": 1,
+        "raw_counts": 1,
+        "status": 1,
+        "identity": 1,
+        "identity_candidates": 1,
+        "airport": 1,
+        "takeoff": 1,
+        "present": 4,
+        "source_rows": 3,
+        "values": 3,
+        "known": 3,
+        "point_times": 3
+      },
+      "total_reads": 24,
+      "keys": 13,
+      "added_points": 58
+    },
+    {
+      "rows": 7,
+      "reads": {
+        "ids": 1,
+        "raw_ranges": 1,
+        "raw_counts": 1,
+        "status": 1,
+        "identity": 1,
+        "identity_candidates": 1,
+        "airport": 1,
+        "takeoff": 1,
+        "present": 22,
+        "source_rows": 21,
+        "values": 21,
+        "known": 21,
+        "point_times": 21
+      },
+      "total_reads": 114,
+      "keys": 13,
+      "added_points": 406
+    },
+    {
+      "rows": 64,
+      "reads": {
+        "ids": 1,
+        "raw_ranges": 1,
+        "raw_counts": 1,
+        "status": 1,
+        "identity": 1,
+        "identity_candidates": 1,
+        "airport": 1,
+        "takeoff": 1,
+        "present": 193,
+        "source_rows": 192,
+        "values": 192,
+        "known": 192,
+        "point_times": 192
+      },
+      "total_reads": 969,
+      "keys": 13,
+      "added_points": 3712
+    }
+  ]
+}

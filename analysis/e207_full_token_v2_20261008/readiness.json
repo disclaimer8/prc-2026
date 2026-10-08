@@ -1,0 +1,36 @@
+{
+  "utc": "2026-10-08T00:10:16.618505+00:00",
+  "status": "ready_for_review_not_launched",
+  "parent_registration": "741045e9fe10c17f68a7ce6bed4216e6160ee7b1",
+  "files": {
+    "scripts/e207_full_token_sampler_v2.py": "52867eb1772ed4bdcfc9088e097e5d2e12d72736796e61ab67dc7ecb7107a452",
+    "scripts/e207_full_token_queue_v2_20261008.py": "5ed43d38c6d669b4766bd25f3a9d6aee196aab9b9133e8cf835e77417eb90a13",
+    "tests/test_e207_full_token_sampler_v2.py": "f8f0e94e65d7e28d12094ead6f5da80aecdd5f59b670f871ff6d502ae5789132",
+    "analysis/e207_full_token_v2_20261008/PROTOCOL.md": "7601e9e50feb905a87ed32d03c6b71248a56736a1572dedbde94245da092a6d6",
+    "analysis/e207_full_token_v2_20261008/reproduction.json": "6b3c8018ca0ef1819abb27cff64471cb4edb4012aa9e38dda688cbf7ad034ff0",
+    "analysis/e207_full_token_v2_20261008/scoped_diff.txt": "e726e091007b3909a87b23b82a8c5d3e79feb561a696c83e7078cebdb4b89b0e"
+  },
+  "tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests -p test_e207_full_token_sampler_v2.py",
+    "passed": 12,
+    "failed": 0,
+    "actual_extract_day_archive_reads": {
+      "rows1": 13,
+      "rows7": 13,
+      "each_key": 1
+    },
+    "exact_arrays": true,
+    "red_before_fix": true
+  },
+  "py_compile_pass": true,
+  "queue_change_namespaces_only": true,
+  "real_extraction": false,
+  "normalization": false,
+  "target_fits": 0,
+  "gpu_smoke_executed": false,
+  "v1_cleanup_confirmed": {
+    "171": "inactive/MainPID0",
+    "175": "inactive/MainPID0",
+    "terminal": "failed_no_retry"
+  }
+}
