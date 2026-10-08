@@ -40,6 +40,12 @@ LSZH correction (−0.25 s over two steps); the rest of the chain does not use t
 | [Data insights](docs/data-insights.md) | Properties of the data that shaped the design, with figures |
 | [Validation](docs/validation.md) | Cross-validation scheme, integrity checks, evidence for current members |
 | [Negative results](docs/negative-results.md) | Ideas we tested and rejected, with measured effects and lessons |
+| [Generalisation](docs/generalisation.md) | How the model performs on February and June (the final's new months), from 2025 out-of-fold predictions |
+| [Uncertainty](docs/uncertainty.md) | A calibrated predictive distribution per flight from the regime mixture |
+| [Data quality for PRU](docs/data-quality-regimes.md) | The regime classifier as a detector of block times copied from planning timestamps, and its effect on the PRU taxi-out indicator |
+| [PRU view](docs/pru-view.md) | Predictions expressed as unimpeded reference plus additional taxi-out time |
+| [Final submission](docs/final-submission-runbook.md) | How the single four-month final file is validated and uploaded |
+| [Paper draft](paper/README.md) | Draft article for the Journal of Open Aviation Science |
 | [Reproduction](docs/reproduction.md) | How to verify and rebuild the submission; what is and is not yet portable |
 | [Glossary](docs/glossary.md) | Plain-language names for experiment IDs such as E25 or E141 |
 | [Sources and licences](SOURCES.md) | External data, licences, organiser clarifications |
@@ -128,6 +134,20 @@ flowchart LR
 The [model-design document](docs/model-design.md) gives the exact weights and
 stage order; the [glossary](docs/glossary.md) maps every experiment ID to a
 plain-language name.
+
+## Beyond the leaderboard
+
+- **A data-quality detector for the PRU taxi-out indicator.** The regime classifier is calibrated
+  (mean probability 9.46% against 9.58% labelled planning-time copies across the seven labelled
+  airports). Our emulation of the PRU additional taxi-out indicator matches the published 2025
+  values from April to October (MAE 3.3 s, correlation 0.999), and copied block times inflate the
+  LIRF indicator by about 42 s per departure. Details in [data quality for PRU](docs/data-quality-regimes.md).
+- **Generalisation to the final's new months.** On 2025 out-of-fold predictions, February and June
+  are not harder than January and July (RMSE 247.3 s against 279.2 s; on labels up to 7,200 s,
+  196.3 s against 211.2 s), and the model beats the NM-proxy baseline in all 120 airport-months.
+  See [generalisation](docs/generalisation.md).
+- **Calibrated uncertainty.** Central 50/80/90% intervals from the regime mixture cover
+  51.0/80.1/89.7% of 2025 out-of-fold departures. See [uncertainty](docs/uncertainty.md).
 
 ## What moved the score
 

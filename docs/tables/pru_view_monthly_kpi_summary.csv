@@ -1,0 +1,5 @@
+variant,cells,mae_s,bias_s,max_abs_s,corr,sd_label_kpi_s
+as_recorded,120,6.3794,0.3658,33.1752,0.9937,77.2222
+regular_mixture_pred,120,10.4728,6.7595,64.4877,0.9849,70.7283
+regular_regressor_reg,120,6.4198,-0.0339,32.3893,0.9927,70.7283
+our_emulation_vs_pru_published,120,12.5927,8.6027,153.9770,0.9356,80.4126

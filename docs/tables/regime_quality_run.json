@@ -1,0 +1,74 @@
+{
+ "generated_utc": "2026-10-08T12:46:14Z",
+ "script": "scripts/regime_quality_report.py",
+ "inputs": {
+  "oof": [
+   {
+    "file": "/Users/denyskolomiiets/prc-2026/data/cv_preds_fin1b_hz/fold_1_7.npz",
+    "rows": 344419,
+    "md5": "5a42d255793fcc406903ddb13f1cf6ae"
+   },
+   {
+    "file": "/Users/denyskolomiiets/prc-2026/data/cv_preds_fin1b_hz/fold_2_8.npz",
+    "rows": 334914,
+    "md5": "8f37e92c9a0aa78f3dcd3e5fe6433762"
+   },
+   {
+    "file": "/Users/denyskolomiiets/prc-2026/data/cv_preds_fin1b_hz/fold_3_9.npz",
+    "rows": 348399,
+    "md5": "0c6c04f5123372f8717fe9ccdb824bba"
+   },
+   {
+    "file": "/Users/denyskolomiiets/prc-2026/data/cv_preds_fin1b_hz/fold_4_10.npz",
+    "rows": 360962,
+    "md5": "ff8dfbe76987edbd72f648ea77a8cbff"
+   },
+   {
+    "file": "/Users/denyskolomiiets/prc-2026/data/cv_preds_fin1b_hz/fold_5_11.npz",
+    "rows": 347534,
+    "md5": "bb26eece36f0a6143e7189d08775ddaf"
+   },
+   {
+    "file": "/Users/denyskolomiiets/prc-2026/data/cv_preds_fin1b_hz/fold_6_12.npz",
+    "rows": 348819,
+    "md5": "1e0be474b06767761111e42dd6a879aa"
+   }
+  ],
+  "training_parquets": 12,
+  "pru_csv": true
+ },
+ "label_rule": {
+  "tolerance_s": 6,
+  "planned_regimes_excluded_at": [
+   "EDDF",
+   "EHAM",
+   "LSZH"
+  ],
+  "classes": [
+   "regular",
+   "sched",
+   "iobt",
+   "lobt",
+   "eobt",
+   "dayshift"
+  ],
+  "sched_tol_long": "0"
+ },
+ "pru_emulation": {
+  "group": "ADEP x STAND x RUNWAY",
+  "percentile": 0.1,
+  "min_flights_at_or_below_ref": 10,
+  "max_taxi_s": 7200,
+  "window": "calendar year 2025 (PRU: rolling 12 months ending with the month)",
+  "month_basis": "UTC month of take-off (PRU: local time)",
+  "helicopter_rows_excluded": 1442,
+  "deicing_filter": "not available in the challenge data"
+ },
+ "rows": 2085047,
+ "label_positive": 140993,
+ "expected_positive": 139340.50293897325,
+ "pru_ok_rows": 2081758,
+ "rows_with_valid_reference": 1928605,
+ "probability_table_bytes": 17708670,
+ "elapsed_s": 6.4
+}
