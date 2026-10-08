@@ -1,0 +1,171 @@
+rank_by_gain,feature,family,gain,gain_share,split,split_share
+1,d_aobt_eobt,Planning-time intervals,4.58539e+11,0.180514,23225,0.019637
+2,d_mvt_aobt,Planning-time intervals,2.36138e+11,0.092961,18127,0.015327
+3,ap_runway,"Airport, runway, aircraft and flight identity",1.55774e+11,0.061324,31696,0.026800
+4,nb_own_minus_ap,Neighbour NM taxi proxies,1.05615e+11,0.041578,11020,0.009318
+5,airline_prefix,"Airport, runway, aircraft and flight identity",9.26451e+10,0.036472,37025,0.031306
+6,AIRCRAFT_OPERATOR_flt,"Airport, runway, aircraft and flight identity",9.18568e+10,0.036162,38628,0.032661
+7,nb_own_minus_rwy,Neighbour NM taxi proxies,8.51428e+10,0.033518,10973,0.009278
+8,d_aobt_sched,Planning-time intervals,7.76408e+10,0.030565,14089,0.011913
+9,RUNWAY_mvt,"Airport, runway, aircraft and flight identity",7.27272e+10,0.028631,14480,0.012243
+10,ades_region,"Airport, runway, aircraft and flight identity",6.99461e+10,0.027536,68977,0.058322
+11,stand_prev_arr_age,Stand turnaround,6.16217e+10,0.024259,15476,0.013085
+12,aobt_infeasible,Planning-time intervals,5.12363e+10,0.020170,1701,0.001438
+13,AIRCRAFT_TYPE_mvt,"Airport, runway, aircraft and flight identity",4.4923e+10,0.017685,37940,0.032079
+14,d_mvt_eobt,Planning-time intervals,4.40756e+10,0.017351,23178,0.019598
+15,nbf_rwy_30_30_mean,Filed-time neighbours (E77),4.37387e+10,0.017219,12092,0.010224
+16,route_m,Taxi-route length (E51),3.41134e+10,0.013430,10004,0.008459
+17,stand_prefix,"Airport, runway, aircraft and flight identity",3.22152e+10,0.012682,9687,0.008191
+18,ADEP_mvt,"Airport, runway, aircraft and flight identity",2.46727e+10,0.009713,2056,0.001738
+19,d_mvt_sched,Planning-time intervals,2.08152e+10,0.008194,14025,0.011859
+20,wx_temp,Weather (METAR),1.93129e+10,0.007603,9352,0.007907
+21,nbf_ap_30_30_mean,Filed-time neighbours (E77),1.78556e+10,0.007029,9014,0.007622
+22,geo_dist_m,Stand-to-runway geometry,1.76121e+10,0.006933,7283,0.006158
+23,nbf_own_minus_rwy,Filed-time neighbours (E77),1.73721e+10,0.006839,13728,0.011607
+24,nbs_rwy_30_30_mean,Filed-time neighbours (E77),1.61476e+10,0.006357,8672,0.007332
+25,nbs_own_minus_ap,Filed-time neighbours (E77),1.59118e+10,0.006264,15240,0.012886
+26,fw_ap_60_mean,Forward neighbours (E28),1.58857e+10,0.006254,6314,0.005339
+27,d_mvt_iobt,Planning-time intervals,1.56885e+10,0.006176,9083,0.007680
+28,route_extra_m,Taxi-route length (E51),1.53984e+10,0.006062,9389,0.007939
+29,geo_dist_across,Stand-to-runway geometry,1.45609e+10,0.005732,8199,0.006933
+30,stand_next_arr_gap,Stand turnaround,1.39125e+10,0.005477,13912,0.011763
+31,nbs_ap_30_30_mean,Filed-time neighbours (E77),1.34359e+10,0.005289,7228,0.006111
+32,takeoffs_between_ob_mvt,Airport traffic counts,1.23983e+10,0.004881,5282,0.004466
+33,nb_stand_4320_0_mean,Neighbour NM taxi proxies,1.20957e+10,0.004762,10043,0.008492
+34,nbf_own_minus_ap,Filed-time neighbours (E77),1.19675e+10,0.004711,13003,0.010994
+35,d_mvt_lobt,Planning-time intervals,1.18789e+10,0.004676,11206,0.009475
+36,fw_rwy_next_gap,Forward neighbours (E28),1.15663e+10,0.004553,7875,0.006659
+37,e157_ladder_q,Wake separation (E157),1.04279e+10,0.004105,9806,0.008291
+38,nb_ap_30_30_mean,Neighbour NM taxi proxies,1.0085e+10,0.003970,5177,0.004377
+39,plan_taxi_res,Planned-arrival residuals (E165),9.76738e+09,0.003845,14900,0.012598
+40,rwy_dep_after_10,Runway traffic and configuration,9.74844e+09,0.003838,2355,0.001991
+41,e157_margin,Wake separation (E157),9.23622e+09,0.003636,4627,0.003912
+42,local_hour,Local time,8.98261e+09,0.003536,9483,0.008018
+43,d_eobt_iobt,Planning-time intervals,8.7366e+09,0.003439,5221,0.004415
+44,nbf_ap_30_0_mean,Filed-time neighbours (E77),7.88099e+09,0.003103,9151,0.007737
+45,plan_nm_taxi,Planned-arrival residuals (E165),7.61107e+09,0.002996,11134,0.009414
+46,rwy_since_last_arr,Runway traffic and configuration,7.53144e+09,0.002965,9770,0.008261
+47,nbf_rwy_30_30_std,Filed-time neighbours (E77),7.16934e+09,0.002822,9876,0.008350
+48,geo_dist_along,Stand-to-runway geometry,6.9957e+09,0.002754,5789,0.004895
+49,nbf_ap_30_30_std,Filed-time neighbours (E77),6.96485e+09,0.002742,8774,0.007419
+50,nb_rwy_30_30_mean,Neighbour NM taxi proxies,6.65885e+09,0.002621,6177,0.005223
+51,nb_rwy_30_30_std,Neighbour NM taxi proxies,6.62369e+09,0.002608,7615,0.006439
+52,taxi_in_mean_180,Airport traffic counts,6.23955e+09,0.002456,8251,0.006976
+53,nbs_rwy_60_0_mean,Filed-time neighbours (E77),6.22858e+09,0.002452,8784,0.007427
+54,nb_rwy_60_0_std,Neighbour NM taxi proxies,6.0511e+09,0.002382,9597,0.008115
+55,route_detour,Taxi-route length (E51),6.04625e+09,0.002380,8322,0.007037
+56,geo_bearing_offset,Stand-to-runway geometry,6.00454e+09,0.002364,6452,0.005455
+57,nb_stand_4320_0_std,Neighbour NM taxi proxies,5.986e+09,0.002357,11878,0.010043
+58,nbf_rwy_60_0_mean,Filed-time neighbours (E77),5.96167e+09,0.002347,9542,0.008068
+59,nbf_rwy_60_0_std,Filed-time neighbours (E77),5.89553e+09,0.002321,10764,0.009101
+60,stand_prev_arr_taxi_in,Stand turnaround,5.87421e+09,0.002313,10982,0.009286
+61,stand_prev_arr_same_type,Stand turnaround,5.86081e+09,0.002307,1229,0.001039
+62,nb_ap_30_30_std,Neighbour NM taxi proxies,5.85855e+09,0.002306,6712,0.005675
+63,nb_rwy_60_0_mean,Neighbour NM taxi proxies,5.7471e+09,0.002262,7425,0.006278
+64,taxi_in_mean_30,Airport traffic counts,5.7328e+09,0.002257,9809,0.008294
+65,flight_time_plan,Planning-time intervals,5.61833e+09,0.002212,6342,0.005362
+66,nbs_rwy_60_0_std,Filed-time neighbours (E77),5.60829e+09,0.002208,10509,0.008886
+67,taxi_in_n_60,Airport traffic counts,5.60283e+09,0.002206,5338,0.004513
+68,taxi_in_n_180,Airport traffic counts,5.60183e+09,0.002205,6906,0.005839
+69,nb_stand_last_age,Neighbour NM taxi proxies,5.56488e+09,0.002191,10345,0.008747
+70,nb_stand_4320_0_n,Neighbour NM taxi proxies,5.55184e+09,0.002186,4975,0.004207
+71,nb_stand_last,Neighbour NM taxi proxies,5.53473e+09,0.002179,9956,0.008418
+72,wx_ceiling_ft,Weather (METAR),5.52735e+09,0.002176,10274,0.008687
+73,rwy_to_next_arr,Runway traffic and configuration,5.48757e+09,0.002160,9615,0.008130
+74,fw_ap_60_std,Forward neighbours (E28),5.43415e+09,0.002139,8363,0.007071
+75,fw_rwy_60_mean,Forward neighbours (E28),5.40391e+09,0.002127,7270,0.006147
+76,nbs_rwy_30_30_std,Filed-time neighbours (E77),5.33587e+09,0.002101,8755,0.007403
+77,nbs_ap_30_30_std,Filed-time neighbours (E77),5.32169e+09,0.002095,7970,0.006739
+78,taxi_in_mean_60,Airport traffic counts,5.28603e+09,0.002081,8122,0.006867
+79,fw_rwy_15_std,Forward neighbours (E28),5.28317e+09,0.002080,10015,0.008468
+80,fw_rwy_60_std,Forward neighbours (E28),5.28228e+09,0.002079,8942,0.007561
+81,nb_ap_30_0_std,Neighbour NM taxi proxies,5.20822e+09,0.002050,8128,0.006872
+82,nbf_ap_30_0_std,Filed-time neighbours (E77),5.0241e+09,0.001978,9728,0.008225
+83,dst_dly_per_arr,Destination arrival ATFM delay (E163),5.01629e+09,0.001975,3332,0.002817
+84,dep_before_60,Airport traffic counts,4.9025e+09,0.001930,5015,0.004240
+85,nbs_ap_30_0_std,Filed-time neighbours (E77),4.86383e+09,0.001915,9031,0.007636
+86,nb_ap_30_0_mean,Neighbour NM taxi proxies,4.84017e+09,0.001905,6643,0.005617
+87,fw_rwy_15_mean,Forward neighbours (E28),4.60404e+09,0.001812,7871,0.006655
+88,own_rwy_share_hour,Runway traffic and configuration,4.57772e+09,0.001802,5694,0.004814
+89,e157_heavy_10,Wake separation (E157),4.52174e+09,0.001780,2054,0.001737
+90,nbs_ap_30_0_mean,Filed-time neighbours (E77),4.3485e+09,0.001712,7353,0.006217
+91,fw_ap_15_mean,Forward neighbours (E28),4.19913e+09,0.001653,6661,0.005632
+92,fw_ap_15_std,Forward neighbours (E28),4.18869e+09,0.001649,8614,0.007283
+93,wx_snow,Weather (METAR),4.09051e+09,0.001610,167,0.000141
+94,nb_rwy_last,Neighbour NM taxi proxies,3.98014e+09,0.001567,7413,0.006268
+95,MARKET_SEGMENT_flt,"Airport, runway, aircraft and flight identity",3.47189e+09,0.001367,651,0.000550
+96,wx_wind,Weather (METAR),3.35341e+09,0.001320,5728,0.004843
+97,fw_ap_next_gap,Forward neighbours (E28),3.241e+09,0.001276,7005,0.005923
+98,rwy_dep_before_30,Runway traffic and configuration,3.2326e+09,0.001273,3206,0.002711
+99,fw_rwy_60_n,Forward neighbours (E28),3.21182e+09,0.001264,4671,0.003949
+100,nb_ap_last_age,Neighbour NM taxi proxies,3.14594e+09,0.001238,6932,0.005861
+101,nb_ap_last,Neighbour NM taxi proxies,3.08457e+09,0.001214,6576,0.005560
+102,wx_snow_recent,Weather (METAR),2.97103e+09,0.001170,300,0.000254
+103,metar_age_min,Weather (METAR),2.89371e+09,0.001139,6815,0.005762
+104,dep_before_30,Airport traffic counts,2.88249e+09,0.001135,1947,0.001646
+105,dep_after_60,Airport traffic counts,2.86962e+09,0.001130,3727,0.003151
+106,wx_spread,Weather (METAR),2.74248e+09,0.001080,4710,0.003982
+107,wx_vis_mi,Weather (METAR),2.69036e+09,0.001059,1738,0.001470
+108,rwy_dep_before_10,Runway traffic and configuration,2.52638e+09,0.000995,2174,0.001838
+109,nbs_rwy_60_0_n,Filed-time neighbours (E77),2.52235e+09,0.000993,3061,0.002588
+110,fw_rwy_15_n,Forward neighbours (E28),2.48241e+09,0.000977,2206,0.001865
+111,e157_gap,Wake separation (E157),2.46724e+09,0.000971,4326,0.003658
+112,nb_rwy_last_age,Neighbour NM taxi proxies,2.46249e+09,0.000969,4842,0.004094
+113,e157_req,Wake separation (E157),2.45677e+09,0.000967,2118,0.001791
+114,arr_before_20,Airport traffic counts,2.38657e+09,0.000940,3039,0.002570
+115,arr_around_ob_60,Airport traffic counts,2.38137e+09,0.000937,3886,0.003286
+116,nb_rwy_60_0_n,Neighbour NM taxi proxies,2.36076e+09,0.000929,2927,0.002475
+117,arr_before_60,Airport traffic counts,2.32218e+09,0.000914,3939,0.003331
+118,fw_ap_60_n,Forward neighbours (E28),2.19593e+09,0.000864,3400,0.002875
+119,taxiing_at_ob,Airport traffic counts,2.15126e+09,0.000847,3067,0.002593
+120,dst_share_dly,Destination arrival ATFM delay (E163),2.13979e+09,0.000842,2642,0.002234
+121,arr_before_10,Airport traffic counts,2.10361e+09,0.000828,2512,0.002124
+122,taxi_in_n_30,Airport traffic counts,2.01807e+09,0.000794,3657,0.003092
+123,offblocks_around_ob_60,Airport traffic counts,1.96362e+09,0.000773,2959,0.002502
+124,e157_hold,Wake separation (E157),1.94158e+09,0.000764,3905,0.003302
+125,nbf_rwy_60_0_n,Filed-time neighbours (E77),1.86607e+09,0.000735,2428,0.002053
+126,nbs_ap_30_30_n,Filed-time neighbours (E77),1.84735e+09,0.000727,2345,0.001983
+127,nbs_ap_30_0_n,Filed-time neighbours (E77),1.84483e+09,0.000726,1941,0.001641
+128,dep_after_10,Airport traffic counts,1.7512e+09,0.000689,1849,0.001563
+129,nbs_rwy_30_30_n,Filed-time neighbours (E77),1.74459e+09,0.000687,2557,0.002162
+130,local_dow,Local time,1.7237e+09,0.000679,3370,0.002849
+131,offblocks_around_ob_20,Airport traffic counts,1.67902e+09,0.000661,2756,0.002330
+132,nb_rwy_30_30_n,Neighbour NM taxi proxies,1.60152e+09,0.000630,2202,0.001862
+133,dep_before_20,Airport traffic counts,1.58715e+09,0.000625,2286,0.001933
+134,wx_icing,Weather (METAR),1.5851e+09,0.000624,302,0.000255
+135,rwy_arr_before_10,Runway traffic and configuration,1.58502e+09,0.000624,471,0.000398
+136,wx_icing_recent,Weather (METAR),1.53864e+09,0.000606,315,0.000266
+137,dep_before_10,Airport traffic counts,1.53027e+09,0.000602,2050,0.001733
+138,arr_before_30,Airport traffic counts,1.52978e+09,0.000602,2589,0.002189
+139,aobt_minute_exact,Planning-time intervals,1.5235e+09,0.000600,115,0.000097
+140,dep_after_30,Airport traffic counts,1.4859e+09,0.000585,2791,0.002360
+141,offblocks_around_ob_30,Airport traffic counts,1.48273e+09,0.000584,2713,0.002294
+142,offblocks_around_ob_10,Airport traffic counts,1.44731e+09,0.000570,2555,0.002160
+143,nb_ap_30_0_n,Neighbour NM taxi proxies,1.40377e+09,0.000553,1632,0.001380
+144,nb_ap_30_30_n,Neighbour NM taxi proxies,1.38997e+09,0.000547,1827,0.001545
+145,wx_thunder,Weather (METAR),1.35202e+09,0.000532,410,0.000347
+146,fw_ap_15_n,Forward neighbours (E28),1.33697e+09,0.000526,2123,0.001795
+147,nbf_ap_30_30_n,Filed-time neighbours (E77),1.30607e+09,0.000514,1747,0.001477
+148,arr_around_ob_30,Airport traffic counts,1.29193e+09,0.000509,2573,0.002176
+149,dep_after_20,Airport traffic counts,1.28753e+09,0.000507,2252,0.001904
+150,nbf_rwy_30_30_n,Filed-time neighbours (E77),1.26199e+09,0.000497,1991,0.001683
+151,nbf_ap_30_0_n,Filed-time neighbours (E77),1.1934e+09,0.000470,1383,0.001169
+152,arr_around_ob_20,Airport traffic counts,1.16873e+09,0.000460,2259,0.001910
+153,dst_cap_per_arr,Destination arrival ATFM delay (E163),1.09473e+09,0.000431,1932,0.001634
+154,FLIGHT_TYPE_flt,"Airport, runway, aircraft and flight identity",9.29828e+08,0.000366,443,0.000375
+155,WK_TBL_CAT_flt,"Airport, runway, aircraft and flight identity",8.79587e+08,0.000346,238,0.000201
+156,arr_around_ob_10,Airport traffic counts,8.57245e+08,0.000337,1916,0.001620
+157,dst_w_per_arr,Destination arrival ATFM delay (E163),8.5346e+08,0.000336,1256,0.001062
+158,rwy_arr_before_30,Runway traffic and configuration,6.72535e+08,0.000265,681,0.000576
+159,n_arr_rwys,Runway traffic and configuration,6.22928e+08,0.000245,736,0.000622
+160,wx_rain,Weather (METAR),6.14831e+08,0.000242,453,0.000383
+161,rwy_arr_around_10,Runway traffic and configuration,5.59094e+08,0.000220,414,0.000350
+162,n_dep_rwys,Runway traffic and configuration,4.74253e+08,0.000187,383,0.000324
+163,wx_gust,Weather (METAR),3.94771e+08,0.000155,644,0.000545
+164,rwy_arr_before_5,Runway traffic and configuration,3.21895e+08,0.000127,163,0.000138
+165,geo_match,Stand-to-runway geometry,2.36424e+08,0.000093,146,0.000123
+166,wx_fog,Weather (METAR),1.60839e+08,0.000063,147,0.000124
+167,e157_prev_heavy,Wake separation (E157),1.55558e+08,0.000061,315,0.000266
+168,wx_freezing,Weather (METAR),1.32223e+08,0.000052,35,0.000030
+169,diverted,"Airport, runway, aircraft and flight identity",4.46162e+07,0.000018,65,0.000055
+170,dst_known,Destination arrival ATFM delay (E163),0,0.000000,0,0.000000

@@ -1,0 +1,38 @@
+# GPU stack used to train the neural member of v12075 (E203, ordered-trajectory
+# member; the earlier E190 PLE member used the same stack).
+#
+# Only needed to retrain that member. Replaying v12075 from the archived member
+# predictions (scripts/reproduce_v12075_v2.py) needs neither a GPU nor torch.
+# The CPU stack is pyproject.toml + uv.lock; uv.lock contains torch 2.14.0 only
+# as a dependency of tabpfn and does not contain rtdl-num-embeddings.
+#
+# Recorded runtime of the E203 ranking fits
+# (analysis/e203_reproduction_status_20261007.json,
+#  candidate_manifest.rank_receipt.runtime; identical in
+#  analysis/e190_rank_20261006_verified.json):
+#   python  3.12.15 (main, Oct  3 2026, 01:03:07) [Clang 22.1.3]
+#   torch   2.13.0+rocm10.0.0, HIP 7.15.26333
+#   rtdl-num-embeddings 0.0.12
+#   numpy 2.5.3, polars 1.44.2, lightgbm 4.7.0
+#   device  AMD Radeon RX 7900 XTX, total memory 25,753,026,560 bytes
+# Host: Ubuntu 26.04.1, kernel 7.0.0-38-generic, inbox amdgpu driver
+# (analysis/home_gpu_setup_2026-10-04.md).
+#
+# torch was installed from AMD's wheel index with this command, recorded in
+# analysis/home_gpu_setup_2026-10-04.md:
+#   pip install --index-url https://stable.repo.amd.com/rocm/whl-next/ 'torch[device-gfx1100]==2.13.0+rocm10.0.0'
+# Install torch that way first, then the remaining pins below from PyPI.
+#
+# The install command for rtdl-num-embeddings was not recorded.
+# analysis/e190_protocol_2026-10-05.md names the official package, version
+# 0.0.12 (MIT), installed in a separate environment that reads the torch
+# environment through a .pth path.
+#
+# This file records versions; it has not been used to build an environment
+# from scratch.
+
+torch[device-gfx1100]==2.13.0+rocm10.0.0
+rtdl-num-embeddings==0.0.12
+numpy==2.5.3
+polars==1.44.2
+lightgbm==4.7.0

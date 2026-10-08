@@ -13,8 +13,11 @@ pipeline boundary; a component result is not a full-chain result.
 | v12074 | E190 + E188, complete chain | 231.4438 | 2026-10-07 07:02:34 |
 | **v12075** | **E203 ordered-trajectory replacement, complete chain** | **230.9387** | **2026-10-07 21:53:59** |
 
-All four scored 344,841 rows. The original recipes were registered before these
-scores. The [delivery/result report](../analysis/submission_results_20261007.md)
+E190 is the neural member with piecewise-linear numerical embeddings; E188
+retrains the previous-visit surface stage for LIRF rows with an NM record; E203
+replaces E190 with the ordered-trajectory neural member (see the
+[glossary](glossary.md)). All four scored 344,841 rows. The original recipes were
+registered before these scores. The [delivery/result report](../analysis/submission_results_20261007.md)
 links the stored responses. v12074 has SHA256
 `e5c78ab061492b69fe72d4a46d2e286f7a2f6b3129ebf2ae4a34731bb662374b`.
 A local documentation check on 7 October confirmed this hash, 344,841 unique IDs
@@ -29,8 +32,7 @@ ranking-set measurement, not an independent future-period estimate.
 
 The 0.0011-second difference between v12074 and v12070 is a property of these
 files on this ranking set. It is not evidence that E188 will improve another
-period. We do not infer a current rank, prize-review threshold or remaining
-submission allowance from a historical scoring response.
+period.
 
 ## Temporal splits and integrity checks
 
@@ -56,6 +58,9 @@ subset. The tables below use actual RMSE differences from their named reports.
 These two conventions must not be mixed in a pooled results table.
 
 ## Subset definitions
+
+These subsets were defined for E195, the retrospective four-arm comparison of the
+chain before E81 described in the next section.
 
 | Name | Definition and purpose |
 |---|---|
@@ -87,18 +92,65 @@ E152 but **before E81, LOBT tail adjustments, final protection and half-LSZH**.
 
 Source: [E195 report](../analysis/e195_pre_e81_results_20261007.md), with fold
 results and registered input/model receipts. The comparison includes the saved
-Cat15/LGB5/neural members, fixed weights, E185/E167, fold-specific surface stages
-and E152. No feasibility-mask exclusions were newly introduced; the 126
-historical TabPFN rows were excluded from every arm.
+Cat15/LGB5/neural members, fixed weights, the E185 movement-only member, the E167
+NM-window rules, fold-specific surface stages and the E152 confidence gate. No
+feasibility-mask exclusions were newly introduced; the 126 historical TabPFN rows
+were excluded from every arm.
 
 This is **selection-informed retrospective validation**. Historical upstream
 out-of-fold predictions were not fully nested through the complete downstream
 chain. The stored classifier probabilities are already feasibility-masked;
 the original unmasked mass is unavailable. Exact historical OOF donors for v44
-and v60 are unavailable, and the legacy tail cache does not reproduce the 42-row
-production treatment. These limitations prevent presenting E195 as an unbiased
-full-v12074 estimate. The original v12074 manifest explicitly records
-`quality_validated_on_full_chain=false`.
+and v60 are unavailable
+([model design](model-design.md#sparse-tail-and-final-transformations)), and the
+legacy tail cache does not reproduce the 42-row production treatment. These
+limitations prevent presenting E195 as an unbiased full-v12074 estimate. The
+original v12074 manifest explicitly records `quality_validated_on_full_chain=false`.
+
+## 2025 out-of-fold RMSE by airport
+
+The table uses the E195 `joint` arm: the E190 + E188 chain of v12074 through E152,
+before E81 and the later tail steps. The E203 member of v12075 is not in these
+predictions. Rows are the 2,084,921 evaluated 2025 departures; the 126 LIRF rows of
+the TabPFN tail segment are excluded. The numbers are printed by
+`scripts/make_doc_figures.py --only 5` (output lines `[F5] airport ...`), which reads
+`data/e195_pre_e81_20261007_v2/predictions.parquet`.
+
+**2025 out-of-fold RMSE by airport (E195 `joint`, current chain before E81)**
+
+| Airport | Evaluated rows | Share of squared error | RMSE, all rows (s) | RMSE, labels ≤ 7,200 s (s) |
+|---|---:|---:|---:|---:|
+| EDDF | 230,141 | 2.5 % | 103.9 | 103.9 |
+| EDDM | 167,334 | 1.4 % | 92.7 | 92.7 |
+| EGLL | 239,546 | 9.3 % | 196.0 | 188.6 |
+| EHAM | 247,951 | 2.6 % | 101.7 | 98.5 |
+| LEBL | 179,705 | 4.0 % | 149.0 | 149.0 |
+| LEMD | 212,242 | 4.1 % | 138.3 | 138.3 |
+| LFPG | 239,552 | 21.6 % | 298.9 | 211.9 |
+| LIRF | 160,578 | 30.8 % | 436.4 | 363.5 |
+| LSZH | 134,907 | 9.5 % | 263.8 | 102.1 |
+| LTFM | 272,965 | 14.3 % | 228.2 | 224.2 |
+| **All** | **2,084,921** | **100 %** | **218.26** | **183.17** |
+
+The totals agree with the E190 + E188 row of the E195 table above to two
+decimals; that table's `decided` subset excludes one further row. At LSZH, six labels above 7,200 s hold
+85 % of the airport's squared error (recomputed from the same file), which explains
+the gap between 263.8 s and 102.1 s. LIRF, LFPG and LTFM have the largest errors on
+labels up to 7,200 s.
+
+**Why 218.3 s out-of-fold differs from 230.9 s on the leaderboard (explanation,
+not measurement).** The two numbers cover different rows: the out-of-fold figure
+spans all twelve 2025 months, excludes the 126 TabPFN tail rows (which hold 111 of
+the 122 labels above four hours) and stops before E81 and the LSZH stage, while the
+leaderboard scores every row of the complete file for January and July 2026; on
+January and July 2025 alone the out-of-fold RMSE is 279.2 s, and four labels above
+four hours hold 38.2 % of that squared error. The inputs also shift between years:
+own-aircraft ADS-B coverage changes strongly by airport and month
+([data insights §4](data-insights.md#4-ads-b-surface-coverage-drift)), and
+departures without an NM record, which hold 36.6 % of the out-of-fold squared
+error, are 1.53 % of the ranking set against 1.08 % of 2025. Finally, the chain was
+developed by selecting changes on the same 2025 data, so its out-of-fold error is
+optimistic; we have not measured how much of the gap each factor explains.
 
 ## Negative experiments and later work
 
@@ -111,8 +163,9 @@ full-v12074 estimate. The original v12074 manifest explicitly records
 | E204: a wider second trajectory-message scale | Body/decided changes were +0.092642/+0.096240 s on pair 1+7 and −0.203661/−0.203193 s on pair 4+10 | Failed the preregistered requirement to improve both pairs after six fits. Small pooled improvements do not override that gate; no confirmation or ranking fit followed. [Report](../analysis/night_gpu_20261007/RESULTS.md) |
 | E205: missed cloud-CB flags | Against existing weather inputs, decided RMSE improved by 0.009903 s; against the current E203 chain, the complete correction worsened decided RMSE by 0.087097 s, with only 3/6 improved pairs and worse trims | Rejected after 12 fits. The additional input signal did not make this correction useful. Independent ASUS reconstruction matched all 2,429,888 flight IDs and four CB columns. [Report](../analysis/night_cb_20261007/RESULTS.md) |
 
-E202 completed the four remaining month-pair comparisons (24 fits); both
-registered component gates passed. E203 then compared the ordered replacement
+E202, the confirmation run of the ordered-trajectory member, completed the four
+remaining month-pair comparisons (24 fits); both registered component gates
+passed. E203 then compared the ordered replacement
 against the E190+E188 control through E152, before E81 and the remaining tail:
 
 | Subset | Control RMSE | E203 RMSE | Change |
@@ -131,8 +184,7 @@ E197's 4.5/7.1-second component improvements are not the achieved leaderboard
 gain. The measured complete-file improvement is 0.5051 s, as recorded above.
 
 The full [experiment register](../HYPOTHESES_LOG.md) also preserves older rejected
-features and models. This summary is deliberately selective; it is not a claim
-that all conceivable alternatives have been excluded.
+features and models; this page summarises only recent experiments.
 
 ## Remaining scientific limits
 
@@ -161,10 +213,6 @@ The public [eligibility page](https://prc-data-challenge-2026.netlify.app/eligib
 read on 7 October 2026, requires GPLv3 source code, documented/open external data
 and sufficient information to understand and reproduce the result.
 
-The user-verified local extract
-`analysis/review_fable_2026-10-07/discord_2026-09-26_10-05_extract.md`
-records organiser statements dated 1 October (last repository commit before the
-deadline), 2 October (model design/documentation contribute to prize review) and
-3 October (no final round). We read this supplied extract for documentation; we
-did not independently authenticate those Discord messages in this pass. No
-number of teams eligible for code review is established by those statements.
+Organiser clarifications on data use, the final repository commit, the role of
+model design and documentation in prize review, and the absence of a final round
+are quoted with their dates in [organiser clarifications](organiser-clarifications.md).
