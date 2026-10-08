@@ -14,3 +14,6 @@ analysis/discord/
 analysis/competitor_repos/
 
 /.prc-upload-credentials.json
+
+# final tabular fits (saved models and predictions, 2+ GB; receipts are mirrored under analysis/)
+models/final_tabular/
