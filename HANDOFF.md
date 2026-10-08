@@ -2,6 +2,12 @@
 
 Правила, машины, рецепты — в `AGENTS.md`. Здесь — позиция, что считается и что делать дальше.
 
+## Документация к ревью приза — 08.10.2026 00:55Z (сессия Claude, коммиты a95ed2b, 92c7278, merge 84ddbaa)
+
+- README и `docs/` переписаны под ревьюеров приза (английский): README с таблицей открытости данных, `docs/development-history.md`, `docs/data-insights.md` + `docs/figures/` (`scripts/make_doc_figures.py`), `docs/negative-results.md`, `docs/glossary.md`, `docs/organiser-clarifications.md` (дословные цитаты организатора с UTC), переписанный `docs/reproduction.md` (история v12074 → `analysis/reproduce_v12074_20261007/HISTORY.md`), `requirements-gpu.txt`, `CITATION.cff`, метаданные `pyproject.toml`. Прошло ревью Fable в роли проверяющего PRU: `analysis/review_fable_2026-10-07/`.
+- При новом best обновлять числа в README (результат, таблица фаз), `docs/development-history.md` (шаг), `docs/tables/leaderboard_gentle-igloo.csv`, график 1 (`scripts/make_doc_figures.py`). Структуру не откатывать; правки — по месту.
+- Открыто для Denys до 09.10: раздел Team в README (имя, фраза про AI-ассистентов, нужны ли affiliation/контакт), что делать с внутренними файлами (AGENTS/HANDOFF/hz_queue/outreach/review/research_notes/reports, LAN-IP в tracked-файлах) при открытии.
+
 ## Оперативное обновление 08.10.2026 00:08:36 UTC — первый E207 технически остановлен
 
 - **E207 №377 остановлен до завершения первого дня и до fit.** Root обнаружил повторную распаковку NPZ в per-flight `validate_arrays(NpzFile)` и отправил SIGTERM controller87152. Это техническая проблема выполнения, не научный FAIL F-only. [Полная квитанция старого запуска](analysis/e207_full_token_20261008/STATUS.md).
