@@ -187,6 +187,20 @@ def member_table(path, expected_seeds=None, require_per_seed=True):
     return ids, reg, receipt
 
 
+def check_completion(kind, comp, expected, npz_name, npz_sha):
+    """The completion receipt must list exactly seeds 0..expected-1 and, if it lists the prediction file, its SHA."""
+    if isinstance(comp.get('all_seeds'), list):  # NN seeds 3..9 run: its receipt lists the full 0..9 set
+        listed = comp['all_seeds']
+    else:
+        listed = comp.get('seeds') if isinstance(comp.get('seeds'), list) else comp.get('fits', [])
+    seeds = [x['seed'] if isinstance(x, dict) else int(x) for x in listed]
+    if sorted(seeds) != list(range(expected)):
+        raise ValueError(f'{kind}: completion receipt lists seeds {sorted(seeds)}')
+    listed_sha = comp.get('files', {}).get(npz_name)
+    if isinstance(listed_sha, str) and listed_sha != npz_sha:
+        raise ValueError(f'{kind}: prediction SHA differs from its completion receipt')
+
+
 def align(ids, member_ids, values):
     """Return values ordered like ids; every id must exist exactly once (blend.py dict semantics)."""
     order = np.argsort(member_ids, kind='stable')
@@ -239,15 +253,12 @@ def admit(root, contract_path):
             continue
         if spec['npz'] not in c['files']:
             raise ValueError('unpinned member ' + kind)
-        ids, reg, receipt = member_table(relative(root, spec['npz']), EXPECTED_SEEDS[kind], require_per_seed=kind != 'nn')
+        expected = c.get('nn_seeds', EXPECTED_SEEDS['nn']) if kind == 'nn' else EXPECTED_SEEDS[kind]
+        ids, reg, receipt = member_table(relative(root, spec['npz']), expected, require_per_seed=kind != 'nn')
         align(rank_ids, ids, reg)
         if spec.get('complete'):
             receipt['complete_sha256'] = c['files'][spec['complete']]
-            comp = read(relative(root, spec['complete']))
-            listed = comp.get('seeds') if isinstance(comp.get('seeds'), list) else comp.get('fits', [])
-            seeds = [x['seed'] if isinstance(x, dict) else int(x) for x in listed]
-            if sorted(seeds) != list(range(EXPECTED_SEEDS[kind])):
-                raise ValueError(f'{kind}: completion receipt lists seeds {sorted(seeds)}')
+            check_completion(kind, read(relative(root, spec['complete'])), expected, Path(spec['npz']).name, receipt['sha256'])
         members[kind] = receipt
     if set(members) != set(EXPECTED_SEEDS):
         raise ValueError('missing model family: ' + str(set(EXPECTED_SEEDS) - set(members)))
@@ -995,6 +1006,7 @@ def make_contract(root, mode, out, **kw):
     files = pin(root, sorted(set(names)))
     feat = pl.read_parquet(root / inputs['features_fin1b'], columns=[ID, 'split']).filter(pl.col('split') == 'rank')
     contract = dict(protocol=PROTOCOL, mode=mode, rows=rows, train_rows=2085047, inputs=inputs, members=members,
+                    nn_seeds=3 if mode == 'janjul' else 10,
                     rank_ids_sha256=ids_sha(feat[ID].to_numpy()), derivatives=dict(**deriv, ranking_sha256=files[inputs['ranking']]),
                     opdi=dict(files={n: files[n] for n in opdi}, extra_dir=kw.get('opdi_extra'),
                               extra_files=[n for n in opdi if not n.startswith('data/opdi/')]),

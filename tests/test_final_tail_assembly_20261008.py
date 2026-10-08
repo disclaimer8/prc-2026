@@ -97,6 +97,20 @@ class MemberContracts(unittest.TestCase):
             A.align(np.array([10., 20., 40.]), member_ids, values)
 
 
+class CompletionReceipts(unittest.TestCase):
+    def test_nn_ten_seed_receipt_and_sha(self):
+        ten = dict(seeds=[3, 4, 5, 6, 7, 8, 9], all_seeds=list(range(10)), files={'prediction_10seed.npz': 'a' * 64})
+        A.check_completion('nn', ten, 10, 'prediction_10seed.npz', 'a' * 64)
+        with self.assertRaises(ValueError):
+            A.check_completion('nn', ten, 3, 'prediction_10seed.npz', 'a' * 64)
+        with self.assertRaises(ValueError):
+            A.check_completion('nn', ten, 10, 'prediction_10seed.npz', 'b' * 64)
+        with self.assertRaises(ValueError):
+            A.check_completion('nn', dict(seeds=[3, 4, 5, 6, 7, 8, 9]), 10, 'p.npz', 'a' * 64)
+        A.check_completion('nn', dict(seeds=[0, 1, 2]), 3, 'prediction.npz', 'c' * 64)
+        A.check_completion('cat', dict(fits=[dict(seed=i) for i in range(15)]), 15, 'predictions.npz', 'd' * 64)
+
+
 class PremixArithmetic(unittest.TestCase):
     def setUp(self):
         rng = np.random.default_rng(3)
