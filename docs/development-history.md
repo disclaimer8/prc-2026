@@ -23,8 +23,8 @@ experiment ID.
 ## 1. Score progression
 
 108 uploads between 13 September and 7 October 2026 produced 61 new best scores. The 30
-steps with a gain of about 0.3 s or more account for 267.2 s of the total 270.3 s; the other
-30 add 3.1 s together. Step 27 (−0.299 s) is in the first table because it is a separate
+steps with a gain of about 0.3 s or more account for 267.5 s of the total 270.3 s; the other
+30 add 2.8 s together. Step 27 (−0.299 s) is in the first table because it is a separate
 design decision; step 13 is measured against v28, the best file before it.
 
 ### Steps of 0.3 s or more
@@ -105,7 +105,8 @@ design decision; step 13 is measured against v28, the best file before it.
 **Observed.** The target is a recorded interval, not always a physical one. Among 4,126
 departures of 2025 with a target above one hour, the target matched take-off minus the
 scheduled time (±120 s) in 45.5 % of cases, take-off minus IOBT in 10.9 %, LOBT in 10.8 %
-and EOBT in 6.6 %. At LIRF this explains 87 % of the long values; 14 labels are shifted by
+and EOBT in 6.6 %. At LIRF this explains 87 % of the long values at this ±120 s tolerance (83.7 % at the
+model's ±6 s tolerance, [data insights](data-insights.md) Figure 2b); 14 labels are shifted by
 exactly one day (B §3, item 2). In the January+July 2025 holdout, 45 rows above four hours
 carried 52 % of the sum of squared deviations (B §3, item 1).
 

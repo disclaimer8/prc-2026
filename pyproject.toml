@@ -1,6 +1,10 @@
 [project]
 name = "prc-2026"
 version = "0.1.0"
+description = "Recorded taxi-out time model for the EUROCONTROL PRC Data Challenge 2026 (team gentle-igloo)"
+readme = "README.md"
+license = "GPL-3.0-only"
+authors = [{ name = "Denys Kolomiiets" }]
 requires-python = ">=3.12"
 dependencies = [
     "catboost>=1.2.10",

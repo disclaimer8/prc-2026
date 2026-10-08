@@ -31,27 +31,21 @@ pretrained-model redistribution questions have been resolved.
 
 ## Challenge-specific clarifications
 
-The user verified the organiser's Discord clarification that OPDI is permitted
-for this competition. The supplied local extract
-`analysis/review_fable_2026-10-07/discord_2026-09-26_10-05_extract.md`
-records these relevant statements:
+The organiser answered data questions in the challenge Discord channel. The
+statements that matter for this recipe are quoted verbatim, with UTC times, in
+[docs/organiser-clarifications.md](docs/organiser-clarifications.md). In short:
 
-| Date, UTC | Recorded organiser guidance | Scope used here |
+| Date (UTC) | Organiser's answer | Applies to |
 |---|---|---|
-| 2026-09-27 07:03 and 15:14 | Published dashboard figures may be cited; affirmative answer about January/July 2026 monthly airport taxi-out aggregates as model input | Evidence of challenge-specific permission for those figures/aggregates. It does not itself grant a blanket licence for every portal dataset. |
-| 2026-10-01 14:39 | Open-data rule applies to a flight's own post-pushback ADS-B trajectory | Supports the retrospective information boundary described in the model documentation. |
-| 2026-10-04 03:51 | OPDI accepted as open for the eligibility question | Challenge-specific acceptance, consistent with the user's confirmation. It is not a separately published general redistribution licence. |
+| 2026-09-16 | All columns except the departure block time and target, in the same row and in other rows, are available to the model | `AOBT_3_flt` and other NM timestamps |
+| 2026-09-17 | EUROCONTROL's daily airport files (including arrival ATFM delay, under the portal's non-commercial disclaimer) and the adsb.lol archive (ODbL 1.0) "can be considered open data for the challenge" | Destination ATFM delay features (E163); adsb.lol |
+| 2026-09-19, 2026-10-01 | Using open trajectory data, including the flight's own post-pushback track, is allowed | Surface stages and trajectory network |
+| 2026-10-04 | OPDI, published without a separate licence, is "open" for eligibility | LSZH correction |
 
-These statements are cited from the **user-verified local extract**, read during
-this documentation pass. We did not independently authenticate the Discord
-messages here. The current recipe uses destination **daily ATFM aggregates**,
-not the monthly taxi-out averages named in the September question. Its input and
-the scope of the recorded permission are therefore both disclosed rather than
-silently equated.
-
-A reusable public data bundle must retain the applicable source terms and state
-any unresolved permission scope. The main source repository's GPLv3 licence
-covers our code; it does not erase the data restrictions above.
+These are challenge-specific permissions. They do not change the general terms of
+each portal and do not by themselves grant a right to redistribute EUROCONTROL
+files; we therefore do not redistribute them and give acquisition instructions
+instead.
 
 ## Acquisition, lineage and coverage
 
@@ -62,8 +56,8 @@ covers our code; it does not erase the data restrictions above.
 | OSM geometry | [`analysis/sources/scripts/osm_overpass_download.py`](analysis/sources/scripts/osm_overpass_download.py), [`src/geometry.py`](src/geometry.py) | Preserve the extract and retrieval date; a new live OSM query can produce different geometry. |
 | adsb.lol | [`src/adsb_offblock_v2.py`](src/adsb_offblock_v2.py), [`src/adsb_offblock_v5.py`](src/adsb_offblock_v5.py), [`src/adsb_visit.py`](src/adsb_visit.py), [`src/e69_visit_merge.py`](src/e69_visit_merge.py) | Freeze daily archive/release selection and extraction settings. Coverage is uneven; do not interpret missing reception as no movement. |
 | Destination ATFM | [`src/e163_build_features.py`](src/e163_build_features.py); `data/ext_pru/apt_dly_{2024,2025,2026}.csv` | Joins `ADES_mvt` and the UTC take-off date. Five `dst_*` columns are present in the submitted FIN1b schema. These are retrospective daily aggregates. |
-| OPDI in the submitted correction | [`src/e159_fixed_lineage.json`](src/e159_fixed_lineage.json), [`src/e159_opdi_stage_cv.py`](src/e159_opdi_stage_cv.py), [`src/e159b_apply.py`](src/e159b_apply.py) | The frozen `data/opdi/ev_*.parquet` inputs define v12074. Callsign/airport matching uses a nearby observed event anchor; the correction is applied only at LSZH. |
-| Expanded OPDI research ingestion | [`docs/opdi_full_ingestion.md`](docs/opdi_full_ingestion.md), [`scripts/opdi_full_ingest.py`](scripts/opdi_full_ingest.py) | Separate research data path. It records source URLs, versions, hashes and incomplete windows; its larger inventory is not automatically part of v12074. |
+| OPDI in the submitted correction | [`src/e159_fixed_lineage.json`](src/e159_fixed_lineage.json), [`src/e159_opdi_stage_cv.py`](src/e159_opdi_stage_cv.py), [`src/e159b_apply.py`](src/e159b_apply.py) | The frozen `data/opdi/ev_*.parquet` inputs define the v12075 correction. Callsign/airport matching uses a nearby observed event anchor; the correction is applied only at LSZH. |
+| Expanded OPDI research ingestion | [`docs/opdi_full_ingestion.md`](docs/opdi_full_ingestion.md), [`scripts/opdi_full_ingest.py`](scripts/opdi_full_ingest.py) | Separate research data path. It records source URLs, versions, hashes and incomplete windows; its larger inventory is not part of v12075. |
 
 The development directories `data/` and `submissions/` are excluded from Git.
 Listing a local path is not a statement that its contents ship with a fresh clone.
@@ -76,9 +70,9 @@ silently represented as complete coverage.
 Our source code is [GNU GPLv3](LICENSE). Third-party libraries retain their own
 licences. [`pyproject.toml`](pyproject.toml) and [`uv.lock`](uv.lock) describe the
 main Python dependency set (Python ≥3.12), including Polars, NumPy, LightGBM,
-CatBoost and scikit-learn. They do not fully specify the separate E190 GPU
-runtime. Its immutable receipts record PyTorch/ROCm and `rtdl_num_embeddings`
-versions; those must accompany a release environment specification.
+CatBoost and scikit-learn. The GPU stack of the neural member (PyTorch with
+ROCm, `rtdl_num_embeddings`) is pinned separately in
+[`requirements-gpu.txt`](requirements-gpu.txt).
 
 The numerical-embedding method is from Yury Gorishniy, Ivan Rubachev and Artem
 Babenko, *On Embeddings for Numerical Features in Tabular Deep Learning*, NeurIPS
@@ -87,18 +81,20 @@ Babenko, *On Embeddings for Numerical Features in Tabular Deep Learning*, NeurIP
 [usage guide](https://github.com/yandex-research/rtdl-num-embeddings/blob/main/package/README.md).
 The PLE method is prior work, not a new algorithm claimed by this solution.
 
-The historical LIRF tail used TabPFN pretrained models. Exact v12074 reproduction
-currently requires the saved donor predictions rather than fresh inference.
-Library licensing and pretrained-weight licensing must be identified separately
-if distributing weights or offering a from-scratch tail rebuild. No blanket
-GPL/ODbL claim is made for third-party weights.
+The LIRF tail uses the TabPFN-2 classifier (`tabpfn` 8.5.0, `ModelVersion.V2`
+weights) by Prior Labs, licensed under the
+[Prior Labs License 1.1](https://github.com/PriorLabs/TabPFN/blob/main/LICENSE):
+Apache 2.0 with an added attribution clause. This solution is **Built with
+PriorLabs-TabPFN**. We do not redistribute the weights. Exact reproduction of
+v12075 uses the 42 saved tail predictions rather than fresh inference, because
+TabPFN inference is not bit-identical across runs and machines.
 
 ## Evaluated sources outside this recipe
 
 Research considered alternative ADS-B archives, additional OPDI features,
 reanalysis weather, ACARS, airport publications and other context. Their presence
 in scripts or survey notes does not establish use in the submitted model. In
-particular, the v12074 source inventory does not include commercial flight feeds,
+particular, the v12075 source inventory does not include commercial flight feeds,
 OpenSky Trino trajectory queries, Airplanes.Live, ADSB Exchange, ACARS archives
 or ERA5 variables. This is an inventory statement, not a current legal judgment
 on every source considered.

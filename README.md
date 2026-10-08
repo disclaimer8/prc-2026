@@ -10,7 +10,26 @@ The models are trained on all 2025 departures (2,085,047 rows) and scored on
 7 October 2026). This is our best of 108 submissions; on 8 October 2026 it
 ranked 14th of 237 teams. Our first submission scored 501.23 s.
 
-Code: [GNU GPLv3](LICENSE). Data keep their own terms; see [SOURCES.md](SOURCES.md).
+Code: [GNU GPLv3](LICENSE). Data keep their own terms, summarised below and in
+[SOURCES.md](SOURCES.md).
+
+### Data openness at a glance
+
+| Input | Licence or terms | Status for the challenge |
+|---|---|---|
+| Challenge movements and NM records | Provided by the organiser to all teams | Challenge data |
+| adsb.lol `globe_history` 2025 and 2026 | ODbL 1.0 | Open licence; also accepted by the organiser on 17 Sep 2026 |
+| OpenStreetMap (via Overpass) | ODbL 1.0 | Open licence |
+| Iowa Environmental Mesonet METAR archive | Public domain (IEM statement) | Open |
+| ansperformance.eu daily arrival ATFM delay by airport | Portal terms: free with attribution, non-commercial | Accepted as open data for the challenge by the organiser on 17 Sep 2026 |
+| OPDI v0.0.2 events (LSZH correction only) | No separate dataset licence published | Accepted as open by the organiser on 4 Oct 2026 |
+| TabPFN-2 classifier weights | [Prior Labs License 1.1](https://github.com/PriorLabs/TabPFN/blob/main/LICENSE) (Apache 2.0 plus an attribution clause) | Used for 42 tail predictions; weights are not redistributed. Built with PriorLabs-TabPFN |
+
+The organiser's statements are quoted with dates in
+[organiser clarifications](docs/organiser-clarifications.md). If either
+EUROCONTROL-portal input were set aside, the affected parts are the destination
+ATFM delay features (leaderboard effect when added: −0.17 s) and the half-weight
+LSZH correction (−0.25 s over two steps); the rest of the chain does not use them.
 
 ## Contents
 
@@ -24,7 +43,8 @@ Code: [GNU GPLv3](LICENSE). Data keep their own terms; see [SOURCES.md](SOURCES.
 | [Reproduction](docs/reproduction.md) | How to verify and rebuild the submission; what is and is not yet portable |
 | [Glossary](docs/glossary.md) | Plain-language names for experiment IDs such as E25 or E141 |
 | [Sources and licences](SOURCES.md) | External data, licences, organiser clarifications |
-| [Experiment register](HYPOTHESES_LOG.md) | All ~375 hypotheses with method, result and verdict (in Russian) |
+| [Organiser clarifications](docs/organiser-clarifications.md) | Dated organiser statements on data use and evaluation |
+| [Experiment register](HYPOTHESES_LOG.md) | 376 numbered entries from 23 September with method, result and verdict (in Russian); earlier experiments are in `REVIEW_BRIEF.md` |
 
 ## The problem as the data presents it
 
@@ -138,10 +158,11 @@ development history gives the single-change control.
   January + July ranking set.
 - **Pre-registered gates.** Before each experiment we recorded the decision rule
   (for example: lower paired squared error in at least 4 of 6 folds, and not driven
-  by a few rows). From 20 September we also wrote a predicted leaderboard score
-  before each upload.
-- **Every idea is logged**, including the rejected ones: about 375 entries in
-  [HYPOTHESES_LOG.md](HYPOTHESES_LOG.md); the most informative rejections are
+  by a few rows). From 20 September most uploads also carried a leaderboard
+  forecast written before the upload.
+- **Every idea is logged**, including the rejected ones: 376 numbered entries in
+  [HYPOTHESES_LOG.md](HYPOTHESES_LOG.md) since 23 September, earlier ones in
+  `REVIEW_BRIEF.md`; the most informative rejections are
   summarised in English in [negative results](docs/negative-results.md).
 - **What we learned about transfer.** Rule-like changes that add no learned capacity
   carried over to the leaderboard reliably; added learned capacity often helped in
@@ -159,30 +180,35 @@ not establish.
 |---|---|---|
 | Verify the submitted file | SHA-256 `90d3cd0b…aee2`, 344,841 unique IDs | [docs/reproduction.md](docs/reproduction.md) |
 | Rebuild v12075 from archived features, member predictions and saved models | Done independently on 7 October 2026: all predictions and Parquet bytes identical, no model refits, 101 s | `scripts/reproduce_v12075_v2.py` |
-| Retrain everything from raw data | Trainers, extractors and stage builders are in `src/` and `scripts/`; a clean end-to-end run of the current recipe has not been completed | [docs/reproduction.md](docs/reproduction.md) |
+| Retrain everything from raw data | Trainers, extractors and stage builders are in `src/` and `scripts/`, listed in order in the reproduction guide; a clean end-to-end run of the current recipe has not been completed | [docs/reproduction.md](docs/reproduction.md) |
+| Apply to a new period | Not available as one command: the 42 frozen tail predictions and the two archived blend donors are specific to the ranking period | [docs/reproduction.md](docs/reproduction.md) |
 
 Large data, fitted models and submission files are not in Git. The archive
-needed for the exact rebuild is about 5.1 GB and is listed in
-[`docs/reproduction_manifest.json`](docs/reproduction_manifest.json).
+needed for the exact rebuild is about 5.2 GB (5,187,588,486 bytes); its 3,711 files and their hashes are
+listed in
+[`analysis/reproduce_v12075_20261007/inventory_v2.json`](analysis/reproduce_v12075_20261007/inventory_v2.json).
 
-Environment: Python 3.12 with the locked dependencies in
-[`pyproject.toml`](pyproject.toml) / [`uv.lock`](uv.lock). The neural members were
-trained with PyTorch on an AMD Radeon RX 7900 XTX (ROCm); everything else runs on
-CPU.
+Environment: the CPU stack (Python ≥ 3.12, Polars, LightGBM, CatBoost, TabPFN) is
+locked in [`uv.lock`](uv.lock). The neural member was trained on an AMD Radeon
+RX 7900 XTX with a separately pinned GPU stack
+([`requirements-gpu.txt`](requirements-gpu.txt): PyTorch 2.13.0 + ROCm,
+`rtdl_num_embeddings` 0.0.12). Replaying the archived submission needs neither.
 
 ## Repository map
 
 | Path | Content |
 |---|---|
-| `src/train.py` | Regime labels, classifier, regular-duration regressor, mixture |
+| `src/train.py` | Regime labels, regime classifier, regular-duration regressor, mixture |
 | `src/build_final_table.py`, `src/features.py` | Feature tables, including FIN1b |
 | `src/blend.py`, `src/catboost_reg.py` | Regular candidate: CatBoost/LightGBM blend and anchored members |
 | `src/adsb_*.py` | adsb.lol download, extraction, off-block and visit features |
-| `src/e141_apply.py`, `src/e64_apply.py`, `src/e64_visit_stage.py`, `src/e134_stage_cv.py` | Surface stages (own track, previous visit) and their cross-validation |
-| `src/e152_stage_gate.py`, `src/blend_submissions.py`, `src/lobt_edge_lift.py`, `src/protect_tabpfn_rows.py` | Final controls |
+| `src/e141_apply.py`, `src/e64_apply.py`, `src/e64_visit_stage.py`, `src/e134_stage_cv.py` | Own-track surface stage (E141), previous-visit stage (E64) and their cross-validation |
+| `src/e185_apply.py`, `src/e167_nm_window_rule.py` | Movement-only member for rows without LOBT (E185); LOBT-window regime rules (E167) |
+| `src/e152_stage_gate.py`, `src/blend_submissions.py`, `src/lobt_edge_lift.py`, `src/protect_tabpfn_rows.py` | Final controls: planning-regime gate (E152), blend with earlier pipelines (E81), LOBT window, frozen tail rows |
 | `src/e11_tabpfn.py`, `src/e118_tabpfn_prefix.py` | TabPFN tail model for LIRF without NM |
 | `scripts/e190_numeric_embeddings.py`, `scripts/e197_trajectory_encoder.py`, `scripts/e203_trajectory_production.py` | Neural member |
-| `src/e159b_apply.py` | LSZH OPDI correction |
+| `src/e159b_apply.py` | LSZH OPDI correction (E159b) |
+| `scripts/export_feature_importance.py` | Feature importance of the saved classifier and regressor |
 | `scripts/today_submissions_20261006.py` | Stage order of the submitted chain |
 | `scripts/reproduce_v12075_v2.py` | Exact rebuild of the best submission |
 | `src/strict_oof_gate.py` | Integrity checks for out-of-fold artifacts |
@@ -204,6 +230,26 @@ for traceability; their IDs match the register.
 - Results depend on ADS-B ground coverage, which differs by airport and year.
 - A few extreme labels (multi-hour or one-day shifts) dominate RMSE; small changes
   in how they are hedged can move the score by more than a model improvement.
+
+## Originality and prior work
+
+The design is our own. Where an idea came from elsewhere we say so in the
+[development history](docs/development-history.md): the first ADS-B surface stage
+followed a technique seen in team merry-quicksand's public code (our
+implementation); per-airport scaling of the NM proxy was also reported by team
+elegant-alligator; ideas from other public repositories that we tested and
+rejected are listed in [negative results](docs/negative-results.md). The
+numerical embeddings follow Gorishniy, Rubachev and Babenko (NeurIPS 2022), and
+the tail classifier is TabPFN-2 (Hollmann et al., Nature 2025).
+
+## Team
+
+Team gentle-igloo is one developer, Denys Kolomiiets
+([@disclaimer8](https://github.com/disclaimer8)), working with AI coding
+assistants. Every modelling decision, gate and upload is recorded with its
+evidence in [HYPOTHESES_LOG.md](HYPOTHESES_LOG.md). The working notes in Russian
+(`AGENTS.md`, `HANDOFF.md`, `REVIEW_BRIEF.md`, `hz_queue/`, `analysis/`) are kept
+for traceability and are not needed to read or reproduce the model.
 
 ## Data acknowledgements
 

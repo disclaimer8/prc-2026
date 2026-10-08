@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "gentle-igloo: recorded taxi-out time model for the EUROCONTROL PRC Data Challenge 2026"
+type: software
+authors:
+  - family-names: Kolomiiets
+    given-names: Denys
+repository-code: "https://github.com/disclaimer8/prc-2026"
+license: GPL-3.0-only
+date-released: "2026-10-09"
+keywords:
+  - taxi-out time
+  - air traffic management
+  - ADS-B
+  - gradient boosting
+  - mixture model

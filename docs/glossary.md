@@ -1,8 +1,10 @@
 # Glossary
 
 Experiment IDs (E-numbers) and submission versions (v-numbers) are stable
-identifiers: each one has an entry in [HYPOTHESES_LOG.md](../HYPOTHESES_LOG.md)
-and usually a dated report under `analysis/`. This page gives a plain-language
+identifiers. IDs up to about E99 (13–22 September) are documented in
+[REVIEW_BRIEF.md](../REVIEW_BRIEF.md) §2–§21; later IDs each have a numbered entry
+in [HYPOTHESES_LOG.md](../HYPOTHESES_LOG.md). Most also have a dated report under
+`analysis/`. This page gives a plain-language
 name for the IDs that appear in the English documentation.
 
 ## Terms

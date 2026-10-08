@@ -242,7 +242,7 @@ leaderboard. E14 itself had been worth −7.9 against the 14 September base but
 was +0.376 (3/6) against the production base. Removing it gave LB −0.227. A
 stronger base absorbs later stages. (Log 138, 141, 166)
 
-**5. One wrong label can outweigh a gate.** On 2,084,920 decided out-of-fold
+**5. One wrong label can outweigh a gate.** On 2,084,920 decided out-of-fold (21 September chain)
 rows (RMSE 228.2 s), the ten worst rows held 24.3 % of the SSE. In training,
 34 of 2.09 million departures have labels above 12 h (LIRF 31, LFPG 2, LSZH 1).
 These are mostly time at the stand carried over from the previous day. The
