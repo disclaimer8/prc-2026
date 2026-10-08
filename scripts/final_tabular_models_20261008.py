@@ -34,6 +34,10 @@ DOC='analysis/final_tabular_models_20261008/PROTOCOL.md'
 HELPERS=('src/train.py','src/features.py','src/target_encoding.py','src/e185_motion_view.py')
 DROP='day_,tq_,wxr_,month,te_,ter_,STAND_mvt,ap_stand,rwy_config'
 ROUNDS={'cat':5600,'lgb':2319,'raw':2565,'lobt':3065,'sched':2958,'eobt':2736,'aobt':2738,'motion':2481,'base':2319}
+# Unit memory ceiling accepted by resource_guard, GiB. Cat was drafted at 12 GiB; the
+# production prepare() path measured a 19.46 GiB transient cgroup peak (prc-cloud,
+# 08.10.2026 12:42Z, full 2755837-row frame), so the ceiling is 24 GiB. LGB stays 32.
+MEMORY_LIMIT_GIB={'cat':24,'lgb':32}
 ENV={'PROXY_SCALE':'1','PROXY_SCALE_RIDGE':'1000','CLF_COST_WEIGHT':'1',
      'CLF_COST_MIN_SPREAD':'3600','REG_CLIP_HI':'7200','REGIME_TOL':'6',
      'REGIME_EXCLUDE':'EDDF,EHAM,LSZH','AOBT_GATE':'1','CLF_SEEDS':'1',
@@ -70,11 +74,15 @@ def resource_guard(root,kind,threads):
     cg=next(v.split(':',2)[2].strip() for v in Path('/proc/self/cgroup').read_text().splitlines() if v.startswith('0:'))
     path=Path('/sys/fs/cgroup')/cg.lstrip('/')
     memory=(path/'memory.max').read_text().strip();swap=(path/'memory.swap.max').read_text().strip()
-    quota,period=(path/'cpu.max').read_text().split();limit=(12 if kind=='cat' else 32)*1024**3
+    quota,period=(path/'cpu.max').read_text().split();limit=memory_limit(kind)
     if memory=='max' or int(memory)>limit or swap!='0' or quota=='max' or int(quota)>threads*int(period):
         raise ValueError('unbounded/excessive CPU/RAM/swap resource unit')
     if os.getpriority(os.PRIO_PROCESS,0)<10:raise ValueError('nice10 required')
     return {'cgroup':cg,'memory_max':int(memory),'cpu_max':[int(quota),int(period)],'swap_max':0}
+
+
+def memory_limit(kind):
+    return MEMORY_LIMIT_GIB['cat' if kind=='cat' else 'lgb']*1024**3
 
 
 def ids_sha(ids):

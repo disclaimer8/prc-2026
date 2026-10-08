@@ -59,7 +59,8 @@ and thread settings. CPU-only Linux workers do not import or require Torch.
 Initial deployment after live resource admission is Linux-only: Cat
 Home12threads/12GiB, one seed at a time. Mac production fits are explicitly
 refused until a separately reviewed RSS/time supervisor exists. Hetz one LightGBM worker,
-6physicalcores0,2,4,6,8,10/nice10/passiveOMP,≤32GiB. The worker enforces Linuxcgroup CPU≤requested threads, memory≤12GiBCat/32GiBLGB,
+6physicalcores0,2,4,6,8,10/nice10/passiveOMP,≤32GiB. The worker enforces Linuxcgroup CPU≤requested threads, memory≤24GiBCat/32GiBLGB
+(Cat ceiling raised from the 12GiB draft on 08.10.2026 after the production prepare() path measured a 19.46GiB transient cgroup peak on prc-cloud; fit phase 6.6GiB),
 swap0/nice10 and4GiB disk floor before each seed; root must supply RuntimeMaxSec
 and owned unit receipts in the actual preregistration. This script does not start detached processes or
 implement a second scheduler. Feature build and E207 memory reservations take

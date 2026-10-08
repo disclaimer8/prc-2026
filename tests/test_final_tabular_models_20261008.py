@@ -41,6 +41,13 @@ class Contracts(unittest.TestCase):
             with self.assertRaises(ValueError): X.check_seed_set('raw', seeds)
         X.check_seed_set('raw', [4,3,2,1,0])
 
+    def test_memory_ceiling_cat_24gib_lgb_32gib(self):
+        # Measured 19.46 GiB cgroup peak in prepare() on prc-cloud (08.10.2026); 12 GiB would OOM every Cat seed.
+        self.assertEqual(X.memory_limit('cat'), 24*1024**3)
+        for kind in ('lgb','raw','lobt','sched','eobt','aobt','motion','base'):
+            self.assertEqual(X.memory_limit(kind), 32*1024**3)
+        with self.assertRaises(KeyError): X.MEMORY_LIMIT_GIB['raw']
+
     def test_dynamic_population_rejects_final_targets_and_duplicate_ids(self):
         d=pl.DataFrame({'MVT_ID_mvt':[1.,2.,3.,4.], 'split':['train','train','rank','rank'],
                         'TAXITIME_SEC_mvt':[10.,20.,None,None]})

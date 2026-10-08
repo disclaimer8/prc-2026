@@ -1,0 +1,141 @@
+{
+  "created_utc": "2026-10-08T12:34:24Z",
+  "families": {
+    "aobt": {
+      "rounds": 2738,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "base": {
+      "rounds": {
+        "clf": 180,
+        "reg": 2319
+      },
+      "seeds": [
+        0
+      ]
+    },
+    "cat": {
+      "rounds": 5600,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    "eobt": {
+      "rounds": 2736,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "lgb": {
+      "rounds": 2319,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "lobt": {
+      "rounds": 3065,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "motion": {
+      "rounds": 2481,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "raw": {
+      "rounds": 2565,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "sched": {
+      "rounds": 2958,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "total_fits": 52
+  },
+  "feature_build": {
+    "feature_complete_sha256": "8494279d18351ba56706999985d171ba705ca9753b7a86724e8a47c1d5b57ea8",
+    "final_ranking_sha256": "4b0692a792846079516a2749e034b0abda55df72c213eabdcda52a4d1f6bc69f",
+    "journal_entry": 385,
+    "manifest_sha256": "14e210cadf8491a1bcd596b0ecd0a2f398271290656a07d273ca854d915a8260",
+    "other_outputs": {
+      "data/e185_motion_features.parquet": "0c2a3ea1bc9fc1c9009907906b6611d6540714b0b0cab1fd80255effe546e24b",
+      "data/features_e106.parquet": "f337bdeecc854de42555502048685025136d6d97226782cf29eb4bf31bb9a682",
+      "data/features_e113.parquet": "86efa94fc9cc66c1cb7e888edf5c3301d15f78c131eb318968408c2f844ed348",
+      "data/features_fin1b.parquet": "2bb90b763e8e841f13047c6116f42b7f339f9a7ad60b42e5b02344c297f3ad98"
+    },
+    "protocol": "final-fresh-FIN1b-E113-motion-20261008-v1",
+    "registration_commit": "c0230421b7d60589fd9b358d707ad638f6e5785b"
+  },
+  "feature_build_complete": true,
+  "feature_receipt": "data/final_feature_work_mac_20261008/feature_complete.json",
+  "features": "data/final_feature_work_mac_20261008/data/features_fin1b.parquet",
+  "files": {
+    "data/final_feature_work_mac_20261008/data/e185_motion_features.parquet": "0c2a3ea1bc9fc1c9009907906b6611d6540714b0b0cab1fd80255effe546e24b",
+    "data/final_feature_work_mac_20261008/data/features_fin1b.parquet": "2bb90b763e8e841f13047c6116f42b7f339f9a7ad60b42e5b02344c297f3ad98",
+    "data/final_feature_work_mac_20261008/data/prc-2026-datasets/submitting.parquet": "b3445d80e29bf599a5583ca9675f63ddf57b51fdf1ca3f498facb38ea84f3924",
+    "data/final_feature_work_mac_20261008/feature_complete.json": "8494279d18351ba56706999985d171ba705ca9753b7a86724e8a47c1d5b57ea8",
+    "src/e185_motion_view.py": "4283c8ee43c11945aa5e2328e91558dceb7a25026c5317d97d8df0a6177b3b66",
+    "src/features.py": "58e6b783df2123adf261022733e4c602dfd22ff97d2e98e9e03e8c12486a17a2",
+    "src/target_encoding.py": "ac1b35fdd31139b531ca3760d9172f78112c77ed3ca3e72631100cd252b37d6c",
+    "src/train.py": "b47dfcaef892bc9dc7dc4a913c3f38c8c94540f4becb4c9bfb66a7fec5d3d706"
+  },
+  "id_hash_format": "sha256 of contiguous little-endian float64 bytes, parquet row order within split",
+  "motion": "data/final_feature_work_mac_20261008/data/e185_motion_features.parquet",
+  "owner": "Claude (final tabular fits), takeover 2026-10-08",
+  "protocol": "final-four-month-tabular-fixed-recipe-save-models-v1",
+  "rank_ids_sha256": "f7c0b43a3ae365fa11c117b811297599f5660b4a0a29780a0cfab0afc2035da3",
+  "rank_rows": 670790,
+  "template": "data/final_feature_work_mac_20261008/data/prc-2026-datasets/submitting.parquet",
+  "train_ids_sha256": "653698ad92bc88441058e8eb754b20a989c66714afeaae9a3883171b45457de8",
+  "train_rows": 2085047
+}
