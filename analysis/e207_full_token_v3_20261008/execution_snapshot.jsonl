@@ -1,0 +1,28 @@
+{"utc": "2026-10-08T10:06:07.756092+00:00", "event": "controller_started", "pid": 55670, "registration_commit": "f43405e7c6836230862837b66fad081ae4d69777"}
+{"utc": "2026-10-08T10:06:08.742489+00:00", "event": "idle_and_disk_checked", "host": "home-pc-lan", "free_bytes": 710652616704}
+{"utc": "2026-10-08T10:06:09.910476+00:00", "event": "idle_and_disk_checked", "host": "a1@192.168.1.171", "free_bytes": 160011186176}
+{"utc": "2026-10-08T10:06:11.422152+00:00", "event": "idle_and_disk_checked", "host": "a1@192.168.1.175", "free_bytes": 413102104576}
+{"utc": "2026-10-08T10:07:51.579893+00:00", "event": "started", "host": "a1@192.168.1.171", "unit": "prc-e207-v3-raw-171-20261008.service", "properties": {"ActiveState": "active", "SubState": "running", "InvocationID": "a39aa0fb8b4446b5a9f9b8050dc27afe", "MainPID": "404842", "Result": "success", "ExecMainStatus": "0"}, "log": "/home/a1/prc-2026/data/prc-e207-v3-raw-171-20261008.log"}
+{"utc": "2026-10-08T10:07:52.725780+00:00", "event": "started", "host": "a1@192.168.1.175", "unit": "prc-e207-v3-raw-175-20261008.service", "properties": {"ActiveState": "active", "SubState": "running", "InvocationID": "755ffa9d56fb40eda67c44a34273bdc1", "MainPID": "199617", "Result": "success", "ExecMainStatus": "0"}, "log": "/home/a1/prc-2026/data/prc-e207-v3-raw-175-20261008.log"}
+{"utc": "2026-10-08T10:07:52.983733+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-v3-raw-175-20261008.service", "MainPID": "199617"}
+{"utc": "2026-10-08T10:07:53.167456+00:00", "event": "progress", "host": "a1@192.168.1.171", "unit": "prc-e207-v3-raw-171-20261008.service", "MainPID": "404842"}
+{"utc": "2026-10-08T10:08:23.266891+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-v3-raw-175-20261008.service", "MainPID": "199617"}
+{"utc": "2026-10-08T10:08:23.601140+00:00", "event": "progress", "host": "a1@192.168.1.171", "unit": "prc-e207-v3-raw-171-20261008.service", "MainPID": "404842"}
+{"utc": "2026-10-08T10:08:53.593519+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-v3-raw-175-20261008.service", "MainPID": "199617"}
+{"utc": "2026-10-08T10:08:54.041501+00:00", "event": "progress", "host": "a1@192.168.1.171", "unit": "prc-e207-v3-raw-171-20261008.service", "MainPID": "404842"}
+{"utc": "2026-10-08T10:09:23.877769+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-v3-raw-175-20261008.service", "MainPID": "199617"}
+{"utc": "2026-10-08T10:09:24.451006+00:00", "event": "progress", "host": "a1@192.168.1.171", "unit": "prc-e207-v3-raw-171-20261008.service", "MainPID": "404842"}
+{"utc": "2026-10-08T10:09:54.159478+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-v3-raw-175-20261008.service", "MainPID": "199617"}
+{"utc": "2026-10-08T10:09:54.900953+00:00", "event": "progress", "host": "a1@192.168.1.171", "unit": "prc-e207-v3-raw-171-20261008.service", "MainPID": "404842"}
+{"utc": "2026-10-08T10:10:24.485386+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-v3-raw-175-20261008.service", "MainPID": "199617"}
+{"utc": "2026-10-08T10:10:25.398077+00:00", "event": "progress", "host": "a1@192.168.1.171", "unit": "prc-e207-v3-raw-171-20261008.service", "MainPID": "404842"}
+{"utc": "2026-10-08T10:10:54.796113+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-v3-raw-175-20261008.service", "MainPID": "199617"}
+{"utc": "2026-10-08T10:10:55.898819+00:00", "event": "exited", "host": "a1@192.168.1.171", "unit": "prc-e207-v3-raw-171-20261008.service", "properties": {"ActiveState": "active", "SubState": "exited", "InvocationID": "a39aa0fb8b4446b5a9f9b8050dc27afe", "MainPID": "0", "Result": "success", "ExecMainStatus": "0"}}
+{"utc": "2026-10-08T10:11:25.120738+00:00", "event": "progress", "host": "a1@192.168.1.175", "unit": "prc-e207-v3-raw-175-20261008.service", "MainPID": "199617"}
+{"utc": "2026-10-08T10:11:55.541872+00:00", "event": "exited", "host": "a1@192.168.1.175", "unit": "prc-e207-v3-raw-175-20261008.service", "properties": {"ActiveState": "active", "SubState": "exited", "InvocationID": "755ffa9d56fb40eda67c44a34273bdc1", "MainPID": "0", "Result": "success", "ExecMainStatus": "0"}}
+{"utc": "2026-10-08T10:18:39.205821+00:00", "event": "raw_complete_materialized", "input_spec_sha256": "56e1417bb71aa917847a7536ffbf8f0a9110c768a66bbaa6bf32e851fbffc4ca"}
+{"utc": "2026-10-08T10:18:40.685047+00:00", "event": "started", "host": "a1@192.168.1.171", "unit": "prc-e207-v3-prep-171-20261008.service", "properties": {"ActiveState": "active", "SubState": "running", "InvocationID": "0f2d847701814b6b8b20b1f0f55e4f73", "MainPID": "407027", "Result": "success", "ExecMainStatus": "0"}, "log": "/home/a1/prc-2026/data/prc-e207-v3-prep-171-20261008.log"}
+{"utc": "2026-10-08T10:18:42.015247+00:00", "event": "started", "host": "a1@192.168.1.175", "unit": "prc-e207-v3-prep-175-20261008.service", "properties": {"ActiveState": "active", "SubState": "running", "InvocationID": "3d985a51238d4c2a92fabc74c0d3d8eb", "MainPID": "201254", "Result": "success", "ExecMainStatus": "0"}, "log": "/home/a1/prc-2026/data/prc-e207-v3-prep-175-20261008.log"}
+{"utc": "2026-10-08T10:18:42.951483+00:00", "event": "started", "host": "home-pc-lan", "unit": "prc-e207-v3-trajectory-20261008.service", "properties": {"ActiveState": "active", "SubState": "running", "InvocationID": "4ccf79f86a144e4d9aaedd1ef0f169bd", "MainPID": "870055", "Result": "success", "ExecMainStatus": "0"}, "log": "/home/a1/prc-2026/data/prc-e207-v3-trajectory-20261008.log"}
+{"utc": "2026-10-08T10:19:57.046865+00:00", "event": "streaming", "fold": 3, "node": 175}
+{"utc": "2026-10-08T10:19:59.891859+00:00", "event": "streaming", "fold": 1, "node": 171}

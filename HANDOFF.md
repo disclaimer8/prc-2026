@@ -12,7 +12,23 @@
 - На маке свободно ~13 ГБ диска (10:30Z).
 - Claude параллельно (без правки конвейера, отчёты в `analysis/final_*_20261008.md`): чувствительность к шуму ±12 с, перенос на фев/июн (покрытие ADS-B), валидатор финального файла, риск-аудит ревью.
 
-## Оперативное обновление 08.10.2026 02:30:30 UTC — E207 v2 технически остановлен
+## Оперативное обновление 08.10.2026 10:28 UTC — E207 v3: подготовка завершена, передача на Home
+
+E207 v3 зарегистрирован №379, commit `f43405e7c6836230862837b66fad081ae4d69777`.
+Фактический старт controller55670 —08.10 10:06:07.756092UTC; ожидание разрешения
+до этого не является вычислением. Все365 дней извлечены, materialized spec
+`56e1417bb71aa917847a7536ffbf8f0a9110c768a66bbaa6bf32e851fbffc4ca`.
+На10:28UTC все6 fold tables подготовлены на171/175; оба prep-unit retained
+active/exited/MainPID0. Идёт передача fold1/3 наHome; GPU-unit PID870055
+active/running, лог `WAIT PREPARED 1`: **0 подтверждённых target-fit**, smoke ещё
+не подтверждён. [Точный статус E207 v3](analysis/e207_full_token_v3_20261008/STATUS.md).
+Не менять frozen source/protocol и не дублировать очередь. Далее admission,
+synthetic GPU smoke и6пар/18fit; ranking требует отдельного current-chain гейта.
+Best230.9387 прежний;14/237 — снимок07.10 22:00UTC, live-квота08.10 не проверена.
+E208 D-ATIS coverage и переносимый saved-component пакет v12075 готовятся;
+их bulk-запуски ещё не зарегистрированы. E201 отменён, LLMoff.
+
+## Исторический снимок 08.10.2026 02:30:30 UTC — E207 v2 технически остановлен
 
 - **V2 controller38371 завершён**, оба raw-unit inactive/dead/MainPID0. 171 сохранил183day receipts и shard`complete.json`;175 —145day receipts без shard complete. **Всего328 сохранённых дней,0 prep/target-fit/ranking.** [Полная квитанцияv2](analysis/e207_full_token_v2_20261008/STATUS.md).
 - После завершения171 systemd GC очистил InvocationID; `wait_unit` ошибочно завершил очередь с `owned unit invocation changed`. Owned175 cleanup02:28:24.955675UTC, terminal`failed_no_retry`02:28:53.186665UTC. Это технический lifecycle-сбой, не scientific FAIL. Operational snapshot дополнен terminal-событием.

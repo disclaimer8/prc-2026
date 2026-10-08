@@ -20,7 +20,7 @@
 
 | Что | Где |
 |---|---|
-| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №378) | `HYPOTHESES_LOG.md` |
+| Журнал гипотез и результатов (каждая идея — строка, номера по порядку, сейчас до №379) | `HYPOTHESES_LOG.md` |
 | Бриф для ревью: «Читать первым», раздел 0 (закрытое — не повторять), последние итоги — раздел 21cn | `REVIEW_BRIEF.md`; после правки — `.venv/bin/python review/build_brief.py` |
 | Обходы конкурентов и источников данных | `analysis/competitor_repos/_UPDATE_2026-10-04.md`, `analysis/data_sources_2026-10-04_{fable,sonnet}.md`, `SOURCES.md` |
 | Таблицы признаков (не в git) | `data/features_e106.parquet`, `data/features_e163.parquet`, **`data/features_fin1b.parquet`** (боевая) |
@@ -59,7 +59,23 @@
   Для аудита №289:6CPU/MemoryMax10G/swap0/nice10, один день за раз, только наблюдаемые ADS-B данные.
   Большие Cat/LGB задачи с других машин не дублировать: они требуют больше RAM и имеют собственные фиксированные очереди.
 
-## Актуальное дополнение 08.10.2026 02:30:30 UTC
+## Актуальное дополнение 08.10.2026 10:28 UTC
+
+E207 v3 зарегистрирован №379, commit `f43405e7c6836230862837b66fad081ae4d69777`.
+Фактический старт controller55670 —08.10 10:06:07.756092UTC; ожидание разрешения
+до этого не является вычислением. Все365 дней извлечены, materialized spec
+`56e1417bb71aa917847a7536ffbf8f0a9110c768a66bbaa6bf32e851fbffc4ca`.
+На10:28UTC все6 fold tables подготовлены на171/175; оба prep-unit retained
+active/exited/MainPID0. Идёт передача fold1/3 наHome; GPU-unit PID870055
+active/running, лог `WAIT PREPARED 1`: **0 подтверждённых target-fit**, smoke ещё
+не подтверждён. [Точный статус E207 v3](analysis/e207_full_token_v3_20261008/STATUS.md).
+Не менять frozen source/protocol и не дублировать очередь. Далее admission,
+synthetic GPU smoke и6пар/18fit; ranking требует отдельного current-chain гейта.
+Best230.9387 прежний;14/237 — снимок07.10 22:00UTC, live-квота08.10 не проверена.
+E208 D-ATIS coverage и переносимый saved-component пакет v12075 готовятся;
+их bulk-запуски ещё не зарегистрированы. E201 отменён, LLMoff.
+
+## Историческое дополнение 08.10.2026 02:30:30 UTC
 
 E207 v2 технически остановлен: после успешного завершения171 systemd GC очистил
 InvocationID; controller38371 завершился с `owned unit invocation changed`.
