@@ -37,6 +37,10 @@ fresh_external — E208 результаты/review child. Финальный de
 E207 входит только после исходного и current-chain гейтов. Репо/design/docs11.10,
 слепой файл14.10 10:00UTC; опубликованный ниже блок Claude с новыми правилами сохранён.
 
+## ДЕДЛАЙН ПРОДЛЁН — 08.10 12:10Z (письмо Enrico/espinielli командам + сайт index.html)
+- **Весь конкурс, включая репо/доки, — до 2026-10-14 10:00Z** («The competition runs … up until 14 October 2026 12:00:00 CET»; «Deadline is extended till 2026-10-14T12:00 CET (2026-10-14T10:00Z)»). Финальная фаза: 4 месяца, ранжирование янв/июл, фев/июн и все 4 + ревью кода и документации.
+- Следствия: заморозка дизайна фактически сдвигается к 14.10; обычные подачи янв/июл по сайту тоже до 14.10 10:00Z (5/сутки — больше слотов под S1–S3); финальный файл грузить после последней обычной подачи; репо открывать 14.10 ≈ 07:00–08:00Z после финальной загрузки (OPENING-CHECKLIST).
+
 ## ОКОНЧАТЕЛЬНЫЕ ФИНАЛЬНЫЕ ФАЙЛЫ — 08.10 12:00Z (Claude)
 - espinielli 11:55Z: «yeah, sorry, that is the "randomness" I had to introduce...just use the final_ranking.parquet / final_submission.parquet for the final phase». ±12 с — намеренная случайность; финал — по текущим файлам.
 - **По каноническим путям теперь окончательные (загрузка в бакет 11:04Z):** `data/prc-2026-datasets/final_ranking.parquet` SHA-256 `4b0692a792846079516a2749e034b0abda55df72c213eabdcda52a4d1f6bc69f` (85 853 399 Б), `final_submitting.parquet` `b3445d80e29bf599a5583ca9675f63ddf57b51fdf1ca3f498facb38ea84f3924` (3 003 722 Б). Утренние (08:47Z) перенесены в `data/prc-2026-datasets/final_v1_0847Z/` — не использовать. Новый `scripts/final_feature_workspace_20261008.py` (untracked) на момент замены не запускался и workspace не строил.
