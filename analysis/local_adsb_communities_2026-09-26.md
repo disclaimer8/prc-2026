@@ -42,7 +42,7 @@ Caveat on ground coverage: every feeder found is 10–40 km from its airport. Lo
 ## Existing public archive for Jan or Jul 2026 near these airports
 None found apart from the one you already use: adsblol/globe_history_2026, which includes the FlyItalyADSB and TheAirTraffic feeds.
 - The FlightAware thread on `tar1090_archive` daily outlines (discussions.flightaware.com/t/100613) is about range outlines, not traces.
-- The GitHub repo yyigitturan/ist-airport-decision-support-system uses an LTFM ADS-B archive, but the README says it follows OpenSky conventions. Its source is probably OpenSky. Contact: yasaryigitturan@gmail.com, if you want to ask.
+- The GitHub repo yyigitturan/ist-airport-decision-support-system uses an LTFM ADS-B archive, but the README says it follows OpenSky conventions. Its source is probably OpenSky. A contact address is on the maintainer's GitHub profile.
 
 ## How to word the request
 - Say exactly what you need: ICAO, dates (01–31 Jan and 01–31 Jul 2026), and any of: globe_history, readsb `--write-json` history, or SBS/Beast logs.
