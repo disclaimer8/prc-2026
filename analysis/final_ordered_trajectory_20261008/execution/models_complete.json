@@ -1,0 +1,139 @@
+{
+  "cgroup": {
+    "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/prc-nnfinal-run-20261008.service",
+    "cpu_max": [
+      200000,
+      100000
+    ],
+    "memory_max": 12884901888,
+    "swap_max": 0
+  },
+  "checkpoint_replay_exact": true,
+  "config": {
+    "arms": [
+      "ordered"
+    ],
+    "batch": 4096,
+    "bins": 48,
+    "channels": 12,
+    "d_embedding": 12,
+    "epochs": 8,
+    "final_rows": 670790,
+    "folds": [],
+    "full_2025": true,
+    "lr": 0.002,
+    "masks_dtype": "uint8",
+    "message_blocks": 2,
+    "normalization": "ordinary-fit-only-mean-std-channels0to5-clip8",
+    "pct_start": 0.1,
+    "ple_version": "B",
+    "prep_workers": 1,
+    "sampler": "original-E194-unfilled",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "streams": 2,
+    "token_width": 64,
+    "tokens": 64,
+    "train_rows": 2085047,
+    "values_dtype": "float16",
+    "weight_decay": 1e-05,
+    "width": 512
+  },
+  "context_complete_sha256": "1b06605956858f77e7ea1924771203ecdda0aba2ff82796dbc49d9e93938280d",
+  "files": {
+    "bins.npz": "d5b1c861653b774d9e8a9dd1b875099d0921692fe5271282e761bc781f828ef6",
+    "model_0.pt": "678bd50c5352bd6fa316c3fd2ceef53a324068399ae9c9490e58de366aacb30a",
+    "model_1.pt": "ec83888d98de65f7a83b6e79202897e1d7ebeed09dc3bd6c83b311fb989686d3",
+    "model_2.pt": "a3c305cedb0d64f13ff84631657835ff5c918b2e78177d237ac380b31f7fd92e",
+    "normalization.json": "9e80b712112494d71659225bd1b09c45d61bce5dcd85f515513d3bdc8f2996c9",
+    "prediction.npz": "6d50f9cb741456c5e8d3daf3db19e8b0c11d0cb02ea4be97e5118dda1a9fb213",
+    "seed_0.npy": "32f03e7fba8bdf17e586560a162eb766ea308a4a1569d1b4923099e64fd9f32e",
+    "seed_1.npy": "ded627c47ca70c9307e5345226c262fa205d48e14d300e8e939f96c7add49a9f",
+    "seed_2.npy": "c0353b56efb63ec68e4eb5f59bc3fd1a9ba9fae556bbd392e1d042d7a4a9ed50",
+    "spec.json": "cac601f6982eab10372a0d6ef25a29d805731522bde161f4d7284265d74f9470",
+    "transforms.json": "690b8a967e0f5b6425324d90d11985ccecd27faca0bcb0721a47ffc1bd688ae1"
+  },
+  "fits": [
+    {
+      "losses": [
+        0.5583146626310509,
+        0.3784360768674295,
+        0.32581665476917715,
+        0.28803441277410413,
+        0.2595810401351643,
+        0.2380011678056375,
+        0.22240777926731714,
+        0.21378989027270787
+      ],
+      "parameters": 1908437,
+      "peak_gpu_bytes": 15692727296,
+      "peak_rss_gib": 4.6188507080078125,
+      "seconds": 271.0177724499954,
+      "seed": 0
+    },
+    {
+      "losses": [
+        0.5458251116522254,
+        0.37877175727474033,
+        0.32491140809491714,
+        0.28645068482507635,
+        0.25825543261530026,
+        0.23580909400926864,
+        0.21951943934592516,
+        0.21151869203345183
+      ],
+      "parameters": 1908437,
+      "peak_gpu_bytes": 15692497920,
+      "peak_rss_gib": 4.633544921875,
+      "seconds": 273.86032927100314,
+      "seed": 1
+    },
+    {
+      "losses": [
+        0.5434462441925259,
+        0.3760751189058843,
+        0.32453763720732703,
+        0.2861677286242634,
+        0.25841635075802544,
+        0.2350982735365755,
+        0.21906691028850492,
+        0.2107714802844112
+      ],
+      "parameters": 1908437,
+      "peak_gpu_bytes": 15692497920,
+      "peak_rss_gib": 4.633544921875,
+      "seconds": 270.69358554296196,
+      "seed": 2
+    }
+  ],
+  "kind": "models",
+  "protocol": "final-original-ordered-E203-fresh2025-three-seed-eight-epoch-v1",
+  "query_complete_sha256": "bc7520407e01963b4aab2a16d46ffd73520dbd9706a1ce88518e77f29a2a8a2c",
+  "raw_member_only": true,
+  "receipt_sha256": "6b36784eb309d6962ab5a3bacad94cef0fe2c6f41cf56487ba338d437090d912",
+  "registration_commit": "b9e37f30d432dbb10060064b75f0ff6e375c17ce",
+  "rows": 670790,
+  "runtime": {
+    "gpu_runtime": {
+      "device": "AMD Radeon RX 7900 XTX",
+      "hip": "7.15.26333",
+      "lightgbm": "4.7.0",
+      "numpy": "2.5.3",
+      "polars": "1.44.2",
+      "python": "3.12.15 (main, Oct  3 2026, 01:03:07) [Clang 22.1.3 ]",
+      "torch": "2.13.0+rocm10.0.0",
+      "total_memory": 25753026560
+    },
+    "source_sha256": "48dfc019d447e0cd225deb8b8145b3efa8b42cde9aa314772d6e234753e1cee1",
+    "version": "0.0.12"
+  },
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "smoke_complete_sha256": "1bf754ee73547bd87c07649bfc8a93a9a8da78d7d5f5f49bfbb16a7b718bf50a"
+}

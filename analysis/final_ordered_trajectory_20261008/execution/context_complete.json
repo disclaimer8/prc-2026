@@ -1,0 +1,58 @@
+{
+  "cgroup": {
+    "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/prc-nnfinal-context-20261008.service",
+    "cpu_max": [
+      300000,
+      100000
+    ],
+    "memory_max": 10737418240,
+    "swap_max": 0
+  },
+  "config": {
+    "arms": [
+      "ordered"
+    ],
+    "batch": 4096,
+    "bins": 48,
+    "channels": 12,
+    "d_embedding": 12,
+    "epochs": 8,
+    "final_rows": 670790,
+    "folds": [],
+    "full_2025": true,
+    "lr": 0.002,
+    "masks_dtype": "uint8",
+    "message_blocks": 2,
+    "normalization": "ordinary-fit-only-mean-std-channels0to5-clip8",
+    "pct_start": 0.1,
+    "ple_version": "B",
+    "prep_workers": 1,
+    "sampler": "original-E194-unfilled",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "streams": 2,
+    "token_width": 64,
+    "tokens": 64,
+    "train_rows": 2085047,
+    "values_dtype": "float16",
+    "weight_decay": 1e-05,
+    "width": 512
+  },
+  "files": {
+    "known.npy": "e0cdf77d46e9f4c59ed3326e61da021838af0055f7ce5bbbf6efbbe64c4171d1",
+    "normalization.json": "9e80b712112494d71659225bd1b09c45d61bce5dcd85f515513d3bdc8f2996c9",
+    "present.npy": "fc4ef54e4d973b270a5e89c61e752e21e02e5444061a34be1668d959b8d5945c",
+    "query_ids.npy": "9fa9a50e947d2d35c5a56473dda955c378083f17b7307c17cfb7d52a1a97b019",
+    "values.npy": "cf194b5e9f3d7542eecf253eb3c5871e16b3869bf0beeaa1eb7f05bdad9a95b3"
+  },
+  "kind": "context",
+  "protocol": "final-original-ordered-E203-fresh2025-three-seed-eight-epoch-v1",
+  "query_complete_sha256": "bc7520407e01963b4aab2a16d46ffd73520dbd9706a1ce88518e77f29a2a8a2c",
+  "raw_complete_sha256": "48893e1c99fb96467c85fb0dc6be4a3e9fa5de0b8298b628d0949dbed972512f",
+  "receipt_sha256": "6b36784eb309d6962ab5a3bacad94cef0fe2c6f41cf56487ba338d437090d912",
+  "registration_commit": "b9e37f30d432dbb10060064b75f0ff6e375c17ce",
+  "rows": 2755837
+}

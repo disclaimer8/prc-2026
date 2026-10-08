@@ -1,0 +1,70 @@
+{
+  "cgroup": {
+    "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/prc-nnfinal-replay-20261008.service",
+    "cpu_max": [
+      200000,
+      100000
+    ],
+    "memory_max": 12884901888,
+    "swap_max": 0
+  },
+  "config": {
+    "arms": [
+      "ordered"
+    ],
+    "batch": 4096,
+    "bins": 48,
+    "channels": 12,
+    "d_embedding": 12,
+    "epochs": 8,
+    "final_rows": 670790,
+    "folds": [],
+    "full_2025": true,
+    "lr": 0.002,
+    "masks_dtype": "uint8",
+    "message_blocks": 2,
+    "normalization": "ordinary-fit-only-mean-std-channels0to5-clip8",
+    "pct_start": 0.1,
+    "ple_version": "B",
+    "prep_workers": 1,
+    "sampler": "original-E194-unfilled",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "streams": 2,
+    "token_width": 64,
+    "tokens": 64,
+    "train_rows": 2085047,
+    "values_dtype": "float16",
+    "weight_decay": 1e-05,
+    "width": 512
+  },
+  "files": {
+    "prediction.npz": "6d50f9cb741456c5e8d3daf3db19e8b0c11d0cb02ea4be97e5118dda1a9fb213"
+  },
+  "fits_performed": 0,
+  "kind": "replay",
+  "models_complete_sha256": "4608f68dce292f2cb210527159da9ba4fef37dc64599f99911daf9ba0e41b884",
+  "protocol": "final-original-ordered-E203-fresh2025-three-seed-eight-epoch-v1",
+  "receipt_sha256": "6b36784eb309d6962ab5a3bacad94cef0fe2c6f41cf56487ba338d437090d912",
+  "registration_commit": "b9e37f30d432dbb10060064b75f0ff6e375c17ce",
+  "rows": 670790,
+  "runtime": {
+    "gpu_runtime": {
+      "device": "AMD Radeon RX 7900 XTX",
+      "hip": "7.15.26333",
+      "lightgbm": "4.7.0",
+      "numpy": "2.5.3",
+      "polars": "1.44.2",
+      "python": "3.12.15 (main, Oct  3 2026, 01:03:07) [Clang 22.1.3 ]",
+      "torch": "2.13.0+rocm10.0.0",
+      "total_memory": 25753026560
+    },
+    "source_sha256": "48dfc019d447e0cd225deb8b8145b3efa8b42cde9aa314772d6e234753e1cee1",
+    "version": "0.0.12"
+  },
+  "saved_checkpoints_exact": true,
+  "saved_transforms_exact": true
+}
