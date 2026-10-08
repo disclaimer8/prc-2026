@@ -47,8 +47,15 @@ TABPFN_SHA = 'cf8c519c01eaf1613ee91239006d57b1c806ff5f23ac1aeb1315ba1015210e49'
 TABPFN_CKPT = 'data/tabpfn_v2_checkpoint/tabpfn-v2-classifier-finetuned-zk73skhh.ckpt'  # repo copy: macOS purged ~/Library/Caches on 08.10
 DAY = 86400.0
 CAT_W = .65
-ANCHORS = [('raw', '0.0333333333333333'), ('lobt', '.10'), ('sched', '.10'), ('eobt', '.10'), ('aobt', '.10')]
-NN_W = '0.25'
+# Mixture weights by contract mode. janjul = the v12090 canary recipe (journal 389-391), kept for replay;
+# final = neural member 0.35 with the five anchors scaled by 0.65/0.75, the tree pair keeps 1 - sum (E212,
+# journal 407a/410/425: lower decided SSE than 0.25 in all twelve 2025 months, 3 and 10 seeds).
+WEIGHTS = {
+    'janjul': ([('raw', '0.0333333333333333'), ('lobt', '.10'), ('sched', '.10'), ('eobt', '.10'), ('aobt', '.10')], '0.25'),
+    'final': ([('raw', '0.028888888888888857'), ('lobt', '0.08666666666666667'), ('sched', '0.08666666666666667'),
+               ('eobt', '0.08666666666666667'), ('aobt', '0.08666666666666667')], '0.35'),
+}
+ANCHORS, NN_W = WEIGHTS['janjul']  # member names (and the canary weights)
 E185_W = .35 * 2 / 3
 STAGE_SEEDS = '42,1,2,3,4'
 D7 = 'n_pts,sf_n_seg,vi_n_pts,vi_prev_pts,vi_alt_first,vm_n_pts,vm_prev_pts'
@@ -112,10 +119,11 @@ def environment(threads=6):
 
 # ----------------------------------------------------------------------------- stage plan
 
-def stage_plan():
+def stage_plan(mode='final'):
     """Literal uniform recipe. Versions are offsets from the private base version."""
     b = BASE_VERSION
-    members = ','.join(f'submissions/e130_{m}f_rank.npz:{w}' for m, w in ANCHORS) + f',submissions/nn_rank.npz:{NN_W}'
+    anchors, nn_w = WEIGHTS[mode]
+    members = ','.join(f'submissions/e130_{m}f_rank.npz:{w}' for m, w in anchors) + f',submissions/nn_rank.npz:{nn_w}'
     return [
         dict(name='premix', kind='native', out=b, weights=dict(cat=CAT_W, members=members)),
         dict(name='e185', kind='script', args=['e185_apply.py', b, b + 1], env={'E185_W': str(E185_W), 'E185_RANK': 'data/e185_motion_rank.npz'}),
@@ -139,7 +147,7 @@ def stage_plan():
     ]
 
 
-def check_plan(plan):
+def check_plan(plan, mode='final'):
     names = [s['name'] for s in plan]
     expected = ['premix', 'e185', 'e167', 'e156', 'e141', 'e64', 'e188', 'e152', 'lobt', 'protect', 'lszh', 'half']
     if names != expected:
@@ -150,7 +158,8 @@ def check_plan(plan):
             raise ValueError('forbidden historical component in plan: ' + token)
     premix = plan[0]['weights']
     members = [x.rsplit(':', 1) for x in premix['members'].split(',')]
-    if premix['cat'] != CAT_W or [w for _, w in members] != [w for _, w in ANCHORS] + [NN_W]:
+    anchors, nn_w = WEIGHTS[mode]
+    if premix['cat'] != CAT_W or [w for _, w in members] != [w for _, w in anchors] + [nn_w]:
         raise ValueError('mixture weights differ from the registered recipe')
     if sum(m[0].endswith('nn_rank.npz') for m in members) != 1:
         raise ValueError('the neural member enters exactly once')
@@ -376,7 +385,7 @@ def prepare(root, contract_path, work):
     if shutil.disk_usage(root).free < 4 * 1024 ** 3:
         raise ValueError('4 GiB disk floor at preparation')
     c, evidence = admit(root, contract_path)
-    plan = check_plan(stage_plan())
+    plan = check_plan(stage_plan(c.get('mode', 'final')), c.get('mode', 'final'))
     work.mkdir(parents=True)
     for d in ('src', 'submissions', 'logs', 'jobs', 'receipts', 'e156', 'data/prc-2026-datasets'):
         (work / d).mkdir(parents=True)
@@ -867,8 +876,9 @@ def assemble(work, repeat_e156=False, refit=()):
     sealed = read(work / 'sealed.json')
     if (work / 'complete.json').exists() or (work / 'failure.json').exists() or list((work / 'receipts').iterdir()):
         raise FileExistsError('workspace already executed; no retry/resume')
-    plan = check_plan(sealed['plan'])
-    if plan != stage_plan():
+    mode = sealed.get('mode', 'final')
+    plan = check_plan(sealed['plan'], mode)
+    if plan != stage_plan(mode):
         raise ValueError('sealed plan differs from the adapter plan')
     for s in refit:
         if s not in CACHED:
@@ -1036,7 +1046,7 @@ def main():
     p.add_argument('--opdi-extra', help='directory (relative to root) with an extended OPDI event set, e.g. data/opdi_final_20261008 (journal 398)')
     a = p.parse_args()
     if a.action == 'plan':
-        print(json.dumps(check_plan(stage_plan()), indent=1))
+        print(json.dumps(check_plan(stage_plan(a.mode or 'final'), a.mode or 'final'), indent=1))
     elif a.action == 'make-contract':
         make_contract(a.root, a.mode, a.out, **{k: v for k, v in vars(a).items() if v is not None and k in
                       ('feature_work', 'tabular_root', 'nn_prediction', 'nn_complete', 'derivatives_work', 'output_name', 'opdi_extra')})

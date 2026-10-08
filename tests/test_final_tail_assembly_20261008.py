@@ -60,6 +60,24 @@ class PlanContracts(unittest.TestCase):
             A.check_plan(bad)
 
 
+class ModeWeights(unittest.TestCase):
+    def test_final_uses_e212_weights_and_janjul_keeps_the_canary(self):
+        final, janjul = A.check_plan(A.stage_plan('final'), 'final'), A.check_plan(A.stage_plan('janjul'), 'janjul')
+        fm = dict(x.rsplit(':', 1) for x in final[0]['weights']['members'].split(','))
+        jm = dict(x.rsplit(':', 1) for x in janjul[0]['weights']['members'].split(','))
+        self.assertEqual(fm['submissions/nn_rank.npz'], '0.35')
+        self.assertEqual(jm['submissions/nn_rank.npz'], '0.25')
+        trees = lambda m: 1 - sum(float(w) for w in m.values())
+        self.assertAlmostEqual(trees(fm) / trees(jm), 0.65 / 0.75, places=12)
+        for k in fm:  # anchors scaled by the same factor
+            if not k.endswith('nn_rank.npz'):
+                self.assertAlmostEqual(float(fm[k]) / float(jm[k]), 0.65 / 0.75, places=12)
+        with self.assertRaises(ValueError):
+            A.check_plan(A.stage_plan('final'), 'janjul')
+        with self.assertRaises(ValueError):
+            A.check_plan(A.stage_plan('janjul'), 'final')
+
+
 class MemberContracts(unittest.TestCase):
     def npz(self, tmp, name, ids, per_seed, reg=None, **extra):
         p = Path(tmp) / name
