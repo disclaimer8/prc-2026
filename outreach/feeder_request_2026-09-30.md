@@ -1,7 +1,7 @@
 # Requests 30.09.2026 (Denys: «любые данные берём», «пиши письмо»)
 
 ## 1. yyigitturan (LTFM archive) — Gmail DRAFT created 30.09 04:32 WEST, Denys sends
-To: yasaryigitturan@gmail.com (from the GitHub profile of `yyigitturan/ist-airport-decision-support-system`).
+To: the maintainer of `yyigitturan/ist-airport-decision-support-system` (contact from the GitHub profile; address removed).
 Subject: Istanbul Airport ADS-B data from your ist-airport-decision-support-system repo — asks the source and whether Jan/Jul 2026 ground data exist; open licence preferred; credit in the GPLv3 code.
 
 ## 2. adsb.lol Discord (#feeders or #general) — post by Denys

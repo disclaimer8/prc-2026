@@ -184,15 +184,21 @@ not establish.
 | Apply to a new period | Not available as one command: the 42 frozen tail predictions and the two archived blend donors are specific to the ranking period | [docs/reproduction.md](docs/reproduction.md) |
 
 Large data, fitted models and submission files are not in Git. The archive
-needed for the exact rebuild is about 5.2 GB (5,187,588,486 bytes); its 3,711 files and their hashes are
-listed in
+needed for the exact rebuild is about 5.2 GB (5,187,588,486 bytes); its 3,711
+files and their hashes are listed in
 [`analysis/reproduce_v12075_20261007/inventory_v2.json`](analysis/reproduce_v12075_20261007/inventory_v2.json).
+Part of it cannot be redistributed (challenge data, OPDI extracts, tables that
+embed challenge labels), so the complete archive is available to the organisers
+on request.
 
 Environment: the CPU stack (Python ≥ 3.12, Polars, LightGBM, CatBoost, TabPFN) is
 locked in [`uv.lock`](uv.lock). The neural member was trained on an AMD Radeon
 RX 7900 XTX with a separately pinned GPU stack
 ([`requirements-gpu.txt`](requirements-gpu.txt): PyTorch 2.13.0 + ROCm,
 `rtdl_num_embeddings` 0.0.12). Replaying the archived submission needs neither.
+
+Tests: `python -m unittest discover -s tests` runs 386 unit tests of the build,
+upload and validation helpers in about 5 s without any data (2 skipped).
 
 ## Repository map
 

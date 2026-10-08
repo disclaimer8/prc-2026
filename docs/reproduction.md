@@ -82,6 +82,14 @@ that the recipe runs as recorded, not how accurate it is.
 
 ### What you need
 
+**Availability.** The archive is not in Git and is not published as a whole,
+because it contains files we have no right to redistribute: the challenge data
+(330 MB), OPDI extracts (1.5 GB), and feature tables and out-of-fold arrays that
+embed challenge rows and labels (about 2.3 GB). The rest is our own output (saved
+models, member predictions, receipts, frozen sources) or ODbL-derived adsb.lol
+extractions. The complete archive, with its hash inventory, is available to the
+challenge organisers on request through the team's registered contact.
+
 - The 3,711 files listed with their SHA-256 in
   [`inventory_v2.json`](../analysis/reproduce_v12075_20261007/inventory_v2.json),
   about 5.2 GB (5,187,588,486 bytes), at the same relative paths

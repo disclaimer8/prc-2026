@@ -1,3 +1,4 @@
+import sys
 import importlib.util
 import contextlib
 import io
@@ -71,7 +72,7 @@ class ObjectiveTests(unittest.TestCase):
                     with np.load(path) as saved: z = {key:saved[key] for key in saved.files}
                     z['pred'] = np.full(8, 'bad')
                     np.savez(path, **z)
-                child = subprocess.run([str(Path(__file__).parents[1]/'.venv/bin/python'), str(Path(SPEC.origin)),
+                child = subprocess.run([sys.executable, str(Path(SPEC.origin)),
                                         '--repo-root',str(root),'--output',str(root/'run')],
                                        text=True,capture_output=True,timeout=15)
                 self.assertEqual(child.returncode, 2, child.stderr)

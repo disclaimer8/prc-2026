@@ -10,6 +10,40 @@ commit должен попасть до11октября21:59UTC. Подгото�
 и не отправляет сообщений. Старый план тестирования скрытого периода заменён
 проверкой фактической лучшей подачи. История прежнего плана сохранена в git.
 
+## Решения и проверки 08.10.2026 (Denys: «делай как лучше, пока не открываем»)
+
+- [x] Документация для ревью приза (английский) в master: README (открытость данных,
+  оригинальность, Team), `docs/development-history.md`, `docs/data-insights.md` + графики,
+  `docs/negative-results.md`, `docs/glossary.md`, `docs/organiser-clarifications.md`,
+  переписанный `docs/reproduction.md`, `CITATION.cff`, `requirements-gpu.txt`.
+- [x] Секреты: значения обоих ключей из `.env` не встречаются ни в одном коммите
+  (`git log --all -S`), шаблоны ключей (AWS/GitHub/Anthropic/Google/private key) по всей
+  истории — 0 совпадений. `.env` и `.prc-upload-credentials.json` в `.gitignore`.
+- [x] Личные email третьих лиц убраны из текущего дерева (журнал №233, `outreach/`,
+  `analysis/local_adsb_communities_2026-09-26.md`); в истории остаются — это публичные
+  контактные адреса, историю не переписываем.
+- [x] Внутренние файлы (AGENTS.md, HANDOFF.md, hz_queue/, outreach/, review/,
+  research_notes/, reports/) остаются на месте: Codex читает AGENTS.md из корня, LAN-адреса
+  192.168.x.x не секрет и из интернета недостижимы. README объясняет, что это рабочие заметки.
+- [x] Dependabot: `urllib3` 2.7.0 → 2.8.0 только в `uv.lock`; `.venv` на маке не
+  синхронизирован (не делать `uv sync` под работающими задачами).
+- [x] Тесты: `python -m unittest discover -s tests` — 386 тестов, OK (2 skipped), ~5 с без
+  данных; `test_e187_weight_objective.py` теперь использует `sys.executable`.
+- [x] Архив воспроизведения целиком не публикуется: данные челленджа, OPDI-выгрузки, таблицы
+  признаков и OOF с метками распространять не вправе. В README и reproduction: полный архив
+  доступен организаторам по запросу.
+
+### Порядок в день открытия (только по команде Denys)
+
+1. Если появился новый best — обновить README (результат, таблица фаз), шаг в
+   `docs/development-history.md`, `docs/tables/leaderboard_gentle-igloo.csv`, перегенерировать
+   `docs/figures/` (`scripts/make_doc_figures.py`), закоммитить и запушить.
+2. `gh repo edit disclaimer8/prc-2026 --visibility public --accept-visibility-change-consequences`.
+3. Проверить анонимно: README, LICENSE определяется как GPL-3.0, ссылки и картинки открываются.
+4. В тот же день: письмо на challenge@opensky-network.org (черновик ниже) и сообщение в Discord
+   от Denys; сохранить подтверждение.
+5. Последний коммит до 11.10 21:59Z (организатор берёт последний коммит до дедлайна).
+
 ## Что уже подготовлено
 
 - [x] README переписан под best `gentle-igloo_v12075.parquet`,230.9387с:
