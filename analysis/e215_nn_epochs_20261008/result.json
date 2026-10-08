@@ -1,0 +1,309 @@
+{
+ "protocol": "E215-ordered-member-epochs12-vs-8-3seed-6pair-chain-w035-v1",
+ "w": 0.35,
+ "members": [
+  "m3",
+  "m12"
+ ],
+ "comparison": "m12 (12 epochs, seeds 0-2) minus m3 (8 epochs, seeds 0-2), both at NN weight 0.35",
+ "populations": {
+  "fold_1_7": {
+   "rows": 344419,
+   "e203_included": 344374,
+   "extra_excluded_feasibility": 0,
+   "included": 344374,
+   "body": 344266,
+   "decided": 344374
+  },
+  "fold_2_8": {
+   "rows": 334914,
+   "e203_included": 334892,
+   "extra_excluded_feasibility": 0,
+   "included": 334892,
+   "body": 334791,
+   "decided": 334891
+  },
+  "fold_3_9": {
+   "rows": 348399,
+   "e203_included": 348380,
+   "extra_excluded_feasibility": 0,
+   "included": 348380,
+   "body": 348315,
+   "decided": 348380
+  },
+  "fold_4_10": {
+   "rows": 360962,
+   "e203_included": 360950,
+   "extra_excluded_feasibility": 0,
+   "included": 360950,
+   "body": 360890,
+   "decided": 360950
+  },
+  "fold_5_11": {
+   "rows": 347534,
+   "e203_included": 347524,
+   "extra_excluded_feasibility": 0,
+   "included": 347524,
+   "body": 347472,
+   "decided": 347524
+  },
+  "fold_6_12": {
+   "rows": 348819,
+   "e203_included": 348801,
+   "extra_excluded_feasibility": 0,
+   "included": 348801,
+   "body": 348714,
+   "decided": 348801
+  }
+ },
+ "per_fold": [
+  {
+   "fold": 1,
+   "name": "fold_1_7",
+   "n_decided": 344374,
+   "decided_delta_sse": -49900912.0,
+   "decided_delta_rmse": -0.25994618054727425,
+   "rmse_decided_m3": 278.8477642705696,
+   "body_delta_sse": -48066459.0,
+   "included_delta_sse": -49900912.0,
+   "trim3_sse": -49877928.0,
+   "trim20_sse": -48754223.0,
+   "member_rmse_decided_m3": 341.43698114757956,
+   "member_rmse_decided_m12": 340.82873296776353,
+   "member_delta_rmse_decided": -0.6082481798160302,
+   "member_rms_diff_sec": 37.22024773352961,
+   "member_delta_sse_decided": -142910691.386621
+  },
+  {
+   "fold": 2,
+   "name": "fold_2_8",
+   "n_decided": 334891,
+   "decided_delta_sse": 86422936.0,
+   "decided_delta_rmse": 0.6098163813969109,
+   "rmse_decided_m3": 211.28573452855693,
+   "body_delta_sse": 64522626.0,
+   "included_delta_sse": 86422936.0,
+   "trim3_sse": 82890971.0,
+   "trim20_sse": 70355188.0,
+   "member_rmse_decided_m3": 255.84645904481292,
+   "member_rmse_decided_m12": 257.593221018707,
+   "member_delta_rmse_decided": 1.7467619738941096,
+   "member_rms_diff_sec": 36.98475611405385,
+   "member_delta_sse_decided": 300349307.11972004
+  },
+  {
+   "fold": 3,
+   "name": "fold_3_9",
+   "n_decided": 348380,
+   "decided_delta_sse": -33455245.0,
+   "decided_delta_rmse": -0.2733555663336631,
+   "rmse_decided_m3": 175.78867099933842,
+   "body_delta_sse": -34695129.0,
+   "included_delta_sse": -33455245.0,
+   "trim3_sse": -33378004.0,
+   "trim20_sse": -34817137.0,
+   "member_rmse_decided_m3": 223.0220644566252,
+   "member_rmse_decided_m12": 222.16345434371212,
+   "member_delta_rmse_decided": -0.8586101129130839,
+   "member_rms_diff_sec": 31.693872039431994,
+   "member_delta_sse_decided": -133165045.9200787
+  },
+  {
+   "fold": 4,
+   "name": "fold_4_10",
+   "n_decided": 360950,
+   "decided_delta_sse": -44175914.0,
+   "decided_delta_rmse": -0.35157564219261417,
+   "rmse_decided_m3": 174.23207820937424,
+   "body_delta_sse": -44061969.0,
+   "included_delta_sse": -44175914.0,
+   "trim3_sse": -45150471.0,
+   "trim20_sse": -46089348.0,
+   "member_rmse_decided_m3": 219.2106867931548,
+   "member_rmse_decided_m12": 217.95767855847225,
+   "member_delta_rmse_decided": -1.2530082346825395,
+   "member_rms_diff_sec": 36.7545945898,
+   "member_delta_sse_decided": -197719589.00582713
+  },
+  {
+   "fold": 5,
+   "name": "fold_5_11",
+   "n_decided": 347524,
+   "decided_delta_sse": -31000942.0,
+   "decided_delta_rmse": -0.19802411340640447,
+   "rmse_decided_m3": 225.3371949650591,
+   "body_delta_sse": -33129676.0,
+   "included_delta_sse": -31000942.0,
+   "trim3_sse": -32536348.0,
+   "trim20_sse": -34716214.0,
+   "member_rmse_decided_m3": 254.97359115057728,
+   "member_rmse_decided_m12": 253.61988023255503,
+   "member_delta_rmse_decided": -1.3537109180222444,
+   "member_rms_diff_sec": 32.94617311829651,
+   "member_delta_sse_decided": -239266289.6533854
+  },
+  {
+   "fold": 6,
+   "name": "fold_6_12",
+   "n_decided": 348801,
+   "decided_delta_sse": -24440526.0,
+   "decided_delta_rmse": -0.15611943716100996,
+   "rmse_decided_m3": 224.4899451061007,
+   "body_delta_sse": -21628646.0,
+   "included_delta_sse": -24440526.0,
+   "trim3_sse": -22930543.0,
+   "trim20_sse": -22894412.0,
+   "member_rmse_decided_m3": 276.23010730183216,
+   "member_rmse_decided_m12": 275.3590924195434,
+   "member_delta_rmse_decided": -0.8710148822887618,
+   "member_rms_diff_sec": 33.03748370878519,
+   "member_delta_sse_decided": -167578790.2136402
+  }
+ ],
+ "pooled_delta_sse": {
+  "decided": -96550603.0,
+  "body": -117059253.0,
+  "trim20": -116916146.0,
+  "trim3": -100982323.0,
+  "included": -96550603.0
+ },
+ "pooled_decided_delta_rmse": -0.1064595134626245,
+ "n_decided": 2084920,
+ "rmse_decided_m3_pooled": 217.54915371779734,
+ "per_month": {
+  "1": {
+   "n_decided": 153700,
+   "delta_sse": -20323338.0,
+   "delta_rmse": -0.2099891030990193,
+   "rmse_m3": 314.94826735919173,
+   "member_delta_sse": -149169400.8080094
+  },
+  "2": {
+   "n_decided": 143726,
+   "delta_sse": 102264345.0,
+   "delta_rmse": 1.6145000659967366,
+   "rmse_m3": 219.54669962296433,
+   "member_delta_sse": 373973210.1841688
+  },
+  "3": {
+   "n_decided": 164445,
+   "delta_sse": -12475248.0,
+   "delta_rmse": -0.23500699890314536,
+   "rmse_m3": 161.52277792880653,
+   "member_delta_sse": -44624908.52453381
+  },
+  "4": {
+   "n_decided": 175281,
+   "delta_sse": -20141624.0,
+   "delta_rmse": -0.3434401245272909,
+   "rmse_m3": 167.4650452716288,
+   "member_delta_sse": -115176703.86258408
+  },
+  "5": {
+   "n_decided": 185196,
+   "delta_sse": -10416242.0,
+   "delta_rmse": -0.10411740332421004,
+   "rmse_m3": 270.1530232377414,
+   "member_delta_sse": -80861970.01688607
+  },
+  "6": {
+   "n_decided": 183130,
+   "delta_sse": -12286656.0,
+   "delta_rmse": -0.1263815586979149,
+   "rmse_m3": 265.4996043220337,
+   "member_delta_sse": -48302945.65327388
+  },
+  "7": {
+   "n_decided": 190674,
+   "delta_sse": -29577574.0,
+   "delta_rmse": -0.3155923665499927,
+   "rmse_m3": 245.9197134637021,
+   "member_delta_sse": 6258709.421388328
+  },
+  "8": {
+   "n_decided": 191165,
+   "delta_sse": -15841409.0,
+   "delta_rmse": -0.20235889995967682,
+   "rmse_m3": 204.85552148621403,
+   "member_delta_sse": -73623903.06444882
+  },
+  "9": {
+   "n_decided": 183935,
+   "delta_sse": -20979997.0,
+   "delta_rmse": -0.3042064359324854,
+   "rmse_m3": 187.6267963873823,
+   "member_delta_sse": -88540137.3955449
+  },
+  "10": {
+   "n_decided": 185669,
+   "delta_sse": -24034290.0,
+   "delta_rmse": -0.35915965097319713,
+   "rmse_m3": 180.38770243615085,
+   "member_delta_sse": -82542885.14324307
+  },
+  "11": {
+   "n_decided": 162328,
+   "delta_sse": -20584700.0,
+   "delta_rmse": -0.39799794185583437,
+   "rmse_m3": 159.5079882312964,
+   "member_delta_sse": -158404319.6364993
+  },
+  "12": {
+   "n_decided": 165671,
+   "delta_sse": -12153870.0,
+   "delta_rmse": -0.218635684225859,
+   "rmse_m3": 167.88037898014255,
+   "member_delta_sse": -119275844.56036633
+  }
+ },
+ "half_years": {
+  "h1": {
+   "months": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "n_decided": 1005478,
+   "delta_sse": 26621237.0,
+   "delta_rmse": 0.055205348841752766
+  },
+  "h2": {
+   "months": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "n_decided": 1079442,
+   "delta_sse": -123171840.0,
+   "delta_rmse": -0.2934322894768684
+  }
+ },
+ "member_only": {
+  "delta_sse_decided": -580291099.0598323,
+  "rms_diff_sec_mean": 34.77285455064953
+ },
+ "gate": {
+  "decided_lower": 5,
+  "decided_lower_ge4": true,
+  "pooled_decided_lt0": true,
+  "pooled_body_lt0": true,
+  "pooled_trim20_lt0": true,
+  "fold2_not_worse": false,
+  "fold6_not_worse": true,
+  "months_lower": 11,
+  "months_lower_ge10": true,
+  "h1_lt0": false,
+  "h2_lt0": true,
+  "pass": false
+ },
+ "verdict": {
+  "gate_pass": false,
+  "pooled_decided_delta_rmse": -0.1064595134626245
+ }
+}
