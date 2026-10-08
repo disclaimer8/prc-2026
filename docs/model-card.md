@@ -131,7 +131,7 @@ E203 replacement improved the same comparison by −0.614 s (body) and −0.546 
 
 **Public leaderboard (January + July 2026, 344,841 rows).** Best file v12075:
 230.9387 s, processed 7 October 2026; 16th of 238 teams on 8 October 2026 at
-13:47 UTC (board snapshot in `analysis/competitor_repos/_UPDATE_2026-10-08.md`).
+13:47 UTC (public leaderboard).
 The leaderboard was used to choose between complete pre-built variants during
 development, so this score carries selection effects; the eight such decisions are
 listed in the [leaderboard use disclosure](development-history.md#6-leaderboard-use-disclosure).
