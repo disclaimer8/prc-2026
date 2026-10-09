@@ -100,6 +100,9 @@ design decision; step 13 is measured against v28, the best file before it.
 | 60 | 10-07 07:02 | v12074 | 231.44 | −0.00 | E190 and E188 in one chain | E190, E188 | [results](../analysis/submission_results_20261007.md) |
 | — | 10-08 13:20 | v12090 | 232.19 | (+1.25) | Technical canary of the final recipe on January/July: E81 removed and the 42 frozen tail rows replaced by a fresh ten-seed TabPFN-2 ensemble, old members and weights (three-seed neural member at 0.25). Forecast 231.6, corridor [231.1; 232.3]; not a candidate for best | — | L №389–391; [canary record](../analysis/v12090_upload_20261008/RESULTS.md) |
 | 62 | 10-08 20:05 | v12076 | 230.82 | −0.12 | Neural member as the mean of ten seeds instead of three, the only change against v12075 (zero-fit replay). Seeds 3–9 were fitted on the frozen E203 ranking pack (the final-view seeds cannot be applied to the January/July queries); every checkpoint replayed exactly. On 2025 out-of-fold data the ten-seed mean at the same weight was neutral (+0.0065 s on `decided`); forecast −0.03 with corridor [230.74; 230.99] | E203 | L №410, №416, №417; [upload record](../analysis/v12076_upload_20261008/RESULTS.md) |
+| — | 10-09 08:54 | v12078 | 231.05 | (+0.57) | Measurement: v12077 without the E81 whole-file blend, the only change (zero fits). Forecast 230.60, corridor [230.40; 231.20]: inside, but the Gram-identity point missed by +0.45 s because the identity does not carry across the stages applied after the blend. Not a candidate for best | E81 | L №431, №432; [upload record](../analysis/v12078_upload_20261009/RESULTS.md) |
+| — | 10-09 (after 16:28) | v12079 | 231.18 | (+0.70) | Measurement: v12077 with the 42 frozen tail rows replaced by the fresh ten-seed E156 values, the only change. Uploaded at 08:58 and scored only after the organiser's scorer outage (no file of any team processed 08:54:51–16:28). Forecast 231.17, corridor [230.83; 231.48]. With v12078 it prices the canary's +1.25 as +0.5676 + 0.6958 = +1.2634. Not a candidate for best | E156 | L №433, №434, №444; [upload record](../analysis/v12079_upload_20261009/RESULTS.md) |
+| — | 10-09 16:32 | v12080 | 231.18 | — | Control: the January/July rows of the final file (SHA-256 `76c32426…`), unchanged. Forecast 231.7, corridor [231.2; 232.3]; the result fell 0.02 s below the corridor and 0.564 s below the measured expectation of 231.745. The registered rule paused the final upload until a stage-by-stage analysis without labels explained the deviation (regime probabilities of the refitted classifier on about 350 rows; noise ±0.43–0.55 s); recipe unchanged. Not a candidate for best | — | L №439, №441, №445–447; [explanation](../analysis/v12080_control_explanation_20261009.md) |
 
 ## 2. Phases
 
@@ -248,6 +251,33 @@ where the track starts after pushback (L №13); on 26 September the team record
 did not follow, since the rest of a track can still carry information (B §21bz). E197 put
 the sequence inside the regular-duration member, before the surface stages.
 
+### 2.8 After the last best: pricing the final recipe and the control upload (9 Oct; v12078–v12080; 3 uploads, none a candidate for best)
+
+**Observed.** The canary of 8 October (v12090, +1.2546 s against v12075) removed E81 and
+replaced the 42 frozen tail rows in the same file, so the price of each part was only
+inferred.
+
+**Response.** Two single-change uploads on the v12077 chain measured both parts: E81
++0.5676 s (v12078) and the fresh tail ensemble +0.6958 s (v12079); their sum, +1.2634 s,
+differs from the canary by about 0.009 s. The final file was then assembled once over the
+four months (157.6 s, no fits, every validator hard check passed, rebuilt from scratch with
+the same SHA-256 `76c32426…`; L №436, №438), and its January/July rows were uploaded as the
+control v12080 against a forecast of 231.7 s, corridor [231.2; 232.3] (L №439). It scored
+231.1805 s, 0.02 s below the corridor, and the rule registered with the forecast paused the
+final upload (L №445). A stage-by-stage analysis without labels attributed the −0.564 s
+against the measured expectation mainly to the regime probabilities of the refitted base
+classifier (55 %), concentrated on 345 rows that carry 61.7 % of the squared difference,
+and found no leakage and no substituted member (L №446). The recipe was not changed
+(L №447). In parallel, E216 checked the remaining global scalars of the chain one at a time
+on 2025 out-of-fold data: 0 of 15 values qualified, so no scalar besides the neural weight
+had been mis-set (L №442, №443).
+
+**Cost.** Three slots on 9 October. Two forecasts missed in instructive ways: the Gram
+identity cannot be carried across stages applied after a blend (the v12078 point was off by
++0.45 s), and the control corridor of ±0.3 s was about half as wide as the noise of a chain
+with refitted members, ±0.43–0.55 s (1σ)
+([final submission §4, §7](final-submission.md#4-measured-cost-on-januaryjuly)).
+
 ## 3. Cross-validation against the leaderboard
 
 Most uploads from 20 September on carried a forecast range written before upload (for
@@ -395,6 +425,11 @@ forecast were registered in advance (L №407a, №426). The uploads confirmed t
 board; they did not make it. The one weight decision that departed from the registered rule
 (0.35 instead of the rule's 0.40) was taken on 2025 months, not on the ranking months, and
 in the direction of the smaller change.
+
+The three uploads of 9 October (v12078, v12079, v12080) add no item either. Two priced the
+removal of items 1 and 2 one at a time; the third checked the final file's code path on the
+January/July labels. The control fell 0.02 s outside its corridor on the favourable side;
+the deviation was explained without labels and the final recipe was not changed (L №445–447).
 
 [B]: ../REVIEW_BRIEF.md
 [L]: ../HYPOTHESES_LOG.md

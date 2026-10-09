@@ -7,7 +7,7 @@ The models are trained on all 2025 departures (2,085,047 rows) and scored on
 344,841 departures from January and July 2026.
 
 **Best submission: `gentle-igloo_v12077.parquet`, RMSE 230.4812 s** (scored
-8 October 2026). This is our best of 111 submissions; on 8 October 2026 at
+8 October 2026). This is our best of 114 submissions; on 8 October 2026 at
 20:15 UTC it ranked 16th of 239 teams. Our first submission scored 501.23 s.
 v12077 is the v12075 chain (230.9387 s, 7 October) with two changes: the neural
 member is the mean of ten seeds instead of three (seeds 3–9 trained on the same frozen
@@ -179,9 +179,25 @@ predictions of the exact chain: 0.35 is the only grid value with lower squared
 error than 0.25 in all twelve months, at three and at ten seeds. Both changes were
 then scored on the leaderboard as v12076 and v12077 (−0.4575 s together against
 v12075). Run as a canary on January/July with the old members and the old weights,
-the uniform recipe scored 232.1933 s against 230.9387 s for v12075; that cost is
-accepted so that one procedure covers all months. Recipe, receipts, validation and
-fallbacks: [final submission](docs/final-submission.md); a standard
+the uniform recipe scored 232.1933 s against 230.9387 s for v12075. On 9 October the
+two removals were priced one at a time on the v12077 chain: dropping E81 costs
++0.5676 s (v12078, 231.0488 s) and the fresh tail ensemble instead of the frozen rows
++0.6958 s (v12079, 231.1770 s), +1.2634 s together against the canary's +1.2546 s.
+That cost is accepted so that one procedure covers all months.
+
+The final file was assembled on 9 October 2026: `gentle-igloo_final.parquet`,
+SHA-256 `76c32426d750040690ff68bacd6ecbf3a7aa1e63340df5b9271a324b7064d554`,
+670,790 rows, no model fitted during assembly, all validator hard checks passed,
+and an independent rebuild from scratch gave the same SHA-256. Its January/July
+rows, uploaded as the control v12080, scored 231.1805 s: 0.02 s below the corridor
+written beforehand ([231.2; 232.3]). Under the rule registered with the forecast
+the final upload was paused until the deviation was explained; a stage-by-stage
+analysis without labels traced it mainly to the regime probabilities of the
+refitted classifier on about 350 rows, within a noise of ±0.43–0.55 s, and the recipe was
+not changed. The corridor had been about half as wide as that noise. The final
+upload is planned for 12 October 2026; blind result:
+`[[to be filled after 14 October]]`. Recipe, receipts, validation and fallbacks:
+[final submission](docs/final-submission.md); a standard
 [model card](docs/model-card.md) states intended use and limitations.
 
 ## What moved the score
@@ -287,7 +303,7 @@ for traceability; their IDs match the register.
 - The model reconstructs a **recorded** off-block time after the fact. It uses
   the take-off time and the flight's own post-pushback track, so it is not a
   pre-departure forecast.
-- Ranking months were also used for development decisions through 111
+- Ranking months were also used for development decisions through 114
   leaderboard submissions, so the leaderboard score carries selection effects.
   No submission was tuned row by row against the leaderboard.
 - Results depend on ADS-B ground coverage, which differs by airport and year.
