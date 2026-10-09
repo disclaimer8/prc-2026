@@ -1,0 +1,28 @@
+{
+ "changed_rows": 95421,
+ "evidence": {
+  "cached_calls": 5,
+  "fits_performed": 0,
+  "job_sha256": "a19c0d663c56d84c8a1043169370f088a7b306541cc069316cb0a12fa031a2cb",
+  "mode": "replay",
+  "models": [
+   "184c4948d2a34dd5109ff5e23b9ce66aca7264fcd4a9a4469cfcbb3eeacb7965",
+   "8c0bb578149f1a5c19c2dba3ec99e3e66038876c6fb331ba404ce4842af7491a",
+   "c4a576165fe45d231e819e4bd165b35e6b989a5e6e4faf443c9d62b0b4d7ae9b",
+   "d47ce1e147a6f115be73d8fdeaf3baf825d79bc9f40c614985deced5262c46db",
+   "e112abefe2b87963a6a915e3b439a89d5740ebce5a12916b74a82b28e989a5ce"
+  ],
+  "seconds": 8.400662183761597,
+  "stage": "e64",
+  "unix": 1791536958.545727
+ },
+ "input_sha256": "264f7422bf950deebaf5526a37a76a5f0c9bbe0dd5ca61a20d19dfb1306611cf",
+ "input_version": 970104,
+ "max_abs_change": 1019.0,
+ "output_sha256": "1d3ac2f9928ba63da3ce0047ba3241365825d3ededc2b91a9ebd3f99bb8ecad5",
+ "output_version": 970105,
+ "rms_change": 22.293663417087625,
+ "rows": 670790,
+ "stage": "e64",
+ "unix": 1791536958.664063
+}

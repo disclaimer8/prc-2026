@@ -1,0 +1,41 @@
+{
+ "accepted_for_submission": false,
+ "donor_rows_copied": 0,
+ "e81_applied": false,
+ "fits_performed": 0,
+ "output": "/Users/denyskolomiiets/prc-2026/data/final_tail_20261009/work/gentle-igloo_final.parquet",
+ "output_sha256": "76c32426d750040690ff68bacd6ecbf3a7aa1e63340df5b9271a324b7064d554",
+ "protocol": "final-uniform-tail-E156fresh-noE81-fourmonths-20261008-v1",
+ "receipts": {
+  "receipts/00_premix.json": "ee810aa6753ddbde60e104ef39d2855391ba40e135ce66477aad34ab0e49dca9",
+  "receipts/01_e185.json": "2eac56bd450758872b7b620cfc09aea17b20f575c4b5e6ff3d7b9725f9ec6b46",
+  "receipts/02_e167.json": "78a075d2b942f071b55f6b77cbff6b9f102402cf8a78e7834e31748b0ada2781",
+  "receipts/03_e156.json": "1aedd39c27a48696905772d3e287fda7a55eb649dfd94e9d99842473a0aa477c",
+  "receipts/04_e141.json": "143299d574023b1198cea51f6df701b64ecb02e4377fa6eb5808e82ff5914756",
+  "receipts/05_e64.json": "7849ab08145c5dc4fe1f8149ffed94b26d095187ff05102c9fd5b72f35f9140e",
+  "receipts/06_e188.json": "d214171bade4e70dd349087300b5c7deab41d37190cb4e3ac2b7b8c516b55e1f",
+  "receipts/07_e152.json": "207f0d67c1eff1eb8c8b11260c3bdcbfce983e3c157499c2f1e0f86dd397f8d4",
+  "receipts/08_lobt.json": "634165660a8c4ec873503357db72662c393a0fc3dea3536b56ddf7c5764cab11",
+  "receipts/09_protect.json": "f170504f0b0be9f6ffc1f7ce48b7c5b4b1271c9f5ea569183962f391a961f009",
+  "receipts/10_lszh.json": "4a9676bbfba2c7c8b3615d21a3ebb2596c1e6fdc991fc75e053428967c569ce3",
+  "receipts/11_half.json": "c328859517db9ae3c4a7bb5a6ff24efcbacac04b35fcfe5148ff8fbbe03127c3"
+ },
+ "rows": 670790,
+ "seconds": 157.60553407669067,
+ "served_e156_ids_sha256": "8fbb8394b351fe241a2e2d38b88845f05a6f14ccaea021ba80b4d308a5cbc248",
+ "stages": [
+  "e185",
+  "e167",
+  "e156",
+  "e141",
+  "e64",
+  "e188",
+  "e152",
+  "lobt",
+  "protect",
+  "lszh",
+  "half"
+ ],
+ "unix": 1791536968.9575622,
+ "uploaded": false
+}

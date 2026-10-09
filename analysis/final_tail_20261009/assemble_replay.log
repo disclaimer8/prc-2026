@@ -1,0 +1,12 @@
+PREMIX 670790 rows; mean pred 1014.8055877414125
+STAGE 1 e185
+STAGE 2 e167
+STAGE 3 e156/run0
+STAGE 4 e141/replay
+STAGE 5 e64/replay
+STAGE 6 e188
+STAGE 7 e152
+STAGE 8 lobt
+STAGE 10 lszh/replay
+STAGE 11 half
+{"protocol": "final-uniform-tail-E156fresh-noE81-fourmonths-20261008-v1", "output": "/Users/denyskolomiiets/prc-2026/data/final_tail_20261009/work_replay/gentle-igloo_final.parquet", "output_sha256": "76c32426d750040690ff68bacd6ecbf3a7aa1e63340df5b9271a324b7064d554", "rows": 670790, "stages": ["e185", "e167", "e156", "e141", "e64", "e188", "e152", "lobt", "protect", "lszh", "half"], "receipts": {"receipts/00_premix.json": "50c087613ae689b80eba8850191aafb0d9dc7f49f8f3c80930d13aef48047dd9", "receipts/01_e185.json": "9598d3e49c078a85f172dad896b1a28855788578b94e4726639386ffdd78ca34", "receipts/02_e167.json": "a2298b088d21194320d42b86c5ef888bd2938690194bcd49c4ea76148e442806", "receipts/03_e156.json": "2bacf0cb32fba8b89e9f87ca79b96da2e517cf10338f9f1dcc1b32cbf2182f58", "receipts/04_e141.json": "d3096753eac30ae44817ce8258843291b7eff504a2cd3496cbfbb719111267f3", "receipts/05_e64.json": "e7156bf6ed06c16e69157ee2db09afea46b766d8e1ce003b5c9c189f03ea445b", "receipts/06_e188.json": "0efbda0b2c853f38431cdf4a1a4dae4b73e15b390d5863b4b936a03f044c529c", "receipts/07_e152.json": "60bb11dbf38ba6c15ad0dac3a80498c5a74837af45c39cba89c5210b52a9ece2", "receipts/08_lobt.json": "7f5c0dafb095e5eba4ecb2a31584d70bff89712a67dccb56606318394f1c7cac", "receipts/09_protect.json": "48ec38bdde2a8947fb4bcbecf1a9b2b69608e154a8fe9f8d12f2edaf98b4ff12", "receipts/10_lszh.json": "3b4710e20668341e7472b94e3dab58623308ac6a80cebcf324a80911b09edb5f", "receipts/11_half.json": "d5fc651aa06d0a8d1692f9a5209000d8187089d803e585d73dfd23e09e467c0a"}, "served_e156_ids_sha256": "8fbb8394b351fe241a2e2d38b88845f05a6f14ccaea021ba80b4d308a5cbc248", "e81_applied": false, "donor_rows_copied": 0, "fits_performed": 0, "seconds": 112.72469520568848, "uploaded": false, "accepted_for_submission": false, "unix": 1791537138.035368}
