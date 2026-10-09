@@ -6,12 +6,13 @@
  "ranking_sha256": "4b0692a792846079516a2749e034b0abda55df72c213eabdcda52a4d1f6bc69f",
  "git_commit": "2d85c07ad58d18332fd2e9a50ac265fe58e1af96",
  "journal": "HYPOTHESES_LOG.md 436, 438",
- "builder": "scripts/final_tail_assembly_20261008.py (make-contract --mode final, prepare, assemble --repeat-e156)",
+ "builder": "scripts/final_tail_assembly_20261008.py",
  "builder_sha256": "9ceab78ee03070a4f7f2b2c42f6f2c482efad51380976921869048d824e06b68",
  "contract_sha256": "6af6c4ca7adf2ff5a771b0e5e073ace18ceec1860c336eeac2890635d57d04b7",
  "complete_sha256": "ebfa4b85ee943f3e88bfae691e7ed7f9282b240dcb842c40ce99bd0e113cdf6d",
  "validator_report": "analysis/final_tail_20261009/validate_vs_v12077.json",
  "replay_sha256": "76c32426d750040690ff68bacd6ecbf3a7aa1e63340df5b9271a324b7064d554",
  "machine": "MacBook-Pro-Denys.local arm64 macOS-27.0.1-arm64-arm-64bit",
- "created_utc": "2026-10-09T09:12:29+00:00"
+ "created_utc": "2026-10-09T09:12:29+00:00",
+ "builder_commands": "make-contract --mode final, prepare, assemble --repeat-e156"
 }
