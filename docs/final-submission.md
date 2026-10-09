@@ -232,9 +232,23 @@ LFPG 15–31 %; LEMD January/February 96–97 % against 0–2 % in 2025 (recepti
 appeared at Madrid); EGLL June/July 93–96 % against 34–36 %.
 
 **EHAM taxiway works in June 2026.** Schiphol's announced maintenance of taxiways A and B
-(4 May – 26 June 2026) covers 20,753 of the 23,812 EHAM final departures in June. The model has
+(4 May – 26 June 2026) covers 18,194 of the 20,881 EHAM final departures in June. The model has
 no input for it (the announcement has no open licence and 2025 has no comparable episode), so
 EHAM June is a known risk rather than a modelled effect.
+
+**Tabular inputs against 2025 coverage.** A label-free audit of the sealed four-month feature table against the
+2025 training rows ([input audit](../analysis/final_months_input_audit_20261009.md)) finds no new departure runway at
+any airport and at most 0.1 % of an airport-month on runways with fewer than 100 training departures. Runway
+configurations are novel only at Schiphol (5.8–11.9 % of EHAM rows in configurations with fewer than 100 training
+departures, 3.7–7.9 % never seen in 2025) and marginally at Istanbul in January/February (2.4–3.5 %). Destination ATFM
+delay and hourly traffic features stay inside the 2025 1st–99th percentile band of their airport (at most 1.3 % and
+3.3 % outside). Two inputs leave it: the daily movement count (June/July 2026 above every 2025 day at LEMD, +7 %, 51–69 %
+of rows, and at LEBL, LIRF, LSZH, +5 %; January 2026 below 2025 at EHAM, −12 % departures per day, and EDDM) and
+temperature (June 2026 above the 2025 maximum at EDDF, P99 40 °C against 33, and at LFPG, EDDM, LSZH, EGLL, EHAM). Tree
+models extrapolate flat beyond their training range, so these rows get the prediction of the most extreme 2025 days.
+The no-NM share is 0.9–1.6 % per month against 0.8–2.1 % in 2025; only EHAM January (5.0 %) and LSZH January (3.0 %)
+exceed every 2025 month of their airport. No tabular input separates the EHAM works window from the rest of June; the
+EDDF collapse is visible only in ADS-B.
 
 **2026-06-11 is defective in the archive.** The day's surface file holds 91,473
 points against a median of 1.24 million; LIRF, LEBL, LEMD and LTFM are absent. Both
