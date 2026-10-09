@@ -3,14 +3,14 @@
 **Status: draft, not submitted.** `gentle-igloo-joas-draft.md` is a full research-article draft for the
 Journal of Open Aviation Science (JOAS) describing team gentle-igloo's solution to the EUROCONTROL PRC
 Data Challenge 2026; `main.tex` is the same text in the JOAS LaTeX form (`manuscript=article`), and
-`reference.bib` holds the references. Every number in the draft is copied from the repository
-documentation as of 8 October 2026 (`README.md`, `docs/model-design.md`, `docs/development-history.md`,
-`docs/data-insights.md`, `docs/validation.md`, `docs/negative-results.md`, `docs/reproduction.md`,
-`SOURCES.md`, `docs/tables/*.csv`); figures are referenced from `docs/figures/`. Numbers that did not
-exist when the draft was written are marked `[[RESULT: …]]` and will be filled from
-`docs/generalisation.md`, `docs/uncertainty.md`, `docs/data-quality-regimes.md`, `docs/pru-view.md` and
-the organiser's final four-month ranking after 14 October 2026; the draft is then re-read against the
-docs, the placeholders removed, and the author confirms the AI-assistance, funding and ORCID fields.
+`reference.bib` holds the references; `OUTLINE.md` is the skeleton (thesis, contributions, the
+evidence behind each section, figure and table lists, what is still missing). Every number in the
+draft is copied from the repository documentation as of 9 October 2026 (`README.md`, `docs/*.md`,
+`docs/tables/*.csv`, the dated reports in `analysis/`); figures are referenced from `docs/figures/`.
+Numbers that did not exist when the draft was written are marked `[[RESULT: …]]`: the scores of the
+two pending measurement uploads (v12079, v12080), the organiser's blind four-month ranking after
+14 October 2026, and the author's front-matter fields (ORCID, e-mail, funding, AI-assistance
+wording). The draft is then re-read against the docs and the placeholders removed.
 JOAS accepts LaTeX only, built with its own template (`extra/joas.cls`, `main.tex`, `reference.bib`,
 `figures/`; Overleaf gallery and <https://github.com/open-aviation/joas-template>); the class file is
 not copied here because the GitHub repository declares no licence file. `main.tex` is generated from
