@@ -2,20 +2,17 @@
 
 Правила, машины, рецепты — в `AGENTS.md`. Здесь — позиция, что считается и что делать дальше.
 
-## ТЕКУЩЕЕ СОСТОЯНИЕ — 08.10.2026 16:00Z (владелец: Claude; Codex остановлен)
+## ТЕКУЩЕЕ СОСТОЯНИЕ — 09.10.2026 03:20Z (владелец: Claude; Codex остановлен)
+
+**Best: v12077 = 230,4812** (16/239): v12075 + NN 10 сидов + вес NN 0,35 (№410/425–427) — это и есть финальные веса.
 
 | Блок | Статус | Где / как проверить | ETA |
 |---|---|---|---|
-| Табличные 52 fit (№388; узлы — №413) | идут. prc-cloud: CatBoost 2 очереди (a2: сиды 0–7, b2: 8–14), ≈ 2 ч/сид. hetzner: hz (base, lgb, raw, lobt) → hz2 (sched, eobt) → **hz3 (aobt, motion; перенесены с облака №413)** | prc-cloud `systemctl list-units 'prc-final-tab-*'`, `/root/prc-final-logs/cat_{a,b}.log`; hetzner `/srv/prc-final-logs/lgb_hz{,2,3}.log`; наблюдатель `scratchpad/watch_tab.sh` | всё ≈ 05Z 09.10 (ограничивает CatBoost) |
-| Слияние семейств | **lgb слит на маке** (проверка пути): `models/final_tabular/lgb/merged/` (5×670 790); base скопирован. Остальные: rsync seed-каталогов на мак → `final_tabular_models_20261008.py merge --root . --receipt analysis/final_tabular_models_20261008/receipt_42a6f28.json --kind K` | `models/final_tabular/` (в .gitignore) | по готовности |
-| NN E203 | **10 сидов готовы** (№400): `analysis/final_ordered_trajectory_20261008/execution_10seed/prediction_10seed.npz` + `complete.json`; сборщик принимает 10 сидов через `nn_seeds` (№412) | | готово |
-| E212: вес NN при 10 сидах (№407a) | Home GPU `prc-e212-seeds3to9-20261008` (42 fold-фита) → пересчёт цепочки на маке, вердикт №410. Аналитика ≈ 0,30–0,35 вместо 0,25 — **не решение**; вес меняется только по гейту | `analysis/e212_nn_weight_10seed_20261008*` | ≈ 18–19Z |
-| OPDI фев/июн | **готово**, включается в контракт (№404/405): `--opdi-extra data/opdi_final_20261008` | | готово |
-| Сборка финала | после слияния: `make-contract --mode final --feature-work data/final_feature_work_mac_20261008 --tabular-root models/final_tabular --nn-prediction …/execution_10seed/prediction_10seed.npz --nn-complete …/execution_10seed/complete.json --derivatives-work data/final_adsb_derivatives_20261008 --opdi-extra data/opdi_final_20261008 --out data/final_tail_20261009/contract.json` → `prepare` → `assemble --repeat-e156` → валидатор | `scripts/final_tail_assembly_20261008.py` | 09.10 утро |
-| Загрузка | обёртка control (янв/июл-строки финала как обычная подача, прогноз до загрузки) + final (один PUT, после последней обычной) — пишется (№414) | `scripts/final_transport_20261009.py` | control 09.10; final ≤ 13.10 20Z, с «да» Denys |
-| Диск мака | 55 ГБ свободно; 27 законченных каталогов `data/` → внешний PRCEXT (симлинки; диск держать подключённым) | `analysis/disk_relocation_20261008/` | — |
-
-Закрыто 08.10 (журнал): E207 v3, E209, E210, E211 (вперёд по времени хуже), защита NN при коллапсе покрытия (0/6), E213 (прилёты), «борт по стоянке», связка хвоста через прилёт. Номера журнала раздаёт координатор (дубли 397–407 разведены суффиксами).
+| Табличные fit (№388/413/430) | **готово и слито на маке:** base, lgb, raw, lobt, sched, eobt, aobt, motion (`models/final_tabular/<k>/merged/`); сверка с членами v12075 на янв/июл — RMS ≈ 20 с, сдвиг +0,3…+0,6 с. **CatBoost: 10/15 готовы** (0–4, 8–12, скопированы на мак); очереди упали по RuntimeMaxSec 12 ч в 01:00Z (№430), перезапуск: prc-cloud `prc-final-tab-cat-a4-20261009` (сиды 5, 6) и `-b3-` (13, 14, 7), 10 ч лимит | `ssh prc-cloud 'systemctl list-units "prc-final-tab-cat-*"'`, логи `/root/prc-final-logs/cat_{a,b}.log`; наблюдатель на маке | a4 ≈ 07:30Z, b3 ≈ 09:15Z |
+| Дальше | rsync `cat/seed_{5,6,7,13,14}` → `merge --kind cat` → `make-contract --mode final --feature-work data/final_feature_work_mac_20261008 --tabular-root models/final_tabular --nn-prediction analysis/final_ordered_trajectory_20261008/execution_10seed/prediction_10seed.npz --nn-complete analysis/final_ordered_trajectory_20261008/execution_10seed/complete.json --derivatives-work data/final_adsb_derivatives_20261008 --opdi-extra data/opdi_final_20261008 --out data/final_tail_20261009/contract.json` → `prepare` → `assemble --repeat-e156` → `validate_final_submission.py` → MANIFEST → контрольная подача (`scripts/final_transport_20261009.py seal --mode control …`, прогноз заранее) | веса final = `WEIGHTS['final']` (NN 0,35) | 09.10 днём |
+| Закрыто 08.10 вечером | E212 → вес 0,35 ✅; E214 (калибровка p) ❌; E215 (12 эпох NN: февраль +1,6 с) ❌; внешние отчёты №420/423/424 | журнал №410–429 | — |
+| Подачи 09.10 | контроль финала; v12078 = v12077 без E81 и v12079 = v12077 со свежим E156 на 42 строках — измерение цены честного рецепта (не выбор) | | после сборки |
+| Диск мака | ~50 ГБ свободно; 27 каталогов `data/` → внешний PRCEXT (симлинки, держать диск подключённым) | `analysis/disk_relocation_20261008/` | — |
 
 ## Передача управления Claude — 08.10.2026 12:19UTC
 
