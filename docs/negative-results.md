@@ -170,6 +170,7 @@ regimes, and the prediction is the probability mixture.
 | TabM-style BatchEnsemble network (E186) | 6-fold CV, fixed weight 0.15 | Decided +0.123132 s, 1/6; body +0.126584; trimmed +0.121079 | ❌ | Log 263; [report](../analysis/e186_verdict_2026-10-04.md) |
 | Conditional density heads: Gaussian (E196); mixture density network in the current chain (E200) | 2-pair screen; 6-pair current-chain comparison | Gaussian worse on all decision legs. MDN: ΔRMSE body −0.200152 s, decided +0.054472 s, 3/6 (≥ 4 required) | ❌ | Val.; Log 340, 347 |
 | TabICLv2 for LTFM rows without NM (E189) | 2 pairs × 4,096 rows | ΔRMSE on the LTFM sample +1.433814 / +3.439552 s | ❌ this protocol | Log 295 |
+| Ordered-trajectory neural member trained for 12 epochs instead of 8 (E215) | 6 pairs × 3 seeds (18 fits), exact 2025 out-of-fold chain before E81 at the final weight 0.35; gate ≥ 4/6 decided, pooled decided/body/trim20 < 0, pairs 2+8 and 6+12 not worse, ≥ 10 of 12 months and both half-years < 0 | Pooled decided −0.107 s, 5/6 pairs, 11 of 12 months better; but pair 2+8 +0.610 s and January–June +0.055 s. February alone: +1.61 s on the chain, member 440.6 → 443.7 s, all three 12-epoch seeds worse than the 8-epoch seeds | ❌ | Log 428, 429; [report](../analysis/e215_nn_epochs_20261008.md) |
 
 ### Post-processing, blending and calibration
 
@@ -190,6 +191,7 @@ regimes, and the prediction is the probability mixture.
 | Tail blending: member weight by base-prediction bin, or fixed "physics" weights (E160; the former as described by team strong-crane) | 6-fold CV | Bins vs one weight: +0.029 s, worse in 5/6. Fixed weights: +11.30 s, 0/6 | ❌ | Log 176 |
 | Greedy NNLS blend over a pool of saved out-of-fold files | Out-of-fold check | −15.1 s was an artefact: weight 0.80 went to a file made before the early-stopping leak was fixed | ❌ | Log 191 |
 | Blend weights chosen on decided-body SSE instead of all-row SSE (E187) | 6-fold CV, 1,593-point grid | Decided −0.004902 s; 3/6 lower, 3/6 identical (≥ 4 required) | ❌ | Log 257; [report](../analysis/e187_verdict_2026-10-04.md) |
+| Re-tuning the other global scalars of the final chain, one at a time from the final configuration: CatBoost share in the tree pair (0.55–0.75), the block of four anchored members (× 0.6–1.4), the raw-target member (× 0.5–2), the movement-only member (× 0.5, 1.5) and the E152 gate threshold (0.90, 0.98) (E216) | Exact 2025 out-of-fold chain before E81, 84 runs; a value replaces the current one only if lower in all 12 months, both half-years and pooled decided/body/trim20 | 0 of 15 values qualify. Best pooled: CatBoost share 0.75 −0.013 s (6/12 months), gate 0.90 −0.010 s (all from July, June +0.311 s). One grid step moves pooled RMSE by 0.004–0.016 s, against 0.18 s for the neural weight (E212); February prefers the opposite direction to most months (anchors × 0.6: −0.570 s there) | ❌ no change; configuration confirmed | Log 442, 443; [report](../analysis/e216_chain_scalars_20261009.md) |
 
 ### Validation schemes
 

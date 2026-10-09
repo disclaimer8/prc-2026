@@ -5,8 +5,10 @@ final ranking: the rules it answers, the recipe that produces it, why that recip
 differs from the best leaderboard file (v12075), what the difference was measured
 to cost, what is known about the new months' inputs, and how the file is built,
 validated and uploaded. Numbers are taken from the dated analysis reports they
-cite; items marked `[[to be filled after the final assembly]]` do not exist yet.
-Written on 8 October 2026 while the final model fits were still running.
+cite; items marked `[[to be filled after the final upload]]` or
+`[[to be filled after 14 October]]` do not exist yet. Written on 8 October 2026
+while the final model fits were still running; updated on 9 October 2026 after the
+final file was assembled, validated and checked on the public board (log 430–447).
 
 Related pages: [model design](model-design.md) (the v12075 chain),
 [final submission runbook](final-submission-runbook.md) (upload procedure),
@@ -51,7 +53,7 @@ log entry 389).
 | | v12075 (leaderboard best) | Final file |
 |---|---|---|
 | Feature table | FIN1b built on 2025 + the January/July ranking file | FIN1b rebuilt on 2025 + the four-month `final_ranking.parquet`: 2,755,837 rows = 2,085,047 training + 670,790 final (log 385) |
-| Base classifier and regressor, CatBoost 15 seeds, LightGBM 5 seeds, five anchored members, movement-only member | Fitted on the January/July view | Refitted with the same rounds, seeds and weights on the new view: 52 fits (log 388). Fitted models are saved this time |
+| Base classifier and regressor, CatBoost 15 seeds, LightGBM 5 seeds, five anchored members, movement-only member | Fitted on the January/July view | Refitted with the same rounds, seeds and weights on the new view: 52 fits (log 388), all completed (log 430, 436). Fitted models are saved this time |
 | Neural member (ordered trajectories, E203) | Weight 0.25, mean of 3 seeds | Weight **0.35**, mean of **10 seeds** (0–9), same recipe and 8 epochs; the 3-seed mean is kept for comparison only (log 394, 400). The five anchored members are scaled by 0.65/0.75 (raw 0.028889, LOBT/schedule/EOBT/AOBT 0.086667 each) and the tree pair keeps the remainder 0.27444 (`WEIGHTS['final']`, log 425; section 2.3) |
 | Whole-file blend with v44 and v60 (E81, weights 0.1214 / 0.0270) | Present | **Absent.** The donors are archived January/July leaderboard files; nothing equivalent exists for February and June |
 | LIRF tail without NM record | 42 predictions frozen from v361 (a single TabPFN draw) and protected | **Fresh 10-seed TabPFN-2 ensemble (E156, airline prefix and local date) on every row of the tail segment in all four months**; every served row is protected from later stages |
@@ -91,6 +93,10 @@ authoritative list is the served-ID manifest written by stage 3. On the same
 sealed input the ten-seed ensemble was bitwise repeatable: two runs gave identical
 probabilities for all seeds and 0 of 42 rounded values differed
 ([dry-run results](../analysis/final_tail_assembly_20261008/DRYRUN_RESULTS.md)).
+In the final run stage 3 served 62 rows over the four months, again bitwise
+repeatable ([stage receipt](../analysis/final_tail_20261009/receipts/03_e156.json));
+in January/July they are the same 42 IDs as in the dry run
+([control explanation §4](../analysis/v12080_control_explanation_20261009.md)).
 
 ### 2.3 The ten-seed neural member
 
@@ -150,7 +156,10 @@ the label carries `η ~ U(−12, 12)`; `final_ranking` is a fresh independent dr
 tolerance of 6 s and the 3,606 s LOBT window are the half-width of that dithering.
 Expected effect on RMSE: 0; the realised deviation on January/July is ±0.08 s
 (1σ) for the production chain. No augmentation, tolerance change or de-noising was
-added; the input is used as published.
+added; the input is used as published. The ±0.08 s holds for a fixed chain only:
+the control upload of section 7, item 4, showed that the refitted base classifier's
+response to the re-dithered inputs alone carries about 0.29 s of noise on
+January/July ([control explanation §3, §6](../analysis/v12080_control_explanation_20261009.md)).
 
 ## 3. Why this recipe
 
@@ -186,23 +195,49 @@ once as a technical canary, `v12090`
 | v12090 (same chain, no E81, fresh E156 on the 42 rows) | **232.1933** |
 | Difference | +1.2546 |
 
+The forecast written before the upload was 231.6 s with a corridor of
+[231.1; 232.3] s; the result is inside the corridor near its upper edge. Against
+v12075 the file changed 313,616 of 344,841 rows with RMS 18.209 s. The canary
+removed E81 and replaced the 42 donor rows at the same time, so its +1.2546 s does
+not identify either effect alone.
+
 Later the same day the two member changes of the final recipe were scored on the
 v12075 chain with E81 and the frozen rows still in place (section 2.3): v12076
 (ten seeds) 230.8183 s and v12077 (weight 0.35) 230.4812 s, −0.4575 s together.
-No file combining both the removals of the canary and the new members has been
-scored on the board; the January/July check in section 7, item 4, is that file.
+On 9 October the two removals were then **measured one at a time on the v12077
+chain**, each as the only change against v12077 and each with a forecast written
+before the upload (log 431–434, 444):
 
-The forecast written before the upload was 231.6 s with a corridor of
-[231.1; 232.3] s; the result is inside the corridor near its upper edge. The
-canary removed E81 and replaced the 42 donor rows at the same time, so the +1.2546 s
-does not identify either effect alone. If E81 kept its historical price (about 0.66 s),
-the fresh ensemble against the frozen donors on the 42 rows (RMS 713.5 s between them)
-would account for the rest; this split is an inference, not a measurement. Against v12075
-the file changed 313,616 of 344,841 rows with RMS 18.209 s. The canary is a
-technical check of the code path on real labels, not a candidate for best; no
-further probing uploads were made. The two Jan/Jul labels do not transfer
-one-to-one to the blind months, but the sign of the cost is now known and
-accepted.
+| File | Only change against v12077 | RMSE (s) | Against v12077 (s) | Forecast, corridor |
+|---|---|---:|---:|---|
+| v12077 | — (E81 and the 42 frozen rows present) | 230.4812 | — | — |
+| v12078 | E81 whole-file blend removed | 231.0488 | **+0.5676** | 230.60, [230.40; 231.20] |
+| v12079 | 42 frozen rows replaced by the fresh ten-seed E156 values | 231.1770 | **+0.6958** | 231.17, [230.83; 231.48] |
+| Sum of the two parts | | | **+1.2634** | |
+
+The two measured parts add up to +1.2634 s against the canary's +1.2546 s, which
+was measured with the older weights and the three-seed member; the interaction is
+about −0.009 s (log 444). The cost of the uniform recipe on January/July is
+therefore measured, not inferred: +0.5676 s for dropping E81 and +0.6958 s for
+replacing the single favourable TabPFN draw by the fresh ensemble. Both
+results fell inside their corridors. The central forecast for v12078 came from the
+Gram identity on the current files and missed by +0.45 s: the identity is exact for
+the unrounded blend of fixed files, but v12078 also differs by the tail stages
+applied after E81 (LOBT lift, protect, half LSZH), and that interaction is
+correlated with the residual; the historical price of E81 (−0.6564 s on v98) was
+the better guide ([v12078 record](../analysis/v12078_upload_20261009/RESULTS.md)).
+v12079 was uploaded during an outage of the organiser's scorer (no file of any team
+was processed between 08:54:51 and 16:28 UTC) and was scored after it was
+repaired, 0.007 s from its central forecast
+([v12079 record](../analysis/v12079_upload_20261009/RESULTS.md), log 434, 444).
+
+On this decomposition the January/July rows of the final file were expected at
+230.4812 + 0.5676 + 0.6958 = 231.745 s plus the noise of the refits. They scored
+231.1805 s as the control v12080; why that is 0.564 s better is explained in
+section 7, item 4. The canary and the three uploads of 9 October are technical
+checks of the code path on real labels, not candidates for best. The January/July
+labels do not transfer one-to-one to the blind months, but the sign and size of the
+cost are known and accepted.
 
 ## 5. ADS-B coverage in the final months
 
@@ -279,16 +314,16 @@ Every step is a dated script registered in `HYPOTHESES_LOG.md` before it ran, wi
 tests that use synthetic rows only, and a receipt directory under `analysis/`.
 Interpreter on the Mac: `.venv/bin/python`.
 
-| # | Step | Script | Status on 8 Oct, receipts |
+| # | Step | Script | Status on 9 Oct, receipts |
 |---|---|---|---|
 | 1 | Sealed four-month feature workspace: FIN1b, E106/E113 prefix tables, motion view | `scripts/final_feature_workspace_20261008.py`, `scripts/final_feature_mac_20261008.py` | Done on the Mac: 11 stages, 64.89 s, peak 12.53 GiB; WORK `data/final_feature_work_mac_20261008`, FIN1b SHA `2bb90b76…` (log 385; [protocol](../analysis/final_feature_workspace_20261008/PROTOCOL.md)) |
-| 2 | 52 tabular fits with saved models: classifier (180 rounds) + regressor (2,319), CatBoost 15 × 5,600, LightGBM 5 × 2,319, anchors raw 2,565 / LOBT 3,065 / schedule 2,958 / EOBT 2,736 / AOBT 2,738 × 5 seeds, motion 5 × 2,481 | `scripts/final_tabular_models_20261008.py` | Running on prc-cloud (ARM, 15 CatBoost + 10 LightGBM) and hetzner (26 LightGBM); cross-node parity on a 20-round probe: max abs diff 7.96e-13 over 670,790 predictions ([execution journal](../analysis/final_tabular_models_20261008/EXECUTION.md), [contract](../analysis/final_tabular_models_20261008/CONTRACT.json), log 388). Completion: `[[to be filled after the final assembly]]` |
+| 2 | 52 tabular fits with saved models: classifier (180 rounds) + regressor (2,319), CatBoost 15 × 5,600, LightGBM 5 × 2,319, anchors raw 2,565 / LOBT 3,065 / schedule 2,958 / EOBT 2,736 / AOBT 2,738 × 5 seeds, motion 5 × 2,481 | `scripts/final_tabular_models_20261008.py` | **Done: all 52 fits**, on prc-cloud (ARM) and hetzner; cross-node parity on a 20-round probe: max abs diff 7.96e-13 over 670,790 predictions ([execution journal](../analysis/final_tabular_models_20261008/EXECUTION.md), [contract](../analysis/final_tabular_models_20261008/CONTRACT.json), [receipt](../analysis/final_tabular_models_20261008/receipt_42a6f28.json), log 388). The two CatBoost queues hit their 12 h unit runtime limit (01:00/01:03 UTC on 9 October) about 12 minutes before seeds 5 and 13 finished; seeds 0–4 and 8–12 were complete and untouched, the two empty seed directories were set aside (the fitter refuses to resume a partial seed), and the remaining five seeds (5, 6, 7, 13, 14) were relaunched with the same receipt `42a6f28`, the same resources and a 10 h limit per queue; recipe, seeds and parameters unchanged (log 430). All nine families were merged on the Mac (`models/final_tabular/<kind>/merged/`; CatBoost 15 seeds, LightGBM 5, anchors raw/LOBT/schedule/EOBT/AOBT 5 each, motion 5, base). On the January/July rows each family differs from the v12075-era member by RMS 19–22 s with a mean shift of +0.3 to +0.6 s (input dithering and refit; log 436) |
 | 3 | Neural member: 2025 token reuse (364 days) + 120 final days re-encoded on final times; seeds 0–2, then 3–9 | `scripts/final_ordered_trajectory_20261008.py`, `scripts/final_ordered_trajectory_seeds_20261008.py` | Done on the Home GPU; 3-seed `prediction.npz` SHA `6d50f9cb…`, 10-seed `prediction_10seed.npz`; exact checkpoint replay ([receipts](../analysis/final_ordered_trajectory_20261008/), log 387, 393, 394, 400) |
 | 4 | Seven daily ADS-B products for 120 days on final movement times | `scripts/final_adsb_derivatives_20261008.py` | Done on the Mac: 203.9 s, 120/120 days, 840 files, 114 MB, `MANIFEST.sha256` SHA `a3240876…` ([report](../analysis/final_adsb_derivatives_20261008/RESULTS.md), log 392) |
-| 5 | OPDI events for February and June 2026 (LSZH stage input) | `scripts/opdi_final_extract_20261008.py` | Running on prc-cloud; local `data/opdi` covers 31 Dec–9 Feb and 29 Jun–8 Aug only (log 398). Rows of LSZH without a matched event stay unchanged. Count of LSZH rows with an event per month: `[[to be filled after the final assembly]]` |
-| 6 | Tail assembly: premix, stages 1–11, served-ID manifest, `complete.json` | `scripts/final_tail_assembly_20261008.py` (`make-contract --mode final`, `prepare`, `assemble --repeat-e156`) | Adapter done and dry-run on January/July (141 s, 0 fits, premix byte-identical to the archived v12075 premix; [dry run](../analysis/final_tail_assembly_20261008/DRYRUN_RESULTS.md), log 389). Final run: `[[to be filled after the final assembly]]` |
-| 7 | Validator | `scripts/validate_final_submission.py --file … --reference submissions/gentle-igloo_v12075.parquet --json …` | Written; used on the canary (all hard checks passed). Final: `[[to be filled after the final assembly]]` |
-| 8 | Single PUT to the bucket | New dated wrapper built on `OnePutHTTP` and `single_attempt`, per [runbook §3](final-submission-runbook.md) | Planned for 13 October ≤ 20:00 UTC from the Hetzner host. Receipt: `[[to be filled after the final assembly]]` |
+| 5 | OPDI events for February and June 2026 (LSZH stage input) | `scripts/opdi_final_extract_20261008.py` | **Done** on prc-cloud: February and June windows plus the two boundary windows, 7 files, 4.8 MB, `data/opdi_final_20261008/`, pinned in the final contract (`make-contract --opdi-extra`, 51 files by SHA; log 398, 404, 405). LSZH departures with an exit-parking event: January 4,151 of 9,995 (41.5 %, a gap in the source), **February 6,886 of 9,374 (73.5 %)**, **June 9,517 of 12,384 (76.8 %)**, July 10,131 of 13,155 (77.0 %) ([report §B.3](../analysis/tail_e156_opdi_20261008.md)). Rows without a matched event stay unchanged. The January/July set of IDs with an event is unchanged, so the cached LSZH model stays valid |
+| 6 | Tail assembly: premix, stages 1–11, served-ID manifest, `complete.json` | `scripts/final_tail_assembly_20261008.py` (`make-contract --mode final`, `prepare`, `assemble --repeat-e156`) | Adapter dry-run on January/July (141 s, 0 fits, premix byte-identical to the archived v12075 premix; [dry run](../analysis/final_tail_assembly_20261008/DRYRUN_RESULTS.md), log 389). **Final run done** on the Mac on 9 October: 157.6 s including the E156 repeat, `fits_performed = 0`, E81 not applied, 0 donor rows copied; stage 3 served 62 rows and its repeat was bitwise identical (all ten probability arrays, 0 rounded rows differing). Rows changed per stage: E185 8,224; E167 306; E156 62; E141 429,789; E64 95,421; E188 18,128; E152 287; LOBT 169; protect 11; LSZH 30,407 (now also in February and June); half 30,099 ([complete.json](../analysis/final_tail_20261009/complete.json), [stage receipts](../analysis/final_tail_20261009/receipts/), [contract](../analysis/final_tail_20261009/contract.json), log 436, 438) |
+| 7 | Validator | `scripts/validate_final_submission.py --file … --reference submissions/gentle-igloo_v12077.parquet --json …` | **Done**: all hard checks pass; against v12077 on the 344,841 January/July IDs 329,804 rows changed (95.64 %), RMS 26.5 s, max 2,926 s ([validator report](../analysis/final_tail_20261009/validate_vs_v12077.json)). Independent rebuild from scratch (a new `prepare` and `assemble` from the same contract into a separate work directory on the Mac, 112.7 s) gave the same SHA-256 `76c32426…d554` ([replay log](../analysis/final_tail_20261009/assemble_replay.log), [MANIFEST](../analysis/final_tail_20261009/MANIFEST.json), log 438) |
+| 8 | Single PUT to the bucket | Mode `final` of the transport registered in log 414 (`scripts/final_transport_20261009.py`, built on `OnePutHTTP` and `single_attempt`, per [runbook §3](final-submission-runbook.md)) | Planned for **12 October at about 18:00 UTC** from the Hetzner host, after the last regular upload, a day before the latest planned time of 13 October 20:00 UTC (log 447). Copies of the file and its MANIFEST are kept in three places (Hetzner, Home, an external disk), SHA-256 `76c32426…` in each (log 447). Receipt: `[[to be filled after the final upload]]` |
 
 Cached stage models (E141 5, E64 5, LSZH 1, E188 5) are loaded only when the
 reconstructed training call matches the stored signature (parameters, rounds,
@@ -298,9 +333,11 @@ otherwise the run stops before any fit, and a refit is a separate explicit actio
 cache purge deleted the cached copy on 8 October
 ([protocol](../analysis/final_tail_assembly_20261008/PROTOCOL.md)).
 
-Unmeasured until the final run: wall-clock of the four-month assembly on the Mac
-(the January/July dry run took 141 s; the v12075 replay of the same stages peaked at
-7.9 GiB), and the fit times of step 2 per family: `[[to be filled after the final assembly]]`.
+Measured in the final run: the four-month assembly took 157.6 s on the Mac with the
+E156 repeat and 112.7 s for the rebuild without it (the January/July dry run took
+141 s). Fit times of step 2 per family were not collected into one table; the
+bound that mattered was CatBoost, whose queues of 5,600-iteration fits finished five
+seeds each within 12 h and were stopped by the unit limit during the sixth (log 430).
 
 ## 7. Validation of the file
 
@@ -308,38 +345,130 @@ Unmeasured until the final run: wall-clock of the four-month assembly on the Mac
    dtypes (reported, never cast), 670,790 rows, ID set equal to the template, no
    duplicates, no null/NaN/inf, 0 ≤ value ≤ 172,800, integer seconds
    ([runbook §2](final-submission-runbook.md)).
+   **Result: all hard checks pass**: columns `MVT_ID_mvt` (`Float64`) and
+   `TAXITIME_SEC_mvt` (`Int32`), 670,790 rows, ID set identical to the template,
+   0 duplicates, 0 null/NaN/inf, values 0…110,578, all integer
+   ([validator report](../analysis/final_tail_20261009/validate_vs_v12077.json)).
 2. **Distribution checks**: per month × airport medians and 95th percentiles,
    share of rows equal to take-off minus a planning time ±15 s (on v12075 about
    2.4–3.5 % for schedule/IOBT/LOBT/EOBT and about 6 % for `AOBT_3` per month);
    February/June values far from January/July indicate a changed regime mixture.
-3. **Reference check against v12075 on the 344,841 January/July IDs**: RMS and
-   maximum difference, Gram-identity range of the January/July score. The canary
-   had RMS 18.209 s; the final file should differ from the canary by the dithering
-   and the refits, expected RMS 16–25 s (`analysis/win_program_20261008.md` §9);
-   an RMS of exactly 0 would mean the rows were copied and is not acceptable.
-   Result: `[[to be filled after the final assembly]]`.
-4. **Integration check on the public board** (planned, one regular slot): the
-   January/July rows of the assembled four-month file uploaded as a regular
-   submission. Forecast written in advance: 232.2 s, corridor [231.8; 232.7] s;
-   a result outside the corridor stops the process and triggers a stage-by-stage
-   comparison with v12090 (`analysis/win_program_20261008.md` §1, item 2). That
-   forecast predates the ten-seed member and the 0.35 weight (v12076, v12077:
-   −0.4575 s together on the v12075 chain, section 2.3) and has to be
-   re-registered with them before that upload.
-   Result: `[[to be filled after the final assembly]]`.
+   **Result**: mean/median per month 1,086/971 s (January), 985/922 s (February),
+   984/927 s (June), 1,001/940 s (July). Shares equal to take-off minus a planning
+   time: schedule 2.39–2.80 %, IOBT 2.89–3.21 %, LOBT 2.87–3.20 %, EOBT 3.33–3.89 %,
+   `AOBT_3` 5.67–6.14 % per month. February is the highest month in every column
+   (schedule 2.80 %, EOBT 3.89 %, `AOBT_3` 6.14 %); June lies within the
+   January/July spread except EOBT (3.33 % against 3.35–3.59 %) and `AOBT_3`
+   (6.04 % against 5.67–5.96 %). The full month × airport table (n, mean, median,
+   95th percentile, maximum) is in the validator report.
+3. **Reference check on the 344,841 January/July IDs**: RMS and maximum
+   difference against the best file at assembly time. An RMS of exactly 0 would
+   mean the rows were copied and is not acceptable.
+   **Result** against v12077: 329,804 rows changed (95.64 %), RMS 26.5 s, maximum
+   2,926 s. The expectation of RMS 16–25 s written beforehand
+   (`analysis/win_program_20261008.md` §9) was stated against the canary, which has
+   no E81 and no frozen rows; v12077 has both, so 26.5 s does not test it. Against
+   H, the file v12077 without E81 and with the fresh 42 tail rows (section 7,
+   item 4), the difference is RMS 20.36 s on 325,612 changed rows
+   ([control explanation](../analysis/v12080_control_explanation_20261009.md)).
+   The validator's Gram-identity line assumes that the reference scored
+   230.9387 s, the v12075 score, while the reference file was v12077 (230.4812 s);
+   that line is therefore not used. The board check in item 4 replaces it.
+4. **Integration check on the public board: the control v12080.** The January/July
+   rows of the final file (344,841 IDs, values unchanged, SHA-256 `ae1680cb…`)
+   were uploaded once as the regular submission v12080. Before the upload the
+   forecast was written into the journal and its line pinned by SHA-256 in the
+   sealed control manifest (10:40 UTC; [manifest](../analysis/final_transport_20261009/manifest_control.json)):
+   **231.7 s, corridor [231.2; 232.3] s**, from two routes, v12077 plus the
+   measured E81 price plus the estimated fresh-tail effect (231.65) and the canary
+   minus the measured member changes (231.74), with ±0.3 s for the noise of the
+   refits and the new input dithering (log 439). The rule written with it: a result
+   outside the corridor stops the final upload until a stage-by-stage comparison
+   explains the difference. (The older forecast in this section, 232.2 s
+   [231.8; 232.7], was written for the old members and weights and was replaced by
+   this one.) Once v12079 was scored, the measured decomposition of section 4 gave
+   231.745 s, inside the corridor (log 444).
+
+   **Result: 231.1805 s**, processed at 16:32:54 UTC on 9 October (one PUT
+   16:16:28–16:16:40 UTC from the Hetzner host). That is **0.02 s below the
+   corridor**, on the favourable side, and 0.564 s better than the measured
+   expectation. Under the pre-registered rule the final upload was paused (log 445).
+   Label leakage was excluded first: in `final_ranking.parquet` the departure
+   `BLOCK` and `TAXITIME` fields are null in all four months, as in
+   `ranking.parquet`.
+
+   **Explanation, without labels and without fits** (log 446;
+   [report](../analysis/v12080_control_explanation_20261009.md)). The reference
+   point is a real file, H = v12078 with the 42 fresh rows of v12079; its score
+   follows exactly from the Gram identity, √(231.0488² + 231.1770² − 230.4812²) =
+   231.7429 s, because v12079 and v12077 differ on exactly those 42 rows. The final
+   rows F differ from H by RMS 20.36 s on 325,612 rows, ΔMSE −260.3 s². Each group
+   of inputs was swapped back to its v12077-era version one at a time and run
+   through the frozen final chain; the identity run reproduces all twelve stages
+   byte for byte. Share of the difference (projection on F − H):
+
+   | Source | Share |
+   |---|---:|
+   | Regime probabilities of the base classifier (refit on the four-month view of the `plan_*` medians, and the re-dithered January/July inputs) | 55 % |
+   | Neural member (fresh fits on the final view) | 23 % |
+   | Tabular members (CatBoost, LightGBM, anchors) | 16 % |
+   | Daily ADS-B products rebuilt on the final movement times | 2 % |
+   | Candidate dithering in the premix; movement-only member | 0.4 % each |
+   | 42 tail rows (final E156 against the canary's E156) | 0.4 % |
+   | Remainder (dithering inside stage features, E167, LSZH) | 4 % |
+
+   Single swaps do not add exactly because the mixture is non-linear; the joint
+   swaps close the decomposition at 99.9 %. The difference is concentrated: 345
+   rows (0.1 %) carry 61.7 % of its squared size, and LIRF in July alone 53.5 %.
+   On these rows (185 of them LIRF in July) the prediction is a mixture of regime
+   candidates whose median spread is 2,818 s, and 87 % of the change comes from
+   the probabilities.
+   Nothing points to an error: the members show the same seed spread as before
+   (CatBoost 32.6 s against 32.6 s), the classifier has the same parameters, trees,
+   features and training rows, and the stages serve almost the same rows (E141
+   222,740 against 222,660). The noise of such a control, calibrated label-free on
+   the 2025 January + July out-of-fold predictions, is σ ≈ 200–250 s² in MSE, that is
+   **±0.43–0.55 s in RMSE (1σ)**; the observed deviation is a 1.0–1.3σ event. v12079
+   and v12080 differ by RMS 25.3 s and scored 231.1770 and 231.1805 s.
+
+   **Lesson.** The ±0.3 s corridor was about half as wide as it should have been.
+   The control of a chain whose members and classifier were refitted carries about
+   ±0.5 s of noise on January/July, and the ±0.08 s dithering estimate of
+   section 2.4 does not cover the refitted classifier's response to new inputs. The
+   rule did what it was written for: it stopped the upload until the deviation was
+   explained. The same draw is not guaranteed to fall with the same sign on the
+   blind months.
+
+   **Decision** (log 447): explained, no leakage, no substituted member; the recipe
+   is unchanged and the file `76c32426…` remains the only final candidate.
 5. **Determinism**: `assemble --repeat-e156` must reproduce all ten TabPFN
    probability arrays bitwise; cached-model replay reports `fits_performed = 0`
-   unless `--refit` was requested. Planned: an independent replay of the assembly
-   on a second node. Result: `[[to be filled after the final assembly]]`.
-6. **Label-free diagnostics** on February/June: rows within 12 s of the 3,606 s,
-   4 h and LOBT-window thresholds (January/July: 0, and 79 → 10 after the shifts);
-   the no-NM floor audit `analysis/nonm_disruption_floor_20261008/audit_2026.py`
-   (share of no-NM rows below the neighbours' level; diagnostic only, the rule E209
-   was rejected); regime-probability means per airport × month against 2025
-   (`scripts/regime_quality_report.py export`). Results: `[[to be filled after the final assembly]]`.
-7. **Manifest** (`MANIFEST.json`): SHA-256 of the file, the template, the ranking
-   file, every saved model and receipt, the git commit of the frozen pipeline, the
-   journal entry, machine and UTC time ([runbook §2](final-submission-runbook.md)).
+   unless `--refit` was requested.
+   **Result**: the repeat gave identical probabilities for all ten seeds (maximum
+   absolute difference 0.0) and 0 differing rounded rows; all cached stages report
+   `fits_performed = 0` ([E156 receipt](../analysis/final_tail_20261009/receipts/03_e156.json)).
+   An independent rebuild from scratch, a new `prepare` and `assemble` from the same
+   contract into a separate work directory, gave the byte-identical file, SHA-256
+   `76c32426…d554` ([replay log](../analysis/final_tail_20261009/assemble_replay.log),
+   log 438). The rebuild ran on the same Mac, not on a second node as planned
+   earlier.
+6. **Label-free diagnostics** of the new months. Planned beforehand: rows near the
+   3,606 s, 4 h and LOBT-window thresholds, the no-NM floor audit
+   (`analysis/nonm_disruption_floor_20261008/audit_2026.py`) and regime-probability
+   means per airport × month against 2025. No separate report of these three was
+   produced for the final file. The label-free evidence that exists is the
+   [input audit](../analysis/final_months_input_audit_20261009.md) of the sealed
+   four-month feature table against 2025 (section 5), the validator's per
+   month × airport table and fallback-regime shares (items 1–2), and the
+   stage-by-stage control explanation (item 4).
+7. **Manifest** ([`MANIFEST.json`](../analysis/final_tail_20261009/MANIFEST.json)):
+   SHA-256 of the file, the template (`b3445d80…`), the ranking file
+   (`4b0692a7…`), the builder, the contract and `complete.json`; `complete.json`
+   pins the twelve stage receipts, which pin the cached stage models, and the
+   contract pins 4,025 input files by SHA-256, including the saved base classifier
+   and the merged predictions of every member. It also records the replay SHA-256,
+   the git commit of the frozen pipeline (`2d85c07…`), the journal entries (436,
+   438), the machine and the UTC time (09:12:29 on 9 October 2026).
 
 ## 8. Fallbacks written down in advance
 
@@ -350,7 +479,7 @@ Unmeasured until the final run: wall-clock of the four-month assembly on the Mac
 | Coverage collapse (EDDF Feb, LIRF Jun/Jul) | Stages E141/E64/E188 inert by their masks (verified: 0 rows changed outside the masks); the neural member keeps its full weight (0.35) on every row because the protection rule failed its gate (section 5; the gate was evaluated at 0.25) |
 | Cached stage model does not match its training signature | Run stops; explicit `--refit e141 e64 lszh` with fresh signatures recorded, no silent fit |
 | Partial seed set in any member family | Refused by the contract (`members` must cover every ID exactly once) |
-| Pipeline not assembled by 11 October 12:00 UTC | Pre-registered backup: `src/run_final_any_period.sh` with `E81=drop TABPFN_SEEDS=0..9` (the older v808 line, 233.5877 s on the board, period-independent) (`analysis/win_program_20261008.md` §2; [strategy §1](../analysis/final_strategy_20261008.md)) |
+| Pipeline not assembled by 11 October 12:00 UTC | Pre-registered backup: `src/run_final_any_period.sh` with `E81=drop TABPFN_SEEDS=0..9` (the older v808 line, 233.5877 s on the board, period-independent) (`analysis/win_program_20261008.md` §2; [strategy §1](../analysis/final_strategy_20261008.md)). Not triggered: the pipeline was assembled on 9 October (section 6) |
 | Upload failure | [Runbook §6](final-submission-runbook.md): reconcile the ledger before any second PUT; never a second final name |
 
 ## 9. What is deliberately not in the final
@@ -382,17 +511,56 @@ Unmeasured until the final run: wall-clock of the four-month assembly on the Mac
   three 2025 days 2 departures without an NM record received a candidate, and 0 on
   three 2026 days; ground reception at the stands is missing, so the idea was closed
   before any cross-validation (log 405b–407b).
+- **E215** (12 training epochs for the neural member instead of 8; 18 fits, exact
+  2025 out-of-fold chain at the final weight 0.35): pooled −0.107 s on `decided`
+  rows and 11 of 12 months better, but the registered gate failed on the month pair
+  2+8 (+0.610 s) and on January–June (+0.055 s). The whole loss is February
+  (+1.61 s on the chain; all three 12-epoch seeds worse there), the regime month in
+  which the chain leans on the neural member most. The member stays at 8 epochs and
+  no retrain was registered (log 428, 429;
+  [report](../analysis/e215_nn_epochs_20261008.md)).
+- **E216** (the remaining global scalars of the chain re-checked one at a time from
+  the final configuration: CatBoost share in the tree pair, the block of four
+  anchored members, the raw-target member, the movement-only member weight and the
+  E152 gate threshold; 15 values, exact 2025 out-of-fold chain): none of the 15
+  values is lower than the current one in all twelve months, both half-years and
+  pooled, which the rule registered beforehand required (0 of 15). The best pooled
+  gain was −0.013 s (CatBoost share 0.75, better in 6 of 12 months); one grid step
+  moves the pooled RMSE by 0.004–0.016 s against 0.18 s for the neural weight in
+  E212, and February again pulls in the opposite direction to most other months.
+  No chain scalar besides the neural weight was mis-set; the final configuration is
+  confirmed unchanged (log 442, 443;
+  [report](../analysis/e216_chain_scalars_20261009.md)).
 - **E188** stays although its measured contribution is small (CV −0.007 s, 3/6;
   board −0.0011 s): removing it would be a design change ([validation](validation.md)).
 - No weights, seeds or rows are chosen on the public board for the final: the
   ten-seed mean was decided before the seeds were trained and the 0.35 weight on
-  2025 out-of-fold data before v12077 was built (section 2.3); the two uploads of
-  8 October and the Jan/Jul slot in section 7 are checks, not selections.
+  2025 out-of-fold data before v12077 was built (section 2.3). The two uploads of
+  8 October (v12076, v12077), the two measurement uploads of 9 October (v12078,
+  v12079, section 4) and the control v12080 (section 7, item 4) are checks, not
+  selections: the control fell outside its corridor on the favourable side and the
+  recipe was not changed (log 447).
 
 ## 10. Results
 
-- Final file: SHA-256, size, validator report, manifest: `[[to be filled after the final assembly]]`.
-- Per month × airport distribution and the three label-free diagnostics: `[[to be filled after the final assembly]]`.
-- Upload receipt (ledger lines, bucket listing, SHA-256 of the object): `[[to be filled after the final assembly]]`.
+- **Final file**: `gentle-igloo_final.parquet`, SHA-256
+  `76c32426d750040690ff68bacd6ecbf3a7aa1e63340df5b9271a324b7064d554`,
+  2,145,126 bytes, 670,790 rows; assembled on the Mac on 9 October 2026 in 157.6 s
+  with 0 fits from git commit `2d85c07…` (log 436, 438).
+- **Validator**: all hard checks pass
+  ([`analysis/final_tail_20261009/validate_vs_v12077.json`](../analysis/final_tail_20261009/validate_vs_v12077.json));
+  **manifest**: [`analysis/final_tail_20261009/MANIFEST.json`](../analysis/final_tail_20261009/MANIFEST.json);
+  receipts, contract and `complete.json` in the same directory.
+- **Replay**: an independent rebuild from scratch from the same contract gave the
+  byte-identical file, SHA-256 `76c32426…d554`
+  ([replay log](../analysis/final_tail_20261009/assemble_replay.log)).
+- **January/July rows on the public board** (control v12080): 231.1805 s, 0.02 s
+  below the corridor written beforehand; explained stage by stage, recipe unchanged
+  (section 7, item 4; log 445–447).
+- **Per month × airport distribution and label-free diagnostics**: the validator
+  report (month × airport table, fallback-regime shares) and the
+  [input audit](../analysis/final_months_input_audit_20261009.md) (sections 5, 7).
+- Upload receipt (ledger lines, bucket listing, SHA-256 of the object):
+  `[[to be filled after the final upload]]`.
 - Blind-ranking result (January/July, February/June, four months), published by
-  the organiser after 14 October 10:00 UTC: `[[to be filled after the final assembly]]`.
+  the organiser after 14 October 10:00 UTC: `[[to be filled after 14 October]]`.

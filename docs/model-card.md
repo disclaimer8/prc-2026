@@ -3,7 +3,8 @@
 A model card in the usual sections (Mitchell et al., 2019). Every number is
 copied from the page it cites; nothing here is new measurement. Written 8 October
 2026 for the v12075 chain and the uniform final recipe derived from it
-([final submission](final-submission.md)).
+([final submission](final-submission.md)); updated 9 October 2026 after the final
+file was assembled and checked.
 
 ## Model details
 
@@ -11,7 +12,7 @@ copied from the page it cites; nothing here is new measurement. Written 8 Octobe
 |---|---|
 | Name | gentle-igloo taxi-out chain, version v12077 (leaderboard; the v12075 chain with the neural member as a ten-seed mean at weight 0.35) / `gentle-igloo_final.parquet` recipe (blind final) |
 | Developer | Team gentle-igloo: one developer, Denys Kolomiiets, with AI coding assistants ([README](../README.md#team)) |
-| Date | Developed 13 September – 8 October 2026; v12075 scored 7 October 2026, v12077 scored 8 October 2026 |
+| Date | Developed 13 September – 8 October 2026; v12075 scored 7 October 2026, v12077 scored 8 October 2026; final file assembled 9 October 2026 |
 | Task | Predict `TAXITIME_SEC_mvt`, the recorded taxi-out time of a departure at ten European airports (EDDF, EDDM, EGLL, EHAM, LEBL, LEMD, LFPG, LIRF, LSZH, LTFM), for the EUROCONTROL PRC Data Challenge 2026; metric RMSE in seconds |
 | Type | Probability mixture over six recording regimes (LightGBM multiclass classifier) whose "regular" candidate is a blend of gradient-boosted residual models (CatBoost 15 seeds, LightGBM 5 seeds), five anchored LightGBM members and an ordered-trajectory neural network (mean of ten seeds at weight 0.35 in v12077 and the final; three seeds at 0.25 in v12075); followed by LightGBM surface-correction stages on the aircraft's own ADS-B track, a TabPFN-2 classifier for a sparse Rome tail, a confidence gate, LOBT-window clipping and an OPDI correction at Zurich ([model design](model-design.md)) |
 | Size | Tree models: classifier 1,080 trees, regressor 2,319 trees, 170 input columns; neural member 1,908,437 parameters per seed, 189 tabular columns + 2 streams × 64 tokens × 12 channels ([model design](model-design.md)) |
@@ -141,7 +142,10 @@ The leaderboard was used to choose between complete pre-built variants during
 development, so this score carries selection effects; the eight such decisions are
 listed in the [leaderboard use disclosure](development-history.md#6-leaderboard-use-disclosure).
 The uniform final recipe (no E81, fresh tail ensemble) scored 232.1933 s on the
-same rows as a canary run with the v12075 members and weights
+same rows as a canary run with the v12075 members and weights. On the v12077 chain
+its two removals were then measured one at a time: without E81 231.0488 s
+(v12078, +0.5676 s) and with the fresh tail ensemble instead of the 42 frozen rows
+231.1770 s (v12079, +0.6958 s); together +1.2634 s against the canary's +1.2546 s
 ([final submission §4](final-submission.md#4-measured-cost-on-januaryjuly)).
 
 **Generalisation across months (2025 out-of-fold).** February + June: 247.3 s all
@@ -161,8 +165,17 @@ calibrations fitted on 2025; the sign matched in only 60–70 % of pairs
 variant); by month group Feb + Jun 51.0/80.3/89.9 %, Jan + Jul 47.4/76.6/87.1 %;
 CRPS 76.5 s against point MAE 101.8 s ([uncertainty](uncertainty.md)).
 
-**Blind final (January, February, June, July 2026; 670,790 rows).**
-Result: `[[to be filled after the final assembly]]` ([final submission §10](final-submission.md#10-results)).
+**Blind final (January, February, June, July 2026; 670,790 rows).** The file
+`gentle-igloo_final.parquet` (SHA-256 `76c32426…d554`, 670,790 rows) was assembled
+on 9 October 2026 with no fits, passed every hard check of the validator and was
+rebuilt from scratch with the same SHA-256. Its January/July rows, uploaded as the
+control v12080, scored 231.1805 s, 0.02 s below the corridor written beforehand
+([231.2; 232.3]) and 0.564 s better than the measured expectation of 231.745 s;
+the deviation was explained without labels, mainly as noise in the regime
+probabilities of the refitted classifier on about 350 mixture rows, and the recipe was not
+changed ([final submission §7](final-submission.md#7-validation-of-the-file)).
+Blind result: `[[to be filled after 14 October]]`
+([final submission §10](final-submission.md#10-results)).
 
 ## Limitations and failure modes
 
@@ -201,7 +214,15 @@ Result: `[[to be filled after the final assembly]]` ([final submission §10](fin
   exceed four hours and hold 52.4 % of the label's squared deviation from its mean
   ([data insights](data-insights.md#data-caveats)). Small changes in how such rows
   are hedged move the score by more than most design changes.
-- **Selection effects.** 111 leaderboard uploads informed development; blend
+- **Score noise of a refitted chain.** Refitting the members and the regime
+  classifier on the four-month view moves the January/July score with a noise of
+  about ±0.43–0.55 s (1σ, estimated without labels from 2025 out-of-fold data),
+  concentrated on a few hundred rows whose prediction mixes regime candidates with
+  a median spread of 2,818 s; the control v12080 deviated from its measured
+  expectation by −0.564 s, a 1.0–1.3σ event
+  ([final submission §7](final-submission.md#7-validation-of-the-file)). One score
+  cannot separate refitted variants that differ by less than about 0.5 s.
+- **Selection effects.** 114 leaderboard uploads informed development; blend
   weights were never fitted to the board, but eight design choices were kept or
   dropped on a board result ([disclosure](development-history.md#6-leaderboard-use-disclosure)).
   Out-of-fold errors are optimistic for the same reason.
@@ -249,7 +270,9 @@ Result: `[[to be filled after the final assembly]]` ([final submission §10](fin
   retrain has not been completed and several step times are not measured
   ([reproduction](reproduction.md)). The final file is produced by the dated scripts
   in [final submission §6](final-submission.md#6-pipeline-scripts-inputs-and-receipts),
-  which save every fitted model and write receipts.
+  which save every fitted model and write receipts. On 9 October 2026 the final file
+  was rebuilt from scratch from the same contract (on the same machine) with a
+  byte-identical result ([final submission §7](final-submission.md#7-validation-of-the-file)).
 - **Environment.** CPU stack locked in `uv.lock` (Python ≥ 3.12, Polars, LightGBM,
   CatBoost, TabPFN); GPU stack for the neural member pinned in `requirements-gpu.txt`
   (PyTorch 2.13.0 + ROCm, `rtdl_num_embeddings` 0.0.12). Cached stage models record
