@@ -143,6 +143,7 @@ def main() -> int:
         "×": "$\\times$", "±": "$\\pm$", "…": "\\ldots{}", "·": "$\\cdot$",
         "ρ": "$\\rho$", "σ": "$\\sigma$", "τ": "$\\tau$", "²": "\\textsuperscript{2}",
         "⁻⁵": "\\textsuperscript{$-$5}", "©": "\\textcopyright{}", "≈": "$\\approx$",
+        "⁻¹³": "\\textsuperscript{$-$13}", "°": "\\textdegree{}", "Δ": "$\\Delta$",
     }
     for k, v in unicode_map.items():
         body = body.replace(k, v)
