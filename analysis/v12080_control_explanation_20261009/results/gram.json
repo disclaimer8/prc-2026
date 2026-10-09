@@ -1,0 +1,203 @@
+{
+ "scores": {
+  "v12075": 230.9387,
+  "v12076": 230.8183,
+  "v12077": 230.4812,
+  "v12078": 231.0488,
+  "v12079": 231.177,
+  "v12080": 231.1805,
+  "v12090": 232.1933,
+  "H": 231.74289580696967
+ },
+ "pairs": [
+  {
+   "a": "v12075",
+   "b": "v12077",
+   "rms_diff": 8.682,
+   "dmse_a_minus_b": 211.1,
+   "corr_change_vs_b_resid": 0.0339,
+   "resid_corr": 0.999294,
+   "midpoint_score": 230.6692
+  },
+  {
+   "a": "v12075",
+   "b": "v12078",
+   "rms_diff": 20.034,
+   "dmse_a_minus_b": -50.9,
+   "corr_change_vs_b_resid": -0.0488,
+   "resid_corr": 0.996239,
+   "midpoint_score": 230.7765
+  },
+  {
+   "a": "v12075",
+   "b": "v12079",
+   "rms_diff": 11.721,
+   "dmse_a_minus_b": -110.1,
+   "corr_change_vs_b_resid": -0.0457,
+   "resid_corr": 0.998714,
+   "midpoint_score": 230.9835
+  },
+  {
+   "a": "v12075",
+   "b": "H",
+   "rms_diff": 21.526,
+   "dmse_a_minus_b": -372.1,
+   "corr_change_vs_b_resid": -0.0837,
+   "resid_corr": 0.995677,
+   "midpoint_score": 231.0906
+  },
+  {
+   "a": "v12075",
+   "b": "v12080",
+   "rms_diff": 28.56,
+   "dmse_a_minus_b": -111.7,
+   "corr_change_vs_b_resid": -0.0702,
+   "resid_corr": 0.992362,
+   "midpoint_score": 230.6179
+  },
+  {
+   "a": "v12075",
+   "b": "v12090",
+   "rms_diff": 18.209,
+   "dmse_a_minus_b": -581.0,
+   "corr_change_vs_b_resid": -0.1079,
+   "resid_corr": 0.996923,
+   "midpoint_score": 231.3878
+  },
+  {
+   "a": "v12077",
+   "b": "v12078",
+   "rms_diff": 16.507,
+   "dmse_a_minus_b": -262.0,
+   "corr_change_vs_b_resid": -0.0701,
+   "resid_corr": 0.997445,
+   "midpoint_score": 230.6175
+  },
+  {
+   "a": "v12077",
+   "b": "v12079",
+   "rms_diff": 7.874,
+   "dmse_a_minus_b": -321.2,
+   "corr_change_vs_b_resid": -0.1053,
+   "resid_corr": 0.999423,
+   "midpoint_score": 230.7958
+  },
+  {
+   "a": "v12077",
+   "b": "H",
+   "rms_diff": 18.289,
+   "dmse_a_minus_b": -583.2,
+   "corr_change_vs_b_resid": -0.1083,
+   "resid_corr": 0.996884,
+   "midpoint_score": 230.9319
+  },
+  {
+   "a": "v12077",
+   "b": "v12080",
+   "rms_diff": 26.515,
+   "dmse_a_minus_b": -322.8,
+   "corr_change_vs_b_resid": -0.0837,
+   "resid_corr": 0.993407,
+   "midpoint_score": 230.4501
+  },
+  {
+   "a": "v12077",
+   "b": "v12090",
+   "rms_diff": 19.298,
+   "dmse_a_minus_b": -792.1,
+   "corr_change_vs_b_resid": -0.1299,
+   "resid_corr": 0.996548,
+   "midpoint_score": 231.1375
+  },
+  {
+   "a": "v12078",
+   "b": "v12079",
+   "rms_diff": 18.289,
+   "dmse_a_minus_b": -59.3,
+   "corr_change_vs_b_resid": -0.0466,
+   "resid_corr": 0.996869,
+   "midpoint_score": 230.9319
+  },
+  {
+   "a": "v12078",
+   "b": "H",
+   "rms_diff": 7.874,
+   "dmse_a_minus_b": -321.2,
+   "corr_change_vs_b_resid": -0.105,
+   "resid_corr": 0.999425,
+   "midpoint_score": 231.3626
+  },
+  {
+   "a": "v12078",
+   "b": "v12080",
+   "rms_diff": 21.844,
+   "dmse_a_minus_b": -60.9,
+   "corr_change_vs_b_resid": -0.0533,
+   "resid_corr": 0.995534,
+   "midpoint_score": 230.8564
+  },
+  {
+   "a": "v12078",
+   "b": "v12090",
+   "rms_diff": 13.044,
+   "dmse_a_minus_b": -530.2,
+   "corr_change_vs_b_resid": -0.1156,
+   "resid_corr": 0.998426,
+   "midpoint_score": 231.5299
+  },
+  {
+   "a": "v12079",
+   "b": "H",
+   "rms_diff": 16.507,
+   "dmse_a_minus_b": -262.0,
+   "corr_change_vs_b_resid": -0.0699,
+   "resid_corr": 0.99746,
+   "midpoint_score": 231.3129
+  },
+  {
+   "a": "v12079",
+   "b": "v12080",
+   "rms_diff": 25.305,
+   "dmse_a_minus_b": -1.6,
+   "corr_change_vs_b_resid": -0.0549,
+   "resid_corr": 0.994009,
+   "midpoint_score": 230.8323
+  },
+  {
+   "a": "v12079",
+   "b": "v12090",
+   "rms_diff": 17.618,
+   "dmse_a_minus_b": -470.9,
+   "corr_change_vs_b_resid": -0.0955,
+   "resid_corr": 0.997118,
+   "midpoint_score": 231.5182
+  },
+  {
+   "a": "H",
+   "b": "v12080",
+   "rms_diff": 20.358,
+   "dmse_a_minus_b": 260.3,
+   "corr_change_vs_b_resid": -0.0164,
+   "resid_corr": 0.996135,
+   "midpoint_score": 231.2379
+  },
+  {
+   "a": "H",
+   "b": "v12090",
+   "rms_diff": 10.399,
+   "dmse_a_minus_b": -209.0,
+   "corr_change_vs_b_resid": -0.0657,
+   "resid_corr": 0.998997,
+   "midpoint_score": 231.9099
+  },
+  {
+   "a": "v12080",
+   "b": "v12090",
+   "rms_diff": 22.56,
+   "dmse_a_minus_b": -469.3,
+   "corr_change_vs_b_resid": -0.0934,
+   "resid_corr": 0.995269,
+   "midpoint_score": 231.4127
+  }
+ ]
+}

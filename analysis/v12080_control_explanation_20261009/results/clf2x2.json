@@ -1,0 +1,37 @@
+{
+ "classifier (old view)": {
+  "mean_tv": 0.006930739979904218,
+  "p99_tv": 0.051697085028917504,
+  "mean_tv_lirf_nonm": 0.027059125379249774,
+  "mean_dpsched_lirf_nonm": -0.0008435885017654701,
+  "frac_neg_dpsched_lirf_nonm": 0.5300261096605744
+ },
+ "classifier (final view)": {
+  "mean_tv": 0.006924408883778303,
+  "p99_tv": 0.05187751093903707,
+  "mean_tv_lirf_nonm": 0.026535862241457656,
+  "mean_dpsched_lirf_nonm": -0.0007228189618944204,
+  "frac_neg_dpsched_lirf_nonm": 0.5013054830287206
+ },
+ "view (old clf)": {
+  "mean_tv": 0.002364200065326235,
+  "p99_tv": 0.02211214283364945,
+  "mean_tv_lirf_nonm": 0.0197114576457601,
+  "mean_dpsched_lirf_nonm": -0.010058859655415394,
+  "frac_neg_dpsched_lirf_nonm": 0.5326370757180157
+ },
+ "view (final clf)": {
+  "mean_tv": 0.002361437204790506,
+  "p99_tv": 0.022036553885111974,
+  "mean_tv_lirf_nonm": 0.01891135730135046,
+  "mean_dpsched_lirf_nonm": -0.009938090115544343,
+  "frac_neg_dpsched_lirf_nonm": 0.5535248041775457
+ },
+ "total": {
+  "mean_tv": 0.007256477809947957,
+  "p99_tv": 0.05433221801816081,
+  "mean_tv_lirf_nonm": 0.036214143018963044,
+  "mean_dpsched_lirf_nonm": -0.010781678617309817,
+  "frac_neg_dpsched_lirf_nonm": 0.5404699738903395
+ }
+}

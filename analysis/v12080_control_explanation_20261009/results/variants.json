@@ -1,0 +1,43 @@
+{
+ "results": {
+  "identity": {
+   "seconds": 68.44790077209473
+  },
+  "tab": {
+   "seconds": 68.30803298950195
+  },
+  "nn": {
+   "seconds": 68.90403509140015
+  },
+  "proba": {
+   "seconds": 69.10047483444214
+  },
+  "cand": {
+   "seconds": 71.48449087142944
+  },
+  "motion": {
+   "seconds": 69.31037592887878
+  },
+  "products": {
+   "seconds": 68.48937916755676
+  },
+  "allpremix": {
+   "seconds": 68.26908493041992
+  },
+  "allold": {
+   "seconds": 67.91017627716064
+  },
+  "proba_model": {
+   "seconds": 69.49480128288269
+  },
+  "proba_view": {
+   "seconds": 68.4501781463623
+  }
+ },
+ "premix_old_reproduction": {
+  "reg": 0.0,
+  "proba": 0.0,
+  "values": 0.0,
+  "pred": 0.0
+ }
+}
