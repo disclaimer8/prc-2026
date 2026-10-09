@@ -143,6 +143,7 @@ def validate(root):
     r = reference.sort(G.ID)
     pred = c[G.TARGET].to_numpy().astype(np.int64)
     ref = r[G.TARGET].to_numpy().astype(np.int64)
+    ids = c[G.ID].to_numpy().astype(np.int64)
     base = pl.read_parquet(root/'submissions/gentle-igloo_v291.parquet').sort(G.ID)[G.TARGET].to_numpy().astype(np.int64)
     donor = pl.read_parquet(root/'submissions/gentle-igloo_v361.parquet').sort(G.ID)[G.TARGET].to_numpy().astype(np.int64)
     protected = base != donor
