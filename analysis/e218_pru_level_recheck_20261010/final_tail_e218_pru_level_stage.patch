@@ -1,0 +1,138 @@
+--- a/scripts/final_tail_assembly_20261008.py	2026-10-10 23:17:05
++++ b/scripts/final_tail_assembly_20261008.py	2026-10-10 23:17:13
+@@ -73,6 +73,17 @@
+ CACHED = {'e141': ('e141_apply.py', 5, 'FEATS'), 'e64': ('e64_apply.py', 5, 'FEATS'), 'lszh': ('e159b_apply.py', 1, 'F')}
+ BASE_VERSION = 970100
+ FORBIDDEN = ('e81', 'blend_submissions.py:44', 'v44', 'v60', 'v291', 'v361', 'donor')
++# E218 (journal 451/452): post-mixture PRU level stage. DEFAULT OFF: with E218_PRU_LEVEL unset the plan, the sealed contract
++# and the output are byte-identical to the registered recipe. Enabling it needs a new contract (make-contract) and a new seal.
++PRU_LEVEL = os.environ.get('E218_PRU_LEVEL', '0') == '1'
++PRU_CSV = {2025: ('data/taxi_out_additional_time_2025.csv', '4aedf19520d3f84bebc418b56835762c907b714a9c19e751bb8658f9e62ce598'),
++           2026: ('data/taxi_out_additional_time_2026.csv', 'b72040e0987e6c7d5706279d645ef9f814a6506165c83f89d8509022154a1076')}
++PRU_K, PRU_XS_MAX, PRU_MAX_TAXI, PRU_PCT, PRU_MIN_LE = 0.5, 0.005, 7200, 0.10, 10
++PRU_AIRPORTS = ['EDDF', 'EDDM', 'EGLL', 'EHAM', 'LEBL', 'LEMD', 'LFPG', 'LIRF', 'LSZH', 'LTFM']
++PRU_HELI = ['A109', 'A119', 'A139', 'A149', 'A169', 'A189', 'AS32', 'AS50', 'AS55', 'AS65', 'AW09', 'B06', 'B105', 'B212', 'B407',
++            'B412', 'B429', 'B505', 'EC20', 'EC25', 'EC30', 'EC35', 'EC45', 'EC55', 'EC75', 'H135', 'H145', 'H160', 'H175', 'H47',
++            'H500', 'H60', 'LYNX', 'NH90', 'PUMA', 'R22', 'R44', 'R66', 'S61', 'S76', 'S92']   # = scripts/regime_quality_report.py
++PRU_GRP, PRU_KEY = ['ADEP_mvt', 'STAND_mvt', 'RUNWAY_mvt'], ['ADEP_mvt', 'month']
+ 
+ 
+ def sha(path):
+@@ -144,12 +155,12 @@
+         dict(name='lszh', kind='cached', args=['e159b_apply.py', b + 13, b + 14], cache='lszh',
+              env={'E159_APS': 'LSZH', 'E159_MONTHS': 'all', 'E159_BASE': 'data/cv_preds_e150c_e64_keep', 'E159_SHIFT': '0'}),
+         dict(name='half', kind='script', args=['blend_submissions.py', b + 15], env={'BLEND_BASE': str(b + 13), 'BLEND_PARTS': f'{b + 14}:0.5'}),
+-    ]
++    ] + ([dict(name='pru_level', kind='native', src=b + 15, out=b + 16, k=PRU_K, xs_max=PRU_XS_MAX)] if PRU_LEVEL else [])
+ 
+ 
+ def check_plan(plan, mode='final'):
+     names = [s['name'] for s in plan]
+-    expected = ['premix', 'e185', 'e167', 'e156', 'e141', 'e64', 'e188', 'e152', 'lobt', 'protect', 'lszh', 'half']
++    expected = ['premix', 'e185', 'e167', 'e156', 'e141', 'e64', 'e188', 'e152', 'lobt', 'protect', 'lszh', 'half'] + (['pru_level'] if PRU_LEVEL else [])
+     if names != expected:
+         raise ValueError('stage order differs from the registered uniform recipe')
+     text = json.dumps(plan).lower()
+@@ -827,8 +838,84 @@
+     out = protect(final, tab, ids)
+     out.write_parquet(sub(work, stage['out']))
+     return dict(protected_rows=int(len(ids)))
++
++
++def pru_read(root, year):
++    path, digest = PRU_CSV[year]
++    if sha(Path(root) / path) != digest:
++        raise ValueError('PRU file changed: ' + path)
++    p = pl.read_csv(Path(root) / path, schema_overrides={'MONTH_NUM': pl.Int32, 'COMMENT': pl.Utf8}).filter(pl.col('APT_ICAO').is_in(PRU_AIRPORTS))
++    return p.select(pl.col('APT_ICAO').alias('ADEP_mvt'), pl.col('MONTH_NUM').alias('month'),
++                    pru_add_s=pl.col('TOTAL_ADD_TIME_MIN') * 60 / pl.col('TOTAL_REF_NB_FL'), excl=1 - pl.col('VALID_FL') / pl.col('TF'))
++
++
++def pru_ok(col):
++    heli = pl.col('AIRCRAFT_TYPE_mvt').is_in(PRU_HELI)
++    return (pl.col('STAND_mvt').is_not_null() & pl.col('RUNWAY_mvt').is_not_null() & ~heli & (pl.col(col) >= 0) & (pl.col(col) <= PRU_MAX_TAXI)).fill_null(False)
++
++
++def pru_reference(train):
++    """P10 of the 2025 label per airport x stand x runway over all records passing PRU's filters; valid with >= 10 at or below
++    (same arithmetic as regime_quality_report.weighted_quantile_by_group with unit weights)."""
++    d = train.filter(pru_ok('y')).with_columns(w=pl.lit(1.0)).sort(PRU_GRP + ['y'])
++    d = d.with_columns(cw=pl.col('w').cum_sum().over(PRU_GRP), W=pl.col('w').sum().over(PRU_GRP))
++    q = d.filter(pl.col('cw') >= PRU_PCT * pl.col('W')).group_by(PRU_GRP).agg(pl.col('y').first().alias('ref'))
++    below = d.join(q, on=PRU_GRP, how='left').filter(pl.col('y') <= pl.col('ref')).group_by(PRU_GRP).agg(pl.col('w').sum().alias('n_le'))
++    return q.join(below, on=PRU_GRP, how='left').with_columns(valid=pl.col('n_le') >= PRU_MIN_LE).select(PRU_GRP + ['ref', 'valid'])
++
++
++def pru_level_shift(train, rank, pred, pru25, pru26, protected, k=PRU_K, xs_max=PRU_XS_MAX):
++    """E218: per airport x month, gap = mean(pred - ref) over the PRU population P minus PRU's published additional time; on cells
++    without de-icing (PRU excluded share < xs_max above the airport's April-October 2025 level) every P row moves by
++    c = -k (gap - emu_hat), emu_hat = the airport's 2025 label-indicator minus published value over its months without de-icing.
++    Rows outside P, cells with de-icing and protected rows are unchanged."""
++    ref = pru_reference(train)
++    base = pru25.filter(pl.col('month').is_between(4, 10)).group_by('ADEP_mvt').agg(excl_base=pl.col('excl').mean())
++    p25, p26 = (p.join(base, on='ADEP_mvt').with_columns(xs=(pl.col('excl') - pl.col('excl_base')).clip(0, None)) for p in (pru25, pru26))
+ 
++    def indicator(df, col):
++        x = df.join(ref, on=PRU_GRP, how='left').filter(pru_ok(col) & pl.col('valid').fill_null(False))
++        return x.group_by(PRU_KEY).agg(ind=(pl.col(col) - pl.col('ref')).mean(), n_p=pl.len())
++    emu = indicator(train, 'y').join(p25, on=PRU_KEY, how='inner').filter(pl.col('xs') < xs_max).group_by('ADEP_mvt').agg(
++        emu_hat=(pl.col('ind') - pl.col('pru_add_s')).mean())
++    r = rank.join(pred.select(ID, pl.col(Y).cast(pl.Float64).alias('pred')), on=ID, how='inner')
++    if r.height != pred.height:
++        raise ValueError('ranking/prediction join incomplete')
++    cells = indicator(r, 'pred').join(p26, on=PRU_KEY, how='left').join(emu, on='ADEP_mvt', how='left').with_columns(
++        eligible=(pl.col('pru_add_s').is_not_null() & (pl.col('xs') < xs_max)).fill_null(False)).with_columns(
++        c=pl.when(pl.col('eligible')).then(-k * (pl.col('ind') - pl.col('pru_add_s') - pl.col('emu_hat').fill_null(0.0))).otherwise(0.0))
++    x = r.join(ref, on=PRU_GRP, how='left').with_columns(inP=pru_ok('pred') & pl.col('valid').fill_null(False) & ~pl.col(ID).is_in(list(protected)))
++    x = x.join(cells.select(PRU_KEY + ['c']), on=PRU_KEY, how='left').with_columns(pl.col('c').fill_null(0.0)).with_columns(
++        new=pl.when(pl.col('inP')).then((pl.col('pred') + pl.col('c')).round(0).clip(0, None)).otherwise(pl.col('pred')))
++    out = pred.join(x.select(ID, 'new'), on=ID, how='left').with_columns(pl.col('new').cast(pred.schema[Y]).alias(Y)).select(pred.columns)
++    if out.height != pred.height or out[Y].null_count():
++        raise ValueError('PRU level stage changed the population')
++    return out, cells.sort(PRU_KEY)
+ 
++
++def pru_level_stage(work, index, stage):
++    """Post-mixture E218 stage (default off): src version -> out version; reads the 2025 training labels and the ranking of the
++    workspace, the two SHA-pinned PRU files from the repository, and never moves a protected E156 row."""
++    work = Path(work)
++    root = Path(__file__).resolve().parents[1]
++    cols = [ID, 'PHASE_mvt', 'ADEP_mvt', 'MVT_TIME_UTC_mvt', 'STAND_mvt', 'RUNWAY_mvt', 'AIRCRAFT_TYPE_mvt']
++    def dep(path, label):
++        f = pl.read_parquet(path, columns=cols + ([Y] if label else [])).filter(pl.col('PHASE_mvt') == 'DEP')
++        f = f.with_columns(month=pl.col('MVT_TIME_UTC_mvt').dt.month().cast(pl.Int32)).drop('PHASE_mvt', 'MVT_TIME_UTC_mvt')
++        return f.rename({Y: 'y'}).with_columns(pl.col('y').cast(pl.Float64)) if label else f
++    train = pl.concat([dep(p, True) for p in sorted((work / 'data/prc-2026-datasets').glob('training_*.parquet'))])
++    src = read_sub(sub(work, stage['src']))
++    rank = dep(work / 'data/prc-2026-datasets/ranking.parquet', False).with_columns(pl.col(ID).cast(src.schema[ID]))
++    served = read(work / 'e156/run_0/served.json')
++    out, cells = pru_level_shift(train, rank, src, pru_read(root, 2025), pru_read(root, 2026),
++                                 np.array(served['ids'], dtype=np.float64),
++                                 k=stage['k'], xs_max=stage['xs_max'])
++    out.write_parquet(sub(work, stage['out']))
++    changed = int((out.sort(ID)[Y].cast(pl.Float64).to_numpy() != src.sort(ID)[Y].cast(pl.Float64).to_numpy()).sum())
++    return dict(rows_changed=changed, cells=cells.select(PRU_KEY + ['ind', 'pru_add_s', 'xs', 'emu_hat', 'eligible', 'c']).to_dicts(),
++                pru_sha256={str(y): v[1] for y, v in PRU_CSV.items()})
++
++
+ def check_protected(work, version):
+     served = read(Path(work) / 'e156/run_0/served.json')
+     keys = pl.DataFrame({ID: np.array(served['ids'], dtype=np.float64)})
+@@ -910,13 +997,16 @@
+             elif stage['kind'] == 'native' and stage['name'] == 'protect':
+                 extra = protect_stage(work, index, stage)
+                 src_v, out_v = stage['final'], stage['out']
++            elif stage['kind'] == 'native' and stage['name'] == 'pru_level':
++                extra = pru_level_stage(work, index, stage)
++                src_v, out_v = stage['src'], stage['out']
+             else:
+                 raise ValueError('unknown stage kind')
+             extra['seconds'] = time.time() - t0
+             if stage['name'] == 'lszh':
+                 extra['changed_rows_outside_LSZH'] = scope_check(work, src_v, out_v, 'LSZH')
+             receipts.append(change_receipt(work, stage['name'], index, src_v, out_v, extra))
+-        final_version = plan[-1]['args'][1]
++        final_version = plan[-1]['out'] if plan[-1]['name'] == 'pru_level' else plan[-1]['args'][1]
+         out = finalize(work, final_version)
+         result = dict(protocol=PROTOCOL, output=str(out), output_sha256=sha(out), rows=sealed['rows'], stages=[r['stage'] for r in receipts],
+                       receipts={f'receipts/{p.name}': sha(p) for p in sorted((work / 'receipts').iterdir())},
