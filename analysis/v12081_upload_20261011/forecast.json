@@ -1,0 +1,74 @@
+{
+  "bias_model": {
+    "beta": 0.9323329891592096,
+    "se_jackknife_airport": 0.06728713192296552,
+    "source": "analysis/e218_pru_level_recheck_20261010/evaluate.json"
+  },
+  "cells_eligible": 14,
+  "cells_total": 20,
+  "changed_rows": 215682,
+  "estimate": {
+    "beta_0_gap_is_noise": {
+      "beta": 0.0,
+      "dmse_model": 12.371514572316551,
+      "drmse_model": 0.026836883776184095,
+      "drmse_rounded": 0.027057113576290703,
+      "dsse_model": 4266205.456632212,
+      "dsse_rounded": 4301217.0
+    },
+    "beta_1": {
+      "beta": 1.0,
+      "dmse_model": -37.11454371694965,
+      "drmse_model": -0.08052940695884558,
+      "drmse_rounded": -0.08048560296535356,
+      "dsse_model": -12798616.369896634,
+      "dsse_rounded": -12791655.774699515
+    },
+    "beta_hat": {
+      "beta": 0.9323329891592096,
+      "dmse_model": -33.76597007422188,
+      "drmse_model": -0.0732626728198511,
+      "drmse_rounded": -0.07320692542890583,
+      "dsse_model": -11643890.886364749,
+      "dsse_rounded": -11635032.16735367
+    },
+    "beta_hi_2se": {
+      "beta": 1.0669072530051407,
+      "dmse_model": -40.42551993913671,
+      "drmse_model": -0.08771477634860503,
+      "drmse_rounded": -0.08768278239469396,
+      "dsse_model": -13940376.721331844,
+      "dsse_rounded": -13935292.938021015
+    },
+    "beta_lo_2se": {
+      "beta": 0.7977587253132785,
+      "dmse_model": -27.106420209307053,
+      "drmse_model": -0.05881147572767986,
+      "drmse_rounded": -0.05873197788153561,
+      "dsse_model": -9347405.051397653,
+      "dsse_rounded": -9334771.396686327
+    },
+    "lirf_gap_is_artifact": {
+      "beta": null,
+      "dmse_model": -15.361052081795643,
+      "drmse_model": -0.03332628154234385,
+      "drmse_rounded": -0.03448339628857866,
+      "dsse_model": -5297120.5609384915,
+      "dsse_rounded": -5481026.999766553
+    }
+  },
+  "expected_values_sha256": "814f2c469a41f7193f04927127d71f692469e45291da4530cf44a63e68ad8354",
+  "lirf_share_of_beta_hat": 0.3989146381391884,
+  "max_abs_change": 8.0,
+  "mean_change": -0.9836852346443723,
+  "parent_sha256": "f06c66bfa3388b17f5b6ba2362fa45a7da1be8fd5ae2d37de47cfe0e6bf2ba44",
+  "patch_sha256": "0613fdd9bab1aad457c12ed466c5ef05ecadc8e21ddda0e599287118544b4615",
+  "protected_rows": 42,
+  "protected_unchanged": true,
+  "ranking": "data/prc-2026-datasets/ranking.parquet",
+  "ranking_sha256": "9db75e3a56fa09b87aab72e191a53da3fe763d9887ad2b23aea9cde6a6325f86",
+  "reference_rmse": 230.4812,
+  "rms_change": 3.5317197083835183,
+  "rows": 344841,
+  "rows_in_P_eligible": 227268
+}

@@ -1,0 +1,11 @@
+{
+  "cells_eligible": 29,
+  "dryrun_sha256": "bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1",
+  "equal_to_dryrun": true,
+  "final_sha256": "76c32426d750040690ff68bacd6ecbf3a7aa1e63340df5b9271a324b7064d554",
+  "patch_sha256": "0613fdd9bab1aad457c12ed466c5ef05ecadc8e21ddda0e599287118544b4615",
+  "protected_rows": 62,
+  "rows": 670790,
+  "rows_changed": 415697,
+  "unix": 1791708223.265162
+}
