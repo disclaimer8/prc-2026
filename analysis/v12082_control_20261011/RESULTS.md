@@ -72,3 +72,17 @@ control file e87b7978, manifest, proof; preflight passed on the Mac and on Hetzn
 Quota before the PUT: 1/5 used on 11.10 (v12081); scorer live (last other-team item 08:58:02Z). Exactly **one PUT**, 09:10:05 → 09:10:16 UTC,
 `/root/prc-2026/.venv-upload/bin/python`, no retry. Ledger lines in [canonical_ledger.jsonl](canonical_ledger.jsonl), stdout in
 [upload_stdout.log](upload_stdout.log), stderr empty. PRC keys were neither read nor printed by the agent.
+
+## Final v2 for the 12.10 upload (preflight only)
+
+Registration commit **`6b130265f467b050182600cfe0d7feb6bb72100e`** (journal №459 + `manifest_final_v2.json`), transport source SHA-256
+**`831712bfd165c3e94a20f85a801047514ab6f462231e1c8cdfedc6264650ab4f`**, proof `proof_final_v2.json` (ad761b3f; not committed; on Hetzner as
+`analysis/final_transport_20261009/proof_final_v2.json`). Preflight passed on the Mac and on Hetzner with `.venv-upload`
+([preflight_final_v2_hetzner.json](preflight_final_v2_hetzner.json)): mode final, `gentle-igloo_final.parquet`, 670 790 rows,
+SHA bbae2cc5, 2 145 576 bytes, day 2026-10-12. The final PUT was not made. Command for the 12.10 upload on Hetzner:
+
+    cd /root/prc-2026 && .venv-upload/bin/python scripts/final_transport_20261009.py upload --root /root/prc-2026 \
+      --manifest analysis/final_transport_20261009/manifest_final_v2.json \
+      --registration-proof analysis/final_transport_20261009/proof_final_v2.json \
+      --registration-commit 6b130265f467b050182600cfe0d7feb6bb72100e \
+      --source-sha256 831712bfd165c3e94a20f85a801047514ab6f462231e1c8cdfedc6264650ab4f
