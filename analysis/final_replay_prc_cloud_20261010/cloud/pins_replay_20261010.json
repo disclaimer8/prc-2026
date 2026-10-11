@@ -1,0 +1,16 @@
+{
+ "mismatch": {},
+ "missing": [],
+ "summary": {
+  "bytes_hashed": 6479202375,
+  "contract": "/root/prc-final-replay-20261010/data/final_tail_20261009/contract.json",
+  "contract_sha256": "6af6c4ca7adf2ff5a771b0e5e073ace18ceec1860c336eeac2890635d57d04b7",
+  "mismatch": 0,
+  "missing": 0,
+  "ok": 4025,
+  "pinned": 4025,
+  "root": "/root/prc-final-replay-20261010",
+  "seconds": 4.5,
+  "unix": 1791670603.660171
+ }
+}

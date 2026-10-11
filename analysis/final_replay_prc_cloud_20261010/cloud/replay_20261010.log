@@ -1,0 +1,27 @@
+START 2026-10-10T22:16:49.681067219Z host=ubuntu-32gb-hel1-1 arch=aarch64
+9ceab78ee03070a4f7f2b2c42f6f2c482efad51380976921869048d824e06b68  scripts/final_tail_assembly_20261008.py
+6af6c4ca7adf2ff5a771b0e5e073ace18ceec1860c336eeac2890635d57d04b7  data/final_tail_20261009/contract.json
+328761f4d574264b12f3b1b794ad4421949007286dc96eb399a8378bd6f2db48  data/today_chain_20261006/setup.json
+python 3.12.14 (main, Sep 29 2026, 14:59:39) [Clang 22.1.3 ]
+WORKSPACE READY /root/prc-final-replay-20261010/data/final_tail_20261009/work_prc_cloud_20261010 rows 670790
+PREMIX 670790 rows; mean pred 1014.8055877414125
+STAGE 1 e185
+STAGE 2 e167
+STAGE 3 e156/run0
+STAGE 3 e156/run1
+STAGE 4 e141/replay
+Traceback (most recent call last):
+  File "/root/prc-final-replay-20261010/scripts/final_tail_assembly_20261008.py", line 1064, in <module>
+    main()
+  File "/root/prc-final-replay-20261010/scripts/final_tail_assembly_20261008.py", line 1056, in main
+    assemble(a.work, repeat_e156=a.repeat_e156, refit=tuple(a.refit))
+  File "/root/prc-final-replay-20261010/scripts/final_tail_assembly_20261008.py", line 905, in assemble
+    extra = cached_stage(work, index, stage, 'refit' if stage['cache'] in refit else 'replay')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/prc-final-replay-20261010/scripts/final_tail_assembly_20261008.py", line 599, in cached_stage
+    run_child(work, index, stage['name'] + '/' + mode, [sys.executable, '-u', str(Path(__file__).resolve()), '_stage', '--work', str(work), '--job', str(job)],
+  File "/root/prc-final-replay-20261010/scripts/final_tail_assembly_20261008.py", line 565, in run_child
+    subprocess.run(command, cwd=work, env={**environment(), **extra_env}, stdin=subprocess.DEVNULL, stdout=f, stderr=subprocess.STDOUT, check=True)
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/root/prc-2026/.venv/bin/python', '-u', '/root/prc-final-replay-20261010/scripts/final_tail_assembly_20261008.py', '_stage', '--work', '/root/prc-final-replay-20261010/data/final_tail_20261009/work_prc_cloud_20261010', '--job', '/root/prc-final-replay-20261010/data/final_tail_20261009/work_prc_cloud_20261010/jobs/04_e141.json']' returned non-zero exit status 1.

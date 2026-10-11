@@ -1,0 +1,15 @@
+{
+ "adapter_sha256": "9ceab78ee03070a4f7f2b2c42f6f2c482efad51380976921869048d824e06b68",
+ "args": [
+  "e141_apply.py",
+  970103,
+  970104
+ ],
+ "cache": "/root/prc-final-replay-20261010/data/e203_chain_20261007/models/e141",
+ "expected_calls": 5,
+ "feature_global": "FEATS",
+ "mode": "replay",
+ "name": "e141",
+ "refit_cache": "/root/prc-final-replay-20261010/data/final_tail_20261009/work_prc_cloud_20261010/models/e141",
+ "source_sha256": "1b5871e2291ec1cf82a99e6a2304e758c1182aacc0b917ff7aece2f5e3f823d1"
+}

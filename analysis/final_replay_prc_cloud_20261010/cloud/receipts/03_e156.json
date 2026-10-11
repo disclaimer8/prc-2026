@@ -1,0 +1,61 @@
+{
+ "changed_rows": 62,
+ "evidence": {
+  "determinism": {
+   "bitwise_identical": true,
+   "max_abs_proba_diff_per_seed": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "rounded_rows_differing": 0,
+   "rounded_values_identical": true,
+   "second_run_seconds": 365.66151547431946
+  },
+  "n_estimators": "auto",
+  "per_seed_proba": [
+   "607d112a2f465acd71383a6f6b7abc58f51d078b4432c1cff011ac158a52de54",
+   "0ec69aa8bb204deb36d2c176da4d3dc8dadb673626d1500699d5c164299ebe40",
+   "033cf86cf7ab4172689918e4078ae61913fd5a30cf900088cc3e2f8e42faedc8",
+   "1b02ff77f7ed7e70a6f49d07528261c48ee651305965ab3da2ad9589ae087890",
+   "0158d1a5e3bd804ff072a9bc4465702b85374ffe848b7c1293bc974b44c6b8b2",
+   "ffe1992357277f1c4e190d364fbcfa988d80fcbdf040e4094d2d6632f4975610",
+   "83b5a1e19b3294d8ef760971a039ef9f3d77aad771d27ca6e5f9d02618afbc90",
+   "16f8e7ed152b2ba635a49147041c1a8c600690e58f3aacefbc62f21c2efdeb30",
+   "1444ed1ac3efbb24d8d76bf5514954ab5bbb38ba3e2f3d8134e8d635fe5b5a8f",
+   "d9a58b864699e1dcc1d2362883ecc4bc0ec8f1e68d216abdae051cced2099552"
+  ],
+  "seconds": 727.4802949428558,
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "served_ids_sha256": "8fbb8394b351fe241a2e2d38b88845f05a6f14ccaea021ba80b4d308a5cbc248",
+  "served_rows": 62,
+  "unchanged_rounded_rows": 0
+ },
+ "input_sha256": "894aef661ff81b7c9e56fd992b5f195c26d72b8ebc9a0d933aa8863908882a6f",
+ "input_version": 970102,
+ "max_abs_change": 36998.0,
+ "output_sha256": "2ddd22c2e103cf5ebf2c797b9cf1acb662a99410d232b6bf1536a4b094a5dc1a",
+ "output_version": 970103,
+ "rms_change": 72.8849261196234,
+ "rows": 670790,
+ "stage": "e156",
+ "unix": 1791671393.5557346
+}

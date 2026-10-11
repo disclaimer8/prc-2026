@@ -1,0 +1,14 @@
+ActiveState=failed
+InvocationID=018ad6c9fffe41c2a9138cea5f220f4e
+Restart=no
+RuntimeMaxUSec=1h
+Result=exit-code
+ExecMainStartTimestamp=Sat 2026-10-10 22:16:49 UTC
+ExecMainExitTimestamp=Sat 2026-10-10 22:30:08 UTC
+ExecMainStatus=1
+MemoryPeak=6357884928
+CPUUsageNSec=4167231106000
+CPUQuotaPerSecUSec=8s
+AllowedCPUs=0-7
+MemoryMax=25769803776
+Nice=10

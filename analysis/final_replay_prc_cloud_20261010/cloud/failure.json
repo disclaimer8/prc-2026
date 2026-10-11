@@ -1,0 +1,6 @@
+{
+ "error": "CalledProcessError(1, ['/root/prc-2026/.venv/bin/python', '-u', '/root/prc-final-replay-20261010/scripts/final_tail_assembly_20261008.py', '_stage', '--work', '/root/prc-final-replay-20261010/data/final_tail_20261009/work_prc_cloud_20261010', '--job', '/root/prc-final-replay-20261010/data/final_tail_20261009/work_prc_cloud_20261010/jobs/04_e141.json'])",
+ "no_retry": true,
+ "partials_preserved": true,
+ "unix": 1791671407.7242336
+}

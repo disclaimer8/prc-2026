@@ -1,0 +1,2 @@
+subset rows 8458 (by airport {'EDDF': 766, 'EDDM': 449, 'EGLL': 471, 'EHAM': 1894, 'LEBL': 759, 'LEMD': 438, 'LFPG': 1305, 'LSZH': 1047, 'LTFM': 1329}); w 0.2333333333333333; corr(motion, reg) 0.9557, mean(motion - reg) +49.5 s; prediction change on the subset: mean +11.6 s, RMS 48.3 s
+wrote v970101 and parts_v970101

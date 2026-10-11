@@ -1,0 +1,4 @@
+linked no-NM departures 380 (by airport {'LIRF': 57, 'LTFM': 18, 'EDDM': 58, 'LFPG': 66, 'EHAM': 15, 'EDDF': 12, 'LEMD': 53, 'EGLL': 37, 'LSZH': 10, 'LEBL': 54}); rule A rows 315, rule B rows 14
+P(sched) mass removed by A 4.39 (+ day 0.01); B mean P(sched) 0.75 -> 0.9
+changed rows 299; RMS change on them 504 s
+wrote v970102 and parts_v970102

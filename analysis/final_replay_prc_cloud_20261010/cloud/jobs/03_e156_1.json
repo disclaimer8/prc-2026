@@ -1,0 +1,21 @@
+{
+ "args": [
+  "lirf_tabpfn.py",
+  970102,
+  999903
+ ],
+ "capture": "/root/prc-final-replay-20261010/data/final_tail_20261009/work_prc_cloud_20261010/e156/run_1",
+ "checkpoint": "/root/prc-final-replay-20261010/data/tabpfn_v2_checkpoint/tabpfn-v2-classifier-finetuned-zk73skhh.ckpt",
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9
+ ]
+}

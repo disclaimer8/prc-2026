@@ -1,0 +1,5 @@
+prefix codes 56, coverage train 0.867 rank 0.694
+TabPFN features: ['d_mvt_sched', 'local_hour', 'local_dow', 'day_nonm_rate', 'dep_before_30', 'arr_before_30', 'stand_num', 'rwy_head', 'fn_num', 'fn_len', 'fn_garbled', 'pfx'] categorical idx: [11]
+TabPFN seeds [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], extra {'categorical_features_indices': [11]}
+[{'b': '12-30h', 'n': 14, 'p_sched': 0.68, 'p_day': 0.313}, {'b': '4-8h', 'n': 36, 'p_sched': 0.841, 'p_day': 0.008}, {'b': '8-12h', 'n': 12, 'p_sched': 0.947, 'p_day': 0.031}]
+wrote v999903: 62 rows replaced

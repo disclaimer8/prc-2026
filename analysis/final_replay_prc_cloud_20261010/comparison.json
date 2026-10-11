@@ -1,0 +1,592 @@
+{
+ "e156": {
+  "run_0": {
+   "averaged_max_abs_diff": 0.0016074180603027344,
+   "base_values_identical": true,
+   "seeds": [
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.00788038969039917,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 0
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.006387591361999512,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 1
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.00397878885269165,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 2
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.007715702056884766,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 3
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.00676119327545166,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 4
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.010031938552856445,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 5
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.0051201581954956055,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 6
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.007057130336761475,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 7
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.00811314582824707,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 8
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.004481837153434753,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 9
+    }
+   ],
+   "served_ids_identical": true,
+   "served_max_abs_diff": 35.0,
+   "served_rows_differing": 55,
+   "served_values_identical": false,
+   "versions": {
+    "cloud": {
+     "python": "3.12.14 (main, Sep 29 2026, 14:59:39) [Clang 22.1.3 ]",
+     "tabpfn": "8.5.0",
+     "threads": 6,
+     "torch": "2.14.0+cu130"
+    },
+    "mac": {
+     "python": "3.12.14 (main, Sep  1 2026, 14:09:38) [Clang 22.1.3 ]",
+     "tabpfn": "8.5.0",
+     "threads": 6,
+     "torch": "2.14.0"
+    }
+   }
+  },
+  "run_1": {
+   "averaged_max_abs_diff": 0.0016074180603027344,
+   "base_values_identical": true,
+   "seeds": [
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.00788038969039917,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 0
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.006387591361999512,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 1
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.00397878885269165,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 2
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.007715702056884766,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 3
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.00676119327545166,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 4
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.010031938552856445,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 5
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.0051201581954956055,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 6
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.007057130336761475,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 7
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.00811314582824707,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 8
+    },
+    {
+     "argmax_rows_differing": 0,
+     "classes_same": true,
+     "fit_x_same": true,
+     "fit_y_same": true,
+     "max_abs_proba_diff": 0.004481837153434753,
+     "n_estimators": [
+      "auto",
+      "auto"
+     ],
+     "proba_bitwise_identical": false,
+     "query_x_same": true,
+     "seed": 9
+    }
+   ],
+   "served_ids_identical": true,
+   "served_max_abs_diff": 35.0,
+   "served_rows_differing": 55,
+   "served_values_identical": false,
+   "versions": {
+    "cloud": {
+     "python": "3.12.14 (main, Sep 29 2026, 14:59:39) [Clang 22.1.3 ]",
+     "tabpfn": "8.5.0",
+     "threads": 6,
+     "torch": "2.14.0+cu130"
+    },
+    "mac": {
+     "python": "3.12.14 (main, Sep  1 2026, 14:09:38) [Clang 22.1.3 ]",
+     "tabpfn": "8.5.0",
+     "threads": 6,
+     "torch": "2.14.0"
+    }
+   }
+  }
+ },
+ "failure": {
+  "error": "CalledProcessError(1, ['/root/prc-2026/.venv/bin/python', '-u', '/root/prc-final-replay-20261010/scripts/final_tail_assembly_20261008.py', '_stage', '--work', '/root/prc-final-replay-20261010/data/final_tail_20261009/work_prc_cloud_20261010', '--job', '/root/prc-final-replay-20261010/data/final_tail_20261009/work_prc_cloud_20261010/jobs/04_e141.json'])",
+  "no_retry": true,
+  "partials_preserved": true,
+  "unix": 1791671407.7242336
+ },
+ "final": {
+  "expected": "76c32426d750040690ff68bacd6ecbf3a7aa1e63340df5b9271a324b7064d554",
+  "mac_sha256": "76c32426d750040690ff68bacd6ecbf3a7aa1e63340df5b9271a324b7064d554"
+ },
+ "first_differing_receipt": "00_premix.json",
+ "outputs": [
+  {
+   "bitwise_identical": false,
+   "file": "gentle-igloo_v970100.parquet",
+   "max_abs_diff": 0.0,
+   "rows_differing": 0,
+   "same_ids": true,
+   "sha256_cloud": "fdc737206cf1ad75a002a1c2d8c86d481ea1b9d36c5e94fb81fe946fa244b545",
+   "sha256_mac": "5191426ddd768f6c1158e61c4097d14467f0c877999827fa0767395e6ad96d0e"
+  },
+  {
+   "bitwise_identical": true,
+   "file": "gentle-igloo_v970101.parquet",
+   "sha256_cloud": "2d044c7c6cf124995a2c9aff75dd91a22cc2e43f73a5d6547939064e39de0721",
+   "sha256_mac": "2d044c7c6cf124995a2c9aff75dd91a22cc2e43f73a5d6547939064e39de0721"
+  },
+  {
+   "bitwise_identical": true,
+   "file": "gentle-igloo_v970102.parquet",
+   "sha256_cloud": "894aef661ff81b7c9e56fd992b5f195c26d72b8ebc9a0d933aa8863908882a6f",
+   "sha256_mac": "894aef661ff81b7c9e56fd992b5f195c26d72b8ebc9a0d933aa8863908882a6f"
+  },
+  {
+   "bitwise_identical": false,
+   "file": "gentle-igloo_v970103.parquet",
+   "max_abs_diff": 35.0,
+   "rows_differing": 55,
+   "same_ids": true,
+   "sha256_cloud": "2ddd22c2e103cf5ebf2c797b9cf1acb662a99410d232b6bf1536a4b094a5dc1a",
+   "sha256_mac": "9f85ad3485ade4fd1fbc870396ab28a764900224986831d42c017b0c054201ab"
+  },
+  {
+   "arrays": {
+    "mvt_id": {
+     "identical": true
+    },
+    "pred": {
+     "elements_differing": 129,
+     "identical": false,
+     "max_abs_diff": 6.821210263296962e-13
+    },
+    "proba": {
+     "elements_differing": 5001,
+     "identical": false,
+     "max_abs_diff": 2.220446049250313e-16
+    },
+    "reg": {
+     "identical": true
+    },
+    "values": {
+     "identical": true
+    }
+   },
+   "bitwise_identical": false,
+   "file": "parts_v970100.npz"
+  },
+  {
+   "arrays": {
+    "mvt_id": {
+     "identical": true
+    },
+    "pred": {
+     "elements_differing": 129,
+     "identical": false,
+     "max_abs_diff": 6.821210263296962e-13
+    },
+    "proba": {
+     "elements_differing": 5001,
+     "identical": false,
+     "max_abs_diff": 2.220446049250313e-16
+    },
+    "reg": {
+     "identical": true
+    },
+    "values": {
+     "identical": true
+    }
+   },
+   "bitwise_identical": false,
+   "file": "parts_v970101.npz"
+  },
+  {
+   "arrays": {
+    "mvt_id": {
+     "identical": true
+    },
+    "pred": {
+     "elements_differing": 129,
+     "identical": false,
+     "max_abs_diff": 6.821210263296962e-13
+    },
+    "proba": {
+     "elements_differing": 5012,
+     "identical": false,
+     "max_abs_diff": 2.220446049250313e-16
+    },
+    "reg": {
+     "identical": true
+    },
+    "values": {
+     "identical": true
+    }
+   },
+   "bitwise_identical": false,
+   "file": "parts_v970102.npz"
+  }
+ ],
+ "receipts": [
+  {
+   "differences": [
+    {
+     "cloud": "fdc737206cf1ad75a002a1c2d8c86d481ea1b9d36c5e94fb81fe946fa244b545",
+     "field": "output_sha256",
+     "mac": "5191426ddd768f6c1158e61c4097d14467f0c877999827fa0767395e6ad96d0e"
+    },
+    {
+     "cloud": "6d6eb0df0b9464ed794e71eb31aecc56b51d861ae0f2e37c5b0bb251103b60bc",
+     "field": "parts_sha256",
+     "mac": "1dccd50bfcdabd7c1229b752b37f2dda2f6c8ed2fb33bfcd29390c9de462dcf9"
+    },
+    {
+     "cloud": "0a5a129a7b72becc7c11005d1a8c46b0f5e91ff9099af7eea47ab4caf0cae287",
+     "field": "raw_proba_sha256",
+     "mac": "cb2c45de4711b0331b423e2ebb3fbc8029dcb927e51e2252959e67c0b23edd5e"
+    }
+   ],
+   "identical_without_volatile": false,
+   "receipt": "00_premix.json"
+  },
+  {
+   "differences": [
+    {
+     "cloud": "fdc737206cf1ad75a002a1c2d8c86d481ea1b9d36c5e94fb81fe946fa244b545",
+     "field": "input_sha256",
+     "mac": "5191426ddd768f6c1158e61c4097d14467f0c877999827fa0767395e6ad96d0e"
+    }
+   ],
+   "identical_without_volatile": false,
+   "receipt": "01_e185.json"
+  },
+  {
+   "differences": [],
+   "identical_without_volatile": true,
+   "receipt": "02_e167.json"
+  },
+  {
+   "differences": [
+    {
+     "cloud": "607d112a2f465acd71383a6f6b7abc58f51d078b4432c1cff011ac158a52de54",
+     "field": "evidence.per_seed_proba[0]",
+     "mac": "17885f616385a278d3ec19a913af212e10c29cec88220ca319ced95a52537d87"
+    },
+    {
+     "cloud": "0ec69aa8bb204deb36d2c176da4d3dc8dadb673626d1500699d5c164299ebe40",
+     "field": "evidence.per_seed_proba[1]",
+     "mac": "5102cc45acb25ada414e828fb5ec9d7abd4e4e097bcc2ee84e3e87debc9da476"
+    },
+    {
+     "cloud": "033cf86cf7ab4172689918e4078ae61913fd5a30cf900088cc3e2f8e42faedc8",
+     "field": "evidence.per_seed_proba[2]",
+     "mac": "e3f4b7fa955fe8acba47ea5907e2e481a423aee80c6f8650d2bbe3da08ecd429"
+    },
+    {
+     "cloud": "1b02ff77f7ed7e70a6f49d07528261c48ee651305965ab3da2ad9589ae087890",
+     "field": "evidence.per_seed_proba[3]",
+     "mac": "59b480dfe9784beeeec3f5270e612b7f888c51672f02ec4c8eaaa2c235312827"
+    },
+    {
+     "cloud": "0158d1a5e3bd804ff072a9bc4465702b85374ffe848b7c1293bc974b44c6b8b2",
+     "field": "evidence.per_seed_proba[4]",
+     "mac": "5abb68d4b01a1d6b0aeee294ed341449d7221267f697222fc7ea9f04566af9b6"
+    },
+    {
+     "cloud": "ffe1992357277f1c4e190d364fbcfa988d80fcbdf040e4094d2d6632f4975610",
+     "field": "evidence.per_seed_proba[5]",
+     "mac": "66019fc907aa75ba0c60c180cfb904a9c08f56823dfc2b6a28ccd3298ba92823"
+    },
+    {
+     "cloud": "83b5a1e19b3294d8ef760971a039ef9f3d77aad771d27ca6e5f9d02618afbc90",
+     "field": "evidence.per_seed_proba[6]",
+     "mac": "12c45adc9b3616521d2bf6d98e48bc550b66b2838f4606e170217c8073fceef0"
+    },
+    {
+     "cloud": "16f8e7ed152b2ba635a49147041c1a8c600690e58f3aacefbc62f21c2efdeb30",
+     "field": "evidence.per_seed_proba[7]",
+     "mac": "75426a8de727121a8d8bf31931bf34bdf10b11a6eebfcf74ad8d0042a515240a"
+    },
+    {
+     "cloud": "1444ed1ac3efbb24d8d76bf5514954ab5bbb38ba3e2f3d8134e8d635fe5b5a8f",
+     "field": "evidence.per_seed_proba[8]",
+     "mac": "7ec5ee9b8582d3105f7f847c39e38c4ba3c383f5cce487206a70af9fffa1c421"
+    },
+    {
+     "cloud": "d9a58b864699e1dcc1d2362883ecc4bc0ec8f1e68d216abdae051cced2099552",
+     "field": "evidence.per_seed_proba[9]",
+     "mac": "6e2ca3de97530a19328f2f02a3e45475a5b53cfb4fa712f1fdbec23cf02ee9a4"
+    },
+    {
+     "cloud": 36998.0,
+     "field": "max_abs_change",
+     "mac": 37018.0
+    },
+    {
+     "cloud": "2ddd22c2e103cf5ebf2c797b9cf1acb662a99410d232b6bf1536a4b094a5dc1a",
+     "field": "output_sha256",
+     "mac": "9f85ad3485ade4fd1fbc870396ab28a764900224986831d42c017b0c054201ab"
+    },
+    {
+     "cloud": 72.8849261196234,
+     "field": "rms_change",
+     "mac": 72.89987703716973
+    }
+   ],
+   "identical_without_volatile": false,
+   "receipt": "03_e156.json"
+  },
+  {
+   "cloud": "absent",
+   "receipt": "04_e141.json"
+  },
+  {
+   "cloud": "absent",
+   "receipt": "05_e64.json"
+  },
+  {
+   "cloud": "absent",
+   "receipt": "06_e188.json"
+  },
+  {
+   "cloud": "absent",
+   "receipt": "07_e152.json"
+  },
+  {
+   "cloud": "absent",
+   "receipt": "08_lobt.json"
+  },
+  {
+   "cloud": "absent",
+   "receipt": "09_protect.json"
+  },
+  {
+   "cloud": "absent",
+   "receipt": "10_lszh.json"
+  },
+  {
+   "cloud": "absent",
+   "receipt": "11_half.json"
+  }
+ ]
+}

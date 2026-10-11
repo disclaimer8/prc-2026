@@ -1,0 +1,21 @@
+2025: HEAD known on coverage>=2: 1208897 of 1260599
+fit rows 2085047; visit known 1667785, merged 8354, walk extended 225120
+Traceback (most recent call last):
+  File "/root/prc-final-replay-20261010/scripts/final_tail_assembly_20261008.py", line 1064, in <module>
+    main()
+  File "/root/prc-final-replay-20261010/scripts/final_tail_assembly_20261008.py", line 1058, in main
+    stage_worker(a.work, a.job)
+  File "/root/prc-final-replay-20261010/scripts/final_tail_assembly_20261008.py", line 665, in stage_worker
+    runpy.run_path(str(source), run_name='__main__')
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/root/prc-final-replay-20261010/data/final_tail_20261009/work_prc_cloud_20261010/src/e141_apply.py", line 94, in <module>
+    models = [fit(tr, FEATS, {**E36.PARAMS30, "seed": sd}) for sd in SEEDS]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/prc-final-replay-20261010/data/final_tail_20261009/work_prc_cloud_20261010/src/e141_apply.py", line 88, in fit
+    m = lgb.train(params, lgb.Dataset(t.select(feats).to_numpy(), np.clip((t[E36.Y] - t["base"]).to_numpy(), -1800, 1800),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/prc-final-replay-20261010/scripts/final_tail_assembly_20261008.py", line 644, in wrapped
+    raise ValueError('cached stage training signature differs in ' + ','.join(diff) + '; explicit fixed refit required')
+ValueError: cached stage training signature differs in python; explicit fixed refit required
