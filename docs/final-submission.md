@@ -450,8 +450,20 @@ seeds each within 12 h and were stopped by the unit limit during the sixth (log 
    An independent rebuild from scratch, a new `prepare` and `assemble` from the same
    contract into a separate work directory, gave the byte-identical file, SHA-256
    `76c32426…d554` ([replay log](../analysis/final_tail_20261009/assemble_replay.log),
-   log 438). The rebuild ran on the same Mac, not on a second node as planned
-   earlier.
+   log 438). That rebuild ran on the same Mac. A replay on a second machine
+   (prc-cloud, ARM64 Linux, the same 4,025 pinned files verified by SHA-256) did **not**
+   reproduce the file byte for byte, for two reasons that are limits of portability
+   rather than errors ([replay report](../analysis/final_replay_prc_cloud_20261010.md),
+   log 453–454): premix, E185 and E167 matched on all 670,790 rows (classifier
+   probabilities differ by about one unit in the last place and round to the same
+   values), but the TabPFN-2 tail ensemble gives probabilities up to 0.010 apart with
+   identical inputs and package versions, because the Mac uses Apple Accelerate and
+   the ARM server OpenBLAS/NVPL (55 of the 62 rounded tail values differ, by at most
+   35 s; each machine is bitwise repeatable with itself); and the cached E141 stage
+   refused to run because the Python build string differs (build date only), which is
+   the signature check working as designed. The final file is therefore reproducible
+   byte for byte on the build machine, and to within the TabPFN numerical-backend
+   difference elsewhere.
 6. **Label-free diagnostics** of the new months. Planned beforehand: rows near the
    3,606 s, 4 h and LOBT-window thresholds, the no-NM floor audit
    (`analysis/nonm_disruption_floor_20261008/audit_2026.py`) and regime-probability
