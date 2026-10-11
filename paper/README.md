@@ -20,8 +20,7 @@ Every number in the draft is copied from the repository documentation (`README.m
 `docs/tables/*.csv`, the dated reports in `analysis/`, `HYPOTHESES_LOG.md` up to entry 461);
 `OUTLINE.md` names the source of each claim. Numbers that do not exist yet are marked `[[RESULT: …]]`
 and typeset in red. Only these remain: the organiser's blind final ranking after 14 October 2026 (six
-places, all marked `[[RESULT: final ranking — …]]`), the author's ORCID and contact e-mail, and the DOI
-of a public archive if one is created.
+places, all marked `[[RESULT: final ranking — …]]`) and the DOI of a public archive if one is created.
 
 ## Build
 

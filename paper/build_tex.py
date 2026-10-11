@@ -72,9 +72,9 @@ PREAMBLE = r"""%% main.tex -- GENERATED from gentle-igloo-joas-draft.md by build
 % Title within 12 words
 \title{A Recording-Regime Mixture for Taxi-Out Time Reconstruction at Ten European Airports}
 
-\author{Denys Kolomiiets \orcid{0000-0000-0000-0000}}  % [[RESULT: ORCID]]
+\author{Denys Kolomiiets \orcid{0000-0003-3212-3251}}
 \affiliation{Independent researcher, team gentle-igloo}
-\email{correspondence@email.domain}  % [[RESULT: contact e-mail]]
+\email{denys@himaxym.com}
 
 % maximum five keywords
 \keywords{taxi-out time; recording regimes; ADS-B surface tracks; gradient boosting; open aviation data}

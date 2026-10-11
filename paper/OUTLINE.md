@@ -128,7 +128,6 @@ control) and the three E218 uploads; 15 negative results of 8–10 October incl.
 | Item | Placeholder in draft | Available |
 |---|---|---|
 | Blind final ranking: upload time of the final file, RMSE and rank on Jan+Jul, Feb+Jun and four months; ordinary-board rank at close | `[[RESULT: final ranking — …]]` ×6 (abstract, §1, §5.1, §5.7, §6.3, §8) | after 14 Oct 2026 10:00 UTC |
-| Author ORCID and contact e-mail | front matter (`[[RESULT: ORCID]]`, `[[RESULT: contact e-mail]]`; in `main.tex` the template values in `build_tex.py`) | author, before submission |
 | Zenodo DOI of the archived release / redistributable component archive | Open data statement | if created after the deadline |
 | JOAS class build with the bibliography | — | `main.tex` compiled without errors against the official class on 10 Oct (40 pages, preprint layout, bibliography empty because biber is not installed); biber run still unverified |
 | Cross-airport (leave-one-airport-out) evidence | none; the draft states it was not run | would need a new experiment; not planned |
@@ -137,7 +136,7 @@ Filled on 10 October: v12079 = 231.1770 s (+0.6958 s, log 444), control v12080 =
 explanation (log 445–447), the PRU 2026 check of the final file (log 448), E216 (log 442–443), the
 funding statement and the AI-assistance statement.
 
-Filled on 11 October: E217 (log 449–450); E218, its 2025 gate and data-use disclosure (log 451–452,
+Filled on 11 October: author ORCID 0000-0003-3212-3251 and contact e-mail denys@himaxym.com (given by the author); E217 (log 449–450); E218, its 2025 gate and data-use disclosure (log 451–452,
 Section 3.9); the prc-cloud replay limits (log 453–454); v12081 = 230.4478 s (new best, 18/242),
 the final rebuilt with E218 (`bbae2cc5…`), control v12082 = 231.1445 s and v12083 = 231.1749 s with
 the exact LIRF / non-LIRF split (log 455–461); Figure 13 redrawn with the three E218 uploads.

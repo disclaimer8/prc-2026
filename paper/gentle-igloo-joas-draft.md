@@ -4,10 +4,10 @@ subtitle: "Team gentle-igloo in the EUROCONTROL PRC Data Challenge 2026"
 author:
   - name: Denys Kolomiiets
     affiliation: Independent researcher (team gentle-igloo)
-    orcid: "[[RESULT: ORCID]]"
-    email: "[[RESULT: contact e-mail]]"
+    orcid: "0000-0003-3212-3251"
+    email: "denys@himaxym.com"
 keywords: [taxi-out time, recording regimes, ADS-B surface tracks, gradient boosting, open aviation data]
-status: "DRAFT, not submitted. [[RESULT: ...]] marks only the blind final ranking (after 14 October 2026), ORCID, contact e-mail and archive DOI."
+status: "DRAFT, not submitted. [[RESULT: ...]] marks only the blind final ranking (after 14 October 2026) and archive DOI."
 target: "Journal of Open Aviation Science (JOAS), research article"
 ---
 
@@ -17,8 +17,8 @@ target: "Journal of Open Aviation Science (JOAS), research article"
 > the sealed final file. Every number is copied from the
 > repository documentation (`README.md`, `docs/*.md`, `docs/tables/*.csv`, the dated reports in
 > `analysis/`, the experiment register `HYPOTHESES_LOG.md` up to entry 461). Items marked
-> `[[RESULT: …]]` are the only gaps left: the organiser's blind final ranking after 14 October 2026,
-> the author's ORCID and contact e-mail, and the DOI of a public archive if one is created. The
+> `[[RESULT: …]]` are the only gaps left: the organiser's blind final ranking after 14 October 2026
+> and the DOI of a public archive if one is created. The
 > draft is not an accepted article and must not be cited as one. `paper/OUTLINE.md` lists the
 > evidence behind each section; `paper/build_tex.py` turns this file into `paper/main.tex`.
 
