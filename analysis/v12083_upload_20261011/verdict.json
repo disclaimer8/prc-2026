@@ -1,0 +1,59 @@
+{
+ "score_v12083": 231.1749,
+ "delta_vs_v12082": 0.030400000000014415,
+ "delta_vs_v12080": -0.005599999999986949,
+ "dsse_83_vs_82": 4846571.20014964,
+ "T_sum_LIRF_d_resid77": -2874892.10007482,
+ "lambda_LIRF_v77": 0.6878345095834665,
+ "lambda_rounding_band": [
+  0.6859273219168113,
+  0.6897416972504219
+ ],
+ "beta_nonLIRF_from_v12082": 0.36743288374600364,
+ "beta_nonLIRF_from_v12081_given_lambda": 0.48320584452524806,
+ "split_v12082_minus_v12080": {
+  "total": {
+   "dsse": -5739430.151700185,
+   "delta_s": -0.036000000000001364
+  },
+  "lirf": {
+   "dsse": -4846571.20014964,
+   "delta_s": -0.030400000000014415
+  },
+  "non_lirf": {
+   "dsse": -892858.9515505442,
+   "delta_s": -0.005599999999986949
+  }
+ },
+ "beta_F_LIRF_janjul": 0.740639037780339,
+ "blind_febjun": {
+  "measured_janjul_beta_F": {
+   "beta_F": 0.740639037780339,
+   "dsse_febjun_remove_LIRF": 13802705.65624879,
+   "delta_final_file_s": 0.044538508726929105
+  },
+  "break_even": {
+   "beta_F": 0.25,
+   "dsse_febjun_remove_LIRF": 37048.76929699164,
+   "delta_final_file_s": 0.00011954880265877509
+  },
+  "beta_F_0": {
+   "beta_F": 0.0,
+   "dsse_febjun_remove_LIRF": -6977098.0,
+   "delta_final_file_s": -0.02251366854446805
+  }
+ },
+ "janjul_LIRF_gain_in_final_file_units_s": -0.01563889421896234,
+ "forecast": {
+  "point": 231.1533,
+  "corridor": [
+   231.13,
+   231.174
+  ],
+  "inside": false
+ },
+ "rule": {
+  "threshold": 231.1475,
+  "outcome": "final stays bbae2cc5"
+ }
+}
