@@ -1,0 +1,197 @@
+{
+ "protocol": "final-e218-receipt-parity-20261011",
+ "compared_fields_excluded": [
+  "job_sha256",
+  "seconds",
+  "unix"
+ ],
+ "final_0910": {
+  "sha256": "76c32426d750040690ff68bacd6ecbf3a7aa1e63340df5b9271a324b7064d554",
+  "work": "data/final_tail_20261009/work"
+ },
+ "final_e218": {
+  "sha256": "bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1",
+  "work": "data/final_tail_20261011/work"
+ },
+ "replay": {
+  "sha256": "bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1",
+  "work": "data/final_tail_20261011/work_replay"
+ },
+ "dryrun_e218": {
+  "path": "data/e218_pru_level_20261010/dryrun_final_plus_e218_pru_level.parquet",
+  "sha256": "bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1"
+ },
+ "receipts_vs_0910": {
+  "00_premix.json": [
+   {
+    "field": ".output_sha256",
+    "a": "5191426ddd768f6c1158e61c4097d14467f0c877999827fa0767395e6ad96d0e",
+    "b": "fdc737206cf1ad75a002a1c2d8c86d481ea1b9d36c5e94fb81fe946fa244b545"
+   }
+  ],
+  "01_e185.json": [
+   {
+    "field": ".input_sha256",
+    "a": "5191426ddd768f6c1158e61c4097d14467f0c877999827fa0767395e6ad96d0e",
+    "b": "fdc737206cf1ad75a002a1c2d8c86d481ea1b9d36c5e94fb81fe946fa244b545"
+   }
+  ],
+  "02_e167.json": [],
+  "03_e156.json": [
+   {
+    "field": ".evidence.determinism.second_run_seconds",
+    "a": "43.64865493774414",
+    "b": "67.53708004951477"
+   }
+  ],
+  "04_e141.json": [],
+  "05_e64.json": [],
+  "06_e188.json": [
+   {
+    "field": ".evidence.e188_receipt_sha256",
+    "a": "469e6b5b31c17eccf55a7bca55ba4c041ae54cde064db5899b605c94690d55e8",
+    "b": "a14cc987310dd5375246f0340329e6f373cd13fd73284fd922aa97d67a514d12"
+   }
+  ],
+  "07_e152.json": [],
+  "08_lobt.json": [],
+  "09_protect.json": [],
+  "10_lszh.json": [],
+  "11_half.json": []
+ },
+ "receipts_vs_replay": {
+  "00_premix.json": [],
+  "01_e185.json": [],
+  "02_e167.json": [],
+  "03_e156.json": [
+   {
+    "field": ".evidence.determinism.second_run_seconds",
+    "a": "67.53708004951477",
+    "b": "68.18706917762756"
+   }
+  ],
+  "04_e141.json": [],
+  "05_e64.json": [],
+  "06_e188.json": [
+   {
+    "field": ".evidence.e188_receipt_sha256",
+    "a": "a14cc987310dd5375246f0340329e6f373cd13fd73284fd922aa97d67a514d12",
+    "b": "fa92c046d83cb670424ebda9c7b9b2a0528eb249cc86aa1800633cbde81b9631"
+   }
+  ],
+  "07_e152.json": [],
+  "08_lobt.json": [],
+  "09_protect.json": [],
+  "10_lszh.json": [],
+  "11_half.json": [],
+  "12_pru_level.json": []
+ },
+ "stage_outputs": {
+  "970100": {
+   "new": "fdc737206cf1ad75",
+   "vs_0910": "bytes differ",
+   "vs_replay": "byte-identical"
+  },
+  "970101": {
+   "new": "2d044c7c6cf12499",
+   "vs_0910": "byte-identical",
+   "vs_replay": "byte-identical"
+  },
+  "970102": {
+   "new": "894aef661ff81b7c",
+   "vs_0910": "byte-identical",
+   "vs_replay": "byte-identical"
+  },
+  "970103": {
+   "new": "9f85ad3485ade4fd",
+   "vs_0910": "byte-identical",
+   "vs_replay": "byte-identical"
+  },
+  "970104": {
+   "new": "264f7422bf950dee",
+   "vs_0910": "byte-identical",
+   "vs_replay": "byte-identical"
+  },
+  "970105": {
+   "new": "1d3ac2f9928ba63d",
+   "vs_0910": "byte-identical",
+   "vs_replay": "byte-identical"
+  },
+  "970106": {
+   "new": "285f171c55e9402b",
+   "vs_0910": "byte-identical",
+   "vs_replay": "byte-identical"
+  },
+  "970110": {
+   "new": "e76fb5ee28af69b8",
+   "vs_0910": "byte-identical",
+   "vs_replay": "byte-identical"
+  },
+  "970112": {
+   "new": "4de60f9eb235f82e",
+   "vs_0910": "byte-identical",
+   "vs_replay": "byte-identical"
+  },
+  "970113": {
+   "new": "56a6c6d9e3ecc037",
+   "vs_0910": "byte-identical",
+   "vs_replay": "byte-identical"
+  },
+  "970114": {
+   "new": "2deabafa182ccd5c",
+   "vs_0910": "byte-identical",
+   "vs_replay": "byte-identical"
+  },
+  "970115": {
+   "new": "76c32426d7500406",
+   "vs_0910": "byte-identical",
+   "vs_replay": "byte-identical"
+  },
+  "970116": {
+   "new": "bbae2cc544989a0f",
+   "vs_0910": "absent in 09.10",
+   "vs_replay": "byte-identical"
+  }
+ },
+ "explanations": {
+  "premix_output_sha256": "only the parquet row-group split differs (polars join chunking): values, order, schema equal; parts_v970100.npz byte-identical; every later stage output byte-identical",
+  "e185_input_sha256": "the same premix file as above",
+  "e156_second_run_seconds": "timing",
+  "e188_receipt_sha256": "E188 receipt keys input SHAs by absolute workspace path; values equal modulo the work path (09.10 work vs its replay differ the same way)"
+ },
+ "premix_row_groups": {
+  "data/final_tail_20261009/work": [
+   111799,
+   111799,
+   111799,
+   111799,
+   111799,
+   111795
+  ],
+  "data/final_tail_20261011/work": [
+   111799,
+   111798,
+   111798,
+   111799,
+   111798,
+   111798
+  ],
+  "data/final_tail_20261011/work_replay": [
+   111799,
+   111798,
+   111798,
+   111799,
+   111798,
+   111798
+  ]
+ },
+ "premix_values_equal": true,
+ "parts_npz_equal": {
+  "970100": true,
+  "970101": true,
+  "970102": true
+ },
+ "e188_inputs_equal_modulo_path": true,
+ "e156_served_identical": true,
+ "e156_served_rows": 62
+}

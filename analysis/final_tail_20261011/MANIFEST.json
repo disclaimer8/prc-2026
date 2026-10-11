@@ -1,0 +1,31 @@
+{
+ "file": "gentle-igloo_final.parquet",
+ "file_sha256": "bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1",
+ "size_bytes": 2145576,
+ "template_sha256": "b3445d80e29bf599a5583ca9675f63ddf57b51fdf1ca3f498facb38ea84f3924",
+ "ranking_sha256": "4b0692a792846079516a2749e034b0abda55df72c213eabdcda52a4d1f6bc69f",
+ "git_commit": "f9694de316f3e27cd89548cdaab68e0d25f20bb2",
+ "journal": "HYPOTHESES_LOG.md 457 (pre-registration), 458/459 (control v12082)",
+ "builder": "scripts/final_tail_assembly_20261008.py",
+ "builder_sha256": "21f46756659e207c41e234034f75551405dc665f031962aadaffca62a6c4d911",
+ "contract_sha256": "7a1cde30146000a349190b5db69e28ef69ae7b9e6fdfda4eb4b4e422a0637d68",
+ "complete_sha256": "b708f42d80bff6658f555e508f464379b3bd7285b2309b2076287926d0eedf81",
+ "validator_report": "analysis/final_tail_20261011/validate_vs_v12081.json",
+ "replay_sha256": "bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1",
+ "machine": "MacBook-Pro-Denys.local arm64 macOS-27.0.1-arm64-arm-64bit",
+ "created_utc": "2026-10-11T09:07:57+00:00",
+ "builder_commands": "E218_PRU_LEVEL=1 on all three: make-contract --mode final, prepare, assemble --repeat-e156",
+ "e218": {
+  "flag": "E218_PRU_LEVEL=1",
+  "patch": "analysis/e218_pru_level_recheck_20261010/final_tail_e218_pru_level_stage.patch",
+  "patch_sha256": "0613fdd9bab1aad457c12ed466c5ef05ecadc8e21ddda0e599287118544b4615",
+  "pru_files": {
+   "data/taxi_out_additional_time_2025.csv": "4aedf19520d3f84bebc418b56835762c907b714a9c19e751bb8658f9e62ce598",
+   "data/taxi_out_additional_time_2026.csv": "b72040e0987e6c7d5706279d645ef9f814a6506165c83f89d8509022154a1076"
+  },
+  "parent_final_sha256": "76c32426d750040690ff68bacd6ecbf3a7aa1e63340df5b9271a324b7064d554",
+  "rows_changed": 415697,
+  "rms_change_s": 4.687086048151148,
+  "dryrun_sha256": "bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1"
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "changed_rows": 30407,
+ "evidence": {
+  "cached_calls": 1,
+  "changed_rows_outside_LSZH": 0,
+  "fits_performed": 0,
+  "job_sha256": "493a011336cc6e08650afd2c2e84d1f94ecb4b80bf62021b08a986476d859941",
+  "mode": "replay",
+  "models": [
+   "9292642642b3ff7089ce3f012653ffe862e46ac05d45d6c1cae91f49b43e7e72"
+  ],
+  "seconds": 9.91845178604126,
+  "stage": "lszh",
+  "unix": 1791709382.759338
+ },
+ "input_sha256": "56a6c6d9e3ecc037cc76981178d1289e5831fcc1cd85c649e12d253da82e3ba5",
+ "input_version": 970113,
+ "max_abs_change": 1230.0,
+ "output_sha256": "2deabafa182ccd5c2da03e5b04216acf2ddb5e7e4f4adba7754db674f2e56aee",
+ "output_version": 970114,
+ "rms_change": 18.26968342524694,
+ "rows": 670790,
+ "stage": "lszh",
+ "unix": 1791709383.065598
+}

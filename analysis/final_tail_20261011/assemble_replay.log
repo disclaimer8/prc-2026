@@ -1,0 +1,13 @@
+PREMIX 670790 rows; mean pred 1014.8055877414125
+STAGE 1 e185
+STAGE 2 e167
+STAGE 3 e156/run0
+STAGE 3 e156/run1
+STAGE 4 e141/replay
+STAGE 5 e64/replay
+STAGE 6 e188
+STAGE 7 e152
+STAGE 8 lobt
+STAGE 10 lszh/replay
+STAGE 11 half
+{"protocol": "final-uniform-tail-E156fresh-noE81-fourmonths-20261008-v1", "output": "/Users/denyskolomiiets/prc-2026/data/final_tail_20261011/work_replay/gentle-igloo_final.parquet", "output_sha256": "bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1", "rows": 670790, "stages": ["e185", "e167", "e156", "e141", "e64", "e188", "e152", "lobt", "protect", "lszh", "half", "pru_level"], "receipts": {"receipts/00_premix.json": "31e6ae74e335ff0a604ff9ea8f180f10be8410f8d4fee7b2fb2b2395189e11d4", "receipts/01_e185.json": "db59b9ee211830ef33995751f2dd4e0cbe690c93b7d69b4d9e9d3ac5e2997f92", "receipts/02_e167.json": "caa1c7981394f0f0d7daff9db7bcaaef0a0f12f533ffde296b9951a2d17e11eb", "receipts/03_e156.json": "2828b2ebc5776d2a05938b7eca99c8054d2b5c6bda60259bdbe87986741614ce", "receipts/04_e141.json": "deb08e1226a966e5ee10d8de7a112cf388865717241555d5c5d0ac816276da56", "receipts/05_e64.json": "d8a4f34e58f387001fea940328bbc8ba1e5db5d198abe1315e404d06bbc10286", "receipts/06_e188.json": "2e3fe81016a44d9b6db332985161315567d8629aa8d47cf170fa250cc87ba521", "receipts/07_e152.json": "a65449c1a6b34aa75ac864e9a6e62d1d770187cf71bae9d2bede4f6fcd39a6a3", "receipts/08_lobt.json": "d9b9a5edcaf274d93a7ea3e1d4aca7fe0b0038258773e727e9ef3720936658ad", "receipts/09_protect.json": "58786a875c236bb15b059b8e789fadd7f0c748231db06699bf212dd352d7356c", "receipts/10_lszh.json": "cb6c48820c75049ea71023f434b8855a1594ed218aa60a972d1eb05894501ac1", "receipts/11_half.json": "6fffbb31c7f248c245780f694b268d15e1b4ee6d240ebb5f476f81908c75a3f6", "receipts/12_pru_level.json": "84966cab05490aaa921ae967d93951a00c07e229e2952bae6a54a00c3b48f002"}, "served_e156_ids_sha256": "8fbb8394b351fe241a2e2d38b88845f05a6f14ccaea021ba80b4d308a5cbc248", "e81_applied": false, "donor_rows_copied": 0, "fits_performed": 0, "seconds": 230.74553608894348, "uploaded": false, "accepted_for_submission": false, "unix": 1791709638.3711119}

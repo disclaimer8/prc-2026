@@ -1,0 +1,26 @@
+{
+ "assembly_complete": "analysis/final_tail_20261011/complete.json",
+ "assembly_complete_sha256": "b708f42d80bff6658f555e508f464379b3bd7285b2309b2076287926d0eedf81",
+ "builder": "scripts/final_tail_assembly_20261008.py",
+ "builder_sha256": "21f46756659e207c41e234034f75551405dc665f031962aadaffca62a6c4d911",
+ "candidate": "submissions/gentle-igloo_v12082.parquet",
+ "candidate_sha256": "e87b79789ab342c6ad4ca6c64900f159ac7affd242eb284717ff321c122f5298",
+ "control": {
+  "forecast_journal_line": 662,
+  "forecast_line_sha256": "27b830b85c3eaa803ecf53003b02a17bb871e263e8288280b018538de462a7cc",
+  "version": 12082
+ },
+ "day": "2026-10-11",
+ "filename": "gentle-igloo_v12082.parquet",
+ "mode": "control",
+ "protocol": "final-transport-control-janjul-and-final-single-PUT-20261009-v1",
+ "registration_line": 582,
+ "registration_line_sha256": "601902c0eb2c8c948204013dd602f720afe0f56cd53a54a329f9320f8d87ce2a",
+ "rows": 344841,
+ "sealed_utc": "2026-10-11T09:08:32.196373+00:00",
+ "size_bytes": 1097397,
+ "source_final": "data/final_tail_20261011/work/gentle-igloo_final.parquet",
+ "source_final_sha256": "bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1",
+ "template": "data/prc-2026-datasets/submitting.parquet",
+ "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b"
+}

@@ -1,0 +1,18 @@
+{
+ "changed_rows": 18128,
+ "evidence": {
+  "changed_rows": 18128,
+  "e188_receipt_sha256": "a14cc987310dd5375246f0340329e6f373cd13fd73284fd922aa97d67a514d12",
+  "seconds": 2.333542823791504,
+  "target_rows": 20433
+ },
+ "input_sha256": "1d3ac2f9928ba63da3ce0047ba3241365825d3ededc2b91a9ebd3f99bb8ecad5",
+ "input_version": 970105,
+ "max_abs_change": 468.0,
+ "output_sha256": "285f171c55e9402bb800bbe6bdd93c956022903818bda6d88e3c8afb9874e62d",
+ "output_version": 970106,
+ "rms_change": 3.77754319438692,
+ "rows": 670790,
+ "stage": "e188",
+ "unix": 1791709372.2435
+}

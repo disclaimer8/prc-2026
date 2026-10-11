@@ -1,0 +1,43 @@
+{
+ "accepted_for_submission": false,
+ "donor_rows_copied": 0,
+ "e81_applied": false,
+ "fits_performed": 0,
+ "output": "/Users/denyskolomiiets/prc-2026/data/final_tail_20261011/work/gentle-igloo_final.parquet",
+ "output_sha256": "bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1",
+ "protocol": "final-uniform-tail-E156fresh-noE81-fourmonths-20261008-v1",
+ "receipts": {
+  "receipts/00_premix.json": "f291cce8831d0aa6f8e6308a352c2adacc1047d91a5802ec6cdaee92af3297ce",
+  "receipts/01_e185.json": "0ab063c501fa3727b54442b407327b8268f62b68a00251912a745333a3e4dfff",
+  "receipts/02_e167.json": "60259268d44caa7150e8f8f4ddd7e015151f956f34c2a03e152b57e5efefb606",
+  "receipts/03_e156.json": "95b7936088d31ed466bce1ada5e720293a5c5a33d6320bf75d9ef9a2a547f4d0",
+  "receipts/04_e141.json": "916f65b8b974491f7a18d25f69898487abe0bd0c39e9eb373343b5471393ecd9",
+  "receipts/05_e64.json": "13df4e51f146512162559b9139d9d5828abffa0a8ecebf4d25c55619d9919798",
+  "receipts/06_e188.json": "219dc70c5c3d395acd91537731d00db9165c33671a51aa44ae070015e67e5300",
+  "receipts/07_e152.json": "0d51487d4ef95a50ece1afbffe545ec52f9adf98b1fcef5554b1c7b0439119dc",
+  "receipts/08_lobt.json": "02bf521213c4bf4d20b14a294c709711100ad6e3f22374f61bd450262759827f",
+  "receipts/09_protect.json": "4704996230c158fdee116afaaef2aa7473ca693e968162ce35143b9fe747f6f9",
+  "receipts/10_lszh.json": "71805c3bcd405f5bab7f2a9dea7529b243a9888ea6b39fd5d9528596338254db",
+  "receipts/11_half.json": "5670ff08e56e38388c2d4a4e522f7a309206321ac0035ee57e92e150e97ff161",
+  "receipts/12_pru_level.json": "0b8ee793170a1e1e9f2e328aa5ff7849bd972edec42ede5838a165ed0845ac86"
+ },
+ "rows": 670790,
+ "seconds": 231.0515079498291,
+ "served_e156_ids_sha256": "8fbb8394b351fe241a2e2d38b88845f05a6f14ccaea021ba80b4d308a5cbc248",
+ "stages": [
+  "e185",
+  "e167",
+  "e156",
+  "e141",
+  "e64",
+  "e188",
+  "e152",
+  "lobt",
+  "protect",
+  "lszh",
+  "half",
+  "pru_level"
+ ],
+ "unix": 1791709384.775276,
+ "uploaded": false
+}
