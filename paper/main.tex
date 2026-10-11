@@ -32,7 +32,7 @@
 \providecommand{\passthrough}[1]{#1}
 \providecommand{\pandocbounded}[1]{#1}
 \newcommand{\placeholder}[1]{\textcolor{red}{[[RESULT:#1]]}}
-\graphicspath{{../docs/figures/}{figures/}}
+\graphicspath{{figures/}}
 
 % --- below is the area for authors ---
 
@@ -56,21 +56,22 @@
 
 \begin{document}
 
-\begin{abstract}
-The EUROCONTROL Performance Review Commission (PRC) Data Challenge 2026 asked participants to predict the recorded taxi-out time of departures at ten European airports, training on all 2025 departures (2,085,047 rows) and scored by root-mean-square error (RMSE) on 344,841 departures of January and July 2026, followed by a blind four-month final. Team gentle-igloo reached 230.48 s RMSE (first submission 501.23 s), 16th of 239 teams on 8 October 2026, about 17 s behind third place \placeholder{ blind four-month ranking}. The design follows three properties of the data. First, the label is a recorded interval that follows several recording regimes: 6.8 \% of 2025 labels coincide within 6 s with take-off minus a planning timestamp, and at Rome Fiumicino 83.7 \% of labels longer than one hour are such copies. A multiclass classifier therefore weights a regular-duration estimate against five alternative candidates; the prediction is the probability-weighted mean. Second, the Network Manager minute-rounded actual off-block time is a strong but biased anchor (384.9 s RMSE alone; median error $-$118 s to +296 s by airport); gradient-boosted trees learn the residual to a per-airport calibrated proxy. Third, the aircraft's own ADS-B ground track (adsb.lol, ODbL) shows when it started moving and feeds coverage-gated correction stages and a neural member. Validation used six temporal month-pair folds with pre-registered rules. We report which changes transferred from cross-validation to the leaderboard (observational stages: fully; learned capacity on 2025 aggregates: not at all), a label-free identity that prices blends of scored files, the measured cost of a uniform final recipe without leaderboard-specific parts (+1.25 s on January/July, +0.57 s of it the whole-file blend), a calibrated predictive distribution, and the regime classifier read as a data-quality detector for the PRU additional-taxi-out indicator. Code is GPLv3; data licences are documented; both the best and the final file replay byte-exactly from archived components.
-\end{abstract}
+%% Draft notice (from the Markdown source; not typeset):
+%% \textbf{Draft status.} This manuscript describes the solution as of 10 October 2026: 114 scored submissions on the ordinary leaderboard (111 through 8 October, then two measurement uploads and one control upload on 9 October) and the sealed final file. Every number is copied from the repository documentation (\texttt{README.md}, \texttt{docs/*.md}, \texttt{docs/tables/*.csv}, the dated reports in \texttt{analysis/}, the experiment register \texttt{HYPOTHESES\_LOG.md} up to entry 448). Items marked \texttt{\placeholder{\ \ldots{}}} are the only gaps left: the organiser's blind final ranking after 14 October 2026, the author's ORCID and contact e-mail, and the DOI of a public archive if one is created. The draft is not an accepted article and must not be cited as one. \texttt{paper/OUTLINE.md} lists the evidence behind each section; \texttt{paper/build\_tex.py} turns this file into \texttt{paper/main.tex}.
 
-\noindent\textcolor{red}{\textbf{Draft status.}} \textbf{Draft status.} This manuscript describes the state of the solution on 9 October 2026, after 111 scored submissions on the ordinary leaderboard (through 8 October) and two measurement uploads on 9 October, one of which the organiser's scorer had not processed when the draft was written. Every number is copied from the repository documentation (\texttt{README.md}, \texttt{docs/*.md}, \texttt{docs/tables/*.csv}, the dated reports in \texttt{analysis/}). Items marked \texttt{\placeholder{\ \ldots{}}} depend on results that did not exist when the draft was written: the score of the two pending measurement uploads, the organiser's blind four-month ranking after 14 October 2026, and the author's front-matter fields. The draft is not an accepted article and must not be cited as one. The outline in \texttt{paper/OUTLINE.md} lists the evidence behind each section.
+\begin{abstract}
+The EUROCONTROL Performance Review Commission Data Challenge 2026 asked for the recorded taxi-out time of departures at ten European airports: train on 2025, score root-mean-square error (RMSE) on January and July 2026, then a blind four-month final. Team gentle-igloo reached 230.48 s, 16th of 239 teams on 8 October 2026 \placeholder{ final ranking --- blind four-month rank}. The design follows three properties of the data. First, the label is a recorded interval produced by several recording regimes: 6.8 \% of 2025 labels equal take-off minus a planning time within 6 s, and at Rome Fiumicino 83.7 \% of labels above one hour do. A classifier weights a regular-duration estimate against five such candidates and predicts the probability-weighted mean. Second, the Network Manager actual off-block time is a strong but biased anchor (384.9 s RMSE alone); gradient-boosted trees learn the residual to a per-airport calibrated proxy. Third, the aircraft's own ADS-B ground track shows when it started moving and feeds coverage-gated correction stages and a neural member. Temporal month-pair cross-validation with pre-registered rules showed what transfers to the leaderboard: observations of the flight did, learned capacity on 2025 aggregates did not. For the final we removed the two leaderboard-specific parts of the best file and priced each by a single upload (+0.57 s and +0.70 s). The final file's January/July rows then scored 231.18 s, 0.56 s better than the best score plus both prices; a label-free decomposition traced the difference to refitted regime probabilities on about 350 rows, within a noise of $\pm$0.43--0.55 s that our $\pm$0.3 s corridor had underestimated. As a data-quality detector the regime classifier counts substituted records accurately, and an additional-taxi-out indicator computed from the final predictions matches the published June and July 2026 values within 9.2 and 6.6 s on average.
+\end{abstract}
 
 \section{Introduction}\label{introduction}
 
 Taxi-out time, the interval between an aircraft leaving its stand and taking off, is one of the operational quantities that the EUROCONTROL Performance Review Unit (PRU) monitors at European airports. The PRU's \emph{additional taxi-out time} indicator compares the observed taxi-out time with a reference time for the stand and runway used, and reads the difference as an approximate measure of departure-queue time during congested periods \autocite{eurocontrol2023atxot}. The indicator is computed from the Airport Operator Data Flow combined with Network Manager (NM) trajectory data \autocite{eurocontrol2023atxot}. Taxi-out time is therefore both an operational variable and a recorded one: what is monitored is the interval between two recorded timestamps, and the quality of the recording is part of the quantity.
 
-The PRC Data Challenge 2026 \autocite{prc2026site} made this quantity the target of an open modelling competition. Participants received all 2025 departures and arrivals at ten airports (EDDF, EDDM, EGLL, EHAM, LEBL, LEMD, LFPG, LIRF, LSZH, LTFM) with NM flight records, and were asked to predict the recorded taxi-out time \texttt{TAXITIME\_SEC\_mvt} of 344,841 departures in January and July 2026, scored by RMSE on a public leaderboard with at most five uploads per UTC day. The organiser required GPLv3 source code, documented open external data and reproduction documentation, and announced that a large part of the prize assessment would rest on model design and documentation rather than on the ranking alone \autocite{prc2026site}; the organiser's dated statements are quoted verbatim in the repository. On 8 October 2026 a blind final phase was added because, in the organiser's words, ``the signs of `optimizing for the ranking' are too strong'': one submission for January, February, June and July 2026 (670,790 departures), ranked separately on the initial two months, the two new months and all four, with the design of the model not to change \placeholder{ outcome of the final ranking}. Previous editions of the challenge, on take-off weight \autocite{spinielli2025atow} and fuel burn \autocite{sun2026fuel}, were followed by solution papers in this journal \autocite{murca2025atow,grigoriou2026fuel,kacar2026fuel}; this paper follows that practice.
+The PRC Data Challenge 2026 \autocite{prc2026site} made this quantity the target of an open modelling competition. Participants received all 2025 departures and arrivals at ten airports (EDDF, EDDM, EGLL, EHAM, LEBL, LEMD, LFPG, LIRF, LSZH, LTFM) with NM flight records, and were asked to predict the recorded taxi-out time \texttt{TAXITIME\_\allowbreak{}SEC\_\allowbreak{}mvt} of 344,841 departures in January and July 2026, scored by RMSE on a public leaderboard with at most five uploads per UTC day. The organiser required GPLv3 source code, documented open external data and reproduction documentation, and announced that a large part of the prize assessment would rest on model design and documentation rather than on the ranking alone \autocite{prc2026site}; the organiser's dated statements are quoted verbatim in the repository. On 8 October 2026 a blind final phase was added because, in the organiser's words, ``the signs of `optimizing for the ranking' are too strong'': one submission for January, February, June and July 2026 (670,790 departures), ranked separately on the initial two months, the two new months and all four, with the design of the model not to change \placeholder{ final ranking --- one sentence on the outcome of the blind ranking}. Previous editions of the challenge, on take-off weight \autocite{spinielli2025atow} and fuel burn \autocite{sun2026fuel}, were followed by solution papers in this journal \autocite{murca2025atow,grigoriou2026fuel,kacar2026fuel}; this paper follows that practice.
 
-An important feature of the task is what remains visible in the ranking file. Only the departure off-block time and the target are hidden; the take-off time, the NM timestamps of the flight (scheduled, initial, latest and estimated off-block, and the minute-rounded actual off-block \texttt{AOBT\_3}), the stand, the runway and all arrivals remain visible. The organiser confirmed on 16 September 2026 that ``the rest in the same row and other rows is available to your model'', and on 19 September that ``the model is for post-ops, not for tactical use''. The task is therefore a \textbf{retrospective reconstruction of when the aircraft left the stand}, not a pre-departure forecast. We state this at the outset because it shapes every design decision and bounds every claim.
+An important feature of the task is what remains visible in the ranking file. Only the departure off-block time and the target are hidden; the take-off time, the NM timestamps of the flight (scheduled, initial, latest and estimated off-block, and the minute-rounded actual off-block \texttt{AOBT\_\allowbreak{}3}), the stand, the runway and all arrivals remain visible. The organiser confirmed on 16 September 2026 that ``the rest in the same row and other rows is available to your model'', and on 19 September that ``the model is for post-ops, not for tactical use''. The task is therefore a \textbf{retrospective reconstruction of when the aircraft left the stand}, not a pre-departure forecast. We state this at the outset because it shapes every design decision and bounds every claim.
 
-We also state at the outset what this paper does not claim. The team finished 16th of 239 on the ordinary leaderboard, about 17 s behind the third-placed team; the contribution is not the rank. The paper makes five contributions.
+We also state at the outset what this paper does not claim. The team stood 16th of 239 on the ordinary leaderboard on 8 October 2026, about 17 s behind the third-placed team; the contribution is not the rank. The paper makes five contributions.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -80,57 +81,57 @@ We also state at the outset what this paper does not claim. The team finished 16
 \item
   We describe a modular chain (Section 3) in which gradient-boosted trees learn the residual to a calibrated NM proxy, coverage-gated stages correct the estimate from the flight's own ADS-B surface track, a neural member reads the ordered track with a weight chosen at chain level on all twelve months of 2025, and a small tabular foundation model handles a sparse tail.
 \item
-  We describe a uniform recipe for the blind final that removes the two leaderboard-specific parts of the best file, and we report the price of each part measured by single uploads rather than inferred (Sections 3.8, 5.7).
+  We describe a uniform recipe for the blind final that removes the two leaderboard-specific parts of the best file, report the price of each part measured by single uploads rather than inferred, and check the final file's January/July rows against a forecast registered before the upload, including what the check taught us about forecast corridors (Sections 3.8, 5.7).
 \item
   We report a validation protocol of temporal month-pair folds with pre-registered decision rules, an account of which classes of change transferred from cross-validation to the leaderboard, a label-free identity for blends of scored files and the limit at which it fails, and a disclosure of every design choice that was taken or kept because of a leaderboard result (Sections 4, 6.3).
 \item
-  We read the model in PRU terms: a calibrated predictive distribution per flight, the effect of substituted records on an emulated additional-taxi-out indicator, and a documented set of negative results from the last two days of development (Sections 5.5, 5.6, 5.8).
+  We read the model in PRU terms: a calibrated predictive distribution per flight, the effect of substituted records on an emulated additional-taxi-out indicator, a label-free comparison of the final predictions with the indicator EUROCONTROL published for 2026, and a documented set of negative results from the last two days of development (Sections 5.5--5.8).
 \end{enumerate}
 
 \section{Data}\label{data}
 
 \subsection{Challenge data}\label{challenge-data}
 
-The training set contains 2,085,047 departures of 2025 at the ten airports, each with the movement record (\texttt{\_mvt} columns, sourced from the Airport Operator Data Flow) and, for 98.9 \% of departures, a matched NM flight record (\texttt{\_flt} columns) with the scheduled off-block time, the initial, latest and estimated off-block times (IOBT, LOBT, EOBT\_1) and the actual off-block time \texttt{AOBT\_3}. The target \texttt{TAXITIME\_SEC\_mvt} is take-off time minus recorded off-block time. The ranking set holds 344,841 departures of January and July 2026 with the same columns except the hidden off-block time and target. Arrivals are included in both sets with their block times. The final ranking file published on 8 October holds 670,790 departures (January 152,719, February 144,158, June 181,791, July 192,122) and 670,407 arrivals; its timestamps carry a fresh draw of the same $\pm$12 s dithering that every challenge file carries, so the label itself carries noise of up to $\pm$12 s and the regime tolerance of 6 s and the LOBT window of 3,606 s used below are the half-width of that dithering.
+The training set contains 2,085,047 departures of 2025 at the ten airports, each with the movement record (\texttt{\_\allowbreak{}mvt} columns, sourced from the Airport Operator Data Flow) and, for 98.9 \% of departures, a matched NM flight record (\texttt{\_\allowbreak{}flt} columns) with the scheduled off-block time, the initial, latest and estimated off-block times (IOBT, LOBT, EOBT\_1) and the actual off-block time \texttt{AOBT\_\allowbreak{}3}. The target \texttt{TAXITIME\_\allowbreak{}SEC\_\allowbreak{}mvt} is take-off time minus recorded off-block time. The ranking set holds 344,841 departures of January and July 2026 with the same columns except the hidden off-block time and target. Arrivals are included in both sets with their block times. The final ranking file published on 8 October holds 670,790 departures (January 152,719, February 144,158, June 181,791, July 192,122) and 670,407 arrivals; its timestamps carry a fresh draw of the same $\pm$12 s dithering that every challenge file carries, so the label itself carries noise of up to $\pm$12 s and the regime tolerance of 6 s and the LOBT window of 3,606 s used below are the half-width of that dithering. For a fixed chain the expected effect of a fresh draw on RMSE is zero, with a realised spread of $\pm$0.08 s (1$\sigma$) on January/July; Section 5.7 shows that this does not hold for a refitted chain.
 
-Timestamps are mostly minute-resolved. 97.7 \% of \texttt{AOBT\_3} values fall on a whole minute. At EDDM, EGLL, LEBL, LEMD, LFPG, LIRF and LTFM at least 99.95 \% of block times sit within $\pm$6 s of a whole minute; at EDDF, EHAM and LSZH only 21.7--24.9 \% do, close to the 13/60 expected from uniformly distributed seconds, so these three airports record block time to the second. A label at the seven minute-resolved airports is therefore a difference of two minute-resolution times with a few seconds of jitter. Label ranges also differ by airport: LEBL and LEMD labels stop at 3,604 s and 3,598 s, while the other airports reach 6,899--131,167 s; 369 labels are negative.
+Timestamps are mostly minute-resolved. 97.7 \% of \texttt{AOBT\_\allowbreak{}3} values fall on a whole minute. At EDDM, EGLL, LEBL, LEMD, LFPG, LIRF and LTFM at least 99.95 \% of block times sit within $\pm$6 s of a whole minute; at EDDF, EHAM and LSZH only 21.7--24.9 \% do, close to the 13/60 expected from uniformly distributed seconds, so these three airports record block time to the second. A label at the seven minute-resolved airports is therefore a difference of two minute-resolution times with a few seconds of jitter. Label ranges also differ by airport: LEBL and LEMD labels stop at 3,604 s and 3,598 s, while the other airports reach 6,899--131,167 s; 369 labels are negative.
 
 \subsection{Recording regimes}\label{recording-regimes}
 
-The first property that shaped the model is that the label does not always describe a physical taxi. In 2025, 140,993 labels (6.76 \%) equal take-off minus the scheduled time, IOBT, LOBT or EOBT\_1 within $\pm$6 s, or lie between one day and one day plus two hours after a planning time (a one-day shift). We call these \emph{recording regimes}: the recorded off-block time is a copy of a planning timestamp rather than an observation. Figure 1 shows the shares per airport.
+The first property that shaped the model is that the label does not always describe a physical taxi. In 2025, 140,993 labels (6.76 \%) equal take-off minus the scheduled time, IOBT, LOBT or EOBT\_1 within $\pm$6 s, or lie between one day and one day plus two hours after a planning time (a one-day shift). We call these \emph{recording regimes}: the recorded off-block time is a copy of a planning timestamp rather than an observation. Figure~\ref{fig:1} shows the shares per airport.
 
 \begin{figure}
 \centering
 \pandocbounded{\includegraphics[width=\textwidth]{fig2_recording_regimes.png}}
-\caption{Figure 1. Recording regimes in the 2025 labels. (a) Per airport, share of labels equal to take-off minus a planning time (LIRF 24.1 \%; 6.9--9.3 \% at the other six labelled airports). (b) Among labels above one hour, 83.7 \% at LIRF match a planning time against 3.1--5.6 \% elsewhere. (c) The schedule class is 4.4 \% of rows but 28.0 \% of the label's squared deviation from its mean; the 14 one-day-shift labels hold 16.8 \%.}
+\caption{Recording regimes in the 2025 labels. (a) Per airport, share of labels equal to take-off minus a planning time (LIRF 24.1 \%; 6.9--9.3 \% at the other six labelled airports). (b) Among labels above one hour, 83.7 \% at LIRF match a planning time against 3.1--5.6 \% elsewhere. (c) The schedule class is 4.4 \% of rows but 28.0 \% of the label's squared deviation from its mean; the 14 one-day-shift labels hold 16.8 \%.}\label{fig:1}
 \end{figure}
 
 Two tests separate substitution from coincidence. First, a same-minute test: at LIRF 18.1 \% of block times fall in the scheduled minute, against 3.7 \% in the minute before and 1.3 \% in the minute after. At EDDM, EGLL, LEBL, LEMD, LFPG and LTFM the scheduled minute holds 4.1--5.6 \% against 3.5--5.3 \% in its neighbours, which is consistent with on-time pushbacks whose planning-time candidate equals the physical taxi time anyway. Second, the long-label test: among the 1,967 LIRF labels above one hour, 83.7 \% match a planning time, against 3.1--5.6 \% at the other airports with at least 20 such labels. EDDF, EHAM and LSZH, which record block time to the second, show no planned-regime labels and are excluded from regime labelling in the model.
 
 Panel (c) shows why this matters for RMSE. The schedule class is 4.4 \% of rows but holds 28.0 \% of the squared deviation of the label from its mean; 14 one-day-shift labels hold a further 16.8 \%. In January and July 2025, 45 of 344,419 labels exceed four hours and hold 52.4 \% of the label's sum of squared deviations. A single regressor trained on the physical taxi fails exactly where the metric is decided.
 
-The regime labels used for training come from explicit comparisons with the target (\texttt{regime\_label} in \texttt{src/train.py}): $\pm$6 s tolerance, six classes (regular, schedule, IOBT, LOBT, EOBT, one-day shift), no planned regimes at EDDF, EHAM and LSZH. These are dataset-specific heuristics; they must be reassessed for another source of movement records. The rule is a rule, not ground truth: an on-time departure whose physical off-block falls in the scheduled minute is labelled a copy although nothing was copied, and the same-minute test above says that outside LIRF most labelled rows are coincidences of this kind.
+The regime labels used for training come from explicit comparisons with the target (\texttt{regime\_\allowbreak{}label} in \texttt{src/\allowbreak{}train.py}): $\pm$6 s tolerance, six classes (regular, schedule, IOBT, LOBT, EOBT, one-day shift), no planned regimes at EDDF, EHAM and LSZH. These are dataset-specific heuristics; they must be reassessed for another source of movement records. The rule is a rule, not ground truth: an on-time departure whose physical off-block falls in the scheduled minute is labelled a copy although nothing was copied, and the same-minute test above says that outside LIRF most labelled rows are coincidences of this kind.
 
 \subsection{The NM off-block proxy}\label{the-nm-off-block-proxy}
 
-The second property is that the NM actual off-block time \texttt{AOBT\_3} is a strong but noisy anchor (Figure 2). It is present for 98.92 \% of 2025 departures and rounded to the minute. Used directly, take-off minus \texttt{AOBT\_3} gives an RMSE of 384.9 s against the label, where a constant prediction gives 546.4 s. Of all proxy errors, 39.4 \% are within two minutes and 74.6 \% within five. The error has an airport-specific offset: the median is $-$118 s at LIRF, +87 s at EDDF, +107 s at EHAM and +296 s at LTFM, where only 16.9 \% of departures are within two minutes. The median absolute error is 121--184 s at nine airports and 356 s at LTFM. On all 2,062,577 departures of 2025 with a LOBT, the recorded block time lies within 3,606 s of the LOBT, which defines a feasibility window used throughout the chain.
+The second property is that the NM actual off-block time \texttt{AOBT\_\allowbreak{}3} is a strong but noisy anchor (Figure~\ref{fig:2}). It is present for 98.92 \% of 2025 departures and rounded to the minute. Used directly, take-off minus \texttt{AOBT\_\allowbreak{}3} gives an RMSE of 384.9 s against the label, where a constant prediction gives 546.4 s. Of all proxy errors, 39.4 \% are within two minutes and 74.6 \% within five. The error has an airport-specific offset: the median is $-$118 s at LIRF, +87 s at EDDF, +107 s at EHAM and +296 s at LTFM, where only 16.9 \% of departures are within two minutes. The median absolute error is 121--184 s at nine airports and 356 s at LTFM. On all 2,062,577 departures of 2025 with a LOBT, the recorded block time lies within 3,606 s of the LOBT, which defines a feasibility window used throughout the chain.
 
 \begin{figure}
 \centering
 \pandocbounded{\includegraphics[width=\textwidth]{fig3_nm_proxy_error.png}}
-\caption{Figure 2. Signed error of take-off minus AOBT\_3 as a taxi-out estimate, per airport (medians from $-$118 s at LIRF to +296 s at LTFM) and the share of departures by error size (16.9 \% within two minutes at LTFM, 33--49 \% elsewhere).}
+\caption{Signed error of take-off minus AOBT\_3 as a taxi-out estimate, per airport (medians from $-$118 s at LIRF to +296 s at LTFM) and the share of departures by error size (16.9 \% within two minutes at LTFM, 33--49 \% elsewhere).}\label{fig:2}
 \end{figure}
 
-Departures without an NM match are 1.08 \% of 2025 rows (1.56 \% in January and July 2025) and 1.53 \% of the ranking set, reaching 4.96 \% at EHAM in January 2026. They have no \texttt{AOBT\_3}, LOBT, IOBT or EOBT\_1. In out-of-fold predictions these rows hold 36.6 \% of the squared error (Section 2.6). In the four final months the share is 1.6 / 0.9 / 1.4 / 1.5 \% against 0.9 / 0.8 / 1.4 / 2.1 \% in the same months of 2025; only EHAM January (5.0 \%, 805 rows) and LSZH January (3.0 \%, 300 rows) exceed every 2025 month of their airport.
+Departures without an NM match are 1.08 \% of 2025 rows (1.56 \% in January and July 2025) and 1.53 \% of the ranking set, reaching 4.96 \% at EHAM in January 2026. They have no \texttt{AOBT\_\allowbreak{}3}, LOBT, IOBT or EOBT\_1. In out-of-fold predictions these rows hold 36.6 \% of the squared error (Section 2.6). In the four final months the share is 1.6 / 0.9 / 1.4 / 1.5 \% against 0.9 / 0.8 / 1.4 / 2.1 \% in the same months of 2025; only EHAM January (5.0 \%, 805 rows) and LSZH January (3.0 \%, 300 rows) exceed every 2025 month of their airport.
 
 \subsection{ADS-B surface coverage and its drift}\label{ads-b-surface-coverage-and-its-drift}
 
-The third property is that the aircraft's own ADS-B ground track shows when it actually started moving, but coverage is uneven and changed between the training and ranking months (Figure 3). We used the adsb.lol \texttt{globe\_history} archives for 2025 and 2026, published under ODbL 1.0 \autocite{adsblol2025,adsblol2026}; the organiser confirmed on 17 September 2026 that this source ``can be considered open data for the challenge''. An \emph{own surface track} means that the departing aircraft has an adsb.lol surface segment before take-off (coverage class $\ge$ 2 in our extraction).
+The third property is that the aircraft's own ADS-B ground track shows when it actually started moving, but coverage is uneven and changed between the training and ranking months (Figure~\ref{fig:3}). We used the adsb.lol \texttt{globe\_\allowbreak{}history} archives for 2025 and 2026, published under ODbL 1.0 \autocite{adsblol2025,adsblol2026}; the organiser confirmed on 17 September 2026 that this source ``can be considered open data for the challenge''. An \emph{own surface track} means that the departing aircraft has an adsb.lol surface segment before take-off (coverage class $\ge$ 2 in our extraction).
 
 \begin{figure}
 \centering
 \pandocbounded{\includegraphics[width=\textwidth]{fig4_adsb_coverage_drift.png}}
-\caption{Figure 3. Share of departures with an own ADS-B surface track in January and July, 2025 against 2026, per airport. LIRF goes from 0.6 \% to 78.5 \% in January and from 93.9 \% to 6.2 \% in July; LEMD January from 2.3 \% to 96.3 \%; EGLL July from 35.9 \% to 96.3 \%; LTFM stays near zero.}
+\caption{Share of departures with an own ADS-B surface track in January and July, 2025 against 2026, per airport. LIRF goes from 0.6 \% to 78.5 \% in January and from 93.9 \% to 6.2 \% in July; LEMD January from 2.3 \% to 96.3 \%; EGLL July from 35.9 \% to 96.3 \%; LTFM stays near zero.}\label{fig:3}
 \end{figure}
 
 Over January and July the share of departures with a track rises from 53.8 \% in 2025 to 64.9 \% in 2026, but single airport-months move much more: LIRF from 0.6 \% to 78.5 \% in January and from 93.9 \% to 6.2 \% in July; LEMD January from 2.3 \% to 96.3 \%; EGLL July from 35.9 \% to 96.3 \%; EDDF down by 16--17 points in both months. LTFM has practically no surface track in either year and LFPG stays between 5 \% and 25 \%. A model that learned \emph{where aircraft are heard}, rather than \emph{how they move}, would not transfer. This drove the decision to use ADS-B as coverage-gated correction stages rather than as base features (Section 3.5), and to drop reception-density features whose behaviour did not transfer.
@@ -145,12 +146,12 @@ The remaining external inputs are OpenStreetMap stand, runway and taxiway geomet
 
 \subsection{Error budget}\label{error-budget}
 
-Figure 4 decomposes the 2025 out-of-fold squared error of the chain before its final blend (E195 \texttt{joint} arm, 2,084,921 rows, RMSE 218.3 s; Section 4.1 defines the out-of-fold predictions). LIRF holds 7.7 \% of rows and 30.8 \% of the squared error, LFPG 11.5 \% and 21.6 \%. EDDF, EDDM and EHAM together hold 31.0 \% of rows and 6.5 \% of the error. Three one-day-shift rows hold 13.5 \%, and 11 labels above four hours hold 25.4 \%. The 1.07 \% of rows without an NM record hold 36.6 \%. Rows without an own surface track are 39.5 \% of the data, hold 57.1 \% of the error and have an RMSE of 262.3 s against 183.8 s with a track (229.2 s against 145.4 s on labels up to 7,200 s). The ten largest errors make up 25.8 \% of the total and the largest 1 \% of rows 62.0 \%.
+Figure~\ref{fig:4} decomposes the 2025 out-of-fold squared error of the chain before its final blend (E195 \texttt{joint} arm, 2,084,921 rows, RMSE 218.3 s; Section 4.1 defines the out-of-fold predictions). LIRF holds 7.7 \% of rows and 30.8 \% of the squared error, LFPG 11.5 \% and 21.6 \%. EDDF, EDDM and EHAM together hold 31.0 \% of rows and 6.5 \% of the error. Three one-day-shift rows hold 13.5 \%, and 11 labels above four hours hold 25.4 \%. The 1.07 \% of rows without an NM record hold 36.6 \%. Rows without an own surface track are 39.5 \% of the data, hold 57.1 \% of the error and have an RMSE of 262.3 s against 183.8 s with a track (229.2 s against 145.4 s on labels up to 7,200 s). The ten largest errors make up 25.8 \% of the total and the largest 1 \% of rows 62.0 \%.
 
 \begin{figure}
 \centering
 \pandocbounded{\includegraphics[width=\textwidth]{fig5_error_budget.png}}
-\caption{Figure 4. Share of rows against share of squared error in 2025 out-of-fold predictions, by airport, recording regime, label size, NM match and ADS-B track.}
+\caption{Share of rows against share of squared error in 2025 out-of-fold predictions, by airport, recording regime, label size, NM match and ADS-B track.}\label{fig:4}
 \end{figure}
 
 The chain has a dedicated component wherever the error concentrates: the LIRF tail without NM has its own model, rows without LOBT outside LIRF get a movement-only member, and the ADS-B stages correct the start of taxi where a track exists. On labels up to 7,200 s the largest airport errors after LIRF (363.5 s) are LTFM (224.2 s) and LFPG (211.9 s): one has no surface tracks and the most biased proxy, the other has tracks for at most a quarter of its departures. These remain the open problems.
@@ -159,8 +160,10 @@ The chain has a dedicated component wherever the error concentrates: the LIRF ta
 
 \subsection{Overview}\label{overview}
 
-Figure 5 shows the chain of the best ordinary submission, v12077, which is the v12075 chain of 7 October with two zero-fit changes made on 8 October: the neural member is the mean of ten seeds instead of three, and its weight in the regular candidate is 0.35 instead of 0.25 (Section 3.4). A feature table (FIN1b) feeds a regime classifier and a regular-duration candidate; the two combine into a probability-weighted mixture; surface stages correct the mixture where a track exists, subject to a gate; final controls blend with two earlier pipelines, enforce the LOBT window, protect 42 frozen tail predictions and apply a half-weight OPDI correction at LSZH. The final four-month file uses the same chain with the blend and the frozen rows removed (Section 3.8).
+Figure~\ref{fig:5} shows the chain of the best ordinary submission, v12077, which is the v12075 chain of 7 October with two zero-fit changes made on 8 October: the neural member is the mean of ten seeds instead of three, and its weight in the regular candidate is 0.35 instead of 0.25 (Section 3.4). A feature table (FIN1b) feeds a regime classifier and a regular-duration candidate; the two combine into a probability-weighted mixture; surface stages correct the mixture where a track exists, subject to a gate; final controls blend with two earlier pipelines, enforce the LOBT window, protect 42 frozen tail predictions and apply a half-weight OPDI correction at LSZH. The final four-month file uses the same chain with the blend and the frozen rows removed (Section 3.8).
 
+\begin{figure}[htbp]
+\centering
 {\scriptsize\begin{verbatim}
 Challenge data (movements + NM timestamps) --+
 METAR, OSM geometry, ATFM aggregates --------+--> Feature table FIN1b (170 tree / 189 neural columns)
@@ -185,14 +188,12 @@ adsb.lol surface tracks ---------------------+------------------------ + ordered
                                                                  v
                                                              Submission
 \end{verbatim}}
-
-\emph{Figure 5. Stage order of the submitted chain (v12077; the final file differs as marked). Experiment identifiers (E-numbers) are those of the repository's experiment register.}
+\caption{Stage order of the submitted chain (v12077; the final file differs as marked). Experiment identifiers (E-numbers) are those of the repository's experiment register.}\label{fig:5}
+\end{figure}
 
 \subsection{Features}\label{features}
 
-The final feature table FIN1b has 170 columns for the tree models and 189 for the neural member (Table 1). Most are built from the challenge data: the planning-time intervals (take-off minus each NM timestamp, \texttt{AOBT\_3} minus EOBT\_1, a flag for an \texttt{AOBT\_3} more than 3,606 s from the LOBT); airport, runway, aircraft and flight identity, including the airline prefix parsed from the flight number; traffic counts at the airport and on the runway around the flight; neighbour NM taxi proxies (other departures' take-off minus \texttt{AOBT\_3} by airport, runway and stand); neighbour features ordered by filed times (take-off minus LOBT and minus schedule of other departures); stand turnaround; forward neighbours (departures in the next 15--60 min); planned-arrival residuals; and runway wake-separation features. External features are METAR weather, stand-to-runway geometry and taxi-route length on the OpenStreetMap taxiway graph, and the destination airport's daily arrival ATFM delay.
-
-\textbf{Table 1. Feature families of FIN1b and their share of the total split gain in the saved regime classifier and LightGBM regressor.}
+The final feature table FIN1b has 170 columns for the tree models and 189 for the neural member (Table~\ref{tab:1}). Most are built from the challenge data: the planning-time intervals (take-off minus each NM timestamp, \texttt{AOBT\_\allowbreak{}3} minus EOBT\_1, a flag for an \texttt{AOBT\_\allowbreak{}3} more than 3,606 s from the LOBT); airport, runway, aircraft and flight identity, including the airline prefix parsed from the flight number; traffic counts at the airport and on the runway around the flight; neighbour NM taxi proxies (other departures' take-off minus \texttt{AOBT\_\allowbreak{}3} by airport, runway and stand); neighbour features ordered by filed times (take-off minus LOBT and minus schedule of other departures); stand turnaround; forward neighbours (departures in the next 15--60 min); planned-arrival residuals; and runway wake-separation features. External features are METAR weather, stand-to-runway geometry and taxi-route length on the OpenStreetMap taxiway graph, and the destination airport's daily arrival ATFM delay.
 
 {
 \begin{longtable}[]{@{}
@@ -200,6 +201,20 @@ The final feature table FIN1b has 170 columns for the tree models and 189 for th
   >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2143}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2857}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2857}}@{}}
+\caption{Feature families of FIN1b and their share of the total split gain in the saved regime classifier and LightGBM regressor.}\label{tab:1}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Family
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Columns (trees / neural)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Gain share: classifier / regressor
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Family
@@ -219,7 +234,7 @@ Airport, runway, aircraft, flight identity & Challenge data & 12 / 15 & 45.5 \% 
 Local time & Challenge data & 2 / 2 & 0.2 \% / 0.4 \% \\
 Airport traffic counts & Challenge data: all movements & 28 / 28 & 1.2 \% / 3.3 \% \\
 Runway traffic and configuration & Challenge data & 12 / 12 & 0.4 \% / 1.5 \% \\
-Neighbour NM taxi proxies & Other departures' take-off $-$ \texttt{AOBT\_3} & 23 / 23 & 3.6 \% / 11.7 \% \\
+Neighbour NM taxi proxies & Other departures' take-off $-$ \texttt{AOBT\_\allowbreak{}3} & 23 / 23 & 3.6 \% / 11.7 \% \\
 Stand turnaround & Arrivals on the same stand & 4 / 4 & 1.0 \% / 3.4 \% \\
 Forward neighbours & Departures in the next 15--60 min & 14 / 14 & 1.0 \% / 2.9 \% \\
 Filed-time neighbours & Other departures' take-off $-$ LOBT or schedule & 27 / 27 & 3.9 \% / 8.7 \% \\
@@ -251,19 +266,29 @@ Several alternatives were measured and rejected: a hard regime choice at a proba
 
 \subsection{Regular-duration candidate}\label{regular-duration-candidate}
 
-\textbf{Residual to a calibrated NM proxy.} The ordinary regressors do not learn the label directly. They learn the residual to an NM proxy: take-off minus \texttt{AOBT\_3} where it exists and lies within 0--7,200 s, else take-off minus LOBT, else minus EOBT\_1. The proxy is scaled by a least-squares coefficient per airport and timestamp source, shrunk towards a global value (E46); the fitted \texttt{AOBT\_3} scales are 0.80--1.16 and the LOBT scales 0.42--0.69. An airport median is the fallback when no proxy exists. The regressor's training target is clipped to 0--7,200 s; longer labels are left to the regime mixture and the tail model. Learning the residual to the proxy, together with neighbour features, gave $-$32.6 s on the leaderboard (v7 against v5).
+\textbf{Residual to a calibrated NM proxy.} The ordinary regressors do not learn the label directly. They learn the residual to an NM proxy: take-off minus \texttt{AOBT\_\allowbreak{}3} where it exists and lies within 0--7,200 s, else take-off minus LOBT, else minus EOBT\_1. The proxy is scaled by a least-squares coefficient per airport and timestamp source, shrunk towards a global value (E46); the fitted \texttt{AOBT\_\allowbreak{}3} scales are 0.80--1.16 and the LOBT scales 0.42--0.69. An airport median is the fallback when no proxy exists. The regressor's training target is clipped to 0--7,200 s; longer labels are left to the regime mixture and the tail model. Learning the residual to the proxy, together with neighbour features, gave $-$32.6 s on the leaderboard (v7 against v5).
 
 A consequence that we measured and used throughout is that a residual model absorbs any input change it can express: on six folds a change in the \emph{level} of the proxy was absorbed by 95--99 \% and a change in its \emph{shape} by 65--68 \%. An isotonic calibration made the proxy more accurate (RMSE 378 $\rightarrow$ 346 s) and the final prediction worse (+0.46 s). A better intermediate quantity is not a better result.
 
-\textbf{Members.} The regular candidate is a fixed-weight combination (Table 2). The core is 0.65 $\times$ CatBoost \autocite{prokhorenkova2018catboost} (15 seeds) + 0.35 $\times$ LightGBM (5 seeds), both on the proxy residual. Five further LightGBM members add diversity: one learns the raw target and four learn it relative to clipped take-off-minus-T anchors for T = LOBT, schedule, EOBT\_1 and \texttt{AOBT\_3}. Each uses a five-seed average. Their weights were fitted on 2025 out-of-fold predictions and then scaled to 2/3 after a comparison of complete files on the leaderboard (Section 6.3). For rows without a LOBT outside LIRF (4,907 ranking rows), a movement-only member built from ADS-B motion features replaces 7/30 of the regular candidate (E185).
-
-\textbf{Table 2. Fixed weights inside the regular-duration candidate: v12075 and v12077 (the final file uses the v12077 column).}
+\textbf{Members.} The regular candidate is a fixed-weight combination (Table~\ref{tab:2}). The core is 0.65 $\times$ CatBoost \autocite{prokhorenkova2018catboost} (15 seeds) + 0.35 $\times$ LightGBM (5 seeds), both on the proxy residual. Five further LightGBM members add diversity: one learns the raw target and four learn it relative to clipped take-off-minus-T anchors for T = LOBT, schedule, EOBT\_1 and \texttt{AOBT\_\allowbreak{}3}. Each uses a five-seed average. Their weights were fitted on 2025 out-of-fold predictions and then scaled to 2/3 after a comparison of complete files on the leaderboard (Section 6.3). For rows without a LOBT outside LIRF (4,907 ranking rows), a movement-only member built from ADS-B motion features replaces 7/30 of the regular candidate (E185).
 
 {
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2727}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3636}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3636}}@{}}
+\caption{Fixed weights inside the regular-duration candidate: v12075 and v12077 (the final file uses the v12077 column).}\label{tab:2}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Component
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+v12075
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+v12077 and final
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Component
@@ -286,9 +311,9 @@ Ordered-trajectory neural member & 0.25, mean of 3 seeds & 0.35, mean of 10 seed
 \end{longtable}
 }
 
-\textbf{Neural member with ordered trajectories.} The last member is a multilayer perceptron with piecewise-linear numerical embeddings \autocite{gorishniy2022embeddings} (48-bin training quantiles, 12 embedding dimensions, width 512; \texttt{rtdl\_num\_embeddings} 0.0.12, version-B preset), trained for eight epochs with AdamW, learning rate 0.002, weight decay 10\textsuperscript{$-$5} and OneCycleLR. It reads 189 tabular columns and, in addition, up to 64 ordered ADS-B observations of the current visit and of the previous visit of the same aircraft to the airport: time to take-off, position, altitude, speed, heading and on-ground flag, twelve channels with missingness masks, processed by message blocks over previous, current and next tokens (E197/E203). It is not a graph of interacting flights. Each seed has 1,908,437 parameters and took about 269 s to fit on an AMD Radeon RX 7900 XTX. The member replaced an earlier tabular-only version (E190) at the same weight and gained 0.51 s on the leaderboard. Its component-level advantage over the previous member (4.5--7.1 s on two month-pair screens) was much larger than its full-chain effect; against an equal-capacity control without ordering it won only 0.25 and 0.13 s on the same pairs, so most of the component-level gain reflects changed inputs and capacity, not ordering alone. Twelve epochs instead of eight (E215) lowered the pooled 2025 error by 0.107 s but made February worse by 1.61 s in all three seeds, failed its gate and was not used.
+\textbf{Neural member with ordered trajectories.} The last member is a multilayer perceptron with piecewise-linear numerical embeddings \autocite{gorishniy2022embeddings} (48-bin training quantiles, 12 embedding dimensions, width 512; \texttt{rtdl\_\allowbreak{}num\_\allowbreak{}embeddings} 0.0.12, version-B preset), trained for eight epochs with AdamW, learning rate 0.002, weight decay 10\textsuperscript{$-$5} and OneCycleLR. It reads 189 tabular columns and, in addition, up to 64 ordered ADS-B observations of the current visit and of the previous visit of the same aircraft to the airport: time to take-off, position, altitude, speed, heading and on-ground flag, twelve channels with missingness masks, processed by message blocks over previous, current and next tokens (E197/E203). It is not a graph of interacting flights. Each seed has 1,908,437 parameters and took about 269 s to fit on an AMD Radeon RX 7900 XTX. The member replaced an earlier tabular-only version (E190) at the same weight and gained 0.51 s on the leaderboard. Its component-level advantage over the previous member (4.5--7.1 s on two month-pair screens) was much larger than its full-chain effect; against an equal-capacity control without ordering it won only 0.25 and 0.13 s on the same pairs, so most of the component-level gain reflects changed inputs and capacity, not ordering alone. Twelve epochs instead of eight (E215) lowered the pooled 2025 error by 0.107 s but made February worse by 1.61 s in all three seeds, failed its gate and was not used.
 
-\textbf{Seeds and weight (E212).} The weight 0.25 had been inherited from the earlier MLP member and had never been chosen at the level of the full chain. On 8 October the exact 2025 out-of-fold chain up to the blend was recomputed at twelve weights (0.05--0.60 in steps of 0.05) with the three-seed and a ten-seed member, the weight being taken from the other members in proportion; at \(w = 0.25\) this reproduces the production column byte for byte on all 2,085,047 rows. Pooled over the six month pairs on the decided rows the RMSE is 217.717 s at 0.25, 217.549 s at 0.35 and 217.523 s at 0.40 with three seeds, and 217.723, 217.535 and 217.496 s with ten seeds; the ten seeds alone at the old weight change nothing (+0.0065 s). The registered leave-one-pair-out rule selected 0.40 in all six pairs ($-$0.228 s pooled, gate passed). Two checks outside the gate argued for less: 0.40 is worse than 0.25 in August (+0.016 s), and a weight chosen on January--June (0.50) is worse than 0.25 on July--December (+0.017 s); the per-month optimum ranges from 0.30 to 0.60 (Table 10 in Section 5.4). The coordinator fixed 0.35, the only grid value with lower squared error than 0.25 in every month of 2025 at three and at ten seeds, and wrote it into the final assembler before any upload. The two changes were then scored on the leaderboard as single-change uploads with forecasts written beforehand: v12076 (ten-seed mean at 0.25) 230.8183 s, $-$0.1204 s against v12075, inside its corridor; v12077 (weight 0.35) 230.4812 s, $-$0.3371 s against v12076, 0.14 s better than the lower edge of a corridor derived from the January + July 2025 estimate of $-$0.11 s times a 0.7 transfer factor. The weight shift transferred to the board about three times stronger than its out-of-fold estimate.
+\textbf{Seeds and weight (E212).} The weight 0.25 had been inherited from the earlier MLP member and had never been chosen at the level of the full chain. On 8 October the exact 2025 out-of-fold chain up to the blend was recomputed at twelve weights (0.05--0.60 in steps of 0.05) with the three-seed and a ten-seed member, the weight being taken from the other members in proportion; at \(w = 0.25\) this reproduces the production column byte for byte on all 2,085,047 rows. Pooled over the six month pairs on the decided rows the RMSE is 217.717 s at 0.25, 217.549 s at 0.35 and 217.523 s at 0.40 with three seeds, and 217.723, 217.535 and 217.496 s with ten seeds; the ten seeds alone at the old weight change nothing (+0.0065 s). The registered leave-one-pair-out rule selected 0.40 in all six pairs ($-$0.228 s pooled, gate passed). Two checks outside the gate argued for less: 0.40 is worse than 0.25 in August (+0.016 s), and a weight chosen on January--June (0.50) is worse than 0.25 on July--December (+0.017 s); the per-month optimum ranges from 0.30 to 0.60 (Table~\ref{tab:10} and Figure~\ref{fig:9} in Section 5.4). We fixed 0.35 instead, the only grid value with lower squared error than 0.25 in every month of 2025 at three and at ten seeds (Figure~\ref{fig:9}), and wrote it into the final assembler before any upload. The two changes were then scored on the leaderboard as single-change uploads with forecasts written beforehand: v12076 (ten-seed mean at 0.25) 230.8183 s, $-$0.1204 s against v12075, inside its corridor; v12077 (weight 0.35) 230.4812 s, $-$0.3371 s against v12076, 0.14 s better than the lower edge of a corridor derived from the January + July 2025 estimate of $-$0.11 s times a 0.7 transfer factor. The weight shift transferred to the board about three times stronger than its out-of-fold estimate.
 
 \subsection{Surface stages from the aircraft's own track}\label{surface-stages-from-the-aircrafts-own-track}
 
@@ -316,21 +341,30 @@ Complete out-of-fold counterparts of v44 and v60 were not kept, so both donors e
 
 \subsection{The uniform recipe for the blind final}\label{the-uniform-recipe-for-the-blind-final}
 
-The final file \texttt{gentle-igloo\_final.parquet} is produced by one procedure over all 670,790 rows of the four months. It is the v12077 chain with the two leaderboard-specific parts removed (Table 3): the whole-file blend with the archived January/July submissions, and the 42 frozen tail rows. The tabular members were refitted with the same rounds, seeds and weights on the feature table rebuilt against the four-month file (2,755,837 rows = 2,085,047 training + 670,790 final; 52 fits, models saved this time); the ten-seed neural member was retrained on the same recipe with the 2026 days re-encoded on the final movement times; the surface-stage models, the gate, the LOBT window and the LSZH model are the cached 2025 models, replayed only when the reconstructed training call matches the stored signature. Nothing is chosen per month.
-
-\textbf{Table 3. The best ordinary file and the final file.}
+The final file \texttt{gentle-igloo\_\allowbreak{}final.parquet} is produced by one procedure over all 670,790 rows of the four months. It is the v12077 chain with the two leaderboard-specific parts removed (Table~\ref{tab:3}): the whole-file blend with the archived January/July submissions, and the 42 frozen tail rows. The tabular members were refitted with the same rounds, seeds and weights on the feature table rebuilt against the four-month file (2,755,837 rows = 2,085,047 training + 670,790 final; 52 fits, models saved this time); the ten-seed neural member was retrained on the same recipe with the 2026 days re-encoded on the final movement times; the surface-stage models, the gate, the LOBT window and the LSZH model are the cached 2025 models, replayed only when the reconstructed training call matches the stored signature. Nothing is chosen per month.
 
 {
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
   >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
   >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\caption{The best ordinary file and the final file.}\label{tab:3}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 v12077 (leaderboard)
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\texttt{gentle-igloo\_final.parquet}
+\texttt{gentle-igloo\_\allowbreak{}final.parquet}
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+v12077 (leaderboard)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\texttt{gentle-igloo\_\allowbreak{}final.parquet}
 \end{minipage} \\
 \midrule\noalign{}
 \endhead
@@ -356,9 +390,7 @@ The main scheme has six outer folds of 2025: months 1+7, 2+8, 3+9, 4+10, 5+11 an
 
 Three subsets are reported. \emph{Decided} excludes the LIRF rows without an NM record and 4 h or more after schedule, which a separate tail model serves (2,084,920 of 2,085,047 rows). \emph{Body} is rows with observed target $\le$ 7,200 s (2,084,448 rows). \emph{Trimmed} removes the three or twenty largest and smallest paired differences in each fold. Body is defined by the label and is a diagnostic, not a routing condition (Section 4.3).
 
-A caveat applies to all cross-validation results of the final chain. Some later stages were trained on historical out-of-fold predictions of earlier ones, the stored classifier probabilities are already feasibility-masked, and exact out-of-fold donors for the E81 blend are unavailable. The retrospective comparison of the current members (E195, E203, E212) therefore runs through the gate but \textbf{before the E81 blend, the LOBT adjustments, the tail protection and the LSZH stage}, and is \emph{selection-informed} validation: the production manifest records \texttt{quality\_validated\_on\_full\_chain\ =\ false}. Table 4 gives the comparison for the last accepted members.
-
-\textbf{Table 4. Retrospective six-fold comparison of the chain before the E81 blend (2025 out-of-fold RMSE, seconds).}
+A caveat applies to all cross-validation results of the final chain. Some later stages were trained on historical out-of-fold predictions of earlier ones, the stored classifier probabilities are already feasibility-masked, and exact out-of-fold donors for the E81 blend are unavailable. The retrospective comparison of the current members (E195, E203, E212) therefore runs through the gate but \textbf{before the E81 blend, the LOBT adjustments, the tail protection and the LSZH stage}, and is \emph{selection-informed} validation: the production manifest records \texttt{quality\_\allowbreak{}validated\_\allowbreak{}on\_\allowbreak{}full\_\allowbreak{}chain\ =\ false}. Table~\ref{tab:4} gives the comparison for the last accepted members.
 
 {
 \begin{longtable}[]{@{}
@@ -368,6 +400,24 @@ A caveat applies to all cross-validation results of the final chain. Some later 
   >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1739}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1739}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1739}}@{}}
+\caption{Retrospective six-fold comparison of the chain before the E81 blend (2025 out-of-fold RMSE, seconds).}\label{tab:4}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Variant
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Decided RMSE
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Change
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Body RMSE
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Change
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Pairs improved
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Variant
@@ -400,15 +450,15 @@ The 2025 out-of-fold RMSE of the chain before the blend is 217.5--218.3 s; its l
 
 \subsection{Pre-registration and gates}\label{pre-registration-and-gates}
 
-Before each experiment the decision rule was written down. Early rules were ``$-$0.30 s and at least 4 of 6 folds''; later rules were ``at least 4 of 6, trimmed \textless{} 0, body \textless{} 0'' or ``both screen pairs improve''; the October rules added forward-in-time legs (train on months 1--6, test on 7--12; expanding window) after two calibrations fitted on month pairs failed forward (Section 5.8). From 20 September most uploads also carried a leaderboard forecast range recorded before the upload. In the October experiments the protocol and code were committed before the first model fit. Verdicts were applied as written; a later change of mind is logged as a new entry and does not edit the old one. The register holds 441 numbered entries from 23 September to 9 October 2026 and the working brief holds the earlier experiments; the most informative rejections are summarised in English in the repository.
+Before each experiment the decision rule was written down. Early rules were ``$-$0.30 s and at least 4 of 6 folds''; later rules were ``at least 4 of 6, trimmed \textless{} 0, body \textless{} 0'' or ``both screen pairs improve''; the October rules added forward-in-time legs (train on months 1--6, test on 7--12; expanding window) after two calibrations fitted on month pairs failed forward (Section 5.8). From 20 September most uploads also carried a leaderboard forecast range recorded before the upload. In the October experiments the protocol and code were committed before the first model fit. Verdicts were applied as written; a later change of mind is logged as a new entry and does not edit the old one. The register holds 448 numbered entries from 23 September to 9 October 2026 and the working brief holds the earlier experiments; the most informative rejections are summarised in English in the repository.
 
-Some rules were themselves revised when they failed. The fixed $-$0.30 s threshold was not derived from data and was removed; a stage change worth $-$0.137 s (6 of 6 folds) was uploaded anyway and gave $-$0.04 s. The ``8 of 12 months'' tail rule rejected a change that then gained 3.60 s. If the decided and trimmed measures differ by more than a factor of two, the trimmed one decides, because on the 21 September chain the ten worst out-of-fold rows held 24.3 \% of the squared error and the worst single row was worth 7.47 s on the leaderboard scale, 25 times the gate. One decision departed from its registered rule in the conservative direction: the neural weight rule chose 0.40 and the coordinator took 0.35 on the per-month evidence (Section 3.4); the departure was taken on 2025 months, not on the ranking months.
+Some rules were themselves revised when they failed. The fixed $-$0.30 s threshold was not derived from data and was removed; a stage change worth $-$0.137 s (6 of 6 folds) was uploaded anyway and gave $-$0.04 s. The ``8 of 12 months'' tail rule rejected a change that then gained 3.60 s. If the decided and trimmed measures differ by more than a factor of two, the trimmed one decides, because on the 21 September chain the ten worst out-of-fold rows held 24.3 \% of the squared error and the worst single row was worth 7.47 s on the leaderboard scale, 25 times the gate. One decision departed from its registered rule in the conservative direction: the neural weight rule chose 0.40 and 0.35 was taken on the per-month evidence (Section 3.4); the departure was taken on 2025 months, not on the ranking months.
+
+Forecast corridors were themselves tested. Of the four uploads of 8--9 October that priced the final recipe or checked the final file, three scored inside the corridor written before the upload and one, the control of the final file, scored 0.02 s below it on the favourable side (Section 5.7). Its corridor allowed $\pm$0.3 s for the refit of the members and the new input dithering; the label-free analysis afterwards put the noise of such a control at $\pm$0.43--0.55 s (1$\sigma$). A corridor for a file whose members were refitted must be about twice as wide as the one we wrote. The rule attached to the corridor still did its job: it stopped the final upload until the deviation was explained.
 
 \subsection{Transfer from cross-validation to the leaderboard}\label{transfer-from-cross-validation-to-the-leaderboard}
 
-Most uploads from 20 September on carried a written forecast, which lets us compare the cross-validation effect of a single change with its leaderboard effect (Table 5). On 4 October this was calibrated on 38 single-change pairs, 15 of them recomputed from out-of-fold files. The leaderboard change followed the decided-row cross-validation change (Pearson 0.89, slope 1.06) and its body part (0.90), but not the y \textgreater{} 7,200 s tail (0.09); the sign agreed in only 60--70 \% of pairs.
-
-\textbf{Table 5. Cross-validation against leaderboard effect of single changes (seconds; negative is better). CV values before October are on a leaderboard-equivalent scale, comparable in sign and rough size.}
+Most uploads from 20 September on carried a written forecast, which lets us compare the cross-validation effect of a single change with its leaderboard effect (Table~\ref{tab:5}). On 4 October this was calibrated on 38 single-change pairs, 15 of them recomputed from out-of-fold files. The leaderboard change followed the decided-row cross-validation change (Pearson 0.89, slope 1.06) and its body part (0.90), but not the y \textgreater{} 7,200 s tail (0.09); the sign agreed in only 60--70 \% of pairs.
 
 {
 \begin{longtable}[]{@{}
@@ -416,6 +466,20 @@ Most uploads from 20 September on carried a written forecast, which lets us comp
   >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2143}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2857}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2857}}@{}}
+\caption{Cross-validation against leaderboard effect of single changes (seconds; negative is better). CV values before October are on a leaderboard-equivalent scale, comparable in sign and rough size.}\label{tab:5}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Change (leaderboard pair)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Kind
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+CV
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Leaderboard
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Change (leaderboard pair)
@@ -452,7 +516,7 @@ Airline prefix in TabPFN tail E118 (v316 vs v247) & 42 tail rows & forecast $-$0
 \end{longtable}
 }
 
-The ratio of leaderboard to decided-row cross-validation change by type of change was about 1.0 for ADS-B stages, about 0.7 for blend members, 0.2--0.3 for new base features, and zero or negative for rules and calibrations fitted on 2025 (the proxy scale was an exception); tail models and capacity removals were not scaled by cross-validation at all. Later forecasts used the cross-validation change times the type ratio. The last two rows of Table 5 add one observation: a change of mixture weights with no new capacity transferred at about three times its out-of-fold estimate, and seed averaging that was neutral out of fold gained 0.12 s on the board; the forecast corridor for the weight change was missed on the favourable side. Five rules were derived from these observations.
+The ratio of leaderboard to decided-row cross-validation change by type of change was about 1.0 for ADS-B stages, about 0.7 for blend members, 0.2--0.3 for new base features, and zero or negative for rules and calibrations fitted on 2025 (the proxy scale was an exception); tail models and capacity removals were not scaled by cross-validation at all. Later forecasts used the cross-validation change times the type ratio. The last two rows of Table~\ref{tab:5} add one observation: a change of mixture weights with no new capacity transferred at about three times its out-of-fold estimate, and seed averaging that was neutral out of fold gained 0.12 s on the board; the forecast corridor for the weight change was missed on the favourable side. Five rules were derived from these observations.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -479,21 +543,19 @@ Every leaderboard score is an unweighted RMSE over the same 344,841 rows. For tw
 
 No labels are needed. Seven blends were priced before upload and scored within 0.0009 s of the forecast (the residual is the rounding of the uploaded file to whole seconds). The identity served three purposes: to price a blend before spending a slot; to refuse a blend whose cross-validation weights promised $-$9.68 s but which the identity priced 5.20 s worse than the base file; and to expose a hidden component, when a blend with an unscored partner missed its forecast by 0.66 s and the identity gave the partner's own leaderboard RMSE as 338.46 s although it had trailed the control by only 7 \% in cross-validation. The rule that followed is to blend only complete, scored submissions. Leaderboard-optimal blend weights ($-$1.004 s instead of the $-$0.83 s achieved for the first blend) were computed and not used, because fitting weights to the leaderboard is probing.
 
-The identity has a limit, learned on 9 October. It is exact for the unrounded blend of fixed files, so ``de-blending'' v12077 gives the score of the chain before the E81 blend as 230.54 s; but the file without the blend, v12078, differs from that de-blended file by the stages applied after the blend (the LOBT edge lift, the tail protection and the half-weight LSZH stage; RMS 5.48 s on 62,163 rows) and scored 231.05 s, 0.45 s worse than the identity's point. The difference is correlated with the residual (2$\cdot$cov = 204.9 s\textsuperscript{2} against RMS\textsuperscript{2} = 30.0 s\textsuperscript{2}), not noise. The identity cannot be carried across stages that act after the blend; the historical price of the blend was the better guide.
+The identity has a limit, learned on 9 October. It is exact for the unrounded blend of fixed files, so ``de-blending'' v12077 gives the score of the chain before the E81 blend as 230.54 s; but the file without the blend, v12078, differs from that de-blended file by the stages applied after the blend (the LOBT edge lift, the tail protection and the half-weight LSZH stage; RMS 5.48 s on 62,163 rows) and scored 231.05 s, 0.45 s worse than the identity's point. The difference is correlated with the residual (2$\cdot$cov = 204.9 s\textsuperscript{2} against RMS\textsuperscript{2} = 30.0 s\textsuperscript{2}), not noise. The identity cannot be carried across stages that act after the blend; the historical price of the blend was the better guide. Used within its limit, the identity also gives the exact score of a file that was never uploaded: v12079 differs from v12077 on exactly 42 rows, on which v12077 and v12078 agree, so v12078 with those 42 rows replaced scores \(\sqrt{231.0488^2 + 231.1770^2 - 230.4812^2} = 231.7429\) s. This file is the reference point for the control of Section 5.7.
 
 \section{Results}\label{results}
 
 \subsection{Leaderboard progression}\label{leaderboard-progression}
 
-111 uploads between 13 September and 8 October 2026 produced 63 new best scores (Figure 6). The 31 steps with a gain of about 0.3 s or more account for 267.9 s of the total 270.7 s improvement. Table 6 groups them into seven phases; each gain is against the previous best file, and where an upload bundled changes the repository's development history gives the single-change control.
+111 uploads between 13 September and 8 October 2026 produced 63 new best scores (Figure~\ref{fig:6}); three more on 9 October measured the final recipe and are reported in Section 5.7, for 114 in total. The 31 steps with a gain of about 0.3 s or more account for 267.9 s of the total 270.7 s improvement. Table~\ref{tab:6} groups them into seven phases; each gain is against the previous best file, and where an upload bundled changes the repository's development history gives the single-change control.
 
 \begin{figure}
 \centering
 \pandocbounded{\includegraphics[width=\textwidth]{fig1_leaderboard_progression.png}}
-\caption{Figure 6. Best leaderboard RMSE over time, from 501.23 s (v1, 13 September) to 230.48 s (v12077, 8 October), with labelled milestones.}
+\caption{Best leaderboard RMSE over time, from 501.23 s (v1, 13 September) to 230.48 s (v12077, 8 October), with labelled milestones.}\label{fig:6}
 \end{figure}
-
-\textbf{Table 6. Phases of development and the design changes that moved the leaderboard score.}
 
 {
 \begin{longtable}[]{@{}
@@ -501,6 +563,20 @@ The identity has a limit, learned on 9 October. It is exact for the unrounded bl
   >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
   >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
   >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\caption{Phases of development and the design changes that moved the leaderboard score.}\label{tab:6}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Phase
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Dates
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Best RMSE (s)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Changes that moved the score (leaderboard gain, s)
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Phase
@@ -525,19 +601,29 @@ Changes that moved the score (leaderboard gain, s)
 \end{longtable}
 }
 
-The largest gains came from describing the recording process ($-$135.0 s, then $-$27.0 s for the Rome tail) and from a physical sensor ($-$15.2 s for the first surface stage), not from learner tuning. After 26 September progress slowed: from 236.32 s to 230.48 s over 57 uploads. On 26 September the team was 8th of 192 and 3.14 s behind third place; on the morning of 8 October it was 14th of 237 and 15.32 s behind third place (215.62 s); at 20:15 UTC the same day, after v12077, it was 16th of 239 with third place at 213.5212 s, 16.96 s ahead, and on 9 October at 08:55 UTC third place stood at 213.2898 s. Leading teams improved much more in the same period. \placeholder{ final Jan/Jul rank at the close of the ranking on 14 October 2026.}
+The largest gains came from describing the recording process ($-$135.0 s, then $-$27.0 s for the Rome tail) and from a physical sensor ($-$15.2 s for the first surface stage), not from learner tuning. After 26 September progress slowed: from 236.32 s to 230.48 s over 57 uploads. On 26 September the team was 8th of 192 and 3.14 s behind third place; on the morning of 8 October it was 14th of 237 and 15.32 s behind third place (215.62 s); at 20:15 UTC the same day, after v12077, it was 16th of 239 with third place at 213.5212 s, 16.96 s ahead, and on 9 October at 08:55 UTC third place stood at 213.2898 s. Leading teams improved much more in the same period. \placeholder{ final ranking --- rank of v12077 on the ordinary board at its close on 14 October 2026.}
 
 \subsection{Single-change controls (ablations)}\label{single-change-controls-ablations}
 
-Because each upload was a complete file scored on the same rows, the leaderboard provides single-change controls that are not available from cross-validation alone. Table 7 collects the ones that define the submitted chain and the two measurement uploads of 9 October that price the parts removed for the final.
-
-\textbf{Table 7. Single-change leaderboard controls (RMSE change in seconds; negative is better).}
+Because each upload was a complete file scored on the same rows, the leaderboard provides single-change controls that are not available from cross-validation alone. Table~\ref{tab:7} collects the ones that define the submitted chain and the two measurement uploads of 9 October that price the parts removed for the final.
 
 {
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3000}}
   >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3000}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4000}}@{}}
+\caption{Single-change leaderboard controls (RMSE change in seconds; negative is better).}\label{tab:7}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Component
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Control pair
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Effect
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Component
@@ -577,17 +663,15 @@ Ordered-trajectory member replacing E190 & v12075 vs v12074 & $-$0.51 \\
 Neural member: ten seeds instead of three & v12076 vs v12075 & $-$0.12 \\
 Neural weight 0.35 instead of 0.25, anchors $\times$ 0.65/0.75 & v12077 vs v12076 & $-$0.34 \\
 E81 whole-file blend removed (price of the blend on the v12077 chain) & v12078 vs v12077 & +0.57 \\
-Fresh ten-seed TabPFN rows instead of the 42 frozen rows & v12079 vs v12077 & \placeholder{ v12079 score; forecast +0.69, corridor {[}230.83; 231.48}{]} \\
+Fresh ten-seed TabPFN rows instead of the 42 frozen rows (price of the fresh tail) & v12079 vs v12077 & +0.70 \\
 \end{longtable}
 }
 
-Changes that were tested the same way and made the leaderboard worse are part of the record: per-airport models (+3.79), regime shares by group (+5.78), ADS-B features inside the base model (+0.33), adversarial-validation weights (+1.77), the OPDI correction at EDDF (+1.13), a seed ensemble of the TabPFN tail (+0.86), monthly calibration to published PRU taxi-out times (+0.11), removal of the \texttt{ap\_runway} feature (+0.43) or of stand identity while keeping the encodings (+1.45).
+Changes that were tested the same way and made the leaderboard worse are part of the record: per-airport models (+3.79), regime shares by group (+5.78), ADS-B features inside the base model (+0.33), adversarial-validation weights (+1.77), the OPDI correction at EDDF (+1.13), a seed ensemble of the TabPFN tail (+0.86), monthly calibration to published PRU taxi-out times (+0.11), removal of the \texttt{ap\_\allowbreak{}runway} feature (+0.43) or of stand identity while keeping the encodings (+1.45).
 
 \subsection{Out-of-fold error by airport}\label{out-of-fold-error-by-airport}
 
-Table 8 gives the 2025 out-of-fold RMSE by airport for the chain before the E81 blend (E195 \texttt{joint} arm, 2,084,921 rows; the 126 LIRF tail rows are excluded; the E203 member is not in these numbers). LIRF, LFPG and LTFM have the largest errors on labels up to 7,200 s. At LSZH six labels above 7,200 s hold 85 \% of the airport's squared error, which explains the gap between its two columns.
-
-\textbf{Table 8. 2025 out-of-fold RMSE by airport, chain before the E81 blend.}
+Table~\ref{tab:8} gives the 2025 out-of-fold RMSE by airport for the chain before the E81 blend (E195 \texttt{joint} arm, 2,084,921 rows; the 126 LIRF tail rows are excluded; the E203 member is not in these numbers). LIRF, LFPG and LTFM have the largest errors on labels up to 7,200 s. At LSZH six labels above 7,200 s hold 85 \% of the airport's squared error, which explains the gap between its two columns.
 
 {
 \begin{longtable}[]{@{}
@@ -596,6 +680,22 @@ Table 8 gives the 2025 out-of-fold RMSE by airport for the chain before the E81 
   >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2105}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2105}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2105}}@{}}
+\caption{2025 out-of-fold RMSE by airport, chain before the E81 blend.}\label{tab:8}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Airport
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Evaluated rows
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Share of squared error
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+RMSE, all rows (s)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+RMSE, labels $\le$ 7,200 s (s)
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Airport
@@ -628,9 +728,7 @@ LTFM & 272,965 & 14.3 \% & 228.2 & 224.2 \\
 
 \subsection{Generalisation across months: February and June as a pseudo-final}\label{generalisation-across-months-february-and-june-as-a-pseudo-final}
 
-The blind final adds February and June, two months on which no file was ever scored. The six folds predict every 2025 month out of fold, so February and June 2025 serve as a pseudo-final for the same chain (Table 9; Figure 7). Confidence intervals are 95 \% percentile bootstraps that resample calendar days with replacement inside each group, so one day's flights move together.
-
-\textbf{Table 9. 2025 out-of-fold RMSE by month group, chain before the E81 blend (2,084,921 rows).}
+The blind final adds February and June, two months on which no file was ever scored. The six folds predict every 2025 month out of fold, so February and June 2025 serve as a pseudo-final for the same chain (Table~\ref{tab:9}; Figure~\ref{fig:7}). Confidence intervals are 95 \% percentile bootstraps that resample calendar days with replacement inside each group, so one day's flights move together.
 
 {
 \begin{longtable}[]{@{}
@@ -642,6 +740,28 @@ The blind final adds February and June, two months on which no file was ever sco
   >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1034}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1379}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1379}}@{}}
+\caption{2025 out-of-fold RMSE by month group, chain before the E81 blend (2,084,921 rows).}\label{tab:9}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Group
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Rows
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+RMSE, all rows (s)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+95 \% CI
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+RMSE, body (s)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+95 \% CI
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Labels \textgreater{} 4 h
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+SSE in the 10 largest rows
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Group
@@ -673,20 +793,18 @@ Other eight months & 1,413,690 & 192.7 & 174.7 -- 220.7 & 172.4 & 169.5 -- 175.4
 \begin{figure}
 \centering
 \pandocbounded{\includegraphics[width=\textwidth]{fig_generalisation_months.png}}
-\caption{Figure 7. Out-of-fold RMSE by month for the model and two fold-honest baselines (airport median; take-off minus AOBT\_3), all rows and labels up to 7,200 s.}
+\caption{Out-of-fold RMSE by month for the model and two fold-honest baselines (airport median; take-off minus AOBT\_3), all rows and labels up to 7,200 s.}\label{fig:7}
 \end{figure}
 
-The new months were not harder than the leaderboard months in 2025: Feb + Jun minus Jan + Jul is $-$31.9 s on all rows (interval $-$130.3 to +69.0 s) and $-$14.9 s on the body ($-$33.5 to +6.9 s); the intervals include zero, so the difference is not established either. Body RMSE is 159--206 s in eleven months and 236 s in July; February's 206 s is the second highest and is due to one airport, LTFM (417 s against 185--245 s in the other months), which had a snow episode on 19--23 February 2025. All-rows RMSE is driven by single rows in some months: January's 315 s against 175 s on the body comes from two LFPG labels of 23 and 16 hours, June's 266 s against 189 s from one LIRF label of 24 h 13 min. The gain over the baselines does not depend on the month: the body gain over the raw NM proxy is 181--227 s in every month (Jan + Jul 216 s, Feb + Jun 201 s), and in no airport-month (0 of 120) is the model worse than the proxy (Figure 8). Across the twelve months, body RMSE moves with the number of labels above two hours (r = +0.89), the share of departures without an NM record (+0.79) and the label standard deviation (+0.67), and against own-track ADS-B coverage ($-$0.45); these are descriptive correlations on twelve points.
+The new months were not harder than the leaderboard months in 2025: Feb + Jun minus Jan + Jul is $-$31.9 s on all rows (interval $-$130.3 to +69.0 s) and $-$14.9 s on the body ($-$33.5 to +6.9 s); the intervals include zero, so the difference is not established either. Body RMSE is 159--206 s in eleven months and 236 s in July; February's 206 s is the second highest and is due to one airport, LTFM (417 s against 185--245 s in the other months), which had a snow episode on 19--23 February 2025. All-rows RMSE is driven by single rows in some months: January's 315 s against 175 s on the body comes from two LFPG labels of 23 and 16 hours, June's 266 s against 189 s from one LIRF label of 24 h 13 min. The gain over the baselines does not depend on the month: the body gain over the raw NM proxy is 181--227 s in every month (Jan + Jul 216 s, Feb + Jun 201 s), and in no airport-month (0 of 120) is the model worse than the proxy (Figure~\ref{fig:8}). Across the twelve months, body RMSE moves with the number of labels above two hours (r = +0.89), the share of departures without an NM record (+0.79) and the label standard deviation (+0.67), and against own-track ADS-B coverage ($-$0.45); these are descriptive correlations on twelve points.
 
 \begin{figure}
 \centering
 \pandocbounded{\includegraphics[width=\textwidth]{fig_generalisation_airport_month.png}}
-\caption{Figure 8. Body RMSE and gain over the NM proxy by airport and month, 2025 out-of-fold.}
+\caption{Body RMSE and gain over the NM proxy by airport and month, 2025 out-of-fold.}\label{fig:8}
 \end{figure}
 
-The neural weight of Section 3.4 is the one design parameter chosen after the final was announced, so Table 10 shows that it is not tuned to January and July: the per-month optimum ranges from 0.30 to 0.60, January prefers 0.40, and 0.35 is the only grid value below 0.25 in every month, with gains of $-$0.117 s (January), $-$0.675 s (February), $-$0.140 s (June) and $-$0.107 s (July) on 2025 data.
-
-\textbf{Table 10. Change of decided-row out-of-fold RMSE against the 0.25 weight, per month of 2025, ten-seed member (E212).}
+The neural weight of Section 3.4 is the one design parameter chosen after the final was announced, so Table~\ref{tab:10} and Figure~\ref{fig:9} show that it is not tuned to January and July: the per-month optimum ranges from 0.30 to 0.60, January prefers 0.40, and 0.35 is the only grid value below 0.25 in every month, with gains of $-$0.117 s (January), $-$0.675 s (February), $-$0.140 s (June) and $-$0.107 s (July) on 2025 data. February is the outlier: its curve keeps falling up to the largest weight on the grid, while July bottoms out at 0.35 and August at 0.30, so a weight chosen on pooled months would trade the summer for February.
 
 {
 \begin{longtable}[]{@{}
@@ -696,6 +814,24 @@ The neural weight of Section 3.4 is the one design parameter chosen after the fi
   >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1739}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1739}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1739}}@{}}
+\caption{Change of decided-row out-of-fold RMSE against the 0.25 weight, per month of 2025, ten-seed member (E212).}\label{tab:10}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Month
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Best weight on the grid
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+$\Delta$RMSE at 0.35 (s)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+at 0.40
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+at 0.45
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+at 0.50
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Month
@@ -730,13 +866,17 @@ Months better than 0.25 & & \textbf{12 of 12} & 11 of 12 & 9 of 12 & 7 of 12 \\
 \end{longtable}
 }
 
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[width=\textwidth]{nn_weight_by_month.png}}
+\caption{Change of the decided-row 2025 out-of-fold RMSE of the chain (before the E81 blend) against the neural-member weight, per month, relative to the weight 0.25 of v12075 (E212). Solid: ten-seed member; dashed: three-seed member; dot: best grid weight with ten seeds; vertical line: the chosen 0.35; number above each panel: change at 0.35 with ten seeds. Blue panels are the four months of the blind final. The y-scales differ between panels.}\label{fig:9}
+\end{figure}
+
 These are 2025 numbers, not a measurement of 2026. Reading across, the no-NM share of February 2026 (0.91 \%) is close to February 2025 (0.77 \%) and half of January 2026 (1.60 \%), June 2026 (1.35 \%) matches June 2025 (1.36 \%), and LTFM February 2026 shows no snow signature (the share of take-off minus schedule above one hour is 7.2 \% against 12.9 \% in February 2025); the surface coverage of the final months is in Section 2.4.
 
 \subsection{Calibrated uncertainty from the mixture}\label{calibrated-uncertainty-from-the-mixture}
 
-The classifier probabilities and the candidate values define a predictive distribution per flight at no extra training cost: the planned regimes are point masses at their candidates, and the regular regime is the centre plus an empirical residual distribution per airport (99 percentiles of the residual on flights whose true regime is regular, fitted on the other five folds). Two centres were evaluated on the 2,084,921 out-of-fold rows: the base regressor inside the registered mixture, and the value that makes the mixture mean equal the production chain forecast (Table 11; Figure 9).
-
-\textbf{Table 11. Calibration of the predictive distribution, 2025 out-of-fold rows.}
+The classifier probabilities and the candidate values define a predictive distribution per flight at no extra training cost: the planned regimes are point masses at their candidates, and the regular regime is the centre plus an empirical residual distribution per airport (99 percentiles of the residual on flights whose true regime is regular, fitted on the other five folds). Two centres were evaluated on the 2,084,921 out-of-fold rows: the base regressor inside the registered mixture, and the value that makes the mixture mean equal the production chain forecast (Table~\ref{tab:11}; Figure~\ref{fig:10}).
 
 {
 \begin{longtable}[]{@{}
@@ -748,6 +888,28 @@ The classifier probabilities and the candidate values define a predictive distri
   >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1379}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1379}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1379}}@{}}
+\caption{Calibration of the predictive distribution, 2025 out-of-fold rows.}\label{tab:11}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Variant
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Coverage 50 / 80 / 90 \%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Median width 50 / 80 / 90 \% (s)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+CRPS (s)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Point MAE (s)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Climatology CRPS (s)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Skill vs point
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Skill vs climatology
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Variant
@@ -778,22 +940,20 @@ Skill vs climatology
 \begin{figure}
 \centering
 \pandocbounded{\includegraphics[width=\textwidth]{fig_uncertainty_calibration.png}}
-\caption{Figure 9. Coverage of the 50/80/90 \% intervals by airport and probability-integral-transform histograms, chain variant.}
+\caption{Coverage of the 50/80/90 \% intervals by airport and probability-integral-transform histograms, chain variant.}\label{fig:10}
 \end{figure}
 
 Both variants are calibrated on the whole set to within one point of nominal, with symmetric tails (5.2 \% below the 5 \% quantile, 5.1 \% above the 95 \%); the chain variant is 23 \% sharper at the same coverage. By airport, those with a stable residual spread (EDDF, EHAM, LFPG, LSZH, LTFM) are calibrated to within half a point; EDDM and LEBL are slightly too wide (50 \% interval covers 56 \% and 54 \%) and LIRF too narrow (77 \% and 87 \% for the 80 \% and 90 \% intervals), because a single yearly residual table misses their seasonal spread. By month group the coverage of the 50/80/90 \% intervals is 47.4 / 76.6 / 87.1 \% for Jan + Jul, 51.0 / 80.3 / 89.9 \% for Feb + Jun and 51.9 / 80.9 / 90.3 \% for the other months; July is the only month more than three points below nominal. The one population where the distribution fails is the 22,298 rows without an NM record (coverage 30.3 / 56.6 / 70.7 \%, CRPS 224 s): the mixture has no candidate for a missing planning time. The median of the distribution is not a better point forecast than the mean under RMSE (223.1 s against 218.3 s), as expected for right-skewed residuals.
 
 \subsection{The regime classifier as a data-quality detector, and the PRU view}\label{the-regime-classifier-as-a-data-quality-detector-and-the-pru-view}
 
-The detector is \(P(\text{planning copy}) = 1 - P(\text{regular})\), out of fold, evaluated against the $\pm$6 s label rule (Figure 10). Over the seven labelled airports the mean probability is 9.46 \% against a label share of 9.58 \%; the expected number of copies is 139,319 against 140,992 labels ($-$1.2 \%), and per airport the two agree within 0.1 percentage point (LIRF 23.91 \% against 24.14 \%). The reliability curve follows the diagonal across the whole range (bin {[}0.50, 0.60): 0.548 against 0.547; bin {[}0.99, 1{]}: 0.994 against 0.999); at the three airports without planned-regime labels the detector is quiet (5--9 expected copies in 135,000--248,000 departures). Brier score 0.075 on the labelled airports. Individual flags are confident only at LIRF: AUC against the rule is 0.795, and of the flags at \(P \ge 0.5\) (precision 71.1 \%, recall 8.8 \%) 17,361 of 17,424 are at LIRF; at \(P \ge 0.95\) precision is 99.2 \% (Table 12). The detector does not try to call the coincidental copies, because a coincidental copy costs the mixture nothing. The expected count is therefore a usable monthly statistic at every labelled airport, while the per-flight flag is usable at LIRF and, elsewhere, only above about 0.8, where it almost never fires.
+The detector is \(P(\text{planning copy}) = 1 - P(\text{regular})\), out of fold, evaluated against the $\pm$6 s label rule (Figure~\ref{fig:11}). Over the seven labelled airports the mean probability is 9.46 \% against a label share of 9.58 \%; the expected number of copies is 139,319 against 140,992 labels ($-$1.2 \%), and per airport the two agree within 0.1 percentage point (LIRF 23.91 \% against 24.14 \%). The reliability curve follows the diagonal across the whole range (bin {[}0.50, 0.60): 0.548 against 0.547; bin {[}0.99, 1{]}: 0.994 against 0.999); at the three airports without planned-regime labels the detector is quiet (5--9 expected copies in 135,000--248,000 departures). Brier score 0.075 on the labelled airports. Individual flags are confident only at LIRF: AUC against the rule is 0.795, and of the flags at \(P \ge 0.5\) (precision 71.1 \%, recall 8.8 \%) 17,361 of 17,424 are at LIRF; at \(P \ge 0.95\) precision is 99.2 \% (Table~\ref{tab:12}). The detector does not try to call the coincidental copies, because a coincidental copy costs the mixture nothing. The expected count is therefore a usable monthly statistic at every labelled airport, while the per-flight flag is usable at LIRF and, elsewhere, only above about 0.8, where it almost never fires.
 
 \begin{figure}
 \centering
 \pandocbounded{\includegraphics[width=\textwidth]{fig6_regime_detector_calibration.png}}
-\caption{Figure 10. Reliability diagrams of the detector, seven labelled airports together and per airport.}
+\caption{Reliability diagrams of the detector, seven labelled airports together and per airport.}\label{fig:11}
 \end{figure}
-
-\textbf{Table 12. Precision and recall of the flag \(P \ge t\) against the $\pm$6 s rule, 2025 out of fold.}
 
 {
 \begin{longtable}[]{@{}
@@ -802,6 +962,22 @@ The detector is \(P(\text{planning copy}) = 1 - P(\text{regular})\), out of fold
   >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\caption{Precision and recall of the flag \(P \ge t\) against the $\pm$6 s rule, 2025 out of fold.}\label{tab:12}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedleft
+Threshold
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Flagged
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Precision
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Recall (all labelled airports)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Recall at LIRF
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedleft
 Threshold
@@ -824,9 +1000,7 @@ Recall at LIRF
 \end{longtable}
 }
 
-To see what the copies do to a monitoring statistic, we emulated the PRU additional-taxi-out indicator from the challenge records: taxi-out minus an unimpeded reference, the 10th percentile per stand $\times$ departure-runway group over 2025, valid with at least ten flights at or below it, after PRU's filters (deviations forced by the data: calendar-year instead of rolling window, UTC months, no de-icing exclusion, 41 helicopter designators excluded). Against the published 2025 indicator for April--October (70 airport-months) the emulation has a mean absolute difference of 3.3 s, median 1.8 s, maximum 14.5 s and correlation 0.999; November--March the difference grows to 25.7 s with a +23.5 s bias, which is the de-icing exclusion we cannot apply (PRU removes 20--31 \% of EDDM's winter departures). The agreement also shows that the published indicator is computed from the same records, planning copies included. The indicator was then computed three ways: as recorded, with the rule-labelled copies removed, and with every record weighted by \(P(\text{regular})\) (Table 13; Figure 11).
-
-\textbf{Table 13. Effect of planning-copy records on the emulated additional-taxi-out indicator, 2025 per airport, seconds per flight (positive: the as-recorded value is higher).}
+To see what the copies do to a monitoring statistic, we emulated the PRU additional-taxi-out indicator from the challenge records: taxi-out minus an unimpeded reference, the 10th percentile per stand $\times$ departure-runway group over 2025, valid with at least ten flights at or below it, after PRU's filters (deviations forced by the data: calendar-year instead of rolling window, UTC months, no de-icing exclusion, 41 helicopter designators excluded). Against the published 2025 indicator for April--October (70 airport-months) the emulation has a mean absolute difference of 3.3 s, median 1.8 s, maximum 14.5 s and correlation 0.999; November--March the difference grows to 25.7 s with a +23.5 s bias, which is the de-icing exclusion we cannot apply (PRU removes 20--31 \% of EDDM's winter departures). The agreement also shows that the published indicator is computed from the same records, planning copies included. The indicator was then computed three ways: as recorded, with the rule-labelled copies removed, and with every record weighted by \(P(\text{regular})\) (Table~\ref{tab:13}; Figure~\ref{fig:12}).
 
 {
 \begin{longtable}[]{@{}
@@ -836,6 +1010,24 @@ To see what the copies do to a monitoring statistic, we emulated the PRU additio
   >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1739}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1739}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1739}}@{}}
+\caption{Effect of planning-copy records on the emulated additional-taxi-out indicator, 2025 per airport, seconds per flight (positive: the as-recorded value is higher).}\label{tab:13}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Airport
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Copies (rule / detector)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Indicator as recorded
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Rule-cleaned (A $-$ B)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Probability-cleaned (A $-$ C)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Largest monthly A $-$ B
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Airport
@@ -867,18 +1059,16 @@ LTFM & 6.9 \% / 6.8 \% & 294.2 & +1.1 & $-$1.3 & +15.5 (February) \\
 \begin{figure}
 \centering
 \pandocbounded{\includegraphics[width=\textwidth]{fig7_regime_effect_on_kpi.png}}
-\caption{Figure 11. Monthly share of planning-copy departures per airport (rule and detector) and the effect of those records on the monthly indicator.}
+\caption{Monthly share of planning-copy departures per airport (rule and detector) and the effect of those records on the monthly indicator.}\label{fig:12}
 \end{figure}
 
 Outside LIRF the copies do not inflate the statistics: the annual effect is between $-$2.8 and +1.1 s per flight by the rule, and negative by probability (labelled records are slightly shorter than the rest, as on-time departures are), with two episodes worth a monitoring unit's attention: LEBL in July--September 2025 (+26, +19, +15 s per flight by the rule; the label share rose to 11.9--12.3 \% while the detector, trained on the other months, stayed at 8--9 \%, which looks like a change in how delayed departures were recorded) and LTFM in February 2025 (+15 s). At LIRF the copies are the dominant data-quality issue: the PRU-style indicator is 25--67 s per flight higher by the rule (largest in June--August) and 1.5--13 s by the probability lower bound; for an annual value of 401 s the rule-based effect is about 10 \%. The reference itself is barely affected (7.2 s mean absolute change at LIRF, below 5 s elsewhere).
 
-Read in PRU terms, a taxi-out prediction decomposes as reference plus predicted additional time. On the 1,788,520 regular-regime departures with a valid reference the unimpeded reference is 518--978 s by airport and the additional time averages 196--391 s with a standard deviation of 222--391 s; the chain explains 45--69 \% of its variance beyond the airport-month level (correlation 0.68--0.83). The regular regressor is unbiased on the regular regime at every airport (\textbar bias\textbar{} $\le$ 1.9 s), whereas the mixture is biased upward where copies are frequent (+36.8 s at LIRF, +10.6 s at LEBL): on a row that might be a copy the squared-error optimum moves part of the way towards the planning candidate, and on the rows that turn out regular that move is a positive error. A monthly indicator computed from the predictions reproduces the one computed from the labels within 6.4 s on average over 120 airport-months (bias +0.4 s, correlation 0.994) against a month-to-month spread of 71--77 s. For a PRU-style reading of the regular regime, the regressor, not the mixture, is the right output.
+Read in PRU terms, a taxi-out prediction decomposes as reference plus predicted additional time. On the 1,788,520 regular-regime departures with a valid reference the unimpeded reference is 518--978 s by airport and the additional time averages 196--391 s with a standard deviation of 222--391 s; the chain explains 45--69 \% of its variance beyond the airport-month level (correlation 0.68--0.83). The regular regressor is unbiased on the regular regime at every airport (\textbar bias\textbar{} $\le$ 1.9 s), whereas the mixture is biased upward where copies are frequent (+36.8 s at LIRF, +10.6 s at LEBL): on a row that might be a copy the squared-error optimum moves part of the way towards the planning candidate, and on the rows that turn out regular that move is a positive error. A monthly indicator computed from the predictions reproduces the one computed from the labels within 6.4 s on average over 120 airport-months (bias +0.4 s, correlation 0.994) against a month-to-month spread of 71--77 s. For a PRU-style reading of the regular regime, the regressor, not the mixture, is the right output. Section 5.7 applies the same emulation to the final file's predictions for the four months of 2026 and compares it with the indicator EUROCONTROL has published since.
 
-\subsection{The blind final: recipe cost, file and control}\label{the-blind-final-recipe-cost-file-and-control}
+\subsection{The blind final: recipe cost, file, control and label-free checks}\label{the-blind-final-recipe-cost-file-control-and-label-free-checks}
 
-\textbf{Price of the recipe on January/July.} The uniform recipe was run on the v12075-era January/July artifacts (old members, the three-seed neural member at 0.25, the blend removed, fresh tail rows) and uploaded once as a technical canary, v12090: 232.1933 s against 230.9387 s for v12075, +1.2546 s, inside the forecast corridor {[}231.1; 232.3{]} written before the upload. The canary removed the blend and replaced the 42 donor rows at the same time, so it does not identify either effect alone. On 9 October the two parts were priced by single uploads on the v12077 chain: skipping the blend alone (v12078) costs +0.5676 s (231.0488 s), and replacing the 42 frozen rows by the fresh ten-seed ensemble alone (v12079; exactly 42 rows changed, RMS 713.5 s between the two sets of values) was uploaded at 08:58 UTC with a forecast of +0.69 s {[}230.83; 231.48{]} and had not been processed by the organiser's scorer when this draft was written, the scorer having processed no team's file after 08:54 UTC \placeholder{ v12079 score and the second half of the decomposition}. Table 14 collects the measurements.
-
-\textbf{Table 14. The price of the final recipe on the January/July rows, measured by single uploads.}
+\textbf{Price of the recipe on January/July.} The uniform recipe was run on the v12075-era January/July artifacts (old members, the three-seed neural member at 0.25, the blend removed, fresh tail rows) and uploaded once as a technical canary, v12090: 232.1933 s against 230.9387 s for v12075, +1.2546 s, inside the forecast corridor {[}231.1; 232.3{]} written before the upload. The canary removed the blend and replaced the 42 donor rows at the same time, so it does not identify either effect alone. On 9 October the two parts were priced on the v12077 chain by single uploads, each the only change against v12077 and each with a forecast written beforehand (Table~\ref{tab:14}; Figure~\ref{fig:13}a). Skipping the blend (v12078) costs +0.5676 s (231.0488 s; corridor {[}230.40; 231.20{]}). Replacing the 42 frozen rows by the fresh ten-seed ensemble (v12079; exactly 42 rows changed, RMS 713.5 s between the two sets of values) costs +0.6958 s (231.1770 s; forecast 231.17, corridor {[}230.83; 231.48{]}). v12079 was uploaded during an outage of the organiser's scorer, which processed no team's file between 08:54:51 and 16:28 UTC, and was scored after the repair, 0.007 s from its central forecast. The two parts add to +1.2634 s against the canary's +1.2546 s, which was measured with the older weights and the three-seed member; the interaction is about $-$0.009 s. The cost of the uniform recipe on January/July is therefore measured, not inferred: about +0.57 s for dropping the blend and +0.70 s for replacing one favourable TabPFN draw by a repeatable ensemble.
 
 {
 \begin{longtable}[]{@{}
@@ -886,6 +1076,20 @@ Read in PRU terms, a taxi-out prediction decomposes as reference plus predicted 
   >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2143}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2857}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2857}}@{}}
+\caption{The price of the final recipe on the January/July rows, measured by single uploads.}\label{tab:14}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+File
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+What it is
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+RMSE (s)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Change (s)
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 File
@@ -905,22 +1109,33 @@ v12090 & v12075 chain, blend removed, fresh tail rows (canary) & 232.1933 & +1.2
 v12076 & v12075 with the ten-seed neural member & 230.8183 & $-$0.1204 vs v12075 \\
 v12077 & v12076 with the 0.35 weight (best) & 230.4812 & $-$0.3371 vs v12076 \\
 v12078 & v12077 without the blend & 231.0488 & +0.5676 vs v12077 \\
-v12079 & v12077 with fresh tail rows instead of the 42 frozen rows & \placeholder{ v12079} & forecast +0.69 {[}+0.35; +1.00{]} \\
-v12080 & January/July rows of the final file (control) & \placeholder{ v12080} & forecast 231.7 {[}231.2; 232.3{]} \\
+v12079 & v12077 with fresh tail rows instead of the 42 frozen rows & 231.1770 & +0.6958 vs v12077 \\
+H & v12078 with the 42 fresh rows of v12079; not uploaded, exact by the Gram identity (Section 4.4) & 231.7429 & +1.2617 vs v12077 \\
+v12080 & January/July rows of the final file (control) & 231.1805 & $-$0.5624 vs H \\
 \end{longtable}
 }
 
-\textbf{The file.} \texttt{gentle-igloo\_final.parquet} was assembled on 9 October 2026 on the Mac in 157.6 s with zero fits (SHA-256 \texttt{76c32426d750040690ff68bacd6ecbf3a7aa1e63340df5b9271a324b7064d554}, 2,145,126 bytes, 670,790 rows, template SHA \texttt{b3445d80\ldots{}}, ranking file SHA \texttt{4b0692a7\ldots{}}, git commit \texttt{2d85c07a}). The tail stage served 62 rows, with the ten TabPFN seeds bitwise identical on a second run; the blend was not applied and no donor row was copied. The validator passed every hard check (file name, columns and dtypes as in the template, 670,790 rows, identical ID set, no duplicates, no null/NaN/inf, values 0--110,578 s, integer seconds); the file has a mean of 1,012 s, a median of 939 s, 152 values above 7,200 s and 46 zeros. Against v12077 on the 344,841 January/July IDs, 95.6 \% of rows differ with RMS 26.5 s and a maximum of 2,926 s, which is the refit of the members on the four-month view plus the new dithering of the inputs (an RMS of exactly zero would have meant copied rows). An independent second assembly from the same contract (new \texttt{prepare} and \texttt{assemble}, 112.7 s) reproduced the same SHA. Per month $\times$ airport medians lie between 702 s (EHAM June) and 1,331 s (EGLL June); the share of predictions equal to take-off minus a planning time within $\pm$15 s is 2.4--2.8 \% (schedule) to 5.7--6.1 \% (\texttt{AOBT\_3}) in every month, with February and June inside the January/July range, so the regime mixture of the new months is not different in kind.
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[width=\textwidth]{final_recipe_price.png}}
+\caption{The price of the uniform final recipe on January/July 2026, measured by single uploads. (a) Change of each measurement upload against its parent file; the two separately priced parts add to +1.263 s, the canary removed both at once with the older members, and the control is the January/July rows of the final file; the open marker is the expectation H with the two label-free one-sigma noise estimates of the control analysis (thick and thin bar). (b) Each upload against the corridor (band) and central forecast (tick) written before it; v12080 fell 0.02 s below its corridor.}\label{fig:13}
+\end{figure}
 
-\textbf{Control.} The January/July rows of the final file were sealed as a regular submission (v12080, SHA \texttt{ae1680cb\ldots{}}, 344,841 rows) with a forecast written before the upload: 231.7 s, corridor {[}231.2; 232.3{]} s, derived two ways (v12077 plus the measured blend price plus about +0.6 s for the fresh tail rows; the canary minus the measured $-$0.4575 s of the two member changes), plus about $\pm$0.3 s for the refit and the dithering. The rule, registered in advance, is that a result outside the corridor stops the final upload until a stage-by-stage comparison with v12090 and v12077 explains it, and that no choice between control files will be made. The upload waits for the organiser's scorer to resume \placeholder{ v12080 score against its corridor}.
+\textbf{The file.} \texttt{gentle-igloo\_\allowbreak{}final.parquet} was assembled on 9 October 2026 on a single workstation in 157.6 s with zero fits (SHA-256 \texttt{76c32426d750040690ff68bacd6ecbf3a7aa1e63340df5b9271a324b7064d554}, 2,145,126 bytes, 670,790 rows, template SHA \texttt{b3445d80\ldots{}}, ranking file SHA \texttt{4b0692a7\ldots{}}, git commit \texttt{2d85c07a}). The tail stage served 62 rows, with the ten TabPFN seeds bitwise identical on a second run; the blend was not applied and no donor row was copied. The validator passed every hard check (file name, columns and dtypes as in the template, 670,790 rows, identical ID set, no duplicates, no null/NaN/inf, values 0--110,578 s, integer seconds); the file has a mean of 1,012 s, a median of 939 s, 152 values above 7,200 s and 46 zeros. Against v12077 on the 344,841 January/July IDs, 95.6 \% of rows differ with RMS 26.5 s and a maximum of 2,926 s, which is the refit of the members on the four-month view plus the new dithering of the inputs (an RMS of exactly zero would have meant copied rows). An independent second assembly from the same contract (new \texttt{prepare} and \texttt{assemble}, 112.7 s) reproduced the same SHA. Per month $\times$ airport medians lie between 702 s (EHAM June) and 1,331 s (EGLL June); the share of predictions equal to take-off minus a planning time within $\pm$15 s is 2.4--2.8 \% (schedule) to 5.7--6.1 \% (\texttt{AOBT\_\allowbreak{}3}) in every month, with February and June inside the January/July range, so the regime mixture of the new months is not different in kind.
 
-\textbf{Ranking.} \placeholder{ RMSE and rank of \texttt{gentle-igloo\_final.parquet} on January + July, February + June and all four months, from the organiser's final ranking after 14 October 2026.}
+\textbf{Control.} The January/July rows of the final file were sealed as a regular submission (v12080, SHA \texttt{ae1680cb\ldots{}}, 344,841 rows) with a forecast written before the upload: 231.7 s, corridor {[}231.2; 232.3{]} s, derived two ways (v12077 plus the measured blend price plus about +0.6 s for the fresh tail rows; the canary minus the measured $-$0.4575 s of the two member changes), plus $\pm$0.3 s for the refit of the members and the new input dithering. The rule registered with it: a result outside the corridor stops the final upload until a stage-by-stage comparison explains it, and no choice between control files will be made. Once v12079 was scored, the measured decomposition put the expectation at 231.745 s, inside the corridor.
+
+v12080 scored \textbf{231.1805 s}: 0.02 s below the corridor, on the favourable side, and 0.56 s better than the measured expectation (Figure~\ref{fig:13}b). The final upload was paused, as the rule required. Label leakage was excluded first: in the final ranking file the departure block-time and taxi-time fields are null in all four months, as in the ordinary ranking file. The deviation was then decomposed without labels and without fits. The reference is the real file H of Table~\ref{tab:14}; the final rows F differ from it by RMS 20.36 s on 325,612 rows, a change of $-$260.3 s\textsuperscript{2} in mean squared error. Each group of inputs was swapped back to its v12077-era version one at a time and run through the frozen final chain, whose identity run reproduces all twelve stages byte for byte. Projected on F $-$ H, the regime probabilities of the base classifier carry 55 \% of the difference (the classifier was refitted on the four-month view, whose label-free route medians of the \texttt{plan\_\allowbreak{}*} features are taken over four months, and it reads the re-dithered January/July inputs), the neural member 23 \%, the tabular members 16 \%, the rebuilt daily ADS-B products 2 \% and the 42 tail rows 0.4 \%; joint swaps close the decomposition at 99.9 \%. The difference is concentrated: 345 rows (0.1 \%) carry 61.7 \% of its squared size and LIRF in July alone 53.5 \%. On these rows the prediction mixes regime candidates whose median spread is 2,818 s, and 87 \% of the change comes from the probabilities; a typical row is a LIRF July departure without an NM record whose schedule-copy probability moved from 0.79 to 0.55, which moved the prediction from 10,822 s to 7,854 s. Nothing pointed to an error: the members show the same seed spread as before (CatBoost 32.6 s against 32.6 s), the classifier has the same parameters, trees, features and training rows, and the surface stages serve almost the same rows (E141 222,740 against 222,660). Calibrated without labels on the 2025 January + July out-of-fold predictions, the noise of such a control is $\sigma$ $\approx$ 200--250 s\textsuperscript{2} in mean squared error, that is $\pm$0.43--0.55 s in RMSE (1$\sigma$); the observed deviation is a 1.0--1.3$\sigma$ event, and the members alone ($\sigma$ $\approx$ 10--15 s\textsuperscript{2}) could not have produced it. The recipe was not changed and the file remained the only final candidate.
+
+The lesson concerns the forecast, not the model. The corridor allowed $\pm$0.3 s for the refit and the dithering, about half the noise measured afterwards: the $\pm$0.08 s dithering estimate of Section 2.1 holds for a fixed chain, and it does not cover the refitted classifier's response to new inputs, which alone carries about 0.29 s. A control of a chain whose members and classifier are refitted needs a corridor of about $\pm$0.5 s per standard deviation. The same draw is not guaranteed to fall with the same sign on the blind months.
+
+\textbf{Label-free checks of the blind months.} EUROCONTROL publishes the monthly additional-taxi-out indicator per airport; the 2026 file covers January--July \autocite{eurocontrol2026atxotdata}. We computed the indicator from the final file's predictions with the emulation of Section 5.6 (2025 reference per stand $\times$ runway group) and compared it with the published values for the 40 airport-months of the final; the published file is a reference here, not a model input. In summer the two agree: June mean absolute difference 9.2 s (bias $-$1.1 s), July 6.6 s (bias +1.3 s), against 6.6 and 8.2 s for the same procedure applied to the 2025 out-of-fold predictions; without LIRF the June--July difference is 4.8 s. Winter differences are large (January bias +84 s, up to +261 s at EDDM) because PRU excludes de-iced flights and the challenge records do not; after a correction that multiplies PRU's published share of excluded flights by a per-airport cost of de-icing estimated on 2025, the January and February differences are 20 and 11 s. A cell is flagged when the whole range of that correction lies more than 9.9 s (three times the 2025 emulation error) from the published value. LIRF is flagged in all four months, $-$21, $-$20, $-$46 and $-$25 s, against $-$2, $-$0.4, $-$12 and +2 s in the same months of 2025. Its reference agrees with PRU's within 4 s and its predicted copy share is almost unchanged, so the regular-regime regressor predicts shorter taxi times at LIRF in 2026 than the published indicator implies, or the recording of copies changed; without labels the two cannot be told apart. The shift is present in the ordinary-board months as well as in the blind ones; June is the largest. LTFM is flagged in January (+64 s) and February (+28 s) beyond the de-icing allowance; in January 2026 42.7 \% of its departures left more than 30 min late against 24.7 \% a year earlier, and the likely reading is that in snow the model converts gate delay into taxi time more than happens on the flights PRU keeps. Read as uniform shifts, these flags bound the possible gain at about 0.12 s (LIRF February + June) and 0.05 s (LTFM February) of final RMSE; neither is correctable without labels, and a calibration to published PRU values had already lost on the leaderboard (Table~\ref{tab:5}). The regime shares are stable: the mean probability of a planning copy is 6.95 \% in the final months against 6.71 \% in the same months of 2025 out of fold, and 39 of 40 airport-months lie within $\pm$2.1 percentage points. The exception, LFPG in July (+3.8 points), follows a change of input: EOBT\_1 differs from LOBT for 45.6 \% of LFPG departures in July 2026 against 23.4 \% a year earlier, and the extra probability goes to the EOBT-copy class, whose candidate is close to the physical taxi time, so the LFPG July indicator differs from the published one by only +1.3 s. The checks found no break of the kind a wrong month, unit or row order would cause, and the recipe was not changed.
+
+\textbf{Ranking.} \placeholder{ final ranking --- upload time of \texttt{gentle-igloo\_\allowbreak{}final.parquet} (planned once, after the last ordinary upload, on 12 October 2026) and its RMSE and rank on January + July, February + June and all four months, from the organiser's final ranking after 14 October 2026.}
 
 \subsection{Negative results of the last two days}\label{negative-results-of-the-last-two-days}
 
-Table 15 lists the experiments closed on 8--9 October, after the final was announced; each had its decision rule written before the run, and none entered the final file. Earlier rejections (about 80) are summarised in the repository's negative-results document.
-
-\textbf{Table 15. Experiments of 8--9 October 2026 that were rejected or closed.}
+Table~\ref{tab:15} lists the experiments closed on 8--9 October, after the final was announced; each had its decision rule written before the run, and none entered the final file. Earlier rejections (about 80) are summarised in the repository's negative-results document.
 
 {
 \begin{longtable}[]{@{}
@@ -928,6 +1143,20 @@ Table 15 lists the experiments closed on 8--9 October, after the final was annou
   >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
   >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
   >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\caption{Experiments of 8--9 October 2026 that were rejected or closed.}\label{tab:15}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Idea
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+How tested
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Measured effect
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Verdict
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Idea
@@ -949,14 +1178,15 @@ Level correction by the chain's own residuals at neighbouring departures with ex
 Arrivals as sensors of the day's recording state (share of on-block times equal to the schedule) and of the NM clock offset (E213) & Partial correlation with the chain residual after day-level controls & $\le$ 0.013 at LIRF, $\approx$ 0 elsewhere; in-sample ceiling $-$0.001 / $-$0.004 s & no rule built \\
 Eleven-parameter recalibration of the regime probabilities replayed through the frozen chain (E214) & Month pairs and forward legs & In-sample $-$0.74 s; pairs +0.41 s (3 of 6); forward +2.61 s & rejected \\
 Twelve epochs instead of eight for the neural member (E215) & 6 pairs $\times$ 3 seeds, exact chain at weight 0.35 & Pooled $-$0.107 s, 11 of 12 months better, but February +1.61 s in all three seeds and pair 2+8 +0.610 s & gate failed \\
+Re-tuning the other global scalars of the chain one at a time: CatBoost share of the tree pair, the four anchored members together, the raw-target and movement-only members, the gate threshold (E216) & Exact 2025 out-of-fold chain, 84 runs; a value replaces the current one only if lower in all 12 months, both half-years and pooled & 0 of 15 values qualify; best pooled $-$0.013 s (CatBoost share 0.75, better in 6 of 12 months); one grid step moves pooled RMSE by 0.004--0.016 s against 0.18 s for the neural weight & configuration confirmed, no change \\
 Neural member weight 0 on rows with no trajectory tokens and no previous visit & 6 folds on the 417,194 rows the rule touches & +2.03 s, 0 of 6 & rejected \\
 Departure linked to the aircraft that stood on its stand, for rows without an own track & Coverage pre-probe on three 2025 and three 2026 days & 2 and 0 no-NM rows given a candidate; no ground reception at the stands & closed before CV \\
-NM record of a no-NM LIRF tail departure taken from its own arrival row at the destination hub & Count on the 2025 files and the final file & 4 of 127 tail rows fly to a hub; 3 of those 4 labels are schedule copies that the arrival's \texttt{AOBT\_3} contradicts by hours; 1 linkable row of 63 in the final & closed \\
+NM record of a no-NM LIRF tail departure taken from its own arrival row at the destination hub & Count on the 2025 files and the final file & 4 of 127 tail rows fly to a hub; 3 of those 4 labels are schedule copies that the arrival's \texttt{AOBT\_\allowbreak{}3} contradicts by hours; 1 linkable row of 63 in the final & closed \\
 D-ATIS closures (CC0) as an input & Count of independent closure events in the downloaded bulletins & 4 events on the 2025 training days, 118 departures exposed & closed: insufficient support \\
 \end{longtable}
 }
 
-Two methodological points recur. A calibration fitted on month pairs can pass the pair gate and lose forward in time (E211, E214), so the October gates carry forward legs; and the chain amplifies a shift of the regime probabilities (pass-through of the squared-error change 1.3--10.7) because the frozen surface stages and the gate were trained on the uncalibrated probabilities, so the probabilities cannot be recalibrated without retraining the stages.
+Two methodological points recur. A calibration fitted on month pairs can pass the pair gate and lose forward in time (E211, E214), so the October gates carry forward legs; and the chain amplifies a shift of the regime probabilities (pass-through of the squared-error change 1.3--10.7) because the frozen surface stages and the gate were trained on the uncalibrated probabilities, so the probabilities cannot be recalibrated without retraining the stages. E216 adds that the neural weight was the only global scalar of the chain that had been mis-set: the others sit on a flat bottom, and February again prefers the opposite direction to most months (fewer anchored members: $-$0.570 s there), so a pooled choice would be a February compromise.
 
 \section{Discussion}\label{discussion}
 
@@ -968,7 +1198,7 @@ The evidence of Section 4.3 separates the chain into parts with different expect
 
 \emph{Dataset-specific:} the regime labelling rules ($\pm$6 s tolerance; no planned regimes at the three second-resolution airports), the list of airports whose recording substitutes the planning time, the LOBT feasibility window of 3,606 s, and the per-airport proxy scales. These must be re-estimated for another source of movement records or another set of airports.
 
-\emph{Period-specific and removed from the final:} the 42 frozen TabPFN predictions and the two archived blend donors, which exist only for January and July 2026. Their removal cost +1.25 s on January/July in the canary, of which the blend accounts for +0.57 s on the v12077 chain (Section 5.7).
+\emph{Period-specific and removed from the final:} the 42 frozen TabPFN predictions and the two archived blend donors, which exist only for January and July 2026. Measured one at a time on the v12077 chain, their removal costs +0.57 s for the blend and +0.70 s for the fresh tail on January/July, +1.26 s together, as in the canary (Section 5.7).
 
 \emph{Not expected to transfer:} learned capacity on 2025 aggregates (per-airport models, target encodings, stand identity, runway configuration, regime shares by group, flight-number habits, calibrations of probabilities or residual levels fitted on 2025). All of these won in 2025 cross-validation and lost on the 2026 leaderboard or on forward-in-time legs, and removing them improved the leaderboard.
 
@@ -980,17 +1210,29 @@ A label-free audit of the sealed four-month feature table against the 2025 train
 
 Three risks are specific. First, the ADS-B coverage collapse at EDDF in February and at LIRF in June and July (Section 2.4) is invisible in the tabular inputs, as the design intends; the stages are inert there and the neural member reads empty tokens, with a scenario cost of about +0.18 s (Section 3.5). Second, Schiphol announced maintenance of taxiways A and B from 4 May to 26 June 2026; 18,194 of the 20,881 EHAM departures of June 2026 fall in that window, the model has no input for it, and no tabular input separates the works window from the rest of June. Third, two January airport-months (EHAM 5.0 \%, LSZH 3.0 \%) have a higher share of departures without an NM record than any 2025 month of their airport, and those rows are where the chain and its predictive distribution are weakest. The LTFM snow episode that made February 2025 the second-worst month is in the training data, and the same window of 2026 shows 3.5 \% snow METARs.
 
+The comparison with the published 2026 indicator (Section 5.7) adds two level shifts that no label-free rule can correct. At LIRF the indicator computed from the final predictions is 20--46 s per flight below the published one in all four months, largest in June; the shift is as visible in January and July as in February and June, so the ordinary-board score already contains it. At LTFM the January and February predictions run above the published indicator beyond what the de-icing exclusion explains, consistent with the model turning gate delay into taxi time during snow. As uniform shifts these would be worth at most about 0.12 s and 0.05 s of final RMSE. Finally, the control upload showed that the refitted regime probabilities on a few hundred rows with distant candidates move January/July RMSE by about $\pm$0.5 s (1$\sigma$); the blind months carry the same draw, with no guarantee of the favourable sign seen on January/July.
+
 \subsection{Leaderboard use disclosure}\label{leaderboard-use-disclosure}
 
-The ranking months were used to choose between complete, pre-built variants. Nothing in the chain was fitted to individual ranking rows, no blend weight was optimised on the leaderboard, and leaderboard-optimal weights that were computed were rejected. Table 16 lists every design choice in v12075 that was decided or kept because of a leaderboard result rather than cross-validation. The two changes of 8 October add no item: the ten-seed mean was decided before the extra seeds were trained, and the 0.35 weight was chosen on 2025 out-of-fold predictions and written into the final assembler before v12077 was built; the uploads confirmed the choice, they did not make it. The three uploads of 8--9 October that measure the price of the final recipe (v12090, v12078, v12079) and the control v12080 are measurements, not selections: the final file was sealed before any of them was scored, and the pre-registered rule for the control stops the upload rather than choosing among files. The final score of the ordinary leaderboard therefore includes selection effects on the January and July 2026 rows, and the blind four-month ranking is the first measurement free of them for February and June; items 1 and 2 of Table 16 are absent from the final file \placeholder{ compare the final's January/July and February/June rankings}.
-
-\textbf{Table 16. Design choices in v12075 that depended on a leaderboard result.}
+The ranking months were used to choose between complete, pre-built variants. Nothing in the chain was fitted to individual ranking rows, no blend weight was optimised on the leaderboard, and leaderboard-optimal weights that were computed were rejected. Table~\ref{tab:16} lists every design choice in v12075 that was decided or kept because of a leaderboard result rather than cross-validation. The two changes of 8 October add no item: the ten-seed mean was decided before the extra seeds were trained, and the 0.35 weight was chosen on 2025 out-of-fold predictions and written into the final assembler before v12077 was built; the uploads confirmed the choice, they did not make it. The three uploads of 8--9 October that measure the price of the final recipe (v12090, v12078, v12079) and the control v12080 are measurements, not selections: the final file was sealed before any of them was scored, and the pre-registered rule for the control stops the upload rather than choosing among files. When the control fell 0.02 s outside its corridor, the rule paused the upload; the deviation was explained without labels and the file was not changed (Section 5.7). The final score of the ordinary leaderboard therefore includes selection effects on the January and July 2026 rows, and the blind four-month ranking is the first measurement free of them for February and June; items 1 and 2 of Table~\ref{tab:16} are absent from the final file \placeholder{ final ranking --- compare the final file's January/July and February/June results}.
 
 {
 \begin{longtable}[]{@{}
   >{\raggedleft\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4000}}
   >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3000}}
   >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3000}}@{}}
+\caption{Design choices in v12075 that depended on a leaderboard result.}\label{tab:16}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedleft
+\#
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Choice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+How it was chosen
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedleft
 \#
@@ -1033,22 +1275,34 @@ How it was chosen
 \item
   The predictive distribution is conditioned on airport only; it is too wide at EDDM and LEBL, too narrow at LIRF in summer, and fails on the 1.07 \% of rows without an NM record. The $\pm$6 s label tolerance is not represented in the planned-regime point masses, and the 99-point grid understates tail error in the CRPS.
 \item
-  The detector and the PRU emulation are measured against the $\pm$6 s rule, which has no ground truth, labels coincidences as copies, and cannot see copies at the three second-resolution airports; the emulation cannot apply PRU's de-icing exclusion, so its November--March values differ from the published ones by up to 154 s at EDDM.
+  The detector and the PRU emulation are measured against the $\pm$6 s rule, which has no ground truth, labels coincidences as copies, and cannot see copies at the three second-resolution airports; the emulation cannot apply PRU's de-icing exclusion, so its November--March values differ from the published ones by up to 154 s at EDDM. The 2026 comparison corrects for de-icing with one cost per airport estimated on 2025, compares airport-month means only, and says nothing about the tails that decide RMSE.
+\item
+  Forecast corridors were set by judgement from the type of change. The corridor of the final file's control was about half as wide as the noise of a refitted chain (Section 5.7), and the noise estimate itself is label-free and ignores correlation of regime outcomes within a LIRF day, which would widen it.
 \end{itemize}
 
 \section{Open science}\label{open-science}
 
-\textbf{Code.} The repository is licensed under the GNU GPLv3 \autocite{kolomiiets2026repo}. Most of the roughly 560 files in \texttt{src/} and \texttt{scripts/} are individual experiments kept for traceability; their identifiers match the experiment register. 386 unit tests of the build, upload and validation helpers run in about 5 s without any data.
+\textbf{Code.} The repository is licensed under the GNU GPLv3 \autocite{kolomiiets2026repo}. Most of the roughly 560 files in \texttt{src/\allowbreak{}} and \texttt{scripts/\allowbreak{}} are individual experiments kept for traceability; their identifiers match the experiment register. 386 unit tests of the build, upload and validation helpers run in about 5 s without any data.
 
-\textbf{Data.} Table 17 lists each input with its terms. The code licence, a data licence and the organiser's permission to use a source in the challenge are three different things, and we record them separately. We do not redistribute the challenge data, the EUROCONTROL portal files or the OPDI extracts; we give acquisition instructions instead. If either EUROCONTROL-portal input were set aside, the affected parts are the destination ATFM-delay features (leaderboard effect when added: $-$0.17 s) and the half-weight LSZH correction ($-$0.25 s over two steps); the rest of the chain does not use them.
-
-\textbf{Table 17. Data inputs of v12077 and the final file, and their terms.}
+\textbf{Data.} Table~\ref{tab:17} lists each input with its terms. The code licence, a data licence and the organiser's permission to use a source in the challenge are three different things, and we record them separately. We do not redistribute the challenge data, the EUROCONTROL portal files or the OPDI extracts; we give acquisition instructions instead. If either EUROCONTROL-portal input were set aside, the affected parts are the destination ATFM-delay features (leaderboard effect when added: $-$0.17 s) and the half-weight LSZH correction ($-$0.25 s over two steps); the rest of the chain does not use them.
 
 {
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
   >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
   >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\caption{Data inputs of v12077 and the final file, the comparison reference, and their terms.}\label{tab:17}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Input
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Licence or terms
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Status for the challenge
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption[]{(continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Input
@@ -1062,12 +1316,13 @@ Status for the challenge
 \bottomrule\noalign{}
 \endlastfoot
 Challenge movements and NM records & Provided by the organiser to all teams & Challenge data \\
-adsb.lol \texttt{globe\_history} 2025 and 2026 & ODbL 1.0 & Open licence; accepted by the organiser on 17 Sep 2026 \\
+adsb.lol \texttt{globe\_\allowbreak{}history} 2025 and 2026 & ODbL 1.0 & Open licence; accepted by the organiser on 17 Sep 2026 \\
 OpenStreetMap (via Overpass) & ODbL 1.0, \textcopyright{} OpenStreetMap contributors & Open licence \\
 Iowa Environmental Mesonet METAR archive & Public domain (IEM statement) & Open \\
 ansperformance.eu daily arrival ATFM delay by airport & Portal terms: free with attribution, non-commercial & Accepted as open data for the challenge on 17 Sep 2026 \\
 OPDI v0.0.2 events (LSZH correction only) & No separate dataset licence published & Accepted as open by the organiser on 4 Oct 2026 \\
 TabPFN-2 classifier weights & Prior Labs License 1.1 (Apache 2.0 plus attribution) & Used for 42 tail predictions in v12077 and for every tail row in the final; weights not redistributed \\
+EUROCONTROL additional taxi-out time, monthly airport files 2025 (ansperformance.eu) and 2026 (eurocontrol.int) & Portal terms: copying with attribution, non-commercial & Comparison reference for Sections 5.6 and 5.7 only; not a model input \\
 \end{longtable}
 }
 
@@ -1077,7 +1332,7 @@ TabPFN-2 classifier weights & Prior Labs License 1.1 (Apache 2.0 plus attributio
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  \emph{Verify the submitted files.} v12077: SHA-256 \texttt{f06c66bf\ldots{}ba44}; the final file: \texttt{76c32426\ldots{}d554}; 344,841 and 670,790 unique IDs, schema matching the organiser's templates. Achieved; a validator script is provided.
+  \emph{Verify the submitted files.} v12077: SHA-256 \texttt{f06c66bf\ldots{}ba44}; the final file: \texttt{76c32426\ldots{}d554}; the control v12080 (its January/July rows): \texttt{ae1680cb\ldots{}}; 344,841 and 670,790 unique IDs, schema matching the organiser's templates. Achieved; a validator script is provided.
 \item
   \emph{Replay the best submission from archived components.} v12075 was replayed independently on 7 October 2026: all 344,841 predictions and the Parquet bytes identical, no model refits, 101 s and 7.9 GiB peak memory. v12076 and v12077 were built on the same replay path on 8 October (1 min 57 s and 1 min 38 s, no refits; the seven extra neural seeds were fitted on the frozen pack with every checkpoint replayed exactly). The final file was assembled twice from the same contract with identical SHA (Section 5.7). The replays recompute the classifier probabilities, feasibility masks, mixture and every tail stage from frozen code, and reuse the saved models and member predictions after checking them against the receipts written at training time. They show that the recipe runs as recorded, not how accurate it is. The archive for v12075 is about 5.2 GB in 3,711 hashed files; part of it (challenge data, OPDI extracts, tables that embed challenge labels) cannot be redistributed, so the complete archive is available to the organisers on request.
 \item
@@ -1086,33 +1341,33 @@ TabPFN-2 classifier weights & Prior Labs License 1.1 (Apache 2.0 plus attributio
   \emph{Apply to a new period.} Not one command. The four-month final is built by dated scripts (sealed feature workspace, 52 tabular fits with saved models on two nodes with cross-node parity checked to 8 $\times$ 10\textsuperscript{$-$13}, the ten-seed neural member on the GPU, seven daily ADS-B products for 120 days, OPDI extraction, tail assembly, validator, single-PUT transport), each registered in the journal before it ran and each with a receipt directory; the period-specific donor rows and blend are not used.
 \end{enumerate}
 
-\textbf{Environment.} The CPU stack (Python $\ge$ 3.12; Polars 1.44.2, LightGBM 4.7.0, CatBoost 1.2.10, scikit-learn 1.9.1, TabPFN 8.5.0) is locked in \texttt{uv.lock}. The neural member was trained with PyTorch 2.13.0 + ROCm and \texttt{rtdl\_num\_embeddings} 0.0.12, pinned separately. Replaying the archived submission needs neither a GPU nor PyTorch.
+\textbf{Environment.} The CPU stack (Python $\ge$ 3.12; Polars 1.44.2, LightGBM 4.7.0, CatBoost 1.2.10, scikit-learn 1.9.1, TabPFN 8.5.0) is locked in \texttt{uv.lock}. The neural member was trained with PyTorch 2.13.0 + ROCm and \texttt{rtdl\_\allowbreak{}num\_\allowbreak{}embeddings} 0.0.12, pinned separately. Replaying the archived submission needs neither a GPU nor PyTorch.
 
 \textbf{Provenance.} Every modelling decision, gate and upload is recorded with its evidence in the experiment register; organiser statements on data use and evaluation are quoted verbatim with UTC timestamps. Where an idea came from elsewhere we say so: the first ADS-B surface stage followed a technique seen in another team's public code (our implementation); per-airport scaling of the NM proxy was also reported by another team; two of the rejected ideas of Section 5.8 came from other teams' public notes; the numerical embeddings follow Gorishniy et al. \autocite{gorishniy2022embeddings} and the tail classifier is TabPFN-2 \autocite{hollmann2025tabpfn}.
 
 \section{Conclusion}\label{conclusion}
 
-The taxi-out label of the PRC Data Challenge 2026 is a recorded interval that follows several recording regimes, and the regimes decide the metric: a probability mixture over how the off-block time was recorded was worth 135 s of RMSE on the first day, more than every later change combined. The remaining gains came from anchoring the regular taxi to a calibrated NM proxy, from the aircraft's own ADS-B surface track where it exists, from a small foundation model on a sparse tail, and, at the end, from choosing a mixture weight at chain level on all twelve months rather than inheriting it. What transferred from 2025 cross-validation to the 2026 leaderboard was what read an observation of the flight or added no capacity; what did not transfer was learned capacity on 2025 aggregates, and removing it helped. For the blind final we removed the two parts of the best file that existed only for the ranking months and measured what that costs rather than inferring it. We have tried to state the evidence boundary of each result: the best file and the final file are replayed byte-exactly, but the chain has no fully nested cross-validation, the ranking months informed design choices that we list, and the ordinary-board tail rests on a non-deterministic draw. \placeholder{ one sentence on the blind four-month result.} For a performance-monitoring reader, the most useful by-product may not be the point prediction but the calibrated detector of substituted records, which identifies where additional taxi-out time would measure the schedule rather than the queue, and the predictive distribution that comes with every forecast at no extra cost.
+The taxi-out label of the PRC Data Challenge 2026 is a recorded interval that follows several recording regimes, and the regimes decide the metric: a probability mixture over how the off-block time was recorded was worth 135 s of RMSE on the first day, more than every later change combined. The remaining gains came from anchoring the regular taxi to a calibrated NM proxy, from the aircraft's own ADS-B surface track where it exists, from a small foundation model on a sparse tail, and, at the end, from choosing a mixture weight at chain level on all twelve months rather than inheriting it. What transferred from 2025 cross-validation to the 2026 leaderboard was what read an observation of the flight or added no capacity; what did not transfer was learned capacity on 2025 aggregates, and removing it helped. For the blind final we removed the two parts of the best file that existed only for the ranking months and measured what each costs (+0.57 s and +0.70 s on January/July) rather than inferring it. The control of the final file then landed 0.56 s better than that measured expectation and just outside its pre-registered corridor; the deviation was explained without labels as refitted regime probabilities on a few hundred rows, and its lesson is that a corridor for a refitted chain must be about twice as wide as we wrote it. We have tried to state the evidence boundary of each result: the best file and the final file are replayed byte-exactly, but the chain has no fully nested cross-validation, the ranking months informed design choices that we list, and the ordinary-board tail rests on a non-deterministic draw. \placeholder{ final ranking --- one sentence on the blind four-month result.} For a performance-monitoring reader, the most useful by-product may not be the point prediction but the calibrated detector of substituted records, which identifies where additional taxi-out time would measure the schedule rather than the queue, the predictive distribution that comes with every forecast at no extra cost, and the fact that an indicator computed from the predictions tracks the published one for the summer months of 2026.
 
 \section*{Acknowledgements}\label{acknowledgements}
 
-EUROCONTROL Performance Review Commission Data Challenge 2026, supported by the OpenSky Network \autocite{schafer2014opensky}; adsb.lol and its contributors (ODbL 1.0); \textcopyright{} OpenStreetMap contributors (ODbL 1.0); Iowa Environmental Mesonet, Iowa State University; EUROCONTROL Performance Review Unit and the Open Performance Data Initiative. TabPFN-2 weights by Prior Labs (``Built with PriorLabs-TabPFN''). The team is one developer working with AI coding assistants; all modelling decisions, gates and uploads are the author's and are recorded with their evidence in the repository. \placeholder{ the author confirms the AI-assistance disclosure wording against the journal's policy at submission time.}
+EUROCONTROL Performance Review Commission Data Challenge 2026, supported by the OpenSky Network \autocite{schafer2014opensky}; adsb.lol and its contributors (ODbL 1.0); \textcopyright{} OpenStreetMap contributors (ODbL 1.0); Iowa Environmental Mesonet, Iowa State University; EUROCONTROL Performance Review Unit and the Open Performance Data Initiative. TabPFN-2 weights by Prior Labs (``Built with PriorLabs-TabPFN''). We thank the organisers for answering participants' questions on data use and evaluation during the challenge; their statements are quoted with timestamps in the repository.
 
 \section*{Funding statement}\label{funding-statement}
 
-No external funding was received. \placeholder{ author to confirm.}
+This work received no external funding.
 
 \section*{Open data statement}\label{open-data-statement}
 
-The challenge data (2025 training, 2026 ranking and final movements and NM records) are distributed by the organiser to registered teams and are not redistributed here. All other inputs are open or public: adsb.lol \texttt{globe\_history} 2025 and 2026 (ODbL 1.0), OpenStreetMap (ODbL 1.0), Iowa Environmental Mesonet METAR (public domain), EUROCONTROL Aviation Intelligence Portal daily airport files (portal terms; accepted for the challenge) and OPDI v0.0.2 (accepted for the challenge). Acquisition scripts and the dated terms of each source are in \texttt{SOURCES.md} of the repository. Derived tables that embed challenge rows or labels are not published; the per-flight table of regime probabilities for 2025 (\texttt{docs/tables/regime\_probabilities\_2025.parquet}, one row per departure with its ID and six probabilities, no other challenge column) is regenerated by a script.
+The challenge data (2025 training, 2026 ranking and final movements and NM records) are distributed by the organiser to registered teams and are not redistributed here. All other inputs are open or public: adsb.lol \texttt{globe\_\allowbreak{}history} 2025 and 2026 (ODbL 1.0), OpenStreetMap (ODbL 1.0), Iowa Environmental Mesonet METAR (public domain), EUROCONTROL Aviation Intelligence Portal daily airport files (portal terms; accepted for the challenge) and OPDI v0.0.2 (accepted for the challenge). The published EUROCONTROL additional taxi-out indicator files for 2025 and 2026 \autocite{eurocontrol2026atxotdata} serve only as a comparison reference. Acquisition scripts and the dated terms of each source are in \texttt{SOURCES.md} of the repository \autocite{kolomiiets2026repo}. Aggregate tables behind the figures and tables (by airport, month, threshold or reference group; no per-flight challenge rows) are in \texttt{docs/\allowbreak{}tables/\allowbreak{}*.csv} and in the dated reports under \texttt{analysis/\allowbreak{}}. Derived tables that embed challenge rows or labels are not published; the per-flight table of regime probabilities for 2025 (one row per departure with its ID and six probabilities, no other challenge column) is regenerated by \texttt{scripts/\allowbreak{}regime\_\allowbreak{}quality\_\allowbreak{}report.py}. \placeholder{ Zenodo DOI of the archived repository release and of the redistributable part of the component archive, if created.}
 
 \section*{Reproducibility statement}\label{reproducibility-statement}
 
-Source code is at https://github.com/disclaimer8/prc-2026 under GPLv3 \autocite{kolomiiets2026repo}. The submitted files are verifiable by hash; the exact replay of the best ordinary file from archived components (about 5.2 GB, 3,711 hashed files) has been run independently, the final file was assembled twice with identical SHA, and both archives are available to the organisers on request; retraining from raw data is documented step by step but has not been run end to end; application to a new period is the dated final pipeline with receipts, not a single command. \texttt{docs/reproduction.md} and \texttt{docs/final-submission.md} state these levels and the environment (\texttt{uv.lock}, \texttt{requirements-gpu.txt}). \placeholder{ public archive location (e.g.~Zenodo DOI) for the redistributable part of the component archive, if created.}
+Source code is at https://github.com/disclaimer8/prc-2026 under GPLv3 \autocite{kolomiiets2026repo}. The submitted files are verifiable by hash; the exact replay of the best ordinary file from archived components (about 5.2 GB, 3,711 hashed files) has been run independently, the final file was assembled twice with identical SHA, and both archives are available to the organisers on request, because parts of them (challenge data, OPDI extracts, tables that embed labels) cannot be redistributed; retraining from raw data is documented step by step but has not been run end to end; application to a new period is the dated final pipeline with receipts, not a single command. \texttt{docs/\allowbreak{}reproduction.md} and \texttt{docs/\allowbreak{}final-submission.md} state these levels and the environment (\texttt{uv.lock}, \texttt{requirements-gpu.txt}). Figures 1--4 and 6 are drawn by \texttt{scripts/\allowbreak{}make\_\allowbreak{}doc\_\allowbreak{}figures.py}, Figures 7 and 8 by \texttt{scripts/\allowbreak{}generalisation\_\allowbreak{}report.py}, Figure~\ref{fig:10} by \texttt{scripts/\allowbreak{}uncertainty\_\allowbreak{}report.py}, Figures 11 and 12 by \texttt{scripts/\allowbreak{}regime\_\allowbreak{}quality\_\allowbreak{}report.py}, and Figures 9 and 13 by \texttt{paper/\allowbreak{}make\_\allowbreak{}paper\_\allowbreak{}figures.py} from \texttt{analysis/\allowbreak{}e212\_\allowbreak{}nn\_\allowbreak{}weight\_\allowbreak{}10seed\_\allowbreak{}20261008/\allowbreak{}per\_\allowbreak{}month.json} and \texttt{analysis/\allowbreak{}v12080\_\allowbreak{}control\_\allowbreak{}explanation\_\allowbreak{}20261009/\allowbreak{}results/\allowbreak{}}; Figure~\ref{fig:5} is text. Every table is copied from \texttt{docs/\allowbreak{}*.md}, \texttt{docs/\allowbreak{}tables/\allowbreak{}*.csv} or a dated report in \texttt{analysis/\allowbreak{}}, each of which names the script that produced it, and \texttt{paper/\allowbreak{}OUTLINE.md} maps each section of this paper to those sources. The experiment register \texttt{HYPOTHESES\_\allowbreak{}LOG.md} (448 entries) records each experiment's protocol and decision rule before the run and its verdict after.
 
 \section*{AI-assistance statement}\label{ai-assistance-statement}
 
-\placeholder{ Author to finalise. Draft: The author used AI coding assistants for code drafting, log keeping and documentation drafting during the challenge. All experiments, decisions and the final text were reviewed by the author, who takes responsibility for the content.}
+The author worked with AI coding agents throughout the challenge: Anthropic's Claude Code, and OpenAI's Codex agents, which carried the work between 4 and 8 October 2026. The agents wrote most of the code; proposed, registered and ran most experiments on the author's machines; kept the experiment register; built and uploaded submissions under the author's standing or explicit permission; and drafted the repository documentation, the figures and this manuscript. Where the text says that a value was fixed or a registered rule departed from (for example the neural-member weight in Section 3.4), the decision was taken by the coordinating agent and recorded with its evidence in the register before any upload depended on it. The author set the goals, constraints and priorities, decided on data sources and resources, reviewed the evidence and the text, and takes responsibility for the content. Every number in the paper is copied from a dated file in the repository rather than generated, and no AI system is listed as an author.
 
 \printbibliography
 
