@@ -1,9 +1,12 @@
 # Data sources, licences and attribution
 
 This register describes the **v12075 submitted recipe**, with primary public
-source pages checked on **7 October 2026**. The code licence, a data licence and
-an organiser's permission to use data in this challenge are different things.
-We record them separately. Public downloadability alone is not an open licence.
+source pages checked on **7 October 2026**, and the one input added after it: the
+EUROCONTROL monthly additional taxi-out time files read by the E218 stage of v12081
+and of the final file (11 October 2026; [below](#sources-added-after-v12075)). The
+code licence, a data licence and an organiser's permission to use data in this
+challenge are different things. We record them separately. Public downloadability
+alone is not an open licence.
 
 The [challenge eligibility page](https://prc-data-challenge-2026.netlify.app/eligibility.html)
 requires documented, openly accessible/usable external data, openly available
@@ -29,6 +32,16 @@ The 7 October source check independently confirms the displayed adsb.lol, OSM,
 IEM and EUROCONTROL portal statements. It does not certify that all data and
 pretrained-model redistribution questions have been resolved.
 
+## Sources added after v12075
+
+| Source and primary page | Contribution | Licence or terms evidence |
+|---|---|---|
+| EUROCONTROL monthly **taxi-out additional time** per airport: `taxi_out_additional_time_2025.csv` (2025; obtained from ansperformance.eu) and `taxi_out_additional_time_2026.csv` (January–July 2026; `www.eurocontrol.int/performance/data/download/csv/`, server last-modified 19 September 2026, unchanged when re-downloaded on 9 October 2026). Columns used: `APT_ICAO`, `MONTH_NUM`, `TF`, `VALID_FL`, `TOTAL_REF_NB_FL`, `TOTAL_ADD_TIME_MIN` | **E218 only**: the post-mixture PRU level stage of v12081 and of the final file moves each eligible airport-month half-way from the indicator implied by our predictions towards the published value ([final submission §2.5](docs/final-submission.md#25-e218-pru-level-stage)). The 2026 values for January, February, June and July are the scored months of the final, so this is a published aggregate of the same kind of record as the labels, one number per airport and month. SHA-256 `4aedf195…` (2025) and `b72040e0…` (2026), pinned in the final contract. Before 11 October the same files served only as a comparison reference ([PRU view](docs/pru-view.md), [data quality for PRU](docs/data-quality-regimes.md), the 9 October [PRU check](analysis/final_pru_and_regime_check_20261009.md)) and in the rejected E145 calibration | **No open licence is stated** for either file. The related [ansperformance.eu portal disclaimer](https://ansperformance.eu/about/disclaimer/) allows copying with attribution for non-commercial purposes and requires written permission for modification; we found no separate statement for the eurocontrol.int download. Under the organiser's general rule of 1 October 2026 ("If no open license is present it is not open") the files are not open data by licence. Their use rests on the organiser's specific answers: "I already answered above: yes" (27 September 2026) to our question about using the published monthly taxi-out figures for January and July 2026 as a model input, and a confirmation on 8 October 2026 that `taxi_out_additional_time_2026.csv` may still be used (recorded in `HYPOTHESES_LOG.md` entry 452; see [organiser clarifications](docs/organiser-clarifications.md)). We do not redistribute the files |
+
+If this input were set aside, only the E218 stage is affected: v12081 returns to
+v12077 (+0.0334 s on January/July) and the final file to its 9 October predecessor
+`76c32426…` (+0.0360 s on its January/July rows); no other stage reads these files.
+
 ## Challenge-specific clarifications
 
 The organiser answered data questions in the challenge Discord channel. The
@@ -40,7 +53,9 @@ statements that matter for this recipe are quoted verbatim, with UTC times, in
 | 2026-09-16 | All columns except the departure block time and target, in the same row and in other rows, are available to the model | `AOBT_3_flt` and other NM timestamps |
 | 2026-09-17 | EUROCONTROL's daily airport files (including arrival ATFM delay, under the portal's non-commercial disclaimer) and the adsb.lol archive (ODbL 1.0) "can be considered open data for the challenge" | Destination ATFM delay features (E163); adsb.lol |
 | 2026-09-19, 2026-10-01 | Using open trajectory data, including the flight's own post-pushback track, is allowed | Surface stages and trajectory network |
+| 2026-09-27 | "I already answered above: yes", to our question whether EUROCONTROL's published monthly taxi-out figures for January and July 2026 may be used as a model input | E218 PRU level stage (v12081, final file) |
 | 2026-10-04 | OPDI, published without a separate licence, is "open" for eligibility | LSZH correction |
+| 2026-10-08 | `taxi_out_additional_time_2026.csv` may still be used (answer to another team; recorded in our register, entry 452, not quoted) | E218 PRU level stage (v12081, final file) |
 
 These are challenge-specific permissions. They do not change the general terms of
 each portal and do not by themselves grant a right to redistribute EUROCONTROL
@@ -57,6 +72,7 @@ instead.
 | adsb.lol | [`src/adsb_offblock_v2.py`](src/adsb_offblock_v2.py), [`src/adsb_offblock_v5.py`](src/adsb_offblock_v5.py), [`src/adsb_visit.py`](src/adsb_visit.py), [`src/e69_visit_merge.py`](src/e69_visit_merge.py) | Freeze daily archive/release selection and extraction settings. Coverage is uneven; do not interpret missing reception as no movement. |
 | Destination ATFM | [`src/e163_build_features.py`](src/e163_build_features.py); `data/ext_pru/apt_dly_{2024,2025,2026}.csv` | Joins `ADES_mvt` and the UTC take-off date. Five `dst_*` columns are present in the submitted FIN1b schema. These are retrospective daily aggregates. |
 | OPDI in the submitted correction | [`src/e159_fixed_lineage.json`](src/e159_fixed_lineage.json), [`src/e159_opdi_stage_cv.py`](src/e159_opdi_stage_cv.py), [`src/e159b_apply.py`](src/e159b_apply.py) | The frozen `data/opdi/ev_*.parquet` inputs define the v12075 correction. Callsign/airport matching uses a nearby observed event anchor; the correction is applied only at LSZH. |
+| EUROCONTROL monthly taxi-out additional time | `data/taxi_out_additional_time_{2025,2026}.csv`; read by `pru_read` in [`scripts/final_tail_assembly_20261008.py`](scripts/final_tail_assembly_20261008.py) (stage `pru_level`, flag `E218_PRU_LEVEL=1`) | Download the two CSV files from EUROCONTROL's performance data; the stage checks SHA-256 `4aedf195…` and `b72040e0…` and refuses any other copy. A later revision of the published 2026 file would not reproduce the final. |
 | Expanded OPDI research ingestion | [`docs/opdi_full_ingestion.md`](docs/opdi_full_ingestion.md), [`scripts/opdi_full_ingest.py`](scripts/opdi_full_ingest.py) | Separate research data path. It records source URLs, versions, hashes and incomplete windows; its larger inventory is not part of v12075. |
 
 The development directories `data/` and `submissions/` are excluded from Git.
@@ -120,5 +136,6 @@ not revalidated as part of this source inventory update.
 > METAR observations: Iowa Environmental Mesonet, Iowa State University.
 >
 > Airport ATFM aggregates: EUROCONTROL Performance Review Unit / Aviation
-> Intelligence Portal. OPDI events: EUROCONTROL PRU and the OpenSky Network,
-> Open Performance Data Initiative v0.0.2.
+> Intelligence Portal. Monthly taxi-out additional time per airport (2025, 2026):
+> EUROCONTROL Performance Review Unit. OPDI events: EUROCONTROL PRU and the
+> OpenSky Network, Open Performance Data Initiative v0.0.2.

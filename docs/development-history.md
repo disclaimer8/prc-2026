@@ -1,6 +1,6 @@
 # Development history
 
-This page shows how the model went from 501.23 s to 230.48 s RMSE, which design decisions
+This page shows how the model went from 501.23 s to 230.45 s RMSE, which design decisions
 moved the leaderboard score, and how far cross-validation could be trusted along the way.
 The [model design](model-design.md) describes the final chain; [validation](validation.md)
 gives the evidence for its current members; the [glossary](glossary.md) names every
@@ -22,7 +22,9 @@ experiment ID.
 
 ## 1. Score progression
 
-111 uploads between 13 September and 8 October 2026 produced 63 new best scores. The 31
+111 uploads between 13 September and 8 October 2026 produced 63 new best scores. Six more
+followed on 9 and 11 October (sections 2.8 and 2.9); one of them, v12081 (230.4478 s), is
+the 64th new best, the others priced or checked the final file. The 31
 steps with a gain of about 0.3 s or more account for 267.9 s of the total 270.7 s; the other
 31 add 2.9 s together. Step 27 (−0.299 s) is in the first table because it is a separate
 design decision; step 13 is measured against v28, the best file before it.
@@ -103,6 +105,9 @@ design decision; step 13 is measured against v28, the best file before it.
 | — | 10-09 08:54 | v12078 | 231.05 | (+0.57) | Measurement: v12077 without the E81 whole-file blend, the only change (zero fits). Forecast 230.60, corridor [230.40; 231.20]: inside, but the Gram-identity point missed by +0.45 s because the identity does not carry across the stages applied after the blend. Not a candidate for best | E81 | L №431, №432; [upload record](../analysis/v12078_upload_20261009/RESULTS.md) |
 | — | 10-09 (after 16:28) | v12079 | 231.18 | (+0.70) | Measurement: v12077 with the 42 frozen tail rows replaced by the fresh ten-seed E156 values, the only change. Uploaded at 08:58 and scored only after the organiser's scorer outage (no file of any team processed 08:54:51–16:28). Forecast 231.17, corridor [230.83; 231.48]. With v12078 it prices the canary's +1.25 as +0.5676 + 0.6958 = +1.2634. Not a candidate for best | E156 | L №433, №434, №444; [upload record](../analysis/v12079_upload_20261009/RESULTS.md) |
 | — | 10-09 16:32 | v12080 | 231.18 | — | Control: the January/July rows of the final file (SHA-256 `76c32426…`), unchanged. Forecast 231.7, corridor [231.2; 232.3]; the result fell 0.02 s below the corridor and 0.564 s below the measured expectation of 231.745. The registered rule paused the final upload until a stage-by-stage analysis without labels explained the deviation (regime probabilities of the refitted classifier on about 350 rows; noise ±0.43–0.55 s); recipe unchanged. Not a candidate for best | — | L №439, №441, №445–447; [explanation](../analysis/v12080_control_explanation_20261009.md) |
+| 64 | 10-11 08:51 | v12081 | 230.45 | −0.03 | PRU level stage added after the last stage of v12077, the only change (zero fits): per airport × month, half the gap between the additional taxi-out indicator implied by the predictions and EUROCONTROL's published value for that month, net of the airport's 2025 emulation offset; months with de-icing exclusions untouched. Gate on the 2025 out-of-fold chain passed (6/6 pairs, −0.137 s pooled, forward legs, 12/12 months). Forecast 230.408, corridor [230.394; 230.422]: the result fell 0.025 s above it; the rule written before the upload (≤ 230.4512 ⇒ put the stage in the final) was met. Its input is a published aggregate of the scored months (section 6) | E218 | L №451, №452, №455, №456; [E218 report](../analysis/e218_pru_level_recheck_20261010.md); [upload record](../analysis/v12081_upload_20261011/RESULTS.md) |
+| — | 10-11 09:10 | v12082 | 231.14 | — | Control: the January/July rows of the final file rebuilt with E218 (SHA-256 `bbae2cc5…`), −0.0360 s against v12080 on the same labels. Forecast 231.144, corridor [230.994; 231.294], inside; under the rule the E218 file became the final. Not a candidate for best | E218 | L №457–№459; [record](../analysis/v12082_control_20261011/RESULTS.md) |
+| — | 10-11 09:29 | v12083 | 231.17 | — | Measurement: v12082 with the E218 shift removed on LIRF rows only, +0.0304 s. Forecast 231.153, corridor [231.130; 231.174]: 0.0009 s above it. Splits the E218 gain exactly: LIRF −0.0304 s, the other ten cells −0.0056 s; under the rule the LIRF cells stay in the final. Not a candidate for best | E218 | L №460, №461; [record](../analysis/v12083_upload_20261011/RESULTS.md) |
 
 ## 2. Phases
 
@@ -278,6 +283,45 @@ identity cannot be carried across stages applied after a blend (the v12078 point
 with refitted members, ±0.43–0.55 s (1σ)
 ([final submission §4, §7](final-submission.md#4-measured-cost-on-januaryjuly)).
 
+### 2.9 The PRU level stage (10–11 Oct; v12081–v12083; 230.48 → 230.45; 3 uploads, one a new best)
+
+**Observed.** A label-free comparison of the final file with the additional taxi-out
+indicator EUROCONTROL published for January–July 2026 found the summer months within
+6.6–9.2 s but LIRF 20–46 s below the published value in all four months (L №448). A
+calibration to the published PRU values had lost on the board on 28 September (E145:
+CV −0.045 s, board +0.114 s; L №114, №123), and the 9 October comparison had concluded
+that the level shifts were not correctable without labels.
+
+**Response.** E218 re-examined why E145 failed (L №451, №452). E145 had aimed the mean
+taxi time of all rows at the published reference plus additional time plus a same-month
+2025 offset; that target absorbed PRU's recomputed rolling reference and a change in the
+share of rows with a valid reference, ran against the gap in the additional-time
+indicator in 3 of 10 cells, and put its largest shift on a month with de-icing
+exclusions. On 2025 the gap between our indicator and the published one followed the
+chain's residual closely only in airport-months without de-icing (r = 0.91 in 95 cells,
+0.16 over all 120). The registered rule moves each such airport-month by half the gap,
+net of the airport's 2025 emulation offset, and passed every gate condition on the 2025
+out-of-fold chain (6 of 6 pairs, pooled −0.137 s, half-year and expanding-window legs
+< 0, 12 of 12 months). E217, a "winter" weight of the neural member checked in the same
+session, failed its gate (L №449, №450). On the board: v12081, v12077 plus the stage,
+scored 230.4478 s (−0.0334 s), about half the forecast and 0.025 s above its corridor,
+but within the rule written before the upload, so the final file was rebuilt with the
+stage (SHA-256 `bbae2cc5…`, every earlier stage identical to the 9 October build;
+L №457, №458). Its January/July rows, as the control v12082, scored 231.1445 s
+(−0.0360 s against v12080, inside the corridor), so it became the final (L №459). A
+third upload, v12083, removed the stage on LIRF rows only and scored 231.1749 s; the
+three files differ only by the stage on the same labels, so its gain splits exactly into
+−0.0304 s from the two LIRF cells and −0.0056 s from the other ten. That refuted the
+reading taken after v12081 and v12082 ("the non-LIRF cells transfer fully, LIRF is
+neutral") and kept the LIRF cells in the final under the rule of L №460 (L №461).
+
+**Cost.** Three slots on 11 October and two missed corridors (v12081 by 0.025 s,
+v12083 by 0.0009 s). The 2025 relation transferred only partly: about 0.69 of the gap at
+LIRF and 0.37–0.48 elsewhere, against 0.93 on 2025. A single board number could not
+separate two readings of v12081, and the one chosen first was wrong; only a measurement
+that changed one part at a time separated them. The stage's input is a published
+aggregate of the scored months (section 6).
+
 ## 3. Cross-validation against the leaderboard
 
 Most uploads from 20 September on carried a forecast range written before upload (for
@@ -304,6 +348,7 @@ example B §21ah; L №138, №166). The table compares CV and board effects of 
 | Anchored members E171–E173 (v808 vs v655) | members, weights × 2/3 | about −1.24 | −0.98 | B §21cm |
 | Destination ATFM delay E163 (v778 vs v655) | external aggregate | −0.76 | −0.17 | B §21cm |
 | Monthly PRU calibration E145 (v448 vs v447) | calibration to external data | better in 6 of 6 folds | +0.11 | B §21cj |
+| PRU level stage E218, airport-months without de-icing, half the gap (v12081 vs v12077) | calibration to a published aggregate of the scored months | −0.137 (decided, pooled 2025, 6 of 6; forward legs < 0) | −0.03 | L №452, №456; LIRF −0.0304 / others −0.0056 on the final's rows (L №461) |
 | Airline prefix in TabPFN tail E118 (v316 vs v247) | 42 tail rows | forecast −0.27 | −3.60 | B §21bv |
 
 **Rules the team derived**
@@ -385,7 +430,9 @@ team was 8th of 192 and 3.14 s behind third place (B §21ca). On 8 October in th
 was 14th of 237, and third place was 215.62 s, 15.32 s ahead ([team-best
 snapshot](tables/leaderboard_team_best_20261008.csv)); at 20:15 UTC, after v12077, it was
 16th of 239 with third place at 213.5212 s, 16.96 s ahead
-([upload record](../analysis/v12077_upload_20261008/RESULTS.md)). Leading teams improved
+([upload record](../analysis/v12077_upload_20261008/RESULTS.md)); on 11 October at 08:52 UTC,
+after v12081 (230.4478 s), it was 18th of 242, with third place at 213.2898 s and the leader at
+212.8457 s ([upload record](../analysis/v12081_upload_20261011/RESULTS.md)). Leading teams improved
 much more in the same period. Late gains came from members, seeds and small stage changes
 worth 0.01–1.0 s each. No submission was tuned row by row against the leaderboard. Blend weights were fixed
 from cross-validation; weights that would have been optimal on the board (−1.004 s for E76)
@@ -430,6 +477,21 @@ The three uploads of 9 October (v12078, v12079, v12080) add no item either. Two 
 removal of items 1 and 2 one at a time; the third checked the final file's code path on the
 January/July labels. The control fell 0.02 s outside its corridor on the favourable side;
 the deviation was explained without labels and the final recipe was not changed (L №445–447).
+
+**The uploads of 11 October (v12081, v12082, v12083) add one item, to the final file rather
+than to v12075: the E218 PRU level stage.** Its rule (half the gap, airport-months without
+de-icing, the 2025 emulation offset subtracted) and its constants were fixed before its gate
+ran and were decided on 2025 out-of-fold data by that pre-registered gate (L №451, №452).
+Whether it entered the final was then decided on the board: v12081 had to beat v12077 by at
+least 0.03 s under a rule written before the upload (it did, by 0.0334 s; L №455, №456), the
+control v12082 had to be no worse than v12080 (L №458, №459), and v12083 decided whether the
+LIRF cells stay (L №460, №461). Nothing was tuned on the board. **Its input is a published
+aggregate of the scored months:** EUROCONTROL's monthly additional taxi-out time per airport
+for January, February, June and July 2026, which PRU computes from the same kind of record as
+the challenge labels. One number per airport and month enters the file; the organiser
+answered "yes" to its use on 27 September and confirmed the 2026 file on 8 October 2026
+([organiser clarifications](organiser-clarifications.md),
+[final submission §2.5](final-submission.md#25-e218-pru-level-stage)).
 
 [B]: ../REVIEW_BRIEF.md
 [L]: ../HYPOTHESES_LOG.md

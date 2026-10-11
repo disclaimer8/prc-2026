@@ -24,9 +24,17 @@ Questions are paraphrased, and other participants are not named.
 | 2026-09-19 07:59 | Are there restrictions on using trajectory data to derive off-block times? | "there are no such restrictions: if you can find open trajectory data with good ground coverage and extract off-block times, we are ok. Practically speaking it won't be possible." | Own-aircraft surface stages |
 | 2026-09-26 12:52 | May adsb.lol (ODbL), including the flight's own ground positions after pushback, be used? | "As said before open data sources can be usable to devise a better model." | As above |
 | 2026-09-27 07:03 | Where do the `_mvt` columns come from; may dashboard figures be used? | "yes _mvt is from APDF, if you need to cite dashboard figures, do it. They are publicly available." | Context for the ansperformance.eu aggregates |
+| 2026-09-27 15:14 | (Our question.) May the monthly taxi-out figures that EUROCONTROL publishes per airport for January and July 2026 be used as a model input, or should aggregates from the ranking period be treated as off limits? | "I already answered above: yes" | The E218 PRU level stage of the final file, which reads EUROCONTROL's published monthly additional taxi-out time ([final submission §2.5](final-submission.md#25-e218-pru-level-stage)); earlier the rejected E145 calibration |
 | 2026-10-01 14:39 | May the flight's own post-pushback ADS-B track (first movement) be a feature for that flight? | "the rule about open data applies: anything you think that helps, use it!" | Own-aircraft surface stages |
 | 2026-10-01 14:41 | (general) | "If no open license is present it is not open" | Applied to every source in [SOURCES.md](../SOURCES.md) |
 | 2026-10-04 03:51 | Is OPDI, published without a licence, open for eligibility? | "yes open" | OPDI events at LSZH |
+
+On 8 October 2026 at 14:03 UTC another team asked whether a pipeline step that reads
+EUROCONTROL's monthly `taxi_out_additional_time_2026.csv` (including the scored months)
+and shifts predictions toward it is still acceptable, given the later rule "if no open
+license is present it is not open" and the purpose of the final phase. The organiser
+answered: "(1) no change. still ok". The E218 stage of our final file uses the same file.
+The file carries no open licence; its terms are listed in [SOURCES.md](../SOURCES.md).
 
 ## Evaluation and prize review
 

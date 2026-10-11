@@ -4,17 +4,18 @@ A model card in the usual sections (Mitchell et al., 2019). Every number is
 copied from the page it cites; nothing here is new measurement. Written 8 October
 2026 for the v12075 chain and the uniform final recipe derived from it
 ([final submission](final-submission.md)); updated 9 October 2026 after the final
-file was assembled and checked.
+file was assembled and checked, and 11 October 2026 after the E218 PRU level stage
+was added to the best leaderboard file (v12081) and to the final file.
 
 ## Model details
 
 | | |
 |---|---|
-| Name | gentle-igloo taxi-out chain, version v12077 (leaderboard; the v12075 chain with the neural member as a ten-seed mean at weight 0.35) / `gentle-igloo_final.parquet` recipe (blind final) |
+| Name | gentle-igloo taxi-out chain, version v12081 (leaderboard: v12077, the v12075 chain with the neural member as a ten-seed mean at weight 0.35, plus the E218 PRU level stage) / `gentle-igloo_final.parquet` recipe (blind final, with the same E218 stage) |
 | Developer | Team gentle-igloo: one developer, Denys Kolomiiets, with AI coding assistants ([README](../README.md#team)) |
-| Date | Developed 13 September – 8 October 2026; v12075 scored 7 October 2026, v12077 scored 8 October 2026; final file assembled 9 October 2026 |
+| Date | Developed 13 September – 11 October 2026; v12075 scored 7 October 2026, v12077 8 October 2026, v12081 11 October 2026; final file assembled 9 October 2026 and rebuilt with the E218 stage 11 October 2026 |
 | Task | Predict `TAXITIME_SEC_mvt`, the recorded taxi-out time of a departure at ten European airports (EDDF, EDDM, EGLL, EHAM, LEBL, LEMD, LFPG, LIRF, LSZH, LTFM), for the EUROCONTROL PRC Data Challenge 2026; metric RMSE in seconds |
-| Type | Probability mixture over six recording regimes (LightGBM multiclass classifier) whose "regular" candidate is a blend of gradient-boosted residual models (CatBoost 15 seeds, LightGBM 5 seeds), five anchored LightGBM members and an ordered-trajectory neural network (mean of ten seeds at weight 0.35 in v12077 and the final; three seeds at 0.25 in v12075); followed by LightGBM surface-correction stages on the aircraft's own ADS-B track, a TabPFN-2 classifier for a sparse Rome tail, a confidence gate, LOBT-window clipping and an OPDI correction at Zurich ([model design](model-design.md)) |
+| Type | Probability mixture over six recording regimes (LightGBM multiclass classifier) whose "regular" candidate is a blend of gradient-boosted residual models (CatBoost 15 seeds, LightGBM 5 seeds), five anchored LightGBM members and an ordered-trajectory neural network (mean of ten seeds at weight 0.35 in v12077 and the final; three seeds at 0.25 in v12075); followed by LightGBM surface-correction stages on the aircraft's own ADS-B track, a TabPFN-2 classifier for a sparse Rome tail, a confidence gate, LOBT-window clipping, an OPDI correction at Zurich ([model design](model-design.md)) and, in v12081 and the final, a post-mixture level shift per airport × month towards EUROCONTROL's published additional taxi-out time (E218, [final submission §2.5](final-submission.md#25-e218-pru-level-stage)) |
 | Size | Tree models: classifier 1,080 trees, regressor 2,319 trees, 170 input columns; neural member 1,908,437 parameters per seed, 189 tabular columns + 2 streams × 64 tokens × 12 channels ([model design](model-design.md)) |
 | Licence | Code GNU GPLv3 ([LICENSE](../LICENSE)); data and pretrained weights keep their own terms ([SOURCES.md](../SOURCES.md)) |
 | Where documented | [README](../README.md), [model design](model-design.md), [validation](validation.md), [development history](development-history.md), [negative results](negative-results.md), [glossary](glossary.md) |
@@ -67,6 +68,7 @@ process of 2025–2026.
 | Target encodings (month-out) | 2025 labels | 0 / 16 |
 | Ordered ADS-B observations of the current and previous visit | adsb.lol `globe_history` | 0 / 2 × 64 × 12 |
 | Surface-stage features (movement onset, stops, stand distances, previous visit) and OPDI exit-parking events at LSZH | adsb.lol; OPDI v0.0.2 | stage inputs, not base columns |
+| Published monthly additional taxi-out time per airport, 2025 and the scored months of 2026 | EUROCONTROL (`taxi_out_additional_time_{2025,2026}.csv`) | input of the E218 stage only (v12081, final file), one value per airport × month |
 
 Full table with gain shares: [model design](model-design.md#feature-families).
 The tree models drop stand identity, runway configuration, `month`, day of year,
@@ -89,7 +91,10 @@ enters only through coverage-gated correction stages ([data insights §4](data-i
 - External data: adsb.lol 2025 and 2026 archives (ODbL 1.0), OSM (ODbL 1.0), IEM
   METAR (public domain), ansperformance.eu daily aggregates (portal terms; accepted
   for the challenge by the organiser on 17 September 2026), OPDI v0.0.2 events at
-  LSZH (accepted on 4 October 2026) ([SOURCES.md](../SOURCES.md)).
+  LSZH (accepted on 4 October 2026), and for the E218 stage EUROCONTROL's monthly
+  additional taxi-out time files for 2025 and 2026 (no open licence stated; use
+  answered "yes" by the organiser on 27 September 2026 and confirmed for the 2026
+  file on 8 October 2026) ([SOURCES.md](../SOURCES.md)).
 - Pretrained weights: TabPFN-2 classifier by Prior Labs (Prior Labs License 1.1,
   Apache 2.0 plus attribution; "Built with PriorLabs-TabPFN"); used for the LIRF
   tail only, weights not redistributed.
@@ -130,9 +135,14 @@ Source: [validation](validation.md#2025-out-of-fold-rmse-by-airport). The
 E203 replacement improved the same comparison by −0.614 s (body) and −0.546 s
 (decided), 6 of 6 pairs.
 
-**Public leaderboard (January + July 2026, 344,841 rows).** Best file v12077:
-230.4812 s, processed 8 October 2026; 16th of 239 teams on 8 October 2026 at
-20:15 UTC (public leaderboard). It is the v12075 chain (230.9387 s, 7 October)
+**Public leaderboard (January + July 2026, 344,841 rows).** Best file v12081:
+230.4478 s, processed 11 October 2026; 18th of 242 teams on 11 October 2026 at
+08:52 UTC (public leaderboard). It is v12077 (230.4812 s, 8 October; 16th of 239
+at the time) with the E218 PRU level stage added, −0.0334 s; the stage's rule was
+fixed and passed a gate on 2025 out-of-fold data before the upload, and its input
+is EUROCONTROL's published monthly additional taxi-out time for the scored months
+([final submission §2.5](final-submission.md#25-e218-pru-level-stage)). v12077 is
+the v12075 chain (230.9387 s, 7 October)
 with the neural member averaged over ten seeds (v12076, −0.1204 s) and its weight
 raised from 0.25 to 0.35 with the anchored members scaled by 0.65/0.75 (v12077,
 −0.3371 s); the weight was chosen on 2025 out-of-fold data before the upload,
@@ -166,14 +176,22 @@ variant); by month group Feb + Jun 51.0/80.3/89.9 %, Jan + Jul 47.4/76.6/87.1 %;
 CRPS 76.5 s against point MAE 101.8 s ([uncertainty](uncertainty.md)).
 
 **Blind final (January, February, June, July 2026; 670,790 rows).** The file
-`gentle-igloo_final.parquet` (SHA-256 `76c32426…d554`, 670,790 rows) was assembled
-on 9 October 2026 with no fits, passed every hard check of the validator and was
+`gentle-igloo_final.parquet` was first assembled on 9 October 2026 (SHA-256
+`76c32426…d554`) with no fits, passed every hard check of the validator and was
 rebuilt from scratch with the same SHA-256. Its January/July rows, uploaded as the
 control v12080, scored 231.1805 s, 0.02 s below the corridor written beforehand
 ([231.2; 232.3]) and 0.564 s better than the measured expectation of 231.745 s;
 the deviation was explained without labels, mainly as noise in the regime
 probabilities of the refitted classifier on about 350 mixture rows, and the recipe was not
 changed ([final submission §7](final-submission.md#7-validation-of-the-file)).
+On 11 October the file was rebuilt with the E218 stage (SHA-256 `bbae2cc5…34a1`;
+stages up to the last as on 9 October, 415,697 rows moved by RMS 4.687 s, validator
+passed, same SHA on a second build). Its January/July rows scored 231.1445 s as the
+control v12082 (−0.0360 s against v12080, inside the corridor), and under the rule
+written beforehand this file is the final. A third upload, v12083 (231.1749 s),
+removed the stage on the LIRF rows only and split the gain exactly: −0.0304 s from
+the two LIRF cells, −0.0056 s from the other ten, so the 2025 relation transferred
+only partly and mostly at LIRF ([final submission §2.5](final-submission.md#25-e218-pru-level-stage)).
 Blind result: `[[to be filled after 14 October]]`
 ([final submission §10](final-submission.md#10-results)).
 
@@ -222,14 +240,24 @@ Blind result: `[[to be filled after 14 October]]`
   expectation by −0.564 s, a 1.0–1.3σ event
   ([final submission §7](final-submission.md#7-validation-of-the-file)). One score
   cannot separate refitted variants that differ by less than about 0.5 s.
-- **Selection effects.** 114 leaderboard uploads informed development; blend
-  weights were never fitted to the board, but eight design choices were kept or
-  dropped on a board result ([disclosure](development-history.md#6-leaderboard-use-disclosure)).
+- **Selection effects.** 117 leaderboard uploads informed development; blend
+  weights were never fitted to the board, but eight design choices of v12075 were
+  kept or dropped on a board result, and the E218 stage entered v12081 and the final
+  under rules that depended on board results ([disclosure](development-history.md#6-leaderboard-use-disclosure)).
   Out-of-fold errors are optimistic for the same reason.
+- **A published aggregate of the scored months as an input (E218).** The stage reads
+  EUROCONTROL's monthly additional taxi-out time for January, February, June and
+  July 2026, computed by PRU from the same kind of record as the labels. Its form
+  was chosen after a diagnosis on 2025 and gated on 2025, but on January/July 2026
+  only part of the 2025 relation transferred (LIRF about 0.69 of its gap, the other
+  airports 0.37–0.48, against 0.93 on 2025). The largest shift of the blind months,
+  LIRF June +21 s, has no board measurement. The stage needs the published value of
+  the month, so it is a post-operations correction, not available in real time.
 - **Learned 2025 capacity does not transfer reliably.** Features and rules that
-  encode 2025 aggregates (per-airport models, regime rates by group, PRU
-  calibration, flight-number habits) improved CV and worsened the board
-  ([negative results, lessons 1–2](negative-results.md#methodological-lessons)).
+  encode 2025 aggregates (per-airport models, regime rates by group, the first PRU
+  calibration E145, flight-number habits) improved CV and worsened the board
+  ([negative results, lessons 1–2](negative-results.md#methodological-lessons)). The
+  narrower PRU level stage E218 transferred, but at about half of its 2025 size.
 - **Not a physical model.** A trajectory observes movement, the target is a
   recorded interval; neither is declared correct when they disagree
   ([validation](validation.md#remaining-scientific-limits)). The chain has no proven
@@ -247,15 +275,23 @@ Blind result: `[[to be filled after 14 October]]`
   [organiser clarifications](organiser-clarifications.md). Challenge data, OPDI
   extracts and tables that embed challenge labels are not redistributed; the
   reproduction archive is available to the organisers on request
-  ([reproduction](reproduction.md#what-you-need)). If the two EUROCONTROL-portal
-  inputs were set aside, the affected parts are the destination ATFM delay features
-  (board effect −0.17 s) and the half-weight LSZH correction (−0.25 s over two
-  steps) ([README](../README.md#data-openness-at-a-glance)).
+  ([reproduction](reproduction.md#what-you-need)). If the EUROCONTROL inputs were
+  set aside, the affected parts are the destination ATFM delay features (board
+  effect −0.17 s), the half-weight LSZH correction (−0.25 s over two steps) and the
+  E218 stage (−0.0334 s on v12077, −0.0360 s on the final's January/July rows)
+  ([README](../README.md#data-openness-at-a-glance)). The monthly additional
+  taxi-out time files read by E218 carry no open licence; their use rests on the
+  organiser's answers of 27 September and 8 October 2026
+  ([organiser clarifications](organiser-clarifications.md)).
 - **Use of the leaderboard.** No submission was tuned row by row and no weight was
   optimised on the board; leaderboard-optimal weights (−1.004 s for one blend) were
   rejected ([development history §5](development-history.md#5-a-note-on-the-late-phase)).
   For the blind final the two leaderboard-dependent parts were removed at a
-  measured cost ([final submission](final-submission.md)).
+  measured cost ([final submission](final-submission.md)). The one stage added
+  afterwards, E218, was gated on 2025 data, and its inclusion was then decided by
+  board uploads with rules written beforehand (v12081, v12082, v12083); its input is
+  a published aggregate of the scored months, which we state plainly rather than
+  treat as ordinary external data.
 - **Misuse.** The regime detector flags records whose block time equals a planning
   time; it is a statistical signal (calibrated probability), not proof about any
   individual record, airport or operator ([data quality for PRU §6](data-quality-regimes.md)).
@@ -272,7 +308,12 @@ Blind result: `[[to be filled after 14 October]]`
   in [final submission §6](final-submission.md#6-pipeline-scripts-inputs-and-receipts),
   which save every fitted model and write receipts. On 9 October 2026 the final file
   was rebuilt from scratch from the same contract (on the same machine) with a
-  byte-identical result ([final submission §7](final-submission.md#7-validation-of-the-file)).
+  byte-identical result, and so was the E218 version on 11 October 2026
+  ([final submission §7](final-submission.md#7-validation-of-the-file)). Byte
+  identity holds on the build platform: a replay on Linux ARM64 matched the first
+  three stages by value, gave 55 of the 62 TabPFN tail values up to 35 s apart
+  (different numerical backend) and stopped at the cached E141 stage on the Python
+  build string, as designed ([reproduction §2c](reproduction.md#2c-rebuild-the-final-file)).
 - **Environment.** CPU stack locked in `uv.lock` (Python ≥ 3.12, Polars, LightGBM,
   CatBoost, TabPFN); GPU stack for the neural member pinned in `requirements-gpu.txt`
   (PyTorch 2.13.0 + ROCm, `rtdl_num_embeddings` 0.0.12). Cached stage models record

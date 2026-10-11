@@ -1,6 +1,6 @@
 # JOAS paper draft
 
-**Status: draft, not submitted (state of 10 October 2026).** `gentle-igloo-joas-draft.md` is a full
+**Status: draft, not submitted (state of 11 October 2026).** `gentle-igloo-joas-draft.md` is a full
 research-article draft for the Journal of Open Aviation Science (JOAS) describing team gentle-igloo's
 solution to the EUROCONTROL PRC Data Challenge 2026. The organiser said on 9 October 2026 that a JOAS
 paper is not required but welcome.
@@ -11,13 +11,13 @@ paper is not required but welcome.
 | `main.tex` | The same text in the JOAS LaTeX form (`manuscript=article`), **generated** by `build_tex.py`; do not edit by hand |
 | `reference.bib` | References |
 | `figures/` | Every figure the paper uses: ten copied unchanged from `docs/figures/`, two drawn for the paper (`nn_weight_by_month.png`, `final_recipe_price.png`) |
-| `make_paper_figures.py` | Rebuilds `figures/` (copies the reused figures, draws the two new ones from `analysis/e212_nn_weight_10seed_20261008/per_month.json` and `analysis/v12080_control_explanation_20261009/results/*.json`) |
+| `make_paper_figures.py` | Rebuilds `figures/` (copies the reused figures, draws the two new ones from `analysis/e212_nn_weight_10seed_20261008/per_month.json`, `analysis/v12080_control_explanation_20261009/results/*.json` and the score and forecast files of `analysis/v1208{1,2,3}_*_20261011/`) |
 | `build_tex.py` | Markdown → `main.tex`; with `--preview` also the PDF preview below |
 | `preview/gentle-igloo-joas-preview.pdf` | **Reading preview only — not the JOAS layout** (see below) |
 | `OUTLINE.md` | Skeleton: thesis, contributions, the evidence behind each section, figure and table lists, what is still missing |
 
 Every number in the draft is copied from the repository documentation (`README.md`, `docs/*.md`,
-`docs/tables/*.csv`, the dated reports in `analysis/`, `HYPOTHESES_LOG.md` up to entry 448);
+`docs/tables/*.csv`, the dated reports in `analysis/`, `HYPOTHESES_LOG.md` up to entry 461);
 `OUTLINE.md` names the source of each claim. Numbers that do not exist yet are marked `[[RESULT: …]]`
 and typeset in red. Only these remain: the organiser's blind final ranking after 14 October 2026 (six
 places, all marked `[[RESULT: final ranking — …]]`), the author's ORCID and contact e-mail, and the DOI
@@ -52,13 +52,13 @@ only as a comment in `main.tex`.
   (`\doi`, `\received`, `\editor`, `\reviewers`, `\orcid`, `\affiliation`, `\email`, `\keywords`,
   `\abbreviations`) dropped or reduced to plain text, and biblatex on the bibtex backend (numeric,
   unsorted, as in the JOAS class) so that the references resolve without biber. It is **not the JOAS
-  layout**: fonts, margins, page count, abstract box and header differ. On 10 October 2026 it has
-  44 pages (11 pt, A4).
+  layout**: fonts, margins, page count, abstract box and header differ. On 11 October 2026 it has
+  48 pages (11 pt, A4).
 
-## JOAS limits (checked 10 October 2026)
+## JOAS limits (checked 11 October 2026)
 
-Title 11 words (≤ 12); five keywords (≤ 5); abstract 296 words counting every unit symbol and the
-placeholder as a word, 290 without the placeholder (≤ 300; keep the filled ranking clause to about ten words); mandatory *Open data
+Title 11 words (≤ 12); five keywords (≤ 5); abstract 294 words counting every unit symbol and the
+placeholder as a word, 288 without the placeholder (≤ 300; keep the filled ranking clause to about ten words); mandatory *Open data
 statement* and *Reproducibility statement* present (the latter names the scripts behind every figure
 and the sources of every table, as the template asks); *Funding statement* and *AI-assistance
 statement* written; single author, so no CRediT section. CC BY 4.0, no fees, open peer review.

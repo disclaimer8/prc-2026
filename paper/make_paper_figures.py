@@ -10,7 +10,9 @@
      single uploads, and each upload against the forecast corridor written before it, from
      analysis/v12080_control_explanation_20261009/results/{gram.json,sigma_piecewise.json,sigma_cluster.json}
      and the forecasts recorded in docs/final-submission.md (sections 4 and 7) and
-     analysis/v12090_upload_20261008/RESULTS.md.
+     analysis/v12090_upload_20261008/RESULTS.md; the three uploads of 11 October that measured the
+     E218 PRU level stage (v12081, v12082, v12083) from analysis/v1208{1,2,3}_*_20261011/
+     (score_response.json, forecast.json; the v12081 corridor as recorded in its RESULTS.md).
 
 Run from anywhere (no data outside the repository is read):
 
@@ -52,6 +54,14 @@ REUSED = [
 
 E212 = ROOT / "analysis/e212_nn_weight_10seed_20261008/per_month.json"
 CTRL = ROOT / "analysis/v12080_control_explanation_20261009/results"
+E218_RUNS = {  # the three single-change uploads of 11 October that measured the E218 stage
+    "v12081": ROOT / "analysis/v12081_upload_20261011",
+    "v12082": ROOT / "analysis/v12082_control_20261011",
+    "v12083": ROOT / "analysis/v12083_upload_20261011",
+}
+# v12081: point and corridor as written before the upload (RESULTS.md / journal 455); its forecast.json
+# stores the board-model deltas rather than the rounded corridor.
+V12081_FORECAST = (230.408, (230.394, 230.422))
 
 # Colour roles (validated light-mode palette slots 1-2 plus neutral text/grid tokens).
 BLUE = "#2a78d6"
@@ -150,6 +160,13 @@ def final_recipe_price() -> None:
     sigma_rows = json.loads((CTRL / "sigma_piecewise.json").read_text())["sigma_FH"]  # binned calibration
     sigma_lin = json.loads((CTRL / "sigma_cluster.json").read_text())["F-H|ADEP_mvt_day"]["sigma_rows"]  # linear calibration
     s = {k: float(v) for k, v in gram.items()}
+    for name, run in E218_RUNS.items():
+        s[name] = float(json.loads((run / "score_response.json").read_text())["score"])
+    e218_forecasts = {"v12081": V12081_FORECAST}
+    for name in ("v12082", "v12083"):
+        f = json.loads((E218_RUNS[name] / "forecast.json").read_text())["forecast"]
+        e218_forecasts[name] = (float(f["point"]), tuple(float(x) for x in f["corridor"]))
+    final_e218 = s["v12082"] - s["v12077"]
     e81 = s["v12078"] - s["v12077"]
     tail = s["v12079"] - s["v12077"]
     canary = s["v12090"] - s["v12075"]
@@ -158,7 +175,7 @@ def final_recipe_price() -> None:
     # sigma of the control in RMSE units: sigma_MSE / (2 * RMSE)
     sig_lo, sig_hi = sorted((sigma_rows / (2 * expected), sigma_lin / (2 * expected)))
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7.6, 3.4), gridspec_kw={"width_ratios": [1.0, 1.0]})
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7.6, 4.2), gridspec_kw={"width_ratios": [1.0, 1.0]})
 
     def expectation(ax, x, y):
         """Measured expectation with the two label-free 1-sigma estimates (thick: binned, thin: linear)."""
@@ -174,8 +191,9 @@ def final_recipe_price() -> None:
         ("sum of the two parts", [(e81, BLUE), (tail, ORANGE)]),
         ("both at once, older members\n(canary v12090 − v12075)", [(canary, MUTED)]),
         ("final file, Jan/Jul rows\n(control v12080 − v12077)", [(control, INK2)]),
+        ("final file with E218, Jan/Jul\n(control v12082 − v12077)", [(final_e218, INK)]),
     ]
-    ys = [5.0, 4.0, 3.0, 2.0, 0.8]
+    ys = [6.0, 5.0, 4.0, 3.0, 1.8, 0.8]
     for y, (_, parts) in zip(ys, rows):
         left = 0.0
         for width, colour in parts:
@@ -183,10 +201,10 @@ def final_recipe_price() -> None:
             left += width
         ax1.text(left + 0.03, y, f"+{left:.3f}", va="center", ha="left", fontsize=7.5, color=INK)
     exp_rel = expected - s["v12077"]
-    expectation(ax1, exp_rel, 0.15)
-    ax1.text(exp_rel + sig_hi + 0.04, 0.15, f"+{exp_rel:.3f}", fontsize=7, color=INK2, va="center")
-    ax1.set_yticks(ys, [r[0] for r in rows], fontsize=7.3)
-    ax1.set_ylim(-0.3, 5.5)
+    expectation(ax1, exp_rel, 2.4)
+    ax1.text(exp_rel + sig_hi + 0.04, 2.4, f"+{exp_rel:.3f}", fontsize=7, color=INK2, va="center")
+    ax1.set_yticks(ys + [2.4], [r[0] for r in rows] + ["expected v12080 (H)"], fontsize=7.3)
+    ax1.set_ylim(0.3, 6.5)
     ax1.set_xlim(0, 2.45)
     ax1.set_xlabel("RMSE change on January/July 2026 (s)", fontsize=7.8)
     ax1.grid(axis="y", visible=False)
@@ -198,21 +216,27 @@ def final_recipe_price() -> None:
         ("v12079", 231.17, (230.83, 231.48), s["v12079"]),
         ("canary v12090", 231.6, (231.1, 232.3), s["v12090"]),
         ("control v12080", 231.7, (231.2, 232.3), s["v12080"]),
+        ("v12081 (E218 on v12077)", *e218_forecasts["v12081"], s["v12081"]),
+        ("control v12082 (E218 final)", *e218_forecasts["v12082"], s["v12082"]),
+        ("v12083 (E218 without LIRF)", *e218_forecasts["v12083"], s["v12083"]),
     ]
-    yb = [3.6, 2.6, 1.6, 0.6]
+    yb = [7.4, 6.4, 5.4, 4.4, 2.6, 1.6, 0.6]
     for y, (name, central, (lo, hi), observed) in zip(yb, uploads):
         ax2.barh(y, hi - lo, left=lo, height=0.42, color=BAND, edgecolor="none", zorder=2)
         ax2.plot([central, central], [y - 0.21, y + 0.21], color=INK2, linewidth=1.5, zorder=3)
         ax2.plot([observed], [y], marker="o", markersize=6, color=BLUE, markeredgecolor=SURFACE,
                  markeredgewidth=1.0, zorder=6)
-        ax2.text(observed, y + 0.26, f"{observed:.4f}", fontsize=7, color=INK, ha="center", va="bottom")
-    expectation(ax2, expected, 0.15)
-    ax2.text(expected + sig_hi + 0.04, 0.15, f"{expected:.3f}", fontsize=7, color=INK2, va="center")
+        if hi - lo < 0.1:  # narrow corridors (the E218 uploads): label to the right of the corridor and point
+            ax2.text(max(observed, hi) + 0.05, y, f"{observed:.4f}", fontsize=7, color=INK, ha="left", va="center")
+        else:
+            ax2.text(observed, y + 0.26, f"{observed:.4f}", fontsize=7, color=INK, ha="center", va="bottom")
+    expectation(ax2, expected, 3.6)
+    ax2.text(expected + sig_hi + 0.04, 3.6, f"{expected:.3f}", fontsize=7, color=INK2, va="center")
     ax2.axvline(s["v12077"], color=MUTED, linewidth=0.8, linestyle=(0, (2, 2)), zorder=1)
-    ax2.text(s["v12077"] - 0.03, 4.25, "v12077 230.4812", fontsize=6.8, color=INK2, ha="left", va="bottom")
-    ax2.set_yticks(yb + [0.15], [u[0] for u in uploads] + ["expected v12080"], fontsize=7.3)
-    ax2.set_ylim(-0.3, 4.6)
-    ax2.set_xlim(230.3, 232.75)
+    ax2.text(s["v12077"] + 0.03, 8.0, "v12077 230.4812", fontsize=6.8, color=INK2, ha="left", va="bottom")
+    ax2.set_yticks(yb + [3.6], [u[0] for u in uploads] + ["expected v12080 (H)"], fontsize=7.3)
+    ax2.set_ylim(0.2, 8.4)
+    ax2.set_xlim(230.25, 232.75)
     ax2.set_xlabel("leaderboard RMSE, January/July 2026 (s)", fontsize=7.8)
     ax2.grid(axis="y", visible=False)
     ax2.set_title("(b) Scores against forecasts", loc="left", fontsize=8.5, fontweight="bold")
@@ -225,7 +249,7 @@ def final_recipe_price() -> None:
     ]
     fig.legend(handles=handles, loc="lower center", ncol=2, fontsize=7, frameon=False,
                bbox_to_anchor=(0.5, 0.0), columnspacing=1.6)
-    fig.tight_layout(rect=(0, 0.11, 1, 1))
+    fig.tight_layout(rect=(0, 0.09, 1, 1))
     path = OUT / "final_recipe_price.png"
     fig.savefig(path)
     plt.close(fig)

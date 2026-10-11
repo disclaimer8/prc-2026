@@ -1,14 +1,18 @@
-# Reproducing the v12075 and v12077 submissions
+# Reproducing the submissions: v12075, v12077, v12081 and the final file
 
-v12077 is the team's best submission: 230.4812 s RMSE on the ranking period
-(January and July 2026), scored on 8 October 2026
-([scoring receipt](../analysis/v12077_upload_20261008/RESULTS.md)). It is a
+v12081 is the team's best submission: 230.4478 s RMSE on the ranking period
+(January and July 2026), scored on 11 October 2026
+([scoring receipt](../analysis/v12081_upload_20261011/RESULTS.md)). It is v12077
+(230.4812 s, 8 October 2026,
+[scoring receipt](../analysis/v12077_upload_20261008/RESULTS.md)) with one
+post-mixture stage added, E218 (PRU level), and no model fitted. v12077 is a
 zero-fit rebuild of v12075 (230.9387 s, 7 October 2026,
 [scoring receipt](../analysis/e203_upload_20261007/RESULTS.md)) with the neural
 member averaged over ten seeds and its weight raised to 0.35. This guide covers
 [verifying the files](#1-verify-the-submitted-file),
 [replaying v12075 from archived components](#2-replay-v12075-from-archived-components),
-[rebuilding v12076 and v12077 on the same path](#2b-rebuild-v12076-and-v12077-from-the-same-components),
+[rebuilding v12076, v12077 and v12081 on the same path](#2b-rebuild-v12076-and-v12077-from-the-same-components),
+[rebuilding the final file](#2c-rebuild-the-final-file),
 [retraining from raw data](#3-retrain-from-raw-data) and the
 [software environment](#4-environment).
 
@@ -33,6 +37,11 @@ The two files built from it on 8 October 2026 have the same schema and ID set:
 |---|---|---|
 | `submissions/gentle-igloo_v12076.parquet` | `c22de523cd392fb035f9223c1ac2222173de0967ef5a8909ee9641876828e1b0` | 230.8183 s, `5be7ef97-8244-4f9a-94cb-5027f50c20d6` |
 | `submissions/gentle-igloo_v12077.parquet` | `f06c66bfa3388b17f5b6ba2362fa45a7da1be8fd5ae2d37de47cfe0e6bf2ba44` | 230.4812 s, `ecc78bca-21ed-4ce4-89ff-5b9765d3f74c` |
+| `submissions/gentle-igloo_v12081.parquet` (11 October 2026) | `719622263e3e66fb39ad67d3b4255dc7317f9a6449385b136de5d8d80dd42f4c` | 230.4478 s, `95bd150b-e18c-45ca-9ea1-fdf50624e0eb` |
+
+The final file (four months, 670,790 rows, template `final_submitting.parquet`) is
+`gentle-igloo_final.parquet`, SHA-256
+`bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1` (section 2c).
 
 Sources: [scoring receipt](../analysis/e203_upload_20261007/RESULTS.md),
 [replay results](../analysis/reproduce_v12075_20261007/RESULTS.md),
@@ -226,6 +235,93 @@ writing; `build` refuses to run if the output directory or the candidate exists.
 Records: [v12076](../analysis/v12076_upload_20261008/RESULTS.md),
 [v12077](../analysis/v12077_upload_20261008/RESULTS.md); journal 416, 417, 426, 427.
 
+**v12081** (`scripts/v12081_e218_build_20261011.py`): the v12077 chain rebuilt on the
+same path, its stage-11 (`half`) output required to be byte-identical to v12077
+(`f06c66bf…`) before anything else happens; then one stage `pru_level`, executed from
+the post-image of the SHA-pinned patch
+`analysis/e218_pru_level_recheck_20261010/final_tail_e218_pru_level_stage.patch`
+(`0613fdd9…`) rather than retyped, with k 0.5, the 0.005 de-icing threshold, the 2025
+training labels, the board's `ranking.parquet` and the two PRU files
+`data/taxi_out_additional_time_{2025,2026}.csv` (`4aedf195…`, `b72040e0…`). The 42
+frozen TabPFN rows are protected. Output `data/v12081_e218_20261011/`, candidate SHA
+`71962226…`; 1 min 59 s, 0 fits; 215,682 rows differ from v12077, RMS 3.53 s, maximum
+8 s. `parity` checks the extraction: on the 9 October final file it reproduces the E218
+dry run `bbae2cc5…` on all 670,790 rows
+([parity record](../analysis/v12081_upload_20261011/stage_parity_final_dryrun.json)).
+
+```bash
+.venv/bin/python scripts/v12081_e218_build_20261011.py check
+.venv/bin/python scripts/v12081_e218_build_20261011.py parity
+.venv/bin/python scripts/v12081_e218_build_20261011.py build
+```
+
+Record: [v12081](../analysis/v12081_upload_20261011/RESULTS.md); journal 455, 456.
+
+## 2c. Rebuild the final file
+
+The final file is assembled by `scripts/final_tail_assembly_20261008.py` (SHA-256
+`21f46756…`) from a sealed contract, with no model fitted
+([final submission §6](final-submission.md#6-pipeline-scripts-inputs-and-receipts)).
+The E218 stage is off by default; the final was built with `E218_PRU_LEVEL=1` set for
+all three actions (journal 457, 458). Mac, `.venv/bin/python`, at most six threads:
+
+```bash
+export E218_PRU_LEVEL=1 POLARS_UNKNOWN_EXTENSION_TYPE_BEHAVIOR=load_as_storage
+.venv/bin/python scripts/final_tail_assembly_20261008.py make-contract --mode final \
+  --feature-work data/final_feature_work_mac_20261008 --tabular-root models/final_tabular \
+  --nn-prediction analysis/final_ordered_trajectory_20261008/execution_10seed/prediction_10seed.npz \
+  --nn-complete analysis/final_ordered_trajectory_20261008/execution_10seed/complete.json \
+  --derivatives-work data/final_adsb_derivatives_20261008 --opdi-extra data/opdi_final_20261008 \
+  --out data/final_tail_20261011/contract.json
+.venv/bin/python scripts/final_tail_assembly_20261008.py prepare \
+  --contract data/final_tail_20261011/contract.json --work data/final_tail_20261011/work
+.venv/bin/python scripts/final_tail_assembly_20261008.py assemble \
+  --work data/final_tail_20261011/work --repeat-e156
+```
+
+`make-contract` pins 4,027 input files by SHA-256 (the 4,025 of the 9 October contract
+plus the two PRU files) and writes a `pru_level` block (k 0.5, threshold 0.005);
+`admit` refuses a run in which the flag and the contract disagree or a PRU file differs.
+Without the flag the plan is byte-identical to the 9 October recipe, and the same three
+commands rebuild the predecessor `76c32426…` from its own contract
+`data/final_tail_20261009/contract.json`. Cached stage models are loaded only on an
+exact training signature; there is no silent refit (`--refit` is a separate explicit
+action and was not used).
+
+**Result on the build machine.** `gentle-igloo_final.parquet`, SHA-256
+`bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1`, 231 s with the
+E156 repeat, peak 10.8 GB. A second `prepare` and `assemble` into a fresh
+`data/final_tail_20261011/work_replay` gave the same SHA-256; the receipts of stages
+0–11 equal those of 9 October except three explained fields, and the stage-11 output is
+byte-identical to the 9 October file
+([receipt parity](../analysis/final_tail_20261011/receipt_parity.json),
+[MANIFEST](../analysis/final_tail_20261011/MANIFEST.json)). Check the result with
+`scripts/validate_final_submission.py` (all hard checks passed against v12081,
+[report](../analysis/final_tail_20261011/validate_vs_v12081.txt)).
+
+**Cross-platform limits.** On 10 October the 9 October final was replayed on a second
+machine, prc-cloud (Linux 7.0, aarch64 Neoverse-N1, glibc 2.43), from the same contract
+with all 4,025 pinned files verified by SHA-256 and identical package versions (NumPy
+2.5.3, Polars 1.44.2, LightGBM 4.7.0, TabPFN 8.5.0, PyTorch 2.14.0)
+([report](../analysis/final_replay_prc_cloud_20261010.md), journal 453, 454):
+
+| Stage | Result on prc-cloud |
+|---|---|
+| 0 premix | Values equal on all 670,790 rows; LightGBM classifier probabilities differ by one unit in the last place in 4,607 rows and round to the same values; the Parquet bytes differ only by row-group layout |
+| 1 E185, 2 E167 | Outputs byte-identical |
+| 3 E156 (TabPFN-2) | Identical inputs and seed fingerprints, but probabilities up to 0.010 apart; 55 of the 62 rounded tail values differ (mean 9.1 s, at most 35 s); bitwise repeatable within each machine |
+| 4 E141 | Refused before any fit: the cached-model signature differs only in the Python build string (build date); data, label and weight fingerprints match |
+| 5–12 | Not run |
+
+The cause of the E156 difference is the numerical stack under identical package
+versions (Apple Accelerate and libomp on the Mac; OpenBLAS, NVPL/oneDNN, libgomp and
+glibc libm on prc-cloud); no error in code or data. Byte-identical reproduction of the
+final is therefore tied to the build platform (macOS arm64 with Accelerate and the
+Python 3.12.14 build of 1 September 2026). On another platform the first three stages
+agree by value; with an identical interpreter build and exact stages 4–11 the
+9 October file would be expected (not measured) to differ in the 55 tail rows only,
+RMS 0.128 s over the file. The E218 stage was not replayed on a second platform.
+
 ## 3. Retrain from raw data
 
 A clean end-to-end run of this list has not been completed: the producer code
@@ -269,7 +365,9 @@ new TabPFN draw and rebuilt donors (or a recipe without them). The older
 features stop at E106, it uses 25 CatBoost seeds and a different anchor mixture,
 and it has no E203 neural member, E185 insertion, E188 replacement or
 half-weight LSZH stage. Its fresh TabPFN fit also differs from reusing v12075's
-fixed 42-row draw. The README's former `features_v4 → train.py submit` example
+fixed 42-row draw. The E218 stage of v12081 and the final needs EUROCONTROL's
+published monthly additional taxi-out time for the months being predicted, so it can
+be applied only after PRU has published those months. The README's former `features_v4 → train.py submit` example
 produces an earlier baseline, not v12075.
 
 ## 4. Environment

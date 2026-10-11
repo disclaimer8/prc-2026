@@ -1,4 +1,4 @@
-# JOAS paper: outline (state of 10 October 2026)
+# JOAS paper: outline (state of 11 October 2026)
 
 Companion to `gentle-igloo-joas-draft.md`. Every claim below names the file, figure or table that
 carries its evidence; the draft must not say more than these sources say. The organiser stated on
@@ -19,8 +19,8 @@ performance monitoring beyond the leaderboard.
 
 ## What the paper is and is not
 
-The team finished 16th of 239 on the ordinary board (230.4812 s; third place 213.5212 s, a gap of
-about 17 s). The contribution is therefore **not** rank. It is (a) the design, (b) the honest
+The team stood 18th of 242 on the ordinary board on 11 October 2026 (best v12081, 230.4478 s;
+third place 213.2898 s, a gap of about 17 s; 16th of 239 with v12077, 230.4812 s, on 8 October). The contribution is therefore **not** rank. It is (a) the design, (b) the honest
 uniform recipe for the blind final with its measured price, (c) the evidence discipline, (d) the
 data-quality and PRU reading of the same model, and (e) documented negative results. The paper says
 this in the introduction and the conclusion.
@@ -46,7 +46,18 @@ this in the introduction and the conclusion.
    ±0.3 s corridor was about half as wide as it should have been). Evidence: `docs/final-submission.md`
    §4 and §7, `analysis/v12090_upload_20261008/RESULTS.md`, `analysis/v12078_upload_20261009/RESULTS.md`,
    `analysis/v12079_upload_20261009/RESULTS.md` with log 444, `analysis/v12080_control_explanation_20261009.md`
-   (+ `results/gram.json`), `analysis/final_tail_20261009/`.
+   (+ `results/gram.json`), `analysis/final_tail_20261009/`. **Last stage E218 (PRU level), disclosed
+   as an input from the scored months:** per airport × month half the gap between the indicator
+   implied by the predictions and EUROCONTROL's published additional taxi-out time, net of the 2025
+   emulation offset, outside de-icing months; 2025 gate passed (6/6 pairs, −0.137 s pooled, forward
+   legs, 12/12 months); v12081 = v12077 + E218 = 230.4478 s (−0.0334 s, 0.025 s above its corridor);
+   final rebuilt `bbae2cc5…` (stages before E218 identical to 9 Oct; 415,697 rows, RMS 4.687 s);
+   control v12082 = 231.1445 s (−0.0360 s vs v12080, inside corridor); v12083 (E218 removed on LIRF
+   rows) = 231.1749 s ⇒ gain splits LIRF −0.0304 s (84 %) / other ten cells −0.0056 s; LIRF transfers
+   ≈ 0.69 of its gap, others 0.37–0.48 (2025: 0.93); the reading "non-LIRF transfer, LIRF neutral" is
+   refuted. Evidence: `docs/final-submission.md` §2.5, `analysis/e218_pru_level_recheck_20261010.md`,
+   `analysis/v12081_upload_20261011/RESULTS.md`, `analysis/v12082_control_20261011/RESULTS.md`,
+   `analysis/v12083_upload_20261011/RESULTS.md` (+ `verdict.json`), `analysis/final_tail_20261011/`.
 4. **Evidence discipline and what transferred.** Temporal month-pair folds, pre-registered gates,
    forecasts before uploads, 38-pair CV-to-board calibration by type of change, the Gram identity
    for blends (and its limit, learned on v12078), and an eight-item leaderboard-use disclosure.
@@ -65,14 +76,14 @@ this in the introduction and the conclusion.
 
 | § | Claims (2–4 each) | Evidence |
 |---|---|---|
-| Abstract | Task; three data properties; chain; 230.48 s, 16/239; what transferred; final recipe; PRU by-product | all of the below |
+| Abstract | Task; three data properties; chain; 230.45 s, 18/242; what transferred; final recipe; E218 with its input disclosed; detector | all of the below |
 | 1 Introduction | Task is retrospective reconstruction (organiser 16/19 Sep); blind final announced 8 Oct; five contributions; rank is not the contribution | `docs/organiser-clarifications.md`, `README.md` |
 | 2 Data | 2.2 regimes (6.76 %, LIRF 24.1 %, 83.7 % above 1 h; same-minute test); 2.3 proxy 384.9 s, medians −118…+296 s; 2.4 coverage drift incl. final months (EDDF Feb 32.2 %, LIRF Jun 0.7 %, Jul 6.2 %); 2.6 error budget (LIRF 30.8 %, no-NM 36.6 %) | `docs/data-insights.md`, fig2–fig5, `analysis/final_adsb_derivatives_20261008/RESULTS.md`, `docs/final-submission.md` §5 |
-| 3 Method | 3.1 chain of v12077; 3.3 mixture + cost weights + rejected variants; 3.4 members incl. ten-seed NN at 0.35 chosen on 12 months (0.40 by rule, 0.35 only value better in all months); 3.5 stages and gate; 3.6 tail; 3.7 E81 and LSZH; **3.8 the uniform final recipe** (table of differences, stage order, served rows, OPDI coverage) | `docs/model-design.md`, `docs/final-submission.md` §2, `analysis/e212_…md` §4–§6, `analysis/final_tail_20261009/receipts/` |
-| 4 Validation | Six folds; no fully nested CV (`quality_validated_on_full_chain=false`); Table 4 incl. E212 rows; corridors tested: 3 of 4 final-recipe uploads inside, the control 0.02 s outside (lesson: ±0.5 s per σ for a refitted chain); CV→board by type (ratio 1.0 / 0.7 / 0.2–0.3 / ≤ 0) and a mixture-weight shift that transferred ≈ 3× its OOF estimate; Gram identity exact for complete files, not across stages after the blend (v12078 missed by +0.45 s), exact for H = v12078 + 42 fresh rows (231.7429 s) | `docs/validation.md`, `docs/development-history.md` §3–§4, `analysis/v12077_upload_20261008/RESULTS.md`, `analysis/v12078_upload_20261009/RESULTS.md` |
-| 5 Results | 5.1 111 + 3 = 114 uploads, 63 bests, phases, gap to third; 5.2 single-change controls incl. v12076–v12079; 5.3 OOF by airport; 5.4 generalisation Feb+Jun vs Jan+Jul (247.3 vs 279.2; 0/120 worse than proxy) and Figure 9 (NN weight by month); 5.5 uncertainty; 5.6 detector and PRU indicator; 5.7 recipe price (Table 14, Figure 13), the final file (SHA, validator, replay), control v12080 and its explanation, PRU 2026 check and regime shares, ranking pending; 5.8 negative results of 8–9 Oct (E207 v3, E209–E216, NN protection) | fig1, `docs/development-history.md` §1, `docs/generalisation.md`, `docs/uncertainty.md`, `docs/data-quality-regimes.md`, `docs/pru-view.md`, `analysis/final_tail_20261009/MANIFEST.json`, `analysis/v12080_control_explanation_20261009.md`, `analysis/final_pru_and_regime_check_20261009.md`, `analysis/e216_chain_scalars_20261009.md`, `docs/negative-results.md` |
-| 6 Discussion | What generalises (observation vs aggregates); dataset-specific rules; known risks of the final months (EDDF/LIRF coverage, EHAM works 18,194 of 20,881 June rows, input audit, LIRF level shift and LTFM snow from the PRU 2026 check, ±0.5 s regime-probability lottery); leaderboard-use disclosure (8 items; v12076–v12080 add none; final removes items 1–2); limitations incl. corridor width | `docs/final-submission.md` §5, `analysis/final_months_input_audit_20261009.md`, `analysis/coverage_collapse_audit_20261008.md`, `docs/development-history.md` §6, `docs/model-card.md` |
-| 7 Open science | GPLv3; data terms table; four reproducibility levels with the status of each (replay exact; retrain not run end to end; new period = dated final pipeline with receipts) | `README.md`, `docs/reproduction.md`, `docs/final-submission.md` §6 |
+| 3 Method | 3.1 chain of v12077; 3.3 mixture + cost weights + rejected variants; 3.4 members incl. ten-seed NN at 0.35 chosen on 12 months (0.40 by rule, 0.35 only value better in all months); 3.5 stages and gate; 3.6 tail; 3.7 E81 and LSZH; **3.8 the uniform final recipe** (table of differences, stage order, served rows, OPDI coverage); **3.9 E218** (rule, why E145 failed, 2025 gate, plain statement of the input) | `docs/model-design.md`, `docs/final-submission.md` §2, `analysis/e212_…md` §4–§6, `analysis/final_tail_20261009/receipts/` |
+| 4 Validation | Six folds; no fully nested CV (`quality_validated_on_full_chain=false`); Table 4 incl. E212 rows; corridors tested: 4 of 7 uploads of 8–11 Oct inside; the control v12080 0.02 s below (lesson: ±0.5 s per σ for a refitted chain), v12081 0.025 s and v12083 0.0009 s above; E218 row in Table 5; CV→board by type (ratio 1.0 / 0.7 / 0.2–0.3 / ≤ 0) and a mixture-weight shift that transferred ≈ 3× its OOF estimate; Gram identity exact for complete files, not across stages after the blend (v12078 missed by +0.45 s), exact for H = v12078 + 42 fresh rows (231.7429 s) | `docs/validation.md`, `docs/development-history.md` §3–§4, `analysis/v12077_upload_20261008/RESULTS.md`, `analysis/v12078_upload_20261009/RESULTS.md` |
+| 5 Results | 5.1 111 + 3 + 3 = 117 uploads, 64 bests (v12081 the last), eight phases, gap to third; 5.2 single-change controls incl. v12076–v12083 (E218 split LIRF / other); 5.3 OOF by airport; 5.4 generalisation Feb+Jun vs Jan+Jul (247.3 vs 279.2; 0/120 worse than proxy) and Figure 9 (NN weight by month); 5.5 uncertainty; 5.6 detector and PRU indicator; 5.7 recipe price (Table 14, Figure 13), the file of 9 Oct (SHA, validator, replay), control v12080 and its explanation, PRU 2026 check of the 9 Oct file and regime shares, E218 on the board (v12081–v12083) and the final file of 11 Oct `bbae2cc5…`, ranking pending; 5.8 negative results of 8–10 Oct (E207 v3, E209–E217, NN protection) | fig1, `docs/development-history.md` §1, `docs/generalisation.md`, `docs/uncertainty.md`, `docs/data-quality-regimes.md`, `docs/pru-view.md`, `analysis/final_tail_20261009/MANIFEST.json`, `analysis/v12080_control_explanation_20261009.md`, `analysis/final_pru_and_regime_check_20261009.md`, `analysis/e216_chain_scalars_20261009.md`, `analysis/e217_winter_nn_weight_20261010.md`, `analysis/final_tail_20261011/MANIFEST.json`, `analysis/v1208{1,2,3}_*_20261011/RESULTS.md`, `docs/negative-results.md` |
+| 6 Discussion | What generalises (observation vs aggregates); dataset-specific rules; known risks of the final months (EDDF/LIRF coverage, EHAM works 18,194 of 20,881 June rows, input audit, LIRF level shift (now moved by E218; June +21 s unmeasured) and LTFM snow from the PRU 2026 check, ±0.5 s regime-probability lottery); leaderboard-use disclosure (8 items; v12076–v12080 add none; final removes items 1–2; E218 added to the final by board rules, input a published aggregate of the scored months); limitations incl. corridor width, E218, cross-platform replay | `docs/final-submission.md` §5, `analysis/final_months_input_audit_20261009.md`, `analysis/coverage_collapse_audit_20261008.md`, `docs/development-history.md` §6, `docs/model-card.md` |
+| 7 Open science | GPLv3; data terms table (PRU monthly files: no open licence, E218 input, organiser's answers of 27 Sep / 8 Oct); four reproducibility levels with the status of each (replay exact on the build platform; prc-cloud replay limits; retrain not run end to end; new period = dated final pipeline with receipts) | `README.md`, `SOURCES.md`, `docs/reproduction.md` §2c, `docs/final-submission.md` §6, `analysis/final_replay_prc_cloud_20261010.md` |
 | 8 Conclusion | Mixture > learner; observation transfers; by-product for PRU; evidence boundary stated | — |
 
 ## Figures
@@ -95,7 +106,7 @@ All figures used by the paper are in `paper/figures/` (JOAS expects one `figures
 | 10 | `fig_uncertainty_calibration.png` | coverage by airport, PIT | `scripts/uncertainty_report.py` |
 | 11 | `fig6_regime_detector_calibration.png` | reliability of the detector | `scripts/regime_quality_report.py` |
 | 12 | `fig7_regime_effect_on_kpi.png` | copies per month and effect on the indicator | `scripts/regime_quality_report.py` |
-| 13 | `final_recipe_price.png` (**new**) | (a) price of the recipe: E81 +0.568, fresh tail +0.696, sum +1.263, canary +1.255, control +0.699 against H +1.262 ± 1σ; (b) v12078/v12079/v12090/v12080 against their corridors | `paper/make_paper_figures.py` from `analysis/v12080_control_explanation_20261009/results/{gram,sigma_piecewise,sigma_cluster}.json`; corridors from `docs/final-submission.md` §4, §7 and the canary report |
+| 13 | `final_recipe_price.png` (**new**) | (a) price of the recipe: E81 +0.568, fresh tail +0.696, sum +1.263, canary +1.255, control v12080 +0.699 against H +1.262 ± 1σ, control v12082 (with E218) +0.663; (b) v12078/v12079/v12090/v12080/v12081/v12082/v12083 against their corridors | `paper/make_paper_figures.py` from `analysis/v12080_control_explanation_20261009/results/{gram,sigma_piecewise,sigma_cluster}.json` and `analysis/v1208{1,2,3}_*_20261011/{score_response,forecast}.json`; corridors from `docs/final-submission.md` §4, §7, the canary report and the v12081 RESULTS |
 
 Still optional (data exist, not made): ADS-B coverage of the four final months against the same
 months of 2025 by airport (table in `docs/final-submission.md` §5; the paper gives it in the prose of
@@ -105,12 +116,12 @@ months of 2025 by airport (table in `docs/final-submission.md` §5; the paper gi
 
 In document order (as numbered in the draft; `build_tex.py` turns each into a captioned, labelled
 longtable): 1 feature families; 2 regular-candidate weights (v12075 vs v12077/final); 3 final
-recipe vs v12077; 4 six-fold comparison incl. E212; 5 CV vs board by change; 6 phases;
-7 single-change controls incl. v12076–v12079; 8 OOF by airport; 9 generalisation by month group;
+recipe vs v12077 incl. the E218 row; 4 six-fold comparison incl. E212; 5 CV vs board by change incl. E218;
+6 phases (eight); 7 single-change controls incl. v12076–v12083; 8 OOF by airport; 9 generalisation by month group;
 10 neural weight by month (E212); 11 uncertainty coverage; 12 detector thresholds; 13 PRU indicator
 effect by airport; 14 Jan/Jul price of the final recipe (canary, members, E81, fresh tail, H,
-control); 15 negative results of 8–9 October incl. E216; 16 leaderboard-use disclosure; 17 data
-terms incl. the PRU indicator files used as a comparison reference.
+control) and the three E218 uploads; 15 negative results of 8–10 October incl. E216, E217;
+16 leaderboard-use disclosure; 17 data terms incl. the PRU indicator files as the E218 input.
 
 ## Still missing and when it becomes available
 
@@ -125,3 +136,8 @@ terms incl. the PRU indicator files used as a comparison reference.
 Filled on 10 October: v12079 = 231.1770 s (+0.6958 s, log 444), control v12080 = 231.1805 s and its
 explanation (log 445–447), the PRU 2026 check of the final file (log 448), E216 (log 442–443), the
 funding statement and the AI-assistance statement.
+
+Filled on 11 October: E217 (log 449–450); E218, its 2025 gate and data-use disclosure (log 451–452,
+Section 3.9); the prc-cloud replay limits (log 453–454); v12081 = 230.4478 s (new best, 18/242),
+the final rebuilt with E218 (`bbae2cc5…`), control v12082 = 231.1445 s and v12083 = 231.1749 s with
+the exact LIRF / non-LIRF split (log 455–461); Figure 13 redrawn with the three E218 uploads.
