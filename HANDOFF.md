@@ -2,17 +2,22 @@
 
 Правила, машины, рецепты — в `AGENTS.md`. Здесь — позиция, что считается и что делать дальше.
 
-## ТЕКУЩЕЕ СОСТОЯНИЕ — 09.10.2026 03:20Z (владелец: Claude; Codex остановлен)
+## ТЕКУЩЕЕ СОСТОЯНИЕ — 11.10.2026 09:30Z (владелец: Claude; агенты на Opus)
 
-**Best: v12077 = 230,4812** (16/239): v12075 + NN 10 сидов + вес NN 0,35 (№410/425–427) — это и есть финальные веса.
+**Финал:** `data/final_tail_20261011/work/gentle-igloo_final.parquet` **SHA bbae2cc5…34a1** = файл 09.10 (76c32426) + стадия E218 (уровень PRU, `E218_PRU_LEVEL=1`; №451/452/457). Валидатор PASS, пересборка на маке побайтно; контроль **v12082 = 231,1445** (−0,036 к v12080, коридор ✓; №458/459). Копии: Hetzner `/root/prc-final-backup-20261011/`, Home `/home/a1/prc-final-backup-20261011/`, PRCEXT.
 
-| Блок | Статус | Где / как проверить | ETA |
-|---|---|---|---|
-| Табличные fit (№388/413/430) | **готово и слито на маке:** base, lgb, raw, lobt, sched, eobt, aobt, motion (`models/final_tabular/<k>/merged/`); сверка с членами v12075 на янв/июл — RMS ≈ 20 с, сдвиг +0,3…+0,6 с. **CatBoost: 10/15 готовы** (0–4, 8–12, скопированы на мак); очереди упали по RuntimeMaxSec 12 ч в 01:00Z (№430), перезапуск: prc-cloud `prc-final-tab-cat-a4-20261009` (сиды 5, 6) и `-b3-` (13, 14, 7), 10 ч лимит | `ssh prc-cloud 'systemctl list-units "prc-final-tab-cat-*"'`, логи `/root/prc-final-logs/cat_{a,b}.log`; наблюдатель на маке | a4 ≈ 07:30Z, b3 ≈ 09:15Z |
-| Дальше | rsync `cat/seed_{5,6,7,13,14}` → `merge --kind cat` → `make-contract --mode final --feature-work data/final_feature_work_mac_20261008 --tabular-root models/final_tabular --nn-prediction analysis/final_ordered_trajectory_20261008/execution_10seed/prediction_10seed.npz --nn-complete analysis/final_ordered_trajectory_20261008/execution_10seed/complete.json --derivatives-work data/final_adsb_derivatives_20261008 --opdi-extra data/opdi_final_20261008 --out data/final_tail_20261009/contract.json` → `prepare` → `assemble --repeat-e156` → `validate_final_submission.py` → MANIFEST → контрольная подача (`scripts/final_transport_20261009.py seal --mode control …`, прогноз заранее) | веса final = `WEIGHTS['final']` (NN 0,35) | 09.10 днём |
-| Закрыто 08.10 вечером | E212 → вес 0,35 ✅; E214 (калибровка p) ❌; E215 (12 эпох NN: февраль +1,6 с) ❌; внешние отчёты №420/423/424 | журнал №410–429 | — |
-| Подачи 09.10 | контроль финала; v12078 = v12077 без E81 и v12079 = v12077 со свежим E156 на 42 строках — измерение цены честного рецепта (не выбор) | | после сборки |
-| Диск мака | ~50 ГБ свободно; 27 каталогов `data/` → внешний PRCEXT (симлинки, держать диск подключённым) | `analysis/disk_relocation_20261008/` | — |
+**Финальный PUT — 12.10 (день манифеста 2026-10-12), один раз, после последней обычной подачи 12.10:** на Hetzner
+`cd /root/prc-2026 && /root/prc-2026/.venv-upload/bin/python scripts/final_transport_20261009.py upload --manifest analysis/final_transport_20261009/manifest_final_v2.json --registration-proof analysis/final_transport_20261009/proof_final_v2.json --registration-commit 6b130265f467b050182600cfe0d7feb6bb72100e --source-sha256 831712bfd165c3e94a20f85a801047514ab6f462231e1c8cdfedc6264650ab4f`
+(preflight пройден 11.10 на маке и Hetzner; старый `manifest_final.json` для 76c32426 больше не проходит — сборщик теперь 21f46756.)
+
+| Блок | Статус |
+|---|---|
+| Best обычной доски | **v12081 = 230,4478** (v12077 + E218), 18/242 на 11.10 08:51Z |
+| Цена честного рецепта | E81 +0,568 (v12078), свежий хвост +0,696 (v12079); контроль финала без E218 v12080 = 231,1805, с E218 v12082 = 231,1445 |
+| Закрыто 09–11.10 | E215, E216 (скаляры на месте), E217 (зимний вес NN), I1–I8, внешние разборы; пересборка на prc-cloud не побайтная (TabPFN: Accelerate vs OpenBLAS; E141 — подпись Python), №454 |
+| Документы | агент обновляет docs/paper под bbae2cc5 и E218 (раскрытие использования PRU) |
+| Статья | `paper/` готова кроме чисел после 14.10; нужны ORCID, e-mail, подтверждение «no external funding» от Denys |
+| Открытие | 14.10 после 10:00Z: репо public + письмо со ссылкой и SHA последнего коммита на challenge@opensky-network.org (по «да» Denys) |
 
 ## Передача управления Claude — 08.10.2026 12:19UTC
 
