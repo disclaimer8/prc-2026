@@ -14,6 +14,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 os.environ.setdefault('POLARS_UNKNOWN_EXTENSION_TYPE_BEHAVIOR', 'load_as_storage')
 import numpy as np
@@ -467,6 +468,105 @@ class FrozenStageIdentity(unittest.TestCase):
             np.testing.assert_array_equal(after['pred'][1:], before['pred'][1:])
             self.assertNotEqual(after['pred'][0], before['pred'][0])
             self.assertIn('rule A rows 1', result.stdout)
+
+
+class E218PruLevelStage(unittest.TestCase):
+    """E218 (journal 451/452/457): default-off post-mixture stage; contract and flag must agree; arithmetic on synthetic rows."""
+
+    def test_flag_off_keeps_the_registered_plan_and_flag_on_appends_one_stage(self):
+        with mock.patch.object(A, 'PRU_LEVEL', False):
+            off = A.check_plan(A.stage_plan('final'), 'final')
+        self.assertEqual([s['name'] for s in off][-1], 'half')
+        self.assertEqual(len(off), 12)
+        with mock.patch.object(A, 'PRU_LEVEL', True):
+            on = A.check_plan(A.stage_plan('final'), 'final')
+            self.assertEqual(on[:12], off)  # every stage up to `half` is unchanged
+            self.assertEqual(on[12], dict(name='pru_level', kind='native', src=A.BASE_VERSION + 15, out=A.BASE_VERSION + 16, k=0.5, xs_max=0.005))
+            bad = copy.deepcopy(on)
+            bad[12]['k'] = 1.0
+            with self.assertRaises(ValueError):
+                A.check_plan(bad, 'final')
+            with self.assertRaises(ValueError):  # a sealed plan without the stage cannot run with the flag set
+                A.check_plan(off, 'final')
+        with mock.patch.object(A, 'PRU_LEVEL', False):
+            with self.assertRaises(ValueError):  # and a plan with it cannot run without the flag
+                A.check_plan(on, 'final')
+
+    def test_contract_must_agree_with_the_flag_and_pin_both_pru_files(self):
+        files = {path: digest for path, digest in A.PRU_CSV.values()}
+        self.assertEqual(sorted(files), ['data/taxi_out_additional_time_2025.csv', 'data/taxi_out_additional_time_2026.csv'])
+        plain = dict(files={'x': 'y'})
+        with_e218 = dict(files={'x': 'y', **files}, pru_level=A.pru_contract())
+        with mock.patch.object(A, 'PRU_LEVEL', False):
+            A.check_pru_contract(plain)
+            with self.assertRaises(ValueError):
+                A.check_pru_contract(with_e218)
+        with mock.patch.object(A, 'PRU_LEVEL', True):
+            A.check_pru_contract(with_e218)
+            with self.assertRaises(ValueError):
+                A.check_pru_contract(plain)
+            unpinned = copy.deepcopy(with_e218)
+            del unpinned['files']['data/taxi_out_additional_time_2026.csv']
+            with self.assertRaises(ValueError):
+                A.check_pru_contract(unpinned)
+            changed = copy.deepcopy(with_e218)
+            changed['files']['data/taxi_out_additional_time_2025.csv'] = '0' * 64
+            with self.assertRaises(ValueError):
+                A.check_pru_contract(changed)
+            constants = copy.deepcopy(with_e218)
+            constants['pru_level']['k'] = 0.75
+            with self.assertRaises(ValueError):
+                A.check_pru_contract(constants)
+
+    def frames(self):
+        i32 = pl.Int32
+        # 2025 labels: LIRF stand S1 x runway R1, 100 rows in May, y = 100..199 -> P10 = 109 with 10 rows at/below (valid);
+        # indicator(May) = 149.5 - 109 = 40.5; PRU May 30 s -> emu_hat(LIRF) = 10.5.
+        train = pl.DataFrame({'ADEP_mvt': ['LIRF'] * 100, 'STAND_mvt': ['S1'] * 100, 'RUNWAY_mvt': ['R1'] * 100,
+                              'AIRCRAFT_TYPE_mvt': ['A320'] * 100, 'month': pl.Series([5] * 100, dtype=i32), 'y': np.arange(100, 200, dtype=float)})
+        rows = [  # id, airport, stand, runway, type, month, pred
+            (1., 'LIRF', 'S1', 'R1', 'A320', 7, 200), (2., 'LIRF', 'S1', 'R1', 'A320', 7, 210), (3., 'LIRF', 'S1', 'R1', 'A320', 7, 220),
+            (4., 'LIRF', 'S1', 'R1', 'A320', 7, 230), (5., 'LIRF', 'S1', 'R1', 'A320', 7, 240),
+            (6., 'LIRF', 'S1', 'R1', 'A320', 7, 250),     # protected E156 row: counts in the indicator, never moves
+            (7., 'LIRF', 'S1', 'R1', 'H135', 7, 300),     # helicopter: outside P
+            (8., 'LIRF', None, 'R1', 'A320', 7, 300),     # no stand: outside P
+            (9., 'LIRF', 'S1', 'R1', 'A320', 7, 8000),    # above 7200 s: outside P
+            (10., 'LIRF', 'S1', 'R1', 'A320', 1, 200),    # January: PRU excluded share 2 pp above base (de-icing) -> ineligible
+            (11., 'EDDF', 'S9', 'R9', 'A320', 7, 200),    # no valid reference: outside P
+        ]
+        rank = pl.DataFrame({ID: [r[0] for r in rows], 'ADEP_mvt': [r[1] for r in rows], 'STAND_mvt': [r[2] for r in rows],
+                             'RUNWAY_mvt': [r[3] for r in rows], 'AIRCRAFT_TYPE_mvt': [r[4] for r in rows],
+                             'month': pl.Series([r[5] for r in rows], dtype=i32)})
+        pred = pl.DataFrame({ID: [r[0] for r in rows], Y: pl.Series([r[6] for r in rows], dtype=pl.Int32)})
+        pru25 = pl.DataFrame({'ADEP_mvt': ['LIRF'], 'month': pl.Series([5], dtype=i32), 'pru_add_s': [30.], 'excl': [0.01]})
+        pru26 = pl.DataFrame({'ADEP_mvt': ['LIRF', 'LIRF'], 'month': pl.Series([1, 7], dtype=i32), 'pru_add_s': [40., 60.], 'excl': [0.03, 0.01]})
+        return train, rank, pred, pru25, pru26
+
+    def test_shift_moves_only_population_rows_of_eligible_cells_by_the_half_gap(self):
+        train, rank, pred, pru25, pru26 = self.frames()
+        out, cells = A.pru_level_shift(train, rank, pred, pru25, pru26, np.array([6.]))
+        self.assertEqual(out.columns, pred.columns)
+        self.assertEqual(out.schema, pred.schema)
+        july = cells.filter((pl.col('ADEP_mvt') == 'LIRF') & (pl.col('month') == 7)).to_dicts()[0]
+        # P in July = ids 1..6 (protected row included in the indicator): mean pred 225 -> ind 116; c = -0.5 (116 - 60 - 10.5)
+        self.assertAlmostEqual(july['ind'], 116.0)
+        self.assertAlmostEqual(july['emu_hat'], 10.5)
+        self.assertTrue(july['eligible'])
+        self.assertAlmostEqual(july['c'], -22.75)
+        january = cells.filter((pl.col('ADEP_mvt') == 'LIRF') & (pl.col('month') == 1)).to_dicts()[0]
+        self.assertFalse(january['eligible'])
+        self.assertEqual(january['c'], 0.0)
+        got = dict(zip(out[ID].to_list(), out[Y].to_list()))
+        want = dict(zip(pred[ID].to_list(), pred[Y].to_list()))
+        for i, p in ((1., 200), (2., 210), (3., 220), (4., 230), (5., 240)):
+            want[i] = int(np.rint(p - 22.75))
+        self.assertEqual(got, want)
+        self.assertEqual([got[i] for i in (6., 7., 8., 9., 10., 11.)], [250, 300, 300, 8000, 200, 200])
+
+    def test_shift_refuses_an_incomplete_ranking_join(self):
+        train, rank, pred, pru25, pru26 = self.frames()
+        with self.assertRaises(ValueError):
+            A.pru_level_shift(train, rank.head(10), pred, pru25, pru26, np.array([6.]))
 
 
 if __name__ == '__main__':
