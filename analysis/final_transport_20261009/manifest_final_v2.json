@@ -1,0 +1,29 @@
+{
+ "assembly_complete": "analysis/final_tail_20261011/complete.json",
+ "assembly_complete_sha256": "b708f42d80bff6658f555e508f464379b3bd7285b2309b2076287926d0eedf81",
+ "builder": "scripts/final_tail_assembly_20261008.py",
+ "builder_sha256": "21f46756659e207c41e234034f75551405dc665f031962aadaffca62a6c4d911",
+ "candidate": "data/final_tail_20261011/work/gentle-igloo_final.parquet",
+ "candidate_sha256": "bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1",
+ "day": "2026-10-12",
+ "filename": "gentle-igloo_final.parquet",
+ "final": {
+  "deadline_utc": "2026-10-14T09:30:00+00:00",
+  "manifest_json": "analysis/final_tail_20261011/MANIFEST.json",
+  "manifest_json_sha256": "d676f93cc32bbcbb0ab5cec62c83c713c22c71ba2a7f8147049c72909fa07e32",
+  "ranking_sha256": "4b0692a792846079516a2749e034b0abda55df72c213eabdcda52a4d1f6bc69f",
+  "validator_report": "analysis/final_tail_20261011/validate_vs_v12081.json",
+  "validator_report_sha256": "340a5226f8f0e206ad77bd37a16be934b36f1ca78d6c9a540e234239f6c50d11"
+ },
+ "mode": "final",
+ "protocol": "final-transport-control-janjul-and-final-single-PUT-20261009-v1",
+ "registration_line": 582,
+ "registration_line_sha256": "601902c0eb2c8c948204013dd602f720afe0f56cd53a54a329f9320f8d87ce2a",
+ "rows": 670790,
+ "sealed_utc": "2026-10-11T09:12:13.574136+00:00",
+ "size_bytes": 2145576,
+ "source_final": "data/final_tail_20261011/work/gentle-igloo_final.parquet",
+ "source_final_sha256": "bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1",
+ "template": "data/prc-2026-datasets/final_submitting.parquet",
+ "template_sha256": "b3445d80e29bf599a5583ca9675f63ddf57b51fdf1ca3f498facb38ea84f3924"
+}
