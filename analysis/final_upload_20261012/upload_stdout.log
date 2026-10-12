@@ -1,0 +1,4 @@
+TRANSPORT final-transport-control-janjul-and-final-single-PUT-20261009-v1; mode final; registration 6b130265f467b050182600cfe0d7feb6bb72100e; source 831712bfd165c3e94a20f85a801047514ab6f462231e1c8cdfedc6264650ab4f
+{"preflight": {"day": "2026-10-12", "deadline_utc": "2026-10-14T09:30:00+00:00", "filename": "gentle-igloo_final.parquet", "mode": "final", "rows": 670790, "sha256": "bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1", "size_bytes": 2145576, "version": null}}
+{"filename": "gentle-igloo_final.parquet", "finished_utc": "2026-10-12T08:44:59.363796+00:00", "mode": "final", "network_put_attempts": 1, "regular_uploads_closed": true, "sha256": "bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1", "slots_used": 1, "started_utc": "2026-10-12T08:44:45.557533+00:00", "uploaded": true, "version": null}
+UPLOADED gentle-igloo_final.parquet; accounted 1/5 UTC-day slots

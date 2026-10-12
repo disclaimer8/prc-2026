@@ -6,7 +6,7 @@
 
 **Финал:** `data/final_tail_20261011/work/gentle-igloo_final.parquet` **SHA bbae2cc5…34a1** = файл 09.10 (76c32426) + стадия E218 (уровень PRU, `E218_PRU_LEVEL=1`; №451/452/457). Валидатор PASS, пересборка на маке побайтно; контроль **v12082 = 231,1445** (−0,036 к v12080, коридор ✓; №458/459). Копии: Hetzner `/root/prc-final-backup-20261011/`, Home `/home/a1/prc-final-backup-20261011/`, PRCEXT.
 
-**Финальный PUT — 12.10 (день манифеста 2026-10-12), один раз, после последней обычной подачи 12.10:** на Hetzner
+**✅ ФИНАЛ ЗАГРУЖЕН 12.10 08:44:59Z** (разрешение Denys; №462): объект в бакете побайтно = bbae2cc5, обычные подачи закрыты ledger'ом. Дальше — только репо/доки до 14.10 10:00Z, затем открытие (OPENING-CHECKLIST). Выполненная команда (повторять НЕЛЬЗЯ, скрипт откажет):
 `cd /root/prc-2026 && /root/prc-2026/.venv-upload/bin/python scripts/final_transport_20261009.py upload --manifest analysis/final_transport_20261009/manifest_final_v2.json --registration-proof analysis/final_transport_20261009/proof_final_v2.json --registration-commit 6b130265f467b050182600cfe0d7feb6bb72100e --source-sha256 831712bfd165c3e94a20f85a801047514ab6f462231e1c8cdfedc6264650ab4f`
 (preflight пройден 11.10 на маке и Hetzner; старый `manifest_final.json` для 76c32426 больше не проходит — сборщик теперь 21f46756.)
 

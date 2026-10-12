@@ -1267,9 +1267,11 @@ outside the board; if February and June follow the January/July relation, droppi
 would have raised the final file's RMSE by about 0.045 s through those two months (a model, not a
 measurement).
 
-**Ranking.** [[RESULT: final ranking — upload time of `gentle-igloo_final.parquet` (planned once,
-after the last ordinary upload, on 12 October 2026) and its RMSE and rank on January + July,
-February + June and all four months, from the organiser's final ranking after 14 October 2026.]]
+**Ranking.** `gentle-igloo_final.parquet` (SHA-256 `bbae2cc5…34a1`, 670,790 rows) was uploaded
+once, on 12 October 2026 at 08:44:59 UTC, after the last ordinary upload (v12083, 11 October); the
+object read back from the bucket has the same SHA-256, and ordinary uploads were closed after it.
+[[RESULT: final ranking — its RMSE and rank on January + July, February + June and all four
+months, from the organiser's final ranking after 14 October 2026.]]
 
 ## 5.8 Negative results of the last days
 
