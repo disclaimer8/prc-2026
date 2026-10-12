@@ -1,0 +1,14 @@
+{
+  "registration": "bf08d014000bd51ad65ae045be644ab0629f6c8f",
+  "original_output_hashes_reverified": true,
+  "reports_and_diagnostic": {
+    "RESULTS.md": "ee6af9240e4aacfddfa3f61fff4f6535dae0af80364b6965f4a9a45abe79d159",
+    "POSTHOC_ADMISSION_DIAGNOSTIC.md": "0c95d3cd56c5010868758dbdada2bf059294527ef718b28927a0f61b665ff17c",
+    "POSTHOC_ADMISSION_DIAGNOSTIC.json": "79e53bc39e70b5bd9fc45c54713b36a6c457db758846008717be93a9e7ddb42d",
+    "posthoc_admission_diagnostic.py": "8fcb3854d9771958df620d7f07c72c756c5f33dbc752c0dd9db571462d59822e",
+    "posthoc_admission_rows.csv": "68643260b19e2e46e984fad9a952cf64ab1b4f3fea1f2668c6928e823b5772c9"
+  },
+  "posthoc_provenance_sha256": {
+    "src/adsb_extract.py": "b2a13491c5b8dcf5c0749a49588f0c9f09a775e2ddb2d0ed8635f3ddc97ae9a5"
+  }
+}

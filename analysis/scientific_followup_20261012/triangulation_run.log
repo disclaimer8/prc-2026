@@ -1,0 +1,26 @@
+{
+  "protocol": "planning-copy-triangulation-20261012-v1",
+  "rows": 2085047,
+  "primary_rows": 2084663,
+  "flagged_rows": 148452,
+  "seconds": 20.036100042001635,
+  "scientific_status": "descriptive triangulation; exact matches and geometric evidence do not establish copying or AOBT truth"
+}
+       20.20 real        26.01 user         5.23 sys
+          1804697600  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             1158581  page reclaims
+                  71  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  86  voluntary context switches
+              703925  involuntary context switches
+        343998060973  instructions retired
+         85860746626  cycles elapsed
+          1766590672  peak memory footprint

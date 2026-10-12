@@ -1,0 +1,163 @@
+{
+  "status": "descriptive_raw_episode_validation_not_AOBT_truth",
+  "sampled_dates": 36,
+  "derived_eligible": 15758,
+  "validated_episodes": 0,
+  "validated_primary": 0,
+  "scopes": {
+    "ALL": {
+      "cells": 0,
+      "eligible_rows": 0,
+      "discarded_rows": 0,
+      "risk_difference": null,
+      "retained_flagged_rows": 0,
+      "retained_unflagged_rows": 0,
+      "retained_months": [],
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    },
+    "EDDF": {
+      "cells": 0,
+      "eligible_rows": 0,
+      "discarded_rows": 0,
+      "risk_difference": null,
+      "retained_flagged_rows": 0,
+      "retained_unflagged_rows": 0,
+      "retained_months": [],
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    },
+    "EDDM": {
+      "cells": 0,
+      "eligible_rows": 0,
+      "discarded_rows": 0,
+      "risk_difference": null,
+      "retained_flagged_rows": 0,
+      "retained_unflagged_rows": 0,
+      "retained_months": [],
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    },
+    "EGLL": {
+      "cells": 0,
+      "eligible_rows": 0,
+      "discarded_rows": 0,
+      "risk_difference": null,
+      "retained_flagged_rows": 0,
+      "retained_unflagged_rows": 0,
+      "retained_months": [],
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    },
+    "EHAM": {
+      "cells": 0,
+      "eligible_rows": 0,
+      "discarded_rows": 0,
+      "risk_difference": null,
+      "retained_flagged_rows": 0,
+      "retained_unflagged_rows": 0,
+      "retained_months": [],
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    },
+    "LEBL": {
+      "cells": 0,
+      "eligible_rows": 0,
+      "discarded_rows": 0,
+      "risk_difference": null,
+      "retained_flagged_rows": 0,
+      "retained_unflagged_rows": 0,
+      "retained_months": [],
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    },
+    "LEMD": {
+      "cells": 0,
+      "eligible_rows": 0,
+      "discarded_rows": 0,
+      "risk_difference": null,
+      "retained_flagged_rows": 0,
+      "retained_unflagged_rows": 0,
+      "retained_months": [],
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    },
+    "LFPG": {
+      "cells": 0,
+      "eligible_rows": 0,
+      "discarded_rows": 0,
+      "risk_difference": null,
+      "retained_flagged_rows": 0,
+      "retained_unflagged_rows": 0,
+      "retained_months": [],
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    },
+    "LIRF": {
+      "cells": 0,
+      "eligible_rows": 0,
+      "discarded_rows": 0,
+      "risk_difference": null,
+      "retained_flagged_rows": 0,
+      "retained_unflagged_rows": 0,
+      "retained_months": [],
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    },
+    "LTFM": {
+      "cells": 0,
+      "eligible_rows": 0,
+      "discarded_rows": 0,
+      "risk_difference": null,
+      "retained_flagged_rows": 0,
+      "retained_unflagged_rows": 0,
+      "retained_months": [],
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    },
+    "LSZH": {
+      "cells": 0,
+      "eligible_rows": 0,
+      "discarded_rows": 0,
+      "risk_difference": null,
+      "retained_flagged_rows": 0,
+      "retained_unflagged_rows": 0,
+      "retained_months": [],
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    },
+    "LEBL_JulSep": {
+      "cells": 0,
+      "eligible_rows": 0,
+      "discarded_rows": 0,
+      "risk_difference": null,
+      "retained_flagged_rows": 0,
+      "retained_unflagged_rows": 0,
+      "retained_months": [],
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    },
+    "LEBL_JanJun": {
+      "cells": 0,
+      "eligible_rows": 0,
+      "discarded_rows": 0,
+      "risk_difference": null,
+      "retained_flagged_rows": 0,
+      "retained_unflagged_rows": 0,
+      "retained_months": [],
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    },
+    "LEBL_OctDec": {
+      "cells": 0,
+      "eligible_rows": 0,
+      "discarded_rows": 0,
+      "risk_difference": null,
+      "retained_flagged_rows": 0,
+      "retained_unflagged_rows": 0,
+      "retained_months": [],
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    }
+  }
+}

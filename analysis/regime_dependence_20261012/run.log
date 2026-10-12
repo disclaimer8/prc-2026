@@ -1,0 +1,10 @@
+{"phase": "permutation", "done": 20, "total": 199, "elapsed_seconds": 21.445839082996827, "peak_rss_bytes": 1516339200}
+{"phase": "permutation", "done": 40, "total": 199, "elapsed_seconds": 31.477986124999006, "peak_rss_bytes": 1516339200}
+{"phase": "permutation", "done": 60, "total": 199, "elapsed_seconds": 41.33475175000058, "peak_rss_bytes": 1516339200}
+{"phase": "permutation", "done": 80, "total": 199, "elapsed_seconds": 51.27493424999557, "peak_rss_bytes": 1516339200}
+{"phase": "permutation", "done": 100, "total": 199, "elapsed_seconds": 61.14086116699764, "peak_rss_bytes": 1516339200}
+{"phase": "permutation", "done": 120, "total": 199, "elapsed_seconds": 70.99941008300084, "peak_rss_bytes": 1516339200}
+{"phase": "permutation", "done": 140, "total": 199, "elapsed_seconds": 80.85526929199841, "peak_rss_bytes": 1516339200}
+{"phase": "permutation", "done": 160, "total": 199, "elapsed_seconds": 90.85102099999494, "peak_rss_bytes": 1516339200}
+{"phase": "permutation", "done": 180, "total": 199, "elapsed_seconds": 100.68876754200028, "peak_rss_bytes": 1516339200}
+{"result": "/Users/denyskolomiiets/prc-2026/analysis/regime_dependence_20261012/RESULTS.md", "gate": {"positive_primary_with_ci_and_nominal_p": true, "positive_both_halves": true, "positive_every_leave_airport_out": true, "distributed_temporal_association": true}, "elapsed_seconds": 110.24644912499934, "peak_rss_bytes": 1516339200}

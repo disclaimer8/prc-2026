@@ -1,6 +1,6 @@
 # JOAS paper draft
 
-**Status: draft, not submitted (state of 11 October 2026).** `gentle-igloo-joas-draft.md` is a full
+**Status: draft, not submitted (results and wording review through 12 October 2026).** `gentle-igloo-joas-draft.md` is a full
 research-article draft for the Journal of Open Aviation Science (JOAS) describing team gentle-igloo's
 solution to the EUROCONTROL PRC Data Challenge 2026. The organiser said on 9 October 2026 that a JOAS
 paper is not required but welcome.
@@ -17,10 +17,20 @@ paper is not required but welcome.
 | `OUTLINE.md` | Skeleton: thesis, contributions, the evidence behind each section, figure and table lists, what is still missing |
 
 Every number in the draft is copied from the repository documentation (`README.md`, `docs/*.md`,
-`docs/tables/*.csv`, the dated reports in `analysis/`, `HYPOTHESES_LOG.md` up to entry 461);
+`docs/tables/*.csv`, the dated reports in `analysis/`, `HYPOTHESES_LOG.md`, including protocols 463–464);
 `OUTLINE.md` names the source of each claim. Numbers that do not exist yet are marked `[[RESULT: …]]`
-and typeset in red. Only these remain: the organiser's blind final ranking after 14 October 2026 (six
+and typeset in red. The current placeholders cover the organiser's blind final ranking after 14 October 2026 (six
 places, all marked `[[RESULT: final ranking — …]]`) and the DOI of a public archive if one is created.
+
+The 12 October wording review distinguishes agreement with the regime-labelling rule from
+independently verified recording errors, and indicator sensitivity from a causal correction to
+physical taxi-out. The registered airport-day analysis is now integrated in §§4.5 and 5.9: it
+measures residual association in existing 2025 regime probabilities, with conditional inference
+and no conversion into RMSE uncertainty. Planning-match controls, tolerance sensitivity and
+ADS-B comparisons are integrated in §5.10, including the inconclusive strict raw-episode check.
+The independent arithmetic audits and the separately labelled post hoc raw-admission diagnostic
+are archived with the results (experiment-register entries 463–466). The generated LaTeX and
+reading preview were rebuilt on 12 October 2026. `OUTLINE.md` records the evidence and insertion locations.
 
 ## Build
 
@@ -51,13 +61,13 @@ only as a comment in `main.tex`.
   (`\doi`, `\received`, `\editor`, `\reviewers`, `\orcid`, `\affiliation`, `\email`, `\keywords`,
   `\abbreviations`) dropped or reduced to plain text, and biblatex on the bibtex backend (numeric,
   unsorted, as in the JOAS class) so that the references resolve without biber. It is **not the JOAS
-  layout**: fonts, margins, page count, abstract box and header differ. On 11 October 2026 it has
-  48 pages (11 pt, A4).
+  layout**: fonts, margins, page count, abstract box and header differ. On 12 October 2026 it has
+  51 pages (11 pt, A4).
 
-## JOAS limits (checked 11 October 2026)
+## JOAS limits (venue rules checked 11 October; manuscript counts 12 October 2026)
 
-Title 11 words (≤ 12); five keywords (≤ 5); abstract 294 words counting every unit symbol and the
-placeholder as a word, 288 without the placeholder (≤ 300; keep the filled ranking clause to about ten words); mandatory *Open data
+Title 11 words (≤ 12); five keywords (≤ 5); abstract 270 whitespace-delimited words counting every unit symbol and the
+placeholder as a word, 264 without the placeholder (≤ 300); mandatory *Open data
 statement* and *Reproducibility statement* present (the latter names the scripts behind every figure
 and the sources of every table, as the template asks); *Funding statement* and *AI-assistance
 statement* written; single author, so no CRediT section. CC BY 4.0, no fees, open peer review.

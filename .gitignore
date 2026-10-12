@@ -17,3 +17,7 @@ analysis/competitor_repos/
 
 # final tabular fits (saved models and predictions, 2+ GB; receipts are mirrored under analysis/)
 models/final_tabular/
+
+# row-level outputs with challenge IDs and timestamps (not redistributed)
+analysis/planning_copy_triangulation_20261012/raw_episode_audit.csv
+analysis/planning_copy_triangulation_20261012/posthoc_admission_rows.csv

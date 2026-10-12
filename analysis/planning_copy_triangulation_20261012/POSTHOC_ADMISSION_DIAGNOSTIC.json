@@ -1,0 +1,281 @@
+{
+  "status": "posthoc_technical_diagnostic_not_new_scientific_analysis",
+  "registration": "bf08d014000bd51ad65ae045be644ab0629f6c8f",
+  "command": ".venv/bin/python analysis/planning_copy_triangulation_20261012/posthoc_admission_diagnostic.py",
+  "script_sha256": "8fcb3854d9771958df620d7f07c72c756c5f33dbc752c0dd9db571462d59822e",
+  "input_manifest_sha256": "debd46591a8b4f7ee16965dfd2bb6a2f11522aada1b4390aba70656a4181a7fa",
+  "id_pool_sha256": "790d8733ca408e7a72abce537f4c42ade43331e7b04ecbd7363c42754e23f219",
+  "fields_read": [
+    "MVT_ID_mvt",
+    "PHASE_mvt",
+    "MVT_TIME_UTC_mvt",
+    "ADEP_mvt",
+    "CALLSIGN_flt",
+    "FLIGHT_mvt",
+    "STAND_mvt"
+  ],
+  "prohibited_fields_read": [],
+  "rows": 7870,
+  "days": [
+    {
+      "day": "2025-01-05",
+      "rows": 301,
+      "stale_schema": true,
+      "diagnostic_rows": 301
+    },
+    {
+      "day": "2025-01-15",
+      "rows": 321,
+      "stale_schema": true,
+      "diagnostic_rows": 321
+    },
+    {
+      "day": "2025-01-25",
+      "rows": 355,
+      "stale_schema": true,
+      "diagnostic_rows": 355
+    },
+    {
+      "day": "2025-02-05",
+      "rows": 371,
+      "stale_schema": true,
+      "diagnostic_rows": 371
+    },
+    {
+      "day": "2025-02-15",
+      "rows": 381,
+      "stale_schema": true,
+      "diagnostic_rows": 381
+    },
+    {
+      "day": "2025-02-25",
+      "rows": 404,
+      "stale_schema": true,
+      "diagnostic_rows": 404
+    },
+    {
+      "day": "2025-03-05",
+      "rows": 418,
+      "stale_schema": true,
+      "diagnostic_rows": 418
+    },
+    {
+      "day": "2025-03-15",
+      "rows": 408,
+      "stale_schema": true,
+      "diagnostic_rows": 408
+    },
+    {
+      "day": "2025-03-25",
+      "rows": 412,
+      "stale_schema": true,
+      "diagnostic_rows": 412
+    },
+    {
+      "day": "2025-04-05",
+      "rows": 412,
+      "stale_schema": true,
+      "diagnostic_rows": 412
+    },
+    {
+      "day": "2025-04-15",
+      "rows": 292,
+      "stale_schema": true,
+      "diagnostic_rows": 292
+    },
+    {
+      "day": "2025-04-25",
+      "rows": 318,
+      "stale_schema": true,
+      "diagnostic_rows": 318
+    },
+    {
+      "day": "2025-05-05",
+      "rows": 385,
+      "stale_schema": true,
+      "diagnostic_rows": 385
+    },
+    {
+      "day": "2025-05-15",
+      "rows": 322,
+      "stale_schema": true,
+      "diagnostic_rows": 322
+    },
+    {
+      "day": "2025-05-25",
+      "rows": 464,
+      "stale_schema": true,
+      "diagnostic_rows": 464
+    },
+    {
+      "day": "2025-06-05",
+      "rows": 427,
+      "stale_schema": true,
+      "diagnostic_rows": 427
+    },
+    {
+      "day": "2025-06-15",
+      "rows": 477,
+      "stale_schema": true,
+      "diagnostic_rows": 477
+    },
+    {
+      "day": "2025-06-25",
+      "rows": 505,
+      "stale_schema": true,
+      "diagnostic_rows": 505
+    },
+    {
+      "day": "2025-07-05",
+      "rows": 361,
+      "stale_schema": false,
+      "diagnostic_rows": 0
+    },
+    {
+      "day": "2025-07-15",
+      "rows": 361,
+      "stale_schema": true,
+      "diagnostic_rows": 361
+    },
+    {
+      "day": "2025-07-25",
+      "rows": 505,
+      "stale_schema": false,
+      "diagnostic_rows": 0
+    },
+    {
+      "day": "2025-08-05",
+      "rows": 475,
+      "stale_schema": false,
+      "diagnostic_rows": 0
+    },
+    {
+      "day": "2025-08-15",
+      "rows": 415,
+      "stale_schema": false,
+      "diagnostic_rows": 0
+    },
+    {
+      "day": "2025-08-25",
+      "rows": 568,
+      "stale_schema": false,
+      "diagnostic_rows": 0
+    },
+    {
+      "day": "2025-09-05",
+      "rows": 523,
+      "stale_schema": false,
+      "diagnostic_rows": 0
+    },
+    {
+      "day": "2025-09-15",
+      "rows": 481,
+      "stale_schema": false,
+      "diagnostic_rows": 0
+    },
+    {
+      "day": "2025-09-25",
+      "rows": 424,
+      "stale_schema": false,
+      "diagnostic_rows": 0
+    },
+    {
+      "day": "2025-10-05",
+      "rows": 480,
+      "stale_schema": false,
+      "diagnostic_rows": 0
+    },
+    {
+      "day": "2025-10-15",
+      "rows": 536,
+      "stale_schema": true,
+      "diagnostic_rows": 536
+    },
+    {
+      "day": "2025-10-25",
+      "rows": 535,
+      "stale_schema": false,
+      "diagnostic_rows": 0
+    },
+    {
+      "day": "2025-11-05",
+      "rows": 525,
+      "stale_schema": false,
+      "diagnostic_rows": 0
+    },
+    {
+      "day": "2025-11-15",
+      "rows": 463,
+      "stale_schema": false,
+      "diagnostic_rows": 0
+    },
+    {
+      "day": "2025-11-25",
+      "rows": 529,
+      "stale_schema": false,
+      "diagnostic_rows": 0
+    },
+    {
+      "day": "2025-12-05",
+      "rows": 572,
+      "stale_schema": false,
+      "diagnostic_rows": 0
+    },
+    {
+      "day": "2025-12-15",
+      "rows": 539,
+      "stale_schema": false,
+      "diagnostic_rows": 0
+    },
+    {
+      "day": "2025-12-25",
+      "rows": 493,
+      "stale_schema": false,
+      "diagnostic_rows": 0
+    }
+  ],
+  "marginal_failures": {
+    "surface": 0,
+    "speed_finite": 8,
+    "speed_0_1": 4549,
+    "fresh": 7851,
+    "near_stand": 19,
+    "displacement_25": 0,
+    "before_takeoff": 1
+  },
+  "first_failures": [
+    {
+      "first_failing_gate": "speed_0_1",
+      "n": 4541
+    },
+    {
+      "first_failing_gate": "fresh",
+      "n": 3321
+    },
+    {
+      "first_failing_gate": "speed_finite",
+      "n": 8
+    }
+  ],
+  "stale_null_first": 0,
+  "stale_true_first": 7851,
+  "negation_mismatches": 0,
+  "dtypes": [
+    {
+      "stale_numpy_dtype": "bool",
+      "gs_numpy_dtype": "float64",
+      "t_numpy_dtype": "float64"
+    }
+  ],
+  "max_reproduced_n": 0,
+  "time_ranges": [
+    {
+      "raw_min": 1736047643.84,
+      "raw_max": 1760568011.88,
+      "takeoff_min": 1736048299.0,
+      "takeoff_max": 1760568546.0
+    }
+  ],
+  "elapsed_seconds": 6.917835125001147,
+  "rows_sha256": "68643260b19e2e46e984fad9a952cf64ab1b4f3fea1f2668c6928e823b5772c9"
+}

@@ -1,4 +1,4 @@
-# JOAS paper: outline (state of 11 October 2026)
+# JOAS paper: outline (results and wording review through 12 October 2026)
 
 Companion to `gentle-igloo-joas-draft.md`. Every claim below names the file, figure or table that
 carries its evidence; the draft must not say more than these sources say. The organiser stated on
@@ -10,9 +10,9 @@ carries its evidence; the draft must not say more than these sources say. The or
 
 ## Thesis (one sentence)
 
-The challenge label is a *recorded* interval produced by several recording regimes, so a model of
-how the label is produced (a probability mixture over regimes, anchored to the NM off-block proxy
-and corrected by the aircraft's own ADS-B track) is worth more than any learner choice, and the
+The challenge label is a *recorded* interval with several rule-defined regimes, so modelling these
+patterns (a probability mixture, anchored to the NM off-block proxy and corrected by the aircraft's
+own ADS-B track) produced the largest early gain in this development history, and the
 same discipline that found this (temporal folds, pre-registered gates, forecasts before every
 upload, a label-free blend identity, full disclosure) is what makes the result reusable for
 performance monitoring beyond the leaderboard.
@@ -27,11 +27,12 @@ this in the introduction and the conclusion.
 
 ## Contributions (five)
 
-1. **Recording regimes as a model of label production.** 6.76 % of 2025 labels equal take-off
-   minus a planning time; at LIRF 83.7 % of labels above one hour do. A six-class mixture removed
-   135 s of RMSE on day one; a calibrated detector of substituted records falls out of it.
+1. **Recording regimes as a model of label patterns.** 6.76 % of 2025 labels meet the
+   planning-match or one-day-shift rule; at LIRF 83.7 % of labels above one hour match a planning
+   time. The initial two-class mixture removed 135 s of RMSE on day one and was later expanded
+   to six classes. Its detector is calibrated against the rule, not verified physical recording errors.
    Evidence: `docs/data-insights.md`, `docs/figures/fig2_recording_regimes.png`, `docs/data-quality-regimes.md` §2.
-2. **A chain that reads observations, not aggregates.** Residual to a per-airport calibrated NM
+2. **A chain anchored to per-flight observations.** Residual to a per-airport calibrated NM
    proxy; coverage-gated surface stages from the flight's own adsb.lol track; an ordered-trajectory
    neural member whose weight was tuned at chain level on all twelve 2025 months (E212); TabPFN-2
    on the sparse Rome tail. Evidence: `docs/model-design.md`, `analysis/e212_nn_weight_10seed_20261008.md`,
@@ -62,9 +63,10 @@ this in the introduction and the conclusion.
    forecasts before uploads, 38-pair CV-to-board calibration by type of change, the Gram identity
    for blends (and its limit, learned on v12078), and an eight-item leaderboard-use disclosure.
    Evidence: `docs/development-history.md` §3–§6, `docs/negative-results.md` lessons 1–12.
-5. **A PRU reading and calibrated uncertainty.** The detector is calibrated for counting
-   (9.46 % vs 9.58 %), the emulated additional-taxi-out indicator matches published 2025 values
-   (MAE 3.3 s, r = 0.999, April–October), copies inflate the LIRF indicator by 42 s per flight;
+5. **A PRU reading and calibrated uncertainty.** Predicted and rule-defined regime shares
+   agree closely (9.46 % vs 9.58 %); the emulated additional-taxi-out indicator matches published
+   2025 values (MAE 3.3 s, r = 0.999, April–October). Excluding rule-labelled records reduces
+   the LIRF indicator by 42 s per flight, a sensitivity measure rather than a physical correction;
    mixture intervals cover 51.0/80.1/89.7 % at 50/80/90 %. On 2026, the indicator from the final
    file's predictions matches the published values in June (MAE 9.2 s) and July (6.6 s) against
    6.6/8.2 s for the same procedure on 2025; flags: LIRF −20…−46 s in all four months, LTFM January
@@ -84,7 +86,30 @@ this in the introduction and the conclusion.
 | 5 Results | 5.1 111 + 3 + 3 = 117 uploads, 64 bests (v12081 the last), eight phases, gap to third; 5.2 single-change controls incl. v12076–v12083 (E218 split LIRF / other); 5.3 OOF by airport; 5.4 generalisation Feb+Jun vs Jan+Jul (247.3 vs 279.2; 0/120 worse than proxy) and Figure 9 (NN weight by month); 5.5 uncertainty; 5.6 detector and PRU indicator; 5.7 recipe price (Table 14, Figure 13), the file of 9 Oct (SHA, validator, replay), control v12080 and its explanation, PRU 2026 check of the 9 Oct file and regime shares, E218 on the board (v12081–v12083) and the final file of 11 Oct `bbae2cc5…`, ranking pending; 5.8 negative results of 8–10 Oct (E207 v3, E209–E217, NN protection) | fig1, `docs/development-history.md` §1, `docs/generalisation.md`, `docs/uncertainty.md`, `docs/data-quality-regimes.md`, `docs/pru-view.md`, `analysis/final_tail_20261009/MANIFEST.json`, `analysis/v12080_control_explanation_20261009.md`, `analysis/final_pru_and_regime_check_20261009.md`, `analysis/e216_chain_scalars_20261009.md`, `analysis/e217_winter_nn_weight_20261010.md`, `analysis/final_tail_20261011/MANIFEST.json`, `analysis/v1208{1,2,3}_*_20261011/RESULTS.md`, `docs/negative-results.md` |
 | 6 Discussion | What generalises (observation vs aggregates); dataset-specific rules; known risks of the final months (EDDF/LIRF coverage, EHAM works 18,194 of 20,881 June rows, input audit, LIRF level shift (now moved by E218; June +21 s unmeasured) and LTFM snow from the PRU 2026 check, ±0.5 s regime-probability lottery); leaderboard-use disclosure (8 items; v12076–v12080 add none; final removes items 1–2; E218 added to the final by board rules, input a published aggregate of the scored months); limitations incl. corridor width, E218, cross-platform replay | `docs/final-submission.md` §5, `analysis/final_months_input_audit_20261009.md`, `analysis/coverage_collapse_audit_20261008.md`, `docs/development-history.md` §6, `docs/model-card.md` |
 | 7 Open science | GPLv3; data terms table (PRU monthly files: no open licence, E218 input, organiser's answers of 27 Sep / 8 Oct); four reproducibility levels with the status of each (replay exact on the build platform; prc-cloud replay limits; retrain not run end to end; new period = dated final pipeline with receipts) | `README.md`, `SOURCES.md`, `docs/reproduction.md` §2c, `docs/final-submission.md` §6, `analysis/final_replay_prc_cloud_20261010.md` |
-| 8 Conclusion | Mixture > learner; observation transfers; by-product for PRU; evidence boundary stated | — |
+| 8 Conclusion | Largest early gain from the mixture; observed transfer patterns; rule-based monitoring and indicator sensitivity; evidence boundary stated | — |
+
+## Additional analyses (12 October 2026)
+
+The authorised additions concern existing predictions and records. §4.5 contains the registered
+diagnostic methods and §5.9–§5.10 contain the results as they become available:
+
+- **Dependence within airport-days (§5.9, integrated):** 1,434,335 retained rows; excess covariance
+  5.347e-5, conditional date-bootstrap 95% interval [4.194e-5, 6.633e-5], Monte Carlo p=0.005
+  (minimum with 199 permutations). Positive in both halves and every population omitting an airport;
+  heterogeneous airport results, with LEBL strongest. Binary-residual association, not RMSE
+  uncertainty, a physical mechanism or an error floor.
+  Sources: log 463, `analysis/regime_dependence_20261012/{PROTOCOL.md,result.json,RESULTS.md,verification.json}`.
+- **Planning-match checks (§5.10, integrated):** LIRF union alignment 24.137% against 6.499%
+  mean minute-preserving control (+17.638 pp); tolerance and airport contrasts reported. Derived
+  geometric common-support comparison gives LIRF +8.971 pp and LEBL July–September +15.832 pp
+  versus January–June +2.864 pp. Strict raw-episode supplement accepts 0/15,758; inconclusive.
+  No physical off-block ground truth or causal copying claim.
+  Sources: log 464, `analysis/planning_copy_triangulation_20261012/{PROTOCOL.md,results.json,alignment_contrasts.csv,stand_standardized.json,raw_supplement.json}`.
+
+The abstract, §2.2, limitations and conclusion reflect these evidence boundaries. Independent
+arithmetic verification and a separately labelled post hoc raw-admission diagnostic support the
+reported outcome integrity; they do not supply physical ground truth. Leave-one-airport-out model validation remains
+unperformed and is not part of these additions.
 
 ## Figures
 
@@ -127,7 +152,7 @@ control) and the three E218 uploads; 15 negative results of 8–10 October incl.
 
 | Item | Placeholder in draft | Available |
 |---|---|---|
-| Blind final ranking: upload time of the final file, RMSE and rank on Jan+Jul, Feb+Jun and four months; ordinary-board rank at close | `[[RESULT: final ranking — …]]` ×6 (abstract, §1, §5.1, §5.7, §6.3, §8) | after 14 Oct 2026 10:00 UTC |
+| Blind final ranking: RMSE and rank on Jan+Jul, Feb+Jun and four months; ordinary-board rank at close (final upload already verified on 12 October) | `[[RESULT: final ranking — …]]` ×6 (abstract, §1, §5.1, §5.7, §6.3, §8) | after 14 Oct 2026 10:00 UTC |
 | Zenodo DOI of the archived release / redistributable component archive | Open data statement | if created after the deadline |
 | JOAS class build with the bibliography | — | `main.tex` compiled without errors against the official class on 10 Oct (40 pages, preprint layout, bibliography empty because biber is not installed); biber run still unverified |
 | Cross-airport (leave-one-airport-out) evidence | none; the draft states it was not run | would need a new experiment; not planned |

@@ -11,40 +11,41 @@ status: "DRAFT, not submitted. [[RESULT: ...]] marks only the blind final rankin
 target: "Journal of Open Aviation Science (JOAS), research article"
 ---
 
-> **Draft status.** This manuscript describes the solution as of 11 October 2026: 117 scored
+> **Draft status.** This manuscript describes the solution as of 11 October 2026, with final-upload
+> verification and two registered retrospective analyses on 12 October 2026: 117 scored
 > submissions on the ordinary leaderboard (111 through 8 October, two measurement uploads and one
 > control upload on 9 October, and three uploads on 11 October that tested the PRU level stage) and
 > the sealed final file. Every number is copied from the
 > repository documentation (`README.md`, `docs/*.md`, `docs/tables/*.csv`, the dated reports in
-> `analysis/`, the experiment register `HYPOTHESES_LOG.md` up to entry 461). Items marked
-> `[[RESULT: …]]` are the only gaps left: the organiser's blind final ranking after 14 October 2026
+> `analysis/`, the experiment register `HYPOTHESES_LOG.md`, including diagnostic protocols 463–464). Items marked
+> `[[RESULT: …]]` currently cover the organiser's blind final ranking after 14 October 2026
 > and the DOI of a public archive if one is created. The
 > draft is not an accepted article and must not be cited as one. `paper/OUTLINE.md` lists the
 > evidence behind each section; `paper/build_tex.py` turns this file into `paper/main.tex`.
 
 # Abstract
 
-The EUROCONTROL Performance Review Commission Data Challenge 2026 asked for the recorded
-taxi-out time of departures at ten European airports: train on 2025, score root-mean-square error
-(RMSE) on January and July 2026, then a blind four-month final. Team gentle-igloo reached
-230.45 s, 18th of 242 teams on 11 October 2026 [[RESULT: final
-ranking — blind four-month rank]]. The design follows three properties of the data. First, the
-label is a recorded interval produced by several recording regimes: 6.8 % of 2025 labels equal
-take-off minus a planning time within 6 s, and at Rome Fiumicino 83.7 % of labels above one hour do. A
-classifier weights a regular-duration estimate against five such candidates and predicts the
-probability-weighted mean. Second, the Network Manager actual off-block time is a strong but
-biased anchor (384.9 s RMSE alone); gradient-boosted trees learn the residual to a per-airport
-calibrated proxy. Third, the aircraft's own ADS-B ground track shows when it started moving and
-feeds coverage-gated correction stages and a neural member. Temporal month-pair cross-validation
-with pre-registered rules showed what transfers to the leaderboard: observations of the flight
-did, learned capacity on 2025 aggregates did not. For the final we removed the two
-leaderboard-specific parts of the best file and priced each by a single upload (+0.57 s and
-+0.70 s); the final file's January/July rows then scored 0.56 s better than that sum predicted,
-within a refit noise of ±0.43–0.55 s that our ±0.3 s corridor had underestimated. A last stage
-moves each airport-month half-way towards EUROCONTROL's published additional-taxi-out value for
-that month, an aggregate of the scored months that we disclose as such; it passed a 2025 gate and
-gained 0.036 s on January/July, mostly at Rome. As a data-quality detector the regime classifier
-counts substituted records accurately.
+The EUROCONTROL Performance Review Commission Data Challenge 2026 asked for recorded taxi-out
+times at ten European airports: train on 2025, score root-mean-square error (RMSE) on January and
+July 2026, then a blind four-month final. Team gentle-igloo reached 230.45 s, 18th of 242 teams on
+11 October 2026 [[RESULT: final ranking — blind four-month rank]]. The design follows three
+properties of the data. First, labels exhibit rule-defined recording regimes: 6.8 % of 2025
+labels equal take-off minus a planning time within 6 s, and at Rome Fiumicino 83.7 % of labels
+above one hour do. A classifier weights a regular-duration estimate against five candidates.
+Second, Network Manager actual off-block time is a strong but biased anchor (384.9 s RMSE alone);
+gradient-boosted trees learn the residual to a calibrated proxy. Third, the aircraft's ADS-B
+ground track feeds coverage-gated corrections and a neural member. Temporal month-pair
+cross-validation with pre-registered rules showed what transferred: flight observations did,
+learned capacity on 2025 aggregates did not. The uniform final recipe removes leaderboard-specific
+components; its last stage reads EUROCONTROL's published monthly indicator for the scored months,
+a disclosed aggregate input that gained 0.036 s on January/July. Two registered retrospective
+diagnostics examine the recording interpretation. Regime-probability residuals remain associated
+within airport-days after coarse conditioning (normalised excess covariance 0.000717; permutation
+p=0.005, the minimum with 199 shuffles). At Rome, planning-time alignment is 24.14 % against 6.50 %
+for minute-preserving controls. Derived stand geometry supplies limited directional support, but
+no episode passes the stricter continuous-stationary-track check. The findings support rule-based
+monitoring and sensitivity analysis; they do not establish physical recording errors, an
+irreducible error floor or the uncertainty of prediction RMSE.
 
 # 1 Introduction
 
@@ -88,11 +89,11 @@ ordinary leaderboard on 11 October 2026, about 17 s behind the third-placed team
 not the rank.
 The paper makes five contributions.
 
-1. We document a *recording-regime* phenomenon in the challenge labels: a substantial fraction of
-   recorded off-block times are copies of planning timestamps, concentrated at one airport, and these
-   rows dominate the squared error. Modelling the recording process as a probability mixture was
+1. We document a *recording-regime* phenomenon in the challenge labels: recorded off-block times
+   coincide with planning timestamps, particularly at one airport, and these rule-labelled records
+   account for a disproportionate share of squared error. Modelling the recording process as a probability mixture was
    worth more than any learner choice (Section 2.2, Section 5.1), and the same classifier is a
-   calibrated detector of substituted records (Section 5.6).
+   detector evaluated against the regime-labelling rule (Section 5.6).
 2. We describe a modular chain (Section 3) in which gradient-boosted trees learn the residual to a
    calibrated NM proxy, coverage-gated stages correct the estimate from the flight's own ADS-B
    surface track, a neural member reads the ordered track with a weight chosen at chain level on all
@@ -109,7 +110,7 @@ The paper makes five contributions.
    label-free identity for blends of scored files and the limit at which it fails, and a disclosure
    of every design choice that was taken or kept because of a leaderboard result (Sections 4, 6.3).
 5. We read the model in PRU terms: a calibrated predictive distribution per flight, the effect of
-   substituted records on an emulated additional-taxi-out indicator, a label-free comparison of the
+   excluding or reweighting rule-labelled records on an emulated additional-taxi-out indicator, a label-free comparison of the
    final predictions with the indicator EUROCONTROL published for 2026, and a documented set of
    negative results from the last days of development (Sections 5.5–5.8).
 
@@ -141,15 +142,16 @@ while the other airports reach 6,899–131,167 s; 369 labels are negative.
 
 ## 2.2 Recording regimes
 
-The first property that shaped the model is that the label does not always describe a physical
-taxi. In 2025, 140,993 labels (6.76 %) equal take-off minus the scheduled time, IOBT, LOBT or EOBT_1
-within ±6 s, or lie between one day and one day plus two hours after a planning time (a one-day
-shift). We call these *recording regimes*: the recorded off-block time is a copy of a planning
-timestamp rather than an observation. Figure 1 shows the shares per airport.
+The first property that shaped the model is that the recorded label can coincide with a
+planning-time interval. In 2025, 140,993 labels (6.76 %) equal take-off minus the scheduled time, IOBT, LOBT or EOBT_1
+within ±6 s, or have a recorded duration between one day and one day plus two hours (the one-day
+shift class). We call the resulting heuristic classes *recording regimes*. A planning-time match can
+reflect timestamp substitution or a coincidental on-time departure; it does not independently
+establish which occurred. Figure 1 shows the shares per airport.
 
 ![Figure 1. Recording regimes in the 2025 labels. (a) Per airport, share of labels equal to take-off minus a planning time (LIRF 24.1 %; 6.9–9.3 % at the other six labelled airports). (b) Among labels above one hour, 83.7 % at LIRF match a planning time against 3.1–5.6 % elsewhere. (c) The schedule class is 4.4 % of rows but 28.0 % of the label's squared deviation from its mean; the 14 one-day-shift labels hold 16.8 %.](figures/fig2_recording_regimes.png)
 
-Two tests separate substitution from coincidence. First, a same-minute test: at LIRF 18.1 % of
+Two descriptive comparisons motivate the substitution hypothesis. First, a same-minute comparison: at LIRF 18.1 % of
 block times fall in the scheduled minute, against 3.7 % in the minute before and 1.3 % in the minute
 after. At EDDM, EGLL, LEBL, LEMD, LFPG and LTFM the scheduled minute holds 4.1–5.6 % against
 3.5–5.3 % in its neighbours, which is consistent with on-time pushbacks whose planning-time
@@ -161,16 +163,18 @@ planned-regime labels and are excluded from regime labelling in the model.
 Panel (c) shows why this matters for RMSE. The schedule class is 4.4 % of rows but holds 28.0 % of
 the squared deviation of the label from its mean; 14 one-day-shift labels hold a further 16.8 %. In
 January and July 2025, 45 of 344,419 labels exceed four hours and hold 52.4 % of the label's sum of
-squared deviations. A single regressor trained on the physical taxi fails exactly where the metric
-is decided.
+squared deviations. The initial clipped regressor performed poorly on such long recorded
+intervals.
 
 The regime labels used for training come from explicit comparisons with the target (`regime_label`
 in `src/train.py`): ±6 s tolerance, six classes (regular, schedule, IOBT, LOBT, EOBT, one-day
 shift), no planned regimes at EDDF, EHAM and LSZH. These are dataset-specific heuristics; they
 must be reassessed for another source of movement records. The rule is a rule, not ground truth:
 an on-time departure whose physical off-block falls in the scheduled minute is labelled a copy
-although nothing was copied, and the same-minute test above says that outside LIRF most labelled
-rows are coincidences of this kind.
+although nothing was copied. Outside LIRF the similar frequencies in neighbouring minutes are
+consistent with many such coincidences, without identifying them individually.
+Section 5.10 tests this interpretation with whole-minute controls, tolerance sensitivity and
+separately derived stand geometry; the training labels and prediction method remain fixed.
 
 ## 2.3 The NM off-block proxy
 
@@ -377,8 +381,8 @@ the probability-weighted mean of the candidates. Under squared-error loss this i
 prediction when the probabilities and the candidates' conditional means are correct. Section 5.5
 shows that the same two arrays define a predictive distribution per flight whose central intervals
 are calibrated to within one point of nominal on 2025 out-of-fold rows, and Section 5.6 that the
-classifier's expected counts of planning copies agree with the labelled counts to within 0.1
-percentage point per airport. The two-class version of this idea (schedule copy versus regular)
+classifier's expected counts agree closely with the rule-defined counts, with airport-specific
+differences reported there. The two-class version of this idea (schedule match versus regular)
 removed 135.0 s of leaderboard RMSE on the first day; six classes, weather and geometry removed
 27.0 s more (Section 5.1).
 
@@ -494,9 +498,9 @@ previous-visit correction for LIRF rows that have an NM record, no own track and
 its incremental evidence is small and mixed (Section 4.1), and on its own mask its sign varies by
 month (June +0.79 s, July +3.66 s, year −0.29 s in 2025); it stays because removing it would be a
 design change. A gate (E152) restores the pre-surface prediction when the maximum probability of
-the four planning-time classes is at least 0.95, because physical movement cannot explain a label
-that is a copy of a planning time. The gate is based on model confidence, not on knowledge of the
-true regime.
+the four planning-time classes is at least 0.95, preventing a surface correction from overriding
+a high-confidence planning-time candidate. The gate is based on model confidence, not on knowledge
+of the true recording process.
 
 The stages are inert where no track exists, by mask and verified on out-of-fold data (0 rows
 changed outside the masks). In the final file E141 changed 429,789 of 670,790 rows, E64 95,421 and
@@ -826,6 +830,83 @@ from v12077 on exactly 42 rows, on which v12077 and v12078 agree, so v12078 with
 replaced scores $\sqrt{231.0488^2 + 231.1770^2 - 230.4812^2} = 231.7429$ s. This file is the reference
 point for the control of Section 5.7.
 
+## 4.5 Registered analyses of the recorded-time regimes
+
+The analyses below use previously explored 2025 records and historically selected models. Their
+protocols were frozen before these particular outcomes were computed, but they are retrospective
+diagnostics, not independent confirmatory tests. Neither analysis changes the prediction chain.
+
+**Dependence within airport-days.** We used the six archived FIN1b out-of-fold probability files,
+whose held-out units are the month pairs in Section 4.1. For flight $i$, the binary regime residual
+is $z_i = 1\{r_i > 0\} - (1-p_{i,\mathrm{regular}})$: disagreement between the non-regular rule label
+and its predicted probability. The primary population consists of the seven airports where planned
+regimes are labelled, with all NM statuses and target magnitudes retained. EDDF, EHAM and LSZH
+are excluded because their planned labels are structurally disabled. This population differs from
+the downstream RMSE evaluation population.
+
+Fixed strata cross airport, month, NM-record presence, ADS-B coverage class, eight probability
+bins, four-hour UTC bands and weekday/weekend. The probability-bin boundaries are 0, 0.01, 0.05,
+0.20, 0.50, 0.80, 0.95, 0.99 and 1. We retain strata with at least 20 flights on at least four UTC
+dates and centre each residual within its stratum, $u_i=z_i-\bar z_s$. This sample centring uses
+all retained 2025 observations; it is not an out-of-fold calibration or a deployable transformation.
+For distinct flights within airport-day groups, the pair-weighted covariance is
+
+$$ C = \frac{\sum_g[(\sum_{i\in g}u_i)^2-\sum_{i\in g}u_i^2]}
+{\sum_g n_g(n_g-1)}. $$
+
+We subtract its exact finite-stratum shuffle expectation: a same-stratum pair has expected
+product $-\sum_{i\in s}u_i^2/[n_s(n_s-1)]$, and a cross-stratum pair has expectation zero.
+The resulting excess covariance is also divided by the residual second moment for a descriptive
+normalisation; it is not a fitted intraclass correlation. The primary test uses 199 uniform
+within-stratum residual permutations and a two-sided Monte Carlo p-value with minimum resolution
+0.005. We form percentile 95% intervals from 999 bootstraps of UTC dates within month, carrying
+the airports on a sampled date jointly. These intervals condition on the fitted models and
+estimated stratum means and do not model serial dependence between dates.
+
+Same-hour and same-day/different-hour pairs, calendar halves, individual airports and populations
+omitting one airport are secondary descriptive checks. Omitting an airport does not retrain a
+model or test transfer to an unseen airport. The registered criterion requires positive primary
+excess, p $\leq$ 0.05 and a positive interval lower endpoint; a distributed association additionally
+requires positive excess in both halves and every omitted-airport population. Exchangeability
+within the coarse strata is an assumption. The complete protocol, support checks and statistic
+definitions are in `analysis/regime_dependence_20261012/PROTOCOL.md` (register entry 463).
+
+**Planning-time alignment and stand geometry.** The second protocol (register entry 464,
+`analysis/planning_copy_triangulation_20261012/PROTOCOL.md`) compares the recorded block time
+$B=\mathrm{takeoff}-y$ with each available SCHED, IOBT, LOBT and EOBT timestamp, and their union.
+It uses all ten airports, without the classifier's three-airport exception, and finite durations
+$0\leq y<86{,}400$ s. The primary tolerance is 6 s; the fixed sensitivities are 1, 3, 12 and 30 s.
+Every available planning timestamp is shifted by −180, −120, −60, +60, +120 and +180 s on the same
+rows. These whole-minute controls preserve the timestamp grid and denominator; they benchmark
+local concentration, not counterfactual departure times. We report the unshifted rate, each
+control, excess over their equal-weight mean and whether the unshifted rate exceeds all six.
+Multiple matching anchors are counted explicitly, since they do not identify which field was
+copied. No p-value or physical-copy precision is estimated. Airport, month, input-delay, NM-presence
+and coverage breakdowns are fixed in the protocol; LIRF and LEBL's July–September episode are
+previously observed replication targets.
+
+The geometric comparison uses archived v5 ADS-B features derived without taxi labels or model
+predictions. Before looking at $B$ or the alignment flag, eligibility requires a known stand,
+first and first-moving points within 40 m, at least 90 s in its 150 m neighbourhood, a unique
+candidate, at least ten surface points and coverage class at least 2. The first near-stand time
+must be within two hours before take-off and the neighbourhood exit no later than take-off. The
+screen asks whether the first near-stand observation is at least 300 s later than $B$; it does not
+treat neighbourhood exit or first movement as AOBT. We compare aligned and unaligned records
+within airport × month × input-delay-bin × NM-presence strata, requiring at least ten records in
+each arm and weighting by their combined retained population. An informative descriptive
+comparison needs at least 50 retained records in each arm, three months and three strata. These
+are support criteria, not significance tests. Aggregated features cannot certify continuous
+stationary dwell, aircraft identity or absence of a return to the stand.
+
+A stricter supplement checks raw observations on the fixed 5th, 15th and 25th of each 2025 month.
+It requires the initial prefix of the associated terminal surface segment to contain at least five
+non-stale points spanning at least 90 s, every speed 0–1 kt, every point within 40 m of the stand
+and 25 m of the first point, and all successive gaps positive and at most 30 s. Missing stale
+status fails the gate; a later stop cannot rescue a failed prefix. The same 300 s discrepancy and
+common-support criteria then apply. The dates are a convenience sample. Even qualifying episodes
+would validate observed near-stand presence rather than the actual off-block instant or a causal
+copying mechanism.
+
 # 5 Results
 
 ## 5.1 Leaderboard progression
@@ -1035,21 +1116,22 @@ as expected for right-skewed residuals.
 
 ## 5.6 The regime classifier as a data-quality detector, and the PRU view
 
-The detector is $P(\text{planning copy}) = 1 - P(\text{regular})$, out of fold, evaluated against
-the ±6 s label rule (Figure 11). Over the seven labelled airports the mean probability is 9.46 %
-against a label share of 9.58 %; the expected number of copies is 139,319 against 140,992 labels
-(−1.2 %), and per airport the two agree within 0.1 percentage point (LIRF 23.91 % against 24.14 %).
+The detector is $P(\text{non-regular rule label}) = 1 - P(\text{regular})$, out of fold, evaluated
+against the ±6 s label rule (Figure 11). Its target includes planning-time matches and the
+one-day-shift class; it does not identify independently verified faulty records. Over the seven
+labelled airports the mean probability is 9.46 % against a label share of 9.58 %; the expected
+number of non-regular labels is 139,319 against 140,992 labels (−1.2 %). The corresponding LIRF
+shares are 23.91 % and 24.14 %.
 The reliability curve follows the diagonal across the whole range (bin [0.50, 0.60): 0.548 against
 0.547; bin [0.99, 1]: 0.994 against 0.999); at the three airports without planned-regime labels the
-detector is quiet (5–9 expected copies in 135,000–248,000 departures). Brier score 0.075 on the
-labelled airports. Individual flags are confident only at LIRF: AUC against the rule is 0.795, and
+detector is quiet (5–9 expected non-regular labels in 135,000–248,000 departures). Brier score 0.075 on the
+labelled airports. High-probability flags occur mainly at LIRF: AUC against the rule is 0.795, and
 of the flags at $P \ge 0.5$ (precision 71.1 %, recall 8.8 %) 17,361 of 17,424 are at LIRF; at
-$P \ge 0.95$ precision is 99.2 % (Table 12). The detector does not try to call the coincidental
-copies, because a coincidental copy costs the mixture nothing. The expected count is therefore a
-usable monthly statistic at every labelled airport, while the per-flight flag is usable at LIRF and,
-elsewhere, only above about 0.8, where it almost never fires.
+$P \ge 0.95$ precision is 99.2 % (Table 12). These measures concern agreement with the rule,
+including coincidental matches. Expected counts summarise rule-defined regimes, while per-flight
+flags identify a smaller set for inspection. Above about 0.8, flags at other airports are rare.
 
-![Figure 11. Reliability diagrams of the detector, seven labelled airports together and per airport.](figures/fig6_regime_detector_calibration.png)
+![Figure 11. Reliability against the regime-labelling rule, seven labelled airports together and per airport.](figures/fig6_regime_detector_calibration.png)
 
 **Table 12. Precision and recall of the flag $P \ge t$ against the ±6 s rule, 2025 out of fold.**
 
@@ -1059,22 +1141,25 @@ elsewhere, only above about 0.8, where it almost never fires.
 | 0.80 | 4,768 | 92.8 % | 3.1 % | 11.4 % |
 | 0.95 | 1,871 | 99.2 % | 1.3 % | 4.8 % |
 
-To see what the copies do to a monitoring statistic, we emulated the PRU additional-taxi-out
+To assess sensitivity to these records, we emulated the PRU additional-taxi-out
 indicator from the challenge records: taxi-out minus an unimpeded reference, the 10th percentile per
 stand × departure-runway group over 2025, valid with at least ten flights at or below it, after PRU's
 filters (deviations forced by the data: calendar-year instead of rolling window, UTC months, no
-de-icing exclusion, 41 helicopter designators excluded). Against the published 2025 indicator for
+de-icing exclusion, 41 helicopter designators excluded). The full-year reference includes the
+evaluated months; this is a retrospective indicator comparison. Against the published 2025 indicator for
 April–October (70 airport-months) the emulation has a mean absolute difference of 3.3 s, median
 1.8 s, maximum 14.5 s and correlation 0.999; November–March the difference grows to 25.7 s with a
-+23.5 s bias, which is the de-icing exclusion we cannot apply (PRU removes 20–31 % of EDDM's winter
-departures). The agreement also shows that the published indicator is computed from the same
-records, planning copies included. The indicator was then computed three ways: as recorded, with the
-rule-labelled copies removed, and with every record weighted by $P(\text{regular})$ (Table 13;
-Figure 12).
++23.5 s bias, consistent with the de-icing exclusion we cannot apply (PRU removes 20–31 % of EDDM's winter
+departures). The agreement is consistent with the common APDF provenance; it does not independently
+verify physical off-block times or which individual records PRU retains. The indicator was then
+computed three ways, with the reference recomputed under each treatment: as recorded (A), with
+rule-labelled records excluded (B), and with every record weighted by $P(\text{regular})$ (C)
+(Table 13; Figure 12). A − B and A − C are sensitivity measures. Neither is an established
+causal correction to physical taxi-out, and A − C is not a proven lower bound on recording error.
 
-**Table 13. Effect of planning-copy records on the emulated additional-taxi-out indicator, 2025 per airport, seconds per flight (positive: the as-recorded value is higher).**
+**Table 13. Sensitivity of the emulated additional-taxi-out indicator to excluding or weighting rule-labelled records, 2025 per airport, seconds per flight (positive: the as-recorded value is higher).**
 
-| Airport | Copies (rule / detector) | Indicator as recorded | Rule-cleaned (A − B) | Probability-cleaned (A − C) | Largest monthly A − B |
+| Airport | Non-regular labels (rule / detector) | Indicator as recorded | Rule-excluded (A − B) | Probability-weighted (A − C) | Largest monthly A − B |
 |---|---:|---:|---:|---:|---:|
 | EDDM | 7.8 % / 7.8 % | 232.0 | −1.7 | −4.1 | +0.1 |
 | EGLL | 8.5 % / 8.4 % | 388.5 | −2.8 | −5.3 | −1.1 |
@@ -1084,30 +1169,33 @@ Figure 12).
 | LIRF | 24.1 % / 23.9 % | 400.6 | +42.1 | +6.2 | +66.7 (July) |
 | LTFM | 6.9 % / 6.8 % | 294.2 | +1.1 | −1.3 | +15.5 (February) |
 
-![Figure 12. Monthly share of planning-copy departures per airport (rule and detector) and the effect of those records on the monthly indicator.](figures/fig7_regime_effect_on_kpi.png)
+![Figure 12. Monthly share of rule-labelled non-regular departures per airport (rule and detector) and indicator changes under exclusion and weighting.](figures/fig7_regime_effect_on_kpi.png)
 
-Outside LIRF the copies do not inflate the statistics: the annual effect is between −2.8 and +1.1 s
-per flight by the rule, and negative by probability (labelled records are slightly shorter than the
-rest, as on-time departures are), with two episodes worth a monitoring unit's attention: LEBL in
-July–September 2025 (+26, +19, +15 s per flight by the rule; the label share rose to 11.9–12.3 %
-while the detector, trained on the other months, stayed at 8–9 %, which looks like a change in how
-delayed departures were recorded) and LTFM in February 2025 (+15 s). At LIRF the copies are the
-dominant data-quality issue: the PRU-style indicator is 25–67 s per flight higher by the rule
-(largest in June–August) and 1.5–13 s by the probability lower bound; for an annual value of 401 s
-the rule-based effect is about 10 %. The reference itself is barely affected (7.2 s mean absolute
-change at LIRF, below 5 s elsewhere).
+At EDDM, EGLL, LFPG, LEMD and LTFM, the annual rule-exclusion difference is between −2.8 and
++1.1 s per flight, and the probability-weighting difference is negative. Two episodes merit a monitoring unit's
+attention: LEBL in July–September 2025 (+26, +19, +15 s per flight under rule exclusion; the label
+shares of all departures are 11.1, 12.0 and 10.1 %, against mean out-of-fold detector probabilities
+of 8.1, 9.3 and 8.9 %, respectively) and LTFM in February 2025
+(+15 s). A change in recording practice is one explanation for the LEBL episode; changing departure
+patterns could also contribute. LIRF is most sensitive to the treatments: its as-recorded
+PRU-style indicator is 25–67 s per flight higher than under rule exclusion (largest in June–August)
+and 1.5–13 s higher than under probability weighting. For an annual value of 401 s, the rule-exclusion
+difference is about 10 %. The reference also changes (7.2 s mean absolute change at LIRF, below
+5 s elsewhere). The annual difference of 42.1 s in Table 13 quantifies sensitivity to excluding
+these records; it does not establish how much physical congestion was overstated.
 
 Read in PRU terms, a taxi-out prediction decomposes as reference plus predicted additional time. On
-the 1,788,520 regular-regime departures with a valid reference the unimpeded reference is 518–978 s
+the 1,788,520 rule-defined regular departures with a valid reference the unimpeded reference is 518–978 s
 by airport and the additional time averages 196–391 s with a standard deviation of 222–391 s; the
-chain explains 45–69 % of its variance beyond the airport-month level (correlation 0.68–0.83). The
-regular regressor is unbiased on the regular regime at every airport (|bias| ≤ 1.9 s), whereas the
-mixture is biased upward where copies are frequent (+36.8 s at LIRF, +10.6 s at LEBL): on a row that
-might be a copy the squared-error optimum moves part of the way towards the planning candidate, and
-on the rows that turn out regular that move is a positive error. A monthly indicator computed from
-the predictions reproduces the one computed from the labels within 6.4 s on average over 120
+base mixture explains 45–69 % of its variance beyond the airport-month level (correlation 0.68–0.83).
+The regular regressor has small observed mean bias on this subset at every airport (|bias| ≤ 1.9 s),
+whereas the mixture has positive mean error (+36.8 s at LIRF, +10.6 s at LEBL). Assigning probability
+to a longer planning-time candidate raises the prediction even when the realised label is regular.
+The as-recorded monthly indicator from the mixture reproduces its label-based counterpart within 6.4 s on average over 120
 airport-months (bias +0.4 s, correlation 0.994) against a month-to-month spread of 71–77 s. For a
-PRU-style reading of the regular regime, the regressor, not the mixture, is the right output. Section 5.7
+PRU-style summary of the selected regular subset, the regressor has less observed bias; this does
+not establish its accuracy for physical taxi-out or justify replacing the mixture for all-regime
+records. Section 5.7
 applies the same emulation to the final file's predictions for the four months of 2026 and compares
 it with the indicator EUROCONTROL has published since.
 
@@ -1233,12 +1321,12 @@ neither was correctable without labels, because a calibration to published PRU v
 lost on the leaderboard (Table 5); the re-examination of that failure led to the stage of
 Section 3.9 the next day. Since the final file now contains that stage, its predictions are no
 longer independent of the published values, and this comparison cannot be repeated on it as a check.
-The regime shares are stable: the mean probability of a planning copy is 6.95 % in the final months
+The predicted regime shares are stable: the mean probability of a non-regular rule label is 6.95 % in the final months
 against 6.71 % in the same months of 2025 out of fold, and 39 of 40 airport-months lie within
 ±2.1 percentage points. The exception, LFPG in July (+3.8 points), follows a change of input:
 EOBT_1 differs from LOBT for 45.6 % of LFPG departures in July 2026 against 23.4 % a year earlier,
-and the extra probability goes to the EOBT-copy class, whose candidate is close to the physical
-taxi time, so the LFPG July indicator differs from the published one by only +1.3 s. The checks found no break of the kind
+and the extra probability goes to the EOBT-match class. Despite this probability change, the
+LFPG July indicator differs from the published one by only +1.3 s. The checks found no break of the kind
 a wrong month, unit or row order would cause, and the recipe was not changed.
 
 **The PRU level stage on the leaderboard, and the final file of 11 October.** The stage of
@@ -1308,6 +1396,82 @@ there), so a pooled choice would be a February compromise. E217 found the same f
 by season: a winter weight helped December 2025 and hurt January, and its promise for the final
 rested on February alone.
 
+## 5.9 Residual temporal association in the regime classifier
+
+The registered dependence analysis retains 1,434,335 of 1,472,048 eligible-airport flights after
+the fixed sparse-stratum exclusion of 37,713 rows, covering 2,548 airport-days. The primary
+airport-day covariance is $4.425\times10^{-5}$, against an exact shuffle expectation of
+$-9.222\times10^{-6}$, giving excess covariance $5.347\times10^{-5}$ (conditional date-bootstrap
+95% interval $[4.194,6.633]\times10^{-5}$). The normalised excess is 0.000717. The Monte Carlo
+p-value is 0.005, the smallest attainable with 199 permutations; it is not evidence for a more
+precise p-value below that limit. Covariance is measured in squared probability-residual units,
+not seconds squared.
+
+The excess is positive in both calendar halves and every population omitting one airport, so the
+registered distributed-association criterion is met. LEBL has the largest normalised airport-day
+excess (0.004782); excluding it still leaves pooled excess $1.826\times10^{-5}$. This does not mean
+that every airport has a positive association: LFPG's estimate is negative, and the individual
+EDDM, EGLL and LFPG tests are inconclusive at the nominal 0.05 level. All subgroup p-values are
+descriptive and unadjusted for multiplicity.
+
+The association is stronger between flights within the same hour: excess covariance
+$2.493\times10^{-4}$, interval $[2.088,2.912]\times10^{-4}$. It remains positive between different
+hours of the same day: $4.166\times10^{-5}$, interval $[3.076,5.446]\times10^{-5}$. These secondary
+scales suggest that the pooled result is not confined to immediate clock-hour neighbours.
+
+The finding supports residual temporal association in a finite fitted classifier after the stated
+conditioning. A shared recording state is one possible explanation, alongside omitted operational
+conditions, changing composition within strata and common misspecification of the monthly model.
+It neither identifies a physical or recording mechanism nor establishes a Bayes error floor.
+The archived report also provides a variance proxy for the mean centred binary residual; that
+quantity does not estimate the uncertainty of taxi-out RMSE, the effective number of flights, or
+a score gain. The 2025 analysis supplies no direct estimate of dependence in the 2026 final.
+
+## 5.10 Planning-time alignment, geometric support and its limits
+
+The second analysis retains 2,084,663 flights after excluding 384 durations outside its range;
+none lacks all four planning timestamps. All 2,085,047 comparable implied block times agree with
+the supplied BLOCK timestamp within one second, a representation check rather than a validation
+of physical time. At tolerance 6 s, 148,452 rows match at least one anchor, and 109,555 of those
+match multiple anchors. These counts differ from the production regime labels because this
+analysis includes planned matches at EDDF, EHAM and LSZH and excludes day-shift records.
+
+**Timestamp concentration.** At LIRF the unshifted union match rate is 24.137 % (38,785 of
+160,690), versus a mean 6.499 % across the six minute-preserving controls, an excess of 17.638
+percentage points (pp). All six controls lie below the unshifted rate (range 4.736–7.710 %).
+The excess is 4.351 pp at tolerance 1 s and 10.245 pp at 3 s; the 6, 12 and 30 s counts are
+identical. Thus the central concentration does not depend on choosing exactly 6 s, although its
+measured prevalence depends on the narrower tolerance. Only LIRF, LEBL, LFPG and EGLL exceed all
+six controls at 6 s. LEBL's excess over the control mean is 2.607 pp; EDDM's is only 0.281 pp
+despite its 7.839 % unshifted match rate, and LSZH's is negative (−0.379 pp). The complete
+per-airport, per-anchor and stratified contrasts are archived. A match prevalence alone therefore
+does not establish excess alignment, and excess alignment does not establish copying.
+
+**Derived geometric comparison.** Of 160,240 geometrically eligible rows, common support retains
+120,218 (5,606 aligned and 114,612 unaligned); 40,022 are discarded. LIRF retains 245 aligned and
+795 unaligned rows in nine strata over seven months, with 438 eligible rows outside common
+support. Its standardised excess probability of a first near-stand observation at least five
+minutes after the recorded block is +8.971 pp. LEBL's July–September contrast is +15.832 pp
+(164 aligned, 1,225 unaligned, five strata), compared with +2.864 pp in January–June (225,
+1,963, seven strata) and +4.734 pp in October–December (151, 1,202, three strata). These are
+descriptive contrasts on different supported populations, not a causal seasonal effect. EDDF,
+LFPG and LTFM fail the fixed common-support gate. The LIRF and LEBL results are directionally
+consistent with some aligned timestamps preceding later stand presence, subject to association
+and coverage errors in the derived product. Both the alignment flag and the late-presence outcome
+contain the recorded block time $B$: label-blind feature extraction does not make their contrast
+an independent statistical validation of copying.
+
+**Raw-episode check.** None of the 15,758 derived-eligible visits on the 36 fixed dates satisfies
+the stricter stationary-prefix criteria. Every raw geometric contrast is consequently
+inconclusive, not a zero effect. Sixteen dates lack the stale-status field. A separately reported,
+post hoc label-blind admission check found that 7,851 of 7,870 first points where the field was
+available were marked stale; the remaining 19 were outside the 40 m stand boundary. Other quality
+failures overlap these, and no threshold was relaxed after seeing the result. The aggregated-feature
+comparison therefore has no corroboration from validated continuous stationary episodes in this
+audit. Planning-time concentration and limited derived geometric support strengthen the case for
+record-level investigation, but do not supply AOBT ground truth, the proportion of physically wrong
+records or a physical interpretation of the 42.1 s deletion sensitivity in Section 5.6.
+
 # 6 Discussion
 
 ## 6.1 What generalises
@@ -1322,7 +1486,7 @@ cross-validation to the 2026 leaderboard at full size or more. The 2025 pseudo-f
 adds that the gain over the NM proxy is stable across all twelve months and all 120 airport-months.
 
 *Dataset-specific:* the regime labelling rules (±6 s tolerance; no planned regimes at the three
-second-resolution airports), the list of airports whose recording substitutes the planning time, the
+second-resolution airports), the airports at which planned regimes are enabled, the
 LOBT feasibility window of 3,606 s, and the per-airport proxy scales. These must be re-estimated for
 another source of movement records or another set of airports.
 
@@ -1340,10 +1504,10 @@ level stage) sits in between: it gained on the leaderboard, but at about half it
 2025 relation transferred unevenly across airports (Section 5.7).
 
 A separate question is transfer to other airports. The chain has not been validated on an unseen
-airport and no leave-one-airport-out experiment was run; the recording-regime phenomenon is an
+airport and no leave-one-airport-out retraining or evaluation of transfer was run; the recording-regime phenomenon is an
 empirical property of the supplied records and may be absent, or take a different form, elsewhere.
-The LEBL episode of Section 5.6 shows that the detector reacts to a change in recording practice
-only after it appears in training data.
+The LEBL episode of Section 5.6 shows that the detector can underestimate a change in rule-label
+prevalence in held-out months.
 
 ## 6.2 Known risks of the final months
 
@@ -1446,16 +1610,21 @@ file's January/July and February/June results]].
   narrow at LIRF in summer, and fails on the 1.07 % of rows without an NM record. The ±6 s label
   tolerance is not represented in the planned-regime point masses, and the 99-point grid
   understates tail error in the CRPS.
-- The detector and the PRU emulation are measured against the ±6 s rule, which has no ground truth,
-  labels coincidences as copies, and cannot see copies at the three second-resolution airports; the
-  emulation cannot apply PRU's de-icing exclusion, so its November–March values differ from the
+- The detector is evaluated against the ±6 s rule, which has no independent physical ground truth,
+  includes coincidental matches, and disables planned regimes at the three second-resolution
+  airports. Minute-preserving controls and derived geometry supply evidence about alignment and
+  later stand presence, but the strict raw-episode audit is inconclusive (Section 5.10).
+  Exclusion and weighting quantify indicator sensitivity, not a causal correction to
+  physical taxi-out. The emulation cannot apply PRU's de-icing exclusion, and its November–March values differ from the
   published ones by up to 154 s at EDDM. The 2026 comparison corrects for de-icing with one cost
   per airport estimated on 2025, compares airport-month means only, and says nothing about the tails
   that decide RMSE.
 - Forecast corridors were set by judgement from the type of change. The corridor of the final
   file's control was about half as wide as the noise of a refitted chain (Section 5.7), and the
-  noise estimate itself is label-free and ignores correlation of regime outcomes within a LIRF day,
-  which would widen it.
+  noise estimate itself is label-free and ignores dependence of regime outcomes within a LIRF day.
+  Section 5.9 measures positive conditional association in 2025 binary regime residuals, including
+  at LIRF, but does not quantify the resulting uncertainty of 2026 RMSE. Its conditional intervals
+  also omit model-selection uncertainty and serial dependence between dates.
 - The PRU level stage reads a published aggregate of the scored months. Its form was chosen after a
   diagnosis on 2025, it transferred at about half its forecast, and its largest blind-month shift
   (LIRF June, +21 s) is unmeasured. It needs PRU's published value for the month, so it is a
@@ -1562,11 +1731,20 @@ boundary of each result: the best file and the final file are replayed byte-exac
 has no fully nested cross-validation, the ranking months informed design choices that we list, and
 the ordinary-board tail rests on a non-deterministic draw. [[RESULT: final ranking — one sentence on
 the blind four-month result.]] For a performance-monitoring reader, the most useful by-product may
-not be the point prediction but the calibrated detector of substituted records, which identifies
-where additional taxi-out time would measure the schedule rather than the queue, the predictive
+not be the point prediction but the detector of rule-defined recording regimes and the associated
+indicator-sensitivity analysis, which identify records for closer inspection, the predictive
 distribution that comes with every forecast at no extra cost, and the fact that, before the last
 stage used the published values, an indicator computed from the predictions tracked the published
 one for the summer months of 2026.
+
+The two registered retrospective analyses narrow that interpretation. A small positive association
+remains in the classifier's binary residuals within airport-days after coarse conditioning,
+supporting further study of shared recording or operational factors without identifying either.
+Minute-preserving controls distinguish LIRF's pronounced planning-time concentration from airports
+where raw match rates are largely reproduced nearby. Derived stand geometry is directionally
+consistent with some recorded times preceding later stand presence, but the stricter raw-episode
+audit is inconclusive. Thus a rule label can be useful for reconstruction and monitoring without
+being a validated declaration that the physical off-block time is wrong.
 
 # Acknowledgements
 
@@ -1618,8 +1796,13 @@ Figures 11 and 12 by `scripts/regime_quality_report.py`, and Figures 9 and 13 by
 `analysis/v1208{1,2,3}_*_20261011/`; Figure 5 is text. Every table is copied
 from `docs/*.md`, `docs/tables/*.csv` or a dated report in `analysis/`, each of which names the
 script that produced it, and `paper/OUTLINE.md` maps each section of this paper to those sources.
-The experiment register `HYPOTHESES_LOG.md` (461 entries) records each experiment's protocol and
-decision rule before the run and its verdict after.
+The experiment register `HYPOTHESES_LOG.md` records each experiment's protocol and decision rule
+before the run and its verdict after. The dependence analysis is implemented in
+`scripts/regime_dependence_audit_20261012.py`; its frozen protocol, input manifest, complete
+results and arithmetic-verification receipt are in `analysis/regime_dependence_20261012/`.
+The alignment and geometric analysis is implemented in
+`scripts/planning_copy_triangulation_20261012.py`; its protocol, pinned inputs, complete controls,
+support and raw-episode exclusions are in `analysis/planning_copy_triangulation_20261012/`.
 
 # AI-assistance statement
 

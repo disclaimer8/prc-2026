@@ -8,6 +8,10 @@ two questions: how well do we predict the additional time of an individual depar
 how close is a PRU-style monthly indicator computed from predictions to the one computed
 from the labels.
 
+These are **retrospective reconstructions** using post-operations inputs, including the
+take-off time and NM actual off-block reports. The results below describe held-out 2025
+month pairs; they do not evaluate forecasts made before off-block.
+
 Computed by [`scripts/regime_quality_report.py`](../scripts/regime_quality_report.py)
 (same run as [data-quality-regimes.md](data-quality-regimes.md), which also describes the
 reference emulation and its deviations from PRU's method). Tables:
@@ -24,8 +28,9 @@ reference emulation and its deviations from PRU's method). Tables:
   from records in the regular regime (label rule of `src/train.py`), valid with at least 10
   flights at or below it, after PRU's filters (stand, runway, 0-7,200 s, no helicopters).
 - **Rows.** Regular-regime records with a valid reference: 1,788,520 departures (85.8 % of
-  2025). Rows labelled as planning copies are left out because their "additional time" is a
-  planning delay, not a taxi; they are treated in the data-quality page.
+  2025). Records matched by the +-6 s planning-time rule are excluded to define this
+  subset; they are treated in the data-quality page. The rule includes coincidental
+  matches and does not establish an individual flight's physical taxi-out time.
 - `additional_actual = y - reference`, `additional_pred = pred - reference`. Because the
   reference is the same on both sides, the RMSE of the additional time equals the RMSE of
   the taxi-out itself on these rows; what the decomposition adds is the scale of the
@@ -56,14 +61,17 @@ What the table says:
 - The unimpeded reference is 518-978 s depending on the airport; the additional time on
   top of it averages 196-391 s with a standard deviation of 222-391 s. Our prediction
   explains 45-69 % of the variance of the additional time beyond the airport-month level
-  (correlation 0.68-0.83). The remaining 150-280 s RMSE is the per-departure
-  unpredictability of queueing from the data available before off-block.
-- The **regular regressor is unbiased** on the regular regime at every airport (|bias| <= 1.9 s).
-  The **mixture prediction is biased upward** where planning copies are frequent: +36.8 s at
-  LIRF, +10.6 s at LEBL, +4.6 to +5.9 s at EDDM, EGLL, LEMD and LFPG. This is the price of
-  the squared-error optimum: on a row that might be a copy, the mixture moves part of the
-  way towards the planning candidate, and on the rows that turn out regular that move is a
-  positive error. For a PRU-style reading of the regular regime, `reg` is the right output.
+  (correlation 0.68-0.83). The remaining 150-280 s RMSE is the observed error of this fitted
+  model on held-out records. It does not establish an irreducible error floor or isolate
+  unpredictable queueing from model error and recording differences.
+- The **regular regressor has small observed mean bias** on the rule-defined regular subset
+  at every airport (|bias| <= 1.9 s). The **mixture has positive mean error on that subset**:
+  +36.8 s at LIRF, +10.6 s at LEBL, +4.6 to +5.9 s at EDDM, EGLL, LEMD and LFPG. The mixture
+  also assigns probability to planning-time candidates; moving towards a longer candidate
+  raises the prediction even when the realised label belongs to the regular regime.
+  Thus `reg` gives a less biased monthly summary of this selected subset in the reported
+  evaluation. That does not establish its accuracy for physical taxi-out, or make it a
+  replacement for the mixture when the target is the recorded interval across all regimes.
 
 ## 3. Monthly indicator from predictions and from labels
 
@@ -77,21 +85,22 @@ on the same rows with the same reference. Three variants, 120 airport-months eac
 | regular regime, mixture `pred` | rule-regular records | from regular records | 10.5 | +6.8 | 64.5 | 0.985 | 71 |
 | regular regime, regressor `reg` | rule-regular records | from regular records | 6.4 | 0.0 | 32.4 | 0.993 | 71 |
 
-The monthly indicator computed from our predictions reproduces the one computed from the
-labels within 6.4 s on average, against a month-to-month spread of 71-77 s; the as-recorded
-variant, which is what PRU publishes, has a bias of +0.4 s. The largest monthly differences
+The as-recorded mixture and the regular-subset regressor reproduce their respective
+label-based indicators within 6.4 s on average, against a month-to-month spread of 71-77 s;
+using the mixture on the regular subset instead gives 10.5 s. The as-recorded variant uses
+our emulation of PRU's statistic and has a bias of +0.4 s. Its largest monthly differences
 are at LTFM (March -33 s, December +26 s, February -26 s) and LEMD (March -26 s); per airport
 the mean absolute difference is 3.0-5.5 s at EDDF, EDDM, EGLL, EHAM, LEBL, LFPG and LSZH,
 7.6 s at LIRF, 9.7 s at LEMD and 14.6 s at LTFM. As in section 2, the mixture output
 overstates the regular-regime indicator at LIRF (+35.5 s on average), the regressor does not
 (-0.7 s).
 
-For PRU this means two things. A model of this kind can produce a **forward-looking
-monthly indicator** (predicted additional time per airport and month) that tracks the
-realised one to within a few seconds, from information available before off-block. And the
-decomposition exposes which part of a forecast is structural (the reference, set by the
-stand-runway geometry and the airport's own history) and which part is congestion
-(the additional time), the quantity PRU actually monitors.
+For PRU, these results support a **retrospective monthly reconstruction** of the recorded
+indicator on the evaluated 2025 data. The decomposition separates a stand-runway reference
+estimated from recorded taxi-out times from the additional recorded duration. The latter
+is relevant to performance monitoring, but it is not a direct measurement of queueing:
+recording practices, de-icing and other operational factors can also affect it. The choice
+between `pred` and `reg` must follow the population and quantity being summarised.
 
 ## 4. Limitations
 
@@ -99,10 +108,13 @@ stand-runway geometry and the airport's own history) and which part is congestio
   the de-icing exclusion cannot be applied; see the deviation table in
   [data-quality-regimes.md](data-quality-regimes.md#41-how-the-indicator-is-emulated).
 - Out-of-fold predictions are evaluated on the same year they are trained around (each
-  month held out against the other eleven); the 2026 ranking months are a different year
+  month pair held out against the other ten months); the 2026 ranking months are a different year
   and the leaderboard RMSE, not these numbers, measures transfer.
+- The reference is estimated from the full calendar year, including the evaluation months.
+  Using the same reference for predictions and labels makes this a comparison of recorded
+  indicators; it does not test a reference available prospectively for an unseen period.
 - "Regular regime" is defined by the +-6 s label rule, which has no ground truth; records
-  labelled as copies are excluded here rather than modelled.
-- Per-departure RMSE and the monthly indicator are both driven by the right tail of
-  queueing; a monthly agreement of a few seconds does not imply that individual long delays
-  are predicted.
+  labelled as copies are excluded from the regular-subset comparisons rather than modelled.
+- Per-departure RMSE and the monthly indicator are affected by the right tail of recorded
+  durations; close monthly agreement does not imply that individual long delays are
+  reconstructed accurately or that the records measure physical queueing.

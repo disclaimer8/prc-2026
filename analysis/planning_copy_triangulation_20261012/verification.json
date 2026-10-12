@@ -1,0 +1,487 @@
+{
+  "status": "PASS_WITH_LIMITATIONS",
+  "scope": "Independent arithmetic and frozen-artifact audit only; no outcome rerun or raw/Parquet re-read.",
+  "registration": "bf08d014000bd51ad65ae045be644ab0629f6c8f",
+  "checks": {
+    "frozen_guard_files_and_manifest": "PASS",
+    "ten_registered_output_hashes_without_self_reference": "PASS",
+    "148750_alignment_rows_rates_ranges_and_scope_partitions": "PASS",
+    "identical_denominators_all7offsets_all5tolerances": "PASS",
+    "21250_contrasts_all6controls_equalweighted_and_gates": "PASS",
+    "all10airport_primary_and_global_result_counters": "PASS",
+    "14_geometry_scopes_common_support_weights_risks_counts_months_gates": "PASS",
+    "3396_availability_cells_funnel_and_geometry_reconciliation": "PASS",
+    "36_raw_dates_15758_ids_104_attrition_cells_zero_valid_and_null_effect": "PASS",
+    "raw_zero_semantics": "INCONCLUSIVE: no visit passes strict observed initial-prefix quality gate; no physical discrepancy risk could be estimated"
+  },
+  "source_guards": {
+    "scripts/planning_copy_triangulation_20261012.py": {
+      "registered_git_blob": "8ba7d576ef8982919f45c562eec2e498840faf09",
+      "current_git_blob": "8ba7d576ef8982919f45c562eec2e498840faf09",
+      "match": true
+    },
+    "tests/test_planning_copy_triangulation_20261012.py": {
+      "registered_git_blob": "a1f3838e778818fa017df5781668b161d31407f4",
+      "current_git_blob": "a1f3838e778818fa017df5781668b161d31407f4",
+      "match": true
+    },
+    "analysis/planning_copy_triangulation_20261012/PROTOCOL.md": {
+      "registered_git_blob": "9da0a1ea13cd486405439235ddc562c5f54af74c",
+      "current_git_blob": "9da0a1ea13cd486405439235ddc562c5f54af74c",
+      "match": true
+    },
+    "analysis/planning_copy_triangulation_20261012/preflight.json": {
+      "registered_git_blob": "a0d0d6d6f9a23ab4e38af00fd14aa7d6f8fd78ec",
+      "current_git_blob": "a0d0d6d6f9a23ab4e38af00fd14aa7d6f8fd78ec",
+      "match": true
+    }
+  },
+  "output_hashes_verified": {
+    "alignment.csv": "e5b996399d608de98abf7b456c273f0efac8fc904bcb960af592900af089a11a",
+    "alignment_contrasts.csv": "976ebc2a28287f7ad0715d82e1bd9b7ff395836dd1271137ddf0969fa3342494",
+    "availability.csv": "4f610e55bf3705f029b68984582c05ad3b7a0c5e1870138ecf1a276caa95ba71",
+    "raw_attrition.csv": "2ace4ba957edf24c2cb7c70648988ef678ab5c8c2bde04cc13147af615932fd2",
+    "raw_common_support_cells.csv": "1a9ec82bb6fa23d2e016d4b2696950904b23ba1baa88b106b8e9267f3a0baaff",
+    "raw_day_inventory.csv": "59a2770cc4c0d0cb40f6ceff5a40e1d5ebb776e20389fb9465c2e5571fcdb42c",
+    "raw_episode_audit.csv": "790d8733ca408e7a72abce537f4c42ade43331e7b04ecbd7363c42754e23f219",
+    "raw_supplement.json": "9e872571d469f4b4d1891db26652be908c87f993c93ec62646e39f7aa5ec887e",
+    "stand_geometry_summary.csv": "f27c7b10a0a9cd584bcd7be2ea8e4b0273234d11fd7317099202fec3da955be8",
+    "stand_standardized.json": "78a922deda7c2492c214e7d0f2a4be50df90b0b59121f1d22fca55db539cedbe"
+  },
+  "results_json_sha256": "f55be6d79e301c56a247a4e1cc915afdce37dc8f658a941578626dcb69af14e1",
+  "primary_by_airport": {
+    "EDDF": {
+      "eligible": 230141,
+      "matches": 2815,
+      "multiple_anchor_matches": 2076,
+      "zero_rate": 0.012231631912610095,
+      "control_mean_rate": 0.012055652838911796,
+      "control_min_rate": 0.006787143533746703,
+      "control_max_rate": 0.016394297408979713,
+      "excess_rate": 0.00017597907369829892,
+      "exceeds_all_controls": false
+    },
+    "LIRF": {
+      "eligible": 160690,
+      "matches": 38785,
+      "multiple_anchor_matches": 28249,
+      "zero_rate": 0.24136536187690585,
+      "control_mean_rate": 0.06498641276163213,
+      "control_min_rate": 0.04736449063414027,
+      "control_max_rate": 0.07709876159064036,
+      "excess_rate": 0.17637894911527374,
+      "exceeds_all_controls": true
+    },
+    "LSZH": {
+      "eligible": 134608,
+      "matches": 1513,
+      "multiple_anchor_matches": 1177,
+      "zero_rate": 0.011240045168192084,
+      "control_mean_rate": 0.015031300764689568,
+      "control_min_rate": 0.005007131819802686,
+      "control_max_rate": 0.04516819208368002,
+      "excess_rate": -0.0037912555964974837,
+      "exceeds_all_controls": false
+    },
+    "EDDM": {
+      "eligible": 167334,
+      "matches": 13118,
+      "multiple_anchor_matches": 9768,
+      "zero_rate": 0.07839410998362556,
+      "control_mean_rate": 0.07558834426954474,
+      "control_min_rate": 0.04575280576571408,
+      "control_max_rate": 0.09879044306596388,
+      "excess_rate": 0.002805765714080824,
+      "exceeds_all_controls": false
+    },
+    "EHAM": {
+      "eligible": 247948,
+      "matches": 3148,
+      "multiple_anchor_matches": 2350,
+      "zero_rate": 0.012696210495749108,
+      "control_mean_rate": 0.011636848586531585,
+      "control_min_rate": 0.006267443173568652,
+      "control_max_rate": 0.01568474034878281,
+      "excess_rate": 0.0010593619092175224,
+      "exceeds_all_controls": false
+    },
+    "LTFM": {
+      "eligible": 272963,
+      "matches": 18909,
+      "multiple_anchor_matches": 15170,
+      "zero_rate": 0.06927312492901969,
+      "control_mean_rate": 0.06298839036792532,
+      "control_min_rate": 0.05549836424716903,
+      "control_max_rate": 0.06933906793228387,
+      "excess_rate": 0.006284734561094366,
+      "exceeds_all_controls": false
+    },
+    "LFPG": {
+      "eligible": 239491,
+      "matches": 16875,
+      "multiple_anchor_matches": 13091,
+      "zero_rate": 0.07046193802689872,
+      "control_mean_rate": 0.058459399309368616,
+      "control_min_rate": 0.04418120096371054,
+      "control_max_rate": 0.06902973389396679,
+      "excess_rate": 0.012002538717530105,
+      "exceeds_all_controls": true
+    },
+    "LEBL": {
+      "eligible": 179700,
+      "matches": 16642,
+      "multiple_anchor_matches": 12387,
+      "zero_rate": 0.09260990539788537,
+      "control_mean_rate": 0.06654053051381932,
+      "control_min_rate": 0.05084028937117418,
+      "control_max_rate": 0.07651085141903172,
+      "excess_rate": 0.02606937488406605,
+      "exceeds_all_controls": true
+    },
+    "LEMD": {
+      "eligible": 212242,
+      "matches": 16326,
+      "multiple_anchor_matches": 11943,
+      "zero_rate": 0.0769216271991406,
+      "control_mean_rate": 0.06220964747787903,
+      "control_min_rate": 0.0365950188935272,
+      "control_max_rate": 0.07796760301919507,
+      "excess_rate": 0.014711979721261571,
+      "exceeds_all_controls": false
+    },
+    "EGLL": {
+      "eligible": 239546,
+      "matches": 20321,
+      "multiple_anchor_matches": 13344,
+      "zero_rate": 0.08483130588696952,
+      "control_mean_rate": 0.06919965267631269,
+      "control_min_rate": 0.05958354554031376,
+      "control_max_rate": 0.07985940069965686,
+      "excess_rate": 0.015631653210656835,
+      "exceeds_all_controls": true
+    }
+  },
+  "stand_standardization_recomputed": {
+    "ALL": {
+      "cells": 97,
+      "eligible_rows": 120218,
+      "discarded_rows": 40022,
+      "risk_difference": 0.010085732593884168,
+      "retained_flagged_rows": 5606,
+      "retained_unflagged_rows": 114612,
+      "retained_months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "available_flagged_rows": 6152,
+      "available_unflagged_rows": 154088,
+      "months_with_any_flagged_geometry": 12,
+      "sufficiency_gate": true,
+      "interpretation": "directionally_consistent"
+    },
+    "EDDF": {
+      "cells": 1,
+      "eligible_rows": 894,
+      "discarded_rows": 8263,
+      "risk_difference": 0.0,
+      "retained_flagged_rows": 11,
+      "retained_unflagged_rows": 883,
+      "retained_months": [
+        11
+      ],
+      "available_flagged_rows": 97,
+      "available_unflagged_rows": 9060,
+      "months_with_any_flagged_geometry": 12,
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    },
+    "EDDM": {
+      "cells": 28,
+      "eligible_rows": 37953,
+      "discarded_rows": 1846,
+      "risk_difference": 7.392843637707398e-05,
+      "retained_flagged_rows": 3354,
+      "retained_unflagged_rows": 34599,
+      "retained_months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "available_flagged_rows": 3447,
+      "available_unflagged_rows": 36352,
+      "months_with_any_flagged_geometry": 12,
+      "sufficiency_gate": true,
+      "interpretation": "directionally_consistent"
+    },
+    "EGLL": {
+      "cells": 5,
+      "eligible_rows": 769,
+      "discarded_rows": 657,
+      "risk_difference": 0.043779875831385186,
+      "retained_flagged_rows": 90,
+      "retained_unflagged_rows": 679,
+      "retained_months": [
+        1,
+        2,
+        3,
+        11,
+        12
+      ],
+      "available_flagged_rows": 135,
+      "available_unflagged_rows": 1291,
+      "months_with_any_flagged_geometry": 12,
+      "sufficiency_gate": true,
+      "interpretation": "directionally_consistent"
+    },
+    "EHAM": {
+      "cells": 16,
+      "eligible_rows": 59526,
+      "discarded_rows": 18489,
+      "risk_difference": 0.009328049225517991,
+      "retained_flagged_rows": 871,
+      "retained_unflagged_rows": 58655,
+      "retained_months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "available_flagged_rows": 960,
+      "available_unflagged_rows": 77055,
+      "months_with_any_flagged_geometry": 12,
+      "sufficiency_gate": true,
+      "interpretation": "directionally_consistent"
+    },
+    "LEBL": {
+      "cells": 15,
+      "eligible_rows": 4930,
+      "discarded_rows": 1525,
+      "risk_difference": 0.0703080656878995,
+      "retained_flagged_rows": 540,
+      "retained_unflagged_rows": 4390,
+      "retained_months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "available_flagged_rows": 610,
+      "available_unflagged_rows": 5845,
+      "months_with_any_flagged_geometry": 12,
+      "sufficiency_gate": true,
+      "interpretation": "directionally_consistent"
+    },
+    "LEMD": {
+      "cells": 13,
+      "eligible_rows": 4350,
+      "discarded_rows": 1800,
+      "risk_difference": 0.01778453981371056,
+      "retained_flagged_rows": 342,
+      "retained_unflagged_rows": 4008,
+      "retained_months": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "available_flagged_rows": 431,
+      "available_unflagged_rows": 5719,
+      "months_with_any_flagged_geometry": 10,
+      "sufficiency_gate": true,
+      "interpretation": "directionally_consistent"
+    },
+    "LFPG": {
+      "cells": 0,
+      "eligible_rows": 0,
+      "discarded_rows": 14,
+      "risk_difference": null,
+      "retained_flagged_rows": 0,
+      "retained_unflagged_rows": 0,
+      "retained_months": [],
+      "available_flagged_rows": 0,
+      "available_unflagged_rows": 14,
+      "months_with_any_flagged_geometry": 0,
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    },
+    "LIRF": {
+      "cells": 9,
+      "eligible_rows": 1040,
+      "discarded_rows": 438,
+      "risk_difference": 0.08971185468383143,
+      "retained_flagged_rows": 245,
+      "retained_unflagged_rows": 795,
+      "retained_months": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "available_flagged_rows": 283,
+      "available_unflagged_rows": 1195,
+      "months_with_any_flagged_geometry": 8,
+      "sufficiency_gate": true,
+      "interpretation": "directionally_consistent"
+    },
+    "LTFM": {
+      "cells": 0,
+      "eligible_rows": 0,
+      "discarded_rows": 0,
+      "risk_difference": null,
+      "retained_flagged_rows": 0,
+      "retained_unflagged_rows": 0,
+      "retained_months": [],
+      "available_flagged_rows": 0,
+      "available_unflagged_rows": 0,
+      "months_with_any_flagged_geometry": 0,
+      "sufficiency_gate": false,
+      "interpretation": "inconclusive_insufficient_common_support"
+    },
+    "LSZH": {
+      "cells": 10,
+      "eligible_rows": 10756,
+      "discarded_rows": 6990,
+      "risk_difference": 0.009619818837026626,
+      "retained_flagged_rows": 153,
+      "retained_unflagged_rows": 10603,
+      "retained_months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "available_flagged_rows": 189,
+      "available_unflagged_rows": 17557,
+      "months_with_any_flagged_geometry": 12,
+      "sufficiency_gate": true,
+      "interpretation": "directionally_consistent"
+    },
+    "LEBL_JulSep": {
+      "cells": 5,
+      "eligible_rows": 1389,
+      "discarded_rows": 387,
+      "risk_difference": 0.15832007292531564,
+      "retained_flagged_rows": 164,
+      "retained_unflagged_rows": 1225,
+      "retained_months": [
+        7,
+        8,
+        9
+      ],
+      "available_flagged_rows": 185,
+      "available_unflagged_rows": 1591,
+      "months_with_any_flagged_geometry": 3,
+      "sufficiency_gate": true,
+      "interpretation": "directionally_consistent"
+    },
+    "LEBL_JanJun": {
+      "cells": 7,
+      "eligible_rows": 2188,
+      "discarded_rows": 583,
+      "risk_difference": 0.028635980642564278,
+      "retained_flagged_rows": 225,
+      "retained_unflagged_rows": 1963,
+      "retained_months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "available_flagged_rows": 249,
+      "available_unflagged_rows": 2522,
+      "months_with_any_flagged_geometry": 6,
+      "sufficiency_gate": true,
+      "interpretation": "directionally_consistent"
+    },
+    "LEBL_OctDec": {
+      "cells": 3,
+      "eligible_rows": 1353,
+      "discarded_rows": 555,
+      "risk_difference": 0.04734416622479709,
+      "retained_flagged_rows": 151,
+      "retained_unflagged_rows": 1202,
+      "retained_months": [
+        10,
+        11,
+        12
+      ],
+      "available_flagged_rows": 176,
+      "available_unflagged_rows": 1732,
+      "months_with_any_flagged_geometry": 3,
+      "sufficiency_gate": true,
+      "interpretation": "directionally_consistent"
+    }
+  },
+  "raw_summary": {
+    "dates": 36,
+    "stale_available_dates": 20,
+    "missing_stale_dates": 16,
+    "derived_eligible_visits": 15758,
+    "primary_visits": 15757,
+    "validated_episodes": 0,
+    "reason_counts": {
+      "insufficient_stationary_prefix": 7870,
+      "missing_stale_status": 7888
+    }
+  },
+  "limits": [
+    "Underlying raw/Parquet inputs were not independently reread or rehashed; the committed preflight and runtime guard are the input provenance evidence.",
+    "No independent recomputation of event linkage, geometric filters, residual timestamp matches or within-cell quantiles from raw rows in this audit.",
+    "Input source/test/protocol/preflight byte identity was checked against git registration; tests and other source files were not semantically reviewed beyond the allowed analysis script.",
+    "Geometry standardisation is descriptive on selected common support; no physical-copy precision, AOBT truth, statistical significance or causal copying established.",
+    "No raw visit passes the strict prefix filter, so its physical comparison is unidentifiable, not a measured zero discrepancy.",
+    "The results JSON is externally hashed here; verification.json and mutable narrative RESULTS are intentionally excluded from outcome hashes to avoid circular verification."
+  ]
+}

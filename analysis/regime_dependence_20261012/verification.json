@@ -1,0 +1,20 @@
+{
+  "checks": {
+    "all17populations_metric_and_pair_algebra": "PASS",
+    "primary3_permutation_p_from199_saved_draws": "PASS",
+    "bootstrap_interval_integrity": "PASS; draws not retained, quantiles not independently recomputed",
+    "gate_and_support_arithmetic": "PASS",
+    "frozen_source_protocol_tests_preflight_unchanged": "PASS"
+  },
+  "outcome_run_exit_code": 0,
+  "result_hashes": {
+    "result.json": "533d653aacd405c3eb87103e54361d43113165eb184cba2e36ce88ab656f66a5",
+    "run.log": "9540528c107fdc556d45a7d0b9ae368cba024c4a6933cd3c190747b6e0981691"
+  },
+  "primary_eligible_strata": 6728,
+  "strata_count_evidence": "prepare_population computes unique(strata[keep]) after primary-airport and eligibility filters; count is primary7 only",
+  "resources": {
+    "elapsed_seconds": 110.24478308299877,
+    "peak_rss_bytes": 1516339200
+  }
+}

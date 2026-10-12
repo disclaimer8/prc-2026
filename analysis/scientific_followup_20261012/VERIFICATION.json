@@ -1,0 +1,57 @@
+{
+  "checked_at_utc": "2026-10-12T09:46:07.419500+00:00",
+  "registrations": {
+    "regime_dependence_20261012": {
+      "registration": "63ffe1b11f0f7f5c4677e3d895b405c449a05283",
+      "frozen_files_byte_equal": true
+    },
+    "planning_copy_triangulation_20261012": {
+      "registration": "bf08d014000bd51ad65ae045be644ab0629f6c8f",
+      "frozen_files_byte_equal": true
+    }
+  },
+  "hashes": {
+    "data/final_tail_20261011/work/gentle-igloo_final.parquet": "bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1",
+    "paper/preview/gentle-igloo-joas-preview.pdf": "0af7bd6421e20139b7fbd5e221932623627534572d21ab34a7bcc7b5d15e06ba",
+    "analysis/regime_dependence_20261012/result.json": "533d653aacd405c3eb87103e54361d43113165eb184cba2e36ce88ab656f66a5",
+    "analysis/planning_copy_triangulation_20261012/results.json": "f55be6d79e301c56a247a4e1cc915afdce37dc8f658a941578626dcb69af14e1"
+  },
+  "synthetic_checks_before_outcomes": {
+    "dependence": 7,
+    "triangulation": 21
+  },
+  "brief": {
+    "build": "PASS existing Pandoc fallback",
+    "idempotent": true,
+    "sections": 118,
+    "tables": 116,
+    "data_cells": 3275,
+    "new_local_links": "PASS"
+  },
+  "local_markdown_links": {
+    "checked": 49,
+    "missing": 0
+  },
+  "paper": {
+    "pages": 51,
+    "root_visual_spotcheck_pages": [
+      1,
+      22,
+      42
+    ],
+    "agent_full_contact_sheets_and_changed_pages": "PASS",
+    "unresolved_references_in_extracted_text": 0,
+    "compiler_warning_status": "not independently certified; successful builder removes full compiler log"
+  },
+  "scope": {
+    "outcome_runs_per_protocol": 1,
+    "model_fits": 0,
+    "model_inference": 0,
+    "new_submissions": 0,
+    "posthoc_label_blind_admission_diagnostic": true
+  },
+  "independent_audits": [
+    "analysis/regime_dependence_20261012/verification.json",
+    "analysis/planning_copy_triangulation_20261012/verification.json"
+  ]
+}
