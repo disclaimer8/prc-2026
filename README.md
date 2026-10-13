@@ -354,7 +354,11 @@ for traceability; their IDs match the register.
   kind of record as the labels. Its rule was fixed on 2025 data, but its inclusion
   in the final was decided by leaderboard uploads. On January/July only part of the
   2025 relation transferred, most of it at Rome, where the largest shift of the
-  blind months (+21 s in June) has not been measured.
+  blind months (+21 s in June) has not been measured. A label-free scenario audit
+  prices that bet: if the published gaps were pure noise the stage would cost
+  +0.104 s on June and +0.013 s over the four months, while the transfer measured
+  on January/July would gain −0.064 s over four months; break-even is a transfer
+  of 0.25 in every cell ([scenario audit](analysis/blind_e218_scenarios_20261013/RESULTS.md)).
 - Results depend on ADS-B ground coverage, which differs by airport and year.
 - A few extreme labels (multi-hour or one-day shifts) dominate RMSE; small changes
   in how they are hedged can move the score by more than a model improvement.

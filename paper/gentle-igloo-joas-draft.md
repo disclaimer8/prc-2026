@@ -131,6 +131,11 @@ every challenge file carries, so the label itself carries noise of up to ±12 s 
 tolerance of 6 s and the LOBT window of 3,606 s used below are the half-width of that dithering.
 For a fixed chain the expected effect of a fresh draw on RMSE is zero, with a realised spread of
 ±0.08 s (1σ) on January/July; Section 5.7 shows that this does not hold for a refitted chain.
+Extending that estimate to the four-month final file, with the neural member's response to a
+shifted take-off anchor carried as scenarios rather than measured (its prepared tensors are not
+on the machine where the audit ran), gives a spread of ±0.03 s if the member responds like the
+tabular members and ±0.07 s even at four times that response; the spread would reach 0.05 s only
+at a neural response of 43.7 s RMS to an input shift of at most 12 s.
 
 Timestamps are mostly minute-resolved. 97.7 % of `AOBT_3` values fall on a whole minute. At EDDM,
 EGLL, LEBL, LEMD, LFPG, LIRF and LTFM at least 99.95 % of block times sit within ±6 s of a whole
@@ -1353,7 +1358,15 @@ first reading is refuted. Under the rule of v12083 (a score of at most 231.1475 
 LIRF cells stay. The largest single shift of the final, LIRF in June (+21 s on 14,362 rows), is
 outside the board; if February and June follow the January/July relation, dropping the LIRF cells
 would have raised the final file's RMSE by about 0.045 s through those two months (a model, not a
-measurement).
+measurement). A later label-free audit priced the whole stage per blind subset under the same
+model, with the transfer solved from the three boards in the parametrisation of the applied
+shifts (LIRF 0.715, the other cells 0.344, reproducing the measured split): if the published gaps
+were pure noise, the stage would cost +0.016 s in February, +0.104 s in June and +0.065 s on
+February/June together (+0.013 s over the four months), while the measured January/July transfer
+would gain −0.093 s on February/June and −0.064 s over the four months; break-even is a transfer
+of 0.25 in every cell. June's exposure is concentrated in the single LIRF June cell, which carries
+73 % of that month's shift energy. These are scenarios over unpublished labels, not measurements
+of the blind months.
 
 **Ranking.** `gentle-igloo_final.parquet` (SHA-256 `bbae2cc5…34a1`, 670,790 rows) was uploaded
 once, on 12 October 2026 at 08:44:59 UTC, after the last ordinary upload (v12083, 11 October); the

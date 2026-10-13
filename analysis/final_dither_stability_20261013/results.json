@@ -1,0 +1,64 @@
+{
+ "protocol": "final-dither-stability-20261013-v1",
+ "measured_inputs": {
+  "premix_rms_change_s": 16.2,
+  "board_band_1sigma_s": 0.08,
+  "pass_through": 0.76,
+  "weights": {
+   "tabular": 0.65,
+   "neural": 0.35
+  }
+ },
+ "scenarios": [
+  {
+   "nn_response_rms_s": 0.0,
+   "premix_rms_change_s": 10.53,
+   "final_rms_change_s": 8.002799999999999,
+   "rmse_band_1sigma_s": 0.02833564442292824
+  },
+  {
+   "nn_response_rms_s": 8.0,
+   "premix_rms_change_s": 10.89591207747199,
+   "final_rms_change_s": 8.280893178878713,
+   "rmse_band_1sigma_s": 0.029320293474903687
+  },
+  {
+   "nn_response_rms_s": 16.0,
+   "premix_rms_change_s": 11.926478943929762,
+   "final_rms_change_s": 9.06412399738662,
+   "rmse_band_1sigma_s": 0.032093491602348964
+  },
+  {
+   "nn_response_rms_s": 32.0,
+   "premix_rms_change_s": 15.372732353098455,
+   "final_rms_change_s": 11.683276588354826,
+   "rmse_band_1sigma_s": 0.04136716787903541
+  },
+  {
+   "nn_response_rms_s": 64.0,
+   "premix_rms_change_s": 24.75158378770942,
+   "final_rms_change_s": 18.81120367865916,
+   "rmse_band_1sigma_s": 0.06660513552828583
+  }
+ ],
+ "nn_response_rms_at_band_0.05_s": 43.74010594368553,
+ "tail_62_rows": {
+  "100": {
+   "dmse_per_row": 0.924283307741618,
+   "drmse_at_231": 0.0020006045569687103
+  },
+  "300": {
+   "dmse_per_row": 8.318549769674563,
+   "drmse_at_231": 0.018004817307854637
+  },
+  "700": {
+   "dmse_per_row": 45.289882079339286,
+   "drmse_at_231": 0.0980092559850334
+  },
+  "1627": {
+   "dmse_per_row": 244.66971481387617,
+   "drmse_at_231": 0.5289824510397523
+  }
+ },
+ "direct_nn_reinference": "not possible on the Mac: E197 prepared tensors (19 GB) and the OOF checkpoints are on the Home machine; the NN term above is therefore scenario-based, not measured"
+}

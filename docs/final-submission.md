@@ -5,13 +5,16 @@ final ranking: the rules it answers, the recipe that produces it, why that recip
 differs from the best leaderboard file (v12075), what the difference was measured
 to cost, what is known about the new months' inputs, and how the file is built,
 validated and uploaded. Numbers are taken from the dated analysis reports they
-cite; items marked `[[to be filled after the final upload]]` or
-`[[to be filled after 14 October]]` do not exist yet. Written on 8 October 2026
+cite; items marked `[[to be filled after 14 October]]` do not exist yet.
+Written on 8 October 2026
 while the final model fits were still running; updated on 9 October 2026 after the
 final file was assembled, validated and checked on the public board (log 430–447);
 updated on 11 October 2026 after one post-mixture stage, E218 (PRU level), was
 added to the recipe and the final file was rebuilt with it (log 449–461,
-[section 2.5](#25-e218-pru-level-stage)). The file of 9 October (SHA-256
+[section 2.5](#25-e218-pru-level-stage)); updated on 13 October 2026 with the
+upload receipt (log 462) and two label-free audits of the submitted file, the
+E218 scenario bounds for the blind months and the dither-stability bound
+(log 467–470, sections 2.4 and 2.5). The file of 9 October (SHA-256
 `76c32426…d554`) is the predecessor: the new final is that file plus the E218
 stage, and every stage up to `half` is byte-identical to it.
 
@@ -167,7 +170,15 @@ the label carries `η ~ U(−12, 12)`; `final_ranking` is a fresh independent dr
 tolerance of 6 s and the 3,606 s LOBT window are the half-width of that dithering.
 Expected effect on RMSE: 0; the realised deviation on January/July is ±0.08 s
 (1σ) for the production chain. No augmentation, tolerance change or de-noising was
-added; the input is used as published. The ±0.08 s holds for a fixed chain only:
+added; the input is used as published. Extended to the four-month final file on
+13 October (log 468, 470; [stability audit](../analysis/final_dither_stability_20261013/RESULTS.md)),
+with the neural member's unmeasured response to a shifted take-off anchor carried
+as scenarios, the band is ±0.028 s if the member ignores the shift, ±0.032 s if it
+responds like the tabular members, and ±0.067 s even at four times that response;
+it would reach 0.05 s only at a neural response of RMS 43.7 s to a shift of at
+most 12 s. A direct re-inference under shifted token times was not run (the
+prepared tensors and checkpoints are on the Home machine), so this is a bounded
+scenario statement, not a measurement. The ±0.08 s holds for a fixed chain only:
 the control upload of section 7, item 4, showed that the refitted base classifier's
 response to the re-dithered inputs alone carries about 0.29 s of noise on
 January/July ([control explanation §3, §6](../analysis/v12080_control_explanation_20261009.md)).
@@ -279,7 +290,18 @@ case of the model of log 452, a gap that is pure noise in every cell, would cost
 +0.066 s on February/June
 ([board.json](../analysis/e218_pru_level_recheck_20261010/board.json)); on
 January/July both parts of the stage gained, so that case did not occur there. LIRF
-June (+21 s on 14,362 rows) remains the largest single bet of the final.
+June (+21 s on 14,362 rows) remains the largest single bet of the final. Priced per
+subset and per cell on 13 October (log 467, 469;
+[scenario audit](../analysis/blind_e218_scenarios_20261013/RESULTS.md)), with the
+transfer solved from the January/July boards in the same parametrisation
+(β_LIRF = 0.715, β_nonLIRF = 0.344, reproducing the measured −0.0304 / −0.0056 s
+split), the pure-noise case costs +0.0158 s in February, +0.1036 s in June and
++0.0648 s on February/June (+0.0130 s on the four-month ranking), while the
+measured January/July transfer would gain −0.0932 s on February/June and
+−0.0638 s over four months; break-even is β = 0.25 in every cell, below every
+transfer measured so far. The June figure is dominated by the single LIRF June
+cell (`n·c²` = 6,333,642 of June's 8,706,973). These are scenarios over the
+organiser's unpublished labels, not measurements of February/June.
 
 **The new file.** Rebuilt on the Mac on 11 October 2026 with `E218_PRU_LEVEL=1` on
 `make-contract`, `prepare` and `assemble --repeat-e156` (231 s, peak 10.8 GB, 0 fits;
@@ -492,7 +514,7 @@ Interpreter on the Mac: `.venv/bin/python`.
 | 5 | OPDI events for February and June 2026 (LSZH stage input) | `scripts/opdi_final_extract_20261008.py` | **Done** on prc-cloud: February and June windows plus the two boundary windows, 7 files, 4.8 MB, `data/opdi_final_20261008/`, pinned in the final contract (`make-contract --opdi-extra`, 51 files by SHA; log 398, 404, 405). LSZH departures with an exit-parking event: January 4,151 of 9,995 (41.5 %, a gap in the source), **February 6,886 of 9,374 (73.5 %)**, **June 9,517 of 12,384 (76.8 %)**, July 10,131 of 13,155 (77.0 %) ([report §B.3](../analysis/tail_e156_opdi_20261008.md)). Rows without a matched event stay unchanged. The January/July set of IDs with an event is unchanged, so the cached LSZH model stays valid |
 | 6 | Tail assembly: premix, stages 1–11, served-ID manifest, `complete.json` | `scripts/final_tail_assembly_20261008.py` (`make-contract --mode final`, `prepare`, `assemble --repeat-e156`) | Adapter dry-run on January/July (141 s, 0 fits, premix byte-identical to the archived v12075 premix; [dry run](../analysis/final_tail_assembly_20261008/DRYRUN_RESULTS.md), log 389). **Final run done** on the Mac on 9 October: 157.6 s including the E156 repeat, `fits_performed = 0`, E81 not applied, 0 donor rows copied; stage 3 served 62 rows and its repeat was bitwise identical (all ten probability arrays, 0 rounded rows differing). Rows changed per stage: E185 8,224; E167 306; E156 62; E141 429,789; E64 95,421; E188 18,128; E152 287; LOBT 169; protect 11; LSZH 30,407 (now also in February and June); half 30,099 ([complete.json](../analysis/final_tail_20261009/complete.json), [stage receipts](../analysis/final_tail_20261009/receipts/), [contract](../analysis/final_tail_20261009/contract.json), log 436, 438). **Rebuilt on 11 October** with `E218_PRU_LEVEL=1` (builder `21f46756…`, contract `7a1cde30…`): 231 s, peak 10.8 GB, `fits_performed = 0`; stages 0–11 as on 9 October, stage 12 `pru_level` 415,697 rows ([complete.json](../analysis/final_tail_20261011/complete.json), [stage receipts](../analysis/final_tail_20261011/receipts/), [contract](../analysis/final_tail_20261011/contract.json), log 457, 458; section 2.5) |
 | 7 | Validator | `scripts/validate_final_submission.py --file … --reference submissions/gentle-igloo_v12081.parquet --json …` (on 9 October with v12077 as the reference) | **Done**: all hard checks pass; against v12081 on the 344,841 January/July IDs 329,836 rows changed (95.65 %), RMS 26.485 s, max 2,926 s ([validator report](../analysis/final_tail_20261011/validate_vs_v12081.json)). Independent rebuild from scratch (a new `prepare` and `assemble` from the same contract into a separate work directory on the Mac) gave the same SHA-256 `bbae2cc5…34a1` ([replay log](../analysis/final_tail_20261011/assemble_replay.log), [MANIFEST](../analysis/final_tail_20261011/MANIFEST.json), log 458). The 9 October file was checked the same way (against v12077: 95.64 %, RMS 26.5 s; replay 112.7 s, SHA `76c32426…d554`; [report](../analysis/final_tail_20261009/validate_vs_v12077.json), log 438) |
-| 8 | Single PUT to the bucket | Mode `final` of the transport registered in log 414 (`scripts/final_transport_20261009.py`, built on `OnePutHTTP` and `single_attempt`, per [runbook §3](final-submission-runbook.md)) | Planned for **12 October** from the Hetzner host, after the last regular upload (log 447, 459). The manifest of 9 October (`manifest_final.json`, file `76c32426…`) is superseded by [`analysis/final_transport_20261009/manifest_final_v2.json`](../analysis/final_transport_20261009/manifest_final_v2.json) (SHA-256 `3648f566…`, file `bbae2cc5…`, day 2026-10-12, builder `21f46756…`), sealed after v12082; registration commit `6b130265…`, transport source SHA-256 `831712bf…`; the new file and its manifest were copied to Hetzner and verified by SHA-256, and the preflight passed on the Mac and on Hetzner, and again on Hetzner after v12083. The final PUT has not been made ([v12082 record](../analysis/v12082_control_20261011/RESULTS.md), [v12083 record](../analysis/v12083_upload_20261011/RESULTS.md), log 459, 461). Receipt: `[[to be filled after the final upload]]` |
+| 8 | Single PUT to the bucket | Mode `final` of the transport registered in log 414 (`scripts/final_transport_20261009.py`, built on `OnePutHTTP` and `single_attempt`, per [runbook §3](final-submission-runbook.md)) | Planned for **12 October** from the Hetzner host, after the last regular upload (log 447, 459). The manifest of 9 October (`manifest_final.json`, file `76c32426…`) is superseded by [`analysis/final_transport_20261009/manifest_final_v2.json`](../analysis/final_transport_20261009/manifest_final_v2.json) (SHA-256 `3648f566…`, file `bbae2cc5…`, day 2026-10-12, builder `21f46756…`), sealed after v12082; registration commit `6b130265…`, transport source SHA-256 `831712bf…`; the new file and its manifest were copied to Hetzner and verified by SHA-256, and the preflight passed on the Mac and on Hetzner, and again on Hetzner after v12083. **Done on 12 October 2026**: one PUT from Hetzner at 08:44:59 UTC, the bucket object read back byte-identical to SHA-256 `bbae2cc5…34a1` (2,145,576 bytes), the ledger then closed regular uploads; the PUT must not be repeated ([v12082 record](../analysis/v12082_control_20261011/RESULTS.md), [v12083 record](../analysis/v12083_upload_20261011/RESULTS.md), log 459, 461, 462; upload log `analysis/final_upload_20261012/upload_stdout.log`). |
 
 Cached stage models (E141 5, E64 5, LSZH 1, E188 5) are loaded only when the
 reconstructed training call matches the stored signature (parameters, rounds,
@@ -809,6 +831,9 @@ seeds each within 12 h and were stopped by the unit limit during the sixth (log 
   report (month × airport table, fallback-regime shares) and the
   [input audit](../analysis/final_months_input_audit_20261009.md) (sections 5, 7).
 - Upload receipt (ledger lines, bucket listing, SHA-256 of the object):
-  `[[to be filled after the final upload]]`.
+  uploaded once on 12 October 2026 at 08:44:59 UTC from Hetzner; the bucket
+  object (2,145,576 bytes) was read back with SHA-256 `bbae2cc5…34a1`, equal
+  to the local file, and the ledger closed regular uploads after the PUT
+  (log 462; `analysis/final_upload_20261012/upload_stdout.log`).
 - Blind-ranking result (January/July, February/June, four months), published by
   the organiser after 14 October 10:00 UTC: `[[to be filled after 14 October]]`.
