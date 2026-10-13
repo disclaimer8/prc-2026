@@ -114,6 +114,20 @@ The paper makes five contributions.
    final predictions with the indicator EUROCONTROL published for 2026, and a documented set of
    negative results from the last days of development (Sections 5.5–5.8).
 
+**Concurrent work.** The recording-regime property is not ours alone. Public repositories that
+other teams released between 11 and 13 October 2026 describe it independently. Team
+reliable-hamburger report that 9.6 % of off-block times are a copy of the schedule and combine a
+copy classifier with a regressor as an expectation [@reliablehamburger2026]. Team
+warmhearted-zipper describe the block-off time of a large share of departures as a copy, within a
+few seconds, of the scheduled time, `AOBT_3`, `EOBT_1`, `LOBT` or `IOBT`, and add a one-day-shift
+class [@warmheartedzipper2026]. Team gracious-tornado treat the way the off-block was recorded as
+the main source of squared error [@gracioustornado2026], and team inspiring-kitten route
+departures through deterministic regimes that include a schedule identity at LIRF
+[@inspiringkitten2026]. We claim no priority for the observation. Our contribution on it is the
+probability mixture over five candidates, its evaluation against the labelling rule and the
+registered analyses of Sections 4.5, 5.9 and 5.10. We read these four repositories on 13 October
+2026, after our final file had been uploaded.
+
 # 2 Data
 
 ## 2.1 Challenge data
@@ -1642,6 +1656,14 @@ file's January/July and February/June results]].
   diagnosis on 2025, it transferred at about half its forecast, and its largest blind-month shift
   (LIRF June, +21 s) is unmeasured. It needs PRU's published value for the month, so it is a
   post-operations correction only.
+- A finer published aggregate was not tested. Team gracious-tornado reconcile each airport-day
+  with EUROCONTROL's daily pre-departure delay. They find that on 2025 labels it equals the sum of
+  max(0, d − y) over the day's departures, where d is the take-off delay against schedule, and
+  report it as the largest single step of their 2025 rehearsal (−3,095.7 in pooled squared
+  seconds) [@gracioustornado2026]. We noted the daily file on 30 September 2026, when it did not
+  yet cover July 2026, and never built such a reconciliation. It would read the scored days more
+  directly than our monthly stage, and that team's documentation states that no organiser ruling
+  names the daily file. We record it as an untested direction, not a result.
 - Byte-identical reproduction of the final file holds on the build platform. A replay on Linux
   ARM64 with identical package versions matched the first three stages by value, but the TabPFN tail
   values differed in 55 of 62 rows (by at most 35 s) because of the numerical backend, and the cached
