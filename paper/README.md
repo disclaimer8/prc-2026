@@ -1,6 +1,6 @@
 # JOAS paper draft
 
-**Status: draft, not submitted (results and wording review through 12 October 2026).** `gentle-igloo-joas-draft.md` is a full
+**Status: draft, not submitted (updated through 13 October 2026; package checked 14 October).** `gentle-igloo-joas-draft.md` is a full
 research-article draft for the Journal of Open Aviation Science (JOAS) describing team gentle-igloo's
 solution to the EUROCONTROL PRC Data Challenge 2026. The organiser said on 9 October 2026 that a JOAS
 paper is not required but welcome.
@@ -30,7 +30,9 @@ and no conversion into RMSE uncertainty. Planning-match controls, tolerance sens
 ADS-B comparisons are integrated in §5.10, including the inconclusive strict raw-episode check.
 The independent arithmetic audits and the separately labelled post hoc raw-admission diagnostic
 are archived with the results (experiment-register entries 463–466). The generated LaTeX and
-reading preview were rebuilt on 12 October 2026. `OUTLINE.md` records the evidence and insertion locations.
+reading preview were rebuilt on 13 October 2026, including the blind E218 scenarios,
+dither-stability scenarios and concurrent-work discussion (register entries 467–471).
+`OUTLINE.md` records the evidence and insertion locations.
 
 ## Build
 
@@ -61,8 +63,8 @@ only as a comment in `main.tex`.
   (`\doi`, `\received`, `\editor`, `\reviewers`, `\orcid`, `\affiliation`, `\email`, `\keywords`,
   `\abbreviations`) dropped or reduced to plain text, and biblatex on the bibtex backend (numeric,
   unsorted, as in the JOAS class) so that the references resolve without biber. It is **not the JOAS
-  layout**: fonts, margins, page count, abstract box and header differ. On 12 October 2026 it has
-  51 pages (11 pt, A4).
+  layout**: fonts, margins, page count, abstract box and header differ. On 13 October 2026 it has
+  52 pages (11 pt, A4).
 
 ## JOAS limits (venue rules checked 11 October; manuscript counts 12 October 2026)
 

@@ -1,0 +1,12 @@
+{
+  "unittest_modules_with_tests": 56,
+  "unittest_tests": 548,
+  "unittest_passed": 546,
+  "unittest_skipped": 2,
+  "planning_direct_entrypoint_tests_passed": 21,
+  "total_passed": 567,
+  "total_skipped": 2,
+  "execution": "separate process per unittest module; direct entry point for planning triangulation",
+  "monolithic_discovery_passed": false,
+  "production_sources_changed": false
+}

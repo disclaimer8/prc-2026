@@ -1,0 +1,82 @@
+[
+  {
+    "path": "README.md",
+    "size_bytes": 30282,
+    "sha256": "7cfc05cc279e70bfea9c9ca13508bea5769c0db151fcee1b655f74ea592b9197"
+  },
+  {
+    "path": "LICENSE",
+    "size_bytes": 35149,
+    "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+  },
+  {
+    "path": "SOURCES.md",
+    "size_bytes": 14864,
+    "sha256": "ec0aead4f1b55d84023487181d5811e5bab487b42043ef296d208410a0b37239"
+  },
+  {
+    "path": "CITATION.cff",
+    "size_bytes": 463,
+    "sha256": "aeafb034821e14b2086155ba5fe7ff215e883574b5bf97e3fe336dea08ea73f8"
+  },
+  {
+    "path": "docs/model-design.md",
+    "size_bytes": 23781,
+    "sha256": "0bb58cb712dd04e911af56110830c17bfda4777fa1fa0325795d37110f52ab31"
+  },
+  {
+    "path": "docs/reproduction.md",
+    "size_bytes": 26677,
+    "sha256": "314185ee07f641e2f73899bd49295c8f64e54181ed87cb7390cac635cc8d0a74"
+  },
+  {
+    "path": "docs/validation.md",
+    "size_bytes": 14571,
+    "sha256": "773c089f109f74cb6b25e90da2ce5d9e93d75941fda7ed815b08050cfb385e42"
+  },
+  {
+    "path": "docs/final-submission.md",
+    "size_bytes": 67465,
+    "sha256": "b537778412aba9873a305953962d2b65109d5dd26d31d73b3a974ff15181865c"
+  },
+  {
+    "path": "docs/organiser-clarifications.md",
+    "size_bytes": 8610,
+    "sha256": "5ca86efbc3090bffb51f81f7580f4aa99f781352c923a6745712b335ef507c5d"
+  },
+  {
+    "path": "paper/gentle-igloo-joas-draft.md",
+    "size_bytes": 152625,
+    "sha256": "b7b9efdb1ea5ab44a91f4a04542ffd1b13e2d0b3cd87cec4fdd64d452174f96a"
+  },
+  {
+    "path": "paper/main.tex",
+    "size_bytes": 182040,
+    "sha256": "3c2c2ef83a4a7eab077999d1200aa456b427aaa7a08df1c8874546198fc08e1e"
+  },
+  {
+    "path": "paper/reference.bib",
+    "size_bytes": 9715,
+    "sha256": "575ddddd53fe5015c77b03a26037082a3a8eb3f8b5ef4f87de961cb31aaa7bd2"
+  },
+  {
+    "path": "paper/preview/gentle-igloo-joas-preview.pdf",
+    "size_bytes": 2395165,
+    "sha256": "f376617860af9f63898e7f12d74fc7e77f23850c61f269c39aa31286f9148f49"
+  },
+  {
+    "path": "pyproject.toml",
+    "size_bytes": 541,
+    "sha256": "4ec100147cdf6423fb0a19a7ba4bacc8ce571f82c5c227d254e81eddd096c054"
+  },
+  {
+    "path": "uv.lock",
+    "size_bytes": 363287,
+    "sha256": "cc83e62f6cce0c6cedb9769bb39be90528e22ad88eec3d956f3c86a5f5065b57"
+  },
+  {
+    "path": "requirements-gpu.txt",
+    "size_bytes": 1785,
+    "sha256": "e96567a6bc287fc1b1cdf038e55a5a8a0c7fb8057c11eff71bd8c9936420a4ca"
+  }
+]

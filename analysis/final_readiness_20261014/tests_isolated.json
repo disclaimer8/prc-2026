@@ -1,0 +1,401 @@
+[
+  {
+    "file": "tests/test_cat_ally_windows.py",
+    "exit_code": 0,
+    "tests": 4,
+    "elapsed": 0.25,
+    "summary": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.168s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_cat_extra175.py",
+    "exit_code": 0,
+    "tests": 5,
+    "elapsed": 0.11,
+    "summary": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.002s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_cat_fin1b_oof.py",
+    "exit_code": 0,
+    "tests": 18,
+    "elapsed": 0.14,
+    "summary": "..................\n----------------------------------------------------------------------\nRan 18 tests in 0.043s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_cat_laptop_pools.py",
+    "exit_code": 0,
+    "tests": 2,
+    "elapsed": 0.1,
+    "summary": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.001s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_cat_night_queue.py",
+    "exit_code": 0,
+    "tests": 5,
+    "elapsed": 0.11,
+    "summary": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.011s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_cat_runtime_parity.py",
+    "exit_code": 0,
+    "tests": 1,
+    "elapsed": 0.1,
+    "summary": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_current_error_mechanisms.py",
+    "exit_code": 0,
+    "tests": 10,
+    "elapsed": 0.26,
+    "summary": ": 2 rows\nvalidated/measured fold_4_10.npz: 2 rows\nvalidated/measured fold_5_11.npz: 2 rows\nvalidated/measured fold_6_12.npz: 2 rows\n.........\n----------------------------------------------------------------------\nRan 10 tests in 0.165s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e159_fixed_submission.py",
+    "exit_code": 0,
+    "tests": 12,
+    "elapsed": 0.11,
+    "summary": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.017s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e159_fixed_transport.py",
+    "exit_code": 0,
+    "tests": 6,
+    "elapsed": 0.12,
+    "summary": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.080s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e182_e185_submission.py",
+    "exit_code": 0,
+    "tests": 7,
+    "elapsed": 0.17,
+    "summary": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.054s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e182_submission.py",
+    "exit_code": 0,
+    "tests": 9,
+    "elapsed": 0.18,
+    "summary": ".........\n----------------------------------------------------------------------\nRan 9 tests in 0.069s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e184_resource_cv.py",
+    "exit_code": 0,
+    "tests": 5,
+    "elapsed": 0.04,
+    "summary": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.005s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e185_on_e182_fixed.py",
+    "exit_code": 0,
+    "tests": 16,
+    "elapsed": 0.72,
+    "summary": "................\n----------------------------------------------------------------------\nRan 16 tests in 0.620s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e185_submission.py",
+    "exit_code": 0,
+    "tests": 6,
+    "elapsed": 0.11,
+    "summary": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.006s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e186_batch_ensemble.py",
+    "exit_code": 0,
+    "tests": 14,
+    "elapsed": 0.83,
+    "summary": "..............\n----------------------------------------------------------------------\nRan 14 tests in 0.259s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e187_weight_objective.py",
+    "exit_code": 0,
+    "tests": 13,
+    "elapsed": 0.71,
+    "summary": ".............\n----------------------------------------------------------------------\nRan 13 tests in 0.611s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e190_numeric_embeddings.py",
+    "exit_code": 0,
+    "tests": 5,
+    "elapsed": 0.11,
+    "summary": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.005s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e191_flag_recovery.py",
+    "exit_code": 0,
+    "tests": 3,
+    "elapsed": 0.43,
+    "summary": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.317s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e191_physical_support.py",
+    "exit_code": 0,
+    "tests": 9,
+    "elapsed": 0.11,
+    "summary": ".........\n----------------------------------------------------------------------\nRan 9 tests in 0.006s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e207_current_chain_20261008.py",
+    "exit_code": 0,
+    "tests": 11,
+    "elapsed": 0.31,
+    "summary": "...........\n----------------------------------------------------------------------\nRan 11 tests in 0.207s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e207_full_token_sampler.py",
+    "exit_code": 0,
+    "tests": 11,
+    "elapsed": 0.28,
+    "summary": "...........\n----------------------------------------------------------------------\nRan 11 tests in 0.181s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e207_full_token_sampler_v2.py",
+    "exit_code": 0,
+    "tests": 12,
+    "elapsed": 0.31,
+    "summary": "EXTRACTED 2025-01-01 64\nEXTRACTED 2025-01-01 448\n............\n----------------------------------------------------------------------\nRan 12 tests in 0.205s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e207_full_token_sampler_v3.py",
+    "exit_code": 0,
+    "tests": 13,
+    "elapsed": 0.3,
+    "summary": "EXTRACTED 2025-01-01 64\nEXTRACTED 2025-01-01 448\n.............\n----------------------------------------------------------------------\nRan 13 tests in 0.198s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e208_datis_coverage.py",
+    "exit_code": 0,
+    "tests": 17,
+    "elapsed": 0.07,
+    "summary": ".................\n----------------------------------------------------------------------\nRan 17 tests in 0.021s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_e211_neighbour_level_apply.py",
+    "exit_code": 0,
+    "tests": 3,
+    "elapsed": 0.35,
+    "summary": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.252s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_final_adsb_derivatives_20261008.py",
+    "exit_code": 0,
+    "tests": 8,
+    "elapsed": 2.13,
+    "summary": "ut/run.log' mode='a' encoding='UTF-8'>\n  tb.tb_frame.clear()\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n......\n----------------------------------------------------------------------\nRan 8 tests in 2.044s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_final_feature_workspace_20261008.py",
+    "exit_code": 0,
+    "tests": 12,
+    "elapsed": 0.91,
+    "summary": "5\nFEATURE_STAGE 9 fin1b\nFEATURE_STAGE 10 motion\nPASS verify /private/var/folders/c3/j210wv292jl3t_dn4z86k8040000gn/T/tmpvgf41f37\n............\n----------------------------------------------------------------------\nRan 12 tests in 0.830s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_final_ordered_trajectory_20261008.py",
+    "exit_code": 0,
+    "tests": 13,
+    "elapsed": 0.33,
+    "summary": ".............\n----------------------------------------------------------------------\nRan 13 tests in 0.228s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_final_ordered_trajectory_seeds_20261008.py",
+    "exit_code": 0,
+    "tests": 6,
+    "elapsed": 0.11,
+    "summary": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.012s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_final_tabular_models_20261008.py",
+    "exit_code": 0,
+    "tests": 11,
+    "elapsed": 1.4,
+    "summary": "732}, {'ADEP_mvt': 'LIRF', 'src': 'aobt', 'a': 0.8337562740451986}, {'ADEP_mvt': 'LSZH', 'src': 'lobt', 'a': 0.8337928077446028}]\n...........\n----------------------------------------------------------------------\nRan 11 tests in 1.111s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_final_tail_assembly_20261008.py",
+    "exit_code": 0,
+    "tests": 22,
+    "elapsed": 5.42,
+    "summary": "......................\n----------------------------------------------------------------------\nRan 22 tests in 5.262s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_final_transport_20261009.py",
+    "exit_code": 0,
+    "tests": 15,
+    "elapsed": 1.72,
+    "summary": "...............\n----------------------------------------------------------------------\nRan 15 tests in 1.591s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_lgb_fin1b_oof.py",
+    "exit_code": 0,
+    "tests": 10,
+    "elapsed": 0.13,
+    "summary": "..........\n----------------------------------------------------------------------\nRan 10 tests in 0.025s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_mlp_gpu_component_oof.py",
+    "exit_code": 0,
+    "tests": 8,
+    "elapsed": 0.14,
+    "summary": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.026s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_mlp_gpu_prepare_probe.py",
+    "exit_code": 0,
+    "tests": 3,
+    "elapsed": 0.1,
+    "summary": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.038s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_mlp_lowmem_prepare.py",
+    "exit_code": 0,
+    "tests": 4,
+    "elapsed": 0.14,
+    "summary": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.032s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_night_cb_20261007.py",
+    "exit_code": 0,
+    "tests": 10,
+    "elapsed": 0.1,
+    "summary": "..........\n----------------------------------------------------------------------\nRan 10 tests in 0.047s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_night_gpu_20261007.py",
+    "exit_code": 0,
+    "tests": 7,
+    "elapsed": 0.57,
+    "summary": "...s...\n----------------------------------------------------------------------\nRan 7 tests in 0.041s\n\nOK (skipped=1)\n"
+  },
+  {
+    "file": "tests/test_night_trajectory_chain.py",
+    "exit_code": 0,
+    "tests": 4,
+    "elapsed": 0.12,
+    "summary": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.059s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_opdi_full_ingest.py",
+    "exit_code": 0,
+    "tests": 26,
+    "elapsed": 0.49,
+    "summary": "ror measurements=blocked_missing_events\n[1/1] 20251231_20260110\n  events=error measurements=blocked_missing_events\n..........................\n----------------------------------------------------------------------\nRan 26 tests in 0.374s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_opdi_id_hashes.py",
+    "exit_code": 0,
+    "tests": 6,
+    "elapsed": 0.03,
+    "summary": ".s....\n----------------------------------------------------------------------\nRan 6 tests in 0.001s\n\nOK (skipped=1)\n"
+  },
+  {
+    "file": "tests/test_opdi_repair_december.py",
+    "exit_code": 0,
+    "tests": 12,
+    "elapsed": 0.49,
+    "summary": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.376s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_opdi_support_gate.py",
+    "exit_code": 0,
+    "tests": 13,
+    "elapsed": 0.36,
+    "summary": "ow\": \"20260110_20260120\", \"used_rows\": 1}\n{\"stage\": \"validate_global_pairs\", \"shard\": 13, \"pairs\": 1, \"valid_polygon_pairs\": 0}\n.............\n----------------------------------------------------------------------\nRan 13 tests in 0.214s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_opdi_unique_match.py",
+    "exit_code": 0,
+    "tests": 13,
+    "elapsed": 0.09,
+    "summary": ".............\n----------------------------------------------------------------------\nRan 13 tests in 0.017s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_planning_copy_triangulation_20261012.py",
+    "exit_code": 5,
+    "tests": 0,
+    "elapsed": 0.09,
+    "summary": "\n----------------------------------------------------------------------\nRan 0 tests in 0.000s\n\nNO TESTS RAN\n"
+  },
+  {
+    "file": "tests/test_rank_artifact.py",
+    "exit_code": 0,
+    "tests": 18,
+    "elapsed": 0.22,
+    "summary": "..................\n----------------------------------------------------------------------\nRan 18 tests in 0.166s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_regime_dependence_audit_20261012.py",
+    "exit_code": 0,
+    "tests": 7,
+    "elapsed": 0.11,
+    "summary": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.055s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_reproduce_v12075.py",
+    "exit_code": 0,
+    "tests": 6,
+    "elapsed": 0.1,
+    "summary": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.027s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_reproduce_v12075_v2.py",
+    "exit_code": 0,
+    "tests": 10,
+    "elapsed": 0.27,
+    "summary": "..........\n----------------------------------------------------------------------\nRan 10 tests in 0.157s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_single_put_transport.py",
+    "exit_code": 0,
+    "tests": 1,
+    "elapsed": 1.19,
+    "summary": ".\n----------------------------------------------------------------------\nRan 1 test in 1.016s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_strict_oof_gate.py",
+    "exit_code": 0,
+    "tests": 30,
+    "elapsed": 0.3,
+    "summary": "..............................\n----------------------------------------------------------------------\nRan 30 tests in 0.188s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_submission_guard.py",
+    "exit_code": 0,
+    "tests": 11,
+    "elapsed": 0.11,
+    "summary": "...........\n----------------------------------------------------------------------\nRan 11 tests in 0.011s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_tabicl_ltfm_probe.py",
+    "exit_code": 0,
+    "tests": 4,
+    "elapsed": 0.12,
+    "summary": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.059s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_v12075_portable_bundle.py",
+    "exit_code": 0,
+    "tests": 7,
+    "elapsed": 0.31,
+    "summary": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.284s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_validate_final_submission.py",
+    "exit_code": 0,
+    "tests": 13,
+    "elapsed": 0.13,
+    "summary": ".............\n----------------------------------------------------------------------\nRan 13 tests in 0.039s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_visit_airborne_audit.py",
+    "exit_code": 0,
+    "tests": 13,
+    "elapsed": 0.15,
+    "summary": ".............\n----------------------------------------------------------------------\nRan 13 tests in 0.041s\n\nOK\n"
+  },
+  {
+    "file": "tests/test_visit_mask_experiment.py",
+    "exit_code": 0,
+    "tests": 8,
+    "elapsed": 0.1,
+    "summary": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.006s\n\nOK\n"
+  }
+]

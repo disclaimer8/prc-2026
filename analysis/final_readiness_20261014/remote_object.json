@@ -1,0 +1,9 @@
+{
+  "checked_utc": "2026-10-14T09:47:07.953562+00:00",
+  "object": "gentle-igloo_final.parquet",
+  "size_bytes": 2145576,
+  "sha256": "bbae2cc544989a0faf68abb85dbb4a9aab5ea38eec98d01fa9282c332b4234a1",
+  "last_modified": "2026-10-12T08:44:59+00:00",
+  "matches_expected": true,
+  "operation": "read-only STAT and GET; no PUT"
+}
